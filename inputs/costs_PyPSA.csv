@@ -1,0 +1,190 @@
+technology,parameter,value,unit,source
+solar-rooftop,discount rate,0.04,per unit,standard for decentral
+onwind,lifetime,30,years,DEA https://ens.dk/en/our-services/projections-and-models/technology-data
+offwind,lifetime,30,years,DEA https://ens.dk/en/our-services/projections-and-models/technology-data
+solar,lifetime,25,years,IEA2010
+solar-rooftop,lifetime,25,years,IEA2010
+solar-utility,lifetime,25,years,IEA2010
+PHS,lifetime,80,years,IEA2010
+hydro,lifetime,80,years,IEA2010
+ror,lifetime,80,years,IEA2010
+OCGT,lifetime,30,years,IEA2010
+nuclear,lifetime,45,years,ECF2010 in DIW DataDoc http://hdl.handle.net/10419/80348
+CCGT,lifetime,30,years,IEA2010
+coal,lifetime,40,years,IEA2010
+lignite,lifetime,40,years,IEA2010
+geothermal,lifetime,40,years,IEA2010
+biomass,lifetime,30,years,ECF2010 in DIW DataDoc http://hdl.handle.net/10419/80348
+oil,lifetime,30,years,ECF2010 in DIW DataDoc http://hdl.handle.net/10419/80348
+onwind,investment,1110,EUR/kWel,DEA https://ens.dk/en/our-services/projections-and-models/technology-data
+onwind-landcosts,investment,200,EUR/kWel,Land costs and compensation payments conservatively estimated based on DEA https://ens.dk/en/our-services/projections-and-models/technology-data
+offwind,investment,1640,EUR/kWel,DEA https://ens.dk/en/our-services/projections-and-models/technology-data
+offwind-ac-station,investment,250,EUR/kWel,DEA https://ens.dk/en/our-services/projections-and-models/technology-data
+offwind-ac-connection-submarine,investment,2685,EUR/MW/km,DEA https://ens.dk/en/our-services/projections-and-models/technology-data
+offwind-ac-connection-underground,investment,1342,EUR/MW/km,DEA https://ens.dk/en/our-services/projections-and-models/technology-data
+offwind-dc-station,investment,400,EUR/kWel,Haertel 2017; assuming one onshore and one offshore node + 13% learning reduction
+offwind-dc-connection-submarine,investment,2000,EUR/MW/km,DTU report based on Fig 34 of https://ec.europa.eu/energy/sites/ener/files/documents/2014_nsog_report.pdf
+offwind-dc-connection-underground,investment,1000,EUR/MW/km,Haertel 2017; average + 13% learning reduction
+solar,investment,600,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
+biomass,investment,2209,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
+geothermal,investment,3392,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
+coal,investment,1300,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348 PC (Advanced/SuperC)
+lignite,investment,1500,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
+solar-rooftop,investment,725,EUR/kWel,ETIP PV
+solar-utility,investment,425,EUR/kWel,ETIP PV
+PHS,investment,2000,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
+hydro,investment,2000,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
+ror,investment,3000,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
+OCGT,investment,400,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
+nuclear,investment,6000,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
+CCGT,investment,800,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
+oil,investment,400,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
+onwind,FOM,2.450549,%/year,DEA https://ens.dk/en/our-services/projections-and-models/technology-data
+offwind,FOM,2.304878,%/year,DEA https://ens.dk/en/our-services/projections-and-models/technology-data
+solar,FOM,4.166667,%/year,DIW DataDoc http://hdl.handle.net/10419/80348
+solar-rooftop,FOM,2,%/year,ETIP PV
+solar-utility,FOM,3,%/year,ETIP PV
+biomass,FOM,4.526935,%/year,DIW DataDoc http://hdl.handle.net/10419/80348
+geothermal,FOM,2.358491,%/year,DIW DataDoc http://hdl.handle.net/10419/80348
+coal,FOM,1.923076,%/year,DIW DataDoc http://hdl.handle.net/10419/80348 PC (Advanced/SuperC)
+lignite,FOM,2,%/year,DIW DataDoc http://hdl.handle.net/10419/80348 PC (Advanced/SuperC)
+oil,FOM,1.5,%/year,DIW DataDoc http://hdl.handle.net/10419/80348
+PHS,FOM,1,%/year,DIW DataDoc http://hdl.handle.net/10419/80348
+hydro,FOM,1,%/year,DIW DataDoc http://hdl.handle.net/10419/80348
+ror,FOM,2,%/year,DIW DataDoc http://hdl.handle.net/10419/80348
+CCGT,FOM,2.5,%/year,DIW DataDoc http://hdl.handle.net/10419/80348
+OCGT,FOM,3.75,%/year,DIW DataDoc http://hdl.handle.net/10419/80348
+onwind,VOM,2.3,EUR/MWhel,DEA https://ens.dk/en/our-services/projections-and-models/technology-data
+offwind,VOM,2.7,EUR/MWhel,DEA https://ens.dk/en/our-services/projections-and-models/technology-data
+solar,VOM,0.01,EUR/MWhel,RES costs made up to fix curtailment order
+coal,VOM,6,EUR/MWhel,DIW DataDoc http://hdl.handle.net/10419/80348 PC (Advanced/SuperC)
+lignite,VOM,7,EUR/MWhel,DIW DataDoc http://hdl.handle.net/10419/80348
+CCGT,VOM,4,EUR/MWhel,DIW DataDoc http://hdl.handle.net/10419/80348
+OCGT,VOM,3,EUR/MWhel,DIW DataDoc http://hdl.handle.net/10419/80348
+nuclear,VOM,8,EUR/MWhel,DIW DataDoc http://hdl.handle.net/10419/80348
+gas,fuel,21.6,EUR/MWhth,IEA2011b
+uranium,fuel,3,EUR/MWhth,DIW DataDoc http://hdl.handle.net/10419/80348
+oil,VOM,3,EUR/MWhel,DIW DataDoc http://hdl.handle.net/10419/80348
+nuclear,fuel,3,EUR/MWhth,IEA2011b
+biomass,fuel,7,EUR/MWhth,IEA2011b
+coal,fuel,8.4,EUR/MWhth,IEA2011b
+lignite,fuel,2.9,EUR/MWhth,IEA2011b
+oil,fuel,50,EUR/MWhth,IEA WEM2017 97USD/boe = http://www.iea.org/media/weowebsite/2017/WEM_Documentation_WEO2017.pdf
+PHS,efficiency,0.75,per unit,DIW DataDoc http://hdl.handle.net/10419/80348
+hydro,efficiency,0.9,per unit,DIW DataDoc http://hdl.handle.net/10419/80348
+ror,efficiency,0.9,per unit,DIW DataDoc http://hdl.handle.net/10419/80348
+OCGT,efficiency,0.39,per unit,DIW DataDoc http://hdl.handle.net/10419/80348
+CCGT,efficiency,0.5,per unit,DIW DataDoc http://hdl.handle.net/10419/80348
+biomass,efficiency,0.468,per unit,DIW DataDoc http://hdl.handle.net/10419/80348
+geothermal,efficiency,0.239,per unit,DIW DataDoc http://hdl.handle.net/10419/80348
+nuclear,efficiency,0.337,per unit,DIW DataDoc http://hdl.handle.net/10419/80348
+gas,CO2 intensity,0.187,tCO2/MWth,https://www.eia.gov/environment/emissions/co2_vol_mass.php
+coal,efficiency,0.464,per unit,DIW DataDoc http://hdl.handle.net/10419/80348 PC (Advanced/SuperC)
+lignite,efficiency,0.447,per unit,DIW DataDoc http://hdl.handle.net/10419/80348
+oil,efficiency,0.393,per unit,DIW DataDoc http://hdl.handle.net/10419/80348 CT
+coal,CO2 intensity,0.354,tCO2/MWth,https://www.eia.gov/environment/emissions/co2_vol_mass.php
+lignite,CO2 intensity,0.334,tCO2/MWth,https://www.eia.gov/environment/emissions/co2_vol_mass.php
+oil,CO2 intensity,0.248,tCO2/MWth,https://www.eia.gov/environment/emissions/co2_vol_mass.php
+geothermal,CO2 intensity,0.026,tCO2/MWth,https://www.eia.gov/environment/emissions/co2_vol_mass.php
+electrolysis,investment,350,EUR/kWel,Palzer Thesis
+electrolysis,FOM,4,%/year,NREL http://www.nrel.gov/docs/fy09osti/45873.pdf; budischak2013
+electrolysis,lifetime,18,years,NREL http://www.nrel.gov/docs/fy09osti/45873.pdf; budischak2013
+electrolysis,efficiency,0.8,per unit,NREL http://www.nrel.gov/docs/fy09osti/45873.pdf; budischak2013
+fuel cell,investment,339,EUR/kWel,NREL http://www.nrel.gov/docs/fy09osti/45873.pdf; budischak2013
+fuel cell,FOM,3,%/year,NREL http://www.nrel.gov/docs/fy09osti/45873.pdf; budischak2013
+fuel cell,lifetime,20,years,NREL http://www.nrel.gov/docs/fy09osti/45873.pdf; budischak2013
+fuel cell,efficiency,0.58,per unit,NREL http://www.nrel.gov/docs/fy09osti/45873.pdf; budischak2013 conservative 2020
+hydrogen storage,investment,0.5,USD/kWh,NREL http://www.nrel.gov/docs/fy09osti/45873.pdf; budischak2013
+hydrogen storage,lifetime,20,years,budischak2013
+methanation,investment,1000,EUR/kWH2,Schaber thesis
+methanation,lifetime,25,years,Schaber thesis
+methanation,FOM,3,%/year,Schaber thesis
+methanation,efficiency,0.6,per unit,Palzer; Breyer for DAC
+helmeth,investment,1000,EUR/kW,no source
+helmeth,lifetime,25,years,no source
+helmeth,FOM,3,%/year,no source
+helmeth,efficiency,0.8,per unit,HELMETH press release
+DAC,investment,250,EUR/(tCO2/a),Fasihi/Climeworks
+DAC,lifetime,30,years,Fasihi
+DAC,FOM,4,%/year,Fasihi
+battery inverter,investment,411,USD/kWel,budischak2013
+battery inverter,lifetime,20,years,budischak2013
+battery inverter,efficiency,0.81,per unit,budischak2013; Lund and Kempton (2008) http://dx.doi.org/10.1016/j.enpol.2008.06.007
+battery inverter,FOM,3,%/year,budischak2013
+battery storage,investment,192,USD/kWh,budischak2013
+battery storage,lifetime,15,years,budischak2013
+decentral air-sourced heat pump,investment,1050,EUR/kWth,HP; Palzer thesis
+decentral air-sourced heat pump,lifetime,20,years,HP; Palzer thesis
+decentral air-sourced heat pump,FOM,3.5,%/year,Palzer thesis
+decentral air-sourced heat pump,efficiency,3,per unit,default for costs
+decentral air-sourced heat pump,discount rate,0.04,per unit,Palzer thesis
+decentral ground-sourced heat pump,investment,1400,EUR/kWth,Palzer thesis
+decentral ground-sourced heat pump,lifetime,20,years,Palzer thesis
+decentral ground-sourced heat pump,FOM,3.5,%/year,Palzer thesis
+decentral ground-sourced heat pump,efficiency,4,per unit,default for costs
+decentral ground-sourced heat pump,discount rate,0.04,per unit,Palzer thesis
+central air-sourced heat pump,investment,700,EUR/kWth,Palzer thesis
+central air-sourced heat pump,lifetime,20,years,Palzer thesis
+central air-sourced heat pump,FOM,3.5,%/year,Palzer thesis
+central air-sourced heat pump,efficiency,3,per unit,default for costs
+retrofitting I,discount rate,0.04,per unit,Palzer thesis
+retrofitting I,lifetime,50,years,Palzer thesis
+retrofitting I,FOM,1,%/year,Palzer thesis
+retrofitting I,investment,50,EUR/m2/fraction reduction,Palzer thesis
+retrofitting II,discount rate,0.04,per unit,Palzer thesis
+retrofitting II,lifetime,50,years,Palzer thesis
+retrofitting II,FOM,1,%/year,Palzer thesis
+retrofitting II,investment,250,EUR/m2/fraction reduction,Palzer thesis
+water tank charger,efficiency,0.9,per unit,HP
+water tank discharger,efficiency,0.9,per unit,HP
+decentral water tank storage,investment,860,EUR/m3,IWES Interaktion
+decentral water tank storage,FOM,1,%/year,HP
+decentral water tank storage,lifetime,20,years,HP
+decentral water tank storage,discount rate,0.04,per unit,Palzer thesis
+central water tank storage,investment,30,EUR/m3,IWES Interaktion
+central water tank storage,FOM,1,%/year,HP
+central water tank storage,lifetime,40,years,HP
+decentral resistive heater,investment,100,EUR/kWhth,Schaber thesis
+decentral resistive heater,lifetime,20,years,Schaber thesis
+decentral resistive heater,FOM,2,%/year,Schaber thesis
+decentral resistive heater,efficiency,0.9,per unit,Schaber thesis
+decentral resistive heater,discount rate,0.04,per unit,Palzer thesis
+central resistive heater,investment,100,EUR/kWhth,Schaber thesis
+central resistive heater,lifetime,20,years,Schaber thesis
+central resistive heater,FOM,2,%/year,Schaber thesis
+central resistive heater,efficiency,0.9,per unit,Schaber thesis
+decentral gas boiler,investment,175,EUR/kWhth,Palzer thesis
+decentral gas boiler,lifetime,20,years,Palzer thesis
+decentral gas boiler,FOM,2,%/year,Palzer thesis
+decentral gas boiler,efficiency,0.9,per unit,Palzer thesis
+decentral gas boiler,discount rate,0.04,per unit,Palzer thesis
+central gas boiler,investment,63,EUR/kWhth,Palzer thesis
+central gas boiler,lifetime,22,years,Palzer thesis
+central gas boiler,FOM,1,%/year,Palzer thesis
+central gas boiler,efficiency,0.9,per unit,Palzer thesis
+decentral CHP,lifetime,25,years,HP
+decentral CHP,investment,1400,EUR/kWel,HP
+decentral CHP,FOM,3,%/year,HP
+decentral CHP,discount rate,0.04,per unit,Palzer thesis
+central CHP,lifetime,25,years,HP
+central CHP,investment,650,EUR/kWel,HP
+central CHP,FOM,3,%/year,HP
+decentral solar thermal,discount rate,0.04,per unit,Palzer thesis
+decentral solar thermal,FOM,1.3,%/year,HP
+decentral solar thermal,investment,270000,EUR/1000m2,HP
+decentral solar thermal,lifetime,20,years,HP
+central solar thermal,FOM,1.4,%/year,HP
+central solar thermal,investment,140000,EUR/1000m2,HP
+central solar thermal,lifetime,20,years,HP
+HVAC overhead,investment,400,EUR/MW/km,Hagspiel
+HVAC overhead,lifetime,40,years,Hagspiel
+HVAC overhead,FOM,2,%/year,Hagspiel
+HVDC overhead,investment,400,EUR/MW/km,Hagspiel
+HVDC overhead,lifetime,40,years,Hagspiel
+HVDC overhead,FOM,2,%/year,Hagspiel
+HVDC submarine,investment,2000,EUR/MW/km,DTU report based on Fig 34 of https://ec.europa.eu/energy/sites/ener/files/documents/2014_nsog_report.pdf
+HVDC submarine,lifetime,40,years,Hagspiel
+HVDC submarine,FOM,2,%/year,Hagspiel
+HVDC inverter pair,investment,150000,EUR/MW,Hagspiel
+HVDC inverter pair,lifetime,40,years,Hagspiel
+HVDC inverter pair,FOM,2,%/year,Hagspiel

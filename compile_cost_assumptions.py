@@ -238,7 +238,8 @@ d_by_year = {}
 
 for year in years:
 
-    index = ['investment','FOM','VOM','lifetime','efficiency']
+    index = ['investment','FOM','VOM','lifetime','efficiency',
+             'efficiency-heat']
 
     df = pd.DataFrame(index=index,columns=sheet_names.keys(),data=0,dtype=float)
 

@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 # coding: utf-8
+
 import pandas as pd
 import numpy as np
 import os
-# %% -------- PARAMETER ------------------------------------------------------
-path_in = "/home/ws/bw0928/Dokumente/compile_costs_new/inputs/"
 
-years = np.arange(2020,2055,5)
+# %% -------- PARAMETER ------------------------------------------------------
+path_in = "/home/ws/bw0928/Dokumente/compile_costs_new/technology_data/inputs/"
+
+years = np.arange(2020, 2055, 5)
 rate_inflation = 0.02
 
 source_DEA = 'Technology Data for Energy Plants for Electricity and District heating generation'
@@ -236,8 +238,7 @@ d_by_year = {}
 
 for year in years:
 
-    index = ['investment','FOM','VOM','lifetime','efficiency',
-             'efficiency-heat']
+    index = ['investment','FOM','VOM','lifetime','efficiency']
 
     df = pd.DataFrame(index=index,columns=sheet_names.keys(),data=0,dtype=float)
 
@@ -349,12 +350,8 @@ for year in years:
     # central heat pump for district heating from DEA
     costs.rename({'central air-sourced heat pump':
                   'central ground-sourced heat pump'}, inplace=True)
-#     costs.rename({'decentral air-sourced heat pump':'decentral heat pump'},inplace=True)
-#     costs.drop(index='decentral ground-sourced heat pump',inplace=True)
-
     # central CHP is gas-fired
     costs.rename({'central CHP':'central gas CHP'},inplace=True)
-
     # hydrogen storage now have two forms
     costs.drop(index='hydrogen storage',inplace=True)
 

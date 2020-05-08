@@ -10,7 +10,10 @@ path_in = "/home/ws/bw0928/Dokumente/compile_costs_new/technology_data/inputs/"
 
 years = np.arange(2020, 2055, 5)
 rate_inflation = 0.02
+solar_from_DEA = True  # add solar data from DEA if false from Vartiaien/ETIP
+h2_from_budischak = False # add fuel cell/electrolysis efficiencies from budischak
 
+# ---------- sources -------------------------------------------------------
 source_DEA = 'Technology Data for Energy Plants for Electricity and District heating generation'
 # solar
 source_Vartiainen = 'Impact of weighted average cost of capital, capital expenditure, and other parameters on future utility‐scale PV levelised cost of electricity'
@@ -19,7 +22,9 @@ source_ETIP = 'European PV Technology and Innovation Platform'
 source_Lazards = 'Lazard’s Levelized Cost of Energy Analysis - Version 13.0'
 # and the fuel cost is from Zappa's paper
 zappa_paper = 'Is a 100% renewable European power system feasible by 2050?'
-
+# co2 intensity
+source_co2 = 'Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018'
+# ---------------------------------------------------------------------------
 
 sheet_names = {'onwind': '20 Onshore turbines',
                'offwind': '21 Offshore turbines',
@@ -50,6 +55,15 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'battery storage': '180 Lithium Ion Battery',
                'battery inverter': '180 Lithium Ion Battery',
                'electrolysis': '88 Alkaline Electrolyser',
+               'electricity distribution rural': '101 2 el distri Rural',
+               'electricity distribution urban': '101 4 el distri  city',
+               'gas distribution rural': '102 7 gas  Rural',
+               'gas distribution urban': '102 9 gas City',
+               'DH distribution rural': '103_12 DH_Distribu Rural',
+               'DH distribution urban': '103_14 DH_Distribu City',
+               'DH distribution low T': '103_16 DH_Distr New area LTDH',
+               'gas pipeline': '102 6 gas Main distri line',
+               "DH main transmission": "103_11 DH transmission",
               }
 
 
@@ -83,7 +97,6 @@ def get_sheet_location(tech, sheet_names, data_in):
     """
     looks up in which excel file technology is saved
     """
-
     for key in data_in:
         if sheet_names[tech] in data_in[key]:
             return key
@@ -95,8 +108,9 @@ def get_sheet_location(tech, sheet_names, data_in):
 
 
 def cal_cost(tech):
-    """interpolate cost for a given technology from DEA database sheet"""
-
+    """
+    interpolate cost for a given technology from DEA database sheet
+    """
     excel_file = get_sheet_location(tech, sheet_names, data_in)
     if excel_file is None:
         print("excel file not found for tech ", tech)
@@ -130,7 +144,7 @@ def cal_cost(tech):
     df_raw = excel.iloc[index_loc_start+1:index_loc_end+1, :]
 
     excel_raw = excel.loc[excel.index.dropna()].dropna(how="all", axis=0)
-    df_raw = df_raw.append(excel_raw[excel_raw.index.str.contains("Technical lifetime")])
+    df_raw = df_raw.append(excel_raw[excel_raw.index.str.contains("Technical life")])
 
     if ('decentral' in tech) & ('storage' not in tech):
         df_raw = df_raw.append(
@@ -152,6 +166,11 @@ def cal_cost(tech):
     elif tech == 'electrolysis':
         df_raw.loc['efficiency'] = excel.loc['A) Hydrogen output (% total size), at LHV']/100
 
+    elif any(['Energy losses, lines ' in i for i in excel.index.fillna("")]):
+        df_raw.loc["efficiency"] = (excel[excel.index.str
+                                    .contains("Energy losses, lines")
+                                    .fillna(False)].iloc[0, :]).replace('-', np.nan)
+        df_raw.loc["efficiency"] = 1 - (df_raw.loc["efficiency"].fillna(0)/100)
     else:
         index = locate_index(excel, 'efficiency')
         df_raw.loc['efficiency'] = (excel.loc[index]/100).clip(upper=1)
@@ -219,207 +238,43 @@ def cal_cost(tech):
     return df
 
 
-# %%------ get data from DEA excel sheets -----------------------------------
-data_in = get_excel_sheets(path_in)
-
-d_by_tech = {}
-
-for tech in sheet_names.keys():
-    print(tech+' in PyPSA corresponds to '+ sheet_names[tech] +
-          ' in DEA database.')
-    df = cal_cost(tech=tech)
-    df.fillna(value=0, inplace=True)
-    d_by_tech[tech] = df
-
-
 # %%
-# aggregate technologies into a dict, whose keys are years
-d_by_year = {}
-
-for year in years:
-
-    index = ['investment','FOM','VOM','lifetime','efficiency',
-             'efficiency-heat']
-
-    df = pd.DataFrame(index=index,columns=sheet_names.keys(),data=0,dtype=float)
-
-    for tech in sheet_names.keys():
-
-        index = locate_index(d_by_tech[tech], 'investment')
-
-        if tech == "micro CHP":
-             index = locate_index(d_by_tech[tech], 'investment (M')
-
-        if ('M€' in index) & ('MW' in index):
-            CC = d_by_tech[tech].at[index,year]*1e6 # convert from MEUR/MW(h) to EUR/MW(h)
-        elif ('M€' in index) & ('MJ/s' in index):
-            CC = d_by_tech[tech].at[index,year]*1e6 # convert from MEUR/MW to EUR/MW(h)
-        elif ('M€' in index) & ('GW' in index):
-            CC = d_by_tech[tech].at[index,year]*1e3 # convert from MEUR/GW(h) to EUR/MW(h)
-        elif ('€' in index) & ('kW' in index):
-            CC = d_by_tech[tech].at[index,year]*1e3 # convert from EUR/KW(h) to EUR/MW(h)
-        elif('€' in index) & ('MJ/s' in index):
-            CC =  d_by_tech[tech].at[index,year]
-        else:
-            print("check investment units: ", tech)
-            CC =  d_by_tech[tech].at[index,year]
-
-        # investment contains grid injection and upgrading
-        if tech == "biogas upgrading":
-            investment = d_by_tech[tech].loc[d_by_tech[tech].index.str.contains("investment")].sum()
-            CC = investment.loc[year]
-
-        df.at['investment',tech] = CC/1e3 # in EUR/kW
-        index = locate_index(d_by_tech[tech], 'Fixed O&M')
-
-        try:
-            FOM = d_by_tech[tech].at[index,year] # in EUR/MW/year
-            if tech == 'decentral water tank storage':
-                FOM = d_by_tech[tech].at[index,year]/3 # from EUR/tank/year to EUR/MW/year
-            elif tech == 'hydrogen storage underground': # I believe there is an error in DEA database
-                FOM = CC*0.02
-            elif tech == "micro CHP":
-                CC = d_by_tech[tech].at["Specific investment (1000€/unit)",year] *1000
-        except KeyError:
-            FOM = 0
-        df.at['FOM',tech] = np.round(FOM/CC*100,3) # in %/year
-
-        index = locate_index(d_by_tech[tech], 'Variable O&M')
-        try:
-            VOM = d_by_tech[tech].at[index,year] # in EUR/MWh
-            if tech == "biogas upgrading":
-                VOM *= 3.6   # convert from EUR/GJ in EUR/MWh
-        except KeyError:
-            VOM = 0
-        df.at['VOM',tech] = VOM
-
-        d_by_tech[tech].rename(index={'Technical lifetime of total system (years)': 'Technical lifetime (years)'},
-                               inplace=True)
-        df.at['lifetime',tech] = d_by_tech[tech].at['Technical lifetime (years)',year]
-
-        index = d_by_tech[tech].index.str.contains("efficiency")
-        index = d_by_tech[tech].loc[index].index
-        df.loc[index, tech] = d_by_tech[tech].loc[index, year]
-
-    d_by_year[year] = df
-
-
-# %%  ---------- Other sources ---------------------------------------------
-#  ------------- solar --------------------------
-
-# solar utility from Vartiaian 2019
-data = np.interp(x=years,xp=[2020, 2030, 2040, 2050],fp=[431, 275, 204, 164])
-# the paper says 'In this report, all results are given in real 2019 money.'
-data = data / (1 + rate_inflation)**(2019-2015)
-solar_uti = pd.Series(data=data,index=years)
-
-# solar rooftop from ETIP 2019
-data = np.interp(x=years,xp=[2020, 2030, 2050],fp=[1150, 800, 550])
-data = data / (1 + rate_inflation)**(2016-2015) # using 2016 money in page 10
-solar_roof = pd.Series(data=data, index=years)
-
-# %% --------- units ----------------
-
-
-unit_to_replace = {'investment':'EUR/kWel',
-                   'lifetime':'years',
-                   'FOM':'%/year',
-                   'efficiency':'per unit',
-                   'efficiency-heat':'per unit',
-                   'VOM':'EUR/MWh',
-                  }
-
-
-# %%
-
-
-for year in years:
-    df = d_by_year[year]
-    costs = pd.read_csv('inputs/costs_PyPSA.csv',
-                        index_col=list(range(2))).sort_index()
-
-    # drop irrelevant techs
-    costs.drop(index=['solar', 'central solar thermal',
-                      'decentral solar thermal',
-                      'geothermal', 'decentral CHP', 'biomass'], inplace=True)
-
-    # biomass is differentiated by biomass CHP and HOP
-    costs.loc[('solid biomass','fuel'),'value'] = 25.2
-    costs.loc[('solid biomass','fuel'),'unit'] = 'EUR/MWhth'
-    costs.loc[('solid biomass','fuel'),'source'] = zappa_paper
-
-    # central heat pump for district heating from DEA
-    costs.rename({'central air-sourced heat pump':
-                  'central ground-sourced heat pump'}, inplace=True)
-    # central CHP is gas-fired
-    costs.rename({'central CHP':'central gas CHP'},inplace=True)
-    # hydrogen storage now have two forms
-    costs.drop(index='hydrogen storage',inplace=True)
-
-    for tech in df.columns:
-        for para in df.index:
-            if (index=='efficiency-heat') and (df.at[para, tech]==0):
-                continue
-            costs.at[(tech, para), 'value'] = df.at[para, tech]
-            costs.at[(tech, para), 'source'] = source_DEA
-
-    # correct the units
-    costs.loc[('battery storage','investment'),'unit'] = 'EUR/kWh'
-    costs.loc[('battery inverter','investment'),'unit'] = 'EUR/kWel'
-
-    # solar utility from Vartiaian 2019
-    costs.loc[('solar-utility','investment'),'value'] = solar_uti[year]
-    costs.loc[('solar-utility','investment'),'source'] = source_Vartiainen
-
-    costs.loc[('solar-utility','lifetime'),'value'] = 30
-    costs.loc[('solar-utility','lifetime'),'source'] = source_Vartiainen
-
-    # solar rooftop from ETIP 2019
-    costs.loc[('solar-rooftop','investment'),'value'] = solar_roof[year]
-    costs.loc[('solar-rooftop','investment'),'source'] = source_ETIP
-
-    costs.loc[('solar-rooftop','lifetime'),'value'] = 30
-    costs.loc[('solar-rooftop','lifetime'),'source'] = source_ETIP
-
-    # lifetime&efficiency for solar
-    costs.loc[('solar','lifetime'),'value'] = (costs.loc[('solar-rooftop','lifetime'),'value']+costs.loc[('solar-utility','lifetime'),'value'])/2
-    costs.loc[('solar','lifetime'),'unit'] = 'years'
-    costs.loc[('solar','efficiency'),'value'] = 1
-    costs.loc[('solar','efficiency'),'unit'] = 'per unit'
+def add_conventional_data(costs):
+    """"add technology data for convetional carriers from Lazards"""
 
     # nuclear from Lazards
-    costs.loc[('nuclear','investment'),'value'] = 8595/(1+rate_inflation)**(2019-2015)
-    costs.loc[('nuclear','investment'),'source'] = source_Lazards
+    costs.loc[('nuclear', 'investment'), 'value'] = 8595 / (1 + rate_inflation)**(2019 - 2015)
+    costs.loc[('nuclear', 'investment'), 'source'] = source_Lazards
 
-    costs.loc[('nuclear','FOM'),'value'] = 1.4
-    costs.loc[('nuclear','FOM'),'source'] = source_Lazards
+    costs.loc[('nuclear', 'FOM'),'value'] = 1.4
+    costs.loc[('nuclear', 'FOM'),'source'] = source_Lazards
 
-    costs.loc[('nuclear','VOM'),'value'] = 3.5
-    costs.loc[('nuclear','VOM'),'source'] = source_Lazards
+    costs.loc[('nuclear', 'VOM'),'value'] = 3.5
+    costs.loc[('nuclear', 'VOM'),'source'] = source_Lazards
 
-    costs.loc[('nuclear','efficiency'),'value'] = 0.33
-    costs.loc[('nuclear','efficiency'),'source'] = source_Lazards
+    costs.loc[('nuclear', 'efficiency'),'value'] = 0.33
+    costs.loc[('nuclear', 'efficiency'),'source'] = source_Lazards
 
-    costs.loc[('nuclear','fuel'),'value'] = 2.6
-    costs.loc[('nuclear','fuel'),'source'] = source_Lazards
-    costs.loc[('uranium','fuel'),'value'] = 2.6
-    costs.loc[('uranium','fuel'),'source'] = source_Lazards
+    costs.loc[('nuclear', 'fuel'),'value'] = 2.6
+    costs.loc[('nuclear', 'fuel'),'source'] = source_Lazards
+    costs.loc[('uranium', 'fuel'),'value'] = 2.6
+    costs.loc[('uranium', 'fuel'),'source'] = source_Lazards
 
-    costs.loc[('nuclear','lifetime'),'value'] = 40
-    costs.loc[('nuclear','lifetime'),'source'] = source_Lazards
+    costs.loc[('nuclear', 'lifetime'),'value'] = 40
+    costs.loc[('nuclear', 'lifetime'),'source'] = source_Lazards
 
     # coal from Lazards and BP 2019
-    costs.loc[('coal','investment'),'value'] = 4162.5/(1+rate_inflation)**(2019-2015)
-    costs.loc[('coal','investment'),'source'] = source_Lazards
+    costs.loc[('coal', 'investment'), 'value'] = 4162.5 / (1 + rate_inflation)**(2019-2015)
+    costs.loc[('coal', 'investment'), 'source'] = source_Lazards
 
-    costs.loc[('coal','FOM'),'value'] = 1.6
-    costs.loc[('coal','FOM'),'source'] = source_Lazards
+    costs.loc[('coal', 'FOM'), 'value'] = 1.6
+    costs.loc[('coal', 'FOM'), 'source'] = source_Lazards
 
-    costs.loc[('coal','VOM'),'value'] = 3.5
-    costs.loc[('coal','VOM'),'source'] = source_Lazards
+    costs.loc[('coal', 'VOM'), 'value'] = 3.5
+    costs.loc[('coal', 'VOM'), 'source'] = source_Lazards
 
-    costs.loc[('coal','efficiency'),'value'] = 0.33
-    costs.loc[('coal','efficiency'),'source'] = source_Lazards
+    costs.loc[('coal', 'efficiency'), 'value'] = 0.33
+    costs.loc[('coal', 'efficiency'), 'source'] = source_Lazards
 
     costs.loc[('coal','fuel'),'value'] = 8.15
     costs.loc[('coal','fuel'),'source'] = 'BP 2019'
@@ -448,16 +303,70 @@ for year in years:
     costs.loc[('lignite','lifetime'),'value'] = 40
     costs.loc[('lignite','lifetime'),'source'] = source_Lazards
 
-    # CO2 intensity
+    return costs
+
+
+def add_co2_intensity(costs):
+    """"add CO2 intensity for convetionals """
     TJ_to_MWh = 277.78
     costs.loc[('gas','CO2 intensity'),'value'] = 55827/1e3/TJ_to_MWh #Erdgas
     costs.loc[('coal','CO2 intensity'),'value'] = 93369/1e3/TJ_to_MWh #Steinkohle
     costs.loc[('lignite','CO2 intensity'),'value'] = 113031/1e3/TJ_to_MWh #Rohbraunkohle Rheinland
     costs.loc[('oil','CO2 intensity'),'value'] = 74020/1e3/TJ_to_MWh #Heizöl, leicht
-    costs.loc[('gas','CO2 intensity'),'source'] = 'Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018'
-    costs.loc[('coal','CO2 intensity'),'source'] = 'Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018'
-    costs.loc[('lignite','CO2 intensity'),'source'] = 'Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018'
-    costs.loc[('oil','CO2 intensity'),'source'] = 'Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018'
+    costs.loc[('gas','CO2 intensity'),'source'] = source_co2
+    costs.loc[('coal','CO2 intensity'),'source'] = source_co2
+    costs.loc[('lignite','CO2 intensity'),'source'] = source_co2
+    costs.loc[('oil','CO2 intensity'),'source'] = source_co2
+
+    return costs
+
+
+def add_solar_from_other(costs):
+    """"
+    add solar from other sources than DEA
+    """
+    # solar utility from Vartiaian 2019
+    data = np.interp(x=years,xp=[2020, 2030, 2040, 2050],
+                     fp=[431, 275, 204, 164])
+    # the paper says 'In this report, all results are given in real 2019 money.'
+    data = data / (1 + rate_inflation)**(2019-2015)
+    solar_uti = pd.Series(data=data,index=years)
+
+    # solar rooftop from ETIP 2019
+    data = np.interp(x=years,xp=[2020, 2030, 2050],fp=[1150, 800, 550])
+    data = data / (1 + rate_inflation)**(2016-2015) # using 2016 money in page 10
+    solar_roof = pd.Series(data=data, index=years)
+
+    # solar utility from Vartiaian 2019
+    costs.loc[('solar-utility','investment'),'value'] = solar_uti[year]
+    costs.loc[('solar-utility','investment'),'source'] = source_Vartiainen
+
+    costs.loc[('solar-utility','lifetime'),'value'] = 30
+    costs.loc[('solar-utility','lifetime'),'source'] = source_Vartiainen
+
+    # solar rooftop from ETIP 2019
+    costs.loc[('solar-rooftop','investment'),'value'] = solar_roof[year]
+    costs.loc[('solar-rooftop','investment'),'source'] = source_ETIP
+
+    costs.loc[('solar-rooftop','lifetime'),'value'] = 30
+    costs.loc[('solar-rooftop','lifetime'),'source'] = source_ETIP
+
+    # lifetime&efficiency for solar
+    costs.loc[('solar','lifetime'),'value'] = costs.loc[(['solar-rooftop', 'solar-utility'],'lifetime'),'value'].mean()
+    costs.loc[('solar','lifetime'),'unit'] = 'years'
+    costs.loc[('solar','lifetime'),'source'] = 'Assuming 50% rooftop, 50% utility'
+    costs.loc[('solar','efficiency'),'value'] = 1
+    costs.loc[('solar','efficiency'),'unit'] = 'per unit'
+
+    return costs
+
+
+def correct_units(costs):
+    """"
+    correct units which are wrongly set
+    """
+    costs.loc[('battery storage','investment'),'unit'] = 'EUR/kWh'
+    costs.loc[('battery inverter','investment'),'unit'] = 'EUR/kWel'
 
     # replace unit with value of 0 to a proper unit
     costs.unit.values[costs.unit.isna()] = (costs.index.get_level_values(1)[costs.unit.isna()]).map(unit_to_replace)
@@ -471,16 +380,33 @@ for year in years:
     costs.loc[('decentral water tank storage','investment'),'value'] /= 1.17*40 #convert EUR/m^3 to EUR/kWh for 40 K diff and 1.17 kWh/m^3/K
     costs.loc[('decentral water tank storage','investment'),'unit'] = 'EUR/kWh'
 
-    # assume higher efficiency for electrolysis(0.8) and fuel cell(0.58)
-#    costs.loc[('electrolysis','efficiency'),'value'] = 0.8
-#    costs.loc[('fuel cell','efficiency'),'value'] = 0.58
-#    costs.loc[('electrolysis','efficiency'),'source'] = 'budischak2013'
-#    costs.loc[('fuel cell','efficiency'),'source'] = 'budischak2013'
+    return costs
 
-    # unify the cost from DIW2010
-    costs.loc[('PHS','investment'),'value'] /= (1+rate_inflation)**(2010-2015)
-    costs.loc[('ror','investment'),'value'] /= (1+rate_inflation)**(2010-2015)
-    costs.loc[('hydro','investment'),'value'] /= (1+rate_inflation)**(2010-2015)
+
+def add_h2_from_other(costs):
+    """
+    assume higher efficiency for electrolysis(0.8) and fuel cell(0.58)
+    """
+    costs.loc[('electrolysis','efficiency'),'value'] = 0.8
+    costs.loc[('fuel cell','efficiency'),'value'] = 0.58
+    costs.loc[('electrolysis','efficiency'),'source'] = 'budischak2013'
+    costs.loc[('fuel cell','efficiency'),'source'] = 'budischak2013'
+
+    return costs
+
+
+def add_costs_from_DEA(costs, df, d_by_tech):
+
+    techs_eff_heat = pd.concat(d_by_tech).xs("efficiency-heat", level=1)
+
+    for tech in df.columns:
+        if tech in techs_eff_heat.index:
+            costs.at[(tech, "efficiency-heat"), 'value'] = techs_eff_heat.loc[tech, year]
+            costs.at[(tech, "efficiency-heat"), 'unit'] = 'per unit'
+            costs.at[(tech, "efficiency-heat"), 'source'] = source_DEA
+        for para in df.dropna().index:
+            costs.at[(tech, para), 'value'] = df.at[para, tech]
+            costs.at[(tech, para), 'source'] = source_DEA
 
     # add c_v and c_b coefficient
     costs.loc[('central solid biomass CHP', 'c_b'), 'value'] = d_by_tech["central solid biomass CHP"].loc["c_b", year]
@@ -490,35 +416,195 @@ for year in years:
     costs.loc[('central solid biomass CHP', 'c_v'), 'unit'] = 'per unit'
     costs.loc[('central solid biomass CHP', 'c_v'), 'source'] = source_DEA
 
-    # CCS
-    techs_ccs = ["central solid biomass CHP", "central gas CHP"] #SMR
+    return costs
+
+
+def add_costs_ccs(costs, techs_ccs = ["central solid biomass CHP",
+                                      "central gas CHP"] #SMR
+                  ):
+    """"
+    add costs and efficiencies from DIW for CCS for technologies 'techs_css'
+    """
     for tech_ccs in techs_ccs:
         name = tech_ccs + " CCS"
         costs = costs.append(costs.loc[tech_ccs].set_index(
                 pd.MultiIndex.from_product([[name], costs.loc[tech_ccs].index])))
         costs.loc[(name, 'efficiency'), 'value'] *= 0.9
-        costs.loc[(name, 'investment'), 'value'] += 600  # costs extra for CCS from DIW
-        costs.loc[(name, 'investment'), 'source'] = source_DEA + " , DIW (CCS)"
+        # costs extra for CCS from DIW
+        costs.loc[(name, 'investment'), 'value'] += 600
+        costs.loc[(name, 'investment'), 'source'] += " , DIW (CCS)"
+
+    return costs
+
+
+def unify_diw(costs):
+    """"
+    include inflation for the DIW costs from 2010
+    """
+    inflation = (1+rate_inflation)**(2010-2015)
+    costs.loc[('PHS','investment'),'value'] /= inflation
+    costs.loc[('ror','investment'),'value'] /= inflation
+    costs.loc[('hydro','investment'),'value'] /= inflation
+
+    return costs
+# %%------ get data from DEA excel sheets -----------------------------------
+data_in = get_excel_sheets(path_in)
+
+d_by_tech = {}
+
+for tech in sheet_names.keys():
+    print(tech+' in PyPSA corresponds to '+ sheet_names[tech] +
+          ' in DEA database.')
+    df = cal_cost(tech=tech)
+    df.fillna(value=0, inplace=True)
+    d_by_tech[tech] = df
+
+
+# %% ---------------------------------------------------------------------
+# aggregate technologies into a dict, whose keys are years
+d_by_year = {}
+
+for year in years:
+
+    index = ['investment','FOM','VOM','lifetime','efficiency']
+
+    df = pd.DataFrame(index=index,columns=sheet_names.keys(),data=0,dtype=float)
+
+    for tech in sheet_names.keys():
+
+        index = locate_index(d_by_tech[tech], 'investment')
+        dist = ["Distribution" in index for index in d_by_tech[tech].index]
+        if any(dist):
+            index = d_by_tech[tech].loc[dist].index[0]
+        trans = ["Investment costs; single line, 100 - 250 MW" in index for
+                 index in d_by_tech[tech].index]
+        if any(trans):
+            index = d_by_tech[tech].loc[trans].index[0]
+
+        if tech == "micro CHP":
+             index = locate_index(d_by_tech[tech], 'investment (M')
+
+        if ('M€' in index) & ('MW' in index):
+            CC = d_by_tech[tech].at[index,year]*1e6 # convert from MEUR/MW(h) to EUR/MW(h)
+        elif ('M€' in index) & ('MJ/s' in index):
+            CC = d_by_tech[tech].at[index,year]*1e6 # convert from MEUR/MW to EUR/MW(h)
+        elif ('M€' in index) & ('GW' in index):
+            CC = d_by_tech[tech].at[index,year]*1e3 # convert from MEUR/GW(h) to EUR/MW(h)
+        elif ('€' in index) & ('kW' in index):
+            CC = d_by_tech[tech].at[index,year]*1e3 # convert from EUR/KW(h) to EUR/MW(h)
+        elif('€' in index) & ('MJ/s' in index):
+            CC =  d_by_tech[tech].at[index,year]
+        elif any(dist) & ("EUR/MWh/year" in index):
+            CC = d_by_tech[tech].at[index,year] * 8760  # TODO think about how to deal with investment costs per energy
+        elif any(trans) & ("EUR/MW/m" in index):
+            CC = d_by_tech[tech].at[index,year] * 1000 # convert to EUR/MW/km
+        else:
+            print("check investment units: ", tech)
+            CC =  d_by_tech[tech].loc[index,year]
+
+        # investment contains grid injection and upgrading
+        if tech == "biogas upgrading":
+            investment = d_by_tech[tech].loc[d_by_tech[tech].index.str.contains("investment")].sum()
+            CC = investment.loc[year]
+
+        df.at['investment',tech] = CC/1e3 # in EUR/kW
+
+        index = locate_index(d_by_tech[tech], 'Fixed O&M')
+
+        try:
+            FOM = d_by_tech[tech].at[index,year] # in EUR/MW/year
+            if tech == 'decentral water tank storage':
+                FOM = d_by_tech[tech].at[index,year]/3 # from EUR/tank/year to EUR/MW/year
+            elif tech == 'hydrogen storage underground': # I believe there is an error in DEA database
+                FOM = CC*0.02
+            elif tech == "micro CHP":
+                CC = d_by_tech[tech].at["Specific investment (1000€/unit)",year] *1000
+        except KeyError:
+            FOM = 0
+        df.at['FOM',tech] = np.round(FOM/CC*100,3) # in %/year
+
+        index = locate_index(d_by_tech[tech], 'Variable O&M')
+        try:
+            VOM = d_by_tech[tech].at[index,year] # in EUR/MWh
+            if tech == "biogas upgrading":
+                VOM *= 3.6   # convert from EUR/GJ in EUR/MWh
+        except KeyError:
+            VOM = 0
+        df.at['VOM',tech] = VOM
+
+        d_by_tech[tech].rename(index={'Technical lifetime of total system (years)': 'Technical lifetime (years)'},
+                               inplace=True)
+        d_by_tech[tech].rename(index={'Technical life time (years)': 'Technical lifetime (years)'},
+                       inplace=True)
+        df.at['lifetime', tech] = d_by_tech[tech].at['Technical lifetime (years)',year]
+
+        df.loc[index, tech] = d_by_tech[tech].loc["efficiency", year]
+
+
+    d_by_year[year] = df
+
+
+# %% --------- units ----------------
+
+unit_to_replace = {'investment':'EUR/kWel',
+                   'lifetime':'years',
+                   'FOM':'%/year',
+                   'efficiency':'per unit',
+                   'VOM':'EUR/MWh',
+                  }
+
+
+# %%
+# get pypsa costs
+costs_pypsa = pd.read_csv('inputs/costs_PyPSA.csv',
+                          index_col=list(range(2))).sort_index()
+
+# drop irrelevant techs
+missing =  costs_pypsa.index.levels[0].difference(pd.concat(d_by_year).columns)
+to_drop = ['solar', 'central solar thermal', 'decentral solar thermal',
+           'geothermal', 'decentral CHP', 'biomass', 'retrofitting I',
+           'retrofitting II', 'onwind-landcosts', 'hydrogen storage']
+missing = [item for item in missing if item not in to_drop]
+costs_pypsa = costs_pypsa.loc[missing]
+
+# %%
+for year in years:
+
+    costs = costs_pypsa
+    df = d_by_year[year]
+
+    # biomass is differentiated by biomass CHP and HOP
+    costs.loc[('solid biomass','fuel'),'value'] = 25.2
+    costs.loc[('solid biomass','fuel'),'unit'] = 'EUR/MWhth'
+    costs.loc[('solid biomass','fuel'),'source'] = zappa_paper
+
+    # central heat pump for district heating from DEA
+    costs.rename({'central air-sourced heat pump':
+                  'central ground-sourced heat pump'}, inplace=True)
+    # central CHP is gas-fired
+    costs.rename({'central CHP': 'central gas CHP'}, inplace=True)
+
+    # add costs from DEA
+    costs = add_costs_from_DEA(costs, df, d_by_tech)
+
+    # add solar data from other source than DEA
+    if not solar_from_DEA:
+        costs = add_solar_from_other(costs)
+
+    if h2_from_budischak:
+        costs = add_h2_from_other(costs)
+
+    # add data from conventional carriers
+    costs = add_conventional_data(costs)
+    # CO2 intensity
+    costs = add_co2_intensity(costs)
+    # correct the units
+    costs = correct_units(costs)
+    # unify the cost from DIW2010
+    costs = unify_diw(costs)
+    # CCS
+    costs = add_costs_ccs(costs)
+
     # save the cost assumption per year
     costs.sort_index(inplace=True)
     costs.to_csv('outputs/costs_{}.csv'.format(year))
-
-
-# In[46]:
-
-
-tech = 'biomass'
-pd.read_csv('inputs/costs_PyPSA.csv', index_col=list(range(2))).sort_index().filter(like=tech,axis=0)
-
-
-# In[48]:
-
-
-costs.filter(like='electro',axis=0)
-
-
-# In[ ]:
-
-
-
-

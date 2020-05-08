@@ -10,7 +10,7 @@ path_in = "/home/ws/bw0928/Dokumente/compile_costs_new/technology_data/inputs/"
 
 years = np.arange(2020, 2055, 5)
 rate_inflation = 0.02
-solar_from_DEA = True  # add solar data from DEA if false from Vartiaien/ETIP
+solar_from_DEA = False  # add solar data from DEA if false from Vartiaien/ETIP
 h2_from_budischak = False  # add fuel cell/electrolysis efficiencies from budischak
 
 # ---------- sources -------------------------------------------------------
@@ -28,6 +28,8 @@ source_co2 = 'Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen
 
 sheet_names = {'onwind': '20 Onshore turbines',
                'offwind': '21 Offshore turbines',
+               'solar-utility': '22 Photovoltaics Large',
+               'solar-rooftop': '22 Photovoltaics Small',
                'OCGT': '52 OCGT - Natural gas',
                'CCGT': '05 Gas turb. CC, steam extract.',
                'oil': '50 Diesel engine farm',
@@ -116,7 +118,7 @@ def cal_cost(tech):
         print("excel file not found for tech ", tech)
         return None
 
-    excel = pd.read_excel(excel_file,
+    excel = pd.read_excel(path_in + excel_file,
                           sheet_name=sheet_names[tech],
                           index_col=0,
                           usecols='B:G', skiprows=[0, 1])
@@ -485,7 +487,7 @@ def unify_diw(costs):
 
 
 # %% ---------- MAIN -------------------------------------------------------
-# %%------ get data from DEA excel sheets -----------------------------------
+# --------- get data from DEA excel sheets -----------------------------------
 data_in = get_excel_sheets(path_in)
 d_by_tech = {}
 
@@ -574,12 +576,14 @@ for year in years:
         df.at['FOM', tech] = np.round(FOM / CC * 100, 3)  # in %/year
 
         index = locate_index(d_by_tech[tech], 'Variable O&M')
+
         try:
             VOM = d_by_tech[tech].at[index, year]  # in EUR/MWh
             if tech == "biogas upgrading":
                 VOM *= 3.6   # convert from EUR/GJ in EUR/MWh
         except KeyError:
             VOM = 0
+
         df.at['VOM', tech] = VOM
 
         d_by_tech[tech].rename(index={'Technical lifetime of total system (years)':
@@ -591,7 +595,7 @@ for year in years:
         df.at['lifetime', tech] = d_by_tech[tech].at['Technical lifetime (years)',
                                                      year]
 
-        df.loc[index, tech] = d_by_tech[tech].loc["efficiency", year]
+        df.loc["efficiency", tech] = d_by_tech[tech].loc["efficiency", year]
 
     d_by_year[year] = df
 

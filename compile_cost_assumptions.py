@@ -14,7 +14,7 @@ solar_from_DEA = False  # add solar data from DEA if false from Vartiaien/ETIP
 h2_from_budischak = False  # add fuel cell/electrolysis efficiencies from budischak
 
 # ---------- sources -------------------------------------------------------
-source_DEA = 'Technology Data for Energy Plants for Electricity and District heating generation'
+source_DEA = 'Technology Data DEA'
 # solar
 source_Vartiainen = 'Impact of weighted average cost of capital, capital expenditure, and other parameters on future utility‐scale PV levelised cost of electricity'
 source_ETIP = 'European PV Technology and Innovation Platform'
@@ -130,6 +130,9 @@ def cal_cost(tech):
         excel.drop(excel[excel == 2020].dropna(how="all").index, inplace=True)
         excel.set_index(excel.columns[0], inplace=True)
 
+    excel.index = excel.index.fillna(" ")
+    excel.dropna(axis=0, how="all", inplace=True)
+
     index = locate_index(excel, 'Financial data')
     index_loc_start = excel.index.get_loc(index)
 
@@ -168,7 +171,8 @@ def cal_cost(tech):
         df_raw.loc['efficiency'] = (excel.loc[index] / 100).clip(upper=1)
     elif tech == 'electrolysis':
         df_raw.loc['efficiency'] = excel.loc['A) Hydrogen output (% total size), at LHV'] / 100
-
+    elif tech == 'fuel cell':
+        df_raw.loc['efficiency'] = excel.loc["Electricity efficiency (condensation mode for extraction plants), net (%), annual average"] / 100
     elif any(['Energy losses, lines ' in i for i in excel.index.fillna("")]):
         df_raw.loc["efficiency"] = (excel[excel.index.str .contains(
             "Energy losses, lines") .fillna(False)].iloc[0, :]).replace('-', np.nan)
@@ -512,7 +516,7 @@ for year in years:
         columns=sheet_names.keys(),
         data=0,
         dtype=float)
-
+# %%
     for tech in sheet_names.keys():
 
         index = locate_index(d_by_tech[tech], 'investment')
@@ -545,7 +549,7 @@ for year in years:
             # TODO think about how to deal with investment costs per energy
             CC = d_by_tech[tech].at[index, year] * 8760
         elif any(trans) & ("EUR/MW/m" in index):
-            CC = d_by_tech[tech].at[index, year] * 1000  # convert to EUR/MW/km
+            CC = d_by_tech[tech].at[index, year] * 1e3  # convert to EUR/MW/km
         else:
             print("check investment units: ", tech)
             CC = d_by_tech[tech].loc[index, year]
@@ -559,9 +563,10 @@ for year in years:
         df.at['investment', tech] = CC / 1e3  # in EUR/kW
 
         index = locate_index(d_by_tech[tech], 'Fixed O&M')
-
         try:
             FOM = d_by_tech[tech].at[index, year]  # in EUR/MW/year
+            if '€/MW/year' not in index:
+                print(tech, " ", index)
             if tech == 'decentral water tank storage':
                 FOM = d_by_tech[tech].at[index, year] / \
                     3  # from EUR/tank/year to EUR/MW/year
@@ -573,7 +578,10 @@ for year in years:
                                         year] * 1000
         except KeyError:
             FOM = 0
+#%%
         df.at['FOM', tech] = np.round(FOM / CC * 100, 3)  # in %/year
+
+
 
         index = locate_index(d_by_tech[tech], 'Variable O&M')
 
@@ -603,7 +611,7 @@ for year in years:
 # %%
 # get old pypsa costs
 costs_pypsa = pd.read_csv('inputs/costs_PyPSA.csv',
-                          index_col=list(range(2))).sort_index()
+                          index_col=[0,2]).sort_index()
 
 # drop irrelevant techs
 missing = costs_pypsa.index.levels[0].difference(pd.concat(d_by_year).columns)

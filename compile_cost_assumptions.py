@@ -1,5 +1,10 @@
-#!/usr/bin/env python
-# coding: utf-8
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Tue May 12 13:21:20 2020
+
+@author: bw0928
+"""
 
 import pandas as pd
 import numpy as np
@@ -12,7 +17,9 @@ years = np.arange(2020, 2055, 5)
 rate_inflation = 0.02
 solar_from_DEA = False  # add solar data from DEA if false from Vartiaien/ETIP
 h2_from_budischak = False  # add fuel cell/electrolysis efficiencies from budischak
-
+# remove grid connection costs from DEA for offwind because they are calculated
+# seperately in pypsa-eur
+offwind_no_gridcosts = True
 # ---------- sources -------------------------------------------------------
 source_DEA = 'Technology Data DEA'
 # solar
@@ -40,6 +47,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'central gas CHP': '04 Gas turb. simple cycle, L',
                'central solid biomass CHP': '09b Wood Pellets, Medium',
                'solar': '22 Photovoltaics Medium',
+               'central air-sourced heat pump': '40 Comp. hp, airsource 3 MW',
                'central ground-sourced heat pump': '40 Absorption heat pump, DH',
                'central resistive heater': '41 Electric Boilers',
                'central gas boiler': '44 Natural Gas DH Only',
@@ -54,31 +62,20 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'hydrogen storage tank': '151a Hydrogen Storage - Tanks',
                'micro CHP': '219 LT-PEMFC mCHP - natural gas',
                'biogas upgrading': '82 Biogas, upgrading',
-               'battery storage': '180 Lithium Ion Battery',
-               'battery inverter': '180 Lithium Ion Battery',
+               'battery': '180 Lithium Ion Battery',
                'electrolysis': '88 Alkaline Electrolyser',
-               'electricity distribution rural': '101 2 el distri Rural',
-               'electricity distribution urban': '101 4 el distri  city',
-               'gas distribution rural': '102 7 gas  Rural',
-               'gas distribution urban': '102 9 gas City',
-               'DH distribution rural': '103_12 DH_Distribu Rural',
-               'DH distribution urban': '103_14 DH_Distribu City',
-               'DH distribution low T': '103_16 DH_Distr New area LTDH',
-               'gas pipeline': '102 6 gas Main distri line',
-               "DH main transmission": "103_11 DH transmission",
+               # 'electricity distribution rural': '101 2 el distri Rural',
+               # 'electricity distribution urban': '101 4 el distri  city',
+               # 'gas distribution rural': '102 7 gas  Rural',
+               # 'gas distribution urban': '102 9 gas City',
+               # 'DH distribution rural': '103_12 DH_Distribu Rural',
+               # 'DH distribution urban': '103_14 DH_Distribu City',
+               # 'DH distribution low T': '103_16 DH_Distr New area LTDH',
+               # 'gas pipeline': '102 6 gas Main distri line',
+               # "DH main transmission": "103_11 DH transmission",
                }
 
-
 # %% -------- FUNCTIONS ---------------------------------------------------
-
-def locate_index(df, value):
-    """
-    find the corresponding index which contains str(value) in df
-    """
-    for i in df.index.astype(str):
-        if value in i:
-            return i
-
 
 def get_excel_sheets(path_in):
     """"
@@ -108,8 +105,8 @@ def get_sheet_location(tech, sheet_names, data_in):
     print("****************************")
     return None
 
-
-def cal_cost(tech):
+#
+def get_data_DEA(tech):
     """
     interpolate cost for a given technology from DEA database sheet
     """
@@ -123,6 +120,9 @@ def cal_cost(tech):
                           index_col=0,
                           usecols='B:G', skiprows=[0, 1])
 
+    excel.index = excel.index.fillna(" ")
+    excel.dropna(axis=0, how="all", inplace=True)
+
     if 2020 not in excel.columns:
         excel.reset_index(inplace=True)
         excel.columns = (excel.loc[excel[excel == 2020].dropna(
@@ -130,127 +130,54 @@ def cal_cost(tech):
         excel.drop(excel[excel == 2020].dropna(how="all").index, inplace=True)
         excel.set_index(excel.columns[0], inplace=True)
 
-    excel.index = excel.index.fillna(" ")
-    excel.dropna(axis=0, how="all", inplace=True)
+    parameters = ["efficiency", "investment", "Fixed O&M",
+                  "Variable O&M", "production capacity for one unit",
+                  "Output capacity expansion cost",
+                  "Hydrogen output", "Cb coefficient",
+                  "Cv coefficient",
+                  "Distribution network costs", "Technical life",
+                  "Energy storage expansion cost",
+                  'Output capacity expansion cost (M€2015/MW)']
 
-    index = locate_index(excel, 'Financial data')
-    index_loc_start = excel.index.get_loc(index)
+    df = pd.DataFrame()
+    for para in parameters:
+        attr = excel[excel.index.str.contains(para)]
+        if len(attr) != 0:
+            df = df.append(attr)
+    df.index = df.index.str.replace('€', 'EUR')
 
-    try:
-        index = locate_index(excel, 'Variable O&M')
-        index_loc_end = excel.index.get_loc(index)
+    df = df.loc[:, excel.columns.isin(years)]
 
-    except KeyError:
-        index = locate_index(excel, 'Fixed O&M')
-        index_loc_end = excel.index.get_loc(index)
-        if tech == 'solar':
-            index_loc_end += 1
+    # replace missing data
+    df.replace("-", np.nan, inplace=True)
+    # average data  in format "lower_value-upper_value"
+    df = df.applymap(lambda x: (float((x).split("-")[0])+float((x).split("-")[1]))/2 if (type(x)==str and "-" in x) else x)
+    # remove approx. symbol "~"
+    df = df.applymap(lambda x: float(x.replace("~","")) if type(x)==str else x)
 
-    df_raw = excel.iloc[index_loc_start + 1:index_loc_end + 1, :]
+    df = df.astype(float)
 
-    excel_raw = excel.loc[excel.index.dropna()].dropna(how="all", axis=0)
-    df_raw = df_raw.append(
-        excel_raw[excel_raw.index.str.contains("Technical life")])
-
-    if ('decentral' in tech) & ('storage' not in tech):
-        df_raw = df_raw.append(
-            excel.loc['Heat production capacity for one unit (kW)'])
-        s = (df_raw.loc['Specific investment (1000€/unit)'] /
-             df_raw.loc['Heat production capacity for one unit (kW)'])
-        df_raw.drop(index=df_raw.filter(like='investment', axis=0).index,
-                    inplace=True)
-        df_raw.loc['investment (M€/MW)'] = s
-
-    if any([s in tech for s in ['onwind', 'offwind', 'solar', 'storage',
-                                'CHP', 'biogas upgrading']]):
-        df_raw.loc['efficiency'] = 1
-    elif 'heat pump' in tech:
-        df_raw.loc['efficiency'] = 4
-    elif 'decentral gas boiler' in tech:
-        index = locate_index(excel, 'Heat efficiency')
-        df_raw.loc['efficiency'] = (excel.loc[index] / 100).clip(upper=1)
-    elif tech == 'electrolysis':
-        df_raw.loc['efficiency'] = excel.loc['A) Hydrogen output (% total size), at LHV'] / 100
-    elif tech == 'fuel cell':
-        df_raw.loc['efficiency'] = excel.loc["Electricity efficiency (condensation mode for extraction plants), net (%), annual average"] / 100
-    elif any(['Energy losses, lines ' in i for i in excel.index.fillna("")]):
-        df_raw.loc["efficiency"] = (excel[excel.index.str .contains(
-            "Energy losses, lines") .fillna(False)].iloc[0, :]).replace('-', np.nan)
-        df_raw.loc["efficiency"] = 1 - \
-            (df_raw.loc["efficiency"].fillna(0) / 100)
-    else:
-        index = locate_index(excel, 'efficiency')
-        df_raw.loc['efficiency'] = (excel.loc[index] / 100).clip(upper=1)
-    if "micro CHP" in tech:
-        cap = (excel_raw.loc[["Heat production capacity for one unit (kW)",
-                              "Electricity generation capacity for one unit (kW)"]]
-               .reindex(columns=years).dropna(axis=1, how='all').sum())
-        df_raw.loc['Specific investment (M€/MW)'] = df_raw.loc['Specific investment (1000€/unit)'] / cap
-        df_raw.loc["efficiency"] = (
-            (excel_raw.loc["Electric efficiency, annual average, net (%)"]
-             .reindex(index=df_raw.columns)) / 100).clip(upper=1)
-        df_raw.loc["efficiency-heat"] = (
-            (excel_raw.loc["Heat efficiency, annual average, net (%)"]
-             .reindex(index=df_raw.columns)) / 100).clip(upper=1)
-
-    if "central solid biomass CHP" in tech:
-        df_raw.loc["efficiency"] = (
-            (excel_raw.loc["Electricity efficiency, net (%), annual average"]
-             .reindex(index=df_raw.columns)) / 100).clip(upper=1)
-        df_raw.loc["efficiency-heat"] = (
-            (excel_raw.loc["Heat efficiency, net (%), annual average"]
-             .reindex(index=df_raw.columns)) / 100).clip(upper=1)
-        df_raw.loc["c_b"] = (excel_raw.loc['Cb coefficient (40°C/80°C)']
-                             .reindex(index=df_raw.columns))
-        df_raw.loc["c_v"] = (excel_raw.loc['Cv coefficient (40°C/80°C)']
-                             .reindex(index=df_raw.columns))
-
-    if tech == "battery storage":
-        df_raw = df_raw[df_raw.columns.dropna()]
-        excel = excel[excel.columns.dropna()]
-        df_raw.loc['Specific investment (M€2015 per MWh)'] = excel.loc['Energy storage expansion cost (M€2015/MWh)']
-        df_raw.loc['efficiency'] = 1
-        df_raw = df_raw.reindex(['Specific investment (M€2015 per MWh)',
-                                 'Technical lifetime (years)',
-                                 'efficiency'
-                                 ])
-
-    if tech == "battery inverter":
-        df_raw = df_raw[df_raw.columns.dropna()]
-        excel = excel[excel.columns.dropna()]
-        df_raw.loc['Specific investment (M€2015 per MW)'] = excel.loc['Output capacity expansion cost (M€2015/MW)']
-        df_raw.loc['efficiency'] = np.square(
-            excel.loc['Round trip efficiency (%) DC'].astype(float) / 100)
-        # 1k Euro to Euro
-        df_raw.loc['Fixed O&M (€2015/MW/year)'] = excel.loc['Fixed O&M (k€2015/MW/year)'] * 1e3
-        df_raw = df_raw.reindex(['Specific investment (M€2015 per MW)',
-                                 'Technical lifetime (years)',
-                                 'efficiency',
-                                 'Fixed O&M (€2015/MW/year)'])
-
-    if tech == 'central resistive heater':
-        df_raw.drop(index='Nominal investment (M€ per MW), 400/690 V; 1-5 MW',
-                    inplace=True)
-
-    df_raw = df_raw.loc[:, excel.columns.isin(years)]
-
-    df_raw = df_raw.groupby(df_raw.index).sum()
-
-    df_raw.replace(to_replace='-', value=np.nan, inplace=True)
-
-    df = pd.DataFrame(index=df_raw.index, columns=years)
-
-    for index in df.index:
-        values = np.interp(x=years, xp=df_raw.columns.values.astype(float),
-                           fp=df_raw.loc[index, :].values.astype(float))
-        df.loc[index, :] = values
-
-    return df
+    if (tech == "offwind") & offwind_no_gridcosts:
+        df.loc['Nominal investment (MEUR/MW)'] -= excel.loc[' - of which grid connection']
 
 
+    df_final = pd.DataFrame(index=df.index, columns=years)
+
+    for index in df_final.index:
+        values = np.interp(x=years, xp=df.columns.values.astype(float), fp=df.loc[index, :].values.astype(float))
+        df_final.loc[index, :] = values
+
+    df_final["source"] = source_DEA + ", " + excel_file
+    df_final["unit"] = (df_final.rename(index=lambda x:
+                                        x[x.rfind("(")+1: x.rfind(")")]).index.values)
+    df_final.index = df_final.index.str.replace(r" \(.*\)","")
+
+    return df_final
+
+#
 def add_conventional_data(costs):
     """"
-    add technology data for convetional carriers from Lazards
+    add technology data for convetional carriers from Lazards, DIW and BP
     """
     # nuclear from Lazards
     costs.loc[('nuclear', 'investment'), 'value'] = 8595 / \
@@ -321,17 +248,13 @@ def add_conventional_data(costs):
 
 def add_co2_intensity(costs):
     """"
-    add CO2 intensity for convetionals
+    add CO2 intensity for the carriers
     """
     TJ_to_MWh = 277.78
-    costs.loc[('gas', 'CO2 intensity'), 'value'] = 55827 / \
-        1e3 / TJ_to_MWh  # Erdgas
-    costs.loc[('coal', 'CO2 intensity'), 'value'] = 93369 / \
-        1e3 / TJ_to_MWh  # Steinkohle
-    costs.loc[('lignite', 'CO2 intensity'), 'value'] = 113031 / \
-        1e3 / TJ_to_MWh  # Rohbraunkohle Rheinland
-    costs.loc[('oil', 'CO2 intensity'), 'value'] = 74020 / \
-        1e3 / TJ_to_MWh  # Heizöl, leicht
+    costs.loc[('gas', 'CO2 intensity'), 'value'] = 55827 / 1e3 / TJ_to_MWh  # Erdgas
+    costs.loc[('coal', 'CO2 intensity'), 'value'] = 93369 / 1e3 / TJ_to_MWh  # Steinkohle
+    costs.loc[('lignite', 'CO2 intensity'), 'value'] = 113031 / 1e3 / TJ_to_MWh  # Rohbraunkohle Rheinland
+    costs.loc[('oil', 'CO2 intensity'), 'value'] = 74020 / 1e3 / TJ_to_MWh  # Heizöl, leicht
     costs.at[('solid biomass', 'CO2 intensity'), 'value'] = 0.3
 
     costs.loc[('gas', 'CO2 intensity'), 'source'] = source_co2
@@ -340,12 +263,14 @@ def add_co2_intensity(costs):
     costs.loc[('oil', 'CO2 intensity'), 'source'] = source_co2
     costs.at[('solid biomass', 'CO2 intensity'), 'source'] = "TODO"
 
+    costs.loc[pd.IndexSlice[:, "CO2 intensity"], "unit"] = "tCO2/MWh_th"
+
     return costs
 
 
 def add_solar_from_other(costs):
     """"
-    add solar from other sources than DEA
+    add solar from other sources than DEA (since they are very optimistic)
     """
     # solar utility from Vartiaian 2019
     data = np.interp(x=years, xp=[2020, 2030, 2040, 2050],
@@ -361,15 +286,15 @@ def add_solar_from_other(costs):
     data = data / (1 + rate_inflation)**(2016 - 2015)
     solar_roof = pd.Series(data=data, index=years)
 
-    # solar utility from Vartiaian 2019
-    costs.loc[('solar-utility', 'investment'), 'value'] = solar_uti[year]
+    # solar utility from Vartiaian 2019 - convert EUR/kW -> EUR/MW
+    costs.loc[('solar-utility', 'investment'), 'value'] = solar_uti[year] * 1e3
     costs.loc[('solar-utility', 'investment'), 'source'] = source_Vartiainen
 
     costs.loc[('solar-utility', 'lifetime'), 'value'] = 30
     costs.loc[('solar-utility', 'lifetime'), 'source'] = source_Vartiainen
 
-    # solar rooftop from ETIP 2019
-    costs.loc[('solar-rooftop', 'investment'), 'value'] = solar_roof[year]
+    # solar rooftop from ETIP 2019 - convert EUR/kW -> EUR/MW
+    costs.loc[('solar-rooftop', 'investment'), 'value'] = solar_roof[year] * 1e3
     costs.loc[('solar-rooftop', 'investment'), 'source'] = source_ETIP
 
     costs.loc[('solar-rooftop', 'lifetime'), 'value'] = 30
@@ -381,42 +306,8 @@ def add_solar_from_other(costs):
     costs.loc[('solar', 'lifetime'), 'unit'] = 'years'
     costs.loc[('solar', 'lifetime'),
               'source'] = 'Assuming 50% rooftop, 50% utility'
-    costs.loc[('solar', 'efficiency'), 'value'] = 1
-    costs.loc[('solar', 'efficiency'), 'unit'] = 'per unit'
-
-    return costs
-
-
-def correct_units(costs, unit_to_replace={'investment': 'EUR/kWel',
-                                          'lifetime': 'years',
-                                          'FOM': '%/year',
-                                          'efficiency': 'per unit',
-                                          'VOM': 'EUR/MWh',
-                                          }):
-    """"
-    set units, first some specific, all the others with default units
-    ('unit_to_replace')
-    """
-    costs.loc[('battery storage', 'investment'), 'unit'] = 'EUR/kWh'
-    costs.loc[('battery inverter', 'investment'), 'unit'] = 'EUR/kWel'
-    costs.loc[('hydrogen storage tank', 'investment'), 'unit'] = 'EUR/kWh'
-    costs.loc[('hydrogen storage underground',
-               'investment'), 'unit'] = 'EUR/kWh'
-    costs.loc[('central gas boiler', 'investment'), 'unit'] = 'EUR/kWth'
-    costs.loc[('decentral gas boiler', 'investment'), 'unit'] = 'EUR/kWth'
-    costs.loc[('central resistive heater', 'investment'), 'unit'] = 'EUR/kWth'
-    costs.loc[('decentral resistive heater', 'investment'),
-              'unit'] = 'EUR/kWth'
-    costs.loc[('central water tank storage', 'investment'), 'unit'] = 'EUR/kWh'
-    # convert EUR/m^3 to EUR/kWh for 40 K diff and 1.17 kWh/m^3/K
-    costs.loc[('decentral water tank storage',
-               'investment'), 'value'] /= 1.17 * 40
-    costs.loc[('decentral water tank storage',
-               'investment'), 'unit'] = 'EUR/kWh'
-
-    # replace unit with value of 0 to a proper unit
-    costs.unit.values[costs.unit.isna()] = (costs.index.get_level_values(1)[
-        costs.unit.isna()]).map(unit_to_replace)
+    # costs.loc[('solar', 'efficiency'), 'value'] = 1
+    # costs.loc[('solar', 'efficiency'), 'unit'] = 'per unit'
 
     return costs
 
@@ -429,33 +320,6 @@ def add_h2_from_other(costs):
     costs.loc[('fuel cell', 'efficiency'), 'value'] = 0.58
     costs.loc[('electrolysis', 'efficiency'), 'source'] = 'budischak2013'
     costs.loc[('fuel cell', 'efficiency'), 'source'] = 'budischak2013'
-
-    return costs
-
-
-def add_costs_from_DEA(costs, df, d_by_tech):
-
-    techs_eff_heat = pd.concat(d_by_tech).xs("efficiency-heat", level=1)
-
-    for tech in df.columns:
-        if tech in techs_eff_heat.index:
-            costs.at[(tech, "efficiency-heat"),
-                     'value'] = techs_eff_heat.loc[tech, year]
-            costs.at[(tech, "efficiency-heat"), 'unit'] = 'per unit'
-            costs.at[(tech, "efficiency-heat"), 'source'] = source_DEA
-        for para in df.dropna().index:
-            costs.at[(tech, para), 'value'] = df.at[para, tech]
-            costs.at[(tech, para), 'source'] = source_DEA
-
-    # add c_v and c_b coefficient
-    costs.loc[('central solid biomass CHP', 'c_b'),
-              'value'] = d_by_tech["central solid biomass CHP"].loc["c_b", year]
-    costs.loc[('central solid biomass CHP', 'c_b'), 'unit'] = 'per unit'
-    costs.loc[('central solid biomass CHP', 'c_b'), 'source'] = source_DEA
-    costs.loc[('central solid biomass CHP', 'c_v'),
-              'value'] = d_by_tech["central solid biomass CHP"].loc["c_v", year]
-    costs.loc[('central solid biomass CHP', 'c_v'), 'unit'] = 'per unit'
-    costs.loc[('central solid biomass CHP', 'c_v'), 'source'] = source_DEA
 
     return costs
 
@@ -488,8 +352,6 @@ def unify_diw(costs):
     costs.loc[('hydro', 'investment'), 'value'] /= inflation
 
     return costs
-
-
 # %% ---------- MAIN -------------------------------------------------------
 # --------- get data from DEA excel sheets -----------------------------------
 data_in = get_excel_sheets(path_in)
@@ -498,148 +360,338 @@ d_by_tech = {}
 for tech in sheet_names.keys():
     print(tech + ' in PyPSA corresponds to ' + sheet_names[tech] +
           ' in DEA database.')
-    df = cal_cost(tech=tech)
-    df.fillna(value=0, inplace=True)
+    df = get_data_DEA(tech=tech).fillna(0)
+    # df.fillna(value=0, inplace=True)
     d_by_tech[tech] = df
+# %% --------- clean up units --------------------------------
+tech_data = pd.concat(d_by_tech)
+
+tech_data.unit = tech_data.unit.str.replace(" per ", "/")
+tech_data.unit = tech_data.unit.str.replace(" / ", "/")
+tech_data.unit = tech_data.unit.str.replace("J/s", "W")
+
+# units
+tech_data.loc[tech_data.unit.str.contains("MEUR"), years] *= 1e6
+tech_data.unit = tech_data.unit.str.replace("MEUR", "EUR")
+
+tech_data.loc[tech_data.unit.str.contains("1000EUR"), years] *= 1e3
+tech_data.unit = tech_data.unit.str.replace("1000EUR", "EUR")
+
+tech_data.loc[tech_data.unit.str.contains("kEUR"), years] *= 1e3
+tech_data.unit = tech_data.unit.str.replace("kEUR", "EUR")
+
+tech_data.loc[tech_data.unit.str.contains("kW"), years] /= 1e3
+tech_data.unit = tech_data.unit.str.replace("kW", "MW")
+
+tech_data.loc[tech_data.unit.str.contains("/GWh"), years] /= 1e3
+tech_data.unit = tech_data.unit.str.replace("/GWh", "/MWh")
+
+tech_data.loc[tech_data.unit.str.contains("/GJ"), years] *= 3.6
+tech_data.unit = tech_data.unit.str.replace("/GJ", "/MWh")
+
+tech_data.unit = tech_data.unit.str.replace(" a year", "/year")
+tech_data.unit = tech_data.unit.str.replace("2015EUR", "EUR")
+tech_data.unit = tech_data.unit.str.replace("2015-EUR", "EUR")
+tech_data.unit = tech_data.unit.str.replace("EUR2015", "EUR")
+tech_data.unit = tech_data.unit.str.replace("EUR-2015", "EUR")
+tech_data.unit = tech_data.unit.str.replace("MWe", "MW_e")
+tech_data.unit = tech_data.unit.str.replace("MWth", "MW_th")
+tech_data.unit = tech_data.unit.str.replace("MWheat", "MW_th")
+tech_data.unit = tech_data.unit.str.replace("MWhheat", "MWh_th")
+tech_data.loc[tech_data.unit=='EUR/MW/y', "unit"] = 'EUR/MW/year'
+
+# convert per unit costs to MW
+techs_per_unit = tech_data.xs("Heat production capacity for one unit",
+                             level=1).index
+for tech in techs_per_unit:
+    df = tech_data.loc[tech]
+    cap = df.loc["Heat production capacity for one unit"]
+    df.loc[df.unit.str.contains("/unit"), years] /= cap.loc[years]
+    df.loc[df.unit.str.contains("/unit"), "unit"] = df.loc[df.unit.str.contains("/unit"), "unit"].str.replace("/unit", "/"+cap.unit)
 
 
-# %% ---------------------------------------------------------------------
-# aggregate technologies into a dict, whose keys are years
-d_by_year = {}
+# clarify MW -> MW_th
+# see on p.278 of docu: "However, the primary purpose of the heat pumps in the
+# technology catalogue is heating. In this chapter the unit MW is referring to
+# the heat output (also MJ/s) unless otherwise noted"
+techs_mwth = ['central air-sourced heat pump', 'central gas boiler',
+              'central resistive heater', 'decentral air-sourced heat pump',
+              'decentral gas boiler', 'decentral ground-sourced heat pump' ]
+tech_data.loc[techs_mwth, "unit"] = (tech_data.loc[techs_mwth, "unit"]
+                                     .replace({"EUR/MW": "EUR/MW_th",
+                                               "EUR/MW/year": "EUR/MW_th/year",
+                                               'EUR/MWh':'EUR/MWh_th',
+                                               "MW": "MW_th"}))
 
-for year in years:
+# clarify MW -> MW_e
+techs_e = ['fuel cell']
+tech_data.loc[techs_e, "unit"] = (tech_data.loc[techs_e, "unit"]
+                                  .replace({"EUR/MW": "EUR/MW_e",
+                                            "EUR/MW/year": "EUR/MW_e/year",
+                                            'EUR/MWh':'EUR/MWh_e',
+                                             "MW": "MW_e"}))
 
-    index = ['investment', 'FOM', 'VOM', 'lifetime', 'efficiency']
 
-    df = pd.DataFrame(
-        index=index,
-        columns=sheet_names.keys(),
-        data=0,
-        dtype=float)
+
+# %% ------ specific assumptions for some technologies ------------------------
+
+# for central resistive heater there are investment costs for small (1-5MW) and
+# large (>10 MW) generators, assume the costs for large generators
+to_drop = [("central resistive heater", 'Nominal investment, 400/690 V; 1-5 MW')]
+
+# for decentral gas boilers total and heat efficiency given, the values are
+# the same, drop one of the rows to avoid duplicates
+to_drop.append(("decentral gas boiler", "Heat efficiency, annual average, net"))
+
+# for decentral gas boilers there are investment costs and possbile additional
+# investments which apply for grid connection if the house is not connected yet
+# those costs are currently excluded with the assumption that there are no new
+# decentral gas boilers build in houses with no gas grid connection
+to_drop.append(("decentral gas boiler", "Specific investment"))
+
+# hydrogen storage assume round trip efficiency
+to_drop.append(("hydrogen storage tank", ' - Charge efficiency'))
+to_drop.append(("hydrogen storage tank", ' - Discharge efficiency'))
+to_drop.append(("hydrogen storage underground", ' - Charge efficiency'))
+to_drop.append(("hydrogen storage underground", ' - Discharge efficiency'))
+
+# drop PV module conversion efficiency
+tech_data = tech_data.drop("PV module conversion efficiency", level=1)
+
+# biogas upgrading investment costs should include grid injection costs
+index = tech_data.loc["biogas upgrading"].index.str.contains("investment")
+name = 'investment (upgrading, methane redution and grid injection)'
+inv = tech_data.loc["biogas upgrading"].loc[index].groupby(["unit", "source"]).sum().reset_index()
+new = pd.concat([tech_data.loc["biogas upgrading"].loc[~index],
+                                               inv]).rename({0:name})
+new.index = pd.MultiIndex.from_product([["biogas upgrading"],
+                                        new.index.to_list()])
+tech_data.drop("biogas upgrading", level=0, inplace=True)
+tech_data = pd.concat([tech_data, new])
+
+# heat pump efficiencies are assumed the one's for existing building,
+# in the DEA they do differ between heating the floor area or heating with radiators,
+# since most households heat with radiators and there efficiencies are lower
+# (conservative approach) those are assumed
+# furthermore the total efficiency is assumed which includes auxilary electricity
+# consumption
+name = 'Heat efficiency, annual average, net, radiators'
+techs_radiator = tech_data.xs(name, level=1).index
+for tech in techs_radiator:
+    df = tech_data.loc[tech]
+    df = df[(~df.index.str.contains("efficiency")) | (df.index==name)]
+    df.rename(index={name: name + ", existing one family house"}, inplace=True)
+    df.index = pd.MultiIndex.from_product([[tech], df.index.to_list()])
+    tech_data.drop(tech, level=0, inplace=True)
+    tech_data = pd.concat([tech_data, df])
+
+# battery split into inverter and storage, assume for efficiency sqr(round trip DC)
+df = tech_data.loc["battery"]
+inverter = df.loc[['Round trip efficiency DC',
+                   'Output capacity expansion cost',
+                   'Technical lifetime', 'Fixed O&M']]
+inverter.loc['Round trip efficiency DC', years] = inverter.loc['Round trip efficiency DC',years]**0.5*10
+inverter.rename(index ={'Round trip efficiency DC':
+                        "efficiency sqr(DC round trip)",
+                        'Output capacity expansion cost':
+                        'Output capacity expansion cost investment'},
+                inplace=True)
+inverter.index = pd.MultiIndex.from_product([["battery inverter"],
+                                             inverter.index.to_list()])
+storage = df.reindex(index=['Technical lifetime',
+                            'Energy storage expansion cost'])
+storage.rename(index={'Energy storage expansion cost':
+                      'Energy storage expansion cost investment'}, inplace=True)
+storage.index = pd.MultiIndex.from_product([["battery storage"],
+                                            storage.index.to_list()])
+tech_data.drop("battery", level=0, inplace=True)
+tech_data = pd.concat([tech_data, inverter, storage])
+
+tech_data = tech_data.drop(to_drop)
+
+# drop all rows which only contains zeros
+tech_data = tech_data.loc[(tech_data[years]!=0).sum(axis=1)!=0]
+
 # %%
-    for tech in sheet_names.keys():
+clean_df = {}
+for tech in tech_data.index.levels[0]:
+    clean_df[tech] = pd.DataFrame()
+    switch = False
+    df = tech_data.loc[tech]
 
-        index = locate_index(d_by_tech[tech], 'investment')
-        dist = ["Distribution" in index for index in d_by_tech[tech].index]
-        if any(dist):
-            index = d_by_tech[tech].loc[dist].index[0]
-        trans = ["Investment costs; single line, 100 - 250 MW" in index for
-                 index in d_by_tech[tech].index]
-        if any(trans):
-            index = d_by_tech[tech].loc[trans].index[0]
+    # --- investment ----
+    investment = df[(df.index.str.contains("investment") |
+                     df.index.str.contains("Distribution network costs"))
+                 & ((df.unit=="EUR/MW")|
+                    (df.unit=="EUR/MW_e")|
+                    (df.unit=="EUR/MW_th - heat output")|
+                    (df.unit=="EUR/MW_th excluding drive energy")|
+                    (df.unit=="EUR/MW_th") |
+                    (df.unit=="EUR/MWhCapacity") |
+                    (df.unit=="EUR/MWh") |
+                    (df.unit=="EUR/MWh/year") |
+                    (df.unit=="EUR/MW input"))]
+    if len(investment)!=1:
+        switch = True
+        print("check investment: ", tech, " ",
+              df[df.index.str.contains("investment")].unit)
+    else:
+        investment.loc[:, "parameter"] = "investment"
+        clean_df[tech] = investment
 
-        if tech == "micro CHP":
-            index = locate_index(d_by_tech[tech], 'investment (M')
+    # ---- FOM ----------------
+    if len(investment):
+        fixed = df[df.index.str.contains("Fixed O&M") &
+                   ((df.unit==investment.unit[0]+"/year")|
+                    (df.unit=="EUR/MW/km/year")|
+                    (df.unit=="EUR/MW/year")|
+                    (df.unit==investment.unit.str.split(" ")[0][0]+"/year"))]
+        if (len(fixed)!=1) and (len(df[df.index.str.contains("Fixed O&M")])!=0):
+            switch = True
+            print("check FOM: ", tech, " ",
+                  df[df.index.str.contains("Fixed O&M")].unit)
+        if len(fixed) == 1:
+            fixed.loc[:,"parameter"] = "fixed"
+            clean_df[tech] = pd.concat([clean_df[tech], fixed])
+            fom = pd.DataFrame(columns=fixed.columns)
+            fom[years] = fixed[years]/investment[years].values*100
+            fom["parameter"] = "FOM"
+            fom["unit"] = "%/year"
+            fom["source"] = fixed["source"]
+            clean_df[tech] = pd.concat([clean_df[tech], fom])
 
-        if ('M€' in index) & ('MW' in index):
-            # convert from MEUR/MW(h) to EUR/MW(h)
-            CC = d_by_tech[tech].at[index, year] * 1e6
-        elif ('M€' in index) & ('MJ/s' in index):
-            CC = d_by_tech[tech].at[index, year] * \
-                1e6  # convert from MEUR/MW to EUR/MW(h)
-        elif ('M€' in index) & ('GW' in index):
-            # convert from MEUR/GW(h) to EUR/MW(h)
-            CC = d_by_tech[tech].at[index, year] * 1e3
-        elif ('€' in index) & ('kW' in index):
-            # convert from EUR/KW(h) to EUR/MW(h)
-            CC = d_by_tech[tech].at[index, year] * 1e3
-        elif('€' in index) & ('MJ/s' in index):
-            CC = d_by_tech[tech].at[index, year]
-        elif any(dist) & ("EUR/MWh/year" in index):
-            # TODO think about how to deal with investment costs per energy
-            CC = d_by_tech[tech].at[index, year] * 8760
-        elif any(trans) & ("EUR/MW/m" in index):
-            CC = d_by_tech[tech].at[index, year] * 1e3  # convert to EUR/MW/km
-        else:
-            print("check investment units: ", tech)
-            CC = d_by_tech[tech].loc[index, year]
+    # ---- VOM -----
+    vom = df[df.index.str.contains("Variable O&M")& ((df.unit=="EUR/MWh") |
+                                                     (df.unit=="EUR/MWh_e") |
+                                                     (df.unit=="EUR/MWh_th") |
+                                                     (df.unit=="EUR/MWh/year") |
+                                                     (df.unit=="EUR/MWh/km") |
+                                                     (df.unit=="EUR/MWh") |
+                                                     (df.unit=="EUR/MWhoutput") |
+                                                     (tech == "biogas upgrading"))]
+    if len(vom)!=1 and len(df[df.index.str.contains("Variable O&M")])!=0:
+        switch = True
+        print("check VOM: ", tech, " ",
+              df[df.index.str.contains("Variable O&M")].unit)
+    if len(vom)==1:
+        vom.loc[:,"parameter"] = "VOM"
+        clean_df[tech] = pd.concat([clean_df[tech], vom])
 
-        # investment contains grid injection and upgrading
-        if tech == "biogas upgrading":
-            investment = d_by_tech[tech].loc[d_by_tech[tech].index.str.contains(
-                "investment")].sum()
-            CC = investment.loc[year]
-
-        df.at['investment', tech] = CC / 1e3  # in EUR/kW
-
-        index = locate_index(d_by_tech[tech], 'Fixed O&M')
-        try:
-            FOM = d_by_tech[tech].at[index, year]  # in EUR/MW/year
-            if '€/MW/year' not in index:
-                print(tech, " ", index)
-            if tech == 'decentral water tank storage':
-                FOM = d_by_tech[tech].at[index, year] / \
-                    3  # from EUR/tank/year to EUR/MW/year
-            # I believe there is an error in DEA database
-            elif tech == 'hydrogen storage underground':
-                FOM = CC * 0.02
-            elif tech == "micro CHP":
-                CC = d_by_tech[tech].at["Specific investment (1000€/unit)",
-                                        year] * 1000
-        except KeyError:
-            FOM = 0
-#%%
-        df.at['FOM', tech] = np.round(FOM / CC * 100, 3)  # in %/year
-
-
-
-        index = locate_index(d_by_tech[tech], 'Variable O&M')
-
-        try:
-            VOM = d_by_tech[tech].at[index, year]  # in EUR/MWh
-            if tech == "biogas upgrading":
-                VOM *= 3.6   # convert from EUR/GJ in EUR/MWh
-        except KeyError:
-            VOM = 0
-
-        df.at['VOM', tech] = VOM
-
-        d_by_tech[tech].rename(index={'Technical lifetime of total system (years)':
-                                      'Technical lifetime (years)'},
-                               inplace=True)
-        d_by_tech[tech].rename(index={'Technical life time (years)':
-                                      'Technical lifetime (years)'},
-                               inplace=True)
-        df.at['lifetime', tech] = d_by_tech[tech].at['Technical lifetime (years)',
-                                                     year]
-
-        df.loc["efficiency", tech] = d_by_tech[tech].loc["efficiency", year]
-
-    d_by_year[year] = df
+    # ----- lifetime --------
+    lifetime = df[df.index.str.contains("Technical life") & (df.unit=="years")]
+    if len(lifetime)!=1:
+        switch  = True
+        print("check lifetime: ", tech, " ",
+              df[df.index.str.contains("Technical life")].unit)
+    else:
+        lifetime.loc[:,"parameter"] = "lifetime"
+        clean_df[tech] = pd.concat([clean_df[tech], lifetime])
 
 
+    # ----- efficiencies ------
+    efficiency = df[(df.index.str.contains("efficiency") |
+                     df.index.str.contains("Hydrogen output, at LHV"))
+                     & ((df.unit=="%") |  (df.unit =="% total size"))
+                     & (~df.index.str.contains("name plate"))]
+
+    # take annual average instead of name plate efficiency
+    if any(efficiency.index.str.contains("annual average")):
+        efficiency = efficiency[efficiency.index.str.contains("annual average")]
+
+    # check if electric and heat efficiencies are given
+    if (any(["Electric" in ind for ind in efficiency.index]) and
+        any(["Heat" in ind for ind in efficiency.index])):
+        print("eff heat and electric in ", tech)
+        efficiency_heat = efficiency[efficiency.index.str.contains("Heat")]
+        efficiency_heat.loc[:,"parameter"] = "efficiency-heat"
+        clean_df[tech] = pd.concat([clean_df[tech], efficiency_heat])
+        efficiency = efficiency[efficiency.index.str.contains("Electric")]
+        efficiency.loc[:,"parameter"] = "efficiency"
+        clean_df[tech] = pd.concat([clean_df[tech], efficiency])
+
+    elif len(efficiency)!=1:
+        switch  = True
+        print("check efficiency: ", tech, " ",
+              df[df.index.str.contains("efficiency")].unit)
+    else:
+        efficiency.loc[:,"parameter"] = "efficiency"
+        clean_df[tech] = pd.concat([clean_df[tech], efficiency])
+
+    # add c_v and c_b coefficient
+    if "Cb coefficient" in df.index:
+        c_b = df.loc[df.index.str.contains("Cb coefficient")].dropna()
+        if len(c_b):
+            c_b.loc[:, "parameter"] = "c_b"
+            clean_df[tech] = pd.concat([clean_df[tech], c_b])
+    if "Cv coefficient" in df.index:
+        c_v = df.loc[df.index.str.contains("Cv coefficient")].dropna()
+        if len(c_v):
+            c_v.loc[:, "parameter"] = "c_v"
+            clean_df[tech] = pd.concat([clean_df[tech], c_v])
+
+    if switch:
+        print("---------------------------------------")
+
+
+# TODO distribution network costs
 # %%
-# get old pypsa costs
+data = (pd.concat(clean_df).reset_index().rename(columns={"level_0":"technology",
+                                                          "level_1": "further description"})
+        .set_index(["technology", "parameter"]))
+
+# # add water tank charger/ discharger
+charger = tech_data.loc[("central water tank storage", "Round trip efficiency")]
+charger["further description"] = "efficiency from sqr(Round trip efficiency)"
+charger[years] = charger[years]**0.5*10
+charger.rename(index={"Round trip efficiency": "efficiency"},
+               level=1, inplace=True)
+charger.rename(index={'central water tank storage':"water tank charger"},
+               level=0, inplace=True)
+data = pd.concat([data, charger])
+charger.rename(index={"water tank charger": "water tank discharger"},
+               level=0, inplace=True)
+data = pd.concat([data, charger])
+
+wished_order = list(years) + ["unit", "source", "further description"]
+data = data.reindex(columns=wished_order)
+sheets = data.reset_index()["technology"].map(sheet_names).fillna("")
+sheets.index = data.index
+data["further description"] = sheets + ":  " + data["further description"]
+
+# convert efficiency from % -> per unit
+data.loc[pd.IndexSlice[:, "efficiency"], years] /= 100
+data.loc[pd.IndexSlice[:, "efficiency"], "unit"] = "per unit"
+
+# convert MW -> kW
+to_convert = data["unit"].str.contains("/MW")
+data.loc[to_convert, years] /= 1e3
+data.loc[to_convert, "unit"] = (data.loc[to_convert, "unit"].str
+                               .replace("/MW","/kW"))
+
+# %% ------------ get old pypsa costs ---------------------------------------
 costs_pypsa = pd.read_csv('inputs/costs_PyPSA.csv',
                           index_col=[0,2]).sort_index()
+to_drop = [
+           #  'hydrogen storage',
+           # 'hydrogen underground storage',
+           'retrofitting I', 'retrofitting II']
+costs_pypsa.drop(to_drop, level=0, inplace=True)
 
-# drop irrelevant techs
-missing = costs_pypsa.index.levels[0].difference(pd.concat(d_by_year).columns)
-to_drop = ['solar', 'central solar thermal', 'decentral solar thermal',
-           'geothermal', 'decentral CHP', 'biomass', 'retrofitting I',
-           'retrofitting II', 'onwind-landcosts', 'hydrogen storage']
-missing = [item for item in missing if item not in to_drop]
-costs_pypsa = costs_pypsa.loc[missing]
+# central CHP is gas-fired
+costs_pypsa.rename({'central CHP': 'central gas CHP'}, inplace=True)
+costs_pypsa.rename({'hydrogen storage': 'hydrogen storage tank'}, inplace=True)
+costs_pypsa.rename({'hydrogen underground storage': 'hydrogen storage underground'}, inplace=True)
 
 # %%
 for year in years:
-
-    costs = costs_pypsa
-    df = d_by_year[year]
+    costs = (data[[year, "unit", "source", "further description"]]
+             .rename(columns={year:"value"}))
+    costs["value"] = costs["value"].astype(float)
 
     # biomass is differentiated by biomass CHP and HOP
     costs.loc[('solid biomass', 'fuel'), 'value'] = 25.2
     costs.loc[('solid biomass', 'fuel'), 'unit'] = 'EUR/MWhth'
     costs.loc[('solid biomass', 'fuel'), 'source'] = zappa_paper
-
-    # central heat pump for district heating from DEA
-    costs.rename({'central air-sourced heat pump':
-                  'central ground-sourced heat pump'}, inplace=True)
-    # central CHP is gas-fired
-    costs.rename({'central CHP': 'central gas CHP'}, inplace=True)
-
-    # add costs from DEA
-    costs = add_costs_from_DEA(costs, df, d_by_tech)
 
     # add solar data from other source than DEA
     if not solar_from_DEA:
@@ -652,13 +704,48 @@ for year in years:
     costs = add_conventional_data(costs)
     # CO2 intensity
     costs = add_co2_intensity(costs)
-    # correct the units
-    costs = correct_units(costs)
-    # unify the cost from DIW2010
-    costs = unify_diw(costs)
     # CCS
     costs = add_costs_ccs(costs)
 
-    # save the cost assumption per year
-    costs.sort_index(inplace=True)
-    costs.to_csv('outputs/costs_{}.csv'.format(year))
+    # include old pypsa costs
+    check = pd.concat([costs_pypsa, costs], axis=1)
+
+    # missing technologies
+    missing = costs_pypsa.index.levels[0].difference(costs.index.levels[0])
+    if len(missing):
+        print("************************************************************")
+        print("warning, in new cost assumptions the following components: ")
+        for i in range(len(missing)):
+            print("    ", i + 1, missing[i])
+        print(" are missing and the old cost assumptions are assumed.")
+        print("************************************************************")
+
+    to_add = costs_pypsa.loc[missing].drop("year", axis=1)
+    to_add.loc[:,"further description"] = " from old pypsa cost assumptions"
+    costs_tot = pd.concat([costs, to_add], sort=False)
+
+    # single components missing
+    comp_missing = costs_pypsa.index.difference(costs_tot.index)
+    print("single components missing: ")
+    print(comp_missing)
+    to_add = costs_pypsa.loc[comp_missing].drop("year", axis=1)
+    to_add.loc[:,"further description"] = " from old pypsa cost assumptions"
+    costs_tot = pd.concat([costs_tot, to_add], sort=False)
+
+    # unify the cost from DIW2010
+    costs_tot = unify_diw(costs_tot)
+    costs_tot.sort_index(inplace=True)
+    costs_tot.to_csv("outputs/costs_{}.csv".format(year))
+
+# %% open questions:
+# c_b and c_v values very different!
+# battery inverter efficiency much higher in DEA and investment lower
+# electrolyser and learning rates
+# old pypsa CHP which efficiency for heat or for electric output?
+# decentral resistive heater, decentral water tanks currently from old pypsa costs
+
+# TODO
+# unify units from old and new
+# c_b and c_v values
+
+

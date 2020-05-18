@@ -772,6 +772,7 @@ for year in years:
     costs_tot = unify_diw(costs_tot)
     costs_tot.drop("fixed", level=1, inplace=True)
     costs_tot.sort_index(inplace=True)
+    costs_tot = round(costs_tot, ndigits=2)
     costs_tot.to_csv("outputs/costs_{}.csv".format(year))
 
 # %% open questions:

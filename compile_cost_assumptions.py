@@ -21,12 +21,12 @@ h2_from_budischak = False  # add fuel cell/electrolysis efficiencies from budisc
 # seperately in pypsa-eur
 offwind_no_gridcosts = True
 # ---------- sources -------------------------------------------------------
-source_DEA = 'Technology Data DEA'
+source_DEA = 'DEA'
 # solar
 source_Vartiainen = 'Impact of weighted average cost of capital, capital expenditure, and other parameters on future utility‐scale PV levelised cost of electricity'
 source_ETIP = 'European PV Technology and Innovation Platform'
 # nuclear, coal, lignite from Lazards
-source_Lazards = 'Lazard’s Levelized Cost of Energy Analysis - Version 13.0'
+source_Lazards = 'Lazard s Levelized Cost of Energy Analysis - Version 13.0'
 # and the fuel cost is from Zappa's paper
 zappa_paper = 'Is a 100% renewable European power system feasible by 2050?'
 # co2 intensity
@@ -182,65 +182,85 @@ def add_conventional_data(costs):
     # nuclear from Lazards
     costs.loc[('nuclear', 'investment'), 'value'] = 8595 / \
         (1 + rate_inflation)**(2019 - 2015)
+    costs.loc[('nuclear', 'investment'), 'unit'] = "EUR/kW_e"
     costs.loc[('nuclear', 'investment'), 'source'] = source_Lazards
 
     costs.loc[('nuclear', 'FOM'), 'value'] = 1.4
+    costs.loc[('nuclear', 'FOM'), 'unit'] = "%/year"
     costs.loc[('nuclear', 'FOM'), 'source'] = source_Lazards
 
     costs.loc[('nuclear', 'VOM'), 'value'] = 3.5
+    costs.loc[('nuclear', 'VOM'), 'unit'] = "EUR/MWh_e"
     costs.loc[('nuclear', 'VOM'), 'source'] = source_Lazards
 
     costs.loc[('nuclear', 'efficiency'), 'value'] = 0.33
+    costs.loc[('nuclear', 'efficiency'), 'unit'] = "per unit"
     costs.loc[('nuclear', 'efficiency'), 'source'] = source_Lazards
 
     costs.loc[('nuclear', 'fuel'), 'value'] = 2.6
+    costs.loc[('nuclear', 'fuel'), 'unit'] = 'EUR/MWh_th'
     costs.loc[('nuclear', 'fuel'), 'source'] = source_Lazards
     costs.loc[('uranium', 'fuel'), 'value'] = 2.6
+    costs.loc[('uranium', 'fuel'), 'unit'] = 'EUR/MWh_th'
     costs.loc[('uranium', 'fuel'), 'source'] = source_Lazards
 
     costs.loc[('nuclear', 'lifetime'), 'value'] = 40
+    costs.loc[('nuclear', 'lifetime'), 'unit'] = "years"
     costs.loc[('nuclear', 'lifetime'), 'source'] = source_Lazards
 
     # coal from Lazards and BP 2019
     costs.loc[('coal', 'investment'), 'value'] = 4162.5 / \
         (1 + rate_inflation)**(2019 - 2015)
+    costs.loc[('coal', 'investment'), 'unit'] = "EUR/kW_e"
     costs.loc[('coal', 'investment'), 'source'] = source_Lazards
 
     costs.loc[('coal', 'FOM'), 'value'] = 1.6
+    costs.loc[('coal', 'FOM'), 'unit'] = "%/year"
     costs.loc[('coal', 'FOM'), 'source'] = source_Lazards
 
     costs.loc[('coal', 'VOM'), 'value'] = 3.5
+    costs.loc[('coal', 'VOM'), 'unit'] = "EUR/MWh_e"
     costs.loc[('coal', 'VOM'), 'source'] = source_Lazards
 
     costs.loc[('coal', 'efficiency'), 'value'] = 0.33
+    costs.loc[('coal', 'efficiency'), 'unit'] = "per unit"
     costs.loc[('coal', 'efficiency'), 'source'] = source_Lazards
 
     costs.loc[('coal', 'fuel'), 'value'] = 8.15
+    costs.loc[('coal', 'fuel'), 'unit'] = 'EUR/MWh_th'
     costs.loc[('coal', 'fuel'), 'source'] = 'BP 2019'
     costs.loc[('gas', 'fuel'), 'value'] = 20.1
+    costs.loc[('gas', 'fuel'), 'unit'] = 'EUR/MWh_th'
     costs.loc[('gas', 'fuel'), 'source'] = 'BP 2019'
 
     costs.loc[('coal', 'lifetime'), 'value'] = 40
+    costs.loc[('coal', 'lifetime'), 'unit'] = "years"
     costs.loc[('coal', 'lifetime'), 'source'] = source_Lazards
 
     # lignite from Lazards and DIW
     costs.loc[('lignite', 'investment'), 'value'] = 4162.5 / \
         (1 + rate_inflation)**(2019 - 2015)
+    costs.loc[('lignite', 'investment'), 'unit'] = "EUR/kW_e"
     costs.loc[('lignite', 'investment'), 'source'] = source_Lazards
 
     costs.loc[('lignite', 'FOM'), 'value'] = 1.6
+    costs.loc[('lignite', 'FOM'), 'unit'] = "%/year"
     costs.loc[('lignite', 'FOM'), 'source'] = source_Lazards
 
     costs.loc[('lignite', 'VOM'), 'value'] = 3.5
+    costs.loc[('lignite', 'VOM'), 'unit'] = "EUR/MWh_e"
     costs.loc[('lignite', 'VOM'), 'source'] = source_Lazards
 
     costs.loc[('lignite', 'efficiency'), 'value'] = 0.33
+    costs.loc[('lignite', 'efficiency'), 'unit'] = 'per unit'
     costs.loc[('lignite', 'efficiency'), 'source'] = source_Lazards
 
     costs.loc[('lignite', 'fuel'), 'value'] = 2.9
+    costs.loc[('lignite', 'fuel'), 'unit'] = 'EUR/MWh_th'
     costs.loc[('lignite', 'fuel'), 'source'] = 'DIW'
 
     costs.loc[('lignite', 'lifetime'), 'value'] = 40
+    costs.loc[('lignite', 'lifetime'), 'unit']  = "years"
     costs.loc[('lignite', 'lifetime'), 'source'] = source_Lazards
 
     return costs
@@ -286,15 +306,15 @@ def add_solar_from_other(costs):
     data = data / (1 + rate_inflation)**(2016 - 2015)
     solar_roof = pd.Series(data=data, index=years)
 
-    # solar utility from Vartiaian 2019 - convert EUR/kW -> EUR/MW
-    costs.loc[('solar-utility', 'investment'), 'value'] = solar_uti[year] * 1e3
+    # solar utility from Vartiaian 2019
+    costs.loc[('solar-utility', 'investment'), 'value'] = solar_uti[year]
     costs.loc[('solar-utility', 'investment'), 'source'] = source_Vartiainen
 
     costs.loc[('solar-utility', 'lifetime'), 'value'] = 30
     costs.loc[('solar-utility', 'lifetime'), 'source'] = source_Vartiainen
 
     # solar rooftop from ETIP 2019 - convert EUR/kW -> EUR/MW
-    costs.loc[('solar-rooftop', 'investment'), 'value'] = solar_roof[year] * 1e3
+    costs.loc[('solar-rooftop', 'investment'), 'value'] = solar_roof[year]
     costs.loc[('solar-rooftop', 'investment'), 'source'] = source_ETIP
 
     costs.loc[('solar-rooftop', 'lifetime'), 'value'] = 30
@@ -407,7 +427,7 @@ for tech in techs_per_unit:
     df = tech_data.loc[tech]
     cap = df.loc["Heat production capacity for one unit"]
     df.loc[df.unit.str.contains("/unit"), years] /= cap.loc[years]
-    df.loc[df.unit.str.contains("/unit"), "unit"] = df.loc[df.unit.str.contains("/unit"), "unit"].str.replace("/unit", "/"+cap.unit)
+    df.loc[df.unit.str.contains("/unit"), "unit"] = df.loc[df.unit.str.contains("/unit"), "unit"].str.replace("/unit", "/"+cap.unit+"_th")
 
 
 # clarify MW -> MW_th
@@ -632,14 +652,12 @@ for tech in tech_data.index.levels[0]:
     if switch:
         print("---------------------------------------")
 
-
-# TODO distribution network costs
-# %%
+# %% -------- concat data and convert units to compare with old--------------
 data = (pd.concat(clean_df).reset_index().rename(columns={"level_0":"technology",
                                                           "level_1": "further description"})
         .set_index(["technology", "parameter"]))
 
-# # add water tank charger/ discharger
+# add water tank charger/ discharger
 charger = tech_data.loc[("central water tank storage", "Round trip efficiency")]
 charger["further description"] = "efficiency from sqr(Round trip efficiency)"
 charger[years] = charger[years]**0.5*10
@@ -652,18 +670,27 @@ charger.rename(index={"water tank charger": "water tank discharger"},
                level=0, inplace=True)
 data = pd.concat([data, charger])
 
+# add excel sheet names to data frame
 wished_order = list(years) + ["unit", "source", "further description"]
 data = data.reindex(columns=wished_order)
 sheets = data.reset_index()["technology"].map(sheet_names).fillna("")
 sheets.index = data.index
 data["further description"] = sheets + ":  " + data["further description"]
 
+# add comment for offwind investment
+if offwind_no_gridcosts:
+    data.loc[("offwind", "investment"),
+             "further description"] += " grid connection costs substracted from investment costs"
+
 # convert efficiency from % -> per unit
-data.loc[pd.IndexSlice[:, "efficiency"], years] /= 100
-data.loc[pd.IndexSlice[:, "efficiency"], "unit"] = "per unit"
+data.loc[data.index.get_level_values(1).isin(["efficiency", "efficiency-heat"])
+         , years] /= 100
+data.loc[data.index.get_level_values(1).isin(["efficiency", "efficiency-heat"])
+         , "unit"] = "per unit"
 
 # convert MW -> kW
-to_convert = data["unit"].str.contains("/MW")
+to_convert = (data.index.get_level_values(1).isin(["fixed", "investment"]) &
+              data.unit.str.contains("/MW"))
 data.loc[to_convert, years] /= 1e3
 data.loc[to_convert, "unit"] = (data.loc[to_convert, "unit"].str
                                .replace("/MW","/kW"))
@@ -682,15 +709,15 @@ costs_pypsa.rename({'central CHP': 'central gas CHP'}, inplace=True)
 costs_pypsa.rename({'hydrogen storage': 'hydrogen storage tank'}, inplace=True)
 costs_pypsa.rename({'hydrogen underground storage': 'hydrogen storage underground'}, inplace=True)
 
-# %%
+# %% ------ add additional sources and save cost.csv ------------------
 for year in years:
     costs = (data[[year, "unit", "source", "further description"]]
-             .rename(columns={year:"value"}))
+             .rename(columns={year: "value"}))
     costs["value"] = costs["value"].astype(float)
 
     # biomass is differentiated by biomass CHP and HOP
     costs.loc[('solid biomass', 'fuel'), 'value'] = 25.2
-    costs.loc[('solid biomass', 'fuel'), 'unit'] = 'EUR/MWhth'
+    costs.loc[('solid biomass', 'fuel'), 'unit'] = 'EUR/MWh_th'
     costs.loc[('solid biomass', 'fuel'), 'source'] = zappa_paper
 
     # add solar data from other source than DEA
@@ -729,11 +756,21 @@ for year in years:
     print("single components missing: ")
     print(comp_missing)
     to_add = costs_pypsa.loc[comp_missing].drop("year", axis=1)
-    to_add.loc[:,"further description"] = " from old pypsa cost assumptions"
+    to_add.loc[:, "further description"] = " from old pypsa cost assumptions"
     costs_tot = pd.concat([costs_tot, to_add], sort=False)
+
+    # take c_v and c_b values from old cost assumptions TODO check again!
+    print("old c_v and c_b values are assumed where given")
+    c_value_index =  costs_pypsa[costs_pypsa.index.get_level_values(1).isin(
+                                ["c_b", "c_v"])].index
+    costs_tot.loc[c_value_index,
+                  ["value", "unit", "source"]] = costs_pypsa.loc[c_value_index,
+                                                       ["value", "unit", "source"]]
+    costs_tot.loc[c_value_index, "further description"] = " from old pypsa cost assumptions"
 
     # unify the cost from DIW2010
     costs_tot = unify_diw(costs_tot)
+    costs_tot.drop("fixed", level=1, inplace=True)
     costs_tot.sort_index(inplace=True)
     costs_tot.to_csv("outputs/costs_{}.csv".format(year))
 
@@ -741,11 +778,12 @@ for year in years:
 # c_b and c_v values very different!
 # battery inverter efficiency much higher in DEA and investment lower
 # electrolyser and learning rates
-# old pypsa CHP which efficiency for heat or for electric output?
 # decentral resistive heater, decentral water tanks currently from old pypsa costs
 
 # TODO
-# unify units from old and new
+# unify units from old and new (convert EUR/m² to kW)
 # c_b and c_v values
-
+# check battery
+# look up solar thermal, oil boiler, decentral resistive heater in DEA
+# add offwind grid component connection costs (sea cable ...)
 

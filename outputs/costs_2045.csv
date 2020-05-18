@@ -1,12 +1,11 @@
 technology,parameter,value,unit,source,further description
-CCGT,FOM,3.2755417956656347,%/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Fixed O&M"
-CCGT,VOM,0.00405,EUR/kWh,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Variable O&M"
-CCGT,c_b,2.1500000000000004,50oC/100oC,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Cb coefficient"
-CCGT,c_v,0.15,50oC/100oC,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Cv coefficient"
-CCGT,efficiency,0.595,per unit,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Electricity efficiency, annual average"
-CCGT,fixed,26.45,EUR/kW/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Fixed O&M"
-CCGT,investment,807.5,EUR/kW,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Nominal investment"
-CCGT,lifetime,25.0,years,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Technical lifetime"
+CCGT,FOM,3.2755417956656347,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Fixed O&M"
+CCGT,VOM,4.05,EUR/MWh,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Variable O&M"
+CCGT,c_b,2.1500000000000004,50oC/100oC,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Cb coefficient"
+CCGT,c_v,0.15,50oC/100oC,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Cv coefficient"
+CCGT,efficiency,0.595,per unit,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Electricity efficiency, annual average"
+CCGT,investment,807.5,EUR/kW,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Nominal investment"
+CCGT,lifetime,25.0,years,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Technical lifetime"
 DAC,FOM,4.0,%/year,Fasihi, from old pypsa cost assumptions
 DAC,investment,250.0,EUR/(tCO2/a),Fasihi doi:10.3390/su9020306/Climeworks, from old pypsa cost assumptions
 DAC,lifetime,30.0,years,Fasihi, from old pypsa cost assumptions
@@ -29,12 +28,11 @@ HVDC overhead,lifetime,40.0,years,Hagspiel, from old pypsa cost assumptions
 HVDC submarine,FOM,2.0,%/year,Hagspiel, from old pypsa cost assumptions
 HVDC submarine,investment,2000.0,EUR/MW/km,Own analysis of European submarine HVDC projects since 2000, from old pypsa cost assumptions
 HVDC submarine,lifetime,40.0,years,Hagspiel, from old pypsa cost assumptions
-OCGT,FOM,1.7963657257774903,%/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",52 OCGT - Natural gas:  Fixed O&M
-OCGT,VOM,0.0045,EUR/kWh,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",52 OCGT - Natural gas:  Variable O&M
-OCGT,efficiency,0.425,per unit,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","52 OCGT - Natural gas:  Electricity efficiency, annual average"
-OCGT,fixed,7.50324,EUR/kW/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",52 OCGT - Natural gas:  Fixed O&M
-OCGT,investment,417.69000000000005,EUR/kW,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",52 OCGT - Natural gas:  Specific investment
-OCGT,lifetime,25.0,years,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",52 OCGT - Natural gas:  Technical lifetime
+OCGT,FOM,1.7963657257774903,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",52 OCGT - Natural gas:  Fixed O&M
+OCGT,VOM,4.5,EUR/MWh,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",52 OCGT - Natural gas:  Variable O&M
+OCGT,efficiency,0.425,per unit,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","52 OCGT - Natural gas:  Electricity efficiency, annual average"
+OCGT,investment,417.69000000000005,EUR/kW,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",52 OCGT - Natural gas:  Specific investment
+OCGT,lifetime,25.0,years,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",52 OCGT - Natural gas:  Technical lifetime
 PHS,FOM,1.0,%/year,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 PHS,efficiency,0.75,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 PHS,investment,2208.1616064,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
@@ -47,145 +45,136 @@ SMR CCS,FOM,5.4,%/year,https://www.gov.uk/government/publications/hydrogen-suppl
 SMR CCS,efficiency,0.67,per unit,https://www.gov.uk/government/publications/hydrogen-supply-chain-evidence-base; slide 42 assumption for 2030; CCS uses 10% of gas, from old pypsa cost assumptions
 SMR CCS,investment,1032.0,EUR/kWCH4,https://www.gov.uk/government/publications/hydrogen-supply-chain-evidence-base; slide 42 assumption for 2030; GBP 466 exchange 1.16; CCS costed at 300 EUR/tCO2/a, from old pypsa cost assumptions
 SMR CCS,lifetime,25.0,years,TODO, from old pypsa cost assumptions
-battery inverter,FOM,0.3375,%/year,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Fixed O&M
-battery inverter,efficiency,0.9797958971132712,per unit,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency sqr(DC round trip)
-battery inverter,fixed,0.54,EUR/kW/year,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Fixed O&M
-battery inverter,investment,160.0,EUR/kW,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Output capacity expansion cost investment
-battery inverter,lifetime,25.0,years,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Technical lifetime
-battery storage,investment,142.0,EUR/kWh,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Energy storage expansion cost investment
-battery storage,lifetime,25.0,years,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Technical lifetime
+battery inverter,FOM,0.3375,%/year,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Fixed O&M
+battery inverter,efficiency,0.9797958971132712,per unit,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency sqr(DC round trip)
+battery inverter,investment,160.0,EUR/kW,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Output capacity expansion cost investment
+battery inverter,lifetime,25.0,years,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Technical lifetime
+battery storage,investment,142.0,EUR/kWh,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Energy storage expansion cost investment
+battery storage,lifetime,25.0,years,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Technical lifetime
 biogas,fuel,59.0,EUR/MWhth,JRC and Zappa, from old pypsa cost assumptions
-biogas upgrading,FOM,2.50354609929078,%/year,"Technology Data DEA, data_sheets_for_renewable_fuels_-_0003.xlsx","82 Biogas, upgrading:  Fixed O&M "
-biogas upgrading,VOM,0.003557967652958877,EUR/kWh input,"Technology Data DEA, data_sheets_for_renewable_fuels_-_0003.xlsx","82 Biogas, upgrading:  Variable O&M"
-biogas upgrading,fixed,8.825,EUR/kW input/year,"Technology Data DEA, data_sheets_for_renewable_fuels_-_0003.xlsx","82 Biogas, upgrading:  Fixed O&M "
-biogas upgrading,investment,352.5,EUR/kW input,"Technology Data DEA, data_sheets_for_renewable_fuels_-_0003.xlsx","82 Biogas, upgrading:  investment (upgrading, methane redution and grid injection)"
-biogas upgrading,lifetime,15.0,years,"Technology Data DEA, data_sheets_for_renewable_fuels_-_0003.xlsx","82 Biogas, upgrading:  Technical lifetime"
+biogas upgrading,FOM,2.50354609929078,%/year,"DEA, data_sheets_for_renewable_fuels_-_0003.xlsx","82 Biogas, upgrading:  Fixed O&M "
+biogas upgrading,VOM,3.557967652958877,EUR/MWh input,"DEA, data_sheets_for_renewable_fuels_-_0003.xlsx","82 Biogas, upgrading:  Variable O&M"
+biogas upgrading,investment,352.5,EUR/kW input,"DEA, data_sheets_for_renewable_fuels_-_0003.xlsx","82 Biogas, upgrading:  investment (upgrading, methane redution and grid injection)"
+biogas upgrading,lifetime,15.0,years,"DEA, data_sheets_for_renewable_fuels_-_0003.xlsx","82 Biogas, upgrading:  Technical lifetime"
 biomass,FOM,4.526935,%/year,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 biomass,efficiency,0.46799999999999997,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 biomass,fuel,7.0,EUR/MWhth,IEA2011b, from old pypsa cost assumptions
 biomass,investment,2209.0,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 biomass,lifetime,30.0,years,ECF2010 in DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
-biomass CHP,FOM,3.549006449283633,%/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Fixed O&M"
-biomass CHP,VOM,0.0020997526401075593,EUR/kWh_e,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Variable O&M "
-biomass CHP,c_b,0.4564331710928215,40°C/80°C,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Cb coefficient"
-biomass CHP,c_v,1.0,40°C/80°C,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Cv coefficient"
-biomass CHP,efficiency,0.30028039956237296,per unit,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Electricity efficiency, net, annual average"
-biomass CHP,efficiency-heat,70.8314441454764,%,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Heat efficiency, net, annual average"
-biomass CHP,fixed,106.0,EUR/kW_e/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Fixed O&M"
-biomass CHP,investment,2986.751405351661,EUR/kW_e,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Nominal investment "
-biomass CHP,lifetime,25.0,years,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Technical lifetime"
-biomass EOP,FOM,3.549006449283633,%/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Fixed O&M"
-biomass EOP,VOM,0.0020997526401075593,EUR/kWh_e,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Variable O&M "
-biomass EOP,c_b,0.4564331710928215,40°C/80°C,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Cb coefficient"
-biomass EOP,c_v,1.0,40°C/80°C,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Cv coefficient"
-biomass EOP,efficiency,0.30028039956237296,per unit,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Electricity efficiency, net, annual average"
-biomass EOP,efficiency-heat,70.8314441454764,%,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Heat efficiency, net, annual average"
-biomass EOP,fixed,106.0,EUR/kW_e/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Fixed O&M"
-biomass EOP,investment,2986.751405351661,EUR/kW_e,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Nominal investment "
-biomass EOP,lifetime,25.0,years,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Technical lifetime"
-biomass HOP,FOM,5.711089161619299,%/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw HOP:  Fixed O&M, heat output"
-biomass HOP,VOM,0.003035118184887739,EUR/kWh,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",09c Straw HOP:  Variable O&M heat output
-biomass HOP,efficiency,0.2805834709167132,per unit,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw HOP:  Total efficiency , net, annual average"
-biomass HOP,fixed,44.15,EUR/kW_th/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw HOP:  Fixed O&M, heat output"
-biomass HOP,investment,773.0574457969395,EUR/kW_th - heat output,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",09c Straw HOP:  Nominal investment 
-biomass HOP,lifetime,25.0,years,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",09c Straw HOP:  Technical lifetime
-central air-sourced heat pump,FOM,0.23357753144259666,%/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","40 Comp. hp, airsource 3 MW:  Fixed O&M"
-central air-sourced heat pump,VOM,0.00243,EUR/kWh_th,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","40 Comp. hp, airsource 3 MW:  Variable O&M"
-central air-sourced heat pump,efficiency,3.675,per unit,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","40 Comp. hp, airsource 3 MW:  Total efficiency , net, annual average"
-central air-sourced heat pump,fixed,2.0,EUR/kW_th/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","40 Comp. hp, airsource 3 MW:  Fixed O&M"
-central air-sourced heat pump,investment,856.2467407065282,EUR/kW_th,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","40 Comp. hp, airsource 3 MW:  Specific investment"
-central air-sourced heat pump,lifetime,25.0,years,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","40 Comp. hp, airsource 3 MW:  Technical lifetime"
-central coal CHP,FOM,1.6315789473684215,%/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",01 Coal CHP:  Fixed O&M
-central coal CHP,VOM,0.002751984852158318,EUR/kWh,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",01 Coal CHP:  Variable O&M
-central coal CHP,c_b,0.0,50oC/100oC,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",01 Coal CHP:  Cb coefficient
-central coal CHP,c_v,0.0,50oC/100oC,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",01 Coal CHP:  Cv coefficient
-central coal CHP,efficiency,0.53125,per unit,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","01 Coal CHP:  Electricity efficiency, condensation mode, net"
-central coal CHP,fixed,29.417769109278574,EUR/kW/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",01 Coal CHP:  Fixed O&M
-central coal CHP,investment,1803.024558310622,EUR/kW,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",01 Coal CHP:  Nominal investment
-central coal CHP,lifetime,25.0,years,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",01 Coal CHP:  Technical lifetime
-central gas CHP,FOM,3.4245283018867925,%/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Fixed O&M"
-central gas CHP,VOM,0.00405,EUR/kWh,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Variable O&M"
-central gas CHP,c_b,1.0,50oC/100oC,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Cb coefficient"
-central gas CHP,efficiency,0.425,per unit,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Electricity efficiency, annual average"
-central gas CHP,fixed,18.15,EUR/kW/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Fixed O&M"
-central gas CHP,investment,530.0,EUR/kW,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Nominal investment"
-central gas CHP,lifetime,25.0,years,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Technical lifetime"
-central gas CHP CCS,FOM,3.4245283018867925,%/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Fixed O&M"
-central gas CHP CCS,VOM,0.00405,EUR/kWh,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Variable O&M"
-central gas CHP CCS,c_b,1.0,50oC/100oC,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Cb coefficient"
-central gas CHP CCS,efficiency,0.3825,per unit,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Electricity efficiency, annual average"
-central gas CHP CCS,fixed,18.15,EUR/kW/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Fixed O&M"
-central gas CHP CCS,investment,1130.0,EUR/kW,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx , DIW (CCS)","04 Gas turb. simple cycle, L:  Nominal investment"
-central gas CHP CCS,lifetime,25.0,years,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Technical lifetime"
-central gas boiler,FOM,3.5000000000000004,%/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",44 Natural Gas DH Only:  Fixed O&M
-central gas boiler,VOM,0.001,EUR/kWh_th,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",44 Natural Gas DH Only:  Variable O&M
-central gas boiler,efficiency,1.04,per unit,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","44 Natural Gas DH Only:  Total efficiency , net, annual average"
-central gas boiler,fixed,1.75,EUR/kW_th/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",44 Natural Gas DH Only:  Fixed O&M
-central gas boiler,investment,50.0,EUR/kW_th,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",44 Natural Gas DH Only:  Nominal investment
-central gas boiler,lifetime,25.0,years,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",44 Natural Gas DH Only:  Technical lifetime
-central ground-sourced heat pump,FOM,0.42595787276638347,%/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","40 Absorption heat pump, DH:  Fixed O&M"
-central ground-sourced heat pump,VOM,0.001384765,EUR/kWh_th,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","40 Absorption heat pump, DH:  Variable O&M"
-central ground-sourced heat pump,efficiency,1.745,per unit,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","40 Absorption heat pump, DH:  Total efficiency , net, annual average"
-central ground-sourced heat pump,fixed,2.0,EUR/kW_th/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","40 Absorption heat pump, DH:  Fixed O&M"
-central ground-sourced heat pump,investment,469.5299999999999,EUR/kW_th excluding drive energy,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","40 Absorption heat pump, DH:  Nominal investment"
-central ground-sourced heat pump,lifetime,25.0,years,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","40 Absorption heat pump, DH:  Technical lifetime"
-central resistive heater,FOM,1.575,%/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",41 Electric Boilers:  Fixed O&M
-central resistive heater,VOM,0.001,EUR/kWh_th,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",41 Electric Boilers:  Variable O&M
-central resistive heater,efficiency,0.99,per unit,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","41 Electric Boilers:  Total efficiency , net, annual average"
-central resistive heater,fixed,0.945,EUR/kW_th/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",41 Electric Boilers:  Fixed O&M
-central resistive heater,investment,60.0,EUR/kW_th,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",41 Electric Boilers:  Nominal investment; 10/15 kV; >10 MW
-central resistive heater,lifetime,20.0,years,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",41 Electric Boilers:  Technical lifetime
+biomass CHP,FOM,3.549006449283633,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Fixed O&M"
+biomass CHP,VOM,2.0997526401075595,EUR/MWh_e,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Variable O&M "
+biomass CHP,c_b,0.4564331710928215,40°C/80°C,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Cb coefficient"
+biomass CHP,c_v,1.0,40°C/80°C,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Cv coefficient"
+biomass CHP,efficiency,0.30028039956237296,per unit,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Electricity efficiency, net, annual average"
+biomass CHP,efficiency-heat,0.708314441454764,per unit,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Heat efficiency, net, annual average"
+biomass CHP,investment,2986.751405351661,EUR/kW_e,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Nominal investment "
+biomass CHP,lifetime,25.0,years,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Technical lifetime"
+biomass EOP,FOM,3.549006449283633,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Fixed O&M"
+biomass EOP,VOM,2.0997526401075595,EUR/MWh_e,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Variable O&M "
+biomass EOP,c_b,0.4564331710928215,40°C/80°C,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Cb coefficient"
+biomass EOP,c_v,1.0,40°C/80°C,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Cv coefficient"
+biomass EOP,efficiency,0.30028039956237296,per unit,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Electricity efficiency, net, annual average"
+biomass EOP,efficiency-heat,0.708314441454764,per unit,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Heat efficiency, net, annual average"
+biomass EOP,investment,2986.751405351661,EUR/kW_e,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Nominal investment "
+biomass EOP,lifetime,25.0,years,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Technical lifetime"
+biomass HOP,FOM,5.711089161619299,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw HOP:  Fixed O&M, heat output"
+biomass HOP,VOM,3.035118184887739,EUR/MWh,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",09c Straw HOP:  Variable O&M heat output
+biomass HOP,efficiency,0.2805834709167132,per unit,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw HOP:  Total efficiency , net, annual average"
+biomass HOP,investment,773.0574457969395,EUR/kW_th - heat output,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",09c Straw HOP:  Nominal investment 
+biomass HOP,lifetime,25.0,years,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",09c Straw HOP:  Technical lifetime
+central air-sourced heat pump,FOM,0.23357753144259666,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","40 Comp. hp, airsource 3 MW:  Fixed O&M"
+central air-sourced heat pump,VOM,2.4299999999999997,EUR/MWh_th,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","40 Comp. hp, airsource 3 MW:  Variable O&M"
+central air-sourced heat pump,efficiency,3.675,per unit,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","40 Comp. hp, airsource 3 MW:  Total efficiency , net, annual average"
+central air-sourced heat pump,investment,856.2467407065282,EUR/kW_th,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","40 Comp. hp, airsource 3 MW:  Specific investment"
+central air-sourced heat pump,lifetime,25.0,years,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","40 Comp. hp, airsource 3 MW:  Technical lifetime"
+central coal CHP,FOM,1.6315789473684215,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",01 Coal CHP:  Fixed O&M
+central coal CHP,VOM,2.7519848521583183,EUR/MWh,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",01 Coal CHP:  Variable O&M
+central coal CHP,c_b,0.0,50oC/100oC,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",01 Coal CHP:  Cb coefficient
+central coal CHP,c_v,0.0,50oC/100oC,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",01 Coal CHP:  Cv coefficient
+central coal CHP,efficiency,0.53125,per unit,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","01 Coal CHP:  Electricity efficiency, condensation mode, net"
+central coal CHP,investment,1803.024558310622,EUR/kW,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",01 Coal CHP:  Nominal investment
+central coal CHP,lifetime,25.0,years,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",01 Coal CHP:  Technical lifetime
+central gas CHP,FOM,3.4245283018867925,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Fixed O&M"
+central gas CHP,VOM,4.05,EUR/MWh,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Variable O&M"
+central gas CHP,c_b,0.7,per unit,DEA (backpressure ratio), from old pypsa cost assumptions
+central gas CHP,c_v,0.17,per unit,DEA (loss of fuel for additional heat), from old pypsa cost assumptions
+central gas CHP,efficiency,0.425,per unit,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Electricity efficiency, annual average"
+central gas CHP,investment,530.0,EUR/kW,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Nominal investment"
+central gas CHP,lifetime,25.0,years,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Technical lifetime"
+central gas CHP,p_nom_ratio,1.0,per unit,, from old pypsa cost assumptions
+central gas CHP CCS,FOM,3.4245283018867925,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Fixed O&M"
+central gas CHP CCS,VOM,4.05,EUR/MWh,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Variable O&M"
+central gas CHP CCS,c_b,0.7,per unit,DEA (backpressure ratio), from old pypsa cost assumptions
+central gas CHP CCS,c_v,0.17,per unit,DEA (loss of fuel for additional heat), from old pypsa cost assumptions
+central gas CHP CCS,efficiency,0.3825,per unit,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Electricity efficiency, annual average"
+central gas CHP CCS,investment,1130.0,EUR/kW,"DEA, technology_data_for_el_and_dh_-_0009.xlsx , DIW (CCS)","04 Gas turb. simple cycle, L:  Nominal investment"
+central gas CHP CCS,lifetime,25.0,years,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Technical lifetime"
+central gas CHP CCS,p_nom_ratio,1.0,per unit,, from old pypsa cost assumptions
+central gas boiler,FOM,3.5000000000000004,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",44 Natural Gas DH Only:  Fixed O&M
+central gas boiler,VOM,1.0,EUR/MWh_th,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",44 Natural Gas DH Only:  Variable O&M
+central gas boiler,efficiency,1.04,per unit,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","44 Natural Gas DH Only:  Total efficiency , net, annual average"
+central gas boiler,investment,50.0,EUR/kW_th,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",44 Natural Gas DH Only:  Nominal investment
+central gas boiler,lifetime,25.0,years,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",44 Natural Gas DH Only:  Technical lifetime
+central ground-sourced heat pump,FOM,0.42595787276638347,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","40 Absorption heat pump, DH:  Fixed O&M"
+central ground-sourced heat pump,VOM,1.384765,EUR/MWh_th,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","40 Absorption heat pump, DH:  Variable O&M"
+central ground-sourced heat pump,efficiency,1.745,per unit,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","40 Absorption heat pump, DH:  Total efficiency , net, annual average"
+central ground-sourced heat pump,investment,469.5299999999999,EUR/kW_th excluding drive energy,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","40 Absorption heat pump, DH:  Nominal investment"
+central ground-sourced heat pump,lifetime,25.0,years,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","40 Absorption heat pump, DH:  Technical lifetime"
+central resistive heater,FOM,1.575,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",41 Electric Boilers:  Fixed O&M
+central resistive heater,VOM,1.0,EUR/MWh_th,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",41 Electric Boilers:  Variable O&M
+central resistive heater,efficiency,0.99,per unit,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","41 Electric Boilers:  Total efficiency , net, annual average"
+central resistive heater,investment,60.0,EUR/kW_th,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",41 Electric Boilers:  Nominal investment; 10/15 kV; >10 MW
+central resistive heater,lifetime,20.0,years,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",41 Electric Boilers:  Technical lifetime
 central solar thermal,FOM,1.4,%/year,HP, from old pypsa cost assumptions
 central solar thermal,investment,140000.0,EUR/1000m2,HP, from old pypsa cost assumptions
 central solar thermal,lifetime,20.0,years,HP, from old pypsa cost assumptions
-central solid biomass CHP,FOM,4.0112711359083475,%/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Fixed O&M"
-central solid biomass CHP,VOM,0.0018753791664560464,EUR/kWh_e,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Variable O&M "
-central solid biomass CHP,c_b,0.45064218443623705,40°C/80°C,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Cb coefficient"
-central solid biomass CHP,c_v,1.0,40°C/80°C,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Cv coefficient"
-central solid biomass CHP,efficiency,0.29082303795486913,per unit,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Electricity efficiency, net, annual average"
-central solid biomass CHP,efficiency-heat,69.4642316341305,%,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Heat efficiency, net, annual average"
-central solid biomass CHP,fixed,110.25,EUR/kW_e/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Fixed O&M"
-central solid biomass CHP,investment,2748.505305788411,EUR/kW_e,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Nominal investment "
-central solid biomass CHP,lifetime,25.0,years,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Technical lifetime"
-central solid biomass CHP CCS,FOM,4.0112711359083475,%/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Fixed O&M"
-central solid biomass CHP CCS,VOM,0.0018753791664560464,EUR/kWh_e,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Variable O&M "
-central solid biomass CHP CCS,c_b,0.45064218443623705,40°C/80°C,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Cb coefficient"
-central solid biomass CHP CCS,c_v,1.0,40°C/80°C,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Cv coefficient"
-central solid biomass CHP CCS,efficiency,0.2617407341593822,per unit,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Electricity efficiency, net, annual average"
-central solid biomass CHP CCS,efficiency-heat,69.4642316341305,%,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Heat efficiency, net, annual average"
-central solid biomass CHP CCS,fixed,110.25,EUR/kW_e/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Fixed O&M"
-central solid biomass CHP CCS,investment,3348.505305788411,EUR/kW_e,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx , DIW (CCS)","09b Wood Pellets, Medium:  Nominal investment "
-central solid biomass CHP CCS,lifetime,25.0,years,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Technical lifetime"
-central water tank storage,FOM,0.6171428571428571,%/year,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Fixed O&M
-central water tank storage,fixed,0.003,EUR/kWhCapacity/year,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Fixed O&M
-central water tank storage,investment,0.48611111111111116,EUR/kWhCapacity,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Specific investment
-central water tank storage,lifetime,25.0,years,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Technical lifetime
+central solid biomass CHP,FOM,4.0112711359083475,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Fixed O&M"
+central solid biomass CHP,VOM,1.8753791664560464,EUR/MWh_e,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Variable O&M "
+central solid biomass CHP,c_b,1.01,per unit,DEA for wood pellets CHP (backpressure ratio), from old pypsa cost assumptions
+central solid biomass CHP,c_v,0.15,per unit,DEA for wood pellets CHP (loss of fuel for additional heat), from old pypsa cost assumptions
+central solid biomass CHP,efficiency,0.29082303795486913,per unit,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Electricity efficiency, net, annual average"
+central solid biomass CHP,efficiency-heat,0.694642316341305,per unit,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Heat efficiency, net, annual average"
+central solid biomass CHP,investment,2748.505305788411,EUR/kW_e,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Nominal investment "
+central solid biomass CHP,lifetime,25.0,years,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Technical lifetime"
+central solid biomass CHP,p_nom_ratio,1.0,per unit,, from old pypsa cost assumptions
+central solid biomass CHP CCS,FOM,4.0112711359083475,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Fixed O&M"
+central solid biomass CHP CCS,VOM,1.8753791664560464,EUR/MWh_e,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Variable O&M "
+central solid biomass CHP CCS,c_b,1.01,per unit,DEA for wood pellets CHP (backpressure ratio), from old pypsa cost assumptions
+central solid biomass CHP CCS,c_v,0.15,per unit,DEA for wood pellets CHP (loss of fuel for additional heat), from old pypsa cost assumptions
+central solid biomass CHP CCS,efficiency,0.2617407341593822,per unit,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Electricity efficiency, net, annual average"
+central solid biomass CHP CCS,efficiency-heat,0.694642316341305,per unit,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Heat efficiency, net, annual average"
+central solid biomass CHP CCS,investment,3348.505305788411,EUR/kW_e,"DEA, technology_data_for_el_and_dh_-_0009.xlsx , DIW (CCS)","09b Wood Pellets, Medium:  Nominal investment "
+central solid biomass CHP CCS,lifetime,25.0,years,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Technical lifetime"
+central solid biomass CHP CCS,p_nom_ratio,1.0,per unit,, from old pypsa cost assumptions
+central water tank storage,FOM,0.6171428571428571,%/year,"DEA, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Fixed O&M
+central water tank storage,investment,0.48611111111111116,EUR/kWhCapacity,"DEA, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Specific investment
+central water tank storage,lifetime,25.0,years,"DEA, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Technical lifetime
 coal,CO2 intensity,0.3361257109943121,tCO2/MWh_th,Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018,
-coal,FOM,1.6,,Lazard’s Levelized Cost of Energy Analysis - Version 13.0,
-coal,VOM,3.5,,Lazard’s Levelized Cost of Energy Analysis - Version 13.0,
-coal,efficiency,0.33,,Lazard’s Levelized Cost of Energy Analysis - Version 13.0,
-coal,fuel,8.15,,BP 2019,
-coal,investment,3845.5065858353655,,Lazard’s Levelized Cost of Energy Analysis - Version 13.0,
-coal,lifetime,40.0,,Lazard’s Levelized Cost of Energy Analysis - Version 13.0,
+coal,FOM,1.6,%/year,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+coal,VOM,3.5,EUR/MWh_e,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+coal,efficiency,0.33,per unit,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+coal,fuel,8.15,EUR/MWh_th,BP 2019,
+coal,investment,3845.5065858353655,EUR/kW_e,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+coal,lifetime,40.0,years,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
 decentral CHP,FOM,3.0,%/year,HP, from old pypsa cost assumptions
 decentral CHP,discount rate,0.04,per unit,Palzer thesis, from old pypsa cost assumptions
 decentral CHP,investment,1400.0,EUR/kWel,HP, from old pypsa cost assumptions
 decentral CHP,lifetime,25.0,years,HP, from old pypsa cost assumptions
-decentral air-sourced heat pump,FOM,3.1032647001497256,%/year,"Technology Data DEA, technologydatafor_heating_installations_marts_2018.xlsx",207.3 Air to water existing:  Fixed O&M
-decentral air-sourced heat pump,efficiency,3.75,per unit,"Technology Data DEA, technologydatafor_heating_installations_marts_2018.xlsx","207.3 Air to water existing:  Heat efficiency, annual average, net, radiators, existing one family house"
-decentral air-sourced heat pump,fixed,24.2830462786716,EUR/kW_th/year,"Technology Data DEA, technologydatafor_heating_installations_marts_2018.xlsx",207.3 Air to water existing:  Fixed O&M
-decentral air-sourced heat pump,investment,782.4999999999999,EUR/kW_th,"Technology Data DEA, technologydatafor_heating_installations_marts_2018.xlsx",207.3 Air to water existing:  Specific investment
-decentral air-sourced heat pump,lifetime,18.0,years,"Technology Data DEA, technologydatafor_heating_installations_marts_2018.xlsx",207.3 Air to water existing:  Technical lifetime
-decentral gas boiler,FOM,10.75097940837468,%/year,"Technology Data DEA, technologydatafor_heating_installations_marts_2018.xlsx",202 Natural gas boiler:  Fixed O&M
-decentral gas boiler,efficiency,0.9875,per unit,"Technology Data DEA, technologydatafor_heating_installations_marts_2018.xlsx","202 Natural gas boiler:  Total efficiency, annual average, net"
-decentral gas boiler,fixed,18.517673999650334,EUR/kW_th/year,"Technology Data DEA, technologydatafor_heating_installations_marts_2018.xlsx",202 Natural gas boiler:  Fixed O&M
-decentral gas boiler,investment,172.24173999650336,EUR/kW_th,"Technology Data DEA, technologydatafor_heating_installations_marts_2018.xlsx",202 Natural gas boiler:  Possible additional specific investment
-decentral gas boiler,lifetime,20.0,years,"Technology Data DEA, technologydatafor_heating_installations_marts_2018.xlsx",202 Natural gas boiler:  Technical lifetime
-decentral ground-sourced heat pump,FOM,1.9426437022937277,%/year,"Technology Data DEA, technologydatafor_heating_installations_marts_2018.xlsx",207.7 Ground source existing:  Fixed O&M
-decentral ground-sourced heat pump,efficiency,4.0125,per unit,"Technology Data DEA, technologydatafor_heating_installations_marts_2018.xlsx","207.7 Ground source existing:  Heat efficiency, annual average, net, radiators, existing one family house"
-decentral ground-sourced heat pump,fixed,24.2830462786716,EUR/kW_th/year,"Technology Data DEA, technologydatafor_heating_installations_marts_2018.xlsx",207.7 Ground source existing:  Fixed O&M
-decentral ground-sourced heat pump,investment,1250.0,EUR/kW_th,"Technology Data DEA, technologydatafor_heating_installations_marts_2018.xlsx",207.7 Ground source existing:  Specific investment
-decentral ground-sourced heat pump,lifetime,20.0,years,"Technology Data DEA, technologydatafor_heating_installations_marts_2018.xlsx",207.7 Ground source existing:  Technical lifetime
+decentral air-sourced heat pump,FOM,3.1032647001497256,%/year,"DEA, technologydatafor_heating_installations_marts_2018.xlsx",207.3 Air to water existing:  Fixed O&M
+decentral air-sourced heat pump,discount rate,0.04,per unit,Palzer thesis, from old pypsa cost assumptions
+decentral air-sourced heat pump,efficiency,3.75,per unit,"DEA, technologydatafor_heating_installations_marts_2018.xlsx","207.3 Air to water existing:  Heat efficiency, annual average, net, radiators, existing one family house"
+decentral air-sourced heat pump,investment,782.4999999999999,EUR/kW_th,"DEA, technologydatafor_heating_installations_marts_2018.xlsx",207.3 Air to water existing:  Specific investment
+decentral air-sourced heat pump,lifetime,18.0,years,"DEA, technologydatafor_heating_installations_marts_2018.xlsx",207.3 Air to water existing:  Technical lifetime
+decentral gas boiler,FOM,10.75097940837468,%/year,"DEA, technologydatafor_heating_installations_marts_2018.xlsx",202 Natural gas boiler:  Fixed O&M
+decentral gas boiler,discount rate,0.04,per unit,Palzer thesis, from old pypsa cost assumptions
+decentral gas boiler,efficiency,0.9875,per unit,"DEA, technologydatafor_heating_installations_marts_2018.xlsx","202 Natural gas boiler:  Total efficiency, annual average, net"
+decentral gas boiler,investment,172.24173999650336,EUR/kW_th,"DEA, technologydatafor_heating_installations_marts_2018.xlsx",202 Natural gas boiler:  Possible additional specific investment
+decentral gas boiler,lifetime,20.0,years,"DEA, technologydatafor_heating_installations_marts_2018.xlsx",202 Natural gas boiler:  Technical lifetime
+decentral ground-sourced heat pump,FOM,1.9426437022937277,%/year,"DEA, technologydatafor_heating_installations_marts_2018.xlsx",207.7 Ground source existing:  Fixed O&M
+decentral ground-sourced heat pump,discount rate,0.04,per unit,Palzer thesis, from old pypsa cost assumptions
+decentral ground-sourced heat pump,efficiency,4.0125,per unit,"DEA, technologydatafor_heating_installations_marts_2018.xlsx","207.7 Ground source existing:  Heat efficiency, annual average, net, radiators, existing one family house"
+decentral ground-sourced heat pump,investment,1250.0,EUR/kW_th,"DEA, technologydatafor_heating_installations_marts_2018.xlsx",207.7 Ground source existing:  Specific investment
+decentral ground-sourced heat pump,lifetime,20.0,years,"DEA, technologydatafor_heating_installations_marts_2018.xlsx",207.7 Ground source existing:  Technical lifetime
 decentral oil boiler,FOM,2.0,%/year,Palzer thesis (https://energiesysteme-zukunft.de/fileadmin/user_upload/Publikationen/PDFs/ESYS_Materialien_Optimierungsmodell_REMod-D.pdf), from old pypsa cost assumptions
 decentral oil boiler,efficiency,0.9,per unit,Palzer thesis (https://energiesysteme-zukunft.de/fileadmin/user_upload/Publikationen/PDFs/ESYS_Materialien_Optimierungsmodell_REMod-D.pdf), from old pypsa cost assumptions
 decentral oil boiler,investment,156.0140915953699,EUR/kWth,Palzer thesis (https://energiesysteme-zukunft.de/fileadmin/user_upload/Publikationen/PDFs/ESYS_Materialien_Optimierungsmodell_REMod-D.pdf) (+eigene Berechnung), from old pypsa cost assumptions
@@ -206,19 +195,17 @@ decentral water tank storage,lifetime,20.0,years,HP, from old pypsa cost assumpt
 electricity distribution grid,FOM,2.0,%/year,TODO, from old pypsa cost assumptions
 electricity distribution grid,investment,500.0,EUR/kW,TODO, from old pypsa cost assumptions
 electricity distribution grid,lifetime,40.0,years,TODO, from old pypsa cost assumptions
-electrolysis,FOM,5.0,%/year,"Technology Data DEA, data_sheets_for_renewable_fuels_-_0003.xlsx",88 Alkaline Electrolyser:  Fixed O&M
-electrolysis,efficiency,0.68375,per unit,"Technology Data DEA, data_sheets_for_renewable_fuels_-_0003.xlsx","88 Alkaline Electrolyser:  A) Hydrogen output, at LHV"
-electrolysis,fixed,25.625,EUR/kW_e/year,"Technology Data DEA, data_sheets_for_renewable_fuels_-_0003.xlsx",88 Alkaline Electrolyser:  Fixed O&M
-electrolysis,investment,512.4999999999999,EUR/kW_e,"Technology Data DEA, data_sheets_for_renewable_fuels_-_0003.xlsx",88 Alkaline Electrolyser:  Specific investment
-electrolysis,lifetime,25.0,years,"Technology Data DEA, data_sheets_for_renewable_fuels_-_0003.xlsx",88 Alkaline Electrolyser:  Technical lifetime
-fuel cell,FOM,5.000000000000001,%/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",12 LT-PEMFC CHP:  Fixed O&M
-fuel cell,c_b,1.25,50oC/100oC,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",12 LT-PEMFC CHP:  Cb coefficient
-fuel cell,efficiency,0.5,per unit,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","12 LT-PEMFC CHP:  Electricity efficiency, annual average"
-fuel cell,fixed,43.75000000000001,EUR/kW_e/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",12 LT-PEMFC CHP:  Fixed O&M
-fuel cell,investment,875.0,EUR/kW_e,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",12 LT-PEMFC CHP:  Nominal investment
-fuel cell,lifetime,10.0,years,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",12 LT-PEMFC CHP:  Technical lifetime
+electrolysis,FOM,5.0,%/year,"DEA, data_sheets_for_renewable_fuels_-_0003.xlsx",88 Alkaline Electrolyser:  Fixed O&M
+electrolysis,efficiency,0.68375,per unit,"DEA, data_sheets_for_renewable_fuels_-_0003.xlsx","88 Alkaline Electrolyser:  A) Hydrogen output, at LHV"
+electrolysis,investment,512.4999999999999,EUR/kW_e,"DEA, data_sheets_for_renewable_fuels_-_0003.xlsx",88 Alkaline Electrolyser:  Specific investment
+electrolysis,lifetime,25.0,years,"DEA, data_sheets_for_renewable_fuels_-_0003.xlsx",88 Alkaline Electrolyser:  Technical lifetime
+fuel cell,FOM,5.000000000000001,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",12 LT-PEMFC CHP:  Fixed O&M
+fuel cell,c_b,1.25,50oC/100oC,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",12 LT-PEMFC CHP:  Cb coefficient
+fuel cell,efficiency,0.5,per unit,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","12 LT-PEMFC CHP:  Electricity efficiency, annual average"
+fuel cell,investment,875.0,EUR/kW_e,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",12 LT-PEMFC CHP:  Nominal investment
+fuel cell,lifetime,10.0,years,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",12 LT-PEMFC CHP:  Technical lifetime
 gas,CO2 intensity,0.20097559219526245,tCO2/MWh_th,Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018,
-gas,fuel,20.1,,BP 2019,
+gas,fuel,20.1,EUR/MWh_th,BP 2019,
 geothermal,CO2 intensity,0.026000000000000002,tCO2/MWhth,https://www.eia.gov/environment/emissions/co2_vol_mass.php, from old pypsa cost assumptions
 geothermal,FOM,2.358491,%/year,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 geothermal,efficiency,0.239,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
@@ -232,79 +219,73 @@ hydro,FOM,1.0,%/year,DIW DataDoc http://hdl.handle.net/10419/80348, from old pyp
 hydro,efficiency,0.9,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 hydro,investment,2208.1616064,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 hydro,lifetime,80.0,years,IEA2010, from old pypsa cost assumptions
-hydrogen storage tank,FOM,1.8730333150192295,%/year,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Fixed O&M
-hydrogen storage tank,efficiency,0.008994478240565882,per unit,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Round trip efficiency
-hydrogen storage tank,fixed,0.45,EUR/kW/year,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Fixed O&M
-hydrogen storage tank,investment,24.025200000000005,EUR/kWh,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Specific investment
-hydrogen storage tank,lifetime,30.0,years,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Technical lifetime
-hydrogen storage underground,FOM,2e-06,%/year,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Fixed O&M
-hydrogen storage underground,VOM,1.35e-08,EUR/kWh,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Variable O&M
-hydrogen storage underground,efficiency,0.009899999999999999,per unit,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Round trip efficiency
-hydrogen storage underground,fixed,2.7e-08,EUR/kW/year,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Fixed O&M
-hydrogen storage underground,investment,1.35,EUR/kWh,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Specific investment
-hydrogen storage underground,lifetime,100.0,years,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Technical lifetime
+hydrogen storage tank,FOM,1.8730333150192295,%/year,"DEA, technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Fixed O&M
+hydrogen storage tank,efficiency,0.008994478240565882,per unit,"DEA, technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Round trip efficiency
+hydrogen storage tank,investment,24.025200000000005,EUR/kWh,"DEA, technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Specific investment
+hydrogen storage tank,lifetime,30.0,years,"DEA, technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Technical lifetime
+hydrogen storage underground,FOM,2e-06,%/year,"DEA, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Fixed O&M
+hydrogen storage underground,VOM,1.35e-05,EUR/MWh,"DEA, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Variable O&M
+hydrogen storage underground,efficiency,0.009899999999999999,per unit,"DEA, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Round trip efficiency
+hydrogen storage underground,investment,1.35,EUR/kWh,"DEA, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Specific investment
+hydrogen storage underground,lifetime,100.0,years,"DEA, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Technical lifetime
 industry CCS,FOM,2.0,%/year,Saygin et al 2013 https://doi.org/10.1016/j.ijggc.2013.05.032, from old pypsa cost assumptions
 industry CCS,efficiency,0.9,per unit,Saygin et al 2013 https://doi.org/10.1016/j.ijggc.2013.05.032, from old pypsa cost assumptions
 industry CCS,investment,300.0,EUR/tCO2/a,Saygin et al 2013 https://doi.org/10.1016/j.ijggc.2013.05.032, from old pypsa cost assumptions
 industry CCS,lifetime,25.0,years,Saygin et al 2013 https://doi.org/10.1016/j.ijggc.2013.05.032, from old pypsa cost assumptions
 lignite,CO2 intensity,0.4069083447332422,tCO2/MWh_th,Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018,
-lignite,FOM,1.6,,Lazard’s Levelized Cost of Energy Analysis - Version 13.0,
-lignite,VOM,3.5,,Lazard’s Levelized Cost of Energy Analysis - Version 13.0,
-lignite,efficiency,0.33,,Lazard’s Levelized Cost of Energy Analysis - Version 13.0,
-lignite,fuel,2.9,,DIW,
-lignite,investment,3845.5065858353655,,Lazard’s Levelized Cost of Energy Analysis - Version 13.0,
-lignite,lifetime,40.0,,Lazard’s Levelized Cost of Energy Analysis - Version 13.0,
+lignite,FOM,1.6,%/year,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+lignite,VOM,3.5,EUR/MWh_e,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+lignite,efficiency,0.33,per unit,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+lignite,fuel,2.9,EUR/MWh_th,DIW,
+lignite,investment,3845.5065858353655,EUR/kW_e,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+lignite,lifetime,40.0,years,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
 methanation,FOM,3.0,%/year,Schaber thesis, from old pypsa cost assumptions
 methanation,efficiency,0.8,per unit,Palzer and Schaber thesis, from old pypsa cost assumptions
 methanation,investment,1000.0,EUR/kWH2,Schaber thesis, from old pypsa cost assumptions
 methanation,lifetime,25.0,years,Schaber thesis, from old pypsa cost assumptions
-micro CHP,FOM,6.333333333333334,%/year,"Technology Data DEA, technologydatafor_heating_installations_marts_2018.xlsx",219 LT-PEMFC mCHP - natural gas:  Fixed O&M
-micro CHP,efficiency,0.35100000000000003,per unit,"Technology Data DEA, technologydatafor_heating_installations_marts_2018.xlsx","219 LT-PEMFC mCHP - natural gas:  Electric efficiency, annual average, net"
-micro CHP,efficiency-heat,60.9,%,"Technology Data DEA, technologydatafor_heating_installations_marts_2018.xlsx","219 LT-PEMFC mCHP - natural gas:  Heat efficiency, annual average, net"
-micro CHP,fixed,391.09781843772004,EUR/kW/year,"Technology Data DEA, technologydatafor_heating_installations_marts_2018.xlsx",219 LT-PEMFC mCHP - natural gas:  Fixed O&M
-micro CHP,investment,6175.228712174527,EUR/kW,"Technology Data DEA, technologydatafor_heating_installations_marts_2018.xlsx",219 LT-PEMFC mCHP - natural gas:  Specific investment
-micro CHP,lifetime,20.0,years,"Technology Data DEA, technologydatafor_heating_installations_marts_2018.xlsx",219 LT-PEMFC mCHP - natural gas:  Technical lifetime
-nuclear,FOM,1.4,,Lazard’s Levelized Cost of Energy Analysis - Version 13.0,
-nuclear,VOM,3.5,,Lazard’s Levelized Cost of Energy Analysis - Version 13.0,
-nuclear,efficiency,0.33,,Lazard’s Levelized Cost of Energy Analysis - Version 13.0,
-nuclear,fuel,2.6,,Lazard’s Levelized Cost of Energy Analysis - Version 13.0,
-nuclear,investment,7940.45143669789,,Lazard’s Levelized Cost of Energy Analysis - Version 13.0,
-nuclear,lifetime,40.0,,Lazard’s Levelized Cost of Energy Analysis - Version 13.0,
-offwind,FOM,2.291666666666671,%/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",21 Offshore turbines:  Fixed O&M
-offwind,VOM,0.0024302244840818995,EUR/kWh,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",21 Offshore turbines:  Variable O&M
-offwind,fixed,32.808030535105644,EUR/kW/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",21 Offshore turbines:  Fixed O&M
-offwind,investment,1431.6231506227891,EUR/kW,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",21 Offshore turbines:  Nominal investment
-offwind,lifetime,30.0,years,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",21 Offshore turbines:  Technical lifetime
+micro CHP,FOM,6.333333333333334,%/year,"DEA, technologydatafor_heating_installations_marts_2018.xlsx",219 LT-PEMFC mCHP - natural gas:  Fixed O&M
+micro CHP,efficiency,0.35100000000000003,per unit,"DEA, technologydatafor_heating_installations_marts_2018.xlsx","219 LT-PEMFC mCHP - natural gas:  Electric efficiency, annual average, net"
+micro CHP,efficiency-heat,0.609,per unit,"DEA, technologydatafor_heating_installations_marts_2018.xlsx","219 LT-PEMFC mCHP - natural gas:  Heat efficiency, annual average, net"
+micro CHP,investment,6175.228712174527,EUR/kW_th,"DEA, technologydatafor_heating_installations_marts_2018.xlsx",219 LT-PEMFC mCHP - natural gas:  Specific investment
+micro CHP,lifetime,20.0,years,"DEA, technologydatafor_heating_installations_marts_2018.xlsx",219 LT-PEMFC mCHP - natural gas:  Technical lifetime
+nuclear,FOM,1.4,%/year,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+nuclear,VOM,3.5,EUR/MWh_e,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+nuclear,efficiency,0.33,per unit,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+nuclear,fuel,2.6,EUR/MWh_th,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+nuclear,investment,7940.45143669789,EUR/kW_e,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+nuclear,lifetime,40.0,years,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+offwind,FOM,2.291666666666671,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",21 Offshore turbines:  Fixed O&M
+offwind,VOM,2.4302244840818994,EUR/MWh,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",21 Offshore turbines:  Variable O&M
+offwind,investment,1431.6231506227891,EUR/kW,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",21 Offshore turbines:  Nominal investment grid connection costs substracted from investment costs
+offwind,lifetime,30.0,years,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",21 Offshore turbines:  Technical lifetime
 oil,CO2 intensity,0.26646986824105406,tCO2/MWh_th,Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018,
-oil,FOM,2.423094004441155,%/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",50 Diesel engine farm:  Fixed O&M
-oil,VOM,0.006,EUR/kWh,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",50 Diesel engine farm:  Variable O&M
-oil,efficiency,0.35,per unit,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","50 Diesel engine farm:  Electricity efficiency, annual average"
-oil,fixed,8.184,EUR/kW/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",50 Diesel engine farm:  Fixed O&M
-oil,investment,337.75,EUR/kW,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",50 Diesel engine farm:  Specific investment
-oil,lifetime,25.0,years,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",50 Diesel engine farm:  Technical lifetime
-onwind,FOM,1.1816772014676664,%/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",20 Onshore turbines:  Fixed O&M
-onwind,VOM,0.0012285000000000002,EUR/kWh,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",20 Onshore turbines:  Variable O&M
-onwind,fixed,11.466,EUR/kW/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",20 Onshore turbines:  Fixed O&M
-onwind,investment,970.3157500000001,EUR/kW,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",20 Onshore turbines:  Nominal investment 
-onwind,lifetime,30.0,years,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",20 Onshore turbines:  Technical lifetime
+oil,FOM,2.423094004441155,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",50 Diesel engine farm:  Fixed O&M
+oil,VOM,6.0,EUR/MWh,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",50 Diesel engine farm:  Variable O&M
+oil,efficiency,0.35,per unit,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","50 Diesel engine farm:  Electricity efficiency, annual average"
+oil,fuel,50.0,EUR/MWhth,IEA WEM2017 97USD/boe = http://www.iea.org/media/weowebsite/2017/WEM_Documentation_WEO2017.pdf, from old pypsa cost assumptions
+oil,investment,337.75,EUR/kW,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",50 Diesel engine farm:  Specific investment
+oil,lifetime,25.0,years,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",50 Diesel engine farm:  Technical lifetime
+onwind,FOM,1.1816772014676664,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",20 Onshore turbines:  Fixed O&M
+onwind,VOM,1.2285000000000001,EUR/MWh,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",20 Onshore turbines:  Variable O&M
+onwind,investment,970.3157500000001,EUR/kW,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",20 Onshore turbines:  Nominal investment 
+onwind,lifetime,30.0,years,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",20 Onshore turbines:  Technical lifetime
 ror,FOM,2.0,%/year,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 ror,efficiency,0.9,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 ror,investment,3312.2424096000004,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 ror,lifetime,80.0,years,IEA2010, from old pypsa cost assumptions
-solar,FOM,1.545517353123458,%/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",22 Photovoltaics Medium:  Fixed O&M
-solar,fixed,8.1675,EUR/kW/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",22 Photovoltaics Medium:  Fixed O&M
-solar,investment,528.4638172126412,EUR/kW,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx","22 Photovoltaics Medium:  Specific investment, total system"
+solar,FOM,1.545517353123458,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",22 Photovoltaics Medium:  Fixed O&M
+solar,VOM,0.01,EUR/MWhel,RES costs made up to fix curtailment order, from old pypsa cost assumptions
+solar,investment,528.4638172126412,EUR/kW,"DEA, technology_data_for_el_and_dh_-_0009.xlsx","22 Photovoltaics Medium:  Specific investment, total system"
 solar,lifetime,30.0,years,"Assuming 50% rooftop, 50% utility",22 Photovoltaics Medium:  Technical lifetime of total system
-solar-rooftop,FOM,1.4521582181139976,%/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",22 Photovoltaics Small:  Fixed O&M
-solar-rooftop,fixed,9.555,EUR/kW/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",22 Photovoltaics Small:  Fixed O&M
-solar-rooftop,investment,600490.1960784313,EUR/kW,European PV Technology and Innovation Platform,"22 Photovoltaics Small:  Specific investment, total system"
+solar-rooftop,FOM,1.4521582181139976,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",22 Photovoltaics Small:  Fixed O&M
+solar-rooftop,discount rate,0.04,per unit,standard for decentral, from old pypsa cost assumptions
+solar-rooftop,investment,600.4901960784314,EUR/kW,European PV Technology and Innovation Platform,"22 Photovoltaics Small:  Specific investment, total system"
 solar-rooftop,lifetime,30.0,years,European PV Technology and Innovation Platform,22 Photovoltaics Small:  Technical lifetime of total system
-solar-utility,FOM,2.0400475997771634,%/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",22 Photovoltaics Large:  Fixed O&M
-solar-utility,fixed,6.4375,EUR/kW/year,"Technology Data DEA, technology_data_for_el_and_dh_-_0009.xlsx",22 Photovoltaics Large:  Fixed O&M
-solar-utility,investment,169987.55838887862,EUR/kW,"Impact of weighted average cost of capital, capital expenditure, and other parameters on future utility‐scale PV levelised cost of electricity",22 Photovoltaics Large:  Nominal investment
+solar-utility,FOM,2.0400475997771634,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",22 Photovoltaics Large:  Fixed O&M
+solar-utility,investment,169.98755838887863,EUR/kW,"Impact of weighted average cost of capital, capital expenditure, and other parameters on future utility‐scale PV levelised cost of electricity",22 Photovoltaics Large:  Nominal investment
 solar-utility,lifetime,30.0,years,"Impact of weighted average cost of capital, capital expenditure, and other parameters on future utility‐scale PV levelised cost of electricity",22 Photovoltaics Large:  Technical lifetime
 solid biomass,CO2 intensity,0.3,tCO2/MWh_th,TODO,
-solid biomass,fuel,25.2,EUR/MWhth,Is a 100% renewable European power system feasible by 2050?,
-uranium,fuel,2.6,,Lazard’s Levelized Cost of Energy Analysis - Version 13.0,
-water tank charger,efficiency,0.9146912192286945,per unit,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)
-water tank discharger,efficiency,0.9146912192286945,per unit,"Technology Data DEA, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)
+solid biomass,fuel,25.2,EUR/MWh_th,Is a 100% renewable European power system feasible by 2050?,
+uranium,fuel,2.6,EUR/MWh_th,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+water tank charger,efficiency,0.8366600265340756,per unit,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)
+water tank discharger,efficiency,0.8366600265340756,per unit,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)

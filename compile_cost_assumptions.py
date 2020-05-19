@@ -474,7 +474,8 @@ to_drop.append(("hydrogen storage tank", ' - Charge efficiency'))
 to_drop.append(("hydrogen storage tank", ' - Discharge efficiency'))
 to_drop.append(("hydrogen storage underground", ' - Charge efficiency'))
 to_drop.append(("hydrogen storage underground", ' - Discharge efficiency'))
-
+tech_data.loc[("hydrogen storage underground", "Round trip efficiency")] *= 100
+tech_data.loc[("hydrogen storage tank", "Round trip efficiency")] *= 100
 # drop PV module conversion efficiency
 tech_data = tech_data.drop("PV module conversion efficiency", level=1)
 

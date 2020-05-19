@@ -223,12 +223,10 @@ hydro,efficiency,0.9,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, fro
 hydro,investment,2208.16,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 hydro,lifetime,80.0,years,IEA2010, from old pypsa cost assumptions
 hydrogen storage tank,FOM,1.08,%/year,"DEA, technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Fixed O&M
-hydrogen storage tank,efficiency,0.01,per unit,"DEA, technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Round trip efficiency
 hydrogen storage tank,investment,50.96,EUR/kWh,"DEA, technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Specific investment
 hydrogen storage tank,lifetime,27.5,years,"DEA, technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Technical lifetime
 hydrogen storage underground,FOM,0.0,%/year,"DEA, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Fixed O&M
 hydrogen storage underground,VOM,0.0,EUR/MWh,"DEA, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Variable O&M
-hydrogen storage underground,efficiency,0.01,per unit,"DEA, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Round trip efficiency
 hydrogen storage underground,investment,2.5,EUR/kWh,"DEA, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Specific investment
 hydrogen storage underground,lifetime,100.0,years,"DEA, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Technical lifetime
 industry CCS,FOM,2.0,%/year,Saygin et al 2013 https://doi.org/10.1016/j.ijggc.2013.05.032, from old pypsa cost assumptions

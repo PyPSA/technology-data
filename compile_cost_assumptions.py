@@ -510,10 +510,8 @@ df = tech_data.loc["battery"]
 inverter = df.loc[['Round trip efficiency DC',
                    'Output capacity expansion cost',
                    'Technical lifetime', 'Fixed O&M']]
-inverter.loc['Round trip efficiency DC', years] = inverter.loc['Round trip efficiency DC',years]**0.5*10
-inverter.rename(index ={'Round trip efficiency DC':
-                        "efficiency sqr(DC round trip)",
-                        'Output capacity expansion cost':
+
+inverter.rename(index ={'Output capacity expansion cost':
                         'Output capacity expansion cost investment'},
                 inplace=True)
 inverter.index = pd.MultiIndex.from_product([["battery inverter"],

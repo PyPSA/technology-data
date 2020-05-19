@@ -46,7 +46,7 @@ SMR CCS,efficiency,0.67,per unit,https://www.gov.uk/government/publications/hydr
 SMR CCS,investment,1032.0,EUR/kWCH4,https://www.gov.uk/government/publications/hydrogen-supply-chain-evidence-base; slide 42 assumption for 2030; GBP 466 exchange 1.16; CCS costed at 300 EUR/tCO2/a, from old pypsa cost assumptions
 SMR CCS,lifetime,25.0,years,TODO, from old pypsa cost assumptions
 battery inverter,FOM,0.34,%/year,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Fixed O&M
-battery inverter,efficiency,0.98,per unit,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency sqr(DC round trip)
+battery inverter,efficiency,0.96,per unit,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Round trip efficiency DC
 battery inverter,investment,160.0,EUR/kW,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Output capacity expansion cost investment
 battery inverter,lifetime,25.0,years,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Technical lifetime
 battery storage,investment,142.0,EUR/kWh,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Energy storage expansion cost investment
@@ -195,6 +195,9 @@ decentral water tank storage,lifetime,20.0,years,HP, from old pypsa cost assumpt
 electricity distribution grid,FOM,2.0,%/year,TODO, from old pypsa cost assumptions
 electricity distribution grid,investment,500.0,EUR/kW,TODO, from old pypsa cost assumptions
 electricity distribution grid,lifetime,40.0,years,TODO, from old pypsa cost assumptions
+electricity grid connection,FOM,2.0,%/year,TODO, from old pypsa cost assumptions
+electricity grid connection,investment,140.0,EUR/kW,DEA, from old pypsa cost assumptions
+electricity grid connection,lifetime,40.0,years,TODO, from old pypsa cost assumptions
 electrolysis,FOM,5.0,%/year,"DEA, data_sheets_for_renewable_fuels_-_0003.xlsx",88 Alkaline Electrolyser:  Fixed O&M
 electrolysis,efficiency,0.68,per unit,"DEA, data_sheets_for_renewable_fuels_-_0003.xlsx","88 Alkaline Electrolyser:  A) Hydrogen output, at LHV"
 electrolysis,investment,512.5,EUR/kW_e,"DEA, data_sheets_for_renewable_fuels_-_0003.xlsx",88 Alkaline Electrolyser:  Specific investment

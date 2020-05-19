@@ -190,7 +190,7 @@ decentral solar thermal,investment,270000.0,EUR/1000m2,HP, from old pypsa cost a
 decentral solar thermal,lifetime,20.0,years,HP, from old pypsa cost assumptions
 decentral water tank storage,FOM,1.0,%/year,HP, from old pypsa cost assumptions
 decentral water tank storage,discount rate,0.04,per unit,Palzer thesis, from old pypsa cost assumptions
-decentral water tank storage,investment,860.0,EUR/m3,IWES Interaktion, from old pypsa cost assumptions
+decentral water tank storage,investment,18.38,EUR/kWh,IWES Interaktion, from old pypsa cost assumptions
 decentral water tank storage,lifetime,20.0,years,HP, from old pypsa cost assumptions
 electricity distribution grid,FOM,2.0,%/year,TODO, from old pypsa cost assumptions
 electricity distribution grid,investment,500.0,EUR/kW,TODO, from old pypsa cost assumptions

@@ -190,7 +190,7 @@ decentral solar thermal,investment,270000.0,EUR/1000m2,HP, from old pypsa cost a
 decentral solar thermal,lifetime,20.0,years,HP, from old pypsa cost assumptions
 decentral water tank storage,FOM,1.0,%/year,HP, from old pypsa cost assumptions
 decentral water tank storage,discount rate,0.04,per unit,Palzer thesis, from old pypsa cost assumptions
-decentral water tank storage,investment,860.0,EUR/m3,IWES Interaktion, from old pypsa cost assumptions
+decentral water tank storage,investment,18.38,EUR/kWh,IWES Interaktion, from old pypsa cost assumptions
 decentral water tank storage,lifetime,20.0,years,HP, from old pypsa cost assumptions
 electricity distribution grid,FOM,2.0,%/year,TODO, from old pypsa cost assumptions
 electricity distribution grid,investment,500.0,EUR/kW,TODO, from old pypsa cost assumptions
@@ -282,10 +282,10 @@ solar,investment,803.71,EUR/kW,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",
 solar,lifetime,30.0,years,"Assuming 50% rooftop, 50% utility",22 Photovoltaics Medium:  Technical lifetime of total system
 solar-rooftop,FOM,1.19,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",22 Photovoltaics Small:  Fixed O&M
 solar-rooftop,discount rate,0.04,per unit,standard for decentral, from old pypsa cost assumptions
-solar-rooftop,investment,1127.45,EUR/kW,European PV Technology and Innovation Platform,"22 Photovoltaics Small:  Specific investment, total system"
+solar-rooftop,investment,539.22,EUR/kW,European PV Technology and Innovation Platform,"22 Photovoltaics Small:  Specific investment, total system"
 solar-rooftop,lifetime,30.0,years,European PV Technology and Innovation Platform,22 Photovoltaics Small:  Technical lifetime of total system
 solar-utility,FOM,1.65,%/year,"DEA, technology_data_for_el_and_dh_-_0009.xlsx",22 Photovoltaics Large:  Fixed O&M
-solar-utility,investment,398.18,EUR/kW,"Impact of weighted average cost of capital, capital expenditure, and other parameters on future utility‐scale PV levelised cost of electricity",22 Photovoltaics Large:  Nominal investment
+solar-utility,investment,151.51,EUR/kW,"Impact of weighted average cost of capital, capital expenditure, and other parameters on future utility‐scale PV levelised cost of electricity",22 Photovoltaics Large:  Nominal investment
 solar-utility,lifetime,30.0,years,"Impact of weighted average cost of capital, capital expenditure, and other parameters on future utility‐scale PV levelised cost of electricity",22 Photovoltaics Large:  Technical lifetime
 solid biomass,CO2 intensity,0.3,tCO2/MWh_th,TODO,
 solid biomass,fuel,25.2,EUR/MWh_th,Is a 100% renewable European power system feasible by 2050?,

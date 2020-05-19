@@ -708,6 +708,11 @@ costs_pypsa.rename({'central CHP': 'central gas CHP'}, inplace=True)
 costs_pypsa.rename({'hydrogen storage': 'hydrogen storage tank'}, inplace=True)
 costs_pypsa.rename({'hydrogen underground storage': 'hydrogen storage underground'}, inplace=True)
 
+#convert EUR/m^3 to EUR/kWh for 40 K diff and 1.17 kWh/m^3/K
+costs_pypsa.loc[('decentral water tank storage','investment'),
+                'value'] /= 1.17*40
+costs_pypsa.loc[('decentral water tank storage','investment'),'unit'] = 'EUR/kWh'
+
 # %% ------ add additional sources and save cost.csv ------------------
 for year in years:
     costs = (data[[year, "unit", "source", "further description"]]

@@ -16,6 +16,8 @@ path_in = "/home/ws/bw0928/Dokumente/compile_costs_new/technology_data/inputs/"
 years = np.arange(2020, 2055, 5)
 rate_inflation = 0.02
 solar_from_DEA = False  # add solar data from DEA if false from Vartiaien/ETIP
+solar_utility_from_other = False
+solar_rooftop_from_other = True  # very optimisitic in DEA
 h2_from_budischak = False  # add fuel cell/electrolysis efficiencies from budischak
 # remove grid connection costs from DEA for offwind because they are calculated
 # seperately in pypsa-eur
@@ -31,6 +33,8 @@ source_Lazards = 'Lazard s Levelized Cost of Energy Analysis - Version 13.0'
 zappa_paper = 'Is a 100% renewable European power system feasible by 2050?'
 # co2 intensity
 source_co2 = 'Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018'
+# gas pipeline costs
+ISE = "WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg"
 # ---------------------------------------------------------------------------
 
 sheet_names = {'onwind': '20 Onshore turbines',
@@ -307,18 +311,20 @@ def add_solar_from_other(costs):
     solar_roof = pd.Series(data=data, index=years)
 
     # solar utility from Vartiaian 2019
-    costs.loc[('solar-utility', 'investment'), 'value'] = solar_uti[year]
-    costs.loc[('solar-utility', 'investment'), 'source'] = source_Vartiainen
+    if solar_utility_from_other:
+        costs.loc[('solar-utility', 'investment'), 'value'] = solar_uti[year]
+        costs.loc[('solar-utility', 'investment'), 'source'] = source_Vartiainen
 
-    costs.loc[('solar-utility', 'lifetime'), 'value'] = 30
-    costs.loc[('solar-utility', 'lifetime'), 'source'] = source_Vartiainen
+        costs.loc[('solar-utility', 'lifetime'), 'value'] = 30
+        costs.loc[('solar-utility', 'lifetime'), 'source'] = source_Vartiainen
 
-    # solar rooftop from ETIP 2019 - convert EUR/kW -> EUR/MW
-    costs.loc[('solar-rooftop', 'investment'), 'value'] = solar_roof[year]
-    costs.loc[('solar-rooftop', 'investment'), 'source'] = source_ETIP
+    if solar_rooftop_from_other:
+        # solar rooftop from ETIP 2019
+        costs.loc[('solar-rooftop', 'investment'), 'value'] = solar_roof[year]
+        costs.loc[('solar-rooftop', 'investment'), 'source'] = source_ETIP
 
-    costs.loc[('solar-rooftop', 'lifetime'), 'value'] = 30
-    costs.loc[('solar-rooftop', 'lifetime'), 'source'] = source_ETIP
+        costs.loc[('solar-rooftop', 'lifetime'), 'value'] = 30
+        costs.loc[('solar-rooftop', 'lifetime'), 'source'] = source_ETIP
 
     # lifetime&efficiency for solar
     costs.loc[('solar', 'lifetime'), 'value'] = costs.loc[(
@@ -620,7 +626,7 @@ for tech in tech_data.index.levels[0]:
     # check if electric and heat efficiencies are given
     if (any(["Electric" in ind for ind in efficiency.index]) and
         any(["Heat" in ind for ind in efficiency.index])):
-        print("eff heat and electric in ", tech)
+        print("heat and electric efficiency in ", tech)
         efficiency_heat = efficiency[efficiency.index.str.contains("Heat")]
         efficiency_heat.loc[:,"parameter"] = "efficiency-heat"
         clean_df[tech] = pd.concat([clean_df[tech], efficiency_heat])
@@ -712,6 +718,61 @@ costs_pypsa.rename({'hydrogen underground storage': 'hydrogen storage undergroun
 costs_pypsa.loc[('decentral water tank storage','investment'),
                 'value'] /= 1.17*40
 costs_pypsa.loc[('decentral water tank storage','investment'),'unit'] = 'EUR/kWh'
+
+# %% --------- add costs from Frauenhofer ISE study ------------------
+costs_ISE = pd.read_csv("inputs/Frauenhofer_ISE_costs.csv", engine="python",
+                        index_col=[0,1])
+costs_ISE.rename(index = {"Investition": "investment",
+                          "Lebensdauer": "lifetime",
+                          "M/O-Kosten": "FOM"},
+                 columns = {"Einheit": "unit",
+                            "2020": 2020,
+                            "2025": 2025,
+                            "2030": 2030,
+                            "2035": 2035,
+                            "2040": 2040,
+                            "2045": 2045,
+                            "2050": 2050}, inplace=True)
+costs_ISE.index.names = ["technology", "parameter"]
+costs_ISE.unit.replace({"a": "years", "% Invest": "%"}, inplace=True)
+costs_ISE["source"] = ISE
+costs_ISE['further description'] = costs_ISE.reset_index()["technology"].values
+# add costs for gas pipelines
+data = pd.concat([data, costs_ISE.loc[["Gasnetz"]]])
+# %% add gas storage costs
+gas_storage = pd.read_excel("inputs/technology_data_catalogue_for_energy_storage.xlsx",
+                            sheet_name="150 Underground Storage of Gas",
+                            index_col=1)
+gas_storage.dropna(axis=1, how="all", inplace=True)
+
+# establishment of one cavern ~ 100*1e6 Nm3 = 1.1 TWh
+investment = gas_storage.loc['Total cost, 100 mio Nm3 active volume'][0]
+# convert million EUR/1.1 TWh -> EUR/kWh
+investment /= (1.1 * 1e3)
+data.loc[("gas storage", "investment"), years] = investment
+data.loc[("gas storage", "investment"), "source"] = source_DEA
+data.loc[("gas storage", "investment"), "further description"] = "150 Underground Storage of Gas, Establishment of one cavern (units converted)"
+data.loc[("gas storage", "investment"), "unit"] = "EUR/kWh"
+
+# process equipment, injection (2200MW) withdrawl (6600MW)
+# assuming half of investment costs for injection, half for withdrawl
+investment_charge = gas_storage.loc["Total investment cost"].iloc[0,0]/2/2200*1e9
+investment_discharge = gas_storage.loc["Total investment cost"].iloc[0,0]/2/6600*1e9
+data.loc[("gas storage charger", "investment"), years] = investment_charge
+data.loc[("gas storage discharger", "investment"), years] = investment_discharge
+data.loc[("gas storage charger", "investment"), "source"] = source_DEA
+data.loc[("gas storage charger", "investment"), "further description"] = "150 Underground Storage of Gas, Process equipment (units converted)"
+data.loc[("gas storage charger", "investment"), "unit"] = "EUR/kW"
+data.loc[("gas storage discharger", "investment"), "source"] = source_DEA
+data.loc[("gas storage discharger", "investment"), "further description"] = "150 Underground Storage of Gas, Process equipment (units converted)"
+data.loc[("gas storage discharger", "investment"), "unit"] = "EUR/kW"
+
+# operation + maintenance 400-500 million m³ = 4.4-5.5 TWh
+FOM = gas_storage.loc["Total, incl. administration"].iloc[0] /(5.5*investment*1e3)*100
+data.loc[("gas storage", "FOM"), years] = FOM
+data.loc[("gas storage", "FOM"), "source"] = source_DEA
+data.loc[("gas storage", "FOM"), "further description"] = "150 Underground Storage of Gas, Operation and Maintenace, salt cavern (units converted)"
+data.loc[("gas storage", "FOM"), "unit"] = "%"
 
 # %% ------ add additional sources and save cost.csv ------------------
 for year in years:

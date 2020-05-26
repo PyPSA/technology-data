@@ -756,8 +756,8 @@ data.loc[("gas storage", "investment"), "unit"] = "EUR/kWh"
 
 # process equipment, injection (2200MW) withdrawl (6600MW)
 # assuming half of investment costs for injection, half for withdrawl
-investment_charge = gas_storage.loc["Total investment cost"].iloc[0,0]/2/2200*1e9
-investment_discharge = gas_storage.loc["Total investment cost"].iloc[0,0]/2/6600*1e9
+investment_charge = gas_storage.loc["Total investment cost"].iloc[0,0]/2/2200*1e3
+investment_discharge = gas_storage.loc["Total investment cost"].iloc[0,0]/2/6600*1e3
 data.loc[("gas storage charger", "investment"), years] = investment_charge
 data.loc[("gas storage discharger", "investment"), years] = investment_discharge
 data.loc[("gas storage charger", "investment"), "source"] = source_DEA

@@ -214,8 +214,8 @@ gas,CO2 intensity,0.2,tCO2/MWh_th,Entwicklung der spezifischen Kohlendioxid-Emis
 gas,fuel,20.1,EUR/MWh_th,BP 2019,
 gas storage,FOM,3.59,%,DEA,"150 Underground Storage of Gas, Operation and Maintenace, salt cavern (units converted)"
 gas storage,investment,0.03,EUR/kWh,DEA,"150 Underground Storage of Gas, Establishment of one cavern (units converted)"
-gas storage charger,investment,14338851.58,EUR/kW,DEA,"150 Underground Storage of Gas, Process equipment (units converted)"
-gas storage discharger,investment,4779617.19,EUR/kW,DEA,"150 Underground Storage of Gas, Process equipment (units converted)"
+gas storage charger,investment,14.34,EUR/kW,DEA,"150 Underground Storage of Gas, Process equipment (units converted)"
+gas storage discharger,investment,4.78,EUR/kW,DEA,"150 Underground Storage of Gas, Process equipment (units converted)"
 geothermal,CO2 intensity,0.03,tCO2/MWhth,https://www.eia.gov/environment/emissions/co2_vol_mass.php, from old pypsa cost assumptions
 geothermal,FOM,2.36,%/year,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 geothermal,efficiency,0.24,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions

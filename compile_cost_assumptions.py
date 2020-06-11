@@ -301,7 +301,8 @@ def add_DAC_cost(costs):
 
     DAC_investment = pd.Series(data=data, index=years)
     costs.loc[('DAC','investment'),'value'] = DAC_investment[year]
-    
+    costs.loc[('DAC', 'investment'),'unit']='EUR/(tCO2/a)'
+    costs.loc[('DAC', 'investment'),'source'] = 'Fasihi'
 def add_solar_from_other(costs):
     """"
     add solar from other sources than DEA (since the life time assumed in 

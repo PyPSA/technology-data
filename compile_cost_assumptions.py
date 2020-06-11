@@ -16,7 +16,7 @@ path_in="inputs/"
 years = np.arange(2020, 2055, 5)
 rate_inflation = 0.02
 solar_from_DEA = False  # add solar data from DEA if false from Vartiaien/ETIP
-solar_utility_from_other = False
+solar_utility_from_other = True
 solar_rooftop_from_other = True  # very optimisitic in DEA
 h2_from_budischak = False  # add fuel cell/electrolysis efficiencies from budischak
 # remove grid connection costs from DEA for offwind because they are calculated
@@ -481,7 +481,7 @@ to_drop = [("central resistive heater", 'Nominal investment, 400/690 V; 1-5 MW')
 # the same, drop one of the rows to avoid duplicates
 to_drop.append(("decentral gas boiler", "Heat efficiency, annual average, net"))
 
-# for decentral gas boilers there are investment costs and possbile additional
+# for decentral gas boilers there are investment costs and possible additional
 # investments which apply for grid connection if the house is not connected yet
 # those costs are currently excluded with the assumption that there are no new
 # decentral gas boilers build in houses with no gas grid connection

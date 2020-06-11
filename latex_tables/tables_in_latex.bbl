@@ -11,6 +11,16 @@
   {November} 2019}, Tech. rep., Danish Energy Agency and Energinet.dk (2019).
 \newline\urlprefix\url{https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-generation-electricity-and}
 
+\bibitem{Vartiainen_2019}
+E.~Vartiainen, G.~Masson, C.~Breyer, D.~Moser, E.~R. Medina,
+  \href{https://onlinelibrary.wiley.com/doi/abs/10.1002/pip.3189}{Impact of
+  weighted average cost of capital, capital expenditure, and other parameters
+  on future utility-scale {PV} levelised cost of electricity}, Progress in
+  Photovoltaics: Research and Applications (2017).
+\newblock \href {https://doi.org/10.1002/pip.3189}
+  {\path{doi:10.1002/pip.3189}}.
+\newline\urlprefix\url{https://onlinelibrary.wiley.com/doi/abs/10.1002/pip.3189}
+
 \bibitem{Vartiainen_2017}
 E.~Vartiainen, G.~Masson, C.~Breyer,
   \href{http://www.etip-pv.eu/fileadmin/Documents/ETIP_PV_Publications_2017-2018/LCOE_Report_March_2017.pdf}{The

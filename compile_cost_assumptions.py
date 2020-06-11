@@ -11,8 +11,8 @@ import numpy as np
 import os
 
 # %% -------- PARAMETER ------------------------------------------------------
-path_in = "/home/ws/bw0928/Dokumente/compile_costs_new/technology_data/inputs/"
-
+#path_in = "/home/ws/bw0928/Dokumente/compile_costs_new/technology_data/inputs/"
+path_in="inputs/"
 years = np.arange(2020, 2055, 5)
 rate_inflation = 0.02
 solar_from_DEA = False  # add solar data from DEA if false from Vartiaien/ETIP
@@ -291,10 +291,21 @@ def add_co2_intensity(costs):
 
     return costs
 
+def add_DAC_cost(costs):
+    """"
+    add Direct Air Capture (DAC)cost from  Fasihi2019/Climeworks
+    """
+    # DAC cost included in the Conclusions of Fasihi2019
+    data = np.interp(x=years,xp=[2020, 2030, 2040, 2050],
+                     fp=[772.5, 383, 251, 210.5])
 
+    DAC_investment = pd.Series(data=data, index=years)
+    costs.loc[('DAC','investment'),'value'] = DAC_investment[year]
+    
 def add_solar_from_other(costs):
     """"
-    add solar from other sources than DEA (since they are very optimistic)
+    add solar from other sources than DEA (since the life time assumed in 
+    DEA is very optimistic)
     """
     # solar utility from Vartiaian 2019
     data = np.interp(x=years, xp=[2020, 2030, 2040, 2050],
@@ -798,7 +809,8 @@ for year in years:
     costs = add_co2_intensity(costs)
     # CCS
     costs = add_costs_ccs(costs)
-
+    # DAC
+    add_DAC_cost(costs)
     # include old pypsa costs
     check = pd.concat([costs_pypsa, costs], axis=1)
 

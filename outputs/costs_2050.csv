@@ -48,12 +48,12 @@ SMR CCS,FOM,5.4,%/year,https://www.gov.uk/government/publications/hydrogen-suppl
 SMR CCS,efficiency,0.67,per unit,https://www.gov.uk/government/publications/hydrogen-supply-chain-evidence-base; slide 42 assumption for 2030; CCS uses 10% of gas, from old pypsa cost assumptions
 SMR CCS,investment,1032.0,EUR/kWCH4,https://www.gov.uk/government/publications/hydrogen-supply-chain-evidence-base; slide 42 assumption for 2030; GBP 466 exchange 1.16; CCS costed at 300 EUR/tCO2/a, from old pypsa cost assumptions
 SMR CCS,lifetime,25.0,years,TODO, from old pypsa cost assumptions
-battery inverter,FOM,0.34,%/year,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Fixed O&M
+battery inverter,FOM,0.9,%/year,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Fixed O&M
 battery inverter,efficiency,0.96,per unit,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Round trip efficiency DC
-battery inverter,investment,160.0,EUR/kW,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Output capacity expansion cost investment
-battery inverter,lifetime,25.0,years,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Technical lifetime
-battery storage,investment,142.0,EUR/kWh,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Energy storage expansion cost investment
-battery storage,lifetime,25.0,years,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Technical lifetime
+battery inverter,investment,60.0,EUR/kW,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Output capacity expansion cost investment
+battery inverter,lifetime,30.0,years,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Technical lifetime
+battery storage,investment,75.0,EUR/kWh,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Energy storage expansion cost investment
+battery storage,lifetime,30.0,years,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  Technical lifetime
 biogas,fuel,59.0,EUR/MWhth,JRC and Zappa, from old pypsa cost assumptions
 biogas upgrading,FOM,2.51,%/year,"DEA, data_sheets_for_renewable_fuels_-_0003.xlsx","82 Biogas, upgrading:  Fixed O&M "
 biogas upgrading,VOM,3.68,EUR/MWh input,"DEA, data_sheets_for_renewable_fuels_-_0003.xlsx","82 Biogas, upgrading:  Variable O&M"
@@ -298,5 +298,5 @@ solar-utility,lifetime,40.0,years,"DEA, technology_data_for_el_and_dh_-_0009.xls
 solid biomass,CO2 intensity,0.3,tCO2/MWh_th,TODO,
 solid biomass,fuel,25.2,EUR/MWh_th,Is a 100% renewable European power system feasible by 2050?,
 uranium,fuel,2.6,EUR/MWh_th,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
-water tank charger,efficiency,0.84,per unit,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)
-water tank discharger,efficiency,0.84,per unit,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)
+water tank charger,efficiency,0.91,per unit,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)
+water tank discharger,efficiency,0.91,per unit,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)

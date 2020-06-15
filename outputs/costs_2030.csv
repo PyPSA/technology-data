@@ -214,6 +214,7 @@ gas,CO2 intensity,0.2,tCO2/MWh_th,Entwicklung der spezifischen Kohlendioxid-Emis
 gas,fuel,20.1,EUR/MWh_th,BP 2019,
 gas storage,FOM,3.59,%,DEA,"150 Underground Storage of Gas, Operation and Maintenace, salt cavern (units converted)"
 gas storage,investment,0.03,EUR/kWh,DEA,"150 Underground Storage of Gas, Establishment of one cavern (units converted)"
+gas storage,lifetime,100.0,years,TODO no source,"estimation: most underground storage are already build, they do have a long lifetime"
 gas storage charger,investment,14.34,EUR/kW,DEA,"150 Underground Storage of Gas, Process equipment (units converted)"
 gas storage discharger,investment,4.78,EUR/kW,DEA,"150 Underground Storage of Gas, Process equipment (units converted)"
 geothermal,CO2 intensity,0.03,tCO2/MWhth,https://www.eia.gov/environment/emissions/co2_vol_mass.php, from old pypsa cost assumptions
@@ -297,5 +298,5 @@ solar-utility,lifetime,40.0,years,"DEA, technology_data_for_el_and_dh_-_0009.xls
 solid biomass,CO2 intensity,0.3,tCO2/MWh_th,TODO,
 solid biomass,fuel,25.2,EUR/MWh_th,Is a 100% renewable European power system feasible by 2050?,
 uranium,fuel,2.6,EUR/MWh_th,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
-water tank charger,efficiency,0.84,per unit,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)
-water tank discharger,efficiency,0.84,per unit,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)
+water tank charger,efficiency,0.91,per unit,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)
+water tank discharger,efficiency,0.91,per unit,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)

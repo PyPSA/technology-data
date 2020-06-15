@@ -16,7 +16,7 @@ path_in="inputs/"
 years = np.arange(2020, 2055, 5)
 rate_inflation = 0.02
 solar_from_DEA = False  # add solar data from DEA if false from Vartiaien/ETIP
-solar_utility_from_other = True
+solar_utility_from_other = False
 solar_rooftop_from_other = True  # very optimisitic in DEA
 h2_from_budischak = False  # add fuel cell/electrolysis efficiencies from budischak
 # remove grid connection costs from DEA for offwind because they are calculated
@@ -123,6 +123,14 @@ def get_data_DEA(tech):
                           sheet_name=sheet_names[tech],
                           index_col=0,
                           usecols='B:G', skiprows=[0, 1])
+    # battery excel sheet has a different format
+    if tech=="battery":
+        excel = pd.read_excel(path_in + excel_file,
+                              sheet_name=sheet_names[tech],
+                              index_col=0,
+                              usecols='B:J', skiprows=[0, 1])
+    excel.dropna(axis=1, how="all", inplace=True)
+
 
     excel.index = excel.index.fillna(" ")
     excel.dropna(axis=0, how="all", inplace=True)
@@ -133,6 +141,8 @@ def get_data_DEA(tech):
             how="all").index] .iloc[0, :].fillna("Technology", limit=1))
         excel.drop(excel[excel == 2020].dropna(how="all").index, inplace=True)
         excel.set_index(excel.columns[0], inplace=True)
+        # fix for battery with different excel sheet format
+        excel.rename(columns={"Technology":2040}, inplace=True)
 
     parameters = ["efficiency", "investment", "Fixed O&M",
                   "Variable O&M", "production capacity for one unit",
@@ -303,9 +313,11 @@ def add_DAC_cost(costs):
     costs.loc[('DAC','investment'),'value'] = DAC_investment[year]
     costs.loc[('DAC', 'investment'),'unit']='EUR/(tCO2/a)'
     costs.loc[('DAC', 'investment'),'source'] = 'Fasihi'
+
+
 def add_solar_from_other(costs):
     """"
-    add solar from other sources than DEA (since the life time assumed in 
+    add solar from other sources than DEA (since the life time assumed in
     DEA is very optimistic)
     """
     # solar utility from Vartiaian 2019
@@ -867,6 +879,5 @@ for year in years:
 # unify units from old and new (convert EUR/m² to kW)
 # c_b and c_v values
 # check battery
-# look up solar thermal, oil boiler, decentral resistive heater in DEA
 # add offwind grid component connection costs (sea cable ...)
 

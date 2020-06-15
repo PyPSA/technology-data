@@ -753,6 +753,10 @@ data.loc[("gas storage", "investment"), years] = investment
 data.loc[("gas storage", "investment"), "source"] = source_DEA
 data.loc[("gas storage", "investment"), "further description"] = "150 Underground Storage of Gas, Establishment of one cavern (units converted)"
 data.loc[("gas storage", "investment"), "unit"] = "EUR/kWh"
+data.loc[("gas storage", "lifetime"), years] = 100
+data.loc[("gas storage", "lifetime"), "source"] = "TODO no source"
+data.loc[("gas storage", "lifetime"), "further description"] = "estimation: most underground storage are already build, they do have a long lifetime"
+data.loc[("gas storage", "lifetime"), "unit"] = "years"
 
 # process equipment, injection (2200MW) withdrawl (6600MW)
 # assuming half of investment costs for injection, half for withdrawl

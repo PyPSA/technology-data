@@ -12,7 +12,7 @@ import os
 
 # %% -------- PARAMETER ------------------------------------------------------
 #path_in = "/home/ws/bw0928/Dokumente/compile_costs_new/technology_data/inputs/"
-path_in="inputs/"
+path_in="../inputs/"
 years = np.arange(2020, 2055, 5)
 rate_inflation = 0.02
 solar_from_DEA = False  # add solar data from DEA if false from Vartiaien/ETIP
@@ -495,9 +495,17 @@ to_drop.append(("decentral gas boiler", "Heat efficiency, annual average, net"))
 
 # for decentral gas boilers there are investment costs and possible additional
 # investments which apply for grid connection if the house is not connected yet
-# those costs are currently excluded with the assumption that there are no new
-# decentral gas boilers build in houses with no gas grid connection
-to_drop.append(("decentral gas boiler", "Specific investment"))
+# those costs are added as an extra row since the lifetime of the branchpipe
+# is assumed to be  50 years (see comment K in excel sheet)
+boiler_connect = tech_data.loc[[("decentral gas boiler",
+                                 "Possible additional specific investment"),
+                                ("decentral gas boiler",
+                                 "Technical lifetime")]]
+boiler_connect.loc[("decentral gas boiler", "Technical lifetime"), years] = 50
+boiler_connect.rename(index={"decentral gas boiler":
+                             "decentral gas boiler connection"}, inplace=True)
+tech_data = pd.concat([tech_data, boiler_connect])
+to_drop.append(("decentral gas boiler", "Possible additional specific investment"))
 
 # hydrogen storage assume round trip efficiency
 to_drop.append(("hydrogen storage tank", ' - Charge efficiency'))
@@ -694,10 +702,10 @@ charger.rename(index={"Round trip efficiency": "efficiency"},
                level=1, inplace=True)
 charger.rename(index={'central water tank storage':"water tank charger"},
                level=0, inplace=True)
-data = pd.concat([data, charger])
+data = pd.concat([data, charger], sort=True)
 charger.rename(index={"water tank charger": "water tank discharger"},
                level=0, inplace=True)
-data = pd.concat([data, charger])
+data = pd.concat([data, charger], sort=True)
 
 # add excel sheet names to data frame
 wished_order = list(years) + ["unit", "source", "further description"]
@@ -725,7 +733,7 @@ data.loc[to_convert, "unit"] = (data.loc[to_convert, "unit"].str
                                .replace("/MW","/kW"))
 
 # %% ------------ get old pypsa costs ---------------------------------------
-costs_pypsa = pd.read_csv('inputs/costs_PyPSA.csv',
+costs_pypsa = pd.read_csv('../inputs/costs_PyPSA.csv',
                           index_col=[0,2]).sort_index()
 to_drop = [
            #  'hydrogen storage',
@@ -744,7 +752,7 @@ costs_pypsa.loc[('decentral water tank storage','investment'),
 costs_pypsa.loc[('decentral water tank storage','investment'),'unit'] = 'EUR/kWh'
 
 # %% --------- add costs from Frauenhofer ISE study ------------------
-costs_ISE = pd.read_csv("inputs/Frauenhofer_ISE_costs.csv", engine="python",
+costs_ISE = pd.read_csv("../inputs/Frauenhofer_ISE_costs.csv", engine="python",
                         index_col=[0,1])
 costs_ISE.rename(index = {"Investition": "investment",
                           "Lebensdauer": "lifetime",
@@ -762,9 +770,9 @@ costs_ISE.unit.replace({"a": "years", "% Invest": "%"}, inplace=True)
 costs_ISE["source"] = ISE
 costs_ISE['further description'] = costs_ISE.reset_index()["technology"].values
 # add costs for gas pipelines
-data = pd.concat([data, costs_ISE.loc[["Gasnetz"]]])
+data = pd.concat([data, costs_ISE.loc[["Gasnetz"]]], sort=True)
 # %% add gas storage costs
-gas_storage = pd.read_excel("inputs/technology_data_catalogue_for_energy_storage.xlsx",
+gas_storage = pd.read_excel("../inputs/technology_data_catalogue_for_energy_storage.xlsx",
                             sheet_name="150 Underground Storage of Gas",
                             index_col=1)
 gas_storage.dropna(axis=1, how="all", inplace=True)
@@ -829,7 +837,7 @@ for year in years:
     # DAC
     add_DAC_cost(costs)
     # include old pypsa costs
-    check = pd.concat([costs_pypsa, costs], axis=1)
+    check = pd.concat([costs_pypsa, costs], sort=True, axis=1)
 
     # missing technologies
     missing = costs_pypsa.index.levels[0].difference(costs.index.levels[0])
@@ -867,7 +875,7 @@ for year in years:
     costs_tot.drop("fixed", level=1, inplace=True)
     costs_tot.sort_index(inplace=True)
     costs_tot = round(costs_tot, ndigits=2)
-    costs_tot.to_csv("outputs/costs_{}.csv".format(year))
+    costs_tot.to_csv("../outputs/costs_{}.csv".format(year))
 
 # %% open questions:
 # c_b and c_v values very different!

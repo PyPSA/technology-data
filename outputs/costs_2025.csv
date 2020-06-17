@@ -168,11 +168,13 @@ decentral air-sourced heat pump,discount rate,0.04,per unit,Palzer thesis, from 
 decentral air-sourced heat pump,efficiency,3.5,per unit,"DEA, technologydatafor_heating_installations_marts_2018.xlsx","207.3 Air to water existing:  Heat efficiency, annual average, net, radiators, existing one family house"
 decentral air-sourced heat pump,investment,895.0,EUR/kW_th,"DEA, technologydatafor_heating_installations_marts_2018.xlsx",207.3 Air to water existing:  Specific investment
 decentral air-sourced heat pump,lifetime,18.0,years,"DEA, technologydatafor_heating_installations_marts_2018.xlsx",207.3 Air to water existing:  Technical lifetime
-decentral gas boiler,FOM,10.6,%/year,"DEA, technologydatafor_heating_installations_marts_2018.xlsx",202 Natural gas boiler:  Fixed O&M
+decentral gas boiler,FOM,6.62,%/year,"DEA, technologydatafor_heating_installations_marts_2018.xlsx",202 Natural gas boiler:  Fixed O&M
 decentral gas boiler,discount rate,0.04,per unit,Palzer thesis, from old pypsa cost assumptions
 decentral gas boiler,efficiency,0.98,per unit,"DEA, technologydatafor_heating_installations_marts_2018.xlsx","202 Natural gas boiler:  Total efficiency, annual average, net"
-decentral gas boiler,investment,190.28,EUR/kW_th,"DEA, technologydatafor_heating_installations_marts_2018.xlsx",202 Natural gas boiler:  Possible additional specific investment
+decentral gas boiler,investment,304.45,EUR/kW_th,"DEA, technologydatafor_heating_installations_marts_2018.xlsx",202 Natural gas boiler:  Specific investment
 decentral gas boiler,lifetime,20.0,years,"DEA, technologydatafor_heating_installations_marts_2018.xlsx",202 Natural gas boiler:  Technical lifetime
+decentral gas boiler connection,investment,190.28,EUR/kW_th,"DEA, technologydatafor_heating_installations_marts_2018.xlsx",:  Possible additional specific investment
+decentral gas boiler connection,lifetime,50.0,years,"DEA, technologydatafor_heating_installations_marts_2018.xlsx",:  Technical lifetime
 decentral ground-sourced heat pump,FOM,1.84,%/year,"DEA, technologydatafor_heating_installations_marts_2018.xlsx",207.7 Ground source existing:  Fixed O&M
 decentral ground-sourced heat pump,discount rate,0.04,per unit,Palzer thesis, from old pypsa cost assumptions
 decentral ground-sourced heat pump,efficiency,3.85,per unit,"DEA, technologydatafor_heating_installations_marts_2018.xlsx","207.7 Ground source existing:  Heat efficiency, annual average, net, radiators, existing one family house"
@@ -298,5 +300,5 @@ solar-utility,lifetime,37.5,years,"DEA, technology_data_for_el_and_dh_-_0009.xls
 solid biomass,CO2 intensity,0.3,tCO2/MWh_th,TODO,
 solid biomass,fuel,25.2,EUR/MWh_th,Is a 100% renewable European power system feasible by 2050?,
 uranium,fuel,2.6,EUR/MWh_th,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
-water tank charger,efficiency,0.91,per unit,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)
-water tank discharger,efficiency,0.91,per unit,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)
+water tank charger,efficiency,0.84,per unit,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)
+water tank discharger,efficiency,0.84,per unit,"DEA, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)

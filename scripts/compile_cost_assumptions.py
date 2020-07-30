@@ -3,7 +3,7 @@
 """
 Created on Tue May 12 13:21:20 2020
 
-creates cost csv for choosen years from different source (source_dict).
+Script creates cost csv for choosen years from different source (source_dict).
 The data is standardized for uniform:
     - cost years (depending on the rate of inflation )
     - technology names

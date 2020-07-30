@@ -21,7 +21,7 @@ this repository has the following structure:
     converts input data from multiplte sources to cost_{year}.csv for chosen year. Interpolates data for missing years or calculates the costs at a certain year based on the inflation rate. Technology data from the [Danish Energy Agency Technology Database](https://ens.dk/en/our-services/projections-and-models/technology-data) are preferred.   
 If data are missing from all sources, these are taken from the old PyPSA cost
 assumptions (with a printed warning).   
-The following parameters can be set at the beginning of the script (should be used to a config.yaml):
+The following parameters can be set at the beginning of the script (should be moved to a config.yaml):
       * years : numpy array of all the years of which an output costs csv should be created
       * rate_inflation : inflation rate (currently: rate_inflation=0.02)
       * path_in : str. of input folder (currently: path_in="../inputs/")

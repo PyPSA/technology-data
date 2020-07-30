@@ -65,34 +65,34 @@ name={'onwind' : 'Onshore Wind',
       'fuel cell': 'Fuel cell',
       'methanation': 'Methanation',
       'DAC': 'DAC (direct-air capture)',
-      'central gas boiler': 'Central gas boiler',
-      'decentral gas boiler': 'Decentral gas boiler',
-      'central resistive heater':'Central resistive heater',
-      'decentral resistive heater':'Decentral resistive heater',
-      'central gas CHP':' Gas CHP',
-      'central coal CHP':' Coal CHP',
+      'central gas boiler': 'Gas boiler central',
+      'decentral gas boiler': 'Gas boiler decentral',
+      'central resistive heater':'Resistive heater central',
+      'decentral resistive heater':'Resistive heater decentral',
+      'central gas CHP': 'Gas CHP',
+      'central coal CHP': 'Coal CHP',
       'biomass CHP':'Biomass CHP',
       'biomass EOP':'Biomass power plant',
       'biomass HOP':'Biomass central heat plant',
-      'central water tank storage': 'Central water tank storage',
-      'decentral water tank storage': 'Decentral water tank storage',
+      'central water tank storage': 'Water tank storage central',
+      'decentral water tank storage': 'Water tank storage decentral',
       'water tank charger': 'Water tank charger/discharger',
       'HVDC overhead':'HVDC overhead',
       'HVDC inverter pair':'HVDC inverter pair',
-      'decentral air-sourced heat pump': 'Decentral air-sourced heat pump',
-      'central air-sourced heat pump': 'Central air-sourced heat pump',
-      'central ground-sourced heat pump': 'Central ground-sourced heat pump',
-      'decentral air-sourced heat pump': 'Decentral air-sourced heat pump',
-      'decentral ground-sourced heat pump':  'Decentral ground-sourced heat pump',
-      'Gasnetz': 'gas pipeline',
+      'decentral air-sourced heat pump': 'Air-sourced heat pump decentral',
+      'central air-sourced heat pump': 'Air-sourced heat pump central',
+      'central ground-sourced heat pump': 'Ground-sourced heat pump central',
+      'decentral air-sourced heat pump': 'Air-sourced heat pump decentral',
+      'decentral ground-sourced heat pump':  'Ground-sourced heat pump decentral',
+      'Gasnetz': 'Gas pipeline',
       'micro CHP': 'Micro CHP',
-      'central solid biomass CHP': 'central solid biomass CHP',
+      'central solid biomass CHP': 'Solid biomass CHP central',
       'helmeth': 'Helmeth (Power to SNG, KIT project)',
       'H2 pipeline': 'H2 pipeline',
       'SMR': 'Steam Methane Reforming (SMR)',
       'biogas upgrading': 'Biogas upgrading',
-      'decentral solar thermal': 'Decentral solar thermal',
-      'central solar thermal': 'Central solar thermal',
+      'decentral solar thermal': 'Solar thermal central',
+      'central solar thermal': 'Solar thermal decentral',
       'electricity distribution grid': 'Electricity distribution grid',
        'electricity grid connection': 'Electricity grid connection',
        'gas storage': 'Gas storage (underground cavern)',
@@ -128,6 +128,8 @@ dic_ref = {'Technology Data for Energy Plants for Electricity and District heati
 #
 # %%
 relevant = costs.unstack().loc[technologies]
+# costs from 2050 for direct air capture assumed
+relevant.loc["DAC", ("value", "investment")] = 210.50
 quantities = ["FOM", "VOM", "efficiency", "investment", "lifetime"]
 table = relevant["value"][quantities]
 table["investment"] = (table["investment"].astype(str) + " "
@@ -149,9 +151,62 @@ table.loc[table.source.str.contains("DEA"), "source"] = "DEA"
 table.loc[table.source.str.contains("DIW"), "source"] = "DIW"
 table.loc[table.source.str.contains("Fasihi"), "source"] = "Fasihi"
 table.loc[table.source.str.contains("Welder"), "source"] = "Welder"
-table.loc[table.source.str.contains("gov.uk"), "source"] = "GOV_UK"
+table.loc[table.source.str.contains("gov.uk"), "source"] = "GOV UK"
 table.loc[table.source.str.contains("Fraunhofer"), "source"] = "FA ISE"
 table.rename(index=name, inplace=True)
-table.replace("_th", "$_{th}$", inplace=True)
-table.replace("_el", "$_{el}$", inplace=True)
+
+table.replace({'_th': '$_{th}$',
+               "_el": "$_{el}$",
+               "_e": "$_{el}$",
+               "kWel": "kW$_{el}$",
+               "kWGas": "kW$_{Gas}$"}, regex=True, inplace=True)
+# add costs for gas distribution
+table.loc['Gas distribution grid'] = table.loc['Electricity distribution grid']
+
+
 table.sort_index().to_csv("/home/ws/bw0928/Dokumente/own_projects/retrofitting_paper/data/costs2030_copy.csv")
+# %% biomass transport
+transport_costs = pd.read_csv("/home/ws/bw0928/Dokumente/pypsa-eur-sec/data/biomass/biomass_transport_costs.csv",
+                              index_col=0)
+countries = ['AL', 'AT', 'BA', 'BE', 'BG', 'CH', 'CZ', 'DE', 'DK', 'EE',
+       'ES', 'FI', 'FR', 'GB', 'GR', 'HR', 'HU', 'IE', 'IT', 'LT', 'LU',
+       'LV', 'ME', 'MK', 'NL', 'NO', 'PL', 'PT', 'RO', 'RS', 'SE', 'SI',
+       'SK']
+
+transport_costs = round(transport_costs.reindex(index=countries), ndigits=2)
+transport_costs.index.name = "Country"
+transport_costs.columns = ["cost"]
+transport_costs.to_csv("/home/ws/bw0928/Dokumente/own_projects/retrofitting_paper/data/biomass_transport_costs.csv")
+# %%
+# add retrofitting cost assumptions
+retro = pd.read_csv("/home/ws/bw0928/Dokumente/pypsa-eur-sec/data/retro/retro_cost_germany.csv",
+                    index_col=0, usecols=[0,1,2,3])
+components = ["wall", "floor", "roof", "window"]
+retro = retro.reindex(index=components).rename(index = lambda x: "Building retrofitting " +x)
+retro.columns = ["fixed costs [EUR/m$^2$]",
+                 "variable costs for additional insulation material [EUR/cm]",
+                 "lifetime [years]"]
+source_retro = "IWU: Kosten energierelevanter Bau- und Anlagenteile bei der energetischen Modernisierung von Altbauten, Darmstadt, 2015"
+source_short = "IWU2015"
+retro["source"] = source_short
+retro.to_csv("/home/ws/bw0928/Dokumente/own_projects/retrofitting_paper/data/retro_components_costs.csv")
+
+# %% add costs dE
+retro_de = pd.read_csv("/home/ws/bw0928/Dokumente/pypsa-eur-sec/resources/retro_cost_elec_s_38.csv",
+                       skiprows=[1,2])
+retro_de.rename(columns={'Unnamed: 0': "Country",
+                         'Unnamed: 1': "Sector"}, inplace=True)
+retro_de = round(retro_de, ndigits=2)
+retro_de.set_index(["Country", "Sector"], inplace=True)
+retro_de.unstack(level=-1).to_csv("/home/ws/bw0928/Dokumente/own_projects/retrofitting_paper/data/retro_costs.csv")
+# retro_de.rename(columns={"dE": "dE moderate",
+#                          "dE.1": "dE ambitious",
+#                          "cost": "cost moderate",
+#                          "cost.1": "cost ambitious"})
+retro_de = retro_de[["dE", "cost", "dE.1", "cost.1"]]
+columns = [["moderate", "ambitious"], ["dE", "costs [EUR/m2]"]]
+index = pd.MultiIndex.from_product(columns, names=['strength', 'type'])
+retro_de.columns = index
+retro_de.rename(index={"tot":"total"}, level=1, inplace=True)
+a=retro_de.unstack(level=-1).to_latex(bold_rows=True)
+# %%

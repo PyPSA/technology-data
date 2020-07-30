@@ -33,7 +33,9 @@ The following parameters can be set at the beginning of the script (should be mo
   converts table in pdf to csv format for input data. Script can be modified to convert other .pdf sources to .csv format
   * retrieve_data_from_dea.py   
   takes up to date technology data from DEA website and saves it in the **input** folder. Optional, also retrieves the documentation of the data into the folder **docu**  
-* **latex_tables**: .tex files with tables of the cost.csv and python script to create .tex files with nice names or csv files with nice name (which can be used in latex with csv autotabular)
+* **latex_tables**: .tex files with tables of the cost.csv and 2 python scripts   
+  * tables_in_latex.py to create .tex files with nice names
+  * tables_in_csv.py to create csv files with nice name (which can be used in latex with csv autotabular)
   
   
   ## Sources

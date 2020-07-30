@@ -16,7 +16,7 @@ from bs4 import BeautifulSoup
 # %%
 prefix = "https://ens.dk"
 url = prefix + "/en/our-services/projections-and-models/technology-data/"
-path_out = "/home/ws/bw0928/Dokumente/compile_costs_new/inputs/"
+path_out = "inputs/"
 docu = False
 
 # %%

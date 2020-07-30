@@ -2,7 +2,7 @@
 """
 Created on Thu Dec 12 16:10:15 2019
 
-@author: Marta
+@author: Marta, Lisa
 """
 
 import pandas as pd
@@ -15,12 +15,10 @@ Latex table including FOM, efficiencies and lifetimes
 
 #write latex table
 idx = pd.IndexSlice
+path_out = "latex_tables/costs_2030_nice_names.csv"
 costs = pd.read_csv('outputs/costs_2030.csv',
                     index_col=list(range(2))).sort_index()
 
-# filename='tables/costs.tex'
-
-# file = open(filename, 'w')
 # %%
 technologies=['onwind', 'offwind', 'solar-utility', 'solar-rooftop', 'OCGT',
                'hydro', 'ror', 'PHS',
@@ -137,9 +135,6 @@ table["investment"] = (table["investment"].astype(str) + " "
 
 table["VOM"] = table["VOM"].astype(str) + " " + relevant[("unit", "VOM")]
 
-# table.rename(columns={"FOM": "FOM [% per year]",
-#                       "lifetime": "lifetime [years]",
-#                       "efficiency": "efficiency [per unit]"}, inplace=True)
 table.fillna(" ", inplace=True)
 table["source"] = relevant["source"][quantities].apply(lambda row:
                                                        row.dropna().unique(),
@@ -160,53 +155,9 @@ table.replace({'_th': '$_{th}$',
                "_e": "$_{el}$",
                "kWel": "kW$_{el}$",
                "kWGas": "kW$_{Gas}$"}, regex=True, inplace=True)
+
 # add costs for gas distribution
 table.loc['Gas distribution grid'] = table.loc['Electricity distribution grid']
 
-
-table.sort_index().to_csv("/home/ws/bw0928/Dokumente/own_projects/retrofitting_paper/data/costs2030_copy.csv")
-# %% biomass transport
-transport_costs = pd.read_csv("/home/ws/bw0928/Dokumente/pypsa-eur-sec/data/biomass/biomass_transport_costs.csv",
-                              index_col=0)
-countries = ['AL', 'AT', 'BA', 'BE', 'BG', 'CH', 'CZ', 'DE', 'DK', 'EE',
-       'ES', 'FI', 'FR', 'GB', 'GR', 'HR', 'HU', 'IE', 'IT', 'LT', 'LU',
-       'LV', 'ME', 'MK', 'NL', 'NO', 'PL', 'PT', 'RO', 'RS', 'SE', 'SI',
-       'SK']
-
-transport_costs = round(transport_costs.reindex(index=countries), ndigits=2)
-transport_costs.index.name = "Country"
-transport_costs.columns = ["cost"]
-transport_costs.to_csv("/home/ws/bw0928/Dokumente/own_projects/retrofitting_paper/data/biomass_transport_costs.csv")
-# %%
-# add retrofitting cost assumptions
-retro = pd.read_csv("/home/ws/bw0928/Dokumente/pypsa-eur-sec/data/retro/retro_cost_germany.csv",
-                    index_col=0, usecols=[0,1,2,3])
-components = ["wall", "floor", "roof", "window"]
-retro = retro.reindex(index=components).rename(index = lambda x: "Building retrofitting " +x)
-retro.columns = ["fixed costs [EUR/m$^2$]",
-                 "variable costs for additional insulation material [EUR/cm]",
-                 "lifetime [years]"]
-source_retro = "IWU: Kosten energierelevanter Bau- und Anlagenteile bei der energetischen Modernisierung von Altbauten, Darmstadt, 2015"
-source_short = "IWU2015"
-retro["source"] = source_short
-retro.to_csv("/home/ws/bw0928/Dokumente/own_projects/retrofitting_paper/data/retro_components_costs.csv")
-
-# %% add costs dE
-retro_de = pd.read_csv("/home/ws/bw0928/Dokumente/pypsa-eur-sec/resources/retro_cost_elec_s_38.csv",
-                       skiprows=[1,2])
-retro_de.rename(columns={'Unnamed: 0': "Country",
-                         'Unnamed: 1': "Sector"}, inplace=True)
-retro_de = round(retro_de, ndigits=2)
-retro_de.set_index(["Country", "Sector"], inplace=True)
-retro_de.unstack(level=-1).to_csv("/home/ws/bw0928/Dokumente/own_projects/retrofitting_paper/data/retro_costs.csv")
-# retro_de.rename(columns={"dE": "dE moderate",
-#                          "dE.1": "dE ambitious",
-#                          "cost": "cost moderate",
-#                          "cost.1": "cost ambitious"})
-retro_de = retro_de[["dE", "cost", "dE.1", "cost.1"]]
-columns = [["moderate", "ambitious"], ["dE", "costs [EUR/m2]"]]
-index = pd.MultiIndex.from_product(columns, names=['strength', 'type'])
-retro_de.columns = index
-retro_de.rename(index={"tot":"total"}, level=1, inplace=True)
-a=retro_de.unstack(level=-1).to_latex(bold_rows=True)
-# %%
+# save table as csv
+table.sort_index().to_csv(path_out)

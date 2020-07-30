@@ -15,9 +15,7 @@ from tabula import read_pdf
 import numpy as np
 
 # read pdf file
-path = "/home/ws/bw0928/Dokumente/compile_costs_new/"
-data_path = (path +
-             "docu/Anhang-Studie-Wege-zu-einem-klimaneutralen-Energiesystem.pdf")
+data_path = ("docu/Anhang-Studie-Wege-zu-einem-klimaneutralen-Energiesystem.pdf")
 
 df_list = read_pdf(data_path, pages="3-15",
                    multiple_tables=True)

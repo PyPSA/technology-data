@@ -25,7 +25,7 @@ The script is structured as follows:
     (3) merge data from all sources for every year and save it as a csv
 
 
-@author: bw0928
+@author: Marta, Lisa
 """
 
 import pandas as pd

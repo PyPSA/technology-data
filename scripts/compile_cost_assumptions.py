@@ -3,6 +3,28 @@
 """
 Created on Tue May 12 13:21:20 2020
 
+creates cost csv for choosen years from different source (source_dict).
+The data is standardized for uniform:
+    - cost years (depending on the rate of inflation )
+    - technology names
+    - units
+
+Technology data from the Danish Energy Agency Technology Database are preferred.
+If data are missing from all sources, these are taken from the old PyPSA cost
+assumptions (with a printed warning)
+
+The script is structured as follows:
+
+    (1) DEA data:
+        (a) read + convert units to same base
+        (b) specify assumptions for  certain technologies
+        (c) convert to pypsa cost syntax (investment, FOM, VOM, efficiency)
+    (2) read data from other sources which need additional formatting:
+        (a) old pypsa cost assumptions
+        (b) Frauenhofer ISE cost assumptions
+    (3) merge data from all sources for every year and save it as a csv
+
+
 @author: bw0928
 """
 
@@ -903,8 +925,8 @@ def rename_ISE(costs_ISE):
 
 # %% *************************************************************************
 #  ---------- MAIN ------------------------------------------------------------
-
-# --------- get data from DEA excel sheets ------------------------------------
+# (1) DEA data
+# (a)-------- get data from DEA excel sheets ----------------------------------
 
 # read excel sheet names of all excel files
 data_in = get_excel_sheets(path_in)
@@ -912,11 +934,11 @@ data_in = get_excel_sheets(path_in)
 d_by_tech = get_data_from_DEA(data_in)
 # concat into pd.Dataframe
 tech_data = pd.concat(d_by_tech)
-
-# %% --------- clean up units -------------------------------------------------
+# clean up units
 tech_data = clean_up_units(tech_data)
 
-# %% ------ specific assumptions for some technologies ------------------------
+# (b) ------ specific assumptions for some technologies -----------------------
+
 # specify investment and efficiency assumptions for:
 # resistive heater, decentral gas boiler, biogas upgrading and heat pumps
 tech_data = set_specify_assumptions(tech_data)
@@ -927,7 +949,7 @@ tech_data = set_round_trip_efficiency(tech_data)
 # drop all rows which only contains zeros
 tech_data = tech_data.loc[(tech_data[years]!=0).sum(axis=1)!=0]
 
-# %% -----  get tech data in pypsa syntax
+# (c) -----  get tech data in pypsa syntax -----------------------------------
 # make categories: investment, FOM, VOM, efficiency, c_b, c_v
 data = order_data(tech_data)
 # add excel sheet names and further description
@@ -936,13 +958,15 @@ data = add_description(data)
 data = convert_units(data)
 # add gas storage (different methodology than other sheets)
 data = add_gas_storage(data)
-# %% ------------ get old pypsa costs ---------------------------------------
+
+# %% (2) -- get data from other sources which need formatting -----------------
+# (a)  ---------- get old pypsa costs ---------------------------------------
 costs_pypsa = pd.read_csv('../inputs/costs_PyPSA.csv',
                           index_col=[0,2]).sort_index()
 # rename some techs and convert units
 costs_pypsa = rename_pypsa_old(costs_pypsa)
 
-# %% --------- add costs from Frauenhofer ISE study ------------------
+# (b) ------- add costs from Frauenhofer ISE study --------------------------
 costs_ISE = pd.read_csv("../inputs/Frauenhofer_ISE_costs.csv", engine="python",
                         index_col=[0,1])
 # rename + reorder to fit to other data
@@ -950,7 +974,7 @@ costs_ISE = rename_ISE(costs_ISE)
 # add costs for gas pipelines
 data = pd.concat([data, costs_ISE.loc[["Gasnetz"]]], sort=True)
 
-# %% ------ add additional sources and save cost.csv ------------------
+# %% (3) ------ add additional sources and save cost as csv ------------------
 for year in years:
     costs = (data[[year, "unit", "source", "further description"]]
              .rename(columns={year: "value"}))

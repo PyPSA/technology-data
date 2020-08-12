@@ -52,6 +52,6 @@ The following parameters can be set at the beginning of the script (should be mo
   * CO2 intensity  
   [Umweltbundesamt - Entwicklung Kohlendioxid](https://www.umweltbundesamt.de/publikationen/entwicklung-der-spezifischen-kohlendioxid-5)
   * gas pipeline costs (potenitally import costs, comparison to other data)
-  [Frauenhofer ISE Studie](https://www.ise.fraunhofer.de/de/veroeffentlichungen/studien/wege-zu-einem-klimaneutralen-energiesystem.html)
+  [Fraunhofer ISE Studie](https://www.ise.fraunhofer.de/de/veroeffentlichungen/studien/wege-zu-einem-klimaneutralen-energiesystem.html)
   
            

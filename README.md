@@ -18,14 +18,24 @@ this repository has the following structure:
 * **docu**: reports, paper, additional information about the input data, format .pdf
 * **scripts** : 
   * compile_cost_assumptions.py   
-    converts input data from multiplte sources to cost_{year}.csv for chosen year. Interpolates data for missing years or calculates the costs at a certain year based on the inflation rate. Technology data from the [Danish Energy Agency Technology Database](https://ens.dk/en/our-services/projections-and-models/technology-data) are preferred.
+    converts input data from multiplte sources to cost_{year}.csv for chosen year. Interpolates data for missing years or calculates the costs at a certain year based on the inflation rate. Technology data from the [Danish Energy Agency Technology Database](https://ens.dk/en/our-services/projections-and-models/technology-data) are preferred.   
 If data are missing from all sources, these are taken from the old PyPSA cost
-assumptions (with a printed warning).
+assumptions (with a printed warning).   
+The following parameters can be set at the beginning of the script (should be moved to a config.yaml):
+      * years : numpy array of all the years of which an output costs csv should be created
+      * rate_inflation : inflation rate (currently: rate_inflation=0.02)
+      * path_in : str. of input folder (currently: path_in="../inputs/")
+      * solar_utility_from_other : Bool (True/False) if solar utility data is taken from DEA or Vartiaien
+      * solar_rooftop_from_other : Bool (True/False) if solar rooftop data is taken from DEA or ETIP
+      * h2_from_budischak : Bool (True/False) if fuel cell and electrolyzer efficiencies are taken from DEA or Budischak
+      * offwind_no_gridcosts : Bool (True/False) if offshore wind grid connection costs should be removed (they are calculated seperately in PyPSA-EUR)
   * convert_pdf_frauenhofer_to_dataframe.py   
   converts table in pdf to csv format for input data. Script can be modified to convert other .pdf sources to .csv format
   * retrieve_data_from_dea.py   
   takes up to date technology data from DEA website and saves it in the **input** folder. Optional, also retrieves the documentation of the data into the folder **docu**  
-* **latex_tables**: .tex files with tables of the cost.csv and python script to create .tex files with nice names or csv files with nice name (which can be used in latex with csv autotabular)
+* **latex_tables**: .tex files with tables of the cost.csv and 2 python scripts   
+  * tables_in_latex.py to create .tex files with nice names
+  * tables_in_csv.py to create csv files with nice name (which can be used in latex with csv autotabular)
   
   
   ## Sources
@@ -42,6 +52,6 @@ assumptions (with a printed warning).
   * CO2 intensity  
   [Umweltbundesamt - Entwicklung Kohlendioxid](https://www.umweltbundesamt.de/publikationen/entwicklung-der-spezifischen-kohlendioxid-5)
   * gas pipeline costs (potenitally import costs, comparison to other data)
-  [Frauenhofer ISE Studie](https://www.ise.fraunhofer.de/de/veroeffentlichungen/studien/wege-zu-einem-klimaneutralen-energiesystem.html)
+  [Fraunhofer ISE Studie](https://www.ise.fraunhofer.de/de/veroeffentlichungen/studien/wege-zu-einem-klimaneutralen-energiesystem.html)
   
            

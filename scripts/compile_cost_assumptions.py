@@ -33,13 +33,15 @@ import numpy as np
 import os
 
 # %% -------- PARAMETER ------------------------------------------------------
-path_in="../inputs/"
+# considered years for tech data
 years = np.arange(2020, 2055, 5)
 rate_inflation = 0.02
+path_in="../inputs/"
 # add solar from different source
 solar_utility_from_other = False
 solar_rooftop_from_other = True
-h2_from_budischak = False  # add fuel cell/electrolysis efficiencies from budischak
+# add fuel cell/electrolysis efficiencies from Budischak (DEA assumptions very conservative)
+h2_from_budischak = False
 # remove grid connection costs from DEA for offwind because they are calculated
 # seperately in pypsa-eur
 offwind_no_gridcosts = True
@@ -989,6 +991,7 @@ for year in years:
     if any([solar_utility_from_other, solar_rooftop_from_other]):
         costs = add_solar_from_other(costs)
 
+    # add electrolyzer and fuel cell efficiency from other source than DEA
     if h2_from_budischak:
         costs = add_h2_from_other(costs)
 

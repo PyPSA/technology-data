@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Mar 11 14:11:28 2020
-
-script to convert the technology data assumptions of the Frauenhofer ISE Study
+script to convert the technology data assumptions of the Fraunhofer ISE Study
 "Wege zu einem klimaneutralen Energiesystem" (see pdf in folder docu) into a
 .csv format
-
-@author: bw0928
 """
 
 import pandas as pd
@@ -73,13 +69,13 @@ for table in range(len(clean_df)):
 total = pd.concat(clean_df)
 # %%
 total.Einheit = total.Einheit.str.replace("€", "EUR")
-total.to_csv(path + "inputs/Frauenhofer_ISE_costs.csv", encoding='iso-8859-15')
+total.to_csv(path + "inputs/Fraunhofer_ISE_costs.csv", encoding='iso-8859-15')
 # %%
 energiepreise = read_pdf(data_path, pages="15")
 energiepreise.dropna(axis=1, how="all", inplace=True)
 energiepreise.dropna(axis=0, how="all", inplace=True)
 energiepreise = energiepreise.rename(columns={"Unnamed: 1": "Fuel"}).set_index("Fuel")
 energiepreise["unit"] = "Eur/MWh"
-energiepreise.to_csv(path + "inputs/Frauenhofer_energy_prices.csv" , encoding='iso-8859-15')
+energiepreise.to_csv(path + "inputs/Fraunhofer_ISE_energy_prices.csv" , encoding='iso-8859-15')
 
 # %%

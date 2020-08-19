@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Tue May 12 13:21:20 2020
-
 Script creates cost csv for choosen years from different source (source_dict).
 The data is standardized for uniform:
     - cost years (depending on the rate of inflation )
@@ -21,9 +19,8 @@ The script is structured as follows:
         (c) convert to pypsa cost syntax (investment, FOM, VOM, efficiency)
     (2) read data from other sources which need additional formatting:
         (a) old pypsa cost assumptions
-        (b) Frauenhofer ISE cost assumptions
+        (b) Fraunhofer ISE cost assumptions
     (3) merge data from all sources for every year and save it as a csv
-
 
 @author: Marta, Lisa
 """
@@ -1009,8 +1006,8 @@ costs_pypsa = pd.read_csv('../inputs/costs_PyPSA.csv',
 # rename some techs and convert units
 costs_pypsa = rename_pypsa_old(costs_pypsa)
 
-# (b) ------- add costs from Frauenhofer ISE study --------------------------
-costs_ISE = pd.read_csv("../inputs/Frauenhofer_ISE_costs.csv", engine="python",
+# (b) ------- add costs from Fraunhofer ISE study --------------------------
+costs_ISE = pd.read_csv("../inputs/Fraunhofer_ISE_costs.csv", engine="python",
                         index_col=[0,1])
 # rename + reorder to fit to other data
 costs_ISE = rename_ISE(costs_ISE)
@@ -1088,5 +1085,3 @@ for year in years:
     costs_tot.sort_index(inplace=True)
     costs_tot = round(costs_tot, ndigits=2)
     costs_tot.to_csv("../outputs/costs_{}.csv".format(year))
-
-

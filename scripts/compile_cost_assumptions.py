@@ -31,9 +31,8 @@ import os
 
 # %% -------- PARAMETER ------------------------------------------------------
 # considered years for tech data
-years = np.arange(2020, 2055, 5)
+years = snakemake.config["years"]
 rate_inflation = 0.02
-path_in="../inputs/"
 # add solar from different source
 solar_utility_from_other = False
 solar_rooftop_from_other = True
@@ -107,15 +106,15 @@ sheet_names = {'onwind': '20 Onshore turbines',
 
 # %% -------- FUNCTIONS ---------------------------------------------------
 
-def get_excel_sheets(path_in):
+def get_excel_sheets(excel_files):
     """"
-    read all excel sheets of a given input path (path_in) and return
+    read all excel sheets and return
     them as a dictionary (data_in)
     """
     data_in = {}
-    for entry in os.listdir(path_in):
+    for entry in excel_files:
         if entry[-5:] == ".xlsx":
-            data_in[entry] = pd.ExcelFile(path_in + entry).sheet_names
+            data_in[entry] = pd.ExcelFile(entry).sheet_names
     print("found ", len(data_in), " excel sheets: ")
     for key in data_in.keys():
         print("* ", key)
@@ -145,13 +144,13 @@ def get_data_DEA(tech, data_in):
         print("excel file not found for tech ", tech)
         return None
 
-    excel = pd.read_excel(path_in + excel_file,
+    excel = pd.read_excel(excel_file,
                           sheet_name=sheet_names[tech],
                           index_col=0,
                           usecols='B:G', skiprows=[0, 1])
     # battery excel sheet has a different format
     if tech=="battery":
-        excel = pd.read_excel(path_in + excel_file,
+        excel = pd.read_excel(excel_file,
                               sheet_name=sheet_names[tech],
                               index_col=0,
                               usecols='B:J', skiprows=[0, 1])
@@ -207,7 +206,7 @@ def get_data_DEA(tech, data_in):
         values = np.interp(x=years, xp=df.columns.values.astype(float), fp=df.loc[index, :].values.astype(float))
         df_final.loc[index, :] = values
 
-    df_final["source"] = source_dict["DEA"] + ", " + excel_file
+    df_final["source"] = source_dict["DEA"] + ", " + excel_file.replace("inputs/","")
     df_final["unit"] = (df_final.rename(index=lambda x:
                                         x[x.rfind("(")+1: x.rfind(")")]).index.values)
     df_final.index = df_final.index.str.replace(r" \(.*\)","")
@@ -876,7 +875,7 @@ def add_gas_storage(data):
     therefore added later
     """
 
-    gas_storage = pd.read_excel("../inputs/technology_data_catalogue_for_energy_storage.xlsx",
+    gas_storage = pd.read_excel(snakemake.input.dea_storage,
                                 sheet_name="150 Underground Storage of Gas",
                                 index_col=1)
     gas_storage.dropna(axis=1, how="all", inplace=True)
@@ -969,7 +968,8 @@ def rename_ISE(costs_ISE):
 # (a)-------- get data from DEA excel sheets ----------------------------------
 
 # read excel sheet names of all excel files
-data_in = get_excel_sheets(path_in)
+excel_files = [v for k,v in snakemake.input.items() if "dea" in k]
+data_in = get_excel_sheets(excel_files)
 # create dictionary with raw data from DEA sheets
 d_by_tech = get_data_from_DEA(data_in)
 # concat into pd.Dataframe
@@ -1001,13 +1001,14 @@ data = add_gas_storage(data)
 
 # %% (2) -- get data from other sources which need formatting -----------------
 # (a)  ---------- get old pypsa costs ---------------------------------------
-costs_pypsa = pd.read_csv('../inputs/costs_PyPSA.csv',
+costs_pypsa = pd.read_csv(snakemake.input.pypsa_costs,
                           index_col=[0,2]).sort_index()
 # rename some techs and convert units
 costs_pypsa = rename_pypsa_old(costs_pypsa)
 
 # (b) ------- add costs from Fraunhofer ISE study --------------------------
-costs_ISE = pd.read_csv("../inputs/Fraunhofer_ISE_costs.csv", engine="python",
+costs_ISE = pd.read_csv(snakemake.input.fraunhofer_costs,
+                        engine="python",
                         index_col=[0,1])
 # rename + reorder to fit to other data
 costs_ISE = rename_ISE(costs_ISE)
@@ -1084,4 +1085,4 @@ for year in years:
     costs_tot.drop("fixed", level=1, inplace=True)
     costs_tot.sort_index(inplace=True)
     costs_tot = round(costs_tot, ndigits=2)
-    costs_tot.to_csv("../outputs/costs_{}.csv".format(year))
+    costs_tot.to_csv([v for v in snakemake.output if str(year) in v][0])

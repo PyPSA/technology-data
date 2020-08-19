@@ -29,18 +29,7 @@ import pandas as pd
 import numpy as np
 import os
 
-# %% -------- PARAMETER ------------------------------------------------------
-# considered years for tech data
-years = snakemake.config["years"]
-rate_inflation = 0.02
-# add solar from different source
-solar_utility_from_other = False
-solar_rooftop_from_other = True
-# add fuel cell/electrolysis efficiencies from Budischak (DEA assumptions very conservative)
-h2_from_budischak = False
-# remove grid connection costs from DEA for offwind because they are calculated
-# seperately in pypsa-eur
-offwind_no_gridcosts = True
+years = snakemake.config['years']
 
 # ---------- sources -------------------------------------------------------
 source_dict = {
@@ -196,7 +185,7 @@ def get_data_DEA(tech, data_in):
 
     df = df.astype(float)
 
-    if (tech == "offwind") & offwind_no_gridcosts:
+    if (tech == "offwind") and snakemake.config['offwind_no_gridcosts']:
         df.loc['Nominal investment (MEUR/MW)'] -= excel.loc[' - of which grid connection']
 
 
@@ -261,7 +250,7 @@ def add_conventional_data(costs):
     """
     # nuclear from Lazards
     costs.loc[('nuclear', 'investment'), 'value'] = 8595 / \
-        (1 + rate_inflation)**(2019 - 2015)
+        (1 + snakemake.config['rate_inflation'])**(2019 - snakemake.config['eur_year'])
     costs.loc[('nuclear', 'investment'), 'unit'] = "EUR/kW_e"
     costs.loc[('nuclear', 'investment'), 'source'] = source_dict['Lazards']
 
@@ -290,7 +279,7 @@ def add_conventional_data(costs):
 
     # coal from Lazards and BP 2019
     costs.loc[('coal', 'investment'), 'value'] = 4162.5 / \
-        (1 + rate_inflation)**(2019 - 2015)
+        (1 + snakemake.config['rate_inflation'])**(2019 - snakemake.config['eur_year'])
     costs.loc[('coal', 'investment'), 'unit'] = "EUR/kW_e"
     costs.loc[('coal', 'investment'), 'source'] = source_dict['Lazards']
 
@@ -319,7 +308,7 @@ def add_conventional_data(costs):
 
     # lignite from Lazards and DIW
     costs.loc[('lignite', 'investment'), 'value'] = 4162.5 / \
-        (1 + rate_inflation)**(2019 - 2015)
+        (1 + snakemake.config['rate_inflation'])**(2019 - snakemake.config['eur_year'])
     costs.loc[('lignite', 'investment'), 'unit'] = "EUR/kW_e"
     costs.loc[('lignite', 'investment'), 'source'] = source_dict['Lazards']
 
@@ -391,24 +380,24 @@ def add_solar_from_other(costs):
                      fp=[431, 275, 204, 164])
     # the paper says 'In this report, all results are given in real 2019
     # money.'
-    data = data / (1 + rate_inflation)**(2019 - 2015)
+    data = data / (1 + snakemake.config['rate_inflation'])**(2019 - snakemake.config['eur_year'])
     solar_uti = pd.Series(data=data, index=years)
 
     # solar rooftop from ETIP 2019
     data = np.interp(x=years, xp=[2020, 2030, 2050], fp=[1150, 800, 550])
     # using 2016 money in page 10
-    data = data / (1 + rate_inflation)**(2016 - 2015)
+    data = data / (1 + snakemake.config['rate_inflation'])**(2016 - snakemake.config['eur_year'])
     solar_roof = pd.Series(data=data, index=years)
 
     # solar utility from Vartiaian 2019
-    if solar_utility_from_other:
+    if snakemake.config['solar_utility_from_vartiaien']:
         costs.loc[('solar-utility', 'investment'), 'value'] = solar_uti[year]
         costs.loc[('solar-utility', 'investment'), 'source'] = source_dict['Vartiaien']
 
         costs.loc[('solar-utility', 'lifetime'), 'value'] = 30
         costs.loc[('solar-utility', 'lifetime'), 'source'] = source_dict['Vartiaien']
 
-    if solar_rooftop_from_other:
+    if snakemake.config['solar_rooftop_from_etip']:
         # solar rooftop from ETIP 2019
         costs.loc[('solar-rooftop', 'investment'), 'value'] = solar_roof[year]
         costs.loc[('solar-rooftop', 'investment'), 'source'] = source_dict['ETIP']
@@ -462,7 +451,7 @@ def unify_diw(costs):
     """"
     include inflation for the DIW costs from 2010
     """
-    inflation = (1 + rate_inflation)**(2010 - 2015)
+    inflation = (1 + snakemake.config['rate_inflation'])**(2010 - snakemake.config['eur_year'])
     costs.loc[('PHS', 'investment'), 'value'] /= inflation
     costs.loc[('ror', 'investment'), 'value'] /= inflation
     costs.loc[('hydro', 'investment'), 'value'] /= inflation
@@ -841,7 +830,7 @@ def add_description(data):
     data["further description"] = sheets + ":  " + data["further description"]
 
     # add comment for offwind investment
-    if offwind_no_gridcosts:
+    if snakemake.config['offwind_no_gridcosts']:
         data.loc[("offwind", "investment"),
                  "further description"] += " grid connection costs substracted from investment costs"
 
@@ -1027,11 +1016,11 @@ for year in years:
     costs.loc[('solid biomass', 'fuel'), 'source'] = source_dict["zappa"]
 
     # add solar data from other source than DEA
-    if any([solar_utility_from_other, solar_rooftop_from_other]):
+    if any([snakemake.config['solar_utility_from_vartiaien'], snakemake.config['solar_rooftop_from_etip']]):
         costs = add_solar_from_other(costs)
 
     # add electrolyzer and fuel cell efficiency from other source than DEA
-    if h2_from_budischak:
+    if snakemake.config['h2_from_budischak']:
         costs = add_h2_from_other(costs)
 
     # add data from conventional carriers

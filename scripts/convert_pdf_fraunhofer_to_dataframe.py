@@ -1,25 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Mar 11 14:11:28 2020
-
-script to convert the technology data assumptions of the Frauenhofer ISE Study
+script to convert the technology data assumptions of the Fraunhofer ISE Study
 "Wege zu einem klimaneutralen Energiesystem" (see pdf in folder docu) into a
 .csv format
-
-@author: bw0928
 """
 
 import pandas as pd
 from tabula import read_pdf
 import numpy as np
 
-# read pdf file
-data_path = ("docu/Anhang-Studie-Wege-zu-einem-klimaneutralen-Energiesystem.pdf")
-
-df_list = read_pdf(data_path, pages="3-15",
+df_list = read_pdf(snakemake.input.fraunhofer,
+                   pages="3-15",
                    multiple_tables=True)
-# %%
+
 clean_df = []
 j = 0
 for i in range(len(df_list)):
@@ -35,14 +29,14 @@ for i in range(len(df_list)):
         clean_df[j-1] = clean_df[j-1].append(df_list[i])
         print("table is appended ", i)
 
-# %%
+
 for i in range(len(clean_df)):
     clean_df[i].columns =  clean_df[i].iloc[0,:]
     clean_df[i] = clean_df[i].iloc[1:,:]
     clean_df[i].reset_index(drop=True, inplace=True)
     clean_df[i].dropna(axis=1, how="all", inplace=True)
 
-# %%
+
 columns = ["Komponente", "Größe", "Einheit", 2020, 2025, 2030, 2035, 2040,
        2045, 2050]
 for table in range(len(clean_df)):
@@ -69,17 +63,15 @@ for table in range(len(clean_df)):
     clean_df[table] = pd.concat(new, axis=1).T
     clean_df[table].set_index(["Komponente", "Größe"], inplace=True)
     clean_df[table].dropna(how="all", inplace=True)
- #%%
+
 total = pd.concat(clean_df)
-# %%
+
 total.Einheit = total.Einheit.str.replace("€", "EUR")
-total.to_csv(path + "inputs/Frauenhofer_ISE_costs.csv", encoding='iso-8859-15')
-# %%
-energiepreise = read_pdf(data_path, pages="15")
+total.to_csv(snakemake.output.costs, encoding='iso-8859-15')
+
+energiepreise = read_pdf(snakemake.input.fraunhofer, pages="15")
 energiepreise.dropna(axis=1, how="all", inplace=True)
 energiepreise.dropna(axis=0, how="all", inplace=True)
 energiepreise = energiepreise.rename(columns={"Unnamed: 1": "Fuel"}).set_index("Fuel")
 energiepreise["unit"] = "Eur/MWh"
-energiepreise.to_csv(path + "inputs/Frauenhofer_energy_prices.csv" , encoding='iso-8859-15')
-
-# %%
+energiepreise.to_csv(snakemake.output.energy_prices, encoding='iso-8859-15')

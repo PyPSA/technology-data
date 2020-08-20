@@ -217,47 +217,6 @@ def get_data_DEA(tech, data_in):
 
     return df_final
 
-#
-
-def add_offwind_connection_data(costs):
-    """"
-    add connection costs for offshore wind from DEA,
-    from eng_note_on_technology_costs_for_offshore_wind_turbines.pdf, p.9
-
-    assuming
-    * offshore wind farms with distance > 30 km are DC connected
-    * offshore wind farms near shore (< 30 km) AC connected
-    * station costs include platform, project managment and environmental
-      assessment and transformer station costs
-
-    """
-    # DC connected
-    costs.loc[('offwind-dc-station', 'investment'), 'value'] = 260
-    costs.loc[('offwind-dc-station', 'investment'), 'unit'] = "EUR/kW_e"
-    costs.loc[('offwind-dc-station', 'investment'), 'source'] = source_dict['DEA']
-
-    costs.loc[('offwind-dc-connection-submarine', 'investment'), 'value'] = 2680
-    costs.loc[('offwind-dc-connection-submarine', 'investment'), 'unit'] = "EUR/MW/km"
-    costs.loc[('offwind-dc-connection-submarine', 'investment'), 'source'] = source_dict['DEA']
-
-    costs.loc[('offwind-dc-connection-underground', 'investment'), 'value'] = 1340
-    costs.loc[('offwind-dc-connection-underground', 'investment'), 'unit'] = "EUR/MW/km"
-    costs.loc[('offwind-dc-connection-underground', 'investment'), 'source'] = source_dict['DEA']
-
-    # AC connected
-    costs.loc[('offwind-ac-station', 'investment'), 'value'] = 140
-    costs.loc[('offwind-ac-station', 'investment'), 'unit'] = "EUR/kW_e"
-    costs.loc[('offwind-ac-station', 'investment'), 'source'] = source_dict['DEA']
-
-    costs.loc[('offwind-ac-connection-submarine', 'investment'), 'value'] = 4030
-    costs.loc[('offwind-ac-connection-submarine', 'investment'), 'unit'] = "EUR/MW/km"
-    costs.loc[('offwind-ac-connection-submarine', 'investment'), 'source'] = source_dict['DEA']
-
-    costs.loc[('offwind-ac-connection-underground', 'investment'), 'value'] = 2010
-    costs.loc[('offwind-ac-connection-underground', 'investment'), 'unit'] = "EUR/MW/km"
-    costs.loc[('offwind-ac-connection-underground', 'investment'), 'source'] = source_dict['DEA']
-
-    return costs
 
 def add_conventional_data(costs):
     """"
@@ -1046,9 +1005,6 @@ for year in years:
     costs = add_costs_ccs(costs)
     # DAC
     add_DAC_cost(costs)
-
-    # add connection cost for offshore wind
-    costs = add_offwind_connection_data(costs)
 
     # include old pypsa costs
     check = pd.concat([costs_pypsa, costs], sort=True, axis=1)

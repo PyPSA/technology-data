@@ -184,17 +184,20 @@ def get_data_DEA(tech, data_in):
 
     df = pd.DataFrame()
     for para in parameters:
-        attr = excel[excel.index.str.contains(para)]
+        # attr = excel[excel.index.str.contains(para)]
+        attr = excel[[para in index for index in excel.index]]
         if len(attr) != 0:
             df = df.append(attr)
     df.index = df.index.str.replace('€', 'EUR')
 
-    df = df.loc[:, excel.columns.isin(years)]
+    df = df.reindex(columns=df.columns[df.columns.isin(years)])
+    df = df[~df.index.duplicated(keep='first')]
 
     # replace missing data
     df.replace("-", np.nan, inplace=True)
     # average data  in format "lower_value-upper_value"
-    df = df.applymap(lambda x: (float((x).split("-")[0])+float((x).split("-")[1]))/2 if (type(x)==str and "-" in x) else x)
+    df = df.applymap(lambda x: (float((x).split("-")[0])
+                                + float((x).split("-")[1]))/2 if (type(x)==str and "-" in x) else x)
     # remove approx. symbol "~"
     df = df.applymap(lambda x: float(x.replace("~","")) if type(x)==str else x)
 
@@ -1025,15 +1028,15 @@ for year in years:
 
     # single components missing
     comp_missing = costs_pypsa.index.difference(costs_tot.index)
-    if year==year[0]:
-        print("single components missing: ")
+    if (year==years[0]):
+        print("singlle parameters of technologies are missing: ")
         print(comp_missing)
+        print("old c_v and c_b values are assumed where given")
     to_add = costs_pypsa.loc[comp_missing].drop("year", axis=1)
     to_add.loc[:, "further description"] = " from old pypsa cost assumptions"
     costs_tot = pd.concat([costs_tot, to_add], sort=False)
 
     # take c_v and c_b values from old cost assumptions TODO check again!
-    print("old c_v and c_b values are assumed where given")
     c_value_index =  costs_pypsa[costs_pypsa.index.get_level_values(1).isin(
                                 ["c_b", "c_v"])].index
     costs_tot.loc[c_value_index,

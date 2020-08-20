@@ -67,7 +67,7 @@ The following parameters can be set at the beginning of the script (should be mo
 
 ## Library dependencies
 
-The current script only works with pandas version < 1.1.
+The current script has been tested with pandas up to version 1.1.0.
 
 The PDF to CSV conversion requires the package `tabula`. For conda users, install with `conda install -c conda-forge tabula-py`.
 

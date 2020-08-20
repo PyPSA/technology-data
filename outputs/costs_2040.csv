@@ -286,7 +286,6 @@ onwind,FOM,1.19,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_00
 onwind,VOM,1.24,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",20 Onshore turbines:  Variable O&M
 onwind,investment,977.57,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",20 Onshore turbines:  Nominal investment 
 onwind,lifetime,30.0,years,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",20 Onshore turbines:  Technical lifetime
-onwind-landcosts,investment,200.0,EUR/kWel,Land costs and compensation payments conservatively estimated based on DEA https://ens.dk/en/our-services/projections-and-models/technology-data, from old pypsa cost assumptions
 ror,FOM,2.0,%/year,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 ror,efficiency,0.9,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 ror,investment,3312.24,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions

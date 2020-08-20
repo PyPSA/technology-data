@@ -269,6 +269,12 @@ offwind,FOM,2.29,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_0
 offwind,VOM,2.46,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",21 Offshore turbines:  Variable O&M
 offwind,investment,1447.36,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",21 Offshore turbines:  Nominal investment grid connection costs substracted from investment costs
 offwind,lifetime,30.0,years,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",21 Offshore turbines:  Technical lifetime
+offwind-ac-connection-submarine,investment,2685.0,EUR/MW/km,DEA https://ens.dk/en/our-services/projections-and-models/technology-data, from old pypsa cost assumptions
+offwind-ac-connection-underground,investment,1342.0,EUR/MW/km,DEA https://ens.dk/en/our-services/projections-and-models/technology-data, from old pypsa cost assumptions
+offwind-ac-station,investment,250.0,EUR/kWel,DEA https://ens.dk/en/our-services/projections-and-models/technology-data, from old pypsa cost assumptions
+offwind-dc-connection-submarine,investment,2000.0,EUR/MW/km,DTU report based on Fig 34 of https://ec.europa.eu/energy/sites/ener/files/documents/2014_nsog_report.pdf, from old pypsa cost assumptions
+offwind-dc-connection-underground,investment,1000.0,EUR/MW/km,Haertel 2017; average + 13% learning reduction, from old pypsa cost assumptions
+offwind-dc-station,investment,400.0,EUR/kWel,Haertel 2017; assuming one onshore and one offshore node + 13% learning reduction, from old pypsa cost assumptions
 oil,CO2 intensity,0.27,tCO2/MWh_th,Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018,
 oil,FOM,2.44,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",50 Diesel engine farm:  Fixed O&M
 oil,VOM,6.0,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",50 Diesel engine farm:  Variable O&M
@@ -280,6 +286,7 @@ onwind,FOM,1.19,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_00
 onwind,VOM,1.24,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",20 Onshore turbines:  Variable O&M
 onwind,investment,977.57,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",20 Onshore turbines:  Nominal investment 
 onwind,lifetime,30.0,years,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",20 Onshore turbines:  Technical lifetime
+onwind-landcosts,investment,200.0,EUR/kWel,Land costs and compensation payments conservatively estimated based on DEA https://ens.dk/en/our-services/projections-and-models/technology-data, from old pypsa cost assumptions
 ror,FOM,2.0,%/year,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 ror,efficiency,0.9,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 ror,investment,3312.24,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions

@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Tue May 12 13:21:20 2020
-
 Script creates cost csv for choosen years from different source (source_dict).
 The data is standardized for uniform:
     - cost years (depending on the rate of inflation )
@@ -21,9 +19,8 @@ The script is structured as follows:
         (c) convert to pypsa cost syntax (investment, FOM, VOM, efficiency)
     (2) read data from other sources which need additional formatting:
         (a) old pypsa cost assumptions
-        (b) Frauenhofer ISE cost assumptions
+        (b) Fraunhofer ISE cost assumptions
     (3) merge data from all sources for every year and save it as a csv
-
 
 @author: Marta, Lisa
 """
@@ -32,19 +29,7 @@ import pandas as pd
 import numpy as np
 import os
 
-# %% -------- PARAMETER ------------------------------------------------------
-# considered years for tech data
-years = np.arange(2020, 2055, 5)
-rate_inflation = 0.02
-path_in="../inputs/"
-# add solar from different source
-solar_utility_from_other = False
-solar_rooftop_from_other = True
-# add fuel cell/electrolysis efficiencies from Budischak (DEA assumptions very conservative)
-h2_from_budischak = False
-# remove grid connection costs from DEA for offwind because they are calculated
-# seperately in pypsa-eur
-offwind_no_gridcosts = True
+years = snakemake.config['years']
 
 # ---------- sources -------------------------------------------------------
 source_dict = {
@@ -110,15 +95,15 @@ sheet_names = {'onwind': '20 Onshore turbines',
 
 # %% -------- FUNCTIONS ---------------------------------------------------
 
-def get_excel_sheets(path_in):
+def get_excel_sheets(excel_files):
     """"
-    read all excel sheets of a given input path (path_in) and return
+    read all excel sheets and return
     them as a dictionary (data_in)
     """
     data_in = {}
-    for entry in os.listdir(path_in):
+    for entry in excel_files:
         if entry[-5:] == ".xlsx":
-            data_in[entry] = pd.ExcelFile(path_in + entry).sheet_names
+            data_in[entry] = pd.ExcelFile(entry).sheet_names
     print("found ", len(data_in), " excel sheets: ")
     for key in data_in.keys():
         print("* ", key)
@@ -148,13 +133,13 @@ def get_data_DEA(tech, data_in):
         print("excel file not found for tech ", tech)
         return None
 
-    excel = pd.read_excel(path_in + excel_file,
+    excel = pd.read_excel(excel_file,
                           sheet_name=sheet_names[tech],
                           index_col=0,
                           usecols='B:G', skiprows=[0, 1])
     # battery excel sheet has a different format
     if tech=="battery":
-        excel = pd.read_excel(path_in + excel_file,
+        excel = pd.read_excel(excel_file,
                               sheet_name=sheet_names[tech],
                               index_col=0,
                               usecols='B:J', skiprows=[0, 1])
@@ -203,7 +188,7 @@ def get_data_DEA(tech, data_in):
 
     df = df.astype(float)
 
-    if (tech == "offwind") & offwind_no_gridcosts:
+    if (tech == "offwind") and snakemake.config['offwind_no_gridcosts']:
         df.loc['Nominal investment (MEUR/MW)'] -= excel.loc[' - of which grid connection']
 
 
@@ -213,7 +198,7 @@ def get_data_DEA(tech, data_in):
         values = np.interp(x=years, xp=df.columns.values.astype(float), fp=df.loc[index, :].values.astype(float))
         df_final.loc[index, :] = values
 
-    df_final["source"] = source_dict["DEA"] + ", " + excel_file
+    df_final["source"] = source_dict["DEA"] + ", " + excel_file.replace("inputs/","")
     df_final["unit"] = (df_final.rename(index=lambda x:
                                         x[x.rfind("(")+1: x.rfind(")")]).index.values)
     df_final.index = df_final.index.str.replace(r" \(.*\)","")
@@ -227,7 +212,7 @@ def add_conventional_data(costs):
     """
     # nuclear from Lazards
     costs.loc[('nuclear', 'investment'), 'value'] = 8595 / \
-        (1 + rate_inflation)**(2019 - 2015)
+        (1 + snakemake.config['rate_inflation'])**(2019 - snakemake.config['eur_year'])
     costs.loc[('nuclear', 'investment'), 'unit'] = "EUR/kW_e"
     costs.loc[('nuclear', 'investment'), 'source'] = source_dict['Lazards']
 
@@ -256,7 +241,7 @@ def add_conventional_data(costs):
 
     # coal from Lazards and BP 2019
     costs.loc[('coal', 'investment'), 'value'] = 4162.5 / \
-        (1 + rate_inflation)**(2019 - 2015)
+        (1 + snakemake.config['rate_inflation'])**(2019 - snakemake.config['eur_year'])
     costs.loc[('coal', 'investment'), 'unit'] = "EUR/kW_e"
     costs.loc[('coal', 'investment'), 'source'] = source_dict['Lazards']
 
@@ -285,7 +270,7 @@ def add_conventional_data(costs):
 
     # lignite from Lazards and DIW
     costs.loc[('lignite', 'investment'), 'value'] = 4162.5 / \
-        (1 + rate_inflation)**(2019 - 2015)
+        (1 + snakemake.config['rate_inflation'])**(2019 - snakemake.config['eur_year'])
     costs.loc[('lignite', 'investment'), 'unit'] = "EUR/kW_e"
     costs.loc[('lignite', 'investment'), 'source'] = source_dict['Lazards']
 
@@ -357,24 +342,24 @@ def add_solar_from_other(costs):
                      fp=[431, 275, 204, 164])
     # the paper says 'In this report, all results are given in real 2019
     # money.'
-    data = data / (1 + rate_inflation)**(2019 - 2015)
+    data = data / (1 + snakemake.config['rate_inflation'])**(2019 - snakemake.config['eur_year'])
     solar_uti = pd.Series(data=data, index=years)
 
     # solar rooftop from ETIP 2019
     data = np.interp(x=years, xp=[2020, 2030, 2050], fp=[1150, 800, 550])
     # using 2016 money in page 10
-    data = data / (1 + rate_inflation)**(2016 - 2015)
+    data = data / (1 + snakemake.config['rate_inflation'])**(2016 - snakemake.config['eur_year'])
     solar_roof = pd.Series(data=data, index=years)
 
     # solar utility from Vartiaian 2019
-    if solar_utility_from_other:
+    if snakemake.config['solar_utility_from_vartiaien']:
         costs.loc[('solar-utility', 'investment'), 'value'] = solar_uti[year]
         costs.loc[('solar-utility', 'investment'), 'source'] = source_dict['Vartiaien']
 
         costs.loc[('solar-utility', 'lifetime'), 'value'] = 30
         costs.loc[('solar-utility', 'lifetime'), 'source'] = source_dict['Vartiaien']
 
-    if solar_rooftop_from_other:
+    if snakemake.config['solar_rooftop_from_etip']:
         # solar rooftop from ETIP 2019
         costs.loc[('solar-rooftop', 'investment'), 'value'] = solar_roof[year]
         costs.loc[('solar-rooftop', 'investment'), 'source'] = source_dict['ETIP']
@@ -428,7 +413,7 @@ def unify_diw(costs):
     """"
     include inflation for the DIW costs from 2010
     """
-    inflation = (1 + rate_inflation)**(2010 - 2015)
+    inflation = (1 + snakemake.config['rate_inflation'])**(2010 - snakemake.config['eur_year'])
     costs.loc[('PHS', 'investment'), 'value'] /= inflation
     costs.loc[('ror', 'investment'), 'value'] /= inflation
     costs.loc[('hydro', 'investment'), 'value'] /= inflation
@@ -809,7 +794,7 @@ def add_description(data):
     data["further description"] = sheets + ":  " + data["further description"]
 
     # add comment for offwind investment
-    if offwind_no_gridcosts:
+    if snakemake.config['offwind_no_gridcosts']:
         data.loc[("offwind", "investment"),
                  "further description"] += " grid connection costs substracted from investment costs"
 
@@ -843,7 +828,7 @@ def add_gas_storage(data):
     therefore added later
     """
 
-    gas_storage = pd.read_excel("../inputs/technology_data_catalogue_for_energy_storage.xlsx",
+    gas_storage = pd.read_excel(snakemake.input.dea_storage,
                                 sheet_name="150 Underground Storage of Gas",
                                 index_col=1)
     gas_storage.dropna(axis=1, how="all", inplace=True)
@@ -936,7 +921,8 @@ def rename_ISE(costs_ISE):
 # (a)-------- get data from DEA excel sheets ----------------------------------
 
 # read excel sheet names of all excel files
-data_in = get_excel_sheets(path_in)
+excel_files = [v for k,v in snakemake.input.items() if "dea" in k]
+data_in = get_excel_sheets(excel_files)
 # create dictionary with raw data from DEA sheets
 d_by_tech = get_data_from_DEA(data_in)
 # concat into pd.Dataframe
@@ -968,13 +954,14 @@ data = add_gas_storage(data)
 
 # %% (2) -- get data from other sources which need formatting -----------------
 # (a)  ---------- get old pypsa costs ---------------------------------------
-costs_pypsa = pd.read_csv('../inputs/costs_PyPSA.csv',
+costs_pypsa = pd.read_csv(snakemake.input.pypsa_costs,
                           index_col=[0,2]).sort_index()
 # rename some techs and convert units
 costs_pypsa = rename_pypsa_old(costs_pypsa)
 
-# (b) ------- add costs from Frauenhofer ISE study --------------------------
-costs_ISE = pd.read_csv("../inputs/Frauenhofer_ISE_costs.csv", engine="python",
+# (b) ------- add costs from Fraunhofer ISE study --------------------------
+costs_ISE = pd.read_csv(snakemake.input.fraunhofer_costs,
+                        engine="python",
                         index_col=[0,1])
 # rename + reorder to fit to other data
 costs_ISE = rename_ISE(costs_ISE)
@@ -993,11 +980,11 @@ for year in years:
     costs.loc[('solid biomass', 'fuel'), 'source'] = source_dict["zappa"]
 
     # add solar data from other source than DEA
-    if any([solar_utility_from_other, solar_rooftop_from_other]):
+    if any([snakemake.config['solar_utility_from_vartiaien'], snakemake.config['solar_rooftop_from_etip']]):
         costs = add_solar_from_other(costs)
 
     # add electrolyzer and fuel cell efficiency from other source than DEA
-    if h2_from_budischak:
+    if snakemake.config['h2_from_budischak']:
         costs = add_h2_from_other(costs)
 
     # add data from conventional carriers
@@ -1049,6 +1036,4 @@ for year in years:
     costs_tot.drop("fixed", level=1, inplace=True)
     costs_tot.sort_index(inplace=True)
     costs_tot = round(costs_tot, ndigits=2)
-    costs_tot.to_csv("../outputs/costs_{}.csv".format(year))
-
-
+    costs_tot.to_csv([v for v in snakemake.output if str(year) in v][0])

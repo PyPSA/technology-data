@@ -71,6 +71,21 @@ The current script has been tested with pandas up to version 1.1.0.
 
 The PDF to CSV conversion requires the package `tabula`. For conda users, install with `conda install -c conda-forge tabula-py`.
 
+
+## Release Notes
+
+### technology-data 0.1.0 (21st August 2020)
+
+This is the first release to coincide with the release of [PyPSA-Eur-Sec](https://github.com/PyPSA/pypsa-eur-sec) 0.1.0.
+
+### Release process
+
+* Update release notes.
+* Update version number in `config.yaml`.
+* Make a `git commit`.
+* Tag the release with `git tag v0.x.x`, `git push`, `git push --tags`.
+* Make a [GitHub release](https://github.com/PyPSA/technology-data/releases), which triggers archiving by [zenodo.org](https://zenodo.org/).
+
 ## Licence
 
 Copyright 2019-2020 Marta Victoria (Aarhus University), Kun Zhu

@@ -1,3 +1,10 @@
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/pypsa/technology-data?include_prereleases)
+![Licence](https://img.shields.io/github/license/pypsa/technology-data)
+![Size](https://img.shields.io/github/repo-size/pypsa/technology-data)
+[![Zenodo](https://zenodo.org/badge/DOI/10.5281/zenodo.3994163.svg)](https://doi.org/10.5281/zenodo.3994163)
+[![Gitter](https://badges.gitter.im/PyPSA/community.svg)](https://gitter.im/PyPSA/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
+
 # Energy System Technology Data
 
 This script compiles assumptions on energy system technologies (such
@@ -76,7 +83,7 @@ The PDF to CSV conversion requires the package `tabula`. For conda users, instal
 
 ### technology-data 0.1.0 (21st August 2020)
 
-This is the first release to coincide with the release of [PyPSA-Eur-Sec](https://github.com/PyPSA/pypsa-eur-sec) 0.1.0.
+This is the first release to coincide with the release of [PyPSA-Eur-Sec](https://github.com/PyPSA/pypsa-eur-sec) Version 0.2.0.
 
 ### Release process
 
@@ -84,7 +91,7 @@ This is the first release to coincide with the release of [PyPSA-Eur-Sec](https:
 * Update version number in `config.yaml`.
 * Make a `git commit`.
 * Tag the release with `git tag v0.x.x`, `git push`, `git push --tags`.
-* Make a [GitHub release](https://github.com/PyPSA/technology-data/releases), which triggers archiving by [zenodo.org](https://zenodo.org/).
+* Make a [GitHub release](https://github.com/PyPSA/technology-data/releases), which triggers archiving by [zenodo.org](https://doi.org/10.5281/zenodo.3994163).
 
 ## Licence
 

@@ -192,6 +192,9 @@ def get_data_DEA(tech, data_in, expectation=None):
 
     uncertainty_columns = ["2050-optimist", "2050-pessimist"]
     if uncrtnty_lookup[tech]:
+        # hydrogen storage sheets have reverse order of lower/upper estimates
+        if tech in ["hydrogen storage tank", "hydrogen storage cavern"]:
+            uncertainty_columns.reverse()
         excel.rename(columns={excel.columns[-2]: uncertainty_columns[0],
                                 excel.columns[-1]: uncertainty_columns[1]
                                 }, inplace=True)

@@ -191,7 +191,6 @@ def get_data_DEA(tech, data_in):
     if (tech == "offwind") and snakemake.config['offwind_no_gridcosts']:
         df.loc['Nominal investment (MEUR/MW)'] -= excel.loc[' - of which grid connection']
 
-
     df_final = pd.DataFrame(index=df.index, columns=years)
 
     for index in df_final.index:

@@ -1,0 +1,14 @@
+name: technology-data
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python
+  - pip
+  - snakemake-minimal
+  - pandas>=1.1.0
+  - numpy
+  - beautifulsoup4
+
+  - pip:
+    - tabula-py

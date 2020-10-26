@@ -3,6 +3,8 @@ version: 0.1.0
 # considered years for output data
 years : [2020, 2025, 2030, 2035, 2040, 2045, 2050]
 
+expectation : "" # tech data uncertainty, possible options [None, "optimist", "pessimist"]
+
 rate_inflation : 0.02
 
 #year for EUR outputs

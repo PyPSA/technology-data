@@ -202,7 +202,7 @@ def get_data_DEA(tech, data_in, expectation=None):
         for col in uncertainty_columns:
             excel.loc[:,col] = excel.loc[:,2050]
 
-    swap_patterns = ["technical life", "efficiency"] # cases where bigger is better
+    swap_patterns = ["technical life", "efficiency", "Hydrogen output, at LHV"] # cases where bigger is better
     swap = [any(term in idx.lower() for term in swap_patterns) for idx in excel.index]
     tmp = excel.loc[swap, "2050-pessimist"]
     excel.loc[swap, "2050-pessimist"] = excel.loc[swap, "2050-optimist"]

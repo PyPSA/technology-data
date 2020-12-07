@@ -99,7 +99,7 @@ central coal CHP,investment,1841.32,EUR/kW,"Danish Energy Agency, technology_dat
 central coal CHP,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",01 Coal CHP:  Technical lifetime
 central gas CHP,FOM,3.35,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Fixed O&M"
 central gas CHP,VOM,4.15,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Variable O&M"
-central gas CHP,c_b,0.7,per unit,DEA (backpressure ratio), from old pypsa cost assumptions
+central gas CHP,c_b,1.0,50oC/100oC,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Cb coefficient"
 central gas CHP,c_v,0.17,per unit,DEA (loss of fuel for additional heat), from old pypsa cost assumptions
 central gas CHP,efficiency,0.42,per unit,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Electricity efficiency, annual average"
 central gas CHP,investment,550.0,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Nominal investment"
@@ -107,7 +107,7 @@ central gas CHP,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_e
 central gas CHP,p_nom_ratio,1.0,per unit,, from old pypsa cost assumptions
 central gas CHP CCS,FOM,3.35,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Fixed O&M"
 central gas CHP CCS,VOM,4.15,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Variable O&M"
-central gas CHP CCS,c_b,0.7,per unit,DEA (backpressure ratio), from old pypsa cost assumptions
+central gas CHP CCS,c_b,1.0,50oC/100oC,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Cb coefficient"
 central gas CHP CCS,c_v,0.17,per unit,DEA (loss of fuel for additional heat), from old pypsa cost assumptions
 central gas CHP CCS,efficiency,0.37,per unit,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Electricity efficiency, annual average"
 central gas CHP CCS,investment,1150.0,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx , DIW (CCS)","04 Gas turb. simple cycle, L:  Nominal investment"
@@ -133,8 +133,8 @@ central solar thermal,investment,140000.0,EUR/1000m2,HP, from old pypsa cost ass
 central solar thermal,lifetime,20.0,years,HP, from old pypsa cost assumptions
 central solid biomass CHP,FOM,4.07,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Fixed O&M"
 central solid biomass CHP,VOM,1.86,EUR/MWh_e,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Variable O&M "
-central solid biomass CHP,c_b,1.01,per unit,DEA for wood pellets CHP (backpressure ratio), from old pypsa cost assumptions
-central solid biomass CHP,c_v,0.15,per unit,DEA for wood pellets CHP (loss of fuel for additional heat), from old pypsa cost assumptions
+central solid biomass CHP,c_b,0.46,40°C/80°C,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Cb coefficient"
+central solid biomass CHP,c_v,1.0,40°C/80°C,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Cv coefficient"
 central solid biomass CHP,efficiency,0.29,per unit,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Electricity efficiency, net, annual average"
 central solid biomass CHP,efficiency-heat,0.69,per unit,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Heat efficiency, net, annual average"
 central solid biomass CHP,investment,2817.11,EUR/kW_e,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Nominal investment "
@@ -142,8 +142,8 @@ central solid biomass CHP,lifetime,25.0,years,"Danish Energy Agency, technology_
 central solid biomass CHP,p_nom_ratio,1.0,per unit,, from old pypsa cost assumptions
 central solid biomass CHP CCS,FOM,4.07,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Fixed O&M"
 central solid biomass CHP CCS,VOM,1.86,EUR/MWh_e,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Variable O&M "
-central solid biomass CHP CCS,c_b,1.01,per unit,DEA for wood pellets CHP (backpressure ratio), from old pypsa cost assumptions
-central solid biomass CHP CCS,c_v,0.15,per unit,DEA for wood pellets CHP (loss of fuel for additional heat), from old pypsa cost assumptions
+central solid biomass CHP CCS,c_b,0.46,40°C/80°C,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Cb coefficient"
+central solid biomass CHP CCS,c_v,1.0,40°C/80°C,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Cv coefficient"
 central solid biomass CHP CCS,efficiency,0.26,per unit,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Electricity efficiency, net, annual average"
 central solid biomass CHP CCS,efficiency-heat,0.69,per unit,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Heat efficiency, net, annual average"
 central solid biomass CHP CCS,investment,3417.11,EUR/kW_e,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx , DIW (CCS)","09b Wood Pellets, Medium:  Nominal investment "

@@ -1016,20 +1016,12 @@ for year in years:
     # single components missing
     comp_missing = costs_pypsa.index.difference(costs_tot.index)
     if (year==years[0]):
-        print("singlle parameters of technologies are missing: ")
+        print("single parameters of technologies are missing, using old PyPSA assumptions: ")
         print(comp_missing)
         print("old c_v and c_b values are assumed where given")
     to_add = costs_pypsa.loc[comp_missing].drop("year", axis=1)
     to_add.loc[:, "further description"] = " from old pypsa cost assumptions"
     costs_tot = pd.concat([costs_tot, to_add], sort=False)
-
-    # take c_v and c_b values from old cost assumptions TODO check again!
-    c_value_index =  costs_pypsa[costs_pypsa.index.get_level_values(1).isin(
-                                ["c_b", "c_v"])].index
-    costs_tot.loc[c_value_index,
-                  ["value", "unit", "source"]] = costs_pypsa.loc[c_value_index,
-                                                       ["value", "unit", "source"]]
-    costs_tot.loc[c_value_index, "further description"] = " from old pypsa cost assumptions"
 
     # unify the cost from DIW2010
     costs_tot = unify_diw(costs_tot)

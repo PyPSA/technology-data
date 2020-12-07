@@ -125,7 +125,10 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'biogas upgrading': 'I:J',
                     'electrolysis': 'I:J',
                     'battery': 'L,N',
-               }
+                    'direct air capture': 'I:J',
+                    'cement capture': 'I:J',
+                    'biomass CHP capture': 'I:J',
+}
 
 # %% -------- FUNCTIONS ---------------------------------------------------
 
@@ -172,7 +175,7 @@ def get_data_DEA(tech, data_in, expectation=None):
     if tech=="battery":
         usecols = f"B:J,{uncrtnty_lookup[tech]}"
     elif tech in ['direct air capture', 'cement capture', 'biomass CHP capture']:
-        usecols = f"A:F,I:J"
+        usecols = f"A:F,{uncrtnty_lookup[tech]}"
     else:
         usecols = f"B:G,{uncrtnty_lookup[tech]}"
 

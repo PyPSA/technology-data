@@ -4,7 +4,7 @@ This script compiles assumptions on energy system technologies (such
 as costs, efficiencies, lifetimes, etc.)  for chosen years
 (e.g. [2020, 2030, 2050]) from a variety of sources into CSV files to
 be read by energy system modelling software. The merged outputs have
-standardized cost years, technology names, units and source information.
+standardized cost years, technology names, units and source information. For further information about the structure and how to add new technologies, see the [documentation](https://technology-data.readthedocs.io/en/latest/)
 
 
 The outputs are used in
@@ -30,7 +30,7 @@ This repository has the following structure:
     converts input data from multiple sources to cost_{year}.csv for chosen year. Interpolates data for missing years or calculates the costs at a certain year based on the inflation rate. Technology data from the [Danish Energy Agency Technology Database](https://ens.dk/en/our-services/projections-and-models/technology-data) are preferred.
 If data are missing from all sources, these are taken from the old PyPSA cost
 assumptions (with a printed warning).
-The following parameters can be set at the beginning of the script (should be moved to a config.yaml):
+**config**: The following parameters can be set in the config.yaml
       * years : numpy array of all the years of which an output costs csv should be created
       * rate_inflation : inflation rate (currently: rate_inflation=0.02)
       * solar_utility_from_other : Bool (True/False) if solar utility data is taken from DEA or Vartiaien

@@ -17,6 +17,7 @@ rule compile_cost_assumptions:
         expand("outputs/costs_{year}.csv", year = config["years"])
     threads: 1
     resources: mem=500
+    conda: "environment.yaml"
     script: "scripts/compile_cost_assumptions.py"
 
 
@@ -28,4 +29,5 @@ rule convert_fraunhofer:
         energy_prices = "inputs/Fraunhofer_ISE_energy_prices.csv"
     threads: 1
     resources: mem=500
+    conda: "environment.yaml"
     script: "scripts/convert_pdf_fraunhofer_to_dataframe.py"

@@ -96,6 +96,37 @@ sheet_names = {'onwind': '20 Onshore turbines',
                # "DH main transmission": "103_11 DH transmission",
                }
 
+uncrtnty_lookup = {'onwind': 'J:K',
+                    'offwind': 'J:K',
+                    'solar-utility': 'J:K',
+                    'solar-rooftop': '',
+                    'OCGT': 'I:J',
+                    'CCGT': 'I:J',
+                    'oil': 'I:J',
+                    'biomass CHP': 'I:J',
+                    'biomass EOP': 'I:J',
+                    'biomass HOP': 'I:J',
+                    'central coal CHP': '',
+                    'central gas CHP': 'I:J',
+                    'central solid biomass CHP': 'I:J',
+                    'solar': '',
+                    'central air-sourced heat pump': 'J:K',
+                    'central ground-sourced heat pump': 'I:J',
+                    'central resistive heater': 'I:J',
+                    'central gas boiler': 'I:J',
+                    'decentral gas boiler': 'I:J',
+                    'decentral ground-sourced heat pump': 'I:J',
+                    'decentral air-sourced heat pump': 'I:J',
+                    'central water tank storage': 'J:K',
+                    'fuel cell': 'I:J',
+                    'hydrogen storage underground': 'J:K',
+                    'hydrogen storage tank': 'J:K',
+                    'micro CHP': 'I:J',
+                    'biogas upgrading': 'I:J',
+                    'electrolysis': 'I:J',
+                    'battery': 'L,N',
+               }
+
 # %% -------- FUNCTIONS ---------------------------------------------------
 
 def get_excel_sheets(excel_files):
@@ -127,9 +158,11 @@ def get_sheet_location(tech, sheet_names, data_in):
     return None
 
 #
-def get_data_DEA(tech, data_in):
+def get_data_DEA(tech, data_in, expectation=None):
     """
     interpolate cost for a given technology from DEA database sheet
+
+    uncertainty can be "optimist", "pessimist" or None|""
     """
     excel_file = get_sheet_location(tech, sheet_names, data_in)
     if excel_file is None:
@@ -137,17 +170,18 @@ def get_data_DEA(tech, data_in):
         return None
 
     if tech=="battery":
-        usecols = 'B:J'
+        usecols = f"B:J,{uncrtnty_lookup[tech]}"
     elif tech in ['direct air capture', 'cement capture', 'biomass CHP capture']:
-        usecols = 'A:J'
+        usecols = f"A:F,I:J"
     else:
-        usecols = 'B:G'
+        usecols = f"B:G,{uncrtnty_lookup[tech]}"
 
     excel = pd.read_excel(excel_file,
                           sheet_name=sheet_names[tech],
                           index_col=0,
                           usecols=usecols,
                           skiprows=[0, 1])
+
 
     excel.dropna(axis=1, how="all", inplace=True)
 
@@ -157,13 +191,38 @@ def get_data_DEA(tech, data_in):
     excel.dropna(axis=0, how="all", inplace=True)
 
     if 2020 not in excel.columns:
-        excel.reset_index(inplace=True)
-        excel.columns = (excel.loc[excel[excel == 2020].dropna(
-            how="all").index] .iloc[0, :].fillna("Technology", limit=1))
-        excel.drop(excel[excel == 2020].dropna(how="all").index, inplace=True)
-        excel.set_index(excel.columns[0], inplace=True)
-        # fix for battery with different excel sheet format
+        selection = excel[excel.isin([2020])].dropna(how="all").index
+        excel.columns = excel.loc[selection].iloc[0, :].fillna("Technology", limit=1)
+        excel.drop(selection, inplace=True)
+
+    uncertainty_columns = ["2050-optimist", "2050-pessimist"]
+    if uncrtnty_lookup[tech]:
+        # hydrogen storage sheets have reverse order of lower/upper estimates
+        if tech in ["hydrogen storage tank", "hydrogen storage cavern"]:
+            uncertainty_columns.reverse()
+        excel.rename(columns={excel.columns[-2]: uncertainty_columns[0],
+                                excel.columns[-1]: uncertainty_columns[1]
+                                }, inplace=True)
+    else:
+        for col in uncertainty_columns:
+            excel.loc[:,col] = excel.loc[:,2050]
+
+    swap_patterns = ["technical life", "efficiency", "Hydrogen output, at LHV"] # cases where bigger is better
+    swap = [any(term in idx.lower() for term in swap_patterns) for idx in excel.index]
+    tmp = excel.loc[swap, "2050-pessimist"]
+    excel.loc[swap, "2050-pessimist"] = excel.loc[swap, "2050-optimist"]
+    excel.loc[swap, "2050-optimist"] = tmp
+
+    if expectation:
+        excel.loc[:,2050] = excel.loc[:,f"2050-{expectation}"].combine_first(excel.loc[:,2050])
+    excel.drop(columns=uncertainty_columns, inplace=True)
+
+    # fix for battery with different excel sheet format
+    if tech == "battery":
         excel.rename(columns={"Technology":2040}, inplace=True)
+
+    if expectation:
+        excel = excel.loc[:,[2020,2050]]
 
     parameters = ["efficiency", "investment", "Fixed O&M",
                   "Variable O&M", "production capacity for one unit",
@@ -192,14 +251,14 @@ def get_data_DEA(tech, data_in):
     # average data  in format "lower_value-upper_value"
     df = df.applymap(lambda x: (float((x).split("-")[0])
                                 + float((x).split("-")[1]))/2 if (type(x)==str and "-" in x) else x)
-    # remove approx. symbol "~"
-    df = df.applymap(lambda x: float(x.replace("~","")) if type(x)==str else x)
+    # remove symbols "~", ">", "<"
+    for sym in ["~", ">", "<"]:
+        df = df.applymap(lambda x: x.replace(sym,"") if type(x)==str else x)
 
     df = df.astype(float)
 
     if (tech == "offwind") and snakemake.config['offwind_no_gridcosts']:
         df.loc['Nominal investment (MEUR/MW)'] -= excel.loc[' - of which grid connection']
-
 
     df_final = pd.DataFrame(index=df.index, columns=years)
 
@@ -417,7 +476,7 @@ def unify_diw(costs):
     return costs
 
 
-def get_data_from_DEA(data_in):
+def get_data_from_DEA(data_in, expectation=None):
     """
     saves technology data from DEA in dictionary d_by_tech
     """
@@ -426,7 +485,7 @@ def get_data_from_DEA(data_in):
     for tech in sheet_names.keys():
         print(tech + ' in PyPSA corresponds to ' + sheet_names[tech] +
               ' in DEA database.')
-        df = get_data_DEA(tech, data_in).fillna(0)
+        df = get_data_DEA(tech, data_in, expectation).fillna(0)
         d_by_tech[tech] = df
 
     return d_by_tech
@@ -945,7 +1004,7 @@ def rename_ISE(costs_ISE):
 excel_files = [v for k,v in snakemake.input.items() if "dea" in k]
 data_in = get_excel_sheets(excel_files)
 # create dictionary with raw data from DEA sheets
-d_by_tech = get_data_from_DEA(data_in)
+d_by_tech = get_data_from_DEA(data_in, expectation=snakemake.config["expectation"])
 # concat into pd.Dataframe
 tech_data = pd.concat(d_by_tech).sort_index()
 # clean up units

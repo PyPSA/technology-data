@@ -121,9 +121,6 @@ Fischer-Tropsch,2030,investment,677.6,EUR/kWH2,Fasihi doi:10.3390/su9020306 (60 
 Fischer-Tropsch,2030,lifetime,30,years,doi:10.3390/su9020306
 Fischer-Tropsch,2030,FOM,3,%/year,doi:10.3390/su9020306
 Fischer-Tropsch,2030,efficiency,0.8,per unit,TODO
-DAC,2030,investment,250,EUR/(tCO2/a),Fasihi doi:10.3390/su9020306/Climeworks
-DAC,2030,lifetime,30,years,Fasihi
-DAC,2030,FOM,4,%/year,Fasihi
 battery inverter,2030,investment,411,USD/kWel,budischak2013
 battery inverter,2030,lifetime,20,years,budischak2013
 battery inverter,2030,efficiency,0.81,per unit,budischak2013; Lund and Kempton (2008) https://doi.org/10.1016/j.enpol.2008.06.007

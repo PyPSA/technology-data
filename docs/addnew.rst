@@ -6,7 +6,15 @@ How to add a new technology
 
 Add a new technology from the Danish Energy Agency (DEA)
 ========================================================
-You can add a new technology from the Danish Energy Agency database which are saved in inputs/*.xlsx . One can add the wished technology name (e.g. "onwind") as a key and the excel sheet name of the technology in DEA (e.g. '20 Onshore turbines') as a value to the dictionary ``sheet_names`` in the ``compile_cost_assumptions.py``. It is recommended to still check in the output csv if all new technology data is compiled correctly.
+You can add a new technology from the Danish Energy Agency database which are
+saved in inputs/*.xlsx . One can add the wished technology name (e.g. "onwind")
+as a key and the excel sheet name of the technology in DEA (e.g. '20 Onshore turbines')
+as a value to the dictionary ``sheet_names`` in the ``compile_cost_assumptions.py``.
+For using the technology data uncertainty of DEA, add to the dictionary
+``uncrtnty_lookup`` the columns in the excel sheet which contain the uncertainty
+estimations (e.g. ``'onwind':'J:K'``)
+It is recommended to still check in the output csv if all new technology data is
+compiled correctly.
 
 .. literalinclude:: ../scripts/compile_cost_assumptions.py
    :language: python

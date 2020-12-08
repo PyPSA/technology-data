@@ -57,7 +57,7 @@ can be added without specifying e.g. VOM.
 
 Try to make the source of the data as clear as possible (e.g. including page
 number, DOI) and add the source to the `source_dict <https://github.com/PyPSA/technology-data/blob/2f4da6d75f07ef9457f4070b26d690f1e5e932a5/scripts/compile_cost_assumptions.py#L35>`_
-in the ``compile_cost_assumptions.py``. Convert the units within the script (this can be done `here <https://github.com/PyPSA/technology-data/blob/2f4da6d75f07ef9457f4070b26d690f1e5e932a5/scripts/compile_cost_assumptions.py#L1016>`_ in the script)
+in the ``compile_cost_assumptions.py``. Convert the units within the script (this can be done `in part (2) <https://github.com/PyPSA/technology-data/blob/2f4da6d75f07ef9457f4070b26d690f1e5e932a5/scripts/compile_cost_assumptions.py#L1016>`_ in the script)
 to be as transparent as possible.
 
 The inflation rate should be considered for the investment costs,

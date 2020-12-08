@@ -1,0 +1,12 @@
+parameter,unit,description
+investment,EUR/kW,"overall investment costs, if the energy output is not distinct, clarify with e.g. EUR/kWel or EUR/kWCH4"
+FOM,%/year (% of investment costs),Fixed operation and maintenance costs (FOM) are given as a percentage of the overnight costs per year
+VOM,EUR/MWh,"Variable operation and maintenance costs (VOM), if the energy output is not distinct, clarify with e.g. EUR/MWhel or EUR/MWhCH4"
+efficiency,per unit,efficiency of a technology
+lifetime,years,lifetime which is used in PyPSA-Eur and PyPSA-Eur-Sec to annualise the investment costs
+fuel,EUR/MWh_th,fuel costs
+discount_rate,per unit,"technology specific discount rate, used for annualising the investment costs"
+CO2 intensity,tCO2/MWh_th,amount of emitted CO2 per energy output
+c_b,per unit,back-pressure coefficient (electricity divided by heat) used for CHP plants
+c_v,per unit,"loss of electricity generation per unit of heat generated at fixed fuel input, used for CHP plants"
+efficiency-heat,per unit,heat efficiency for technologies with heat and power output (e.g. CHPs)

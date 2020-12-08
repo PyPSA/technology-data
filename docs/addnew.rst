@@ -20,6 +20,9 @@ compiled correctly.
    :language: python
    :lines: 54-60, 94
 
+If you want to extract further parameters from the DEA excel sheets you can
+add them to the ``parameter`` list in the function ``get_data_DEA()``.
+
 Add a new technology from another source
 ========================================================
 

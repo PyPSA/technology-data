@@ -41,10 +41,10 @@ SMR,FOM,5.4,%/year,https://www.gov.uk/government/publications/hydrogen-supply-ch
 SMR,efficiency,0.74,per unit,https://www.gov.uk/government/publications/hydrogen-supply-chain-evidence-base; slide 42 assumption for 2030, from old pypsa cost assumptions
 SMR,investment,540.56,EUR/kWCH4,https://www.gov.uk/government/publications/hydrogen-supply-chain-evidence-base; slide 42 assumption for 2030; GBP 466 exchange 1.16, from old pypsa cost assumptions
 SMR,lifetime,25.0,years,TODO, from old pypsa cost assumptions
-SMR CCS,FOM,5.4,%/year,https://www.gov.uk/government/publications/hydrogen-supply-chain-evidence-base; slide 42 assumption for 2030, from old pypsa cost assumptions
-SMR CCS,efficiency,0.67,per unit,https://www.gov.uk/government/publications/hydrogen-supply-chain-evidence-base; slide 42 assumption for 2030; CCS uses 10% of gas, from old pypsa cost assumptions
-SMR CCS,investment,1032.0,EUR/kWCH4,https://www.gov.uk/government/publications/hydrogen-supply-chain-evidence-base; slide 42 assumption for 2030; GBP 466 exchange 1.16; CCS costed at 300 EUR/tCO2/a, from old pypsa cost assumptions
-SMR CCS,lifetime,25.0,years,TODO, from old pypsa cost assumptions
+SMR CC,FOM,5.4,%/year,https://www.gov.uk/government/publications/hydrogen-supply-chain-evidence-base; slide 42 assumption for 2030, from old pypsa cost assumptions
+SMR CC,efficiency,0.67,per unit,https://www.gov.uk/government/publications/hydrogen-supply-chain-evidence-base; slide 42 assumption for 2030; CC uses 10% of gas, from old pypsa cost assumptions
+SMR CC,investment,1032.0,EUR/kWCH4,https://www.gov.uk/government/publications/hydrogen-supply-chain-evidence-base; slide 42 assumption for 2030; GBP 466 exchange 1.16; CC costed at 300 EUR/tCO2/a, from old pypsa cost assumptions
+SMR CC,lifetime,25.0,years,TODO, from old pypsa cost assumptions
 battery inverter,FOM,0.25,%/year,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Fixed O&M
 battery inverter,efficiency,0.96,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Round trip efficiency DC
 battery inverter,investment,215.0,EUR/kW,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Output capacity expansion cost investment
@@ -118,14 +118,6 @@ central gas CHP,efficiency,0.4,per unit,"Danish Energy Agency, technology_data_f
 central gas CHP,investment,575.0,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Nominal investment"
 central gas CHP,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Technical lifetime"
 central gas CHP,p_nom_ratio,1.0,per unit,, from old pypsa cost assumptions
-central gas CHP CCS,FOM,3.31,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Fixed O&M"
-central gas CHP CCS,VOM,4.3,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Variable O&M"
-central gas CHP CCS,c_b,0.98,50oC/100oC,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Cb coefficient"
-central gas CHP CCS,c_v,0.17,per unit,DEA (loss of fuel for additional heat), from old pypsa cost assumptions
-central gas CHP CCS,efficiency,0.36,per unit,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Electricity efficiency, annual average"
-central gas CHP CCS,investment,1175.0,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx , DIW (CCS)","04 Gas turb. simple cycle, L:  Nominal investment"
-central gas CHP CCS,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","04 Gas turb. simple cycle, L:  Technical lifetime"
-central gas CHP CCS,p_nom_ratio,1.0,per unit,, from old pypsa cost assumptions
 central gas boiler,FOM,3.5,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",44 Natural Gas DH Only:  Fixed O&M
 central gas boiler,VOM,1.05,EUR/MWh_th,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",44 Natural Gas DH Only:  Variable O&M
 central gas boiler,efficiency,1.03,per unit,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","44 Natural Gas DH Only:  Total efficiency , net, annual average"
@@ -153,15 +145,6 @@ central solid biomass CHP,efficiency-heat,0.69,per unit,"Danish Energy Agency, t
 central solid biomass CHP,investment,2929.1,EUR/kW_e,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Nominal investment "
 central solid biomass CHP,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Technical lifetime"
 central solid biomass CHP,p_nom_ratio,1.0,per unit,, from old pypsa cost assumptions
-central solid biomass CHP CCS,FOM,4.11,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Fixed O&M"
-central solid biomass CHP CCS,VOM,1.86,EUR/MWh_e,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Variable O&M "
-central solid biomass CHP CCS,c_b,0.46,40°C/80°C,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Cb coefficient"
-central solid biomass CHP CCS,c_v,1.0,40°C/80°C,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Cv coefficient"
-central solid biomass CHP CCS,efficiency,0.26,per unit,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Electricity efficiency, net, annual average"
-central solid biomass CHP CCS,efficiency-heat,0.69,per unit,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Heat efficiency, net, annual average"
-central solid biomass CHP CCS,investment,3529.1,EUR/kW_e,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx , DIW (CCS)","09b Wood Pellets, Medium:  Nominal investment "
-central solid biomass CHP CCS,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Technical lifetime"
-central solid biomass CHP CCS,p_nom_ratio,1.0,per unit,, from old pypsa cost assumptions
 central water tank storage,FOM,0.53,%/year,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Fixed O&M
 central water tank storage,investment,0.56,EUR/kWhCapacity,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Specific investment
 central water tank storage,lifetime,22.5,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Technical lifetime
@@ -260,10 +243,10 @@ hydrogen storage underground,FOM,0.0,%/year,"Danish Energy Agency, technology_da
 hydrogen storage underground,VOM,0.0,EUR/MWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Variable O&M
 hydrogen storage underground,investment,2.5,EUR/kWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Specific investment
 hydrogen storage underground,lifetime,100.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Technical lifetime
-industry CCS,FOM,2.0,%/year,Saygin et al 2013 https://doi.org/10.1016/j.ijggc.2013.05.032, from old pypsa cost assumptions
-industry CCS,efficiency,0.9,per unit,Saygin et al 2013 https://doi.org/10.1016/j.ijggc.2013.05.032, from old pypsa cost assumptions
-industry CCS,investment,300.0,EUR/tCO2/a,Saygin et al 2013 https://doi.org/10.1016/j.ijggc.2013.05.032, from old pypsa cost assumptions
-industry CCS,lifetime,25.0,years,Saygin et al 2013 https://doi.org/10.1016/j.ijggc.2013.05.032, from old pypsa cost assumptions
+industry CC,FOM,2.0,%/year,Saygin et al 2013 https://doi.org/10.1016/j.ijggc.2013.05.032, from old pypsa cost assumptions
+industry CC,efficiency,0.9,per unit,Saygin et al 2013 https://doi.org/10.1016/j.ijggc.2013.05.032, from old pypsa cost assumptions
+industry CC,investment,300.0,EUR/tCO2/a,Saygin et al 2013 https://doi.org/10.1016/j.ijggc.2013.05.032, from old pypsa cost assumptions
+industry CC,lifetime,25.0,years,Saygin et al 2013 https://doi.org/10.1016/j.ijggc.2013.05.032, from old pypsa cost assumptions
 lignite,CO2 intensity,0.41,tCO2/MWh_th,Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018,
 lignite,FOM,1.6,%/year,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
 lignite,VOM,3.5,EUR/MWh_e,Lazard s Levelized Cost of Energy Analysis - Version 13.0,

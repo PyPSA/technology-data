@@ -449,24 +449,6 @@ def add_h2_from_other(costs):
     return costs
 
 
-def add_costs_ccs(costs, techs_ccs=["central solid biomass CHP",
-                                    "central gas CHP"]  # SMR
-                  ):
-    """"
-    add costs and efficiencies from DIW for CCS for technologies 'techs_css'
-    """
-    for tech_ccs in techs_ccs:
-        name = tech_ccs + " CCS"
-        costs = costs.append(costs.loc[tech_ccs].set_index(
-            pd.MultiIndex.from_product([[name], costs.loc[tech_ccs].index])))
-        costs.loc[(name, 'efficiency'), 'value'] *= 0.9
-        # costs extra for CCS from DIW
-        costs.loc[(name, 'investment'), 'value'] += 600
-        costs.loc[(name, 'investment'), 'source'] += " , DIW (CCS)"
-
-    return costs
-
-
 def unify_diw(costs):
     """"
     include inflation for the DIW costs from 2010
@@ -1077,8 +1059,6 @@ for year in years:
     costs = add_conventional_data(costs)
     # CO2 intensity
     costs = add_co2_intensity(costs)
-    # CCS
-    costs = add_costs_ccs(costs)
 
     # include old pypsa costs
     check = pd.concat([costs_pypsa, costs], sort=True, axis=1)

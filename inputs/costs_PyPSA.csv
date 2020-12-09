@@ -113,10 +113,6 @@ SMR CC,2030,investment,1032,EUR/kWCH4,https://www.gov.uk/government/publications
 SMR CC,2030,lifetime,25,years,TODO
 SMR CC,2030,FOM,5.4,%/year,https://www.gov.uk/government/publications/hydrogen-supply-chain-evidence-base; slide 42 assumption for 2030
 SMR CC,2030,efficiency,0.67,per unit,https://www.gov.uk/government/publications/hydrogen-supply-chain-evidence-base; slide 42 assumption for 2030; CC uses 10% of gas
-industry CC,2030,investment,300,EUR/tCO2/a,Saygin et al 2013 https://doi.org/10.1016/j.ijggc.2013.05.032
-industry CC,2030,FOM,2,%/year,Saygin et al 2013 https://doi.org/10.1016/j.ijggc.2013.05.032
-industry CC,2030,lifetime,25,years,Saygin et al 2013 https://doi.org/10.1016/j.ijggc.2013.05.032
-industry CC,2030,efficiency,0.9,per unit,Saygin et al 2013 https://doi.org/10.1016/j.ijggc.2013.05.032
 Fischer-Tropsch,2030,investment,677.6,EUR/kWH2,Fasihi doi:10.3390/su9020306 (60 kEUR/bpd = 847 EUR/kWL (1b = 1.7 MWh) 847*0.8 = 677.6)
 Fischer-Tropsch,2030,lifetime,30,years,doi:10.3390/su9020306
 Fischer-Tropsch,2030,FOM,3,%/year,doi:10.3390/su9020306

@@ -245,10 +245,6 @@ hydrogen storage underground,FOM,0.0,%/year,"Danish Energy Agency, technology_da
 hydrogen storage underground,VOM,0.0,EUR/MWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Variable O&M
 hydrogen storage underground,investment,1.5,EUR/kWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Specific investment
 hydrogen storage underground,lifetime,100.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Technical lifetime
-industry CC,FOM,2.0,%/year,Saygin et al 2013 https://doi.org/10.1016/j.ijggc.2013.05.032, from old pypsa cost assumptions
-industry CC,efficiency,0.9,per unit,Saygin et al 2013 https://doi.org/10.1016/j.ijggc.2013.05.032, from old pypsa cost assumptions
-industry CC,investment,300.0,EUR/tCO2/a,Saygin et al 2013 https://doi.org/10.1016/j.ijggc.2013.05.032, from old pypsa cost assumptions
-industry CC,lifetime,25.0,years,Saygin et al 2013 https://doi.org/10.1016/j.ijggc.2013.05.032, from old pypsa cost assumptions
 lignite,CO2 intensity,0.41,tCO2/MWh_th,Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018,
 lignite,FOM,1.6,%/year,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
 lignite,VOM,3.5,EUR/MWh_e,Lazard s Levelized Cost of Energy Analysis - Version 13.0,

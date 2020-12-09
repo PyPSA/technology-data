@@ -235,7 +235,8 @@ def get_data_DEA(tech, data_in, expectation=None):
                   "Distribution network costs", "Technical life",
                   "Energy storage expansion cost",
                   'Output capacity expansion cost (M€2015/MW)',
-                  'Heat input', 'Heat  input', 'Electricity input', 'Eletricity input', 'Heat out']
+                  'Heat input', 'Heat  input', 'Electricity input', 'Eletricity input', 'Heat out',
+                  'capture rate']
 
 
     df = pd.DataFrame()
@@ -909,6 +910,11 @@ def add_gas_storage(data):
     return data
 
 def add_carbon_capture(data, tech_data):
+
+    for tech in ['cement capture', 'biomass CHP capture']:
+        data.loc[(tech,"capture_rate"), years] = tech_data.loc[(tech,'Ax) CO2 capture rate, net'), years].values[0]/100
+        data.loc[(tech,"capture_rate"), 'unit'] = 'per unit'
+
 
     for tech in ['direct air capture', 'cement capture', 'biomass CHP capture']:
         print(tech, tech_data.loc[tech].index)

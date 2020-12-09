@@ -70,6 +70,7 @@ biomass CHP,efficiency-heat,0.71,per unit,"Danish Energy Agency, technology_data
 biomass CHP,investment,3295.78,EUR/kW_e,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Nominal investment "
 biomass CHP,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09c Straw, Large, 40 degree:  Technical lifetime"
 biomass CHP capture,FOM,3.0,%/year,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.a Post comb - small CHP
+biomass CHP capture,capture_rate,0.9,per unit,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.a Post comb - small CHP
 biomass CHP capture,compression-electricity-input,0.1,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.a Post comb - small CHP
 biomass CHP capture,compression-heat-output,0.16,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.a Post comb - small CHP
 biomass CHP capture,electricity-input,0.03,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.a Post comb - small CHP
@@ -91,6 +92,7 @@ biomass HOP,efficiency,1.03,per unit,"Danish Energy Agency, technology_data_for_
 biomass HOP,investment,854.02,EUR/kW_th - heat output,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",09c Straw HOP:  Nominal investment 
 biomass HOP,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",09c Straw HOP:  Technical lifetime
 cement capture,FOM,3.0,%/year,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.c Post comb - Cement kiln
+cement capture,capture_rate,0.9,per unit,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.c Post comb - Cement kiln
 cement capture,compression-electricity-input,0.1,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.c Post comb - Cement kiln
 cement capture,compression-heat-output,0.16,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.c Post comb - Cement kiln
 cement capture,electricity-input,0.02,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.c Post comb - Cement kiln

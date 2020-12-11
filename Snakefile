@@ -12,7 +12,7 @@ rule compile_cost_assumptions:
         dea_storage = "inputs/technology_data_catalogue_for_energy_storage.xlsx",
         dea_generation = "inputs/technology_data_for_el_and_dh_-_0009.xlsx",
         dea_heating = "inputs/technologydatafor_heating_installations_marts_2018.xlsx",
-        dea_industrial = "inputs/technology_data_for_industrial_process_heat_0001.xlsx"
+        dea_industrial = "inputs/technology_data_for_industrial_process_heat_0002.xlsx"
     output:
         expand("outputs/costs_{year}.csv", year = config["years"])
     threads: 1

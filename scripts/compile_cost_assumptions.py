@@ -82,6 +82,9 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'biogas upgrading': '82 Biogas, upgrading',
                'battery': '180 Lithium Ion Battery',
                'electrolysis': '88 Alkaline Electrolyser',
+               'direct air capture' : '403.a Direct air capture',
+               'biomass CHP capture' : '401.a Post comb - small CHP',
+               'cement capture' : '401.c Post comb - Cement kiln',
                # 'electricity distribution rural': '101 2 el distri Rural',
                # 'electricity distribution urban': '101 4 el distri  city',
                # 'gas distribution rural': '102 7 gas  Rural',
@@ -122,7 +125,11 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'biogas upgrading': 'I:J',
                     'electrolysis': 'I:J',
                     'battery': 'L,N',
-               }
+                    'direct air capture': 'I:J',
+                    'cement capture': 'I:J',
+                    'biomass CHP capture': 'I:J',
+}
+
 
 # %% -------- FUNCTIONS ---------------------------------------------------
 
@@ -167,22 +174,24 @@ def get_data_DEA(tech, data_in, expectation=None):
         return None
 
     if tech=="battery":
-        excel = pd.read_excel(excel_file,
-                              sheet_name=sheet_names[tech],
-                              index_col=0,
-                              usecols=f"B:J,{uncrtnty_lookup[tech]}",
-                              skiprows=[0, 1])
+        usecols = f"B:J,{uncrtnty_lookup[tech]}"
+    elif tech in ['direct air capture', 'cement capture', 'biomass CHP capture']:
+        usecols = f"A:F,{uncrtnty_lookup[tech]}"
     else:
-        excel = pd.read_excel(excel_file,
-                              sheet_name=sheet_names[tech],
-                              index_col=0,
-                              usecols=f"B:G,{uncrtnty_lookup[tech]}",
-                              skiprows=[0, 1],
-                              na_values="N.A")
+        usecols = f"B:G,{uncrtnty_lookup[tech]}"
+
+    excel = pd.read_excel(excel_file,
+                          sheet_name=sheet_names[tech],
+                          index_col=0,
+                          usecols=usecols,
+                          skiprows=[0, 1],
+                          na_values="N.A")
+
     excel.dropna(axis=1, how="all", inplace=True)
 
 
     excel.index = excel.index.fillna(" ")
+    excel.index = excel.index.astype(str)
     excel.dropna(axis=0, how="all", inplace=True)
 
     if 2020 not in excel.columns:
@@ -226,7 +235,10 @@ def get_data_DEA(tech, data_in, expectation=None):
                   "Cv coefficient",
                   "Distribution network costs", "Technical life",
                   "Energy storage expansion cost",
-                  'Output capacity expansion cost (M€2015/MW)']
+                  'Output capacity expansion cost (M€2015/MW)',
+                  'Heat input', 'Heat  input', 'Electricity input', 'Eletricity input', 'Heat out',
+                  'capture rate']
+
 
     df = pd.DataFrame()
     for para in parameters:
@@ -379,19 +391,6 @@ def add_co2_intensity(costs):
 
     return costs
 
-def add_DAC_cost(costs):
-    """"
-    add Direct Air Capture (DAC)cost from  Fasihi2019/Climeworks
-    """
-    # DAC cost included in the Conclusions of Fasihi2019
-    data = np.interp(x=years,xp=[2020, 2030, 2040, 2050],
-                     fp=[772.5, 383, 251, 210.5])
-
-    DAC_investment = pd.Series(data=data, index=years)
-    costs.loc[('DAC','investment'),'value'] = DAC_investment[year]
-    costs.loc[('DAC', 'investment'),'unit']='EUR/(tCO2/a)'
-    costs.loc[('DAC', 'investment'),'source'] = 'Fasihi'
-
 
 def add_solar_from_other(costs):
     """"
@@ -448,24 +447,6 @@ def add_h2_from_other(costs):
     costs.loc[('fuel cell', 'efficiency'), 'value'] = 0.58
     costs.loc[('electrolysis', 'efficiency'), 'source'] = 'budischak2013'
     costs.loc[('fuel cell', 'efficiency'), 'source'] = 'budischak2013'
-
-    return costs
-
-
-def add_costs_ccs(costs, techs_ccs=["central solid biomass CHP",
-                                    "central gas CHP"]  # SMR
-                  ):
-    """"
-    add costs and efficiencies from DIW for CCS for technologies 'techs_css'
-    """
-    for tech_ccs in techs_ccs:
-        name = tech_ccs + " CCS"
-        costs = costs.append(costs.loc[tech_ccs].set_index(
-            pd.MultiIndex.from_product([[name], costs.loc[tech_ccs].index])))
-        costs.loc[(name, 'efficiency'), 'value'] *= 0.9
-        # costs extra for CCS from DIW
-        costs.loc[(name, 'investment'), 'value'] += 600
-        costs.loc[(name, 'investment'), 'source'] += " , DIW (CCS)"
 
     return costs
 
@@ -929,6 +910,36 @@ def add_gas_storage(data):
 
     return data
 
+def add_carbon_capture(data, tech_data):
+
+    for tech in ['cement capture', 'biomass CHP capture']:
+        data.loc[(tech,"capture_rate"), years] = tech_data.loc[(tech,'Ax) CO2 capture rate, net'), years].values[0]/100
+        data.loc[(tech,"capture_rate"), 'unit'] = 'per unit'
+
+
+    for tech in ['direct air capture', 'cement capture', 'biomass CHP capture']:
+        print(tech, tech_data.loc[tech].index)
+
+        data.loc[(tech,"investment"), years] = tech_data.loc[(tech,'Specific investment'), years].values[0]*1e6
+        data.loc[(tech,"investment"), 'unit'] = 'EUR/(tCO2/h)'
+
+        data.loc[(tech,"FOM"), years] = tech_data.loc[(tech,'Fixed O&M'), years].values[0]/tech_data.loc[(tech,'Specific investment'), years].values[0]*100
+        data.loc[(tech,"FOM"), 'unit'] = '%/year'
+
+        name_list = [('C2) Eletricity input ',"electricity-input"),
+                     ('C1) Heat  input ',"heat-input"),
+                     ('C1) Heat out ','heat-output'),
+                     ('CO₂ compression and dehydration - Electricity input',"compression-electricity-input"),
+                     ('CO₂ compression and dehydration - Heat out',"compression-heat-output")]
+
+        for dea_name, our_name in name_list:
+            data.loc[(tech,our_name), years] = tech_data.loc[(tech,dea_name), years].values[0]
+            data.loc[(tech,our_name), 'unit'] = 'MWh/tCO2'
+
+        data.loc[tech,'source'] = data.loc[(tech,'lifetime'),'source']
+        data.loc[tech,'further description'] = sheet_names[tech]
+
+    return data
 
 def rename_pypsa_old(costs_pypsa):
     """
@@ -1012,6 +1023,9 @@ data = add_description(data)
 data = convert_units(data)
 # add gas storage (different methodology than other sheets)
 data = add_gas_storage(data)
+# add carbon capture
+data = add_carbon_capture(data, tech_data)
+
 
 # %% (2) -- get data from other sources which need formatting -----------------
 # (a)  ---------- get old pypsa costs ---------------------------------------
@@ -1052,10 +1066,6 @@ for year in years:
     costs = add_conventional_data(costs)
     # CO2 intensity
     costs = add_co2_intensity(costs)
-    # CCS
-    costs = add_costs_ccs(costs)
-    # DAC
-    add_DAC_cost(costs)
 
     # include old pypsa costs
     check = pd.concat([costs_pypsa, costs], sort=True, axis=1)

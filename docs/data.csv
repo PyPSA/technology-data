@@ -1,5 +1,5 @@
 description,file/folder/function in script,licence,source
-"Danish Energy Agency Technology Database, most technologies","technology_data*.xlsx, energy_transport_data_sheet_dec_2017.xlsx",CC BY 4.0,https://ens.dk/en/our-services/projections-and-models/technology-data
+"Danish Energy Agency Technology Database, most technologies","technology_data*.xlsx, energy_transport_data_sheet_dec_2017.xlsx",,https://ens.dk/en/our-services/projections-and-models/technology-data
 "Vartiaien et. al., utility-scale solar PV",function in script,,https://onlinelibrary.wiley.com/doi/full/10.1002/pip.3189
 "Fraunhofer ISE Studie, gas pipeline costs",Fraunhofer_ISE_*.csv,,https://www.ise.fraunhofer.de/de/veroeffentlichungen/studien/wege-zu-einem-klimaneutralen-energiesystem.html
 Older data collected by the PyPSA team from a variety of sources,costs_PyPSA.csv,,

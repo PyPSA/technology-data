@@ -4,12 +4,8 @@ Technology-data base
 .. image:: https://img.shields.io/github/v/release/pypsa/technology-data?include_prereleases
     :alt: GitHub release (latest by date including pre-releases)
 
-.. image:: https://readthedocs.org/projects/pypsa-eur/badge/?version=latest
-    :target: https://pypsa-eur.readthedocs.io/en/latest/?badge=latest
-    :alt: Documentation Status
-
-.. image:: https://readthedocs.org/projects/pypsa-eur-sec/badge/?version=latest
-    :target: https://pypsa-eur-sec.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/technology-data/badge/?version=latest
+    :target: https://technology-data.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
 .. image:: https://img.shields.io/github/license/pypsa/technology-data
@@ -29,7 +25,7 @@ of sources into CSV files to be read by energy system modelling software. The me
 
 This project is maintained by the  `Photovoltaic Solar Energy group <https://eng.au.dk/en/research/mechanical-engineering/energy-systems-and-thermodynamics/photovoltaic-solar-energy/>`_ at the Department of Engineering at
 `Aarhus University <https://international.au.dk/>`_ and the `Energy System Modelling group <https://www.iai.kit.edu/english/2338.php>`_ at the `Institute for Automation and Applied Informatics <https://www.iai.kit.edu/english/index.php>`_ at the `Karlsruhe Institute of Technology <http://www.kit.edu/english/index.php>`_.
-The ESM group is funded by the `Helmholtz Association <https://www.helmholtz.de/en/>`_ until 2024. 
+The ESM group is funded by the `Helmholtz Association <https://www.helmholtz.de/en/>`_ until 2024.
 
 
 Documentation

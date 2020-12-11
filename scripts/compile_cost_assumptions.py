@@ -130,6 +130,7 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'biomass CHP capture': 'I:J',
 }
 
+
 # %% -------- FUNCTIONS ---------------------------------------------------
 
 def get_excel_sheets(excel_files):
@@ -183,8 +184,8 @@ def get_data_DEA(tech, data_in, expectation=None):
                           sheet_name=sheet_names[tech],
                           index_col=0,
                           usecols=usecols,
-                          skiprows=[0, 1])
-
+                          skiprows=[0, 1],
+                          na_values="N.A")
 
     excel.dropna(axis=1, how="all", inplace=True)
 

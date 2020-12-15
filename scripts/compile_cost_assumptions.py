@@ -302,7 +302,7 @@ def add_desalinsation_data(costs):
     costs.loc[(tech, 'electricity-input'), 'unit'] = "kWh/(m^3-H2O)"
     costs.loc[(tech, 'electricity-input'), 'source'] = source_dict['Caldera2016'] + ", Fig. 4."
 
-    tech = "Clean water tank storage"
+    tech = "clean water tank storage"
     costs.loc[(tech, 'investment'), 'value'] = 65
     costs.loc[(tech, 'investment'), 'unit'] = "EUR/(m^3-H2O)"
     costs.loc[(tech, 'investment'), 'source'] = source_dict['Caldera2016'] + ", Table 1."

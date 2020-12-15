@@ -315,6 +315,8 @@ def add_desalinsation_data(costs):
     costs.loc[(tech, 'lifetime'), 'unit'] = "years"
     costs.loc[(tech, 'lifetime'), 'source'] = source_dict['Caldera2016'] + ", Table 1."
 
+    costs = adjust_for_inflation(costs, ['seawater desalination', 'clean water tank storage'], 2013)
+
     return costs
 
 def add_conventional_data(costs):
@@ -514,6 +516,23 @@ def get_data_from_DEA(data_in, expectation=None):
         d_by_tech[tech] = df
 
     return d_by_tech
+
+def adjust_for_inflation(costs, techs, ref_year):
+    """
+    adjust the investment costs for the specified techs for inflation.
+
+    techs: str or list
+        One or more techs in costs index for which the inflation adjustment is done.
+    ref_year: int
+        Reference year for which the costs are provided and based on which the inflation adjustment is done.
+    costs: pd.Dataframe
+        Dataframe containing the costs data with multiindex on technology and one index key 'investment'.
+    """
+
+    inflation = (1 + snakemake.config['rate_inflation'])**(ref_year - snakemake.config['eur_year'])
+    costs.loc[(techs, 'investment'), 'value'] /= inflation
+
+    return costs
 
 
 def clean_up_units(tech_data):

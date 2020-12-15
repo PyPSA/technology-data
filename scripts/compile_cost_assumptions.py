@@ -286,7 +286,7 @@ def add_desalinsation_data(costs):
 
     tech = "seawater desalination"
     costs.loc[(tech, 'investment'), 'value'] = 2.23*8760
-    costs.loc[(tech, 'investment'), 'unit'] = "EUR/m^3-H2O*h"
+    costs.loc[(tech, 'investment'), 'unit'] = "EUR/m^3-H2O/h"
     costs.loc[(tech, 'investment'), 'source'] = source_dict['Caldera2016'] + ", Table 1."
 
     costs.loc[(tech, 'FOM'), 'value'] = 4.

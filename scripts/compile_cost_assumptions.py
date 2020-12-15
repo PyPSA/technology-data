@@ -49,8 +49,7 @@ source_dict = {
 
                 }
 
-# ---- sheet names for techs in DEA ------------------------------------------
-
+# [DEA-sheet-names]
 sheet_names = {'onwind': '20 Onshore turbines',
                'offwind': '21 Offshore turbines',
                'solar-utility': '22 Photovoltaics Large',
@@ -95,6 +94,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
                # 'gas pipeline': '102 6 gas Main distri line',
                # "DH main transmission": "103_11 DH transmission",
                }
+# [DEA-sheet-names]
 
 uncrtnty_lookup = {'onwind': 'J:K',
                     'offwind': 'J:K',
@@ -267,6 +267,7 @@ def get_data_DEA(tech, data_in, expectation=None):
 
     df_final = pd.DataFrame(index=df.index, columns=years)
 
+    # [RTD-interpolation-example]
     for index in df_final.index:
         values = np.interp(x=years, xp=df.columns.values.astype(float), fp=df.loc[index, :].values.astype(float))
         df_final.loc[index, :] = values
@@ -277,7 +278,6 @@ def get_data_DEA(tech, data_in, expectation=None):
     df_final.index = df_final.index.str.replace(r" \(.*\)","")
 
     return df_final
-
 
 def add_conventional_data(costs):
     """"
@@ -391,12 +391,13 @@ def add_co2_intensity(costs):
 
     return costs
 
-
+# [add-solar-from-others]
 def add_solar_from_other(costs):
     """"
     add solar from other sources than DEA (since the life time assumed in
     DEA is very optimistic)
     """
+
     # solar utility from Vartiaian 2019
     data = np.interp(x=years, xp=[2020, 2030, 2040, 2050],
                      fp=[431, 275, 204, 164])
@@ -438,7 +439,7 @@ def add_solar_from_other(costs):
 
     return costs
 
-
+# [add-h2-from-other]
 def add_h2_from_other(costs):
     """
     assume higher efficiency for electrolysis(0.8) and fuel cell(0.58)
@@ -450,7 +451,7 @@ def add_h2_from_other(costs):
 
     return costs
 
-
+# [unify-diw-inflation]
 def unify_diw(costs):
     """"
     include inflation for the DIW costs from 2010
@@ -1044,6 +1045,7 @@ costs_ISE = rename_ISE(costs_ISE)
 data = pd.concat([data, costs_ISE.loc[["Gasnetz"]]], sort=True)
 
 # %% (3) ------ add additional sources and save cost as csv ------------------
+# [RTD-target-multiindex-df]
 for year in years:
     costs = (data[[year, "unit", "source", "further description"]]
              .rename(columns={year: "value"}))

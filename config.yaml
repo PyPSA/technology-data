@@ -22,3 +22,6 @@ h2_from_budischak : false
 # remove grid connection costs from DEA for offwind because they are calculated
 # seperately in pypsa-eur
 offwind_no_gridcosts : true
+
+desalination:
+    salinity: 35 # in PSU (Practical Salinity Unit) = kg/m^3

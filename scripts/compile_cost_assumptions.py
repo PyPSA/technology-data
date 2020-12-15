@@ -46,7 +46,8 @@ source_dict = {
                 "co2" :'Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018',
                 # gas pipeline costs
                 "ISE": "WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",
-
+                # Water desalination costs
+                "Caldera2016": "Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004)",
                 }
 
 # ---- sheet names for techs in DEA ------------------------------------------
@@ -278,6 +279,43 @@ def get_data_DEA(tech, data_in, expectation=None):
 
     return df_final
 
+def add_desalinsation_data(costs):
+    """
+    add technology data for sea water desalination (SWRO) and water storage.
+    """
+
+    tech = "seawater desalination"
+    costs.loc[(tech, 'investment'), 'value'] = 2.23*8760
+    costs.loc[(tech, 'investment'), 'unit'] = "EUR/(m^3-H2O*h)"
+    costs.loc[(tech, 'investment'), 'source'] = source_dict['Caldera2016'] + ", Table 1."
+
+    costs.loc[(tech, 'FOM'), 'value'] = 4.
+    costs.loc[(tech, 'FOM'), 'unit'] = "%/year"
+    costs.loc[(tech, 'FOM'), 'source'] = source_dict['Caldera2016'] + ", Table 1."
+
+    costs.loc[(tech, 'lifetime'), 'value'] = 30
+    costs.loc[(tech, 'lifetime'), 'unit'] = "years"
+    costs.loc[(tech, 'lifetime'), 'source'] = source_dict['Caldera2016'] + ", Table 1."
+
+    salinity = snakemake.config['desalination']['salinity']
+    costs.loc[(tech, 'electricity-input'), 'value'] = (0.0003*salinity**2+0.0018*salinity+2.6043)
+    costs.loc[(tech, 'electricity-input'), 'unit'] = "kWh/(m^3-H2O)"
+    costs.loc[(tech, 'electricity-input'), 'source'] = source_dict['Caldera2016'] + ", Fig. 4."
+
+    tech = "Clean water tank storage"
+    costs.loc[(tech, 'investment'), 'value'] = 65
+    costs.loc[(tech, 'investment'), 'unit'] = "EUR/(m^3-H2O)"
+    costs.loc[(tech, 'investment'), 'source'] = source_dict['Caldera2016'] + ", Table 1."
+
+    costs.loc[(tech, 'FOM'), 'value'] = 2
+    costs.loc[(tech, 'FOM'), 'unit'] = "%/year"
+    costs.loc[(tech, 'FOM'), 'source'] = source_dict['Caldera2016'] + ", Table 1."
+
+    costs.loc[(tech, 'lifetime'), 'value'] = 30
+    costs.loc[(tech, 'lifetime'), 'unit'] = "years"
+    costs.loc[(tech, 'lifetime'), 'source'] = source_dict['Caldera2016'] + ", Table 1."
+
+    return costs
 
 def add_conventional_data(costs):
     """"
@@ -1057,6 +1095,9 @@ for year in years:
     # add solar data from other source than DEA
     if any([snakemake.config['solar_utility_from_vartiaien'], snakemake.config['solar_rooftop_from_etip']]):
         costs = add_solar_from_other(costs)
+    
+    # add desalination and clean water tank storage
+    costs = add_desalinsation_data(costs)
 
     # add electrolyzer and fuel cell efficiency from other source than DEA
     if snakemake.config['h2_from_budischak']:

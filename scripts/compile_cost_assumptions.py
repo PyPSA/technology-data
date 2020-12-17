@@ -83,6 +83,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'biogas upgrading': '82 Biogas, upgrading',
                'battery': '180 Lithium Ion Battery',
                'electrolysis': '88 Alkaline Electrolyser',
+               'industrial heat pump medium temperature':'302.a High temp. hp Up to 125 C',
                'direct air capture' : '403.a Direct air capture',
                'biomass CHP capture' : '401.a Post comb - small CHP',
                'cement capture' : '401.c Post comb - Cement kiln',
@@ -129,6 +130,7 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'direct air capture': 'I:J',
                     'cement capture': 'I:J',
                     'biomass CHP capture': 'I:J',
+                    'industrial heat pump medium temperature':'H:I',
 }
 
 
@@ -178,6 +180,8 @@ def get_data_DEA(tech, data_in, expectation=None):
         usecols = f"B:J,{uncrtnty_lookup[tech]}"
     elif tech in ['direct air capture', 'cement capture', 'biomass CHP capture']:
         usecols = f"A:F,{uncrtnty_lookup[tech]}"
+    elif tech in ['industrial heat pump medium temperature']:
+        usecols = f"A:E,{uncrtnty_lookup[tech]}"
     else:
         usecols = f"B:G,{uncrtnty_lookup[tech]}"
 
@@ -265,6 +269,10 @@ def get_data_DEA(tech, data_in, expectation=None):
 
     if (tech == "offwind") and snakemake.config['offwind_no_gridcosts']:
         df.loc['Nominal investment (MEUR/MW)'] -= excel.loc[' - of which grid connection']
+
+    # Exlucde indirect costs for centralised system with additional piping.
+    if tech.startswith('industrial heat pump'):
+        df = df.drop('Indirect investments cost (MEUR per MW)')
 
     df_final = pd.DataFrame(index=df.index, columns=years)
 

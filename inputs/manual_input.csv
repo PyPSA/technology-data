@@ -1,0 +1,12 @@
+technology,parameter,year,value,unit,currency_year,source,further_description
+industrial heat pump medium temperature,FOM,2050,0.1,%/year,2015,"Danish Energy Agency,  technology_data_for_industrial_process_heat_0002.xlsx",
+industrial heat pump medium temperature,VOM,2050,3.12,EUR/MWh_th,2015,"Danish Energy Agency,  technology_data_for_industrial_process_heat_0002.xlsx",
+industrial heat pump medium temperature,efficiency,2050,2.85,per unit,2015,"Danish Energy Agency,  technology_data_for_industrial_process_heat_0002.xlsx",
+industrial heat pump medium temperature,investment,2050,700,EUR/kW_th,2015,"Danish Energy Agency,  technology_data_for_industrial_process_heat_0002.xlsx",
+industrial heat pump medium temperature,lifetime,2050,20,years,2015,"Danish Energy Agency,  technology_data_for_industrial_process_heat_0002.xlsx",
+methanation,investment,2030,278,EUR/kW_CH4,2015,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
+methanation,lifetime,2030,30,years,2015,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
+methanation,FOM,2030,4,%/year,2015,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
+methanation,investment,2040,226,EUR/kW_CH4,2015,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
+methanation,lifetime,2040,30,years,2015,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
+methanation,FOM,2040,4,%/year,2015,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",

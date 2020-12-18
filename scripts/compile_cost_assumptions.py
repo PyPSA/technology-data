@@ -1028,6 +1028,36 @@ def rename_pypsa_old(costs_pypsa):
 
     return costs_pypsa
 
+def add_manual_input(data):
+
+    df = pd.read_csv(snakemake.input['manual_input'], quotechar='"',sep=',', keep_default_na=False)
+
+    # Inflation adjustment for investment and VOM
+    mask = df[df['parameter'].isin(['investment','VOM'])].index
+    df.loc[mask, 'value'] /= (1+snakemake.config['rate_inflation'])**(df.loc[mask, 'currency_year']-snakemake.config['eur_year'])
+
+    l = []
+    for tech in df['technology'].unique():
+        c0 = df[df['technology'] == tech]
+        for param in c0['parameter'].unique():
+
+            c = df.query('technology == @tech and parameter == @param')
+
+            s = pd.Series(index=snakemake.config['years'],
+                      data=np.interp(snakemake.config['years'], c['year'], c['value']),
+                      name=param)
+            s['parameter'] = param
+            s['technology'] = tech
+            for col in ['unit','source','further_description']:
+                s[col] = "; and\n".join(c[col].unique().astype(str))
+            
+            l.append(s)
+
+    new_df = pd.DataFrame(l).set_index(['technology','parameter'])
+    data = data.combine_first(new_df)
+    
+    return data
+
 
 def rename_ISE(costs_ISE):
     """
@@ -1108,6 +1138,7 @@ costs_ISE = rename_ISE(costs_ISE)
 # add costs for gas pipelines
 data = pd.concat([data, costs_ISE.loc[["Gasnetz"]]], sort=True)
 
+data = add_manual_input(data)
 # %% (3) ------ add additional sources and save cost as csv ------------------
 for year in years:
     costs = (data[[year, "unit", "source", "further description"]]

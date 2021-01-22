@@ -58,6 +58,9 @@ HVDC overhead,lifetime,40.0,years,Hagspiel, from old pypsa cost assumptions
 HVDC submarine,FOM,2.0,%/year,Hagspiel, from old pypsa cost assumptions
 HVDC submarine,investment,2000.0,EUR/MW/km,Own analysis of European submarine HVDC projects since 2000, from old pypsa cost assumptions
 HVDC submarine,lifetime,40.0,years,Hagspiel, from old pypsa cost assumptions
+Haber-Bosch synthesis,FOM,4.0,%/year,"Estimate, based on methanation plant.",
+Haber-Bosch synthesis,investment,5310107.51,EUR/MW,"Calculated based on Morgan E. 2013: doi:10.7275/11KT-3F59 , Fig. 56, Fig. 58, pg. 207, pg. 210.",
+Haber-Bosch synthesis,lifetime,20.0,years,"Morgan E. 2013: doi:10.7275/11KT-3F59 , pg. 290",
 LOHC transport ship,FOM,5.0,%/year,"Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514",
 LOHC transport ship,capacity,75000.0,t_LOHC,"Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514",
 LOHC transport ship,investment,35000000.0,EUR,"Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514",
@@ -87,6 +90,9 @@ SMR CC,FOM,5.4,%/year,https://www.gov.uk/government/publications/hydrogen-supply
 SMR CC,efficiency,0.67,per unit,https://www.gov.uk/government/publications/hydrogen-supply-chain-evidence-base; slide 42 assumption for 2030; CC uses 10% of gas, from old pypsa cost assumptions
 SMR CC,investment,1032.0,EUR/kWCH4,https://www.gov.uk/government/publications/hydrogen-supply-chain-evidence-base; slide 42 assumption for 2030; GBP 466 exchange 1.16; CC costed at 300 EUR/tCO2/a, from old pypsa cost assumptions
 SMR CC,lifetime,25.0,years,TODO, from old pypsa cost assumptions
+air separation unit,FOM,4.0,%/year,"Estimate, based on methanation plant.",
+air separation unit,investment,10942205.1,EUR/MW,"Calculated based on Morgan E. 2013: doi:10.7275/11KT-3F59 , Fig. 56, Fig. 58, pg. 207, pg. 210.",
+air separation unit,lifetime,20.0,years,"Morgan E. 2013: doi:10.7275/11KT-3F59 , pg. 290",
 battery inverter,FOM,0.54,%/year,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Fixed O&M
 battery inverter,efficiency,0.96,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Round trip efficiency DC
 battery inverter,investment,100.0,EUR/kW,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Output capacity expansion cost investment

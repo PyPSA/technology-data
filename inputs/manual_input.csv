@@ -76,9 +76,9 @@ air separation unit,FOM,2020,4,%/year,2010,"Estimate, based on methanation plant
 air separation unit,lifetime,2020,20,years,2010,"Morgan E. 2013: doi:10.7275/11KT-3F59 , pg. 290",
 LOHC chemical,investment,2035,2500,EUR/t,2020,"Runge et al 2020, pg.7, https://papers.ssrn.com/abstract=3623514",
 LOHC chemical,lifetime,2035,20,years,2020,"Runge et al 2020, pg.7, https://papers.ssrn.com/abstract=3623514",
-LOHC hydrogenation,investment,2035,51308,EUR/MW,2020,"Runge et al 2020, pg.8, https://papers.ssrn.com/abstract=3623514",
+LOHC hydrogenation,investment,2035,51308,EUR/MW_LHV,2020,"Runge et al 2020, pg.8, https://papers.ssrn.com/abstract=3623514",per MW H2 (LHV) in.
 LOHC hydrogenation,FOM,2035,3,%/year,2020,"Runge et al 2020, pg.8, https://papers.ssrn.com/abstract=3623514",
 LOHC hydrogenation,lifetime,2035,20,years,2020,"Runge et al 2020, pg.8, https://papers.ssrn.com/abstract=3623514",
-LOHC dehydrogenation,investment,2035,839398,EUR/MW,2020,"Runge et al 2020, pg.8, https://papers.ssrn.com/abstract=3623514",
+LOHC dehydrogenation,investment,2035,1566874,EUR/t/s,2020,"Runge et al 2020, pg.8, https://papers.ssrn.com/abstract=3623514","Org. 839398 EUR/MW_out, scaled to t of LOHC (loaded) in, with 5.6 wt-% H2 and LHV of 33.3333 MWh_LHV t_H2."
 LOHC dehydrogenation,FOM,2035,3,%/year,2020,"Runge et al 2020, pg.8, https://papers.ssrn.com/abstract=3623514",
 LOHC dehydrogenation,lifetime,2035,20,years,2020,"Runge et al 2020, pg.8, https://papers.ssrn.com/abstract=3623514",

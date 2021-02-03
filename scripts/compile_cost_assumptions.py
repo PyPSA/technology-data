@@ -517,9 +517,8 @@ def get_data_from_DEA(data_in, expectation=None):
     """
     d_by_tech = {}
 
-    for tech in sheet_names.keys():
-        print(tech + ' in PyPSA corresponds to ' + sheet_names[tech] +
-              ' in DEA database.')
+    for tech, dea_tech in sheet_names.items():
+        print(f'{tech} in PyPSA corresponds to {dea_tech} in DEA database.')
         df = get_data_DEA(tech, data_in, expectation).fillna(0)
         d_by_tech[tech] = df
 

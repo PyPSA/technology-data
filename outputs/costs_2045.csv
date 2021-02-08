@@ -16,6 +16,9 @@ CH4 evaporation,lifetime,30.0,years,"Fasihi et al 2017, table 1, https://www.mdp
 CH4 liquefaction,FOM,3.5,%/year,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CH4 liquefaction,investment,0.0,EUR/MW_CH4,"Calculated, based on Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CH4 liquefaction,lifetime,25.0,years,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
+CO2 storage tank,FOM,1.0,%/year,"Karjunen et al 2017: 10.1016/j.apenergy.2017.07.111 , Table 6 .",
+CO2 storage tank,investment,2528.17,EUR/t_CO2,"Karjunen et al 2017: 10.1016/j.apenergy.2017.07.111 , Table 6 and ref. [24] ibid (Lauri et al. 2014: doi: 10.1016/j.egypro.2014.11.297)",
+CO2 storage tank,lifetime,30.0,years,"Karjunen et al 2017: 10.1016/j.apenergy.2017.07.111 , Table 6 .",
 Fischer-Tropsch,FOM,3.0,%/year,doi:10.3390/su9020306, from old pypsa cost assumptions
 Fischer-Tropsch,efficiency,0.8,per unit,TODO, from old pypsa cost assumptions
 Fischer-Tropsch,investment,677.6,EUR/kWH2,Fasihi doi:10.3390/su9020306 (60 kEUR/bpd = 847 EUR/kWL (1b = 1.7 MWh) 847*0.8 = 677.6), from old pypsa cost assumptions
@@ -77,6 +80,9 @@ MeOH transport ship,FOM,5.0,%/year,"Assume comparable tanker as for LOHC transpo
 MeOH transport ship,capacity,75000.0,t_MeOH,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
 MeOH transport ship,investment,31700578.34,EUR,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
 MeOH transport ship,lifetime,15.0,years,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
+NH3 (l) storage tank incl. liquefaction,FOM,2.0,%/year,"Guesstimate, based on H2 (l) storage tank.",
+NH3 (l) storage tank incl. liquefaction,investment,161.93,EUR/MWh_NH3,"Calculated based on Morgan E. 2013: doi:10.7275/11KT-3F59 , Fig. 55, Fig 58.",
+NH3 (l) storage tank incl. liquefaction,lifetime,20.0,years,"Morgan E. 2013: doi:10.7275/11KT-3F59 , pg. 290",
 NH3 (l) transport ship,FOM,4.0,%/year,"Cihlar et al 2020 based on IEA 2019, Table 3-B",
 NH3 (l) transport ship,capacity,53000.0,t_NH3,"Cihlar et al 2020 based on IEA 2019, Table 3-B",
 NH3 (l) transport ship,investment,74461941.34,EUR,"Cihlar et al 2020 based on IEA 2019, Table 3-B",

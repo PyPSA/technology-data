@@ -16,9 +16,12 @@ CH4 evaporation,lifetime,30.0,years,"Fasihi et al 2017, table 1, https://www.mdp
 CH4 liquefaction,FOM,3.5,%/year,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CH4 liquefaction,investment,0.0,EUR/MW_CH4,"Calculated, based on Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CH4 liquefaction,lifetime,25.0,years,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
-CO2 storage tank,FOM,1.0,%/year,"Karjunen et al 2017: 10.1016/j.apenergy.2017.07.111 , Table 6 .",
-CO2 storage tank,investment,2528.17,EUR/t_CO2,"Karjunen et al 2017: 10.1016/j.apenergy.2017.07.111 , Table 6 and ref. [24] ibid (Lauri et al. 2014: doi: 10.1016/j.egypro.2014.11.297)",
-CO2 storage tank,lifetime,30.0,years,"Karjunen et al 2017: 10.1016/j.apenergy.2017.07.111 , Table 6 .",
+CO2 liquefaction,FOM,5.0,%/year,Mitsubish Heavy Industries Ltd. and IEA (2004): https://ieaghg.org/docs/General_Docs/Reports/PH4-30%20Ship%20Transport.pdf .,
+CO2 liquefaction,investment,16.03,EUR/t_CO2/h,Mitsubish Heavy Industries Ltd. and IEA (2004): https://ieaghg.org/docs/General_Docs/Reports/PH4-30%20Ship%20Transport.pdf .,
+CO2 liquefaction,lifetime,25.0,years,"Guesstimate, based on CH4 liquefaction.",
+CO2 storage tank,FOM,1.0,%/year,"Lauri et al. 2014: doi: 10.1016/j.egypro.2014.11.297, pg. 2746 .",
+CO2 storage tank,investment,2528.17,EUR/t_CO2,"Lauri et al. 2014: doi: 10.1016/j.egypro.2014.11.297, Table 3.",
+CO2 storage tank,lifetime,25.0,years,"Lauri et al. 2014: doi: 10.1016/j.egypro.2014.11.297, pg. 2746 .",
 Fischer-Tropsch,FOM,3.0,%/year,doi:10.3390/su9020306, from old pypsa cost assumptions
 Fischer-Tropsch,efficiency,0.8,per unit,TODO, from old pypsa cost assumptions
 Fischer-Tropsch,investment,677.6,EUR/kWH2,Fasihi doi:10.3390/su9020306 (60 kEUR/bpd = 847 EUR/kWL (1b = 1.7 MWh) 847*0.8 = 677.6), from old pypsa cost assumptions
@@ -26,6 +29,12 @@ Fischer-Tropsch,lifetime,30.0,years,doi:10.3390/su9020306, from old pypsa cost a
 Gasnetz,FOM,2.5,%,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz
 Gasnetz,investment,28.0,EUR/kWGas,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz
 Gasnetz,lifetime,30.0,years,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz
+General liquid hydrocarbon storage (crude),FOM,6.25,%/year,"Stelter and Nishida 2013: https://webstore.iea.org/insights-series-2013-focus-on-energy-security , figure 7 and pg. 12 .",
+General liquid hydrocarbon storage (crude),investment,135.83,EUR/m^3,"Stelter and Nishida 2013: https://webstore.iea.org/insights-series-2013-focus-on-energy-security , pg. 8F .",
+General liquid hydrocarbon storage (crude),lifetime,30.0,years,"Stelter and Nishida 2013: https://webstore.iea.org/insights-series-2013-focus-on-energy-security , pg. 11.",
+General liquid hydrocarbon storage (product),FOM,6.25,%/year,"Stelter and Nishida 2013: https://webstore.iea.org/insights-series-2013-focus-on-energy-security , figure 7 and pg. 12 .",
+General liquid hydrocarbon storage (product),investment,169.79,EUR/m^3,"Stelter and Nishida 2013: https://webstore.iea.org/insights-series-2013-focus-on-energy-security , pg. 8F .",
+General liquid hydrocarbon storage (product),lifetime,30.0,years,"Stelter and Nishida 2013: https://webstore.iea.org/insights-series-2013-focus-on-energy-security , pg. 11.",
 H2 (g) pipeline,FOM,1.7,%/year,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
 H2 (g) pipeline,investment,234.1,EUR/MW/km,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
 H2 (g) pipeline,lifetime,30.0,years,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
@@ -64,6 +73,9 @@ HVDC submarine,lifetime,40.0,years,Hagspiel, from old pypsa cost assumptions
 Haber-Bosch synthesis,FOM,4.0,%/year,"Estimate, based on methanation plant.",
 Haber-Bosch synthesis,investment,5310107.51,EUR/MW,"Calculated based on Morgan E. 2013: doi:10.7275/11KT-3F59 , Fig. 56, Fig. 58, pg. 207, pg. 210.",
 Haber-Bosch synthesis,lifetime,20.0,years,"Morgan E. 2013: doi:10.7275/11KT-3F59 , pg. 290",
+LNG storage tank,capacity,2.0,%/year,"Guesstimate, based on H2 (l) storage tank with comparable requirements.",
+LNG storage tank,investment,611.59,EUR/m^3,"Hurskainen 2019, https://cris.vtt.fi/en/publications/liquid-organic-hydrogen-carriers-lohc-concept-evaluation-and-tech pg. 46 (59).",
+LNG storage tank,lifetime,20.0,years,"Guesstimate, based on H2 (l) storage tank with comparable requirements.",
 LOHC chemical,investment,2264.33,EUR/t,"Runge et al 2020, pg.7, https://papers.ssrn.com/abstract=3623514",
 LOHC chemical,lifetime,20.0,years,"Runge et al 2020, pg.7, https://papers.ssrn.com/abstract=3623514",
 LOHC dehydrogenation,FOM,3.0,%/year,"Runge et al 2020, pg.8, https://papers.ssrn.com/abstract=3623514",

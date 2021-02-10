@@ -57,7 +57,7 @@ CH4 evaporation,investment,2040,0.000277627731784,EUR/MW_CH4,2015,"Calculated, b
 CH4 evaporation,FOM,2040,3.5,%/year,2015,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CH4 evaporation,lifetime,2040,30,years,2015,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 LNG storage tank,investment,2019,662,EUR/m^3,2019,"Hurskainen 2019, https://cris.vtt.fi/en/publications/liquid-organic-hydrogen-carriers-lohc-concept-evaluation-and-tech pg. 46 (59).",Currency year and technology year assumed based on publication date.
-LNG storage tank,capacity,2019,2,%/year,2019,"Guesstimate, based on H2 (l) storage tank with comparable requirements.",Currency year and technology year assumed based on publication date.
+LNG storage tank,FOM,2019,2,%/year,2019,"Guesstimate, based on H2 (l) storage tank with comparable requirements.",Currency year and technology year assumed based on publication date.
 LNG storage tank,lifetime,2019,20,years,2019,"Guesstimate, based on H2 (l) storage tank with comparable requirements.",Currency year and technology year assumed based on publication date.
 MeOH transport ship,investment,2035,35000000,EUR,2020,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
 MeOH transport ship,capacity,2035,75000,t_MeOH,2020,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",

@@ -40,10 +40,10 @@ CH4 (l) transport ship,investment,2030,151000000,EUR,2015,"Fasihi et al 2017, ta
 CH4 (l) transport ship,FOM,2030,3.5,%/year,2015,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CH4 (l) transport ship,lifetime,2030,25,years,2015,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CH4 (l) transport ship,capacity,2030,58300,t_CH4,2015,"Calculated, based on Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",based on 138 000 m^3 capacity and LNG density of 0.4226 t/m^3 .
-CH4 liquefaction,investment,2030,0.000735338316618,EUR/MW_CH4,2015,"Calculated, based on Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306","based on 196 kEUR/mcm / a SNG, a LNG density of 0.4226 t/m^3 and LHV of 13.8888 Mwh/t_CH4 and 8760 h/a"
+CH4 liquefaction,investment,2030,0.735338316618,EUR/kW_CH4,2015,"Calculated, based on Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306","based on 196 kEUR/mcm / a SNG, a LNG density of 0.4226 t/m^3 and LHV of 13.8888 Mwh/t_CH4 and 8760 h/a"
 CH4 liquefaction,FOM,2030,3.5,%/year,2015,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CH4 liquefaction,lifetime,2030,25,years,2015,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
-CH4 evaporation,investment,2030,0.000277627731784,EUR/MW_CH4,2015,"Calculated, based on Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306","based on 74 kEUR/mcm / a SNG, a LNG density of 0.4226 t/m^3 and LHV of 13.8888 Mwh/t_CH4 and 8760 h/a"
+CH4 evaporation,investment,2030,0.277627731784,EUR/kW_CH4,2015,"Calculated, based on Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306","based on 74 kEUR/mcm / a SNG, a LNG density of 0.4226 t/m^3 and LHV of 13.8888 Mwh/t_CH4 and 8760 h/a"
 CH4 evaporation,FOM,2030,3.5,%/year,2015,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CH4 evaporation,lifetime,2030,30,years,2015,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CH4 (l) transport ship,investment,2040,151000000,EUR,2015,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",

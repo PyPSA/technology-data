@@ -677,8 +677,6 @@ def set_round_trip_efficiency(tech_data):
     tech_data.drop("battery", level=0, inplace=True)
     tech_data = pd.concat([tech_data, inverter, storage])
 
-    breakpoint()
-
     return tech_data.sort_index()
 
 

@@ -661,8 +661,14 @@ def set_round_trip_efficiency(tech_data):
     inverter.rename(index ={'Output capacity expansion cost':
                             'Output capacity expansion cost investment'},
                     inplace=True)
+
+    # Manual correction based on footnote. 
+    inverter.loc['Technical lifetime', years] = 10.
+    inverter.loc['Technical lifetime', 'source'] += ', Note K.'
+
     inverter.index = pd.MultiIndex.from_product([["battery inverter"],
                                                  inverter.index.to_list()])
+
     storage = df.reindex(index=['Technical lifetime',
                                 'Energy storage expansion cost'])
     storage.rename(index={'Energy storage expansion cost':

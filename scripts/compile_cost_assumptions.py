@@ -275,7 +275,7 @@ def get_data_DEA(tech, data_in, expectation=None):
     df_final["source"] = source_dict["DEA"] + ", " + excel_file.replace("inputs/","")
     df_final["unit"] = (df_final.rename(index=lambda x:
                                         x[x.rfind("(")+1: x.rfind(")")]).index.values)
-    df_final.index = df_final.index.str.replace(r" \(.*\)","")
+    df_final.index = df_final.index.str.replace(r" \(.*\)","", regex=True)
 
     return df_final
 

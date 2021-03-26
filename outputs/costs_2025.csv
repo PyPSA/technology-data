@@ -6,6 +6,15 @@ CCGT,c_v,0.15,50oC/100oC,"Danish Energy Agency, technology_data_for_el_and_dh_-_
 CCGT,efficiency,0.57,per unit,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Electricity efficiency, annual average"
 CCGT,investment,855.0,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Nominal investment"
 CCGT,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Technical lifetime"
+CH4 (g) pipeline,FOM,1.7,%/year,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
+CH4 (g) pipeline,investment,79.006242,EUR/MW/km,Calculated based on numbers on Wikiepdia for the “Arab Gas Pipeline”.,
+CH4 (g) pipeline,lifetime,30.0,years,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
+CH4 (g) pipeline compressor,FOM,1.7,%/year,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
+CH4 (g) pipeline compressor,investment,103.825353,EUR/MW_CH4/km,Calculated based on Guidehouse values for H2 pipelines.,
+CH4 (g) pipeline compressor,lifetime,15.0,years,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
+CH4 (g) submarine pipeline,FOM,3.0,%/year,"d’Amore-Domenech et al (2021): 10.1016/j.apenergy.2021.116625 , supplementary material.",
+CH4 (g) submarine pipeline,investment,104.448,EUR/MW/km,Kaiser (2017): 10.1016/j.marpol.2017.05.003 .,
+CH4 (g) submarine pipeline,lifetime,30.0,years,Assume same as for methane (g) pipeline.,
 CH4 (l) transport ship,FOM,3.5,%/year,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CH4 (l) transport ship,capacity,58300.0,t_CH4,"Calculated, based on Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CH4 (l) transport ship,investment,151000000.0,EUR,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
@@ -52,7 +61,7 @@ H2 (g) pipeline compressor,Power needed,330.0,MW_el/1000km,"Guidehouse 2020: Eur
 H2 (g) pipeline compressor,investment,153.974238,EUR/MW_H2/km,"Calculated, based on numbers from Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf .",
 H2 (g) pipeline compressor,lifetime,15.0,years,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
 H2 (g) submarine pipeline,FOM,3.0,%/year,Assume same as for methane (g) submarine pipeline.,
-H2 (g) submarine pipeline,investment,313.344,EUR/km/MW,"Assume similar cost as for methane (g) submarine pipeline but with the same factor as between onland methane (g) pipeline and H2 (g) pipeline (3x). This estimate is comparable to a 36in diameter pipeline calaculated based on d’Amore-Domenech et al (2021): 10.1016/j.apenergy.2021.116625 , supplementary material (=251 EUR/MW/km).",
+H2 (g) submarine pipeline,investment,313.344,EUR/MW/km,"Assume similar cost as for methane (g) submarine pipeline but with the same factor as between onland methane (g) pipeline and H2 (g) pipeline (3x). This estimate is comparable to a 36in diameter pipeline calaculated based on d’Amore-Domenech et al (2021): 10.1016/j.apenergy.2021.116625 , supplementary material (=251 EUR/MW/km).",
 H2 (g) submarine pipeline,lifetime,30.0,years,Assume same as for methane (g) submarine pipeline.,
 H2 (l) storage tank,FOM,2.0,%/year,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 6.",
 H2 (l) storage tank,investment,25000.0,EUR/t_H2,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 6.",
@@ -80,7 +89,7 @@ HVDC overhead,FOM,2.0,%/year,Hagspiel, from old pypsa cost assumptions
 HVDC overhead,investment,400.0,EUR/MW/km,Hagspiel, from old pypsa cost assumptions
 HVDC overhead,lifetime,40.0,years,Hagspiel, from old pypsa cost assumptions
 HVDC submarine,FOM,0.35,%/year,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,
-HVDC submarine,investment,471.161167,EUR/km/MW,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,
+HVDC submarine,investment,471.161167,EUR/MW/km,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,
 HVDC submarine,lifetime,40.0,years,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,
 Haber-Bosch synthesis,FOM,4.0,%/year,"Estimate, based on methanation plant.",
 Haber-Bosch synthesis,investment,5310107.511184,EUR/MW,"Calculated based on Morgan E. 2013: doi:10.7275/11KT-3F59 , Fig. 56, Fig. 58, pg. 207, pg. 210.",
@@ -356,15 +365,6 @@ methanation,FOM,4.0,%/year,"Fasihi et al 2017, table 1, https://www.mdpi.com/207
 methanation,efficiency,0.8,per unit,Palzer and Schaber thesis, from old pypsa cost assumptions
 methanation,investment,278.0,EUR/kW_CH4,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 methanation,lifetime,30.0,years,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
-methane (g) pipeline,FOM,1.7,%/year,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
-methane (g) pipeline,investment,79.006242,EUR/MW/km,Calculated based on numbers on Wikiepdia for the “Arab Gas Pipeline”.,
-methane (g) pipeline,lifetime,30.0,years,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
-methane (g) pipeline compressor,FOM,1.7,%/year,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
-methane (g) pipeline compressor,investment,103.825353,EUR/MW_CH4/km,Calculated based on Guidehouse values for H2 pipelines.,
-methane (g) pipeline compressor,lifetime,15.0,years,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
-methane (g) submarine pipeline,FOM,3.0,%/year,"d’Amore-Domenech et al (2021): 10.1016/j.apenergy.2021.116625 , supplementary material.",
-methane (g) submarine pipeline,investment,104.448,EUR/km/MW,Kaiser (2017): 10.1016/j.marpol.2017.05.003 .,
-methane (g) submarine pipeline,lifetime,30.0,years,Assume same as for methane (g) pipeline.,
 methane storage tank incl. compressor,FOM,1.9,%/year,"Guesstimate, based on hydrogen storage tank by DEA.",
 methane storage tank incl. compressor,investment,8629.2,EUR/m^3,Storage costs per l: https://www.compositesworld.com/articles/pressure-vessels-for-alternative-fuels-2014-2023 (2021-02-10).,
 methane storage tank incl. compressor,lifetime,30.0,years,"Guesstimate, based on hydrogen storage tank by DEA.",

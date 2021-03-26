@@ -141,3 +141,19 @@ methane (g) submarine pipeline,lifetime,2020,30,years,2020,Assume same as for me
 H2 (g) submarine pipeline,investment,2002,307.2,EUR/km/MW,2014,"Assume similar cost as for methane (g) submarine pipeline but with the same factor as between onland methane (g) pipeline and H2 (g) pipeline (3x). This estimate is comparable to a 36in diameter pipeline calaculated based on d’Amore-Domenech et al (2021): 10.1016/j.apenergy.2021.116625 , supplementary material (=251 EUR/MW/km).",-
 H2 (g) submarine pipeline,FOM,2002,3,%/year,2015,Assume same as for methane (g) submarine pipeline.,-
 H2 (g) submarine pipeline,lifetime,2002,30,years,2020,Assume same as for methane (g) submarine pipeline.,-
+FT fuel transport ship,investment,2035,35000000,EUR,2020,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
+FT fuel transport ship,capacity,2035,75000,t_FTfuel,2020,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
+FT fuel transport ship,lifetime,2035,15,years,2020,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
+FT fuel transport ship,FOM,2035,5,%/year,2020,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
+Fischer-Tropsch synthesis,investment,2020,2100000,EUR/MW_FTfuel,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
+Fischer-Tropsch synthesis,lifetime,2020,25,years,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
+Fischer-Tropsch synthesis,FOM,2020,6.5,%/year,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
+Fischer-Tropsch synthesis,investment,2030,1600000,EUR/MW_FTfuel,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
+Fischer-Tropsch synthesis,lifetime,2030,25,years,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
+Fischer-Tropsch synthesis,FOM,2030,6.5,%/year,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
+Fischer-Tropsch synthesis,investment,2040,1100000,EUR/MW_FTfuel,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
+Fischer-Tropsch synthesis,lifetime,2040,25,years,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
+Fischer-Tropsch synthesis,FOM,2040,6.5,%/year,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
+Fischer-Tropsch synthesis,investment,2050,900000,EUR/MW_FTfuel,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
+Fischer-Tropsch synthesis,lifetime,2050,25,years,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
+Fischer-Tropsch synthesis,FOM,2050,6.5,%/year,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",

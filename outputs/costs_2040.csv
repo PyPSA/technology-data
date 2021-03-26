@@ -24,10 +24,17 @@ CO2 liquefaction,lifetime,25.0,years,"Guesstimate, based on CH4 liquefaction.",
 CO2 storage tank,FOM,1.0,%/year,"Lauri et al. 2014: doi: 10.1016/j.egypro.2014.11.297, pg. 2746 .",
 CO2 storage tank,investment,2528.172,EUR/t_CO2,"Lauri et al. 2014: doi: 10.1016/j.egypro.2014.11.297, Table 3.",
 CO2 storage tank,lifetime,25.0,years,"Lauri et al. 2014: doi: 10.1016/j.egypro.2014.11.297, pg. 2746 .",
+FT fuel transport ship,FOM,5.0,%/year,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
+FT fuel transport ship,capacity,75000.0,t_FTfuel,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
+FT fuel transport ship,investment,31700578.344047,EUR,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
+FT fuel transport ship,lifetime,15.0,years,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
 Fischer-Tropsch,FOM,3.0,%/year,doi:10.3390/su9020306, from old pypsa cost assumptions
 Fischer-Tropsch,efficiency,0.8,per unit,TODO, from old pypsa cost assumptions
 Fischer-Tropsch,investment,677.6,EUR/kWH2,Fasihi doi:10.3390/su9020306 (60 kEUR/bpd = 847 EUR/kWL (1b = 1.7 MWh) 847*0.8 = 677.6), from old pypsa cost assumptions
 Fischer-Tropsch,lifetime,30.0,years,doi:10.3390/su9020306, from old pypsa cost assumptions
+Fischer-Tropsch synthesis,FOM,6.5,%/year,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
+Fischer-Tropsch synthesis,investment,1100000.0,EUR/MW_FTfuel,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
+Fischer-Tropsch synthesis,lifetime,25.0,years,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
 Gasnetz,FOM,2.5,%,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz
 Gasnetz,investment,28.0,EUR/kWGas,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz
 Gasnetz,lifetime,30.0,years,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz

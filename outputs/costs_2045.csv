@@ -1,4 +1,22 @@
 technology,parameter,value,unit,source,further description
+Anaerobic digestion,CO2 stored,0.09,tCO2/MWh_th,Stoichiometric calculation,
+Anaerobic digestion,capture rate,0.98,per unit,TODO,
+Anaerobic digestion,investment,1700.0,EUR/kW,doi:10.1039/D0SE01067G,
+BioSNG,C in fuel,0.38,per unit,Stoichiometric calculation,
+BioSNG,C stored,0.59,per unit,Stoichiometric calculation,
+BioSNG,CO2 stored,0.22,tCO2/MWh_th,Stoichiometric calculation,
+BioSNG,FOM,1.61,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels_-_0003.xlsx","84 Gasif. CFB, Bio-SNG:  Fixed O&M"
+BioSNG,capture rate,0.98,per unit,TODO,
+BioSNG,efficiency,0.7,per unit,doi:10.1039/D0SE01067G,
+BioSNG,investment,1525.0,EUR/kW_th,"Danish Energy Agency, data_sheets_for_renewable_fuels_-_0003.xlsx","84 Gasif. CFB, Bio-SNG:  Specific investment"
+BioSNG,lifetime,20.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels_-_0003.xlsx","84 Gasif. CFB, Bio-SNG:  Technical lifetime"
+BtL,C in fuel,0.28,per unit,Stoichiometric calculation,
+BtL,C stored,0.69,per unit,Stoichiometric calculation,
+BtL,CO2 stored,0.25,tCO2/MWh_th,Stoichiometric calculation,
+BtL,capture rate,0.98,per unit,TODO,
+BtL,efficiency,0.4,per unit,doi:10.1039/D0SE01067G,
+BtL,investment,3500.0,EUR/kW_th,TODO,
+BtL,lifetime,25.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels_-_0003.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Technical lifetime"
 CCGT,FOM,3.28,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Fixed O&M"
 CCGT,VOM,4.05,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Variable O&M"
 CCGT,c_b,2.15,50oC/100oC,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Cb coefficient"
@@ -6,15 +24,21 @@ CCGT,c_v,0.15,50oC/100oC,"Danish Energy Agency, technology_data_for_el_and_dh_-_
 CCGT,efficiency,0.6,per unit,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Electricity efficiency, annual average"
 CCGT,investment,807.5,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Nominal investment"
 CCGT,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Technical lifetime"
+Fischer-Tropsch,C in fuel,0.59,per unit,Stoichiometric calculation,
+Fischer-Tropsch,C stored,0.4,per unit,Stoichiometric calculation,
+Fischer-Tropsch,CO2 stored,0.12,tCO2/MWh_th,Stoichiometric calculation,
 Fischer-Tropsch,FOM,3.0,%/year,doi:10.3390/su9020306, from old pypsa cost assumptions
-Fischer-Tropsch,efficiency,0.8,per unit,TODO, from old pypsa cost assumptions
+Fischer-Tropsch,H2 to output energy ratio,1.17,E_H2/E_th,Stoichiometric calculation,
+Fischer-Tropsch,capture rate,0.98,per unit,TODO,
+Fischer-Tropsch,efficiency,0.69,per unit,doi:10.1039/D0SE01067G,
 Fischer-Tropsch,investment,677.6,EUR/kWH2,Fasihi doi:10.3390/su9020306 (60 kEUR/bpd = 847 EUR/kWL (1b = 1.7 MWh) 847*0.8 = 677.6), from old pypsa cost assumptions
 Fischer-Tropsch,lifetime,30.0,years,doi:10.3390/su9020306, from old pypsa cost assumptions
+Fischer-Tropsch,syngas CO2 intensity,0.3,tCO2/MWh_th,Stoichiometric calculation,
 Gasnetz,FOM,2.5,%,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz
 Gasnetz,investment,28.0,EUR/kWGas,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz
 Gasnetz,lifetime,30.0,years,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz
 H2 pipeline,FOM,3.0,%/year,TODO, from old pypsa cost assumptions
-H2 pipeline,investment,267.0,EUR/MW/km,Welder et al https://doi.org/10.1016/j.ijhydene.2018.12.156, from old pypsa cost assumptions
+H2 pipeline,investment,267.0,EUR/MW/km,Welder et al https://doi.org/10.1016/j.energy.2018.05.059, from old pypsa cost assumptions
 H2 pipeline,lifetime,40.0,years,TODO, from old pypsa cost assumptions
 HVAC overhead,FOM,2.0,%/year,Hagspiel, from old pypsa cost assumptions
 HVAC overhead,investment,400.0,EUR/MW/km,Hagspiel, from old pypsa cost assumptions
@@ -147,6 +171,14 @@ central solid biomass CHP,efficiency-heat,0.69,per unit,"Danish Energy Agency, t
 central solid biomass CHP,investment,2748.51,EUR/kW_e,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Nominal investment "
 central solid biomass CHP,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Technical lifetime"
 central solid biomass CHP,p_nom_ratio,1.0,per unit,, from old pypsa cost assumptions
+central solid biomass CHP CCS,FOM,4.01,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Fixed O&M"
+central solid biomass CHP CCS,VOM,1.88,EUR/MWh_e,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Variable O&M "
+central solid biomass CHP CCS,c_b,0.45,40°C/80°C,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Cb coefficient"
+central solid biomass CHP CCS,c_v,1.0,40°C/80°C,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Cv coefficient"
+central solid biomass CHP CCS,efficiency,0.29,per unit,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Electricity efficiency, net, annual average"
+central solid biomass CHP CCS,efficiency-heat,0.69,per unit,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Heat efficiency, net, annual average"
+central solid biomass CHP CCS,investment,2748.51,EUR/kW_e,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Nominal investment "
+central solid biomass CHP CCS,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","09b Wood Pellets, Medium:  Technical lifetime"
 central water tank storage,FOM,0.62,%/year,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Fixed O&M
 central water tank storage,investment,0.49,EUR/kWhCapacity,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Specific investment
 central water tank storage,lifetime,25.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Technical lifetime
@@ -195,6 +227,7 @@ decentral water tank storage,FOM,1.0,%/year,HP, from old pypsa cost assumptions
 decentral water tank storage,discount rate,0.04,per unit,Palzer thesis, from old pypsa cost assumptions
 decentral water tank storage,investment,18.38,EUR/kWh,IWES Interaktion, from old pypsa cost assumptions
 decentral water tank storage,lifetime,20.0,years,HP, from old pypsa cost assumptions
+digestible biomass,fuel,15.0,EUR/MWh_th,"JRC ENSPRESO ca avg for MINBIOAGRW1, ENS_Ref for 2040",
 direct air capture,FOM,4.95,%/year,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",403.a Direct air capture
 direct air capture,compression-electricity-input,0.15,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",403.a Direct air capture
 direct air capture,compression-heat-output,0.2,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",403.a Direct air capture
@@ -218,13 +251,15 @@ fuel cell,c_b,1.25,50oC/100oC,"Danish Energy Agency, technology_data_for_el_and_
 fuel cell,efficiency,0.5,per unit,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","12 LT-PEMFC CHP:  Electricity efficiency, annual average"
 fuel cell,investment,875.0,EUR/kW_e,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",12 LT-PEMFC CHP:  Nominal investment
 fuel cell,lifetime,10.0,years,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",12 LT-PEMFC CHP:  Technical lifetime
-gas,CO2 intensity,0.2,tCO2/MWh_th,Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018,
+gas,CO2 intensity,0.2,tCO2/MWh_th,Stoichiometric calculation with 50 GJ/t CH4,
 gas,fuel,20.1,EUR/MWh_th,BP 2019,
 gas storage,FOM,3.59,%,Danish Energy Agency,"150 Underground Storage of Gas, Operation and Maintenace, salt cavern (units converted)"
 gas storage,investment,0.03,EUR/kWh,Danish Energy Agency,"150 Underground Storage of Gas, Establishment of one cavern (units converted)"
 gas storage,lifetime,100.0,years,TODO no source,"estimation: most underground storage are already build, they do have a long lifetime"
 gas storage charger,investment,14.34,EUR/kW,Danish Energy Agency,"150 Underground Storage of Gas, Process equipment (units converted)"
 gas storage discharger,investment,4.78,EUR/kW,Danish Energy Agency,"150 Underground Storage of Gas, Process equipment (units converted)"
+gas to steam,efficiency,0.75,per unit,data.mendeley.com/datasets/v2c93n28rj/2,
+gas to steam,investment,187.0,EUR/kW_th,data.mendeley.com/datasets/v2c93n28rj/2,
 geothermal,CO2 intensity,0.03,tCO2/MWhth,https://www.eia.gov/environment/emissions/co2_vol_mass.php, from old pypsa cost assumptions
 geothermal,FOM,2.36,%/year,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 geothermal,efficiency,0.24,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
@@ -252,10 +287,16 @@ lignite,efficiency,0.33,per unit,Lazard s Levelized Cost of Energy Analysis - Ve
 lignite,fuel,2.9,EUR/MWh_th,DIW,
 lignite,investment,3845.51,EUR/kW_e,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
 lignite,lifetime,40.0,years,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+methanation,C in fuel,0.76,per unit,Stoichiometric calculation,
+methanation,C stored,0.23,per unit,Stoichiometric calculation,
+methanation,CO2 stored,0.06,tCO2/MWh_th,Stoichiometric calculation,
 methanation,FOM,3.0,%/year,Schaber thesis, from old pypsa cost assumptions
-methanation,efficiency,0.8,per unit,Palzer and Schaber thesis, from old pypsa cost assumptions
+methanation,H2 to output energy ratio,1.2,E_H2/E_th,Stoichiometric calculation,
+methanation,capture rate,0.98,per unit,TODO,
+methanation,efficiency,0.91,per unit,doi:10.1039/D0SE01067G,
 methanation,investment,1000.0,EUR/kWH2,Schaber thesis, from old pypsa cost assumptions
 methanation,lifetime,25.0,years,Schaber thesis, from old pypsa cost assumptions
+methanation,syngas CO2 intensity,0.24,tCO2/MWh_th,Stoichiometric calculation,
 micro CHP,FOM,6.33,%/year,"Danish Energy Agency, technologydatafor_heating_installations_marts_2018.xlsx",219 LT-PEMFC mCHP - natural gas:  Fixed O&M
 micro CHP,efficiency,0.35,per unit,"Danish Energy Agency, technologydatafor_heating_installations_marts_2018.xlsx","219 LT-PEMFC mCHP - natural gas:  Electric efficiency, annual average, net"
 micro CHP,efficiency-heat,0.61,per unit,"Danish Energy Agency, technologydatafor_heating_installations_marts_2018.xlsx","219 LT-PEMFC mCHP - natural gas:  Heat efficiency, annual average, net"
@@ -277,7 +318,7 @@ offwind-ac-station,investment,250.0,EUR/kWel,DEA https://ens.dk/en/our-services/
 offwind-dc-connection-submarine,investment,2000.0,EUR/MW/km,DTU report based on Fig 34 of https://ec.europa.eu/energy/sites/ener/files/documents/2014_nsog_report.pdf, from old pypsa cost assumptions
 offwind-dc-connection-underground,investment,1000.0,EUR/MW/km,Haertel 2017; average + 13% learning reduction, from old pypsa cost assumptions
 offwind-dc-station,investment,400.0,EUR/kWel,Haertel 2017; assuming one onshore and one offshore node + 13% learning reduction, from old pypsa cost assumptions
-oil,CO2 intensity,0.27,tCO2/MWh_th,Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018,
+oil,CO2 intensity,0.26,tCO2/MWh_th,Stoichiometric calculation with 44 GJ/t diesel and -CH2- approximation of diesel,
 oil,FOM,2.42,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",50 Diesel engine farm:  Fixed O&M
 oil,VOM,6.0,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",50 Diesel engine farm:  Variable O&M
 oil,efficiency,0.35,per unit,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","50 Diesel engine farm:  Electricity efficiency, annual average"
@@ -303,8 +344,10 @@ solar-rooftop,lifetime,30.0,years,European PV Technology and Innovation Platform
 solar-utility,FOM,2.04,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",22 Photovoltaics Large:  Fixed O&M
 solar-utility,investment,315.56,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",22 Photovoltaics Large:  Nominal investment
 solar-utility,lifetime,40.0,years,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",22 Photovoltaics Large:  Technical lifetime
-solid biomass,CO2 intensity,0.3,tCO2/MWh_th,TODO,
-solid biomass,fuel,25.2,EUR/MWh_th,Is a 100% renewable European power system feasible by 2050?,
+solid biomass,CO2 intensity,0.37,tCO2/MWh_th,"Based on Larson ED, Li Z, & Williams RH (2012) Chapter 12-fossil energy. In Global Energy Assessment-Toward a Sustainable Future. Cambridge University press, Cambridge, UK and New York, NY, USA and the International Institute for Applied Systems Analysis, Laxenburg, Austria, pp. 901-992",
+solid biomass,fuel,12.0,EUR/MWh_th,"JRC ENSPRESO ca avg for MINBIOWOOW1 (secondary forest residue wood chips), ENS_Ref for 2040",
+solid biomass to steam,efficiency,0.65,per unit,data.mendeley.com/datasets/v2c93n28rj/2,
+solid biomass to steam,investment,55.0,EUR/kW_th,data.mendeley.com/datasets/v2c93n28rj/2,
 uranium,fuel,2.6,EUR/MWh_th,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
 water tank charger,efficiency,0.84,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)
 water tank discharger,efficiency,0.84,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)

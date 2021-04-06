@@ -1,4 +1,7 @@
 technology,parameter,value,unit,source,further description
+Ammonia cracker,FOM,3.0,%/year,-,
+Ammonia cracker,investment,1400083.708842,EUR/MW_H2,ENGIE et al (2020): Ammonia to Green Hydrogen Feasibility Study (https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/880826/HS420_-_Ecuity_-_Ammonia_to_Green_Hydrogen.pdf).,
+Ammonia cracker,lifetime,30.0,years,-,
 CCGT,FOM,3.339181,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Fixed O&M"
 CCGT,VOM,4.3,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Variable O&M"
 CCGT,c_b,1.9,50oC/100oC,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Cb coefficient"
@@ -110,6 +113,12 @@ MeOH transport ship,FOM,5.0,%/year,"Assume comparable tanker as for LOHC transpo
 MeOH transport ship,capacity,75000.0,t_MeOH,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
 MeOH transport ship,investment,31700578.344047,EUR,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
 MeOH transport ship,lifetime,15.0,years,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
+Methane steam reforming,FOM,3.0,%/year,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",
+Methane steam reforming,investment,470085.470085,EUR/MW_H2,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",
+Methane steam reforming,lifetime,30.0,years,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",
+Methanol steam reforming,FOM,4.0,%/year,"Niermann et al (2021): 10.1016/j.rser.2020.110171 , table 4.",
+Methanol steam reforming,investment,16318.431094,EUR/MW_H2,"Niermann et al (2021): 10.1016/j.rser.2020.110171 , table 4.",
+Methanol steam reforming,lifetime,20.0,years,"Niermann et al (2021): 10.1016/j.rser.2020.110171 , table 4.",
 NH3 (l) storage tank incl. liquefaction,FOM,2.0,%/year,"Guesstimate, based on H2 (l) storage tank.",
 NH3 (l) storage tank incl. liquefaction,investment,161.932013,EUR/MWh_NH3,"Calculated based on Morgan E. 2013: doi:10.7275/11KT-3F59 , Fig. 55, Fig 58.",
 NH3 (l) storage tank incl. liquefaction,lifetime,20.0,years,"Morgan E. 2013: doi:10.7275/11KT-3F59 , pg. 290",

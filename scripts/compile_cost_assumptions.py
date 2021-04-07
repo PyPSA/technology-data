@@ -1009,7 +1009,7 @@ def rename_ISE(costs_ISE):
 
 def carbon_flow(costs):
 
-    c_in_char = 0.03
+    c_in_char = 0#.03 #zero avoids inbalace -> assumed to be circulated back and eventually end up in one of the other output streams
     input_CO2_intensity = 0
     medium_out = ''
     H2_energy_ratio = 0
@@ -1029,7 +1029,7 @@ def carbon_flow(costs):
         if tech == 'BtL':
             medium_out = 'oil'
             input_CO2_intensity = costs.loc[('solid biomass','CO2 intensity'),'value']
-            c_in_char = 0.03
+            # c_in_char = 0.03
             costs.loc[(tech, 'efficiency'), 'value'] = 0.4
             costs.loc[(tech, 'efficiency'), 'unit'] = "per unit"
             costs.loc[(tech, 'efficiency'), 'source'] = "doi:10.1039/D0SE01067G"
@@ -1040,7 +1040,7 @@ def carbon_flow(costs):
         elif tech == 'BioSNG':
             medium_out = 'gas'
             input_CO2_intensity = costs.loc[('solid biomass','CO2 intensity'),'value']
-            c_in_char = 0.03
+            # c_in_char = 0.03
             costs.loc[(tech, 'efficiency'), 'value'] = 0.7
             costs.loc[(tech, 'efficiency'), 'unit'] = "per unit"
             costs.loc[(tech, 'efficiency'), 'source'] = "doi:10.1039/D0SE01067G"
@@ -1055,7 +1055,7 @@ def carbon_flow(costs):
             costs.loc[(tech, 'syngas CO2 intensity'), 'source'] = "Stoichiometric calculation"
             input_CO2_intensity = costs.loc[(tech, 'syngas CO2 intensity'), 'value']
 
-            c_in_char = 0.01
+            # c_in_char = 0.01
             costs.loc[(tech, 'efficiency'), 'value'] = 0.69
             costs.loc[(tech, 'efficiency'), 'unit'] = "per unit"
             costs.loc[(tech, 'efficiency'), 'source'] = "doi:10.1039/D0SE01067G"
@@ -1069,7 +1069,7 @@ def carbon_flow(costs):
             costs.loc[(tech, 'syngas CO2 intensity'), 'unit'] = "tCO2/MWh_th"
             costs.loc[(tech, 'syngas CO2 intensity'), 'source'] = "Stoichiometric calculation"
             input_CO2_intensity = costs.loc[(tech, 'syngas CO2 intensity'), 'value']
-            c_in_char = 0.01
+            # c_in_char = 0.01
             costs.loc[(tech, 'efficiency'), 'value'] = 0.91
             costs.loc[(tech, 'efficiency'), 'unit'] = "per unit"
             costs.loc[(tech, 'efficiency'), 'source'] = "doi:10.1039/D0SE01067G"
@@ -1265,5 +1265,5 @@ for year in years:
     costs_tot = unify_diw(costs_tot)
     costs_tot.drop("fixed", level=1, inplace=True)
     costs_tot.sort_index(inplace=True)
-    costs_tot = round(costs_tot, ndigits=2)
+    costs_tot = round(costs_tot, ndigits=4)
     costs_tot.to_csv([v for v in snakemake.output if str(year) in v][0])

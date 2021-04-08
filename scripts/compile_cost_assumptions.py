@@ -386,17 +386,20 @@ def add_co2_intensity(costs):
     costs.loc[('lignite', 'CO2 intensity'), 'value'] = 113031 / 1e3 / TJ_to_MWh  # Rohbraunkohle Rheinland
 
     oil_specific_energy = 44 #GJ/t
-    CO2_CH2_mass_ratio = 44/14 #mol/mol
+    CO2_CH2_mass_ratio = 44/14 #kg/kg (1 mol per mol)
+    CO2_C_mass_ratio = 44/12 #kg/kg
     methane_specific_energy = 50 #GJ/t
-    CO2_CH4_mass_ratio = 44/16 #mol/mol
+    CO2_CH4_mass_ratio = 44/16 #kg/kg (1 mol per mol)
+    biomass_specific_energy = 18 #GJ/t LHV
+    biomass_carbon_content = 0.5
     costs.loc[('oil', 'CO2 intensity'), 'value'] = (1/oil_specific_energy) * 3.6 * CO2_CH2_mass_ratio #tCO2/MWh
     costs.loc[('gas', 'CO2 intensity'), 'value'] = (1/methane_specific_energy) * 3.6 * CO2_CH4_mass_ratio #tCO2/MWh
     # print('Oil CO2 intensity: ', costs.at['oil','CO2 intensity'])
     # print('Gas CO2 intensity: ', costs.at['gas','CO2 intensity'])
-    costs.loc[('solid biomass', 'CO2 intensity'), 'value'] = 0.367
+    costs.loc[('solid biomass', 'CO2 intensity'), 'value'] = biomass_carbon_content * (1/biomass_specific_energy) * 3.6 * CO2_C_mass_ratio #tCO2/MWh
 
     costs.loc[('oil', 'CO2 intensity'), 'source'] = "Stoichiometric calculation with 44 GJ/t diesel and -CH2- approximation of diesel"
-    costs.loc[('solid biomass', 'CO2 intensity'), 'source'] = "Based on Larson ED, Li Z, & Williams RH (2012) Chapter 12-fossil energy. In Global Energy Assessment-Toward a Sustainable Future. Cambridge University press, Cambridge, UK and New York, NY, USA and the International Institute for Applied Systems Analysis, Laxenburg, Austria, pp. 901-992"
+    costs.loc[('solid biomass', 'CO2 intensity'), 'source'] = "Stoichiometric calculation with 18 GJ/t_DM LHV and 50% C-content for solid biomass"
 
     costs.loc[('gas', 'CO2 intensity'), 'source'] = "Stoichiometric calculation with 50 GJ/t CH4"
     costs.loc[('coal', 'CO2 intensity'), 'source'] = source_dict["co2"]
@@ -1024,8 +1027,8 @@ def carbon_flow(costs):
     H2_CH4_energy_ratio = H2_specific_energy * H2_CH4_mass_ratio / CH4_specific_energy #MWh H2 / MWh CH4
     H2_CH2_energy_ratio = H2_specific_energy * H2_CH2_mass_ratio / CH2_specific_energy #MWh H2 / MWh CH2
 
-    carbon_flow_techs = ['BtL', 'BioSNG', 'methanation', 'Fischer-Tropsch']
-    for tech in carbon_flow_techs:
+    # carbon_flow_techs = ['BtL', 'BioSNG'] #, 'methanation', 'Fischer-Tropsch']
+    for tech in ['BtL', 'BioSNG']:
         if tech == 'BtL':
             medium_out = 'oil'
             input_CO2_intensity = costs.loc[('solid biomass','CO2 intensity'),'value']
@@ -1044,56 +1047,46 @@ def carbon_flow(costs):
             costs.loc[(tech, 'efficiency'), 'value'] = 0.7
             costs.loc[(tech, 'efficiency'), 'unit'] = "per unit"
             costs.loc[(tech, 'efficiency'), 'source'] = "doi:10.1039/D0SE01067G"
-        elif tech == 'Fischer-Tropsch':
-            medium_out = 'oil'
-            H2_energy_ratio = H2_CH2_energy_ratio
-            costs.loc[(tech, 'H2 to output energy ratio'), 'value'] = H2_energy_ratio
-            costs.loc[(tech, 'H2 to output energy ratio'), 'unit'] = 'E_H2/E_th'
-            costs.loc[(tech, 'H2 to output energy ratio'), 'source'] = "Stoichiometric calculation"
-            costs.loc[(tech, 'syngas CO2 intensity'), 'value'] = costs.loc[(medium_out, 'CO2 intensity'),'value'] * H2_energy_ratio
-            costs.loc[(tech, 'syngas CO2 intensity'), 'unit'] = "tCO2/MWh_th"
-            costs.loc[(tech, 'syngas CO2 intensity'), 'source'] = "Stoichiometric calculation"
-            input_CO2_intensity = costs.loc[(tech, 'syngas CO2 intensity'), 'value']
 
+
+        costs.loc[(tech, 'C in fuel'), 'value'] = costs.loc[(tech, 'efficiency'), 'value'] \
+                                                  * costs.loc[(medium_out, 'CO2 intensity'), 'value'] \
+                                                  / input_CO2_intensity
+        costs.loc[(tech, 'C stored'), 'value'] = 1 - costs.loc[(tech, 'C in fuel'), 'value'] - c_in_char
+        costs.loc[(tech, 'CO2 stored'), 'value'] = input_CO2_intensity * costs.loc[(tech, 'C stored'), 'value']
+
+        costs.loc[(tech, 'C in fuel'), 'unit'] = "per unit"
+        costs.loc[(tech, 'C stored'), 'unit'] = "per unit"
+        costs.loc[(tech, 'CO2 stored'), 'unit'] = "tCO2/MWh_th"
+
+        costs.loc[(tech, 'C in fuel'), 'source'] = "Stoichiometric calculation"
+        costs.loc[(tech, 'C stored'), 'source'] = "Stoichiometric calculation"
+        costs.loc[(tech, 'CO2 stored'), 'source'] = "Stoichiometric calculation"
+
+        costs.loc[(tech, 'capture rate'), 'value'] = .98
+        costs.loc[(tech, 'capture rate'), 'unit'] = "per unit"
+        costs.loc[(tech, 'capture rate'), 'source'] = "doi:10.1016/j.biombioe.2015.01.006"
+
+    for tech in ['methanation', 'Fischer-Tropsch']:
+        if tech == 'Fischer-Tropsch':
+            medium_out = 'oil'
+            input_CO2_intensity = costs.loc[(medium_out, 'CO2 intensity'), 'value']
             # c_in_char = 0.01
             costs.loc[(tech, 'efficiency'), 'value'] = 0.69
             costs.loc[(tech, 'efficiency'), 'unit'] = "per unit"
             costs.loc[(tech, 'efficiency'), 'source'] = "doi:10.1039/D0SE01067G"
         elif tech == 'methanation':
             medium_out = 'gas'
-            H2_energy_ratio = H2_CH4_energy_ratio
-            costs.loc[(tech, 'H2 to output energy ratio'), 'value'] = H2_energy_ratio
-            costs.loc[(tech, 'H2 to output energy ratio'), 'unit'] = 'E_H2/E_th'
-            costs.loc[(tech, 'H2 to output energy ratio'), 'source'] = "Stoichiometric calculation"
-            costs.loc[(tech, 'syngas CO2 intensity'), 'value'] = costs.loc[(medium_out, 'CO2 intensity'),'value'] * H2_energy_ratio
-            costs.loc[(tech, 'syngas CO2 intensity'), 'unit'] = "tCO2/MWh_th"
-            costs.loc[(tech, 'syngas CO2 intensity'), 'source'] = "Stoichiometric calculation"
-            input_CO2_intensity = costs.loc[(tech, 'syngas CO2 intensity'), 'value']
+            input_CO2_intensity = costs.loc[(medium_out, 'CO2 intensity'), 'value']
             # c_in_char = 0.01
             costs.loc[(tech, 'efficiency'), 'value'] = 0.91
             costs.loc[(tech, 'efficiency'), 'unit'] = "per unit"
             costs.loc[(tech, 'efficiency'), 'source'] = "doi:10.1039/D0SE01067G"
 
-        costs.loc[(tech, 'C in fuel'), 'value'] = costs.loc[(tech,'efficiency'),'value']\
-                                                  * costs.loc[(medium_out,'CO2 intensity'),'value']\
-                                                  / input_CO2_intensity
-        costs.loc[(tech, 'C stored'), 'value'] = 1 - costs.loc[(tech, 'C in fuel'),'value'] - c_in_char
-        costs.loc[(tech, 'CO2 stored'), 'value'] = input_CO2_intensity * costs.loc[(tech,'C stored'),'value']
-        # costs.loc[(tech, 'CO2 vented'), 'value'] = co2_losses * input_CO2_intensity\
-        #                                            * costs.at[tech,'C stored']
-
-        costs.loc[(tech,'C in fuel'), 'unit'] = "per unit"
-        costs.loc[(tech,'C stored'), 'unit'] = "per unit"
-        costs.loc[(tech,'CO2 stored'), 'unit'] = "tCO2/MWh_th"
-
-        costs.loc[(tech,'C in fuel'), 'source'] = "Stoichiometric calculation"
-        costs.loc[(tech,'C stored'), 'source'] = "Stoichiometric calculation"
-        costs.loc[(tech,'CO2 stored'), 'source'] = "Stoichiometric calculation"
-        # costs.loc[(tech,'CO2 vented'), 'source'] = "Stoichiometric calculation"
-
         costs.loc[(tech, 'capture rate'), 'value'] = .98
         costs.loc[(tech, 'capture rate'), 'unit'] = "per unit"
-        costs.loc[(tech, 'capture rate'), 'source'] = "TODO"
+        costs.loc[(tech, 'capture rate'), 'source'] = "doi:10.1016/j.biombioe.2015.01.006"
+
 
     # Anaerobic digestion
     AD_CH4_share = 0.6 #volumetric share in biogas
@@ -1104,6 +1097,11 @@ def carbon_flow(costs):
     CH4_vol_energy_density = CH4_specific_energy * CH4_density / (1000 * 3.6) #MJ/Nm3 -> MWh/Nm3
     CH4_weight_share = AD_CH4_share * CH4_density
     CO2_weight_share = AD_CO2_share * CO2_density
+    # efficiency_biogas = 0.98
+    #
+    # costs.loc[('Anaerobic digestion', 'efficiency'), 'value'] = efficiency_biogas
+    # costs.loc[('Anaerobic digestion', 'efficiency'), 'unit'] = "per unit"
+    # costs.loc[('Anaerobic digestion', 'efficiency'), 'source'] = "TODO"
 
     costs.loc[('Anaerobic digestion', 'CO2 stored'), 'value'] = CO2_weight_share / CH4_vol_energy_density / 1000 #tCO2/MWh,in (NB: assuming the input is already given in the biogas potential and cost
     costs.loc[('Anaerobic digestion', 'CO2 stored'), 'unit'] = "tCO2/MWh_th"
@@ -1265,5 +1263,5 @@ for year in years:
     costs_tot = unify_diw(costs_tot)
     costs_tot.drop("fixed", level=1, inplace=True)
     costs_tot.sort_index(inplace=True)
-    costs_tot = round(costs_tot, ndigits=4)
+    costs_tot = round(costs_tot, ndigits=5)
     costs_tot.to_csv([v for v in snakemake.output if str(year) in v][0])

@@ -31,3 +31,14 @@ rule convert_fraunhofer:
     resources: mem=500
     conda: "environment.yaml"
     script: "scripts/convert_pdf_fraunhofer_to_dataframe.py"
+
+
+rule convert_EWG:
+    input:
+        EWG = "docu/EWG_LUT_100RE_All_Sectors_Global_Report_2019.pdf"
+    output:
+        costs = "inputs/EWG_costs.csv",
+    threads: 1
+    resources: mem=500
+    conda: "environment.yaml"
+    script: "scripts/convert_pdf_EWG_to_dataframe.py"

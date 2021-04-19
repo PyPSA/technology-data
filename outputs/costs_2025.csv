@@ -14,7 +14,7 @@ Gasnetz,FOM,2.5,%,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie,
 Gasnetz,investment,28.0,EUR/kWGas,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz
 Gasnetz,lifetime,30.0,years,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz
 H2 pipeline,FOM,3.0,%/year,TODO, from old pypsa cost assumptions
-H2 pipeline,investment,267.0,EUR/MW/km,Welder et al https://doi.org/10.1016/j.ijhydene.2018.12.156, from old pypsa cost assumptions
+H2 pipeline,investment,267.0,EUR/MW/km,Welder et al https://doi.org/10.1016/j.energy.2018.05.059, from old pypsa cost assumptions
 H2 pipeline,lifetime,40.0,years,TODO, from old pypsa cost assumptions
 HVAC overhead,FOM,2.0,%/year,Hagspiel, from old pypsa cost assumptions
 HVAC overhead,investment,400.0,EUR/MW/km,Hagspiel, from old pypsa cost assumptions
@@ -234,6 +234,8 @@ helmeth,FOM,3.0,%/year,no source, from old pypsa cost assumptions
 helmeth,efficiency,0.8,per unit,HELMETH press release, from old pypsa cost assumptions
 helmeth,investment,2000.0,EUR/kW,no source, from old pypsa cost assumptions
 helmeth,lifetime,25.0,years,no source, from old pypsa cost assumptions
+home battery inverter,investment,303.6,EUR/kW,"Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019, Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Output capacity expansion cost investment
+home battery storage,investment,264.77,EUR/kWh,"Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019, Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Energy storage expansion cost investment
 hydro,FOM,1.0,%/year,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 hydro,efficiency,0.9,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 hydro,investment,2208.16,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions

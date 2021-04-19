@@ -46,7 +46,8 @@ source_dict = {
                 "co2" :'Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018',
                 # gas pipeline costs
                 "ISE": "WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",
-
+                # home battery storage and inverter investment costs
+                "EWG": "Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019"
                 }
 
 # [DEA-sheet-names]
@@ -662,7 +663,7 @@ def set_round_trip_efficiency(tech_data):
                             'Output capacity expansion cost investment'},
                     inplace=True)
 
-    # Manual correction based on footnote. 
+    # Manual correction based on footnote.
     inverter.loc['Technical lifetime', years] = 10.
     inverter.loc['Technical lifetime', 'source'] += ', Note K.'
 
@@ -994,11 +995,103 @@ def rename_ISE(costs_ISE):
     return costs_ISE
 
 
+def add_home_battery_costs(costs):
+    """
+    adds investment costs for home battery storage and inverter.
+    Since home battery costs are not part of the DEA cataloque, utility-scale
+    costs are multiplied by a factor determined by data from the EWG study
+    """
+    # get DEA assumptions for utility scale
+    home_battery = (data.loc[[("battery storage", "investment"),
+                             ("battery inverter", "investment")]]
+                    .rename(index=lambda x: "home " + x, level=0))
+
+    # get EWG cost assumptions
+    costs_ewg = pd.read_csv(snakemake.input.EWG_costs,
+                            index_col=list(range(2))).sort_index()
+    v = costs_ewg.unstack()[[str(year) for year in years]].swaplevel(axis=1)
+
+    def annuity(n,r=0.07):
+        """
+        Calculate the annuity factor for an asset with lifetime n years and
+        discount rate of r
+        """
+        if isinstance(r, pd.Series):
+            return pd.Series(1/n, index=r.index).where(r == 0, r/(1. - 1./(1.+r)**n))
+        elif r > 0:
+            return r/(1. - 1./(1.+r)**n)
+        else:
+            return 1/n
+
+    # annualise EWG cost assumptions
+    fixed = (annuity(v["lifetime"])+v["FOM"]/100.) * v["investment"]
+
+    # battery storage index in EWG --------------
+    battery_store_i = [
+                        'Battery PV prosumer - commercial storage',
+                        'Battery PV prosumer - industrial storage',
+                       'Battery PV prosumer - residential storage',
+                       'Battery storage']
+
+    battery_store_ewg = fixed.loc[battery_store_i].T
+
+    def get_factor(df, cols, utility_col):
+        """get factor by which costs are increasing for home installations"""
+        return (df[cols].div(df[utility_col], axis=0).mean(axis=1)
+                .rename(index=lambda x: float(x)))
+
+    # take mean of cost increase for commercial and residential storage compared to utility-scale
+    home_cols = ['Battery PV prosumer - commercial storage',
+                 'Battery PV prosumer - residential storage']
+    factor = get_factor(battery_store_ewg, home_cols, "Battery storage")
+
+    home_battery.loc["home battery storage", years] = (home_battery.loc["home battery storage", years] * factor).values
+
+    # battery inverter index in EWG -----------------------
+    battery_inverter_i = [
+                        'Battery PV prosumer - commercial interface',
+                        'Battery PV prosumer - industrial interface PHES',
+                        'Battery PV prosumer - residential interface',
+                        'Battery interface']
+
+    battery_inverter_ewg = fixed.loc[battery_inverter_i].T
+
+    home_cols = ['Battery PV prosumer - commercial interface',
+                 'Battery PV prosumer - residential interface']
+    factor = get_factor(battery_inverter_ewg, home_cols, "Battery interface")
+    home_battery.loc["home battery inverter", years] = (home_battery.loc["home battery inverter", years] * factor).values
+
+    # adjust source
+    home_battery["source"] = home_battery["source"].apply(lambda x: source_dict["EWG"] + ", " + x)
+
+    return pd.concat([costs, home_battery])
 # %% *************************************************************************
 #  ---------- MAIN ------------------------------------------------------------
+# for testing
+if 'snakemake' not in globals():
+    from vresutils.snakemake import MockSnakemake
+    snakemake = MockSnakemake(
+        input=dict(
+                    pypsa_costs = "inputs/costs_PyPSA.csv",
+                    fraunhofer_costs = "inputs/Fraunhofer_ISE_costs.csv",
+                    fraunhofer_energy_prices = "inputs/Fraunhofer_ISE_energy_prices.csv",
+                    EWG_costs = "inputs/EWG_costs.csv",
+                    dea_transport = "inputs/energy_transport_data_sheet_dec_2017.xlsx",
+                    dea_renewable_fuels = "inputs/data_sheets_for_renewable_fuels_-_0003.xlsx",
+                    dea_storage = "inputs/technology_data_catalogue_for_energy_storage.xlsx",
+                    dea_generation = "inputs/technology_data_for_el_and_dh_-_0009.xlsx",
+                    dea_heating = "inputs/technologydatafor_heating_installations_marts_2018.xlsx",
+                    dea_industrial = "inputs/technology_data_for_industrial_process_heat_0002.xlsx"
+        ),
+        output=["outputs/costs_{}.csv".format(year) for year in [2020, 2025, 2030, 2035, 2040, 2045, 2050]]
+
+    )
+    import yaml
+    with open('config.yaml', encoding='utf8') as f:
+        snakemake.config = yaml.safe_load(f)
+
 # (1) DEA data
 # (a)-------- get data from DEA excel sheets ----------------------------------
-
 # read excel sheet names of all excel files
 excel_files = [v for k,v in snakemake.input.items() if "dea" in k]
 data_in = get_excel_sheets(excel_files)
@@ -1050,6 +1143,8 @@ costs_ISE = rename_ISE(costs_ISE)
 # add costs for gas pipelines
 data = pd.concat([data, costs_ISE.loc[["Gasnetz"]]], sort=True)
 
+# add costs for home batteries
+data = add_home_battery_costs(data)
 # %% (3) ------ add additional sources and save cost as csv ------------------
 # [RTD-target-multiindex-df]
 for year in years:

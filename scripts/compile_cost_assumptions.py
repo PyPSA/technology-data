@@ -1002,8 +1002,7 @@ def add_home_battery_costs(costs):
     costs are multiplied by a factor determined by data from the EWG study
     """
     # get DEA assumptions for utility scale
-    home_battery = (data.loc[[("battery storage", "investment"),
-                             ("battery inverter", "investment")]]
+    home_battery = (data.loc[["battery storage", "battery inverter"]]
                     .rename(index=lambda x: "home " + x, level=0))
 
     # get EWG cost assumptions
@@ -1045,7 +1044,8 @@ def add_home_battery_costs(costs):
                  'Battery PV prosumer - residential storage']
     factor = get_factor(battery_store_ewg, home_cols, "Battery storage")
 
-    home_battery.loc["home battery storage", years] = (home_battery.loc["home battery storage", years] * factor).values
+    home_cost =  (home_battery.loc[("home battery storage", "investment"), years] * factor).values
+    home_battery.loc[("home battery storage", "investment"), years] = home_cost
 
     # battery inverter index in EWG -----------------------
     battery_inverter_i = [
@@ -1059,7 +1059,8 @@ def add_home_battery_costs(costs):
     home_cols = ['Battery PV prosumer - commercial interface',
                  'Battery PV prosumer - residential interface']
     factor = get_factor(battery_inverter_ewg, home_cols, "Battery interface")
-    home_battery.loc["home battery inverter", years] = (home_battery.loc["home battery inverter", years] * factor).values
+    home_cost = (home_battery.loc[("home battery inverter", "investment"), years] * factor).values
+    home_battery.loc[("home battery inverter", "investment"), years] = home_cost
 
     # adjust source
     home_battery["source"] = home_battery["source"].apply(lambda x: source_dict["EWG"] + ", " + x)

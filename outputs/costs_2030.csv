@@ -52,10 +52,10 @@ battery inverter,lifetime,10.0,years,"Danish Energy Agency, technology_data_cata
 battery storage,investment,142.0,EUR/kWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Energy storage expansion cost investment
 battery storage,lifetime,25.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Technical lifetime
 biogas,fuel,59.0,EUR/MWhth,JRC and Zappa, from old pypsa cost assumptions
-biogas upgrading,FOM,2.49,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels_-_0003.xlsx","82 Biogas, upgrading:  Fixed O&M "
-biogas upgrading,VOM,3.18,EUR/MWh input,"Danish Energy Agency, data_sheets_for_renewable_fuels_-_0003.xlsx","82 Biogas, upgrading:  Variable O&M"
-biogas upgrading,investment,381.0,EUR/kW input,"Danish Energy Agency, data_sheets_for_renewable_fuels_-_0003.xlsx","82 Biogas, upgrading:  investment (upgrading, methane redution and grid injection)"
-biogas upgrading,lifetime,15.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels_-_0003.xlsx","82 Biogas, upgrading:  Technical lifetime"
+biogas upgrading,FOM,2.49,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","82 Biogas, upgrading:  Fixed O&M "
+biogas upgrading,VOM,3.18,EUR/MWh input,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","82 Biogas, upgrading:  Variable O&M"
+biogas upgrading,investment,381.0,EUR/kW input,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","82 Biogas, upgrading:  investment (upgrading, methane redution and grid injection)"
+biogas upgrading,lifetime,15.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","82 Biogas, upgrading:  Technical lifetime"
 biomass,FOM,4.53,%/year,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 biomass,efficiency,0.47,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 biomass,fuel,7.0,EUR/MWhth,IEA2011b, from old pypsa cost assumptions
@@ -209,10 +209,10 @@ electricity distribution grid,lifetime,40.0,years,TODO, from old pypsa cost assu
 electricity grid connection,FOM,2.0,%/year,TODO, from old pypsa cost assumptions
 electricity grid connection,investment,140.0,EUR/kW,DEA, from old pypsa cost assumptions
 electricity grid connection,lifetime,40.0,years,TODO, from old pypsa cost assumptions
-electrolysis,FOM,5.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels_-_0003.xlsx",88 Alkaline Electrolyser:  Fixed O&M
-electrolysis,efficiency,0.66,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels_-_0003.xlsx","88 Alkaline Electrolyser:  A) Hydrogen output, at LHV"
-electrolysis,investment,550.0,EUR/kW_e,"Danish Energy Agency, data_sheets_for_renewable_fuels_-_0003.xlsx",88 Alkaline Electrolyser:  Specific investment
-electrolysis,lifetime,25.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels_-_0003.xlsx",88 Alkaline Electrolyser:  Technical lifetime
+electrolysis,FOM,2.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100MW:  Fixed O&M 
+electrolysis,efficiency,0.68,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100MW:  Hydrogen
+electrolysis,investment,0.0,EUR/kW_e,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100MW:  Specific investment
+electrolysis,lifetime,30.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100MW:  Technical lifetime
 fuel cell,FOM,5.0,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",12 LT-PEMFC CHP:  Fixed O&M
 fuel cell,c_b,1.25,50oC/100oC,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",12 LT-PEMFC CHP:  Cb coefficient
 fuel cell,efficiency,0.5,per unit,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","12 LT-PEMFC CHP:  Electricity efficiency, annual average"

@@ -9,7 +9,7 @@ rule compile_cost_assumptions:
         fraunhofer_energy_prices = "inputs/Fraunhofer_ISE_energy_prices.csv",
         EWG_costs = "inputs/EWG_costs.csv",
         dea_transport = "inputs/energy_transport_data_sheet_dec_2017.xlsx",
-        dea_renewable_fuels = "inputs/data_sheets_for_renewable_fuels_-_0003.xlsx",
+        dea_renewable_fuels = "inputs/data_sheets_for_renewable_fuels.xlsx",
         dea_storage = "inputs/technology_data_catalogue_for_energy_storage.xlsx",
         dea_generation = "inputs/technology_data_for_el_and_dh_-_0009.xlsx",
         dea_heating = "inputs/technologydatafor_heating_installations_marts_2018.xlsx",

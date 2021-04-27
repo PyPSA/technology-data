@@ -507,7 +507,9 @@ def clean_up_units(tech_data):
     tech_data.loc[tech_data.unit.str.contains("kEUR"), years] *= 1e3
     tech_data.unit = tech_data.unit.str.replace("kEUR", "EUR")
 
-    tech_data.loc[tech_data.unit.str.contains("kW"), years] /= 1e3
+    tech_data.loc[tech_data.unit.str.contains("/kW"), years] *= 1e3
+
+    tech_data.loc[tech_data.unit.str.contains("kW")  & ~tech_data.unit.str.contains("/kW"), years] /= 1e3
     tech_data.unit = tech_data.unit.str.replace("kW", "MW")
 
     tech_data.loc[tech_data.unit.str.contains("/GWh"), years] /= 1e3

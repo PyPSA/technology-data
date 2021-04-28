@@ -27,7 +27,7 @@ CCGT,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh_-_
 Fischer-Tropsch,FOM,3.0,%/year,doi:10.3390/su9020306, from old pypsa cost assumptions
 Fischer-Tropsch,capture rate,0.98,per unit,doi:10.1016/j.biombioe.2015.01.006,
 Fischer-Tropsch,efficiency,0.69,per unit,doi:10.1039/D0SE01067G,
-Fischer-Tropsch,investment,677.6,EUR/kWH2,Fasihi doi:10.3390/su9020306 (60 kEUR/bpd = 847 EUR/kWL (1b = 1.7 MWh) 847*0.8 = 677.6), from old pypsa cost assumptions
+Fischer-Tropsch,investment,800.0,EUR/kW_th,doi:10.1039/D0SE01067G,
 Fischer-Tropsch,lifetime,30.0,years,doi:10.3390/su9020306, from old pypsa cost assumptions
 Gasnetz,FOM,2.5,%,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz
 Gasnetz,investment,28.0,EUR/kWGas,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz
@@ -71,6 +71,7 @@ battery inverter,lifetime,10.0,years,"Danish Energy Agency, technology_data_cata
 battery storage,investment,94.0,EUR/kWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Energy storage expansion cost investment
 battery storage,lifetime,30.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Technical lifetime
 biogas,fuel,59.0,EUR/MWhth,JRC and Zappa, from old pypsa cost assumptions
+biogas,lifetime,20.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels_-_0003.xlsx","81 Biogas Plant, Basic conf.:  Technical lifetime"
 biogas upgrading,FOM,2.5,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels_-_0003.xlsx","82 Biogas, upgrading:  Fixed O&M "
 biogas upgrading,VOM,3.43325,EUR/MWh input,"Danish Energy Agency, data_sheets_for_renewable_fuels_-_0003.xlsx","82 Biogas, upgrading:  Variable O&M"
 biogas upgrading,investment,362.0,EUR/kW input,"Danish Energy Agency, data_sheets_for_renewable_fuels_-_0003.xlsx","82 Biogas, upgrading:  investment (upgrading, methane redution and grid injection)"
@@ -296,7 +297,7 @@ nuclear,FOM,1.4,%/year,Lazard s Levelized Cost of Energy Analysis - Version 13.0
 nuclear,VOM,3.5,EUR/MWh_e,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
 nuclear,efficiency,0.33,per unit,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
 nuclear,fuel,2.6,EUR/MWh_th,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
-nuclear,investment,7940.45144,EUR/kW_e,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+nuclear,investment,2000.0,EUR/kW_e,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
 nuclear,lifetime,40.0,years,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
 offwind,FOM,2.29167,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",21 Offshore turbines:  Fixed O&M
 offwind,VOM,2.45693,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",21 Offshore turbines:  Variable O&M

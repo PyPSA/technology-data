@@ -80,6 +80,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'hydrogen storage underground': '151c Hydrogen Storage - Caverns',
                'hydrogen storage tank': '151a Hydrogen Storage - Tanks',
                'micro CHP': '219 LT-PEMFC mCHP - natural gas',
+               'biogas' : '81 Biogas Plant, Basic conf.',
                'biogas upgrading': '82 Biogas, upgrading',
                'battery': '180 Lithium Ion Battery',
                'electrolysis': '88 Alkaline Electrolyser',
@@ -127,6 +128,7 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'hydrogen storage underground': 'J:K',
                     'hydrogen storage tank': 'J:K',
                     'micro CHP': 'I:J',
+                    'biogas': 'I:J',
                     'biogas upgrading': 'I:J',
                     'electrolysis': 'I:J',
                     'battery': 'L,N',
@@ -291,8 +293,10 @@ def add_conventional_data(costs):
     add technology data for conventional carriers from Lazards, DIW and BP
     """
     # nuclear from Lazards
-    costs.loc[('nuclear', 'investment'), 'value'] = 8595 / \
-        (1 + snakemake.config['rate_inflation'])**(2019 - snakemake.config['eur_year'])
+    costs.loc[('nuclear', 'investment'), 'value'] = 2000# / \
+        #(1 + snakemake.config['rate_inflation'])**(2019 - snakemake.config['eur_year'])
+    # costs.loc[('nuclear', 'investment'), 'value'] = 8595 / \
+    #     (1 + snakemake.config['rate_inflation'])**(2019 - snakemake.config['eur_year'])
     costs.loc[('nuclear', 'investment'), 'unit'] = "EUR/kW_e"
     costs.loc[('nuclear', 'investment'), 'source'] = source_dict['Lazards']
 
@@ -1048,7 +1052,6 @@ def carbon_flow(costs):
             costs.loc[(tech, 'efficiency'), 'unit'] = "per unit"
             costs.loc[(tech, 'efficiency'), 'source'] = "doi:10.1039/D0SE01067G"
 
-
         costs.loc[(tech, 'C in fuel'), 'value'] = costs.loc[(tech, 'efficiency'), 'value'] \
                                                   * costs.loc[(medium_out, 'CO2 intensity'), 'value'] \
                                                   / input_CO2_intensity
@@ -1074,7 +1077,11 @@ def carbon_flow(costs):
             # c_in_char = 0.01
             costs.loc[(tech, 'efficiency'), 'value'] = 0.69
             costs.loc[(tech, 'efficiency'), 'unit'] = "per unit"
-            costs.loc[(tech, 'efficiency'), 'source'] = "doi:10.1039/D0SE01067G"
+            costs.loc[(tech, 'efficiency'), 'source'] = "doi:10.1039/D0SE01067G"#, but assuming accd. to Hannula that using CO2 instead of CO as input is less efficient"
+
+            costs.loc[(tech, 'investment'), 'value'] = 800
+            costs.loc[(tech, 'investment'), 'unit'] = "EUR/kW_th"
+            costs.loc[(tech, 'investment'), 'source'] = "doi:10.1039/D0SE01067G"
         elif tech == 'methanation':
             medium_out = 'gas'
             input_CO2_intensity = costs.loc[(medium_out, 'CO2 intensity'), 'value']

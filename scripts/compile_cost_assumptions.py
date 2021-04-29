@@ -81,7 +81,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'micro CHP': '219 LT-PEMFC mCHP - natural gas',
                'biogas upgrading': '82 Biogas, upgrading',
                'battery': '180 Lithium Ion Battery',
-               'electrolysis': '88 Alkaline Electrolyser',
+               'electrolysis': '86 AEC 100MW', #'88 Alkaline Electrolyser',
                'direct air capture' : '403.a Direct air capture',
                'biomass CHP capture' : '401.a Post comb - small CHP',
                'cement capture' : '401.c Post comb - Cement kiln',
@@ -232,7 +232,9 @@ def get_data_DEA(tech, data_in, expectation=None):
     parameters = ["efficiency", "investment", "Fixed O&M",
                   "Variable O&M", "production capacity for one unit",
                   "Output capacity expansion cost",
-                  "Hydrogen output", "Cb coefficient",
+                  "Hydrogen output",
+                  "Hydrogen (% total input_e (MWh / MWh))",
+                  "Cb coefficient",
                   "Cv coefficient",
                   "Distribution network costs", "Technical life",
                   "Energy storage expansion cost",
@@ -505,7 +507,9 @@ def clean_up_units(tech_data):
     tech_data.loc[tech_data.unit.str.contains("kEUR"), years] *= 1e3
     tech_data.unit = tech_data.unit.str.replace("kEUR", "EUR")
 
-    tech_data.loc[tech_data.unit.str.contains("kW"), years] /= 1e3
+    tech_data.loc[tech_data.unit.str.contains("/kW"), years] *= 1e3
+
+    tech_data.loc[tech_data.unit.str.contains("kW")  & ~tech_data.unit.str.contains("/kW"), years] /= 1e3
     tech_data.unit = tech_data.unit.str.replace("kW", "MW")
 
     tech_data.loc[tech_data.unit.str.contains("/GWh"), years] /= 1e3
@@ -520,9 +524,12 @@ def clean_up_units(tech_data):
     tech_data.unit = tech_data.unit.str.replace("EUR2015", "EUR")
     tech_data.unit = tech_data.unit.str.replace("EUR-2015", "EUR")
     tech_data.unit = tech_data.unit.str.replace("MWe", "MW_e")
+    tech_data.unit = tech_data.unit.str.replace("EUR/MW of total input_e", "EUR/MW_e")
+    tech_data.unit = tech_data.unit.str.replace("MWh/MWh\)", "MWh_H2/MWh_e", regex=True)
     tech_data.unit = tech_data.unit.str.replace("MWth", "MW_th")
     tech_data.unit = tech_data.unit.str.replace("MWheat", "MW_th")
     tech_data.unit = tech_data.unit.str.replace("MWhheat", "MWh_th")
+    tech_data.unit = tech_data.unit.str.replace("EUR/MWh of total input", "EUR/MWh_e")
     tech_data.loc[tech_data.unit=='EUR/MW/y', "unit"] = 'EUR/MW/year'
 
     # convert per unit costs to MW
@@ -722,6 +729,7 @@ def order_data(tech_data):
                        ((df.unit==investment.unit[0]+"/year")|
                         (df.unit=="EUR/MW/km/year")|
                         (df.unit=="EUR/MW/year")|
+                        (df.unit=='% of specific investment/year')|
                         (df.unit==investment.unit.str.split(" ")[0][0]+"/year"))].copy()
             if (len(fixed)!=1) and (len(df[df.index.str.contains("Fixed O&M")])!=0):
                 switch = True
@@ -731,7 +739,10 @@ def order_data(tech_data):
                 fixed["parameter"] = "fixed"
                 clean_df[tech] = pd.concat([clean_df[tech], fixed])
                 fom = pd.DataFrame(columns=fixed.columns)
-                fom[years] = fixed[years]/investment[years].values*100
+                if not any(fixed.unit.str.contains('% of specific investment/year')):
+                    fom[years] = fixed[years]/investment[years].values*100
+                else:
+                    fom[years] = fixed[years]
                 fom["parameter"] = "FOM"
                 fom["unit"] = "%/year"
                 fom["source"] = fixed["source"]
@@ -768,8 +779,9 @@ def order_data(tech_data):
 
         # ----- efficiencies ------
         efficiency = df[(df.index.str.contains("efficiency") |
-                         df.index.str.contains("Hydrogen output, at LHV"))
-                         & ((df.unit=="%") |  (df.unit =="% total size"))
+                         (df.index.str.contains("Hydrogen output, at LHV"))|
+                         (df.index == ("Hydrogen")))
+                         & ((df.unit=="%") |  (df.unit =="% total size") |  (df.unit =="MWh_H2/MWh_e"))
                          & (~df.index.str.contains("name plate"))].copy()
 
         # take annual average instead of name plate efficiency
@@ -1078,7 +1090,7 @@ if 'snakemake' not in globals():
                     fraunhofer_energy_prices = "inputs/Fraunhofer_ISE_energy_prices.csv",
                     EWG_costs = "inputs/EWG_costs.csv",
                     dea_transport = "inputs/energy_transport_data_sheet_dec_2017.xlsx",
-                    dea_renewable_fuels = "inputs/data_sheets_for_renewable_fuels_-_0003.xlsx",
+                    dea_renewable_fuels = "inputs/data_sheets_for_renewable_fuels.xlsx",
                     dea_storage = "inputs/technology_data_catalogue_for_energy_storage.xlsx",
                     dea_generation = "inputs/technology_data_for_el_and_dh_-_0009.xlsx",
                     dea_heating = "inputs/technologydatafor_heating_installations_marts_2018.xlsx",

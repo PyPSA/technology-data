@@ -9,15 +9,15 @@ CCGT,c_v,0.15,50oC/100oC,"Danish Energy Agency, technology_data_for_el_and_dh_-_
 CCGT,efficiency,0.595,per unit,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Electricity efficiency, annual average"
 CCGT,investment,807.5,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Nominal investment"
 CCGT,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Technical lifetime"
-CH4 (g) pipeline,FOM,1.7,%/year,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
-CH4 (g) pipeline,investment,79.006242,EUR/MW/km,Calculated based on numbers on Wikiepdia for the “Arab Gas Pipeline”.,
-CH4 (g) pipeline,lifetime,30.0,years,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
-CH4 (g) pipeline compressor,FOM,1.7,%/year,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
-CH4 (g) pipeline compressor,investment,103.825353,EUR/MW_CH4/km,Calculated based on Guidehouse values for H2 pipelines.,
-CH4 (g) pipeline compressor,lifetime,15.0,years,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
+CH4 (g) fill compressor station,FOM,1.7,%/year,Assume same as for H2 (g) fill compressor station.,
+CH4 (g) fill compressor station,investment,1498.948261,EUR/MW_CH4,"Guesstimate, based on H2 (g) pipeline and fill compressor station cost.",
+CH4 (g) fill compressor station,lifetime,20.0,years,Assume same as for H2 (g) fill compressor station.,
+CH4 (g) pipeline,FOM,1.5,%/year,Assume same as for H2 (g) pipeline in 2050 (CH4 pipeline as mature technology).,
+CH4 (g) pipeline,investment,78.997841,EUR/MW/km,Guesstimate.,
+CH4 (g) pipeline,lifetime,50.0,years,Assume same as for H2 (g) pipeline in 2050 (CH4 pipeline as mature technology).,
 CH4 (g) submarine pipeline,FOM,3.0,%/year,"d’Amore-Domenech et al (2021): 10.1016/j.apenergy.2021.116625 , supplementary material.",
-CH4 (g) submarine pipeline,investment,104.448,EUR/MW/km,Kaiser (2017): 10.1016/j.marpol.2017.05.003 .,
-CH4 (g) submarine pipeline,lifetime,30.0,years,Assume same as for methane (g) pipeline.,
+CH4 (g) submarine pipeline,investment,114.8928,EUR/MW/km,Kaiser (2017): 10.1016/j.marpol.2017.05.003 .,
+CH4 (g) submarine pipeline,lifetime,30.0,years,"d’Amore-Domenech et al (2021): 10.1016/j.apenergy.2021.116625 , supplementary material.",
 CH4 (l) transport ship,FOM,3.5,%/year,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CH4 (l) transport ship,capacity,58300.0,t_CH4,"Calculated, based on Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CH4 (l) transport ship,investment,151000000.0,EUR,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
@@ -56,16 +56,15 @@ General liquid hydrocarbon storage (crude),lifetime,30.0,years,"Stelter and Nish
 General liquid hydrocarbon storage (product),FOM,6.25,%/year,"Stelter and Nishida 2013: https://webstore.iea.org/insights-series-2013-focus-on-energy-security , figure 7 and pg. 12 .",
 General liquid hydrocarbon storage (product),investment,169.79328,EUR/m^3,"Stelter and Nishida 2013: https://webstore.iea.org/insights-series-2013-focus-on-energy-security , pg. 8F .",
 General liquid hydrocarbon storage (product),lifetime,30.0,years,"Stelter and Nishida 2013: https://webstore.iea.org/insights-series-2013-focus-on-energy-security , pg. 11.",
-H2 (g) pipeline,FOM,1.7,%/year,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
-H2 (g) pipeline,investment,234.096579,EUR/MW/km,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
-H2 (g) pipeline,lifetime,30.0,years,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
-H2 (g) pipeline compressor,FOM,1.7,%/year,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
-H2 (g) pipeline compressor,Power needed,330.0,MW_el/1000km,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
-H2 (g) pipeline compressor,investment,153.974238,EUR/MW_H2/km,"Calculated, based on numbers from Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf .",
-H2 (g) pipeline compressor,lifetime,15.0,years,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
-H2 (g) submarine pipeline,FOM,3.0,%/year,Assume same as for methane (g) submarine pipeline.,
-H2 (g) submarine pipeline,investment,313.344,EUR/MW/km,"Assume similar cost as for methane (g) submarine pipeline but with the same factor as between onland methane (g) pipeline and H2 (g) pipeline (3x). This estimate is comparable to a 36in diameter pipeline calaculated based on d’Amore-Domenech et al (2021): 10.1016/j.apenergy.2021.116625 , supplementary material (=251 EUR/MW/km).",
-H2 (g) submarine pipeline,lifetime,30.0,years,Assume same as for methane (g) submarine pipeline.,
+H2 (g) fill compressor station,FOM,1.7,%/year,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
+H2 (g) fill compressor station,investment,4478.0,EUR/MW_H2,"Danish Energy Agency, Technology Data for Energy Transport (2021), pg. 164, Figure 14 (Fill compressor).",
+H2 (g) fill compressor station,lifetime,20.0,years,"Danish Energy Agency, Technology Data for Energy Transport (2021), pg. 168, Figure 24 (Fill compressor).",
+H2 (g) pipeline,FOM,1.916667,%/year,"Danish Energy Agency, Technology Data for Energy Transport (2021), Excel datasheet: H2 140.",
+H2 (g) pipeline,investment,236.0,EUR/MW/km,"Danish Energy Agency, Technology Data for Energy Transport (2021), Excel datasheet: H2 140.",
+H2 (g) pipeline,lifetime,50.0,years,"Danish Energy Agency, Technology Data for Energy Transport (2021), Excel datasheet: H2 140.",
+H2 (g) submarine pipeline,FOM,3.0,%/year,Assume same as for CH4 (g) submarine pipeline.,
+H2 (g) submarine pipeline,investment,310.8756,EUR/MW/km,"Assume similar cost as for CH4 (g) submarine pipeline but with the same factor as between onland CH4 (g) pipeline and H2 (g) pipeline (2.7). This estimate is comparable to a 36in diameter pipeline calaculated based on d’Amore-Domenech et al (2021): 10.1016/j.apenergy.2021.116625 , supplementary material (=251 EUR/MW/km).",
+H2 (g) submarine pipeline,lifetime,30.0,years,Assume same as for CH4 (g) submarine pipeline.,
 H2 (l) storage tank,FOM,2.0,%/year,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 6.",
 H2 (l) storage tank,investment,25000.0,EUR/t_H2,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 6.",
 H2 (l) storage tank,lifetime,20.0,years,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 6.",
@@ -122,9 +121,6 @@ MeOH transport ship,FOM,5.0,%/year,"Assume comparable tanker as for LOHC transpo
 MeOH transport ship,capacity,75000.0,t_MeOH,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
 MeOH transport ship,investment,31700578.344047,EUR,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
 MeOH transport ship,lifetime,15.0,years,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
-Methane steam reforming,FOM,3.0,%/year,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",
-Methane steam reforming,investment,470085.470085,EUR/MW_H2,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",
-Methane steam reforming,lifetime,30.0,years,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",
 Methanol steam reforming,FOM,4.0,%/year,"Niermann et al (2021): 10.1016/j.rser.2020.110171 , table 4.",
 Methanol steam reforming,investment,16318.431094,EUR/MW_H2,"Niermann et al (2021): 10.1016/j.rser.2020.110171 , table 4.",
 Methanol steam reforming,lifetime,20.0,years,"Niermann et al (2021): 10.1016/j.rser.2020.110171 , table 4.",
@@ -152,6 +148,9 @@ SMR CC,FOM,5.4,%/year,https://www.gov.uk/government/publications/hydrogen-supply
 SMR CC,efficiency,0.67,per unit,https://www.gov.uk/government/publications/hydrogen-supply-chain-evidence-base; slide 42 assumption for 2030; CC uses 10% of gas, from old pypsa cost assumptions
 SMR CC,investment,1032.0,EUR/kWCH4,https://www.gov.uk/government/publications/hydrogen-supply-chain-evidence-base; slide 42 assumption for 2030; GBP 466 exchange 1.16; CC costed at 300 EUR/tCO2/a, from old pypsa cost assumptions
 SMR CC,lifetime,25.0,years,TODO, from old pypsa cost assumptions
+Steam methane reforming,FOM,3.0,%/year,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",
+Steam methane reforming,investment,470085.470085,EUR/MW_H2,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",
+Steam methane reforming,lifetime,30.0,years,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",
 air separation unit,FOM,4.0,%/year,"Estimate, based on methanation plant.",
 air separation unit,investment,10942205.097557,EUR/MW,"Calculated based on Morgan E. 2013: doi:10.7275/11KT-3F59 , Fig. 56, Fig. 58, pg. 207, pg. 210.",
 air separation unit,lifetime,20.0,years,"Morgan E. 2013: doi:10.7275/11KT-3F59 , pg. 290",
@@ -351,9 +350,11 @@ hydro,FOM,1.0,%/year,DIW DataDoc http://hdl.handle.net/10419/80348, from old pyp
 hydro,efficiency,0.9,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 hydro,investment,2208.161606,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 hydro,lifetime,80.0,years,IEA2010, from old pypsa cost assumptions
-hydrogen storage tank,FOM,1.873033,%/year,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Fixed O&M
-hydrogen storage tank,investment,24.0252,EUR/kWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Specific investment
-hydrogen storage tank,lifetime,30.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Technical lifetime
+hydrogen storage tank,investment,11.2,USD/kWh,budischak2013, from old pypsa cost assumptions
+hydrogen storage tank,lifetime,20.0,years,budischak2013, from old pypsa cost assumptions
+hydrogen storage tank incl. compressor,FOM,1.873033,%/year,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Fixed O&M
+hydrogen storage tank incl. compressor,investment,24.0252,EUR/kWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Specific investment
+hydrogen storage tank incl. compressor,lifetime,30.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Technical lifetime
 hydrogen storage underground,FOM,2e-06,%/year,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Fixed O&M
 hydrogen storage underground,VOM,1.4e-05,EUR/MWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Variable O&M
 hydrogen storage underground,investment,1.35,EUR/kWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Specific investment
@@ -419,7 +420,7 @@ ror,investment,3312.24241,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
 ror,lifetime,80.0,years,IEA2010, from old pypsa cost assumptions
 seawater desalination,FOM,4.0,%/year,"Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Table 1.",
 seawater desalination,electricity-input,3.0348,kWh/m^3-H2O,"Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Fig. 4.",
-seawater desalination,investment,20324.00592,EUR/m^3-H2O/h,"Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Table 1.",
+seawater desalination,investment,23661.538462,EUR/(m^3-H2O/h),"Caldera et al 2017: Learning Curve for Seawater Reverse Osmosis Desalination Plants: Capital Cost Trend of the Past, Present, and Future (https://doi.org/10.1002/2017WR021402), Table 4.",
 seawater desalination,lifetime,30.0,years,"Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Table 1.",
 solar,FOM,1.545517,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",22 Photovoltaics Medium:  Fixed O&M
 solar,VOM,0.01,EUR/MWhel,RES costs made up to fix curtailment order, from old pypsa cost assumptions

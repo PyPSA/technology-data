@@ -48,6 +48,7 @@ source_dict = {
                 "ISE": "WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",
                 # Water desalination costs
                 "Caldera2016": "Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004)",
+                "Caldera2017": "Caldera et al 2017: Learning Curve for Seawater Reverse Osmosis Desalination Plants: Capital Cost Trend of the Past, Present, and Future (https://doi.org/10.1002/2017WR021402)",
                 }
 
 # ---- sheet names for techs in DEA ------------------------------------------
@@ -78,7 +79,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
                # 'decentral water tank storage': '142 Small scale hot water tank',
                'fuel cell': '12 LT-PEMFC CHP',
                'hydrogen storage underground': '151c Hydrogen Storage - Caverns',
-               'hydrogen storage tank': '151a Hydrogen Storage - Tanks',
+               'hydrogen storage tank incl. compressor': '151a Hydrogen Storage - Tanks',
                'micro CHP': '219 LT-PEMFC mCHP - natural gas',
                'biogas upgrading': '82 Biogas, upgrading',
                'battery': '180 Lithium Ion Battery',
@@ -122,7 +123,7 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'central water tank storage': 'J:K',
                     'fuel cell': 'I:J',
                     'hydrogen storage underground': 'J:K',
-                    'hydrogen storage tank': 'J:K',
+                    'hydrogen storage tank incl. compressor': 'J:K',
                     'micro CHP': 'I:J',
                     'biogas upgrading': 'I:J',
                     'electrolysis': 'I:J',
@@ -207,7 +208,7 @@ def get_data_DEA(tech, data_in, expectation=None):
     uncertainty_columns = ["2050-optimist", "2050-pessimist"]
     if uncrtnty_lookup[tech]:
         # hydrogen storage sheets have reverse order of lower/upper estimates
-        if tech in ["hydrogen storage tank", "hydrogen storage cavern"]:
+        if tech in ["hydrogen storage tank incl. compressor", "hydrogen storage cavern"]:
             uncertainty_columns.reverse()
         excel.rename(columns={excel.columns[-2]: uncertainty_columns[0],
                                 excel.columns[-1]: uncertainty_columns[1]
@@ -292,10 +293,17 @@ def add_desalinsation_data(costs):
     add technology data for sea water desalination (SWRO) and water storage.
     """
 
+    # Interpolate cost based on historic costs/cost projection to fitting year
+    cs = [2070,1917,1603,1282,1025] # in USD/(m^3/d)
+    ys = [2015,2022,2030,2040,2050]
+    c = np.interp(year, ys, cs)
+    c *= 24                         # in USD/(m^3/h)
+    c /= 1.17                       # in EUR/(m^3/h)
+
     tech = "seawater desalination"
-    costs.loc[(tech, 'investment'), 'value'] = 2.23*8760
-    costs.loc[(tech, 'investment'), 'unit'] = "EUR/m^3-H2O/h"
-    costs.loc[(tech, 'investment'), 'source'] = source_dict['Caldera2016'] + ", Table 1."
+    costs.loc[(tech, 'investment'), 'value'] = c
+    costs.loc[(tech, 'investment'), 'unit'] = "EUR/(m^3-H2O/h)"
+    costs.loc[(tech, 'investment'), 'source'] = source_dict['Caldera2017'] + ", Table 4."
 
     costs.loc[(tech, 'FOM'), 'value'] = 4.
     costs.loc[(tech, 'FOM'), 'unit'] = "%/year"
@@ -323,7 +331,8 @@ def add_desalinsation_data(costs):
     costs.loc[(tech, 'lifetime'), 'unit'] = "years"
     costs.loc[(tech, 'lifetime'), 'source'] = source_dict['Caldera2016'] + ", Table 1."
 
-    costs = adjust_for_inflation(costs, ['seawater desalination', 'clean water tank storage'], 2013)
+    costs = adjust_for_inflation(costs, ['seawater desalination'], 2015)
+    costs = adjust_for_inflation(costs, ['clean water tank storage'], 2013)
 
     return costs
 
@@ -706,12 +715,12 @@ def set_round_trip_efficiency(tech_data):
     """
 
     # hydrogen storage
-    to_drop = [("hydrogen storage tank", ' - Charge efficiency')]
-    to_drop.append(("hydrogen storage tank", ' - Discharge efficiency'))
+    to_drop = [("hydrogen storage tank incl. compressor", ' - Charge efficiency')]
+    to_drop.append(("hydrogen storage tank incl. compressor", ' - Discharge efficiency'))
     to_drop.append(("hydrogen storage underground", ' - Charge efficiency'))
     to_drop.append(("hydrogen storage underground", ' - Discharge efficiency'))
     tech_data.loc[("hydrogen storage underground", "Round trip efficiency"), years] *= 100
-    tech_data.loc[("hydrogen storage tank", "Round trip efficiency"), years] *= 100
+    tech_data.loc[("hydrogen storage tank incl. compressor", "Round trip efficiency"), years] *= 100
 
 
 

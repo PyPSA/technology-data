@@ -18,7 +18,8 @@ compiled correctly.
 
 .. literalinclude:: ../scripts/compile_cost_assumptions.py
    :language: python
-   :lines: 54-60, 94
+   :start-after: [DEA-sheet-names]
+   :end-before: [DEA-sheet-names]
 
 If you want to extract further parameters from the DEA excel sheets you can
 add them to the ``parameter`` list in the function ``get_data_DEA()``.
@@ -33,14 +34,16 @@ and four columns (``['value', 'unit', 'source', 'further description']``).
 
 .. literalinclude:: ../scripts/compile_cost_assumptions.py
    :language: python
-   :lines: 1032-1036
+   :start-after: [RTD-target-multiindex-df]
+   :lines: 1-4
 
 The function for the newly added technology should extend this pandas Dataframe
 ``costs``. This is done for example for solar PV costs in the function `add_solar_from_other(costs) <https://github.com/PyPSA/technology-data/blob/2f4da6d75f07ef9457f4070b26d690f1e5e932a5/scripts/compile_cost_assumptions.py#L396>`_
 
 .. literalinclude:: ../scripts/compile_cost_assumptions.py
    :language: python
-   :lines: 396-400
+   :start-after: [add-solar-from-others]
+   :lines: 1-4
 
 If a new technology is added, existing parameter names (e.g. "investment") and
 units (e.g. EUR/MW) should be used. If the energy output is not distinct, clarify
@@ -65,7 +68,8 @@ as it is done for example for the cost assumptions from DIW from 2010
 
 .. literalinclude:: ../scripts/compile_cost_assumptions.py
    :language: python
-   :lines: 477
+   :start-after: [unify-diw-inflation]
+   :lines: 1-5
 
 The output cost assumptions are given for different years. So either the added
 cost assumptions have to be interpolated for different in the ``config.yaml``
@@ -73,11 +77,13 @@ specified years, as done e.g. with the technology data from DEA `here <https://g
 
 .. literalinclude:: ../scripts/compile_cost_assumptions.py
    :language: python
-   :lines: 259
+   :start-after: [RTD-interpolation-example]
+   :lines: 1-3
 
 or the technology data is assumed to be constant for the different years, as e.g.
 done if other electrolyzer data is assumed in this `function <https://github.com/PyPSA/technology-data/blob/2f4da6d75f07ef9457f4070b26d690f1e5e932a5/scripts/compile_cost_assumptions.py#L443>`_.
 
 .. literalinclude:: ../scripts/compile_cost_assumptions.py
    :language: python
-   :lines: 443-450
+   :start-after: [add-h2-from-other]
+   :lines: 1-10

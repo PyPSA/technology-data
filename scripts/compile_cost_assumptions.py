@@ -49,10 +49,11 @@ source_dict = {
                 # Water desalination costs
                 "Caldera2016": "Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004)",
                 "Caldera2017": "Caldera et al 2017: Learning Curve for Seawater Reverse Osmosis Desalination Plants: Capital Cost Trend of the Past, Present, and Future (https://doi.org/10.1002/2017WR021402)",
+                # home battery storage and inverter investment costs
+                "EWG": "Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019"
                 }
 
-# ---- sheet names for techs in DEA ------------------------------------------
-
+# [DEA-sheet-names]
 sheet_names = {'onwind': '20 Onshore turbines',
                'offwind': '21 Offshore turbines',
                'solar-utility': '22 Photovoltaics Large',
@@ -83,8 +84,8 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'micro CHP': '219 LT-PEMFC mCHP - natural gas',
                'biogas upgrading': '82 Biogas, upgrading',
                'battery': '180 Lithium Ion Battery',
-               'electrolysis': '88 Alkaline Electrolyser',
                'industrial heat pump medium temperature':'302.a High temp. hp Up to 125 C',
+               'electrolysis': '86 AEC 100MW', #'88 Alkaline Electrolyser',
                'direct air capture' : '403.a Direct air capture',
                'biomass CHP capture' : '401.a Post comb - small CHP',
                'cement capture' : '401.c Post comb - Cement kiln',
@@ -98,6 +99,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
                # 'gas pipeline': '102 6 gas Main distri line',
                # "DH main transmission": "103_11 DH transmission",
                }
+# [DEA-sheet-names]
 
 uncrtnty_lookup = {'onwind': 'J:K',
                     'offwind': 'J:K',
@@ -237,7 +239,9 @@ def get_data_DEA(tech, data_in, expectation=None):
     parameters = ["efficiency", "investment", "Fixed O&M",
                   "Variable O&M", "production capacity for one unit",
                   "Output capacity expansion cost",
-                  "Hydrogen output", "Cb coefficient",
+                  "Hydrogen output",
+                  "Hydrogen (% total input_e (MWh / MWh))",
+                  "Cb coefficient",
                   "Cv coefficient",
                   "Distribution network costs", "Technical life",
                   "Energy storage expansion cost",
@@ -277,6 +281,7 @@ def get_data_DEA(tech, data_in, expectation=None):
 
     df_final = pd.DataFrame(index=df.index, columns=years)
 
+    # [RTD-interpolation-example]
     for index in df_final.index:
         values = np.interp(x=years, xp=df.columns.values.astype(float), fp=df.loc[index, :].values.astype(float))
         df_final.loc[index, :] = values
@@ -284,7 +289,7 @@ def get_data_DEA(tech, data_in, expectation=None):
     df_final["source"] = source_dict["DEA"] + ", " + excel_file.replace("inputs/","")
     df_final["unit"] = (df_final.rename(index=lambda x:
                                         x[x.rfind("(")+1: x.rfind(")")]).index.values)
-    df_final.index = df_final.index.str.replace(r" \(.*\)","")
+    df_final.index = df_final.index.str.replace(r" \(.*\)","", regex=True)
 
     return df_final
 
@@ -448,12 +453,13 @@ def add_co2_intensity(costs):
 
     return costs
 
-
+# [add-solar-from-others]
 def add_solar_from_other(costs):
     """"
     add solar from other sources than DEA (since the life time assumed in
     DEA is very optimistic)
     """
+
     # solar utility from Vartiaian 2019
     data = np.interp(x=years, xp=[2020, 2030, 2040, 2050],
                      fp=[431, 275, 204, 164])
@@ -495,7 +501,7 @@ def add_solar_from_other(costs):
 
     return costs
 
-
+# [add-h2-from-other]
 def add_h2_from_other(costs):
     """
     assume higher efficiency for electrolysis(0.8) and fuel cell(0.58)
@@ -507,7 +513,7 @@ def add_h2_from_other(costs):
 
     return costs
 
-
+# [unify-diw-inflation]
 def unify_diw(costs):
     """"
     include inflation for the DIW costs from 2010
@@ -576,7 +582,9 @@ def clean_up_units(tech_data):
     tech_data.loc[tech_data.unit.str.contains("kEUR"), years] *= 1e3
     tech_data.unit = tech_data.unit.str.replace("kEUR", "EUR")
 
-    tech_data.loc[tech_data.unit.str.contains("kW"), years] /= 1e3
+    tech_data.loc[tech_data.unit.str.contains("/kW"), years] *= 1e3
+
+    tech_data.loc[tech_data.unit.str.contains("kW")  & ~tech_data.unit.str.contains("/kW"), years] /= 1e3
     tech_data.unit = tech_data.unit.str.replace("kW", "MW")
 
     tech_data.loc[tech_data.unit.str.contains("/GWh"), years] /= 1e3
@@ -591,9 +599,12 @@ def clean_up_units(tech_data):
     tech_data.unit = tech_data.unit.str.replace("EUR2015", "EUR")
     tech_data.unit = tech_data.unit.str.replace("EUR-2015", "EUR")
     tech_data.unit = tech_data.unit.str.replace("MWe", "MW_e")
+    tech_data.unit = tech_data.unit.str.replace("EUR/MW of total input_e", "EUR/MW_e")
+    tech_data.unit = tech_data.unit.str.replace("MWh/MWh\)", "MWh_H2/MWh_e", regex=True)
     tech_data.unit = tech_data.unit.str.replace("MWth", "MW_th")
     tech_data.unit = tech_data.unit.str.replace("MWheat", "MW_th")
     tech_data.unit = tech_data.unit.str.replace("MWhheat", "MWh_th")
+    tech_data.unit = tech_data.unit.str.replace("EUR/MWh of total input", "EUR/MWh_e")
     tech_data.loc[tech_data.unit=='EUR/MW/y', "unit"] = 'EUR/MW/year'
 
     # convert per unit costs to MW
@@ -733,8 +744,14 @@ def set_round_trip_efficiency(tech_data):
     inverter.rename(index ={'Output capacity expansion cost':
                             'Output capacity expansion cost investment'},
                     inplace=True)
+
+    # Manual correction based on footnote.
+    inverter.loc['Technical lifetime', years] = 10.
+    inverter.loc['Technical lifetime', 'source'] += ', Note K.'
+
     inverter.index = pd.MultiIndex.from_product([["battery inverter"],
                                                  inverter.index.to_list()])
+
     storage = df.reindex(index=['Technical lifetime',
                                 'Energy storage expansion cost'])
     storage.rename(index={'Energy storage expansion cost':
@@ -787,6 +804,7 @@ def order_data(tech_data):
                        ((df.unit==investment.unit[0]+"/year")|
                         (df.unit=="EUR/MW/km/year")|
                         (df.unit=="EUR/MW/year")|
+                        (df.unit=='% of specific investment/year')|
                         (df.unit==investment.unit.str.split(" ")[0][0]+"/year"))].copy()
             if (len(fixed)!=1) and (len(df[df.index.str.contains("Fixed O&M")])!=0):
                 switch = True
@@ -796,7 +814,10 @@ def order_data(tech_data):
                 fixed["parameter"] = "fixed"
                 clean_df[tech] = pd.concat([clean_df[tech], fixed])
                 fom = pd.DataFrame(columns=fixed.columns)
-                fom[years] = fixed[years]/investment[years].values*100
+                if not any(fixed.unit.str.contains('% of specific investment/year')):
+                    fom[years] = fixed[years]/investment[years].values*100
+                else:
+                    fom[years] = fixed[years]
                 fom["parameter"] = "FOM"
                 fom["unit"] = "%/year"
                 fom["source"] = fixed["source"]
@@ -833,8 +854,9 @@ def order_data(tech_data):
 
         # ----- efficiencies ------
         efficiency = df[(df.index.str.contains("efficiency") |
-                         df.index.str.contains("Hydrogen output, at LHV"))
-                         & ((df.unit=="%") |  (df.unit =="% total size"))
+                         (df.index.str.contains("Hydrogen output, at LHV"))|
+                         (df.index == ("Hydrogen")))
+                         & ((df.unit=="%") |  (df.unit =="% total size") |  (df.unit =="MWh_H2/MWh_e"))
                          & (~df.index.str.contains("name plate"))].copy()
 
         # take annual average instead of name plate efficiency
@@ -1090,11 +1112,104 @@ def rename_ISE(costs_ISE):
     return costs_ISE
 
 
+def add_home_battery_costs(costs):
+    """
+    adds investment costs for home battery storage and inverter.
+    Since home battery costs are not part of the DEA cataloque, utility-scale
+    costs are multiplied by a factor determined by data from the EWG study
+    """
+    # get DEA assumptions for utility scale
+    home_battery = (data.loc[["battery storage", "battery inverter"]]
+                    .rename(index=lambda x: "home " + x, level=0))
+
+    # get EWG cost assumptions
+    costs_ewg = pd.read_csv(snakemake.input.EWG_costs,
+                            index_col=list(range(2))).sort_index()
+    v = costs_ewg.unstack()[[str(year) for year in years]].swaplevel(axis=1)
+
+    def annuity(n,r=0.07):
+        """
+        Calculate the annuity factor for an asset with lifetime n years and
+        discount rate of r
+        """
+        if isinstance(r, pd.Series):
+            return pd.Series(1/n, index=r.index).where(r == 0, r/(1. - 1./(1.+r)**n))
+        elif r > 0:
+            return r/(1. - 1./(1.+r)**n)
+        else:
+            return 1/n
+
+    # annualise EWG cost assumptions
+    fixed = (annuity(v["lifetime"])+v["FOM"]/100.) * v["investment"]
+
+    # battery storage index in EWG --------------
+    battery_store_i = [
+                        'Battery PV prosumer - commercial storage',
+                        'Battery PV prosumer - industrial storage',
+                       'Battery PV prosumer - residential storage',
+                       'Battery storage']
+
+    battery_store_ewg = fixed.loc[battery_store_i].T
+
+    def get_factor(df, cols, utility_col):
+        """get factor by which costs are increasing for home installations"""
+        return (df[cols].div(df[utility_col], axis=0).mean(axis=1)
+                .rename(index=lambda x: float(x)))
+
+    # take mean of cost increase for commercial and residential storage compared to utility-scale
+    home_cols = ['Battery PV prosumer - commercial storage',
+                 'Battery PV prosumer - residential storage']
+    factor = get_factor(battery_store_ewg, home_cols, "Battery storage")
+
+    home_cost =  (home_battery.loc[("home battery storage", "investment"), years] * factor).values
+    home_battery.loc[("home battery storage", "investment"), years] = home_cost
+
+    # battery inverter index in EWG -----------------------
+    battery_inverter_i = [
+                        'Battery PV prosumer - commercial interface',
+                        'Battery PV prosumer - industrial interface PHES',
+                        'Battery PV prosumer - residential interface',
+                        'Battery interface']
+
+    battery_inverter_ewg = fixed.loc[battery_inverter_i].T
+
+    home_cols = ['Battery PV prosumer - commercial interface',
+                 'Battery PV prosumer - residential interface']
+    factor = get_factor(battery_inverter_ewg, home_cols, "Battery interface")
+    home_cost = (home_battery.loc[("home battery inverter", "investment"), years] * factor).values
+    home_battery.loc[("home battery inverter", "investment"), years] = home_cost
+
+    # adjust source
+    home_battery["source"] = home_battery["source"].apply(lambda x: source_dict["EWG"] + ", " + x)
+
+    return pd.concat([costs, home_battery])
 # %% *************************************************************************
 #  ---------- MAIN ------------------------------------------------------------
+# for testing
+if 'snakemake' not in globals():
+    from vresutils.snakemake import MockSnakemake
+    snakemake = MockSnakemake(
+        input=dict(
+                    pypsa_costs = "inputs/costs_PyPSA.csv",
+                    fraunhofer_costs = "inputs/Fraunhofer_ISE_costs.csv",
+                    fraunhofer_energy_prices = "inputs/Fraunhofer_ISE_energy_prices.csv",
+                    EWG_costs = "inputs/EWG_costs.csv",
+                    dea_transport = "inputs/energy_transport_data_sheet_dec_2017.xlsx",
+                    dea_renewable_fuels = "inputs/data_sheets_for_renewable_fuels.xlsx",
+                    dea_storage = "inputs/technology_data_catalogue_for_energy_storage.xlsx",
+                    dea_generation = "inputs/technology_data_for_el_and_dh_-_0009.xlsx",
+                    dea_heating = "inputs/technologydatafor_heating_installations_marts_2018.xlsx",
+                    dea_industrial = "inputs/technology_data_for_industrial_process_heat_0002.xlsx"
+        ),
+        output=["outputs/costs_{}.csv".format(year) for year in [2020, 2025, 2030, 2035, 2040, 2045, 2050]]
+
+    )
+    import yaml
+    with open('config.yaml', encoding='utf8') as f:
+        snakemake.config = yaml.safe_load(f)
+
 # (1) DEA data
 # (a)-------- get data from DEA excel sheets ----------------------------------
-
 # read excel sheet names of all excel files
 excel_files = [v for k,v in snakemake.input.items() if "dea" in k]
 data_in = get_excel_sheets(excel_files)
@@ -1147,7 +1262,10 @@ costs_ISE = rename_ISE(costs_ISE)
 data = pd.concat([data, costs_ISE.loc[["Gasnetz"]]], sort=True)
 
 data = add_manual_input(data)
+# add costs for home batteries
+data = add_home_battery_costs(data)
 # %% (3) ------ add additional sources and save cost as csv ------------------
+# [RTD-target-multiindex-df]
 for year in years:
     costs = (data[[year, "unit", "source", "further description"]]
              .rename(columns={year: "value"}))

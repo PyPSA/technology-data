@@ -1150,7 +1150,8 @@ costs_pypsa = rename_pypsa_old(costs_pypsa)
 # (b) ------- add costs from Fraunhofer ISE study --------------------------
 costs_ISE = pd.read_csv(snakemake.input.fraunhofer_costs,
                         engine="python",
-                        index_col=[0,1])
+                        index_col=[0,1],
+                        encoding = "ISO-8859-1")
 # rename + reorder to fit to other data
 costs_ISE = rename_ISE(costs_ISE)
 # add costs for gas pipelines

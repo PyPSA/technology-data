@@ -16,4 +16,4 @@ jobs:
     - name: Test snakemake workflow
       shell: bash -l {0}
       run: |
-        snakemake --cores all -f compile_cost_assumptions.py
+        snakemake --cores all -f compile_cost_assumptions

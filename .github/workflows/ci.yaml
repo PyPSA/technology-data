@@ -1,0 +1,31 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash -l {0}
+
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - name: Setup Miniconda
+      uses: conda-incubator/setup-miniconda@v2.1.1 
+      with: # checks out environment 'test' by default
+          mamba-version: "*"
+          channels: conda-forge,defaults
+          channel-priority: true
+
+    - name: Install dependencies  
+      run: |
+        mamba env update -f envs/environment.yaml --name test
+        
+    - name: Test snakemake workflow
+      run: |
+        snakemake --cores all -f compile_cost_assumptions.py

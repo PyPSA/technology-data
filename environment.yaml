@@ -10,6 +10,7 @@ dependencies:
   - numpy
   - beautifulsoup4
   - xlrd
+  - openpyxl
 
   - pip:
     - tabula-py

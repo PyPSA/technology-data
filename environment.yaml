@@ -6,7 +6,7 @@ dependencies:
   - python
   - pip
   - snakemake-minimal
-  - pandas>=1.1.0
+  - pandas>=1.1.0,<1.3
   - numpy
   - beautifulsoup4
   - xlrd

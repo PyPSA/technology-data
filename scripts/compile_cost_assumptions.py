@@ -88,6 +88,8 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'direct air capture' : '403.a Direct air capture',
                'biomass CHP capture' : '401.a Post comb - small CHP',
                'cement capture' : '401.c Post comb - Cement kiln',
+               'methanolisation': '98 Methanol from power',
+               'Fischer-Tropsch': '102 Hydrogen to Jet',
                # 'electricity distribution rural': '101 2 el distri Rural',
                # 'electricity distribution urban': '101 4 el distri  city',
                # 'gas distribution rural': '102 7 gas  Rural',
@@ -133,6 +135,8 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'cement capture': 'I:J',
                     'biomass CHP capture': 'I:J',
                     'industrial heat pump medium temperature':'H:I',
+                    'Fischer-Tropsch': 'I:J',
+                    'methanolisation': 'J:K',
 }
 
 
@@ -179,13 +183,17 @@ def get_data_DEA(tech, data_in, expectation=None):
         return None
 
     if tech=="battery":
-        usecols = f"B:J,{uncrtnty_lookup[tech]}"
+        usecols = "B:J"
     elif tech in ['direct air capture', 'cement capture', 'biomass CHP capture']:
-        usecols = f"A:F,{uncrtnty_lookup[tech]}"
+        usecols = "A:F"
     elif tech in ['industrial heat pump medium temperature']:
-        usecols = f"A:E,{uncrtnty_lookup[tech]}"
+        usecols = "A:E"
+    elif tech in ['Fischer-Tropsch']:
+        usecols = "B:F"
     else:
-        usecols = f"B:G,{uncrtnty_lookup[tech]}"
+        usecols = "B:G"
+
+    usecols += f",{uncrtnty_lookup[tech]}"
 
     excel = pd.read_excel(excel_file,
                           sheet_name=sheet_names[tech],
@@ -246,7 +254,8 @@ def get_data_DEA(tech, data_in, expectation=None):
                   "Energy storage expansion cost",
                   'Output capacity expansion cost (M€2015/MW)',
                   'Heat input', 'Heat  input', 'Electricity input', 'Eletricity input', 'Heat out',
-                  'capture rate']
+                  'capture rate', 
+                  "FT Liquids Output, MWh/MWh Total Input"]
 
 
     df = pd.DataFrame()
@@ -278,12 +287,21 @@ def get_data_DEA(tech, data_in, expectation=None):
     if tech.startswith('industrial heat pump'):
         df = df.drop('Indirect investments cost (MEUR per MW)')
 
+    if tech == 'methanolisation':
+        df.drop(df.loc[df.index.str.contains("1,000 t Methanol")].index, inplace=True)
+
+    if tech == 'Fischer-Tropsch':
+        df.drop(df.loc[df.index.str.contains("l FT Liquids")].index, inplace=True)
+
     df_final = pd.DataFrame(index=df.index, columns=years)
 
     # [RTD-interpolation-example]
     for index in df_final.index:
         values = np.interp(x=years, xp=df.columns.values.astype(float), fp=df.loc[index, :].values.astype(float))
         df_final.loc[index, :] = values
+
+    # if year-specific data is missing and not fixed by interpolation fill forward with same values
+    df_final = df_final.fillna(method='ffill', axis=1)
 
     df_final["source"] = source_dict["DEA"] + ", " + excel_file.replace("inputs/","")
     df_final["unit"] = (df_final.rename(index=lambda x:
@@ -569,6 +587,7 @@ def clean_up_units(tech_data):
 
     tech_data.unit = tech_data.unit.str.replace(" per ", "/")
     tech_data.unit = tech_data.unit.str.replace(" / ", "/")
+    tech_data.unit = tech_data.unit.str.replace(" /", "/")
     tech_data.unit = tech_data.unit.str.replace("J/s", "W")
 
     # units
@@ -603,12 +622,14 @@ def clean_up_units(tech_data):
     tech_data.unit = tech_data.unit.str.replace("MWth", "MW_th")
     tech_data.unit = tech_data.unit.str.replace("MWheat", "MW_th")
     tech_data.unit = tech_data.unit.str.replace("MWhheat", "MWh_th")
+    tech_data.unit = tech_data.unit.str.replace("MWH Liquids", "MWh_FT")
+    tech_data.unit = tech_data.unit.str.replace("MW Liquids", "MW_FT")
+    tech_data.unit = tech_data.unit.str.replace("MW Methanol", "MW_MeOH")
     tech_data.unit = tech_data.unit.str.replace("EUR/MWh of total input", "EUR/MWh_e")
+    tech_data.unit = tech_data.unit.str.replace("FT Liquids Output, MWh/MWh Total Inpu", "MWh_FT/MWh_H2")
     tech_data.loc[tech_data.unit=='EUR/MW/y', "unit"] = 'EUR/MW/year'
 
     # convert per unit costs to MW
-    techs_per_unit = tech_data.xs("Heat production capacity for one unit",
-                                 level=1).index
     cost_per_unit = tech_data.unit.str.contains("/unit")
     tech_data.loc[cost_per_unit, years] = tech_data.loc[cost_per_unit, years].apply(
                                                 lambda x: (x / tech_data.loc[(x.name[0],
@@ -637,6 +658,8 @@ def clean_up_units(tech_data):
                                                 "EUR/MW/year": "EUR/MW_e/year",
                                                 'EUR/MWh':'EUR/MWh_e',
                                                  "MW": "MW_e"}))
+
+    tech_data.loc[('methanolisation', 'Variable O&M'), "unit"] = "EUR/MWh_MeOH"
 
     return tech_data
 
@@ -785,6 +808,8 @@ def order_data(tech_data):
                         (df.unit=="EUR/MW_th - heat output")|
                         (df.unit=="EUR/MW_th excluding drive energy")|
                         (df.unit=="EUR/MW_th") |
+                        (df.unit=="EUR/MW_MeOH") |
+                        (df.unit=="EUR/MW_FT/year") |
                         (df.unit=="EUR/MWhCapacity") |
                         (df.unit=="EUR/MWh") |
                         (df.unit=="EUR/MWh/year") |
@@ -826,6 +851,8 @@ def order_data(tech_data):
         vom = df[df.index.str.contains("Variable O&M") & ((df.unit=="EUR/MWh") |
                                                          (df.unit=="EUR/MWh_e") |
                                                          (df.unit=="EUR/MWh_th") |
+                                                         (df.unit=="EUR/MWh_FT") |
+                                                         (df.unit=="EUR/MWh_MeOH") |
                                                          (df.unit=="EUR/MWh/year") |
                                                          (df.unit=="EUR/MWh/km") |
                                                          (df.unit=="EUR/MWh") |
@@ -854,9 +881,13 @@ def order_data(tech_data):
         # ----- efficiencies ------
         efficiency = df[(df.index.str.contains("efficiency") |
                          (df.index.str.contains("Hydrogen output, at LHV"))|
+                         (df.index.str.contains("FT Liquids Output, MWh/MWh Total Input"))|
                          (df.index == ("Hydrogen")))
-                         & ((df.unit=="%") |  (df.unit =="% total size") |  (df.unit =="MWh_H2/MWh_e"))
+                         & ((df.unit=="%") |  (df.unit =="% total size") |  (df.unit =="MWh_H2/MWh_e") | df.unit.str.contains("MWh_FT/MWh_H2"))
                          & (~df.index.str.contains("name plate"))].copy()
+
+        if tech == 'Fischer-Tropsch':
+            efficiency[years] *= 100
 
         # take annual average instead of name plate efficiency
         if any(efficiency.index.str.contains("annual average")):
@@ -1322,5 +1353,5 @@ for year in years:
     costs_tot = unify_diw(costs_tot)
     costs_tot.drop("fixed", level=1, inplace=True)
     costs_tot.sort_index(inplace=True)
-    costs_tot = round(costs_tot, ndigits=2)
+    costs_tot = round(costs_tot, ndigits=snakemake.config.get("ndigits", 2))
     costs_tot.to_csv([v for v in snakemake.output if str(year) in v][0])

@@ -1,9 +1,4 @@
 technology,parameter,year,value,unit,currency_year,source,further_description
-industrial heat pump medium temperature,FOM,2050,0.1,%/year,2015,"Danish Energy Agency,  technology_data_for_industrial_process_heat_0002.xlsx",
-industrial heat pump medium temperature,VOM,2050,3.12,EUR/MWh_th,2015,"Danish Energy Agency,  technology_data_for_industrial_process_heat_0002.xlsx",
-industrial heat pump medium temperature,efficiency,2050,2.85,per unit,2015,"Danish Energy Agency,  technology_data_for_industrial_process_heat_0002.xlsx",
-industrial heat pump medium temperature,investment,2050,700,EUR/kW_th,2015,"Danish Energy Agency,  technology_data_for_industrial_process_heat_0002.xlsx",
-industrial heat pump medium temperature,lifetime,2050,20,years,2015,"Danish Energy Agency,  technology_data_for_industrial_process_heat_0002.xlsx",
 methanation,investment,2030,278,EUR/kW_CH4,2015,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 methanation,lifetime,2030,30,years,2015,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 methanation,FOM,2030,4,%/year,2015,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
@@ -96,26 +91,6 @@ LOHC hydrogenation,lifetime,2035,20,years,2020,"Runge et al 2020, pg.8, https://
 LOHC dehydrogenation,investment,2035,839000,EUR/MW_H2,2020,"Runge et al 2020, pg.8, https://papers.ssrn.com/abstract=3623514",MW of H2 LHV.
 LOHC dehydrogenation,FOM,2035,3,%/year,2020,"Runge et al 2020, pg.8, https://papers.ssrn.com/abstract=3623514",
 LOHC dehydrogenation,lifetime,2035,20,years,2020,"Runge et al 2020, pg.8, https://papers.ssrn.com/abstract=3623514",
-methanolisation,investment,2015,4510,EUR/kW_MeOH,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 98 Methanol from Power.",Typical plant size: 5kt MeOH/year = 3 MW_MeOH .
-methanolisation,FOM,2015,1.17,%/year,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 98 Methanol from Power.",Typical plant size: 5kt MeOH/year = 3 MW_MeOH .
-methanolisation,VOM,2015,6.27,EUR/MWh_MeOH,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 98 Methanol from Power.",Typical plant size: 5kt MeOH/year = 3 MW_MeOH .
-methanolisation,lifetime,2015,20,years,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 98 Methanol from Power.",Typical plant size: 5kt MeOH/year = 3 MW_MeOH .
-methanolisation,investment,2020,4510,EUR/kW_MeOH,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 98 Methanol from Power.",Typical plant size: 5kt MeOH/year = 3 MW_MeOH .
-methanolisation,FOM,2020,1.17,%/year,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 98 Methanol from Power.",Typical plant size: 5kt MeOH/year = 3 MW_MeOH .
-methanolisation,VOM,2020,6.27,EUR/MWh_MeOH,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 98 Methanol from Power.",Typical plant size: 5kt MeOH/year = 3 MW_MeOH .
-methanolisation,lifetime,2020,20,years,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 98 Methanol from Power.",Typical plant size: 5kt MeOH/year = 3 MW_MeOH .
-methanolisation,investment,2030,3010,EUR/kW_MeOH,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 98 Methanol from Power.",Typical plant size: 5kt MeOH/year = 3 MW_MeOH .
-methanolisation,FOM,2030,1.76,%/year,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 98 Methanol from Power.",Typical plant size: 5kt MeOH/year = 3 MW_MeOH .
-methanolisation,VOM,2030,6.27,EUR/MWh_MeOH,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 98 Methanol from Power.",Typical plant size: 5kt MeOH/year = 3 MW_MeOH .
-methanolisation,lifetime,2030,20,years,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 98 Methanol from Power.",Typical plant size: 5kt MeOH/year = 3 MW_MeOH .
-methanolisation,investment,2040,2260,EUR/kW_MeOH,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 98 Methanol from Power.",Typical plant size: 5kt MeOH/year = 3 MW_MeOH .
-methanolisation,FOM,2040,2.35,%/year,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 98 Methanol from Power.",Typical plant size: 5kt MeOH/year = 3 MW_MeOH .
-methanolisation,VOM,2040,6.27,EUR/MWh_MeOH,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 98 Methanol from Power.",Typical plant size: 5kt MeOH/year = 3 MW_MeOH .
-methanolisation,lifetime,2040,20,years,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 98 Methanol from Power.",Typical plant size: 5kt MeOH/year = 3 MW_MeOH .
-methanolisation,investment,2050,1500,EUR/kW_MeOH,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 98 Methanol from Power.",Typical plant size: 5kt MeOH/year = 3 MW_MeOH .
-methanolisation,FOM,2050,3.53,%/year,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 98 Methanol from Power.",Typical plant size: 5kt MeOH/year = 3 MW_MeOH .
-methanolisation,VOM,2050,6.27,EUR/MWh_MeOH,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 98 Methanol from Power.",Typical plant size: 5kt MeOH/year = 3 MW_MeOH .
-methanolisation,lifetime,2050,20,years,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 98 Methanol from Power.",Typical plant size: 5kt MeOH/year = 3 MW_MeOH .
 NH3 (l) storage tank incl. liquefaction,investment,2020,146.66681333348,EUR/MWh_NH3,2010,"Calculated based on Morgan E. 2013: doi:10.7275/11KT-3F59 , Fig. 55, Fig 58.","Based on estimated for a double-wall liquid ammonia tank (~ambient pressure, -33°C), inner tank from stainless steel, outer tank from concrete including installations for liquefaction/condensation, boil-off gas recovery and safety installations; the necessary installations make only a small fraction of the total cost. The total cost are driven by material and working time on the tanks.
 While the costs do not scale strictly linearly, we here assume they do (good approximation c.f. ref. Fig 55.) and take the costs for a 9 kt NH3 (l) tank = 8 M$2010, which is smaller 4-5x smaller than the largest deployed tanks today.
 We assume an exchange rate of 1.17$ to 1 €.
@@ -147,18 +122,6 @@ FT fuel transport ship,investment,2035,35000000,EUR,2020,"Assume comparable tank
 FT fuel transport ship,capacity,2035,75000,t_FTfuel,2020,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
 FT fuel transport ship,lifetime,2035,15,years,2020,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
 FT fuel transport ship,FOM,2035,5,%/year,2020,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
-Fischer-Tropsch synthesis,investment,2020,2100000,EUR/MW_FTfuel,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
-Fischer-Tropsch synthesis,lifetime,2020,25,years,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
-Fischer-Tropsch synthesis,FOM,2020,6.5,%/year,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
-Fischer-Tropsch synthesis,investment,2030,1600000,EUR/MW_FTfuel,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
-Fischer-Tropsch synthesis,lifetime,2030,25,years,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
-Fischer-Tropsch synthesis,FOM,2030,6.5,%/year,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
-Fischer-Tropsch synthesis,investment,2040,1100000,EUR/MW_FTfuel,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
-Fischer-Tropsch synthesis,lifetime,2040,25,years,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
-Fischer-Tropsch synthesis,FOM,2040,6.5,%/year,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
-Fischer-Tropsch synthesis,investment,2050,900000,EUR/MW_FTfuel,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
-Fischer-Tropsch synthesis,lifetime,2050,25,years,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
-Fischer-Tropsch synthesis,FOM,2050,6.5,%/year,2015,"Danish Energy Agency,  data_sheets_for_renewable_fuels_-_0003.xlsx , 102 Hydrogen to Jet .",
 Ammonia cracker,investment,2035,1545805.54580555,EUR/MW_H2,2020,ENGIE et al (2020): Ammonia to Green Hydrogen Feasibility Study (https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/880826/HS420_-_Ecuity_-_Ammonia_to_Green_Hydrogen.pdf).,"Assuming 1 pound = 1.17 EUR exchange rate, LHV of H2 = 33.3333 MWh/t. Relatively small plant size designed (low TRL) of 200t/d output including purification process. Consistent with Ishimoto et al. (2020): 10.1016/j.ijhydene.2020.09.017 ."
 Ammonia cracker,lifetime,2035,30,years,2020,-,Assuming comparable values as for steam methane reforming.
 Ammonia cracker,FOM,2035,3,%/year,2020,-,Assuming comparable values as for steam methane reforming.

@@ -55,7 +55,7 @@ General liquid hydrocarbon storage (product),lifetime,30.0,years,"Stelter and Ni
 H2 (g) fill compressor station,FOM,1.7,%/year,"Guidehouse 2020: European Hydrogen Backbone report, https://guidehouse.com/-/media/www/site/downloads/energy/2020/gh_european-hydrogen-backbone_report.pdf (table 3, table 5)",
 H2 (g) fill compressor station,investment,4478.0,EUR/MW_H2,"Danish Energy Agency, Technology Data for Energy Transport (2021), pg. 164, Figure 14 (Fill compressor).",
 H2 (g) fill compressor station,lifetime,20.0,years,"Danish Energy Agency, Technology Data for Energy Transport (2021), pg. 168, Figure 24 (Fill compressor).",
-H2 (g) pipeline,FOM,4.0,%/year,"Danish Energy Agency, Technology Data for Energy Transport (2021), Excel datasheet: H2 140.",
+H2 (g) pipeline,FOM,3.17,%/year,"Danish Energy Agency, Technology Data for Energy Transport (2021), Excel datasheet: H2 140.",
 H2 (g) pipeline,investment,236.0,EUR/MW/km,"Danish Energy Agency, Technology Data for Energy Transport (2021), Excel datasheet: H2 140.",
 H2 (g) pipeline,lifetime,50.0,years,"Danish Energy Agency, Technology Data for Energy Transport (2021), Excel datasheet: H2 140.",
 H2 (g) pipeline repurposed,investment,42.9,EUR/MW/km,"Danish Energy Agency, Technology Data for Energy Transport (2021), Excel datasheet: H2 140; European Hydrogen Backbone, Analysing future demand, supply, and transport of hydrogen (June 2021): https://gasforclimate2050.eu/wp-content/uploads/2021/06/EHB_Analysing-the-future-demand-supply-and-transport-of-hydrogen_June-2021.pdf.",

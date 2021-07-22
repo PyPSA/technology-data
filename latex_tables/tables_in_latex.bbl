@@ -11,16 +11,6 @@
   {November} 2019}, Tech. rep., Danish Energy Agency and Energinet.dk (2019).
 \newline\urlprefix\url{https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-generation-electricity-and}
 
-\bibitem{Vartiainen_2019}
-E.~Vartiainen, G.~Masson, C.~Breyer, D.~Moser, E.~R. Medina,
-  \href{https://onlinelibrary.wiley.com/doi/abs/10.1002/pip.3189}{Impact of
-  weighted average cost of capital, capital expenditure, and other parameters
-  on future utility-scale {PV} levelised cost of electricity}, Progress in
-  Photovoltaics: Research and Applications (2017).
-\newblock \href {https://doi.org/10.1002/pip.3189}
-  {\path{doi:10.1002/pip.3189}}.
-\newline\urlprefix\url{https://onlinelibrary.wiley.com/doi/abs/10.1002/pip.3189}
-
 \bibitem{Vartiainen_2017}
 E.~Vartiainen, G.~Masson, C.~Breyer,
   \href{http://www.etip-pv.eu/fileadmin/Documents/ETIP_PV_Publications_2017-2018/LCOE_Report_March_2017.pdf}{The
@@ -51,6 +41,29 @@ S.~Hagspiel, C.~J{\"a}gemann, D.~Lindenberger, T.~Brown, S.~Cherevatskiy,
   {\path{doi:10.1016/j.energy.2014.01.025}}.
 \newline\urlprefix\url{http://www.sciencedirect.com/science/article/pii/S0360544214000322}
 
+\bibitem{Ram_2019}
+M.~Ram, D.~Bogdanov, A.~Aghahosseini, A.~Gulagi, A.~S. Oyewo, M.~Child,
+  U.~Caldera, K.~Sadovskaia, J.~Farfan, L.~S. Barbosa, S.~Khalili, C.~Breyer,
+  \href{http://
+  energywatchgroup.org/new‐study‐global‐energy‐system‐based‐100‐
+  renewable‐energy}{Global energy system based on 100\% renewable energy –
+  power, heat, transport and desalination sectors. {Study} by {Lappeenranta}
+  {University} of {Technology} and {Energy} {Watch} {Group}}, Tech. rep.
+  (2019).
+\newline\urlprefix\url{http://
+  energywatchgroup.org/new‐study‐global‐energy‐system‐based‐100‐
+  renewable‐energy}
+
+\bibitem{Budischak_2013}
+C.~Budischak, D.~Sewell, H.~Thomson, L.~Mach, D.~E. Veron, W.~Kempton,
+  \href{http://www.sciencedirect.com/science/article/pii/S0378775312014759}{Cost-minimized
+  combinations of wind power, solar power and electrochemical storage, powering
+  the grid up to 99.9\% of the time}, Journal of Power Sources 225 (2013)
+  60--74.
+\newblock \href {https://doi.org/10.1016/j.jpowsour.2012.09.054}
+  {\path{doi:10.1016/j.jpowsour.2012.09.054}}.
+\newline\urlprefix\url{http://www.sciencedirect.com/science/article/pii/S0378775312014759}
+
 \bibitem{Fasihi_2017}
 M.~Fasihi, D.~Bogdanov, C.~Breyer,
   \href{https://www.mdpi.com/2071-1050/9/2/306}{Long-{Term} {Hydrocarbon}
@@ -73,6 +86,12 @@ N.~Gerhardt, A.~Scholz, F.~Sandau, H.~H.,
   \href{http://www.energiesystemtechnik.iwes.fraunhofer.de/de/projekte/suche/2015/interaktion_strom_waerme_verkehr.html}{{Interaktion}
   {EE-Strom}, {W{\"a}rme} und {Verkehr.} {Tech. rep.} {Fraunhofer} {IWES}}.
 \newline\urlprefix\url{http://www.energiesystemtechnik.iwes.fraunhofer.de/de/projekte/suche/2015/interaktion_strom_waerme_verkehr.html}
+
+\bibitem{govUK}
+\href{https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/760479/H2_supply_chain_evidence_-_publication_version.pdf}{Hydrogen
+  supply chain: evidence base, {Department} for {Business}, {Energy} \&
+  {Industrial} {Strategy}, {GovUK}}, Tech. rep. (2018).
+\newline\urlprefix\url{https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/760479/H2_supply_chain_evidence_-_publication_version.pdf}
 
 \bibitem{BP_2019}
 \href{https://www.bp.com/content/dam/bp/business-sites/en/global/corporate/pdfs/energy-economics/statistical-review/bp-stats-review-2019-full-report.pdf}{{BP}

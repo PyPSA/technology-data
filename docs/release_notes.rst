@@ -2,6 +2,46 @@
 Release Notes
 ##########################################
 
+Technology-Data 0.3.0 (xxth August 2021)
+===========================================
+
+This release includes several new technologies (see list below), the possibility
+to easily add a new technology via a manual input and an update of the H2
+Electrolysis assumptions.
+
+It is released to coincide with `PyPSA-Eur-Sec <https://github.com/PyPSA/pypsa-eur-sec>`_ Version 0.6.0, and is known to work with this release.
+
+Features in more detail:
+
+**New**:
+
+* new technologies:
+
+  - seawater desalination (SWRO)
+  - clean water tank storage
+  - industrial heat pump for medium process temperatures
+  - H2 and CH4 pipelines and compressors
+  - shipping of CH4 (l), NH3 (l), LOHC, MeOH and H2 (l), Fischer-Tropsch
+  - H2 liquefaction and evaporation
+  - LOHC liquefication, hydrogenation and dehydrogenation
+  - NH3 production (Haber-Bosch synthesis and air separation unit)
+  - Fischer-Tropsch synthesis
+  - costs for SMR (methane and methanol) and ammonia cracking
+  - home battery storage and
+  - CO2 pipeline
+  - costs for retrofitting CH4 pipelines to H2 pipelines
+* new function to adjust the investment costs according to the inflation. This is based on in the ``config.yaml`` specified rate of inflation and considered year
+* new option to allow manual input via an additional csv file ``inputs/manual_inputs.csv``
+* update of the H2 electrolyser assumptions based on new DEA release
+* rudimentary CI and templates for pull requests and issues
+* update of the latex tables for displaying the technology data
+
+
+**Bugfixes**:
+
+* adjust battery inverter lifetime to DEA footnote
+* unit consistency, typos
+
 Technology-Data 0.2.0 (11th December 2020)
 ===========================================
 

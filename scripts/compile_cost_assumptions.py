@@ -27,7 +27,6 @@ The script is structured as follows:
 
 import pandas as pd
 import numpy as np
-import os
 
 years = snakemake.config['years']
 
@@ -46,6 +45,9 @@ source_dict = {
                 "co2" :'Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018',
                 # gas pipeline costs
                 "ISE": "WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",
+                # Water desalination costs
+                "Caldera2016": "Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004)",
+                "Caldera2017": "Caldera et al 2017: Learning Curve for Seawater Reverse Osmosis Desalination Plants: Capital Cost Trend of the Past, Present, and Future (https://doi.org/10.1002/2017WR021402)",
                 # home battery storage and inverter investment costs
                 "EWG": "Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019"
                 }
@@ -79,17 +81,20 @@ sheet_names = {'onwind': '20 Onshore turbines',
                # 'decentral water tank storage': '142 Small scale hot water tank',
                'fuel cell': '12 LT-PEMFC CHP',
                'hydrogen storage underground': '151c Hydrogen Storage - Caverns',
-               'hydrogen storage tank': '151a Hydrogen Storage - Tanks',
+               'hydrogen storage tank incl. compressor': '151a Hydrogen Storage - Tanks',
                'micro CHP': '219 LT-PEMFC mCHP - natural gas',
                'biogas' : '81 Biogas Plant, Basic conf.',
                'biogas upgrading': '82 Biogas, upgrading',
                'battery': '180 Lithium Ion Battery',
+               'industrial heat pump medium temperature':'302.a High temp. hp Up to 125 C',
                'electrolysis': '86 AEC 100MW', #'88 Alkaline Electrolyser',
                'direct air capture' : '403.a Direct air capture',
                'biomass CHP capture' : '401.a Post comb - small CHP',
                'cement capture' : '401.c Post comb - Cement kiln',
                'BioSNG' : '84 Gasif. CFB, Bio-SNG',
                'BtL' : '85 Gasif. Ent. Flow FT, liq fu ',
+               'methanolisation': '98 Methanol from power',
+               'Fischer-Tropsch': '102 Hydrogen to Jet',
                # 'electricity distribution rural': '101 2 el distri Rural',
                # 'electricity distribution urban': '101 4 el distri  city',
                # 'gas distribution rural': '102 7 gas  Rural',
@@ -127,7 +132,7 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'central water tank storage': 'J:K',
                     'fuel cell': 'I:J',
                     'hydrogen storage underground': 'J:K',
-                    'hydrogen storage tank': 'J:K',
+                    'hydrogen storage tank incl. compressor': 'J:K',
                     'micro CHP': 'I:J',
                     'biogas': 'I:J',
                     'biogas upgrading': 'I:J',
@@ -137,7 +142,10 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'cement capture': 'I:J',
                     'biomass CHP capture': 'I:J',
                     'BioSNG' : 'I:J',
-                    'BtL' : 'J:K'
+                    'BtL' : 'J:K',
+                    'industrial heat pump medium temperature':'H:I',
+                    'Fischer-Tropsch': 'I:J',
+                    'methanolisation': 'J:K',
 }
 
 
@@ -184,11 +192,17 @@ def get_data_DEA(tech, data_in, expectation=None):
         return None
 
     if tech=="battery":
-        usecols = f"B:J,{uncrtnty_lookup[tech]}"
+        usecols = "B:J"
     elif tech in ['direct air capture', 'cement capture', 'biomass CHP capture']:
-        usecols = f"A:F,{uncrtnty_lookup[tech]}"
+        usecols = "A:F"
+    elif tech in ['industrial heat pump medium temperature']:
+        usecols = "A:E"
+    elif tech in ['Fischer-Tropsch']:
+        usecols = "B:F"
     else:
-        usecols = f"B:G,{uncrtnty_lookup[tech]}"
+        usecols = "B:G"
+
+    usecols += f",{uncrtnty_lookup[tech]}"
 
     excel = pd.read_excel(excel_file,
                           sheet_name=sheet_names[tech],
@@ -212,7 +226,7 @@ def get_data_DEA(tech, data_in, expectation=None):
     uncertainty_columns = ["2050-optimist", "2050-pessimist"]
     if uncrtnty_lookup[tech]:
         # hydrogen storage sheets have reverse order of lower/upper estimates
-        if tech in ["hydrogen storage tank", "hydrogen storage cavern"]:
+        if tech in ["hydrogen storage tank incl. compressor", "hydrogen storage cavern"]:
             uncertainty_columns.reverse()
         excel.rename(columns={excel.columns[-2]: uncertainty_columns[0],
                                 excel.columns[-1]: uncertainty_columns[1]
@@ -249,7 +263,8 @@ def get_data_DEA(tech, data_in, expectation=None):
                   "Energy storage expansion cost",
                   'Output capacity expansion cost (M€2015/MW)',
                   'Heat input', 'Heat  input', 'Electricity input', 'Eletricity input', 'Heat out',
-                  'capture rate']
+                  'capture rate', 
+                  "FT Liquids Output, MWh/MWh Total Input"]
 
 
     df = pd.DataFrame()
@@ -277,6 +292,16 @@ def get_data_DEA(tech, data_in, expectation=None):
     if (tech == "offwind") and snakemake.config['offwind_no_gridcosts']:
         df.loc['Nominal investment (MEUR/MW)'] -= excel.loc[' - of which grid connection']
 
+    # Exlucde indirect costs for centralised system with additional piping.
+    if tech.startswith('industrial heat pump'):
+        df = df.drop('Indirect investments cost (MEUR per MW)')
+
+    if tech == 'methanolisation':
+        df.drop(df.loc[df.index.str.contains("1,000 t Methanol")].index, inplace=True)
+
+    if tech == 'Fischer-Tropsch':
+        df.drop(df.loc[df.index.str.contains("l FT Liquids")].index, inplace=True)
+
     df_final = pd.DataFrame(index=df.index, columns=years)
 
     # [RTD-interpolation-example]
@@ -284,12 +309,63 @@ def get_data_DEA(tech, data_in, expectation=None):
         values = np.interp(x=years, xp=df.columns.values.astype(float), fp=df.loc[index, :].values.astype(float))
         df_final.loc[index, :] = values
 
+    # if year-specific data is missing and not fixed by interpolation fill forward with same values
+    df_final = df_final.fillna(method='ffill', axis=1)
+
     df_final["source"] = source_dict["DEA"] + ", " + excel_file.replace("inputs/","")
     df_final["unit"] = (df_final.rename(index=lambda x:
                                         x[x.rfind("(")+1: x.rfind(")")]).index.values)
     df_final.index = df_final.index.str.replace(r" \(.*\)","", regex=True)
 
     return df_final
+
+def add_desalinsation_data(costs):
+    """
+    add technology data for sea water desalination (SWRO) and water storage.
+    """
+
+    # Interpolate cost based on historic costs/cost projection to fitting year
+    cs = [2070,1917,1603,1282,1025] # in USD/(m^3/d)
+    ys = [2015,2022,2030,2040,2050]
+    c = np.interp(year, ys, cs)
+    c *= 24                         # in USD/(m^3/h)
+    c /= 1.17                       # in EUR/(m^3/h)
+
+    tech = "seawater desalination"
+    costs.loc[(tech, 'investment'), 'value'] = c
+    costs.loc[(tech, 'investment'), 'unit'] = "EUR/(m^3-H2O/h)"
+    costs.loc[(tech, 'investment'), 'source'] = source_dict['Caldera2017'] + ", Table 4."
+
+    costs.loc[(tech, 'FOM'), 'value'] = 4.
+    costs.loc[(tech, 'FOM'), 'unit'] = "%/year"
+    costs.loc[(tech, 'FOM'), 'source'] = source_dict['Caldera2016'] + ", Table 1."
+
+    costs.loc[(tech, 'lifetime'), 'value'] = 30
+    costs.loc[(tech, 'lifetime'), 'unit'] = "years"
+    costs.loc[(tech, 'lifetime'), 'source'] = source_dict['Caldera2016'] + ", Table 1."
+
+    salinity = snakemake.config['desalination']['salinity']
+    costs.loc[(tech, 'electricity-input'), 'value'] = (0.0003*salinity**2+0.0018*salinity+2.6043)
+    costs.loc[(tech, 'electricity-input'), 'unit'] = "kWh/m^3-H2O"
+    costs.loc[(tech, 'electricity-input'), 'source'] = source_dict['Caldera2016'] + ", Fig. 4."
+
+    tech = "clean water tank storage"
+    costs.loc[(tech, 'investment'), 'value'] = 65
+    costs.loc[(tech, 'investment'), 'unit'] = "EUR/m^3-H2O"
+    costs.loc[(tech, 'investment'), 'source'] = source_dict['Caldera2016'] + ", Table 1."
+
+    costs.loc[(tech, 'FOM'), 'value'] = 2
+    costs.loc[(tech, 'FOM'), 'unit'] = "%/year"
+    costs.loc[(tech, 'FOM'), 'source'] = source_dict['Caldera2016'] + ", Table 1."
+
+    costs.loc[(tech, 'lifetime'), 'value'] = 30
+    costs.loc[(tech, 'lifetime'), 'unit'] = "years"
+    costs.loc[(tech, 'lifetime'), 'source'] = source_dict['Caldera2016'] + ", Table 1."
+
+    costs = adjust_for_inflation(costs, ['seawater desalination'], 2015)
+    costs = adjust_for_inflation(costs, ['clean water tank storage'], 2013)
+
+    return costs
 
 def add_conventional_data(costs):
     """"
@@ -494,13 +570,29 @@ def get_data_from_DEA(data_in, expectation=None):
     """
     d_by_tech = {}
 
-    for tech in sheet_names.keys():
-        print(tech + ' in PyPSA corresponds to ' + sheet_names[tech] +
-              ' in DEA database.')
+    for tech, dea_tech in sheet_names.items():
+        print(f'{tech} in PyPSA corresponds to {dea_tech} in DEA database.')
         df = get_data_DEA(tech, data_in, expectation).fillna(0)
         d_by_tech[tech] = df
 
     return d_by_tech
+
+def adjust_for_inflation(costs, techs, ref_year):
+    """
+    adjust the investment costs for the specified techs for inflation.
+
+    techs: str or list
+        One or more techs in costs index for which the inflation adjustment is done.
+    ref_year: int
+        Reference year for which the costs are provided and based on which the inflation adjustment is done.
+    costs: pd.Dataframe
+        Dataframe containing the costs data with multiindex on technology and one index key 'investment'.
+    """
+
+    inflation = (1 + snakemake.config['rate_inflation'])**(ref_year - snakemake.config['eur_year'])
+    costs.loc[(techs, 'investment'), 'value'] /= inflation
+
+    return costs
 
 
 def clean_up_units(tech_data):
@@ -516,6 +608,7 @@ def clean_up_units(tech_data):
 
     tech_data.unit = tech_data.unit.str.replace(" per ", "/")
     tech_data.unit = tech_data.unit.str.replace(" / ", "/")
+    tech_data.unit = tech_data.unit.str.replace(" /", "/")
     tech_data.unit = tech_data.unit.str.replace("J/s", "W")
 
     # units
@@ -550,12 +643,14 @@ def clean_up_units(tech_data):
     tech_data.unit = tech_data.unit.str.replace("MWth", "MW_th")
     tech_data.unit = tech_data.unit.str.replace("MWheat", "MW_th")
     tech_data.unit = tech_data.unit.str.replace("MWhheat", "MWh_th")
+    tech_data.unit = tech_data.unit.str.replace("MWH Liquids", "MWh_FT")
+    tech_data.unit = tech_data.unit.str.replace("MW Liquids", "MW_FT")
+    tech_data.unit = tech_data.unit.str.replace("MW Methanol", "MW_MeOH")
     tech_data.unit = tech_data.unit.str.replace("EUR/MWh of total input", "EUR/MWh_e")
+    tech_data.unit = tech_data.unit.str.replace("FT Liquids Output, MWh/MWh Total Inpu", "MWh_FT/MWh_H2")
     tech_data.loc[tech_data.unit=='EUR/MW/y', "unit"] = 'EUR/MW/year'
 
     # convert per unit costs to MW
-    techs_per_unit = tech_data.xs("Heat production capacity for one unit",
-                                 level=1).index
     cost_per_unit = tech_data.unit.str.contains("/unit")
     tech_data.loc[cost_per_unit, years] = tech_data.loc[cost_per_unit, years].apply(
                                                 lambda x: (x / tech_data.loc[(x.name[0],
@@ -584,6 +679,8 @@ def clean_up_units(tech_data):
                                                 "EUR/MW/year": "EUR/MW_e/year",
                                                 'EUR/MWh':'EUR/MWh_e',
                                                  "MW": "MW_e"}))
+
+    tech_data.loc[('methanolisation', 'Variable O&M'), "unit"] = "EUR/MWh_MeOH"
 
     return tech_data
 
@@ -672,12 +769,12 @@ def set_round_trip_efficiency(tech_data):
     """
 
     # hydrogen storage
-    to_drop = [("hydrogen storage tank", ' - Charge efficiency')]
-    to_drop.append(("hydrogen storage tank", ' - Discharge efficiency'))
+    to_drop = [("hydrogen storage tank incl. compressor", ' - Charge efficiency')]
+    to_drop.append(("hydrogen storage tank incl. compressor", ' - Discharge efficiency'))
     to_drop.append(("hydrogen storage underground", ' - Charge efficiency'))
     to_drop.append(("hydrogen storage underground", ' - Discharge efficiency'))
     tech_data.loc[("hydrogen storage underground", "Round trip efficiency"), years] *= 100
-    tech_data.loc[("hydrogen storage tank", "Round trip efficiency"), years] *= 100
+    tech_data.loc[("hydrogen storage tank incl. compressor", "Round trip efficiency"), years] *= 100
 
 
 
@@ -732,6 +829,8 @@ def order_data(tech_data):
                         (df.unit=="EUR/MW_th - heat output")|
                         (df.unit=="EUR/MW_th excluding drive energy")|
                         (df.unit=="EUR/MW_th") |
+                        (df.unit=="EUR/MW_MeOH") |
+                        (df.unit=="EUR/MW_FT/year") |
                         (df.unit=="EUR/MWhCapacity") |
                         (df.unit=="EUR/MWh") |
                         (df.unit=="EUR/MWh/year") |
@@ -773,6 +872,8 @@ def order_data(tech_data):
         vom = df[df.index.str.contains("Variable O&M") & ((df.unit=="EUR/MWh") |
                                                          (df.unit=="EUR/MWh_e") |
                                                          (df.unit=="EUR/MWh_th") |
+                                                         (df.unit=="EUR/MWh_FT") |
+                                                         (df.unit=="EUR/MWh_MeOH") |
                                                          (df.unit=="EUR/MWh/year") |
                                                          (df.unit=="EUR/MWh/km") |
                                                          (df.unit=="EUR/MWh") |
@@ -801,9 +902,13 @@ def order_data(tech_data):
         # ----- efficiencies ------
         efficiency = df[(df.index.str.contains("efficiency") |
                          (df.index.str.contains("Hydrogen output, at LHV"))|
+                         (df.index.str.contains("FT Liquids Output, MWh/MWh Total Input"))|
                          (df.index == ("Hydrogen")))
-                         & ((df.unit=="%") |  (df.unit =="% total size") |  (df.unit =="MWh_H2/MWh_e"))
+                         & ((df.unit=="%") |  (df.unit =="% total size") |  (df.unit =="MWh_H2/MWh_e") | df.unit.str.contains("MWh_FT/MWh_H2"))
                          & (~df.index.str.contains("name plate"))].copy()
+
+        if tech == 'Fischer-Tropsch':
+            efficiency[years] *= 100
 
         # take annual average instead of name plate efficiency
         if any(efficiency.index.str.contains("annual average")):
@@ -1003,6 +1108,36 @@ def rename_pypsa_old(costs_pypsa):
     costs_pypsa.loc[('decentral water tank storage','investment'),'unit'] = 'EUR/kWh'
 
     return costs_pypsa
+
+def add_manual_input(data):
+
+    df = pd.read_csv(snakemake.input['manual_input'], quotechar='"',sep=',', keep_default_na=False)
+
+    # Inflation adjustment for investment and VOM
+    mask = df[df['parameter'].isin(['investment','VOM'])].index
+    df.loc[mask, 'value'] /= (1+snakemake.config['rate_inflation'])**(df.loc[mask, 'currency_year']-snakemake.config['eur_year'])
+
+    l = []
+    for tech in df['technology'].unique():
+        c0 = df[df['technology'] == tech]
+        for param in c0['parameter'].unique():
+
+            c = df.query('technology == @tech and parameter == @param')
+
+            s = pd.Series(index=snakemake.config['years'],
+                      data=np.interp(snakemake.config['years'], c['year'], c['value']),
+                      name=param)
+            s['parameter'] = param
+            s['technology'] = tech
+            for col in ['unit','source','further_description']:
+                s[col] = "; and\n".join(c[col].unique().astype(str))
+            
+            l.append(s)
+
+    new_df = pd.DataFrame(l).set_index(['technology','parameter'])
+    data = data.combine_first(new_df)
+    
+    return data
 
 
 def rename_ISE(costs_ISE):
@@ -1304,12 +1439,14 @@ costs_pypsa = rename_pypsa_old(costs_pypsa)
 # (b) ------- add costs from Fraunhofer ISE study --------------------------
 costs_ISE = pd.read_csv(snakemake.input.fraunhofer_costs,
                         engine="python",
-                        index_col=[0,1])
+                        index_col=[0,1],
+                        encoding = "ISO-8859-1")
 # rename + reorder to fit to other data
 costs_ISE = rename_ISE(costs_ISE)
 # add costs for gas pipelines
 data = pd.concat([data, costs_ISE.loc[["Gasnetz"]]], sort=True)
 
+data = add_manual_input(data)
 # add costs for home batteries
 data = add_home_battery_costs(data)
 # %% (3) ------ add additional sources and save cost as csv ------------------
@@ -1331,6 +1468,9 @@ for year in years:
     # add solar data from other source than DEA
     if any([snakemake.config['solar_utility_from_vartiaien'], snakemake.config['solar_rooftop_from_etip']]):
         costs = add_solar_from_other(costs)
+    
+    # add desalination and clean water tank storage
+    costs = add_desalinsation_data(costs)
 
     # add electrolyzer and fuel cell efficiency from other source than DEA
     if snakemake.config['h2_from_budischak']:
@@ -1378,5 +1518,5 @@ for year in years:
     costs_tot = unify_diw(costs_tot)
     costs_tot.drop("fixed", level=1, inplace=True)
     costs_tot.sort_index(inplace=True)
-    costs_tot = round(costs_tot, ndigits=5)
+    costs_tot = round(costs_tot, ndigits=snakemake.config.get("ndigits", 2))
     costs_tot.to_csv([v for v in snakemake.output if str(year) in v][0])

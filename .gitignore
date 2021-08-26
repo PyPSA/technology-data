@@ -2,3 +2,6 @@
 
 .snakemake
 _build
+gurobi.log
+.gitignore
+*.log

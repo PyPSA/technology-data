@@ -93,10 +93,10 @@ H2 (l) transport ship,capacity,11000.0,t_H2,"Cihlar et al 2020: http://op.europa
 H2 (l) transport ship,investment,361223561.57637,EUR,"Cihlar et al 2020: http://op.europa.eu/en/publication-detail/-/publication/7e4afa7d-d077-11ea-adf7-01aa75ed71a1/language-en , Table 3-B, based on IEA 2019.",
 H2 (l) transport ship,lifetime,20.0,years,"Cihlar et al 2020: http://op.europa.eu/en/publication-detail/-/publication/7e4afa7d-d077-11ea-adf7-01aa75ed71a1/language-en , Table 3-B, based on IEA 2019.",
 H2 evaporation,FOM,3.0,%/year,"Reuß et al 2017: https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9 and equation in sec 3.0.",
-H2 evaporation,investment,144000.0,EUR/t_H2/h,"Reuß et al 2017: https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9 and equation in sec 3.0.",
+H2 evaporation,investment,4320.0,EUR/MW_H2,"Reuß et al 2017: https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9 and equation in sec 3.0.",
 H2 evaporation,lifetime,10.0,years,"Reuß et al 2017: https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9 and equation in sec 3.0.",
 H2 liquefaction,FOM,8.0,%/year,"Reuß et al 2017: https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9 and equation in sec 3.0.",
-H2 liquefaction,investment,49927250.68086,EUR/t_H2/h,"Reuß et al 2017: https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9 and equation in sec 3.0.",
+H2 liquefaction,investment,822205.0,EUR/MW_H2,"Reuß et al 2017: https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9 and equation in sec 3.0.",
 H2 liquefaction,lifetime,20.0,years,"Reuß et al 2017: https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9 and equation in sec 3.0.",
 H2 pipeline,FOM,3.0,%/year,TODO, from old pypsa cost assumptions
 H2 pipeline,investment,267.0,EUR/MW/km,Welder et al https://doi.org/10.1016/j.energy.2018.05.059, from old pypsa cost assumptions

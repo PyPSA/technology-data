@@ -2,22 +2,18 @@ technology,parameter,value,unit,source,further description
 Ammonia cracker,FOM,3.0,%/year,-,
 Ammonia cracker,investment,1400083.70884,EUR/MW_H2,ENGIE et al (2020): Ammonia to Green Hydrogen Feasibility Study (https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/880826/HS420_-_Ecuity_-_Ammonia_to_Green_Hydrogen.pdf).,
 Ammonia cracker,lifetime,30.0,years,-,
-Anaerobic digestion,CO2 stored,0.08679,tCO2/MWh_th,Stoichiometric calculation,
-Anaerobic digestion,capture rate,0.98,per unit,doi:10.1016/j.biombioe.2015.01.006,
-Anaerobic digestion,efficiency,1.0,per unit,doi:10.1039/D0SE01067G,
-Anaerobic digestion,investment,1700.0,EUR/kW_th,doi:10.1039/D0SE01067G,
-BioSNG,C in fuel,0.351,per unit,Stoichiometric calculation,
-BioSNG,C stored,0.649,per unit,Stoichiometric calculation,
-BioSNG,CO2 stored,0.23797,tCO2/MWh_th,Stoichiometric calculation,
+BioSNG,C in fuel,0.36855,per unit,Stoichiometric calculation,
+BioSNG,C stored,0.63145,per unit,Stoichiometric calculation,
+BioSNG,CO2 stored,0.23153,tCO2/MWh_th,Stoichiometric calculation,
 BioSNG,FOM,1.61475,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Fixed O&M"
-BioSNG,capture rate,0.98,per unit,doi:10.1016/j.biombioe.2015.01.006,
-BioSNG,efficiency,0.65,per unit,doi:10.1039/D0SE01067G,
+BioSNG,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
+BioSNG,efficiency,0.6825,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Bio SNG"
 BioSNG,investment,1525.0,EUR/kW_th,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Specific investment"
 BioSNG,lifetime,20.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Technical lifetime"
 BtL,C in fuel,0.28052,per unit,Stoichiometric calculation,
 BtL,C stored,0.71948,per unit,Stoichiometric calculation,
 BtL,CO2 stored,0.26381,tCO2/MWh_th,Stoichiometric calculation,
-BtL,capture rate,0.98,per unit,doi:10.1016/j.biombioe.2015.01.006,
+BtL,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
 BtL,efficiency,0.4,per unit,doi:10.1039/D0SE01067G,
 BtL,investment,3540.81226,EUR/kW_FT/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Specific investment"
 BtL,lifetime,25.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Technical lifetime"
@@ -64,8 +60,8 @@ FT fuel transport ship,investment,31700578.34405,EUR,"Assume comparable tanker a
 FT fuel transport ship,lifetime,15.0,years,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
 Fischer-Tropsch,FOM,3.0,%/year,doi:10.3390/su9020306, from old pypsa cost assumptions
 Fischer-Tropsch,VOM,2.65,EUR/MWh_FT,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",102 Hydrogen to Jet:  Variable O&M
-Fischer-Tropsch,capture rate,0.98,per unit,doi:10.1016/j.biombioe.2015.01.006,
-Fischer-Tropsch,efficiency,0.69,per unit,doi:10.1039/D0SE01067G,"102 Hydrogen to Jet:  FT Liquids Output, MWh/MWh Total Input"
+Fischer-Tropsch,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
+Fischer-Tropsch,efficiency,0.74,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","102 Hydrogen to Jet:  FT Liquids Output, MWh/MWh Total Input"
 Fischer-Tropsch,investment,1000.0,EUR/kW_FT/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",102 Hydrogen to Jet:  Specific investment
 Fischer-Tropsch,lifetime,25.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",102 Hydrogen to Jet:  Technical lifetime
 Gasnetz,FOM,2.5,%,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz
@@ -184,7 +180,11 @@ battery inverter,investment,80.0,EUR/kW,"Danish Energy Agency, technology_data_c
 battery inverter,lifetime,10.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx, Note K.",:  Technical lifetime
 battery storage,investment,84.5,EUR/kWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Energy storage expansion cost investment
 battery storage,lifetime,30.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Technical lifetime
+biogas,CO2 stored,0.08679,tCO2/MWh_th,Stoichiometric calculation,
+biogas,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
+biogas,efficiency,1.0,per unit,Assuming input biomass is already given in biogas output,
 biogas,fuel,59.0,EUR/MWhth,JRC and Zappa, from old pypsa cost assumptions
+biogas,investment,1424.15112,EUR/kW,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","81 Biogas Plant, Basic conf.:  Specific investment"
 biogas,lifetime,20.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","81 Biogas Plant, Basic conf.:  Technical lifetime"
 biogas upgrading,FOM,2.50355,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","82 Biogas, upgrading:  Fixed O&M "
 biogas upgrading,VOM,3.55797,EUR/MWh input,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","82 Biogas, upgrading:  Variable O&M"
@@ -406,8 +406,8 @@ lignite,fuel,2.9,EUR/MWh_th,DIW,
 lignite,investment,3845.50659,EUR/kW_e,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
 lignite,lifetime,40.0,years,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
 methanation,FOM,4.0,%/year,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
-methanation,capture rate,0.98,per unit,doi:10.1016/j.biombioe.2015.01.006,
-methanation,efficiency,0.91,per unit,doi:10.1039/D0SE01067G,
+methanation,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
+methanation,efficiency,0.8,per unit,Palzer and Schaber thesis, from old pypsa cost assumptions
 methanation,investment,226.0,EUR/kW_CH4,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 methanation,lifetime,30.0,years,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 methane storage tank incl. compressor,FOM,1.9,%/year,"Guesstimate, based on hydrogen storage tank by DEA.",

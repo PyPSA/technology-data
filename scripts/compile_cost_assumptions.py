@@ -265,7 +265,8 @@ def get_data_DEA(tech, data_in, expectation=None):
                   'Heat input', 'Heat  input', 'Electricity input', 'Eletricity input', 'Heat out',
                   'capture rate', 
                   "FT Liquids Output, MWh/MWh Total Input",
-                  "Bio SNG (% of fuel input)"]
+                  "Bio SNG (% of fuel input)",
+                  "Total O&M"]
 
 
     df = pd.DataFrame()
@@ -642,12 +643,17 @@ def clean_up_units(tech_data):
     tech_data.unit = tech_data.unit.str.replace("MWh/MWh\)", "MWh_H2/MWh_e", regex=True)
     tech_data.unit = tech_data.unit.str.replace("MWth", "MW_th")
     tech_data.unit = tech_data.unit.str.replace("MWheat", "MW_th")
+    tech_data.unit = tech_data.unit.str.replace("MWhth", "MWh_th")
     tech_data.unit = tech_data.unit.str.replace("MWhheat", "MWh_th")
     tech_data.unit = tech_data.unit.str.replace("MWH Liquids", "MWh_FT")
     tech_data.unit = tech_data.unit.str.replace("MW Liquids", "MW_FT")
     tech_data.unit = tech_data.unit.str.replace("MW Methanol", "MW_MeOH")
     tech_data.unit = tech_data.unit.str.replace("MW output", "MW")
+    tech_data.unit = tech_data.unit.str.replace("MW/year FT Liquids/year", "MW_FT/year")
+    tech_data.unit = tech_data.unit.str.replace("MWh FT Liquids/year", "MWh_FT")
     tech_data.unit = tech_data.unit.str.replace("EUR/MWh of total input", "EUR/MWh_e")
+
+
     tech_data.unit = tech_data.unit.str.replace("FT Liquids Output, MWh/MWh Total Inpu", "MWh_FT/MWh_H2")
     tech_data.loc[tech_data.unit=='EUR/MW/y', "unit"] = 'EUR/MW/year'
 
@@ -846,10 +852,12 @@ def order_data(tech_data):
 
         # ---- FOM ----------------
         if len(investment):
-            fixed = df[df.index.str.contains("Fixed O&M") &
+            fixed = df[(df.index.str.contains("Fixed O&M") |
+                        df.index.str.contains("Total O&M")) &
                        ((df.unit==investment.unit[0]+"/year")|
                         (df.unit=="EUR/MW/km/year")|
                         (df.unit=="EUR/MW/year")|
+                        (df.unit=="EUR/MW_FT/year")|
                         (df.unit=='% of specific investment/year')|
                         (df.unit==investment.unit.str.split(" ")[0][0]+"/year"))].copy()
             if (len(fixed)!=1) and (len(df[df.index.str.contains("Fixed O&M")])!=0):

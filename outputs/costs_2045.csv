@@ -6,6 +6,7 @@ BioSNG,C in fuel,0.36855,per unit,Stoichiometric calculation,
 BioSNG,C stored,0.63145,per unit,Stoichiometric calculation,
 BioSNG,CO2 stored,0.23153,tCO2/MWh_th,Stoichiometric calculation,
 BioSNG,FOM,1.61475,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Fixed O&M"
+BioSNG,VOM,1.625,EUR/MWh_th,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Variable O&M"
 BioSNG,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
 BioSNG,efficiency,0.6825,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Bio SNG"
 BioSNG,investment,1525.0,EUR/kW_th,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Specific investment"
@@ -13,6 +14,8 @@ BioSNG,lifetime,20.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuel
 BtL,C in fuel,0.28052,per unit,Stoichiometric calculation,
 BtL,C stored,0.71948,per unit,Stoichiometric calculation,
 BtL,CO2 stored,0.26381,tCO2/MWh_th,Stoichiometric calculation,
+BtL,FOM,2.91639,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Fixed O&M"
+BtL,VOM,1.06311,EUR/MWh_FT,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Variable O&M"
 BtL,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
 BtL,efficiency,0.4,per unit,doi:10.1039/D0SE01067G,
 BtL,investment,3540.81226,EUR/kW_FT/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Specific investment"
@@ -181,6 +184,7 @@ battery inverter,lifetime,10.0,years,"Danish Energy Agency, technology_data_cata
 battery storage,investment,84.5,EUR/kWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Energy storage expansion cost investment
 battery storage,lifetime,30.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Technical lifetime
 biogas,CO2 stored,0.08679,tCO2/MWh_th,Stoichiometric calculation,
+biogas,FOM,13.77785,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","81 Biogas Plant, Basic conf.:  Total O&M"
 biogas,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
 biogas,efficiency,1.0,per unit,Assuming input biomass is already given in biogas output,
 biogas,fuel,59.0,EUR/MWhth,JRC and Zappa, from old pypsa cost assumptions

@@ -374,10 +374,10 @@ def add_conventional_data(costs):
     add technology data for conventional carriers from Lazards, DIW and BP
     """
     # nuclear from Lazards
-    costs.loc[('nuclear', 'investment'), 'value'] = 4000 / \
-        (1 + snakemake.config['rate_inflation'])**(2019 - snakemake.config['eur_year'])
+    costs.loc[('nuclear', 'investment'), 'value'] = 4000# / \
+        #(1 + snakemake.config['rate_inflation'])**(2019 - snakemake.config['eur_year'])
     costs.loc[('nuclear', 'investment'), 'unit'] = "EUR/kW_e"
-    costs.loc[('nuclear', 'investment'), 'source'] = source_dict['Lazards']
+    costs.loc[('nuclear', 'investment'), 'source'] = "Assumption based on 10.1016/j.energy.2020.117015"
 
     costs.loc[('nuclear', 'FOM'), 'value'] = 1.4
     costs.loc[('nuclear', 'FOM'), 'unit'] = "%/year"
@@ -401,6 +401,32 @@ def add_conventional_data(costs):
     costs.loc[('nuclear', 'lifetime'), 'value'] = 60
     costs.loc[('nuclear', 'lifetime'), 'unit'] = "years"
     costs.loc[('nuclear', 'lifetime'), 'source'] = source_dict['Lazards']
+
+
+    costs.loc[('nuclear_new', 'investment'), 'value'] = 6000
+    costs.loc[('nuclear_new', 'investment'), 'unit'] = "EUR/kW_e"
+    costs.loc[('nuclear_new', 'investment'), 'source'] = "Assumption based on 10.1016/j.energy.2020.117015"
+
+    costs.loc[('nuclear_new', 'FOM'), 'value'] = 1.4
+    costs.loc[('nuclear_new', 'FOM'), 'unit'] = "%/year"
+    costs.loc[('nuclear_new', 'FOM'), 'source'] = source_dict['Lazards']
+
+    costs.loc[('nuclear_new', 'VOM'), 'value'] = 3.5
+    costs.loc[('nuclear_new', 'VOM'), 'unit'] = "EUR/MWh_e"
+    costs.loc[('nuclear_new', 'VOM'), 'source'] = source_dict['Lazards']
+
+    costs.loc[('nuclear_new', 'efficiency'), 'value'] = 0.33
+    costs.loc[('nuclear_new', 'efficiency'), 'unit'] = "per unit"
+    costs.loc[('nuclear_new', 'efficiency'), 'source'] = source_dict['Lazards']
+
+    costs.loc[('nuclear_new', 'fuel'), 'value'] = 2.6
+    costs.loc[('nuclear_new', 'fuel'), 'unit'] = 'EUR/MWh_th'
+    costs.loc[('nuclear_new', 'fuel'), 'source'] = source_dict['Lazards']
+
+    costs.loc[('nuclear_new', 'lifetime'), 'value'] = 60
+    costs.loc[('nuclear_new', 'lifetime'), 'unit'] = "years"
+    costs.loc[('nuclear_new', 'lifetime'), 'source'] = "Assumption"
+
 
     # coal from Lazards and BP 2019
     costs.loc[('coal', 'investment'), 'value'] = 4162.5 / \

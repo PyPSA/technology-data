@@ -93,7 +93,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'cement capture' : '401.c Post comb - Cement kiln',
                'BioSNG' : '84 Gasif. CFB, Bio-SNG',
                'BtL' : '85 Gasif. Ent. Flow FT, liq fu ',
-               'Biogas plus hydrogen': '99 SNG from methan. of biogas',
+               'biogas plus hydrogen': '99 SNG from methan. of biogas',
                'methanolisation': '98 Methanol from power',
                'Fischer-Tropsch': '102 Hydrogen to Jet',
                # 'electricity distribution rural': '101 2 el distri Rural',
@@ -144,7 +144,7 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'biomass CHP capture': 'I:J',
                     'BioSNG' : 'I:J',
                     'BtL' : 'J:K',
-                    'Biogas plus hydrogen' : 'J:K',
+                    'biogas plus hydrogen' : 'J:K',
                     'industrial heat pump medium temperature':'H:I',
                     'Fischer-Tropsch': 'I:J',
                     'methanolisation': 'J:K',
@@ -300,7 +300,7 @@ def get_data_DEA(tech, data_in, expectation=None):
     if tech.startswith('industrial heat pump'):
         df = df.drop('Indirect investments cost (MEUR per MW)')
 
-    if tech == 'Biogas plus hydrogen':
+    if tech == 'biogas plus hydrogen':
         df.drop(df.loc[df.index.str.contains("GJ SNG")].index, inplace=True)
 
     if tech == 'BtL':
@@ -1219,7 +1219,7 @@ def carbon_flow(costs):
     medium_out = ''
     CH4_specific_energy = 50 #GJ/t methane
 
-    for tech in ['BtL', 'BioSNG', 'methanation', 'Fischer-Tropsch', 'biogas', 'Biogas plus hydrogen']:
+    for tech in ['BtL', 'BioSNG', 'methanation', 'Fischer-Tropsch', 'biogas', 'biogas plus hydrogen']:
         inv_cost = 0
         eta = 0
         source = 'TODO'
@@ -1287,7 +1287,7 @@ def carbon_flow(costs):
             costs.loc[('biogas', 'CO2 stored'), 'source'] = "Stoichiometric calculation"
 
 
-        elif tech == 'Biogas plus hydrogen':
+        elif tech == 'biogas plus hydrogen':
             AD_CO2_share = 0.8 #volumetric share in biogas (rest is CH4). Assuming the relation given in supplementary material in https://doi.org/10.1039/D0SE01067G
 
             CH4_density = 0.657 #kg/Nm3
@@ -1295,9 +1295,9 @@ def carbon_flow(costs):
             CH4_vol_energy_density = CH4_specific_energy * CH4_density / (1000 * 3.6) #MJ/Nm3 -> MWh/Nm3
             CO2_weight_share = AD_CO2_share * CO2_density
 
-            costs.loc[('Biogas plus hydrogen', 'CO2 stored'), 'value'] = CO2_weight_share / CH4_vol_energy_density / 1000 #tCO2/MWh,in (NB: assuming the input is already given in the biogas potential and cost
-            costs.loc[('Biogas plus hydrogen', 'CO2 stored'), 'unit'] = "tCO2/MWh_th"
-            costs.loc[('Biogas plus hydrogen', 'CO2 stored'), 'source'] = "Stoichiometric calculation"
+            costs.loc[('biogas plus hydrogen', 'CO2 stored'), 'value'] = CO2_weight_share / CH4_vol_energy_density / 1000 #tCO2/MWh,in (NB: assuming the input is already given in the biogas potential and cost
+            costs.loc[('biogas plus hydrogen', 'CO2 stored'), 'unit'] = "tCO2/MWh_th"
+            costs.loc[('biogas plus hydrogen', 'CO2 stored'), 'source'] = "Stoichiometric calculation"
 
     return costs
 

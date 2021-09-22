@@ -190,10 +190,13 @@ biogas,efficiency,1.0,per unit,Assuming input biomass is already given in biogas
 biogas,fuel,59.0,EUR/MWhth,JRC and Zappa, from old pypsa cost assumptions
 biogas,investment,1710.69203,EUR/kW,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","81 Biogas Plant, Basic conf.:  Specific investment"
 biogas,lifetime,20.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","81 Biogas Plant, Basic conf.:  Technical lifetime"
-biogas plus hydrogen,CO2 stored,0.17359,tCO2/MWh_th,Stoichiometric calculation,
+biogas plus hydrogen,CO2 stored,0.0217,tCO2/MWh_th,Stoichiometric calculation,
 biogas plus hydrogen,FOM,4.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Fixed O&M
 biogas plus hydrogen,VOM,4.32,EUR/MWh_CH4,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Variable O&M
 biogas plus hydrogen,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
+biogas plus hydrogen,efficiency,1.6,per unit,"Calculated from data in Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",
+biogas plus hydrogen,heat output,0.19,MWh_th/MWh_CH4,"Calculated from data in Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",
+biogas plus hydrogen,hydrogen input,0.46,MWh_H2/MWh_CH4,"Calculated from data in Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",
 biogas plus hydrogen,investment,907.2,EUR/kW_CH4,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Specific investment
 biogas plus hydrogen,lifetime,25.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Technical lifetime
 biogas upgrading,FOM,2.50591,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","82 Biogas, upgrading:  Fixed O&M "

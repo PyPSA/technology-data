@@ -1242,6 +1242,27 @@ def carbon_flow(costs):
         elif tech == 'biogas':
             eta = 1
             source = "Assuming input biomass is already given in biogas output"
+            AD_CO2_share = 0.4 #volumetric share in biogas (rest is CH4)
+
+
+        elif tech == 'biogas plus hydrogen':
+            #NB: this falls between power to gas and biogas and should be used with care, due to possible minor
+            # differences in resource use etc. which may tweak results in favour of one tech or another
+            eta = 1.6
+            H2_in = 0.46
+
+            heat_out = 0.19
+            source = "Calculated from data in Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx"
+            costs.loc[(tech, 'hydrogen input'), 'value'] = H2_in
+            costs.loc[(tech, 'hydrogen input'), 'unit'] = "MWh_H2/MWh_CH4"
+            costs.loc[(tech, 'hydrogen input'), 'source'] = source
+
+            costs.loc[(tech, 'heat output'), 'value'] = heat_out
+            costs.loc[(tech, 'heat output'), 'unit'] = "MWh_th/MWh_CH4"
+            costs.loc[(tech, 'heat output'), 'source'] = source
+
+            #TODO: this needs to be refined based on e.g. stoichiometry:
+            AD_CO2_share = 0.1 #volumetric share in biogas (rest is CH4).
 
         if eta > 0:
             costs.loc[(tech, 'efficiency'), 'value'] = eta
@@ -1274,30 +1295,15 @@ def carbon_flow(costs):
             costs.loc[(tech, 'C stored'), 'source'] = "Stoichiometric calculation"
             costs.loc[(tech, 'CO2 stored'), 'source'] = "Stoichiometric calculation"
 
-        elif tech == 'biogas':
-            AD_CO2_share = 0.4 #volumetric share in biogas (rest is CH4)
-
+        elif tech in ['biogas','biogas plus hydrogen']:
             CH4_density = 0.657 #kg/Nm3
             CO2_density = 1.98 #kg/Nm3
             CH4_vol_energy_density = CH4_specific_energy * CH4_density / (1000 * 3.6) #MJ/Nm3 -> MWh/Nm3
             CO2_weight_share = AD_CO2_share * CO2_density
 
-            costs.loc[('biogas', 'CO2 stored'), 'value'] = CO2_weight_share / CH4_vol_energy_density / 1000 #tCO2/MWh,in (NB: assuming the input is already given in the biogas potential and cost
-            costs.loc[('biogas', 'CO2 stored'), 'unit'] = "tCO2/MWh_th"
-            costs.loc[('biogas', 'CO2 stored'), 'source'] = "Stoichiometric calculation"
-
-
-        elif tech == 'biogas plus hydrogen':
-            AD_CO2_share = 0.8 #volumetric share in biogas (rest is CH4). Assuming the relation given in supplementary material in https://doi.org/10.1039/D0SE01067G
-
-            CH4_density = 0.657 #kg/Nm3
-            CO2_density = 1.98 #kg/Nm3
-            CH4_vol_energy_density = CH4_specific_energy * CH4_density / (1000 * 3.6) #MJ/Nm3 -> MWh/Nm3
-            CO2_weight_share = AD_CO2_share * CO2_density
-
-            costs.loc[('biogas plus hydrogen', 'CO2 stored'), 'value'] = CO2_weight_share / CH4_vol_energy_density / 1000 #tCO2/MWh,in (NB: assuming the input is already given in the biogas potential and cost
-            costs.loc[('biogas plus hydrogen', 'CO2 stored'), 'unit'] = "tCO2/MWh_th"
-            costs.loc[('biogas plus hydrogen', 'CO2 stored'), 'source'] = "Stoichiometric calculation"
+            costs.loc[(tech, 'CO2 stored'), 'value'] = CO2_weight_share / CH4_vol_energy_density / 1000 #tCO2/MWh,in (NB: assuming the input is already given in the biogas potential and cost
+            costs.loc[(tech, 'CO2 stored'), 'unit'] = "tCO2/MWh_th"
+            costs.loc[(tech, 'CO2 stored'), 'source'] = "Stoichiometric calculation"
 
     return costs
 

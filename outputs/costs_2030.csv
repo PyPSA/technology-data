@@ -11,6 +11,12 @@ BioSNG,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.201
 BioSNG,efficiency,0.63,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Bio SNG"
 BioSNG,investment,1600.0,EUR/kW_th,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Specific investment"
 BioSNG,lifetime,20.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Technical lifetime"
+Biogas plus hydrogen,CO2 stored,0.17359,tCO2/MWh_th,Stoichiometric calculation,
+Biogas plus hydrogen,FOM,4.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Fixed O&M
+Biogas plus hydrogen,VOM,3.6,EUR/MWh_CH4,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Variable O&M
+Biogas plus hydrogen,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
+Biogas plus hydrogen,investment,756.0,EUR/kW_CH4,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Specific investment
+Biogas plus hydrogen,lifetime,25.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Technical lifetime
 BtL,C in fuel,0.28052,per unit,Stoichiometric calculation,
 BtL,C stored,0.71948,per unit,Stoichiometric calculation,
 BtL,CO2 stored,0.26381,tCO2/MWh_th,Stoichiometric calculation,

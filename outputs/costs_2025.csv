@@ -436,8 +436,14 @@ nuclear,FOM,1.4,%/year,Lazard s Levelized Cost of Energy Analysis - Version 13.0
 nuclear,VOM,3.5,EUR/MWh_e,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
 nuclear,efficiency,0.33,per unit,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
 nuclear,fuel,2.6,EUR/MWh_th,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
-nuclear,investment,7940.45144,EUR/kW_e,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
-nuclear,lifetime,40.0,years,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+nuclear,investment,4000.0,EUR/kW_e,Assumption based on 10.1016/j.energy.2020.117015,
+nuclear,lifetime,60.0,years,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+nuclear_new,FOM,1.4,%/year,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+nuclear_new,VOM,3.5,EUR/MWh_e,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+nuclear_new,efficiency,0.33,per unit,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+nuclear_new,fuel,2.6,EUR/MWh_th,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+nuclear_new,investment,6000.0,EUR/kW_e,Assumption based on 10.1016/j.energy.2020.117015,
+nuclear_new,lifetime,60.0,years,Assumption,
 offwind,FOM,2.29167,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",21 Offshore turbines:  Fixed O&M
 offwind,VOM,2.81894,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",21 Offshore turbines:  Variable O&M
 offwind,investment,1660.61293,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",21 Offshore turbines:  Nominal investment grid connection costs substracted from investment costs

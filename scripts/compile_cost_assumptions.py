@@ -1217,9 +1217,10 @@ def carbon_flow(costs):
             co2_capture_rate = 0.98
 
         elif tech == 'BtL':
+            inv_cost = 2000
             medium_out = 'oil'
-            eta = 0.4
-            source = "doi:10.1039/D0SE01067G"
+            eta = 0.45
+            source = "doi:10.1016/j.enpol.2017.05.013"
 
         elif tech == 'BioSNG':
             medium_out = 'gas'

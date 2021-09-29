@@ -70,7 +70,7 @@ H2 (g) submarine pipeline,FOM,3.0,%/year,Assume same as for CH4 (g) submarine pi
 H2 (g) submarine pipeline,investment,310.88,EUR/MW/km,"Assume similar cost as for CH4 (g) submarine pipeline but with the same factor as between onland CH4 (g) pipeline and H2 (g) pipeline (2.7). This estimate is comparable to a 36in diameter pipeline calaculated based on d’Amore-Domenech et al (2021): 10.1016/j.apenergy.2021.116625 , supplementary material (=251 EUR/MW/km).",
 H2 (g) submarine pipeline,lifetime,30.0,years,Assume same as for CH4 (g) submarine pipeline.,
 H2 (l) storage tank,FOM,2.0,%/year,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 6.",
-H2 (l) storage tank,investment,750.08,EUR/Mwh_H2,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 6.",
+H2 (l) storage tank,investment,750.08,EUR/MWh_H2,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 6.",
 H2 (l) storage tank,lifetime,20.0,years,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 6.",
 H2 (l) transport ship,FOM,4.0,%/year,"Cihlar et al 2020: http://op.europa.eu/en/publication-detail/-/publication/7e4afa7d-d077-11ea-adf7-01aa75ed71a1/language-en , Table 3-B, based on IEA 2019.",
 H2 (l) transport ship,capacity,11000.0,t_H2,"Cihlar et al 2020: http://op.europa.eu/en/publication-detail/-/publication/7e4afa7d-d077-11ea-adf7-01aa75ed71a1/language-en , Table 3-B, based on IEA 2019.",

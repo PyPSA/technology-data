@@ -23,16 +23,16 @@ rule compile_cost_assumptions:
     script: "scripts/compile_cost_assumptions.py"
 
 
-rule convert_fraunhofer:
-    input:
-        fraunhofer = "docu/Anhang-Studie-Wege-zu-einem-klimaneutralen-Energiesystem.pdf"
-    output:
-        costs = "inputs/Fraunhofer_ISE_costs.csv",
-        energy_prices = "inputs/Fraunhofer_ISE_energy_prices.csv"
-    threads: 1
-    resources: mem=500
-    conda: "environment.yaml"
-    script: "scripts/convert_pdf_fraunhofer_to_dataframe.py"
+# rule convert_fraunhofer:
+#     input:
+#         fraunhofer = "docu/Anhang-Studie-Wege-zu-einem-klimaneutralen-Energiesystem.pdf"
+#     output:
+#         costs = "inputs/Fraunhofer_ISE_costs.csv",
+#         energy_prices = "inputs/Fraunhofer_ISE_energy_prices.csv"
+#     threads: 1
+#     resources: mem=500
+#     conda: "environment.yaml"
+#     script: "scripts/convert_pdf_fraunhofer_to_dataframe.py"
 
 
 rule convert_EWG:

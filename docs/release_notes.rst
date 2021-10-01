@@ -2,7 +2,7 @@
 Release Notes
 ##########################################
 
-Technology-Data 0.3.0 (xxth August 2021)
+Technology-Data 0.3.0 (1 October 2021)
 ===========================================
 
 This release includes several new technologies (see list below), the possibility

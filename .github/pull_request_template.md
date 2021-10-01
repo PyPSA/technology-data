@@ -9,4 +9,4 @@ Closes # (if applicable).
 - [ ] Data source for new technologies is cleary stated.
 - [ ] Newly introduced dependencies are added to `environment.yaml` (if applicable).
 - [ ] A note for the release notes `doc/release_notes.rst` of the upcoming release is included.
-- [ ] I consent to the release of this PR's code under the MIT license.
+- [ ] I consent to the release of this PR's code under the GPLv3 license.

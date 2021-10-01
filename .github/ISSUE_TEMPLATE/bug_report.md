@@ -10,7 +10,7 @@ assignees: ''
 
 ## Checklist
 
-- [ ] I am using the current [`master`](https://github.com/pypsa/pypsa/tree/master) branch or the latest [release](https://github.com/pypsa/pypsa/releases). Please indicate:
+- [ ] I am using the current [`master`](https://github.com/pypsa/technology-data/tree/master) branch or the latest [release](https://github.com/pypsa/technology-data/releases). Please indicate:
 
 ## Describe the Bug
 

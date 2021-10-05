@@ -49,7 +49,8 @@ source_dict = {
                 "Caldera2016": "Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004)",
                 "Caldera2017": "Caldera et al 2017: Learning Curve for Seawater Reverse Osmosis Desalination Plants: Capital Cost Trend of the Past, Present, and Future (https://doi.org/10.1002/2017WR021402)",
                 # home battery storage and inverter investment costs
-                "EWG": "Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019"
+                "EWG": "Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019",
+                "HyNOW" : "Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014"
                 }
 
 # [DEA-sheet-names]
@@ -1204,30 +1205,46 @@ def carbon_flow(costs):
     medium_out = ''
     CH4_specific_energy = 50 #GJ/t methane
 
-    for tech in ['BtL', 'BioSNG', 'methanation', 'Fischer-Tropsch', 'biogas']:
+    for tech in ['BtL', 'BioSNG', 'methanation', 'Fischer-Tropsch', 'biogas', 'digestible biomass to hydrogen', 'solid biomass to hydrogen']:
         inv_cost = 0
         eta = 0
+        lifetime = 0
+        FOM = 0
+        VOM = 0
         source = 'TODO'
         co2_capture_rate = 0.98
 
         if tech == 'Fischer-Tropsch':
-            co2_capture_rate = 0.98
+            continue
 
         elif tech == 'methanation':
-            co2_capture_rate = 0.98
+            continue
 
         elif tech == 'BtL':
-            inv_cost = 2000
+            inv_cost = 2500
             medium_out = 'oil'
             eta = 0.45
             source = "doi:10.1016/j.enpol.2017.05.013"
 
         elif tech == 'BioSNG':
             medium_out = 'gas'
+            lifetime = 25
 
         elif tech == 'biogas':
             eta = 1
             source = "Assuming input biomass is already given in biogas output"
+
+        elif tech == 'digestible biomass to hydrogen':
+            inv_cost = 2500
+            eta = 0.39
+            FOM = 4.25
+            source = 'Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014' #source_dict('HyNOW')
+
+        elif tech == 'solid biomass to hydrogen':
+            inv_cost = 2500
+            eta = 0.56
+            FOM = 4.25
+            source = 'Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014' #source_dict('HyNOW')
 
         if eta > 0:
             costs.loc[(tech, 'efficiency'), 'value'] = eta
@@ -1242,6 +1259,21 @@ def carbon_flow(costs):
             costs.loc[(tech, 'investment'), 'value'] = inv_cost
             costs.loc[(tech, 'investment'), 'unit'] = "EUR/kW_th"
             costs.loc[(tech, 'investment'), 'source'] = source
+
+        if lifetime > 0:
+            costs.loc[(tech, 'lifetime'), 'value'] = lifetime
+            costs.loc[(tech, 'lifetime'), 'unit'] = "years"
+            costs.loc[(tech, 'lifetime'), 'source'] = source
+
+        if FOM > 0:
+            costs.loc[(tech, 'FOM'), 'value'] = FOM
+            costs.loc[(tech, 'FOM'), 'unit'] = "%/year"
+            costs.loc[(tech, 'FOM'), 'source'] = source
+
+        if VOM > 0:
+            costs.loc[(tech, 'VOM'), 'value'] = VOM
+            costs.loc[(tech, 'VOM'), 'unit'] = "EUR/MWh_th"
+            costs.loc[(tech, 'VOM'), 'source'] = source
 
         if tech in ['BioSNG', 'BtL']:
             input_CO2_intensity = costs.loc[('solid biomass', 'CO2 intensity'), 'value']

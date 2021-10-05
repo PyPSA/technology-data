@@ -10,7 +10,7 @@ BioSNG,VOM,1.7,EUR/MWh_th,"Danish Energy Agency, data_sheets_for_renewable_fuels
 BioSNG,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
 BioSNG,efficiency,0.63,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Bio SNG"
 BioSNG,investment,1600.0,EUR/kW_th,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Specific investment"
-BioSNG,lifetime,20.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Technical lifetime"
+BioSNG,lifetime,25.0,years,TODO,"84 Gasif. CFB, Bio-SNG:  Technical lifetime"
 BtL,C in fuel,0.31558,per unit,Stoichiometric calculation,
 BtL,C stored,0.68442,per unit,Stoichiometric calculation,
 BtL,CO2 stored,0.25095,tCO2/MWh_th,Stoichiometric calculation,
@@ -18,7 +18,7 @@ BtL,FOM,2.66667,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xl
 BtL,VOM,1.06257,EUR/MWh_FT,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Variable O&M"
 BtL,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
 BtL,efficiency,0.45,per unit,doi:10.1016/j.enpol.2017.05.013,
-BtL,investment,2000.0,EUR/kW_th,doi:10.1016/j.enpol.2017.05.013,"85 Gasif. Ent. Flow FT, liq fu :  Specific investment"
+BtL,investment,2500.0,EUR/kW_th,doi:10.1016/j.enpol.2017.05.013,"85 Gasif. Ent. Flow FT, liq fu :  Specific investment"
 BtL,lifetime,25.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Technical lifetime"
 CCGT,FOM,3.3494,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Fixed O&M"
 CCGT,VOM,4.2,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Variable O&M"
@@ -63,7 +63,6 @@ FT fuel transport ship,investment,31700578.34405,EUR,"Assume comparable tanker a
 FT fuel transport ship,lifetime,15.0,years,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
 Fischer-Tropsch,FOM,3.0,%/year,doi:10.3390/su9020306, from old pypsa cost assumptions
 Fischer-Tropsch,VOM,4.2,EUR/MWh_FT,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",102 Hydrogen to Jet:  Variable O&M
-Fischer-Tropsch,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
 Fischer-Tropsch,efficiency,0.7,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","102 Hydrogen to Jet:  FT Liquids Output, MWh/MWh Total Input"
 Fischer-Tropsch,investment,1600.0,EUR/kW_FT/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",102 Hydrogen to Jet:  Specific investment
 Fischer-Tropsch,lifetime,25.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",102 Hydrogen to Jet:  Technical lifetime
@@ -337,6 +336,10 @@ decentral water tank storage,discount rate,0.04,per unit,Palzer thesis, from old
 decentral water tank storage,investment,18.37607,EUR/kWh,IWES Interaktion, from old pypsa cost assumptions
 decentral water tank storage,lifetime,20.0,years,HP, from old pypsa cost assumptions
 digestible biomass,fuel,15.0,EUR/MWh_th,"JRC ENSPRESO ca avg for MINBIOAGRW1, ENS_Ref for 2040",
+digestible biomass to hydrogen,FOM,4.25,%/year,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",
+digestible biomass to hydrogen,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
+digestible biomass to hydrogen,efficiency,0.39,per unit,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",
+digestible biomass to hydrogen,investment,2500.0,EUR/kW_th,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",
 direct air capture,FOM,4.95,%/year,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",403.a Direct air capture
 direct air capture,compression-electricity-input,0.15,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",403.a Direct air capture
 direct air capture,compression-heat-output,0.2,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",403.a Direct air capture
@@ -410,7 +413,6 @@ lignite,fuel,2.9,EUR/MWh_th,DIW,
 lignite,investment,3845.50659,EUR/kW_e,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
 lignite,lifetime,40.0,years,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
 methanation,FOM,4.0,%/year,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
-methanation,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
 methanation,efficiency,0.8,per unit,Palzer and Schaber thesis, from old pypsa cost assumptions
 methanation,investment,278.0,EUR/kW_CH4,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 methanation,lifetime,30.0,years,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
@@ -480,6 +482,10 @@ solar-utility,investment,376.29182,EUR/kW,"Danish Energy Agency, technology_data
 solar-utility,lifetime,40.0,years,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",22 Photovoltaics Large:  Technical lifetime
 solid biomass,CO2 intensity,0.36667,tCO2/MWh_th,Stoichiometric calculation with 18 GJ/t_DM LHV and 50% C-content for solid biomass,
 solid biomass,fuel,12.0,EUR/MWh_th,"JRC ENSPRESO ca avg for MINBIOWOOW1 (secondary forest residue wood chips), ENS_Ref for 2040",
+solid biomass to hydrogen,FOM,4.25,%/year,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",
+solid biomass to hydrogen,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
+solid biomass to hydrogen,efficiency,0.56,per unit,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",
+solid biomass to hydrogen,investment,2500.0,EUR/kW_th,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",
 solid biomass to steam,efficiency,0.65,per unit,data.mendeley.com/datasets/v2c93n28rj/2,
 solid biomass to steam,investment,55.0,EUR/kW_th,data.mendeley.com/datasets/v2c93n28rj/2,
 uranium,fuel,2.6,EUR/MWh_th,Lazard s Levelized Cost of Energy Analysis - Version 13.0,

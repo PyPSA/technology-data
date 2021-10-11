@@ -1214,14 +1214,8 @@ def carbon_flow(costs):
         source = 'TODO'
         co2_capture_rate = 0.98
 
-        if tech == 'Fischer-Tropsch':
-            continue
-
-        elif tech == 'methanation':
-            continue
-
-        elif tech == 'BtL':
-            inv_cost = 2500
+        if tech == 'BtL':
+            inv_cost = 2000
             medium_out = 'oil'
             eta = 0.45
             source = "doi:10.1016/j.enpol.2017.05.013"
@@ -1245,6 +1239,10 @@ def carbon_flow(costs):
             eta = 0.56
             FOM = 4.25
             source = 'Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014' #source_dict('HyNOW')
+
+        # elif tech == 'Fischer-Tropsch':
+
+        # elif tech == 'methanation':
 
         if eta > 0:
             costs.loc[(tech, 'efficiency'), 'value'] = eta

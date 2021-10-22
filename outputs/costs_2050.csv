@@ -18,7 +18,7 @@ BtL,FOM,3.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",
 BtL,VOM,1.06257,EUR/MWh_FT,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Variable O&M"
 BtL,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
 BtL,efficiency,0.45,per unit,doi:10.1016/j.enpol.2017.05.013,
-BtL,investment,2000.0,EUR/kW_th,doi:10.1016/j.enpol.2017.05.013,"85 Gasif. Ent. Flow FT, liq fu :  Specific investment"
+BtL,investment,1500.0,EUR/kW_th,doi:10.1016/j.enpol.2017.05.013,"85 Gasif. Ent. Flow FT, liq fu :  Specific investment"
 BtL,lifetime,25.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Technical lifetime"
 CCGT,FOM,3.25,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Fixed O&M"
 CCGT,VOM,4.0,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Variable O&M"
@@ -349,6 +349,11 @@ direct air capture,heat-input,1.5,MWh/tCO2,"Danish Energy Agency, technology_dat
 direct air capture,heat-output,0.75,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",403.a Direct air capture
 direct air capture,investment,4000000.0,EUR/(tCO2/h),"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",403.a Direct air capture
 direct air capture,lifetime,20.0,years,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",403.a Direct air capture
+electric boiler steam,FOM,1.31429,%/year,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",310.1 Electric boiler steam  :  Fixed O&M
+electric boiler steam,VOM,0.78,EUR/MWh,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",310.1 Electric boiler steam  :  Variable O&M
+electric boiler steam,efficiency,0.99,per unit,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx","310.1 Electric boiler steam  :  Total efficiency, net, annual average"
+electric boiler steam,investment,70.0,EUR/kW,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",310.1 Electric boiler steam  :  Nominal investment
+electric boiler steam,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",310.1 Electric boiler steam  :  Technical lifetime
 electricity distribution grid,FOM,2.0,%/year,TODO, from old pypsa cost assumptions
 electricity distribution grid,investment,500.0,EUR/kW,TODO, from old pypsa cost assumptions
 electricity distribution grid,lifetime,40.0,years,TODO, from old pypsa cost assumptions
@@ -366,6 +371,11 @@ fuel cell,investment,800.0,EUR/kW_e,"Danish Energy Agency, technology_data_for_e
 fuel cell,lifetime,10.0,years,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",12 LT-PEMFC CHP:  Technical lifetime
 gas,CO2 intensity,0.198,tCO2/MWh_th,Stoichiometric calculation with 50 GJ/t CH4,
 gas,fuel,20.1,EUR/MWh_th,BP 2019,
+gas boiler steam,FOM,3.74,%/year,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",311.1c Steam boiler Gas:  Fixed O&M
+gas boiler steam,VOM,1.0,EUR/MWh,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",311.1c Steam boiler Gas:  Variable O&M
+gas boiler steam,efficiency,0.94,per unit,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx","311.1c Steam boiler Gas:  Total efficiency, net, annual average"
+gas boiler steam,investment,45.45455,EUR/kW,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",311.1c Steam boiler Gas:  Nominal investment
+gas boiler steam,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",311.1c Steam boiler Gas:  Technical lifetime
 gas storage,FOM,3.59187,%,Danish Energy Agency,"150 Underground Storage of Gas, Operation and Maintenace, salt cavern (units converted)"
 gas storage,investment,0.0329,EUR/kWh,Danish Energy Agency,"150 Underground Storage of Gas, Establishment of one cavern (units converted)"
 gas storage,lifetime,100.0,years,TODO no source,"estimation: most underground storage are already build, they do have a long lifetime"
@@ -401,6 +411,11 @@ hydrogen storage underground,FOM,0.0,%/year,"Danish Energy Agency, technology_da
 hydrogen storage underground,VOM,1e-05,EUR/MWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Variable O&M
 hydrogen storage underground,investment,1.2,EUR/kWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Specific investment
 hydrogen storage underground,lifetime,100.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Technical lifetime
+industrial heat pump high temperature,FOM,0.08571,%/year,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",302.b High temp. hp Up to 150:  Fixed O&M
+industrial heat pump high temperature,VOM,3.12,EUR/MWh,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",302.b High temp. hp Up to 150:  Variable O&M
+industrial heat pump high temperature,efficiency,3.2,per unit,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx","302.b High temp. hp Up to 150:  Total efficiency, net, annual average"
+industrial heat pump high temperature,investment,840.0,EUR/kW,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",302.b High temp. hp Up to 150:  Nominal investment
+industrial heat pump high temperature,lifetime,20.0,years,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",302.b High temp. hp Up to 150:  Technical lifetime
 industrial heat pump medium temperature,FOM,0.10286,%/year,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",302.a High temp. hp Up to 125 C:  Fixed O&M
 industrial heat pump medium temperature,VOM,3.12,EUR/MWh,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",302.a High temp. hp Up to 125 C:  Variable O&M
 industrial heat pump medium temperature,efficiency,2.85,per unit,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx","302.a High temp. hp Up to 125 C:  Total efficiency, net, annual average"
@@ -484,6 +499,11 @@ solar-utility,investment,301.61522,EUR/kW,"Danish Energy Agency, technology_data
 solar-utility,lifetime,40.0,years,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx",22 Photovoltaics Large:  Technical lifetime
 solid biomass,CO2 intensity,0.36667,tCO2/MWh_th,Stoichiometric calculation with 18 GJ/t_DM LHV and 50% C-content for solid biomass,
 solid biomass,fuel,12.0,EUR/MWh_th,"JRC ENSPRESO ca avg for MINBIOWOOW1 (secondary forest residue wood chips), ENS_Ref for 2040",
+solid biomass boiler steam,FOM,6.28305,%/year,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",311.1e Steam boiler Wood:  Fixed O&M
+solid biomass boiler steam,VOM,2.848,EUR/MWh,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",311.1e Steam boiler Wood:  Variable O&M
+solid biomass boiler steam,efficiency,0.9,per unit,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx","311.1e Steam boiler Wood:  Total efficiency, net, annual average"
+solid biomass boiler steam,investment,536.36364,EUR/kW,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",311.1e Steam boiler Wood:  Nominal investment
+solid biomass boiler steam,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",311.1e Steam boiler Wood:  Technical lifetime
 solid biomass to hydrogen,FOM,4.25,%/year,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",
 solid biomass to hydrogen,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
 solid biomass to hydrogen,efficiency,0.56,per unit,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",

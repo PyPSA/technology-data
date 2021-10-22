@@ -87,7 +87,11 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'biogas' : '81 Biogas Plant, Basic conf.',
                'biogas upgrading': '82 Biogas, upgrading',
                'battery': '180 Lithium Ion Battery',
-               'industrial heat pump medium temperature':'302.a High temp. hp Up to 125 C',
+               'industrial heat pump medium temperature': '302.a High temp. hp Up to 125 C',
+               'industrial heat pump high temperature': '302.b High temp. hp Up to 150',
+               'electric boiler steam': '310.1 Electric boiler steam  ',
+               'gas boiler steam': '311.1c Steam boiler Gas',
+               'solid biomass boiler steam': '311.1e Steam boiler Wood',
                'electrolysis': '86 AEC 100MW', #'88 Alkaline Electrolyser',
                'direct air capture' : '403.a Direct air capture',
                'biomass CHP capture' : '401.a Post comb - small CHP',
@@ -145,6 +149,10 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'BioSNG' : 'I:J',
                     'BtL' : 'J:K',
                     'industrial heat pump medium temperature':'H:I',
+                    'industrial heat pump high temperature':'H:I',
+                    'electric boiler steam':'H:I',
+                    'gas boiler steam':'H:I',
+                    'solid biomass boiler steam':'H:I',
                     'Fischer-Tropsch': 'I:J',
                     'methanolisation': 'J:K',
 }
@@ -196,7 +204,7 @@ def get_data_DEA(tech, data_in, expectation=None):
         usecols = "B:J"
     elif tech in ['direct air capture', 'cement capture', 'biomass CHP capture']:
         usecols = "A:F"
-    elif tech in ['industrial heat pump medium temperature']:
+    elif tech in ['industrial heat pump medium temperature','industrial heat pump high temperature','electric boiler steam','gas boiler steam','solid biomass boiler steam']:
         usecols = "A:E"
     elif tech in ['Fischer-Tropsch']:
         usecols = "B:F"
@@ -219,6 +227,7 @@ def get_data_DEA(tech, data_in, expectation=None):
     excel.index = excel.index.astype(str)
     excel.dropna(axis=0, how="all", inplace=True)
 
+    print(excel)
     if 2020 not in excel.columns:
         selection = excel[excel.isin([2020])].dropna(how="all").index
         excel.columns = excel.loc[selection].iloc[0, :].fillna("Technology", limit=1)
@@ -1215,7 +1224,7 @@ def carbon_flow(costs):
         co2_capture_rate = 0.98
 
         if tech == 'BtL':
-            inv_cost = 2000
+            inv_cost = 1500
             medium_out = 'oil'
             eta = 0.45
             source = "doi:10.1016/j.enpol.2017.05.013"

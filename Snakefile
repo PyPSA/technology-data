@@ -18,7 +18,8 @@ rule compile_cost_assumptions:
         pnnl_energy_storage = "inputs/pnnl-energy-storage-database.xlsx",
         manual_input = "inputs/manual_input.csv"
     output:
-        expand("outputs/costs_{year}.csv", year = config["years"])
+        expand("outputs/costs_{year}.csv", year = config["years"]),
+        all_years="outputs/costs.csv"
     threads: 1
     resources: mem=500
     conda: "environment.yaml"

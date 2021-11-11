@@ -200,6 +200,17 @@ Hydrogen-discharger,lifetime,30.0,years,"Viswanathan_2022, p.111 (p.133)","{'car
 Hydrogen-store,FOM,0.43,%/year,"Viswanathan_2022, 0.43 % of SB =(C38+C39)*0.43/4","{'carrier': ['h2cavern'], 'technology_type': ['store'], 'type': ['electrochemical'], 'note': ['derived']}"
 Hydrogen-store,investment,4329.3505,EUR/MWh,"Viswanathan_2022, p.113 (p.135)","{'carrier': ['h2cavern'], 'technology_type': ['store'], 'type': ['electrochemical'], 'note': ['Cavern Storage']}"
 Hydrogen-store,lifetime,30.0,years,"Viswanathan_2022, p.111 (p.133)","{'carrier': ['h2cavern'], 'technology_type': ['store'], 'type': ['electrochemical'], 'note': ['NULL']}"
+IC gas,FOM,1.0333,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","06 Gas engines, natural gas:  Fixed O&M"
+IC gas,VOM,5.1,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","06 Gas engines, natural gas:  Variable O&M"
+IC gas,c_b,0.99,50oC/100oC,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","06 Gas engines, natural gas:  Cb coefficient"
+IC gas,efficiency,0.47,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","06 Gas engines, natural gas:  Electricity efficiency, annual average"
+IC gas,investment,900.0,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","06 Gas engines, natural gas:  Nominal investment"
+IC gas,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","06 Gas engines, natural gas:  Technical lifetime"
+IC oil,FOM,2.463,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",50 Diesel engine farm:  Fixed O&M
+IC oil,VOM,6.0,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",50 Diesel engine farm:  Variable O&M
+IC oil,efficiency,0.35,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","50 Diesel engine farm:  Electricity efficiency, annual average"
+IC oil,investment,343.0,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",50 Diesel engine farm:  Specific investment
+IC oil,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",50 Diesel engine farm:  Technical lifetime
 LNG storage tank,FOM,2.0,%/year,"Guesstimate, based on H2 (l) storage tank with comparable requirements.",Currency year and technology year assumed based on publication date.
 LNG storage tank,investment,611.5857,EUR/m^3,"Hurskainen 2019, https://cris.vtt.fi/en/publications/liquid-organic-hydrogen-carriers-lohc-concept-evaluation-and-tech pg. 46 (59).",Currency year and technology year assumed based on publication date.
 LNG storage tank,lifetime,20.0,years,"Guesstimate, based on H2 (l) storage tank with comparable requirements.",Currency year and technology year assumed based on publication date.
@@ -322,6 +333,12 @@ Pumped-Storage-Hydro-bicharger,lifetime,60.0,years,"Viswanathan_2022, p.68 (p.90
 Pumped-Storage-Hydro-store,FOM,0.43,%/year,"Viswanathan_2022, 0.43 % of SB","{'carrier': ['phs'], 'technology_type': ['store'], 'type': ['mechanical'], 'note': ['derived']}"
 Pumped-Storage-Hydro-store,investment,51693.7369,EUR/MWh,"Viswanathan_2022, p.68 (p.90)","{'carrier': ['phs'], 'technology_type': ['store'], 'type': ['mechanical'], 'note': ['Reservoir Construction & Infrastructure']}"
 Pumped-Storage-Hydro-store,lifetime,60.0,years,"Viswanathan_2022, p.68 (p.90)","{'carrier': ['phs'], 'technology_type': ['store'], 'type': ['mechanical'], 'note': ['NULL']}"
+SCGT,FOM,3.3214,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","04 Gas turb. simple cycle, L:  Fixed O&M"
+SCGT,VOM,4.2,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","04 Gas turb. simple cycle, L:  Variable O&M"
+SCGT,c_b,1.0,50oC/100oC,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","04 Gas turb. simple cycle, L:  Cb coefficient"
+SCGT,efficiency,0.41,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","04 Gas turb. simple cycle, L:  Electricity efficiency, annual average"
+SCGT,investment,560.0,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","04 Gas turb. simple cycle, L:  Nominal investment"
+SCGT,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","04 Gas turb. simple cycle, L:  Technical lifetime"
 SMR,FOM,5.0,%/year,Danish Energy Agency,"Technology data for renewable fuels, in pdf on table 3 p.311"
 SMR,efficiency,0.76,per unit (in LHV),"IEA Global average levelised cost of hydrogen production by energy source and technology, 2019 and 2050 (2020), https://www.iea.org/data-and-statistics/charts/global-average-levelised-cost-of-hydrogen-production-by-energy-source-and-technology-2019-and-2050",
 SMR,investment,493470.3997,EUR/MW_CH4,Danish Energy Agency,"Technology data for renewable fuels, in pdf on table 3 p.311"
@@ -873,3 +890,11 @@ waste CHP CC,investment,8110.3941,EUR/kW_e,"Danish Energy Agency, technology_dat
 waste CHP CC,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","08 WtE CHP, Large, 50 degree:  Technical lifetime"
 water tank charger,efficiency,0.8367,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)
 water tank discharger,efficiency,0.8367,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)
+woodpellets,FOM,4.1032,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09b Wood Pellets, Medium:  Fixed O&M"
+woodpellets,VOM,1.8549,EUR/MWh_e,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09b Wood Pellets, Medium:  Variable O&M "
+woodpellets,c_b,0.4577,40°C/80°C,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09b Wood Pellets, Medium:  Cb coefficient"
+woodpellets,c_v,1.0,40°C/80°C,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09b Wood Pellets, Medium:  Cv coefficient"
+woodpellets,efficiency,0.2939,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09b Wood Pellets, Medium:  Electricity efficiency, net, annual average"
+woodpellets,efficiency-heat,0.6914,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09b Wood Pellets, Medium:  Heat efficiency, net, annual average"
+woodpellets,investment,2851.4102,EUR/kW_e,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09b Wood Pellets, Medium:  Nominal investment "
+woodpellets,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09b Wood Pellets, Medium:  Technical lifetime"

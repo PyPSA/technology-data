@@ -70,6 +70,9 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'solar-rooftop commercial': '22 Rooftop PV commercial',
                'OCGT': '52 OCGT - Natural gas',
                'CCGT': '05 Gas turb. CC, steam extract.',
+               'SCGT': '04 Gas turb. simple cycle, L',
+               'IC gas': '06 Gas engines, natural gas',
+               'IC oil': '50 Diesel engine farm',
                'oil': '50 Diesel engine farm',
                'biomass CHP': '09c Straw, Large, 40 degree',
                'biomass EOP': '09c Straw, Large, 40 degree',
@@ -126,6 +129,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'air separation unit': '103 Hydrogen to Ammonia',
                'waste CHP': '08 WtE CHP, Large, 50 degree',
                'waste CHP CC': '08 WtE CHP, Large, 50 degree',
+               'woodpellets': '09b Wood Pellets, Medium',
                # 'electricity distribution rural': '101 2 el distri Rural',
                # 'electricity distribution urban': '101 4 el distri  city',
                # 'gas distribution rural': '102 7 gas  Rural',
@@ -146,6 +150,9 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'solar-rooftop commercial':  'J:K',
                     'OCGT': 'I:J',
                     'CCGT': 'I:J',
+                    'SCGT': 'I:J',
+                    'IC gas': 'I:J',
+                    'IC oil': 'I:J',
                     'oil': 'I:J',
                     'biomass CHP': 'I:J',
                     'biomass EOP': 'I:J',
@@ -201,6 +208,7 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'methanolisation': 'J:K',
                     'waste CHP': 'I:J',
                     'waste CHP CC': 'I:J',
+                    'woodpellets': 'I:J',
 }
 
 # since February 2022 DEA uses a new format for the technology data
@@ -2175,6 +2183,8 @@ if __name__ == "__main__":
     data = add_mean_solar_rooftop(data)
     # %% (3) ------ add additional sources and save cost as csv ------------------
     # [RTD-target-multiindex-df]
+    costs_all_years = []
+
     for year in years:
         costs = (data[[year, "unit", "source", "further description"]]
                 .rename(columns={year: "value"}))
@@ -2259,3 +2269,8 @@ if __name__ == "__main__":
         costs_tot.sort_index(inplace=True)
         costs_tot.loc[:,'value'] = round(costs_tot.value.astype(float), snakemake.config.get("ndigits", 2))
         costs_tot.to_csv([v for v in snakemake.output if str(year) in v][0])
+
+
+        costs_all_years.append(costs_tot.assign(year=year))
+
+    pd.concat(costs_all_years).set_index("year", append=True).to_csv(snakemake.output.all_years)

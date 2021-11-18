@@ -18,7 +18,7 @@ BtL,FOM,2.83636,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xl
 BtL,VOM,1.06364,EUR/MWh_FT,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Variable O&M"
 BtL,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
 BtL,efficiency,0.45,per unit,doi:10.1016/j.enpol.2017.05.013,
-BtL,investment,1500.0,EUR/kW_th,doi:10.1016/j.enpol.2017.05.013,"85 Gasif. Ent. Flow FT, liq fu :  Specific investment"
+BtL,investment,2000.0,EUR/kW_th,doi:10.1016/j.enpol.2017.05.013,"85 Gasif. Ent. Flow FT, liq fu :  Specific investment"
 BtL,lifetime,25.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Technical lifetime"
 CCGT,FOM,3.30061,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Fixed O&M"
 CCGT,VOM,4.1,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Variable O&M"
@@ -381,8 +381,6 @@ gas storage,investment,0.0329,EUR/kWh,Danish Energy Agency,"150 Underground Stor
 gas storage,lifetime,100.0,years,TODO no source,"estimation: most underground storage are already build, they do have a long lifetime"
 gas storage charger,investment,14.33885,EUR/kW,Danish Energy Agency,"150 Underground Storage of Gas, Process equipment (units converted)"
 gas storage discharger,investment,4.77962,EUR/kW,Danish Energy Agency,"150 Underground Storage of Gas, Process equipment (units converted)"
-gas to steam,efficiency,0.75,per unit,data.mendeley.com/datasets/v2c93n28rj/2,
-gas to steam,investment,187.0,EUR/kW_th,data.mendeley.com/datasets/v2c93n28rj/2,
 geothermal,CO2 intensity,0.026,tCO2/MWhth,https://www.eia.gov/environment/emissions/co2_vol_mass.php, from old pypsa cost assumptions
 geothermal,FOM,2.35849,%/year,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 geothermal,efficiency,0.239,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
@@ -508,8 +506,6 @@ solid biomass to hydrogen,FOM,4.25,%/year,"Zech et.al. DBFZ Report Nr. 19. Hy-NO
 solid biomass to hydrogen,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
 solid biomass to hydrogen,efficiency,0.56,per unit,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",
 solid biomass to hydrogen,investment,2500.0,EUR/kW_th,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",
-solid biomass to steam,efficiency,0.65,per unit,data.mendeley.com/datasets/v2c93n28rj/2,
-solid biomass to steam,investment,55.0,EUR/kW_th,data.mendeley.com/datasets/v2c93n28rj/2,
 uranium,fuel,2.6,EUR/MWh_th,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
 water tank charger,efficiency,0.83666,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)
 water tank discharger,efficiency,0.83666,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)

@@ -98,6 +98,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'cement capture' : '401.c Post comb - Cement kiln',
                'BioSNG' : '84 Gasif. CFB, Bio-SNG',
                'BtL' : '85 Gasif. Ent. Flow FT, liq fu ',
+               'biogas plus hydrogen': '99 SNG from methan. of biogas',
                'methanolisation': '98 Methanol from power',
                'Fischer-Tropsch': '102 Hydrogen to Jet',
                # 'electricity distribution rural': '101 2 el distri Rural',
@@ -148,6 +149,7 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'biomass CHP capture': 'I:J',
                     'BioSNG' : 'I:J',
                     'BtL' : 'J:K',
+                    'biogas plus hydrogen' : 'J:K',
                     'industrial heat pump medium temperature':'H:I',
                     'industrial heat pump high temperature':'H:I',
                     'electric boiler steam':'H:I',
@@ -307,6 +309,12 @@ def get_data_DEA(tech, data_in, expectation=None):
     # Exlucde indirect costs for centralised system with additional piping.
     if tech.startswith('industrial heat pump'):
         df = df.drop('Indirect investments cost (MEUR per MW)')
+
+    if tech == 'biogas plus hydrogen':
+        df.drop(df.loc[df.index.str.contains("GJ SNG")].index, inplace=True)
+
+    if tech == 'BtL':
+        df.drop(df.loc[df.index.str.contains("1,000 t FT Liquids")].index, inplace=True)
 
     if tech == 'methanolisation':
         df.drop(df.loc[df.index.str.contains("1,000 t Methanol")].index, inplace=True)
@@ -687,6 +695,9 @@ def clean_up_units(tech_data):
     tech_data.unit = tech_data.unit.str.replace("MW output", "MW")
     tech_data.unit = tech_data.unit.str.replace("MW/year FT Liquids/year", "MW_FT/year")
     tech_data.unit = tech_data.unit.str.replace("MWh FT Liquids/year", "MWh_FT")
+    tech_data.unit = tech_data.unit.str.replace("MW/year SNG", "MW_CH4/year")
+    tech_data.unit = tech_data.unit.str.replace("MWh SNG", "MWh_CH4")
+    tech_data.unit = tech_data.unit.str.replace("MW SNG", "MW_CH4")
     tech_data.unit = tech_data.unit.str.replace("EUR/MWh of total input", "EUR/MWh_e")
 
 
@@ -876,6 +887,7 @@ def order_data(tech_data):
                         (df.unit=="EUR/MW_FT/year") |
                         (df.unit=="EUR/MWhCapacity") |
                         (df.unit=="EUR/MWh") |
+                        (df.unit=="EUR/MW_CH4") |
                         (df.unit=="EUR/MWh/year") |
                         (df.unit=="EUR/MW input"))].copy()
         if len(investment)!=1:
@@ -894,6 +906,7 @@ def order_data(tech_data):
                         (df.unit=="EUR/MW/km/year")|
                         (df.unit=="EUR/MW/year")|
                         (df.unit=="EUR/MW_FT/year")|
+                        (df.unit=="EUR/MW_CH4/year")|
                         (df.unit=='% of specific investment/year')|
                         (df.unit==investment.unit.str.split(" ")[0][0]+"/year"))].copy()
             if (len(fixed)!=1) and (len(df[df.index.str.contains("Fixed O&M")])!=0):
@@ -922,6 +935,8 @@ def order_data(tech_data):
                                                          (df.unit=="EUR/MWh/year") |
                                                          (df.unit=="EUR/MWh/km") |
                                                          (df.unit=="EUR/MWh") |
+                                                         (df.unit=="EUR/MW_CH4") |
+                                                         (df.unit=="EUR/MWh_CH4") |
                                                          (df.unit=="EUR/MWhoutput") |
                                                          (tech == "biogas upgrading"))].copy()
         if len(vom)==1:
@@ -1236,6 +1251,27 @@ def carbon_flow(costs):
         elif tech == 'biogas':
             eta = 1
             source = "Assuming input biomass is already given in biogas output"
+            AD_CO2_share = 0.4 #volumetric share in biogas (rest is CH4)
+
+
+        elif tech == 'biogas plus hydrogen':
+            #NB: this falls between power to gas and biogas and should be used with care, due to possible minor
+            # differences in resource use etc. which may tweak results in favour of one tech or another
+            eta = 1.6
+            H2_in = 0.46
+
+            heat_out = 0.19
+            source = "Calculated from data in Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx"
+            costs.loc[(tech, 'hydrogen input'), 'value'] = H2_in
+            costs.loc[(tech, 'hydrogen input'), 'unit'] = "MWh_H2/MWh_CH4"
+            costs.loc[(tech, 'hydrogen input'), 'source'] = source
+
+            costs.loc[(tech, 'heat output'), 'value'] = heat_out
+            costs.loc[(tech, 'heat output'), 'unit'] = "MWh_th/MWh_CH4"
+            costs.loc[(tech, 'heat output'), 'source'] = source
+
+            #TODO: this needs to be refined based on e.g. stoichiometry:
+            AD_CO2_share = 0.1 #volumetric share in biogas (rest is CH4).
 
         elif tech == 'digestible biomass to hydrogen':
             inv_cost = 2500
@@ -1299,17 +1335,15 @@ def carbon_flow(costs):
             costs.loc[(tech, 'C stored'), 'source'] = "Stoichiometric calculation"
             costs.loc[(tech, 'CO2 stored'), 'source'] = "Stoichiometric calculation"
 
-        elif tech == 'biogas':
-            AD_CO2_share = 0.4 #volumetric share in biogas (rest is CH4)
-
+        elif tech in ['biogas','biogas plus hydrogen']:
             CH4_density = 0.657 #kg/Nm3
             CO2_density = 1.98 #kg/Nm3
             CH4_vol_energy_density = CH4_specific_energy * CH4_density / (1000 * 3.6) #MJ/Nm3 -> MWh/Nm3
             CO2_weight_share = AD_CO2_share * CO2_density
 
-            costs.loc[('biogas', 'CO2 stored'), 'value'] = CO2_weight_share / CH4_vol_energy_density / 1000 #tCO2/MWh,in (NB: assuming the input is already given in the biogas potential and cost
-            costs.loc[('biogas', 'CO2 stored'), 'unit'] = "tCO2/MWh_th"
-            costs.loc[('biogas', 'CO2 stored'), 'source'] = "Stoichiometric calculation"
+            costs.loc[(tech, 'CO2 stored'), 'value'] = CO2_weight_share / CH4_vol_energy_density / 1000 #tCO2/MWh,in (NB: assuming the input is already given in the biogas potential and cost
+            costs.loc[(tech, 'CO2 stored'), 'unit'] = "tCO2/MWh_th"
+            costs.loc[(tech, 'CO2 stored'), 'source'] = "Stoichiometric calculation"
 
     return costs
 
@@ -1442,8 +1476,11 @@ data_in = get_excel_sheets(excel_files)
 d_by_tech = get_data_from_DEA(data_in, expectation=snakemake.config["expectation"])
 # concat into pd.Dataframe
 tech_data = pd.concat(d_by_tech).sort_index()
+
+print('Pre-cleaning: ', tech_data.head(50))
 # clean up units
 tech_data = clean_up_units(tech_data)
+print(tech_data.head(50))
 # (b) ------ specific assumptions for some technologies -----------------------
 
 # specify investment and efficiency assumptions for:

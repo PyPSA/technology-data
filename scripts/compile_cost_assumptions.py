@@ -1224,7 +1224,7 @@ def carbon_flow(costs):
         co2_capture_rate = 0.98
 
         if tech == 'BtL':
-            inv_cost = 1500
+            inv_cost = 2000
             medium_out = 'oil'
             eta = 0.45
             source = "doi:10.1016/j.enpol.2017.05.013"
@@ -1313,29 +1313,6 @@ def carbon_flow(costs):
 
     return costs
 
-
-def steam_options(costs):
-    steam_techs = ['solid biomass to steam', 'gas to steam']
-    investment = 0
-    eta = 0
-
-    for tech in steam_techs:
-        if tech == 'solid biomass to steam':
-            investment = 55
-            eta = .65
-        elif tech == 'gas to steam':
-            investment = 187
-            eta = .75
-
-        costs.loc[(tech, 'investment'), 'value'] = investment
-        costs.loc[(tech, 'investment'), 'unit'] = "EUR/kW_th"
-        costs.loc[(tech, 'investment'), 'source'] = "data.mendeley.com/datasets/v2c93n28rj/2"
-
-        costs.loc[(tech, 'efficiency'), 'value'] = eta
-        costs.loc[(tech, 'efficiency'), 'unit'] = "per unit"
-        costs.loc[(tech, 'efficiency'), 'source'] = "data.mendeley.com/datasets/v2c93n28rj/2"
-
-    return costs
 
 def add_home_battery_costs(costs):
     """
@@ -1523,9 +1500,6 @@ for year in years:
 
     #carbon balances
     costs = carbon_flow(costs)
-
-    #steam options
-    costs = steam_options(costs)
 
     # include old pypsa costs
     check = pd.concat([costs_pypsa, costs], sort=True, axis=1)

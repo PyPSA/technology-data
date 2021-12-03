@@ -1262,7 +1262,7 @@ def add_SMR_data(data):
     # FOM
     SMR_df.loc[(techs, "FOM"), years] = 5
     SMR_df.loc[(techs, "FOM"), "source"] = source_dict["DEA"]
-    SMR_df.loc[(techs, "FOM"), "unit"] = "'%/year'"
+    SMR_df.loc[(techs, "FOM"), "unit"] = "%/year"
     SMR_df.loc[(techs, "FOM"), "further description"] = "Technology data for renewable fuels, in pdf on table 3 p.311"
 
     # investment

@@ -49,7 +49,11 @@ source_dict = {
                 "Caldera2016": "Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004)",
                 "Caldera2017": "Caldera et al 2017: Learning Curve for Seawater Reverse Osmosis Desalination Plants: Capital Cost Trend of the Past, Present, and Future (https://doi.org/10.1002/2017WR021402)",
                 # home battery storage and inverter investment costs
-                "EWG": "Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019"
+                "EWG": "Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019",
+                # efficiencies + lifetime SMR / SMR + CC
+                "IEA": "IEA Global average levelised cost of hydrogen production by energy source and technology, 2019 and 2050 (2020), https://www.iea.org/data-and-statistics/charts/global-average-levelised-cost-of-hydrogen-production-by-energy-source-and-technology-2019-and-2050",
+                # SMR capture rate
+                "Timmerberg": "Hydrogen and hydrogen-derived fuels through methane decomposition of natural gas – GHG emissions and costs Timmerberg et al. (2020), https://doi.org/10.1016/j.ecmx.2020.100043"
                 }
 
 # [DEA-sheet-names]
@@ -254,7 +258,7 @@ def get_data_DEA(tech, data_in, expectation=None):
                   "Energy storage expansion cost",
                   'Output capacity expansion cost (M€2015/MW)',
                   'Heat input', 'Heat  input', 'Electricity input', 'Eletricity input', 'Heat out',
-                  'capture rate', 
+                  'capture rate',
                   "FT Liquids Output, MWh/MWh Total Input"]
 
 
@@ -1110,12 +1114,12 @@ def add_manual_input(data):
             s['technology'] = tech
             for col in ['unit','source','further_description']:
                 s[col] = "; and\n".join(c[col].unique().astype(str))
-            
+
             l.append(s)
 
     new_df = pd.DataFrame(l).set_index(['technology','parameter'])
     data = data.combine_first(new_df)
-    
+
     return data
 
 
@@ -1142,6 +1146,18 @@ def rename_ISE(costs_ISE):
     return costs_ISE
 
 
+def annuity(n,r=0.07):
+    """
+    Calculate the annuity factor for an asset with lifetime n years and
+    discount rate of r
+    """
+    if isinstance(r, pd.Series):
+        return pd.Series(1/n, index=r.index).where(r == 0, r/(1. - 1./(1.+r)**n))
+    elif r > 0:
+        return r/(1. - 1./(1.+r)**n)
+    else:
+        return 1/n
+
 def add_home_battery_costs(costs):
     """
     adds investment costs for home battery storage and inverter.
@@ -1157,17 +1173,7 @@ def add_home_battery_costs(costs):
                             index_col=list(range(2))).sort_index()
     v = costs_ewg.unstack()[[str(year) for year in years]].swaplevel(axis=1)
 
-    def annuity(n,r=0.07):
-        """
-        Calculate the annuity factor for an asset with lifetime n years and
-        discount rate of r
-        """
-        if isinstance(r, pd.Series):
-            return pd.Series(1/n, index=r.index).where(r == 0, r/(1. - 1./(1.+r)**n))
-        elif r > 0:
-            return r/(1. - 1./(1.+r)**n)
-        else:
-            return 1/n
+
 
     # annualise EWG cost assumptions
     fixed = (annuity(v["lifetime"])+v["FOM"]/100.) * v["investment"]
@@ -1213,6 +1219,73 @@ def add_home_battery_costs(costs):
     home_battery["source"] = home_battery["source"].apply(lambda x: source_dict["EWG"] + ", " + x)
 
     return pd.concat([costs, home_battery])
+
+
+def add_SMR_data(data):
+    """Add steam  methane reforming (SMR)  technology data.
+
+    investment cost :
+        Currently no cost reduction for investment costs of SMR CC assumed.
+
+        - IEA (2020) [1]: assumes cost reduction -19.2% from 2019-2050
+        - Agora [2]: no cost reduction
+
+    carbon capture rate:
+        - IEA (2020) [1]: 0.9
+        - Agora [2]: 0.9
+        - [3]: 0.9
+        - Timmerberg et al.: 0.56-0.9
+
+    efficiency:
+        - Agora SMR + CC (LHV/LHV) 0.58
+
+    [1] IEA (2020) https://www.iea.org/data-and-statistics/charts/global-average-levelised-cost-of-hydrogen-production-by-energy-source-and-technology-2019-and-2050
+    [2] Agora (2021) p.52 https://static.agora-energiewende.de/fileadmin/Projekte/2021/2021_02_EU_H2Grid/A-EW_203_No-regret-hydrogen_WEB.pdf
+    [3] p.12 https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1011506/Hydrogen_Production_Costs_2021.pdf
+    """
+    parameters = ["FOM", "investment", "lifetime", "efficiency"]
+    techs = ["SMR", "SMR CC"]
+    multi_i = pd.MultiIndex.from_product([techs, parameters])
+    SMR_df = pd.DataFrame(index=multi_i, columns=data.columns)
+
+    # efficiencies per unit in LHV (stays constant 2019 to 2050)
+    SMR_df.loc[("SMR", "efficiency"), years] =  0.76
+    SMR_df.loc[("SMR CC", "efficiency"), years] =  0.69
+    SMR_df.loc[(techs, "efficiency"), "source"] = source_dict["IEA"]
+    SMR_df.loc[(techs, "efficiency"), "unit"] = "per unit (in LHV)"
+
+    # lifetime
+    SMR_df.loc[(techs, "lifetime"), years] = 30
+    SMR_df.loc[(techs, "lifetime"), "source"] = source_dict["IEA"]
+    SMR_df.loc[(techs, "lifetime"), "unit"] = "years"
+
+    # FOM
+    SMR_df.loc[(techs, "FOM"), years] = 5
+    SMR_df.loc[(techs, "FOM"), "source"] = source_dict["DEA"]
+    SMR_df.loc[(techs, "FOM"), "unit"] = "'%/year'"
+    SMR_df.loc[(techs, "FOM"), "further description"] = "Technology data for renewable fuels, in pdf on table 3 p.311"
+
+    # investment
+    # investment given in unit EUR/kg H_2/h -> convert to EUR/MW_CH4
+    # lower heating value (LHV) of H2
+    LHV_H2  = 33.33 # unit kWh/kg
+    SMR = 12500 / LHV_H2 * 1e3 * 1/SMR_df.loc[("SMR", "efficiency"), years]
+    SMR_CCS = 14500 / LHV_H2 * 1e3 * 1/SMR_df.loc[("SMR", "efficiency"), years]
+
+    SMR_df.loc[("SMR", "investment"), years] = SMR
+    SMR_df.loc[("SMR CC", "investment"), years] = SMR_CCS
+    SMR_df.loc[(techs, "investment"), "source"] = source_dict["DEA"]
+    SMR_df.loc[(techs, "investment"), "unit"] = "EUR/MW_CH4"
+    SMR_df.loc[(techs, "investment"), "further description"] = "Technology data for renewable fuels, in pdf on table 3 p.311"
+
+    # carbon capture rate
+    SMR_df.loc[("SMR CC", "capture_rate"), years] = 0.9
+    SMR_df.loc[("SMR CC", "capture_rate"), "source"] = source_dict["IEA"]
+    SMR_df.loc[("SMR CC", "capture_rate"), "unit"] = "EUR/MW_CH4"
+    SMR_df.loc[("SMR CC", "capture_rate"), "further description"] = "wide range: capture rates betwen 54%-90%"
+
+    return pd.concat([data, SMR_df])
+
 # %% *************************************************************************
 #  ---------- MAIN ------------------------------------------------------------
 # for testing
@@ -1229,7 +1302,8 @@ if 'snakemake' not in globals():
                     dea_storage = "inputs/technology_data_catalogue_for_energy_storage.xlsx",
                     dea_generation = "inputs/technology_data_for_el_and_dh_-_0009.xlsx",
                     dea_heating = "inputs/technologydatafor_heating_installations_marts_2018.xlsx",
-                    dea_industrial = "inputs/technology_data_for_industrial_process_heat_0002.xlsx"
+                    dea_industrial = "inputs/technology_data_for_industrial_process_heat_0002.xlsx",
+                    manual_input = "inputs/manual_input.csv"
         ),
         output=["outputs/costs_{}.csv".format(year) for year in [2020, 2025, 2030, 2035, 2040, 2045, 2050]]
 
@@ -1274,7 +1348,6 @@ data = add_gas_storage(data)
 # add carbon capture
 data = add_carbon_capture(data, tech_data)
 
-
 # %% (2) -- get data from other sources which need formatting -----------------
 # (a)  ---------- get old pypsa costs ---------------------------------------
 costs_pypsa = pd.read_csv(snakemake.input.pypsa_costs,
@@ -1295,6 +1368,8 @@ data = pd.concat([data, costs_ISE.loc[["Gasnetz"]]], sort=True)
 data = add_manual_input(data)
 # add costs for home batteries
 data = add_home_battery_costs(data)
+# add SMR assumptions
+data = add_SMR_data(data)
 # %% (3) ------ add additional sources and save cost as csv ------------------
 # [RTD-target-multiindex-df]
 for year in years:
@@ -1310,7 +1385,7 @@ for year in years:
     # add solar data from other source than DEA
     if any([snakemake.config['solar_utility_from_vartiaien'], snakemake.config['solar_rooftop_from_etip']]):
         costs = add_solar_from_other(costs)
-    
+
     # add desalination and clean water tank storage
     costs = add_desalinsation_data(costs)
 

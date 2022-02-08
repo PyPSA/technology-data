@@ -274,6 +274,15 @@ coal,efficiency,0.33,per unit,Lazard s Levelized Cost of Energy Analysis - Versi
 coal,fuel,8.15,EUR/MWh_th,BP 2019,
 coal,investment,3845.51,EUR/kW_e,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
 coal,lifetime,40.0,years,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
+csp-tower,FOM,1.1,%/year,ATB CSP data (https://atb.nrel.gov/electricity/2021/concentrating_solar_power),
+csp-tower,investment,76.64,"EUR/kW_th,dp",ATB CSP data (https://atb.nrel.gov/electricity/2021/concentrating_solar_power) and NREL SAM v2021.12.2 (https://sam.nrel.gov/).,
+csp-tower,lifetime,30.0,years,ATB CSP data (https://atb.nrel.gov/electricity/2021/concentrating_solar_power),
+csp-tower TES,FOM,1.1,%/year,see solar-tower.,
+csp-tower TES,investment,10268.9,EUR/MWh_th,ATB CSP data (https://atb.nrel.gov/electricity/2021/concentrating_solar_power) and NREL SAM v2021.12.2 (https://sam.nrel.gov/).,
+csp-tower TES,lifetime,30.0,years,see solar-tower.,
+csp-tower power block,FOM,1.1,%/year,see solar-tower.,
+csp-tower power block,investment,536931.69,EUR/MW_e,ATB CSP data (https://atb.nrel.gov/electricity/2021/concentrating_solar_power) and NREL SAM v2021.12.2 (https://sam.nrel.gov/).,
+csp-tower power block,lifetime,30.0,years,see solar-tower.,
 decentral CHP,FOM,3.0,%/year,HP, from old pypsa cost assumptions
 decentral CHP,discount rate,0.04,per unit,Palzer thesis, from old pypsa cost assumptions
 decentral CHP,investment,1400.0,EUR/kWel,HP, from old pypsa cost assumptions

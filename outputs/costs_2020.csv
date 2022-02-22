@@ -435,20 +435,20 @@ seawater desalination,investment,40219.78,EUR/(m^3-H2O/h),"Caldera et al 2017: L
 seawater desalination,lifetime,30.0,years,"Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Table 1.",
 solar,FOM,1.58,%/year,"Danish Energy Agency, ../technology_data_for_el_and_dh.xlsx",22 Rooftop PV residential:  Fixed O&M [2020-EUR/MW_e/y]
 solar,VOM,0.01,EUR/MWhel,RES costs made up to fix curtailment order, from old pypsa cost assumptions
-solar,investment,809.81,EUR/kW_e,"Danish Energy Agency, ../technology_data_for_el_and_dh.xlsx",22 Rooftop PV residential:  Nominal investment [2020-MEUR/MW_e]
+solar,investment,733.47,EUR/kW_e,"Danish Energy Agency, ../technology_data_for_el_and_dh.xlsx",22 Rooftop PV residential:  Nominal investment [2020-MEUR/MW_e]
 solar,lifetime,35.0,years,"Danish Energy Agency, ../technology_data_for_el_and_dh.xlsx",22 Rooftop PV residential:  Technical lifetime [years]
 solar-rooftop,FOM,1.15,%/year,"Danish Energy Agency, ../technology_data_for_el_and_dh.xlsx",22 Rooftop PV residential:  Fixed O&M [2020-EUR/MW_e/y]
 solar-rooftop,discount rate,0.04,per unit,standard for decentral, from old pypsa cost assumptions
-solar-rooftop,investment,1057.12,EUR/kW_e,"Danish Energy Agency, ../technology_data_for_el_and_dh.xlsx",22 Rooftop PV residential:  Nominal investment [2020-MEUR/MW_e]
+solar-rooftop,investment,957.47,EUR/kW_e,"Danish Energy Agency, ../technology_data_for_el_and_dh.xlsx",22 Rooftop PV residential:  Nominal investment [2020-MEUR/MW_e]
 solar-rooftop,lifetime,35.0,years,"Danish Energy Agency, ../technology_data_for_el_and_dh.xlsx",22 Rooftop PV residential:  Technical lifetime [years]
 solar-rooftop commercial,FOM,1.22,%/year,"Danish Energy Agency, ../technology_data_for_el_and_dh.xlsx",22 Rooftop PV commercial:  Fixed O&M [2020-EUR/MW_e/y]
-solar-rooftop commercial,investment,872.31,EUR/kW_e,"Danish Energy Agency, ../technology_data_for_el_and_dh.xlsx",22 Rooftop PV commercial:  Nominal investment [2020-MEUR/MW_e]
+solar-rooftop commercial,investment,790.08,EUR/kW_e,"Danish Energy Agency, ../technology_data_for_el_and_dh.xlsx",22 Rooftop PV commercial:  Nominal investment [2020-MEUR/MW_e]
 solar-rooftop commercial,lifetime,35.0,years,"Danish Energy Agency, ../technology_data_for_el_and_dh.xlsx",22 Rooftop PV commercial:  Technical lifetime [years]
 solar-rooftop residential,FOM,1.08,%/year,"Danish Energy Agency, ../technology_data_for_el_and_dh.xlsx",22 Rooftop PV residential:  Fixed O&M [2020-EUR/MW_e/y]
-solar-rooftop residential,investment,1241.94,EUR/kW_e,"Danish Energy Agency, ../technology_data_for_el_and_dh.xlsx",22 Rooftop PV residential:  Nominal investment [2020-MEUR/MW_e]
+solar-rooftop residential,investment,1124.86,EUR/kW_e,"Danish Energy Agency, ../technology_data_for_el_and_dh.xlsx",22 Rooftop PV residential:  Nominal investment [2020-MEUR/MW_e]
 solar-rooftop residential,lifetime,35.0,years,"Danish Energy Agency, ../technology_data_for_el_and_dh.xlsx",22 Rooftop PV residential:  Technical lifetime [years]
 solar-utility,FOM,2.01,%/year,"Danish Energy Agency, ../technology_data_for_el_and_dh.xlsx",22 Utility-scale PV:  Fixed O&M [2020-EUR/MW_e/y]
-solar-utility,investment,562.5,EUR/kW_e,"Danish Energy Agency, ../technology_data_for_el_and_dh.xlsx",22 Utility-scale PV:  Nominal investment [2020-MEUR/MW_e]
+solar-utility,investment,509.47,EUR/kW_e,"Danish Energy Agency, ../technology_data_for_el_and_dh.xlsx",22 Utility-scale PV:  Nominal investment [2020-MEUR/MW_e]
 solar-utility,lifetime,35.0,years,"Danish Energy Agency, ../technology_data_for_el_and_dh.xlsx",22 Utility-scale PV:  Technical lifetime [years]
 solid biomass,CO2 intensity,0.3,tCO2/MWh_th,TODO,
 solid biomass,fuel,25.2,EUR/MWh_th,Is a 100% renewable European power system feasible by 2050?,

@@ -1426,6 +1426,10 @@ for year in years:
     # add solar data from other source than DEA
     if any([snakemake.config['solar_utility_from_vartiaien'], snakemake.config['solar_rooftop_from_etip']]):
         costs = add_solar_from_other(costs)
+    else:
+        solar_techs = ['solar', 'solar-rooftop', 'solar-rooftop commercial',
+                       'solar-rooftop residential', 'solar-utility']
+        costs = adjust_for_inflation(costs, solar_techs, 2020)
 
     # add desalination and clean water tank storage
     costs = add_desalinsation_data(costs)

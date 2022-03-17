@@ -144,7 +144,11 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'methanolisation': 'J:K',
 }
 
-
+# since February 2022 DEA uses a new format for the technology data
+# all excel sheets of updated technologies have a different layout and are
+# given in EUR_2020 money (instead of EUR_2015)
+new_format = ["solar-utility", 'solar-rooftop residential', 'solar-rooftop commercial',
+              "offwind"]
 # %% -------- FUNCTIONS ---------------------------------------------------
 
 def get_excel_sheets(excel_files):
@@ -200,7 +204,6 @@ def get_data_DEA(tech, data_in, expectation=None):
 
     usecols += f",{uncrtnty_lookup[tech]}"
 
-    new_format = ["solar-utility", 'solar-rooftop residential', 'solar-rooftop commercial']
 
     if tech in new_format:
         skiprows = [0]
@@ -293,7 +296,7 @@ def get_data_DEA(tech, data_in, expectation=None):
     df = df.astype(float)
 
     if (tech == "offwind") and snakemake.config['offwind_no_gridcosts']:
-        df.loc['Nominal investment (MEUR/MW)'] -= excel.loc[' - of which grid connection']
+        df.loc['Nominal investment (*total) [MEUR/MW_e, 2020]'] -= excel.loc['Nominal investment (installation: grid connection) [M€/MW_e, 2020]']
 
     # Exlucde indirect costs for centralised system with additional piping.
     if tech.startswith('industrial heat pump'):
@@ -835,6 +838,7 @@ def order_data(tech_data):
                         (df.unit=="EUR/MWhCapacity") |
                         (df.unit=="EUR/MWh") |
                         (df.unit=="EUR/MWh/year") |
+                        (df.unit=="EUR/MW_e, 2020") |
                         (df.unit=="EUR/MW input"))].copy()
         if len(investment)!=1:
             switch = True
@@ -850,6 +854,7 @@ def order_data(tech_data):
                        ((df.unit==investment.unit[0]+"/year")|
                         (df.unit=="EUR/MW/km/year")|
                         (df.unit=="EUR/MW/year")|
+                        (df.unit=="EUR/MW_e/y, 2020")|
                         (df.unit=="EUR/MW_e/y")|
                         (df.unit=='% of specific investment/year')|
                         (df.unit==investment.unit.str.split(" ")[0][0]+"/year"))].copy()
@@ -880,6 +885,7 @@ def order_data(tech_data):
                                                          (df.unit=="EUR/MWh/km") |
                                                          (df.unit=="EUR/MWh") |
                                                          (df.unit=="EUR/MWhoutput") |
+                                                         (df.unit=="EUR/MWh_e, 2020") |
                                                          (tech == "biogas upgrading"))].copy()
         if len(vom)==1:
             vom.loc[:,"parameter"] = "VOM"
@@ -1431,6 +1437,9 @@ for year in years:
                        'solar-rooftop residential', 'solar-utility']
         costs = adjust_for_inflation(costs, solar_techs, 2020)
 
+    # adjust for inflation all techs in new DEA format
+    new_format_without_solar = [tech for tech in new_format if tech not in solar_techs]
+    costs = adjust_for_inflation(costs, new_format_without_solar, 2020)
     # add desalination and clean water tank storage
     costs = add_desalinsation_data(costs)
 

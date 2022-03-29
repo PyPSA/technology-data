@@ -14,9 +14,13 @@ It is released to coincide with `PyPSA-Eur-Sec <https://github.com/PyPSA/pypsa-e
 Features in more detail:
 
 **New**:
+  - update offshore wind assumptions according to DEA release in March 2022
+  - update solar PV assumptions according to DEA release in Februrary 2022
 
 * new technologies:
 
+  - solar-rooftop residential
+  - solar-rooftop commercial
   - seawater desalination (SWRO)
   - clean water tank storage
   - industrial heat pump for medium process temperatures

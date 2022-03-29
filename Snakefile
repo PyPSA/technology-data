@@ -11,7 +11,7 @@ rule compile_cost_assumptions:
         dea_transport = "inputs/energy_transport_data_sheet_dec_2017.xlsx",
         dea_renewable_fuels = "inputs/data_sheets_for_renewable_fuels.xlsx",
         dea_storage = "inputs/technology_data_catalogue_for_energy_storage.xlsx",
-        dea_generation = "inputs/technology_data_for_el_and_dh_-_0009.xlsx",
+        dea_generation = "inputs/technology_data_for_el_and_dh.xlsx",
         dea_heating = "inputs/technologydatafor_heating_installations_marts_2018.xlsx",
         dea_industrial = "inputs/technology_data_for_industrial_process_heat_0002.xlsx",
         manual_input = "inputs/manual_input.csv"

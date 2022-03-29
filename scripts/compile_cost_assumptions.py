@@ -59,8 +59,9 @@ source_dict = {
 # [DEA-sheet-names]
 sheet_names = {'onwind': '20 Onshore turbines',
                'offwind': '21 Offshore turbines',
-               'solar-utility': '22 Photovoltaics Large',
-               'solar-rooftop': '22 Photovoltaics Small',
+               'solar-utility': '22 Utility-scale PV',
+               'solar-rooftop residential': '22 Rooftop PV residential',
+               'solar-rooftop commercial': '22 Rooftop PV commercial',
                'OCGT': '52 OCGT - Natural gas',
                'CCGT': '05 Gas turb. CC, steam extract.',
                'oil': '50 Diesel engine farm',
@@ -70,7 +71,6 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'central coal CHP': '01 Coal CHP',
                'central gas CHP': '04 Gas turb. simple cycle, L',
                'central solid biomass CHP': '09b Wood Pellets, Medium',
-               'solar': '22 Photovoltaics Medium',
                'central air-sourced heat pump': '40 Comp. hp, airsource 3 MW',
                'central ground-sourced heat pump': '40 Absorption heat pump, DH',
                'central resistive heater': '41 Electric Boilers',
@@ -109,7 +109,8 @@ sheet_names = {'onwind': '20 Onshore turbines',
 uncrtnty_lookup = {'onwind': 'J:K',
                     'offwind': 'J:K',
                     'solar-utility': 'J:K',
-                    'solar-rooftop': '',
+                    'solar-rooftop residential':  'J:K',
+                    'solar-rooftop commercial':  'J:K',
                     'OCGT': 'I:J',
                     'CCGT': 'I:J',
                     'oil': 'I:J',
@@ -143,7 +144,11 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'methanolisation': 'J:K',
 }
 
-
+# since February 2022 DEA uses a new format for the technology data
+# all excel sheets of updated technologies have a different layout and are
+# given in EUR_2020 money (instead of EUR_2015)
+new_format = ["solar-utility", 'solar-rooftop residential', 'solar-rooftop commercial',
+              "offwind"]
 # %% -------- FUNCTIONS ---------------------------------------------------
 
 def get_excel_sheets(excel_files):
@@ -199,11 +204,17 @@ def get_data_DEA(tech, data_in, expectation=None):
 
     usecols += f",{uncrtnty_lookup[tech]}"
 
+
+    if tech in new_format:
+        skiprows = [0]
+    else:
+        skiprows = [0,1]
+
     excel = pd.read_excel(excel_file,
                           sheet_name=sheet_names[tech],
                           index_col=0,
                           usecols=usecols,
-                          skiprows=[0, 1],
+                          skiprows=skiprows,
                           na_values="N.A")
 
     excel.dropna(axis=1, how="all", inplace=True)
@@ -285,7 +296,7 @@ def get_data_DEA(tech, data_in, expectation=None):
     df = df.astype(float)
 
     if (tech == "offwind") and snakemake.config['offwind_no_gridcosts']:
-        df.loc['Nominal investment (MEUR/MW)'] -= excel.loc[' - of which grid connection']
+        df.loc['Nominal investment (*total) [MEUR/MW_e, 2020]'] -= excel.loc['Nominal investment (installation: grid connection) [M€/MW_e, 2020]']
 
     # Exlucde indirect costs for centralised system with additional piping.
     if tech.startswith('industrial heat pump'):
@@ -308,8 +319,17 @@ def get_data_DEA(tech, data_in, expectation=None):
     df_final = df_final.fillna(method='ffill', axis=1)
 
     df_final["source"] = source_dict["DEA"] + ", " + excel_file.replace("inputs/","")
-    df_final["unit"] = (df_final.rename(index=lambda x:
-                                        x[x.rfind("(")+1: x.rfind(")")]).index.values)
+    if tech in new_format:
+        for attr in ["investment", "Fixed O&M"]:
+            to_drop = df[df.index.str.contains(attr) &
+                         ~df.index.str.contains("\(\*total\)")].index
+            df_final.drop(to_drop, inplace=True)
+
+        df_final["unit"] = (df_final.rename(index=lambda x:
+                                            x[x.rfind("[")+1: x.rfind("]")]).index.values)
+    else:
+        df_final["unit"] = (df_final.rename(index=lambda x:
+                                            x[x.rfind("(")+1: x.rfind(")")]).index.values)
     df_final.index = df_final.index.str.replace(r" \(.*\)","", regex=True)
 
     return df_final
@@ -618,6 +638,7 @@ def clean_up_units(tech_data):
     tech_data.unit = tech_data.unit.str.replace(" a year", "/year")
     tech_data.unit = tech_data.unit.str.replace("2015EUR", "EUR")
     tech_data.unit = tech_data.unit.str.replace("2015-EUR", "EUR")
+    tech_data.unit = tech_data.unit.str.replace("2020-EUR", "EUR")
     tech_data.unit = tech_data.unit.str.replace("EUR2015", "EUR")
     tech_data.unit = tech_data.unit.str.replace("EUR-2015", "EUR")
     tech_data.unit = tech_data.unit.str.replace("MWe", "MW_e")
@@ -721,7 +742,7 @@ def set_specify_assumptions(tech_data):
     tech_data = pd.concat([tech_data, new])
 
     # drop PV module conversion efficiency
-    tech_data = tech_data.drop("PV module conversion efficiency", level=1)
+    tech_data = tech_data.drop("PV module conversion efficiency [p.u.]", level=1)
 
     # heat pump efficiencies are assumed the one's for existing building,
     # in the DEA they do differ between heating the floor area or heating with
@@ -817,6 +838,7 @@ def order_data(tech_data):
                         (df.unit=="EUR/MWhCapacity") |
                         (df.unit=="EUR/MWh") |
                         (df.unit=="EUR/MWh/year") |
+                        (df.unit=="EUR/MW_e, 2020") |
                         (df.unit=="EUR/MW input"))].copy()
         if len(investment)!=1:
             switch = True
@@ -832,6 +854,8 @@ def order_data(tech_data):
                        ((df.unit==investment.unit[0]+"/year")|
                         (df.unit=="EUR/MW/km/year")|
                         (df.unit=="EUR/MW/year")|
+                        (df.unit=="EUR/MW_e/y, 2020")|
+                        (df.unit=="EUR/MW_e/y")|
                         (df.unit=='% of specific investment/year')|
                         (df.unit==investment.unit.str.split(" ")[0][0]+"/year"))].copy()
             if (len(fixed)!=1) and (len(df[df.index.str.contains("Fixed O&M")])!=0):
@@ -861,6 +885,7 @@ def order_data(tech_data):
                                                          (df.unit=="EUR/MWh/km") |
                                                          (df.unit=="EUR/MWh") |
                                                          (df.unit=="EUR/MWhoutput") |
+                                                         (df.unit=="EUR/MWh_e, 2020") |
                                                          (tech == "biogas upgrading"))].copy()
         if len(vom)==1:
             vom.loc[:,"parameter"] = "VOM"
@@ -1286,6 +1311,26 @@ def add_SMR_data(data):
 
     return pd.concat([data, SMR_df])
 
+
+def add_mean_solar_rooftop(data):
+    # take mean of rooftop commercial and residential
+    rooftop = (data.loc[data.index.get_level_values(0)
+                       .str.contains("solar-rooftop")][years]
+               .astype(float).groupby(level=1).mean())
+    for col in data.columns[~data.columns.isin(years)]:
+        rooftop[col] = data.loc["solar-rooftop residential"][col]
+    # set multi index
+    rooftop = pd.concat([rooftop], keys=["solar-rooftop"])
+    # add to data
+    data = pd.concat([data, rooftop])
+    # add solar assuming 50% utility and 50% rooftop
+    solar = (data.loc[["solar-rooftop", "solar-utility"]][years]).astype(float).groupby(level=1).mean()
+    for col in data.columns[~data.columns.isin(years)]:
+        solar[col] = data.loc["solar-rooftop residential"][col]
+    # set multi index
+    solar = pd.concat([solar], keys=["solar"])
+    return pd.concat([data, solar])
+
 # %% *************************************************************************
 #  ---------- MAIN ------------------------------------------------------------
 # for testing
@@ -1300,7 +1345,7 @@ if 'snakemake' not in globals():
                     dea_transport = "inputs/energy_transport_data_sheet_dec_2017.xlsx",
                     dea_renewable_fuels = "inputs/data_sheets_for_renewable_fuels.xlsx",
                     dea_storage = "inputs/technology_data_catalogue_for_energy_storage.xlsx",
-                    dea_generation = "inputs/technology_data_for_el_and_dh_-_0009.xlsx",
+                    dea_generation = "inputs/technology_data_for_el_and_dh.xlsx",
                     dea_heating = "inputs/technologydatafor_heating_installations_marts_2018.xlsx",
                     dea_industrial = "inputs/technology_data_for_industrial_process_heat_0002.xlsx",
                     manual_input = "inputs/manual_input.csv"
@@ -1370,6 +1415,8 @@ data = add_manual_input(data)
 data = add_home_battery_costs(data)
 # add SMR assumptions
 data = add_SMR_data(data)
+# add solar rooftop costs by taking the mean of commercial and residential
+data = add_mean_solar_rooftop(data)
 # %% (3) ------ add additional sources and save cost as csv ------------------
 # [RTD-target-multiindex-df]
 for year in years:
@@ -1385,7 +1432,14 @@ for year in years:
     # add solar data from other source than DEA
     if any([snakemake.config['solar_utility_from_vartiaien'], snakemake.config['solar_rooftop_from_etip']]):
         costs = add_solar_from_other(costs)
+    else:
+        solar_techs = ['solar', 'solar-rooftop', 'solar-rooftop commercial',
+                       'solar-rooftop residential', 'solar-utility']
+        costs = adjust_for_inflation(costs, solar_techs, 2020)
 
+    # adjust for inflation all techs in new DEA format
+    new_format_without_solar = [tech for tech in new_format if tech not in solar_techs]
+    costs = adjust_for_inflation(costs, new_format_without_solar, 2020)
     # add desalination and clean water tank storage
     costs = add_desalinsation_data(costs)
 

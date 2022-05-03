@@ -23,7 +23,7 @@ The outputs are used in
 ## Licence
 
 Copyright 2019-2020 Marta Victoria (Aarhus University), Kun Zhu
-(Aarhus University), Elisabeth Zeyen (KIT), Tom Brown (KIT)
+(Aarhus University), Elisabeth Zeyen (TUB), Tom Brown (TUB)
 
 The code in `scripts/` is released as free software under the
 [GPLv3](http://www.gnu.org/licenses/gpl-3.0.en.html), see LICENSE.txt.

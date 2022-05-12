@@ -101,6 +101,8 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'biogas plus hydrogen': '99 SNG from methan. of biogas',
                'methanolisation': '98 Methanol from power',
                'Fischer-Tropsch': '102 Hydrogen to Jet',
+               'central hydrogen CHP': '12 LT-PEMFC CHP',
+               'biomass boiler': '204 Biomass boiler, automatic',
                # 'electricity distribution rural': '101 2 el distri Rural',
                # 'electricity distribution urban': '101 4 el distri  city',
                # 'gas distribution rural': '102 7 gas  Rural',
@@ -125,6 +127,7 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'biomass HOP': 'I:J',
                     'central coal CHP': '',
                     'central gas CHP': 'I:J',
+                    'central hydrogen CHP': 'I:J',
                     'central solid biomass CHP': 'I:J',
                     # 'central solid biomass CHP CCS': 'I:J',
                     'solar': '',
@@ -157,6 +160,7 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'solid biomass boiler steam':'H:I',
                     'Fischer-Tropsch': 'I:J',
                     'methanolisation': 'J:K',
+                    'biomass boiler': 'I:J',
 }
 
 
@@ -322,6 +326,10 @@ def get_data_DEA(tech, data_in, expectation=None):
     if tech == 'Fischer-Tropsch':
         df.drop(df.loc[df.index.str.contains("l FT Liquids")].index, inplace=True)
 
+    if tech == 'biomass boiler':
+        df.drop(df.loc[df.index.str.contains("Possible additional")].index, inplace=True)
+        df.drop(df.loc[df.index.str.contains("Total efficiency")].index, inplace=True)
+
     df_final = pd.DataFrame(index=df.index, columns=years)
 
     # [RTD-interpolation-example]
@@ -392,7 +400,7 @@ def add_conventional_data(costs):
     add technology data for conventional carriers from Lazards, DIW and BP
     """
     # nuclear from Lazards
-    costs.loc[('nuclear', 'investment'), 'value'] = 4000# / \
+    costs.loc[('nuclear', 'investment'), 'value'] = 6000# / \
         #(1 + snakemake.config['rate_inflation'])**(2019 - snakemake.config['eur_year'])
     costs.loc[('nuclear', 'investment'), 'unit'] = "EUR/kW_e"
     costs.loc[('nuclear', 'investment'), 'source'] = "Assumption based on 10.1016/j.energy.2020.117015"
@@ -1511,13 +1519,13 @@ for year in years:
     costs["value"] = costs["value"].astype(float)
 
     # biomass is differentiated by biomass CHP and HOP
-    costs.loc[('solid biomass', 'fuel'), 'value'] = 12
-    costs.loc[('solid biomass', 'fuel'), 'unit'] = 'EUR/MWh_th'
-    costs.loc[('solid biomass', 'fuel'), 'source'] = "JRC ENSPRESO ca avg for MINBIOWOOW1 (secondary forest residue wood chips), ENS_Ref for 2040"
-
-    costs.loc[('digestible biomass', 'fuel'), 'value'] = 15
-    costs.loc[('digestible biomass', 'fuel'), 'unit'] = 'EUR/MWh_th'
-    costs.loc[('digestible biomass', 'fuel'), 'source'] = "JRC ENSPRESO ca avg for MINBIOAGRW1, ENS_Ref for 2040"
+    # costs.loc[('solid biomass', 'fuel'), 'value'] = 12
+    # costs.loc[('solid biomass', 'fuel'), 'unit'] = 'EUR/MWh_th'
+    # costs.loc[('solid biomass', 'fuel'), 'source'] = "JRC ENSPRESO ca avg for MINBIOWOOW1 (secondary forest residue wood chips), ENS_Ref for 2040"
+    #
+    # costs.loc[('digestible biomass', 'fuel'), 'value'] = 15
+    # costs.loc[('digestible biomass', 'fuel'), 'unit'] = 'EUR/MWh_th'
+    # costs.loc[('digestible biomass', 'fuel'), 'source'] = "JRC ENSPRESO ca avg for MINBIOAGRW1, ENS_Ref for 2040"
 
     # add solar data from other source than DEA
     if any([snakemake.config['solar_utility_from_vartiaien'], snakemake.config['solar_rooftop_from_etip']]):

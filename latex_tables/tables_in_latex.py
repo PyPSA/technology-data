@@ -52,7 +52,16 @@ technologies=['onwind', 'offwind', 'solar-utility', 'solar-rooftop', 'OCGT',
               'biomass CHP capture',
               'Fischer-Tropsch',
               'SMR',
-              'SMR CC'
+              'SMR CC',
+              'BioSNG',
+              'BtL',
+              'biogas plus hydrogen',
+              'industrial heat pump medium temperature',
+              'industrial heat pump high temperature',
+              'electric boiler steam',
+              'gas boiler steam',
+              'solid biomass boiler steam',
+              'methanolisation',
               ]
 
 name={'onwind' : 'Onshore Wind',
@@ -100,7 +109,16 @@ name={'onwind' : 'Onshore Wind',
       'biomass CHP capture':'CO$_2$ capture in CHP',
       'Fischer-Tropsch':'Fischer-Tropsch',
       'SMR': 'Steam Methane Reforming',
-      'SMR CC': 'Steam Methane Reforming with CC'
+      'SMR CC': 'Steam Methane Reforming with CC',
+      'BioSNG': 'BioSNG',
+      'BtL': 'BtL',
+      'biogas plus hydrogen': 'biogas plus hydrogen',
+      'industrial heat pump medium temperature': 'industrial heat pump medium temperature',
+      'industrial heat pump high temperature': 'industrial heat pump high temperature',
+      'electric boiler steam': 'electric boiler steam',
+      'gas boiler steam': 'gas boiler steam',
+      'solid biomass boiler steam': 'solid biomass boiler steam',
+      'methanolisation': 'methanolisation'
       }
 
 dic_ref = {'Technology Data for Energy Plants for Electricity and District heating generation':'DEA_2019',
@@ -191,7 +209,7 @@ file.close()
 """
 Table including costs as a function of years
 """
-years=np.arange(2020,2055,5)
+years=[2020,2040,2050] #np.arange(2020,2055,5)
 filename='table_costs.tex'
 file = open(filename, 'w')
 technologies=[t for t in technologies if t not in ['water tank charger']]
@@ -215,7 +233,9 @@ dic_units={'EUR/kWel':'\EUR/kW$_{el}$',
            'EUR/kW_th': '\EUR/kW$_{th}$', 
            'EUR/kWhCapacity': '\EUR/kWh',
            'EUR/kW_th excluding drive energy': '\EUR/kW$_{th}$',
-           'EUR/kW_FT/year':'\EUR/kW$_{FT}$/a'}
+           'EUR/kW_FT/year':'\EUR/kW$_{FT}$/a',
+           'EUR/kW_MeOH':'\EUR/kW$_{MeOH}$'
+           }
 
 
 
@@ -265,7 +285,7 @@ for fuel in [ 'coal', 'lignite', 'gas', 'oil','nuclear', 'solid biomass']:
         source2 = costs.loc[idx[fuel,'CO2 intensity'],'source'] 
     else:
         emissions = ' '
-    if fuel not in ['nuclear', 'solid biomass'] :
+    if fuel not in ['nuclear', 'solid biomass','gas', 'oil','digestible biomass','biogas'] :
         file.write(' ' + fuel 
                    + ' & ' +  cost
                    + ' & ' + 

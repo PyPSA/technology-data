@@ -85,15 +85,15 @@ H2 liquefaction,lifetime,20.0,years,"Reuß et al 2017: https://doi.org/10.1016/j
 H2 pipeline,FOM,3.0,%/year,TODO, from old pypsa cost assumptions
 H2 pipeline,investment,267.0,EUR/MW/km,Welder et al https://doi.org/10.1016/j.energy.2018.05.059, from old pypsa cost assumptions
 H2 pipeline,lifetime,40.0,years,TODO, from old pypsa cost assumptions
-HVAC overhead,FOM,2.0,%/year,Hagspiel, from old pypsa cost assumptions
-HVAC overhead,investment,400.0,EUR/MW/km,Hagspiel, from old pypsa cost assumptions
-HVAC overhead,lifetime,40.0,years,Hagspiel, from old pypsa cost assumptions
-HVDC inverter pair,FOM,2.0,%/year,Hagspiel, from old pypsa cost assumptions
-HVDC inverter pair,investment,150000.0,EUR/MW,Hagspiel, from old pypsa cost assumptions
-HVDC inverter pair,lifetime,40.0,years,Hagspiel, from old pypsa cost assumptions
-HVDC overhead,FOM,2.0,%/year,Hagspiel, from old pypsa cost assumptions
-HVDC overhead,investment,400.0,EUR/MW/km,Hagspiel, from old pypsa cost assumptions
-HVDC overhead,lifetime,40.0,years,Hagspiel, from old pypsa cost assumptions
+HVAC overhead,FOM,2.0,%/year,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
+HVAC overhead,investment,432.97,EUR/MW/km,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
+HVAC overhead,lifetime,40.0,years,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
+HVDC inverter pair,FOM,2.0,%/year,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
+HVDC inverter pair,investment,162364.82,EUR/MW,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
+HVDC inverter pair,lifetime,40.0,years,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
+HVDC overhead,FOM,2.0,%/year,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
+HVDC overhead,investment,432.97,EUR/MW/km,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
+HVDC overhead,lifetime,40.0,years,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
 HVDC submarine,FOM,0.35,%/year,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,
 HVDC submarine,investment,471.16,EUR/MW/km,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,
 HVDC submarine,lifetime,40.0,years,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,

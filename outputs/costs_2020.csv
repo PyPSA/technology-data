@@ -26,7 +26,7 @@ CH4 evaporation,FOM,3.5,%/year,"Lochner and Bothe (2009): https://doi.org/10.101
 CH4 evaporation,investment,87.6,EUR/kW_CH4,"Calculated, based on Lochner and Bothe (2009): https://doi.org/10.1016/j.enpol.2008.12.012 and Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CH4 evaporation,lifetime,30.0,years,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CH4 liquefaction,FOM,3.5,%/year,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
-CH4 liquefaction,investment,0.74,EUR/kW_CH4,"Calculated, based on Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
+CH4 liquefaction,investment,232.13,EUR/kW_CH4,"Calculated, based on Lochner and Bothe (2009): https://doi.org/10.1016/j.enpol.2008.12.012 and Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CH4 liquefaction,lifetime,25.0,years,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CO2 liquefaction,FOM,5.0,%/year,Mitsubish Heavy Industries Ltd. and IEA (2004): https://ieaghg.org/docs/General_Docs/Reports/PH4-30%20Ship%20Transport.pdf .,
 CO2 liquefaction,investment,16.03,EUR/t_CO2/h,Mitsubish Heavy Industries Ltd. and IEA (2004): https://ieaghg.org/docs/General_Docs/Reports/PH4-30%20Ship%20Transport.pdf .,

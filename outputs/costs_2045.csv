@@ -97,9 +97,10 @@ HVDC overhead,lifetime,40.0,years,"Hagspiel et al. (2014): doi:10.1016/j.energy.
 HVDC submarine,FOM,0.35,%/year,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,
 HVDC submarine,investment,471.16,EUR/MW/km,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,
 HVDC submarine,lifetime,40.0,years,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,
-Haber-Bosch synthesis,FOM,4.0,%/year,"Estimate, based on methanation plant.",
-Haber-Bosch synthesis,investment,5310107.51,EUR/MW,"Calculated based on Morgan E. 2013: doi:10.7275/11KT-3F59 , Fig. 56, Fig. 58, pg. 207, pg. 210.",
-Haber-Bosch synthesis,lifetime,20.0,years,"Morgan E. 2013: doi:10.7275/11KT-3F59 , pg. 290",
+Haber-Bosch,FOM,3.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Fixed O&M
+Haber-Bosch,VOM,0.02,EUR/MWh_NH3,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Variable O&M
+Haber-Bosch,investment,937.36,EUR/kW_NH3,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Specific investment
+Haber-Bosch,lifetime,30.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Technical lifetime
 LNG storage tank,FOM,2.0,%/year,"Guesstimate, based on H2 (l) storage tank with comparable requirements.",
 LNG storage tank,investment,611.59,EUR/m^3,"Hurskainen 2019, https://cris.vtt.fi/en/publications/liquid-organic-hydrogen-carriers-lohc-concept-evaluation-and-tech pg. 46 (59).",
 LNG storage tank,lifetime,20.0,years,"Guesstimate, based on H2 (l) storage tank with comparable requirements.",

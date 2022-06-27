@@ -158,9 +158,10 @@ SMR CC,lifetime,30.0,years,"IEA Global average levelised cost of hydrogen produc
 Steam methane reforming,FOM,3.0,%/year,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",
 Steam methane reforming,investment,470085.47,EUR/MW_H2,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",
 Steam methane reforming,lifetime,30.0,years,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",
-air separation unit,FOM,4.0,%/year,"Estimate, based on methanation plant.",
-air separation unit,investment,10942205.1,EUR/MW,"Calculated based on Morgan E. 2013: doi:10.7275/11KT-3F59 , Fig. 56, Fig. 58, pg. 207, pg. 210.",
-air separation unit,lifetime,20.0,years,"Morgan E. 2013: doi:10.7275/11KT-3F59 , pg. 290",
+air separation unit,FOM,3.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Fixed O&M
+air separation unit,VOM,0.01,EUR/t_N2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Variable O&M
+air separation unit,investment,729306.18,EUR/t_N2/h,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Specific investment
+air separation unit,lifetime,30.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Technical lifetime
 battery inverter,FOM,0.34,%/year,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Fixed O&M
 battery inverter,efficiency,0.96,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Round trip efficiency DC
 battery inverter,investment,160.0,EUR/kW,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Output capacity expansion cost investment

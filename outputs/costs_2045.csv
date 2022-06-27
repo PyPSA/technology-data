@@ -76,12 +76,12 @@ H2 (l) transport ship,FOM,4.0,%/year,"Cihlar et al 2020: http://op.europa.eu/en/
 H2 (l) transport ship,capacity,11000.0,t_H2,"Cihlar et al 2020: http://op.europa.eu/en/publication-detail/-/publication/7e4afa7d-d077-11ea-adf7-01aa75ed71a1/language-en , Table 3-B, based on IEA 2019.",
 H2 (l) transport ship,investment,361223561.58,EUR,"Cihlar et al 2020: http://op.europa.eu/en/publication-detail/-/publication/7e4afa7d-d077-11ea-adf7-01aa75ed71a1/language-en , Table 3-B, based on IEA 2019.",
 H2 (l) transport ship,lifetime,20.0,years,"Cihlar et al 2020: http://op.europa.eu/en/publication-detail/-/publication/7e4afa7d-d077-11ea-adf7-01aa75ed71a1/language-en , Table 3-B, based on IEA 2019.",
-H2 evaporation,FOM,3.0,%/year,"Reuß et al 2017: https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9 and equation in sec 3.0.",
-H2 evaporation,investment,4320.43,EUR/MW_H2,"Reuß et al 2017: https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9 and equation in sec 3.0.",
-H2 evaporation,lifetime,10.0,years,"Reuß et al 2017: https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9 and equation in sec 3.0.",
-H2 liquefaction,FOM,8.0,%/year,"Reuß et al 2017: https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9 and equation in sec 3.0.",
-H2 liquefaction,investment,1497967.32,EUR/MW_H2,"Reuß et al 2017: https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9 and equation in sec 3.0.",
-H2 liquefaction,lifetime,20.0,years,"Reuß et al 2017: https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9 and equation in sec 3.0.",
+H2 evaporation,FOM,2.5,%/year,"DNV GL (2020): Study on the Import of Liquid Renewable Energy: Technology Cost Assessment, https://www.gie.eu/wp-content/uploads/filr/2598/DNV-GL_Study-GLE-Technologies-and-costs-analysis-on-imports-of-liquid-renewable-energy.pdf .",
+H2 evaporation,investment,78.35,EUR/kW_H2,"IRENA (2022): Global Hydrogen Trade to Meet the 1.5° Climate Goal: Technology Review of Hydrogen Carriers, https://www.irena.org/publications/2022/Apr/Global-hydrogen-trade-Part-II , pg. 62f.",
+H2 evaporation,lifetime,20.0,years,Guesstimate.,
+H2 liquefaction,FOM,2.5,%/year,"DNV GL (2020): Study on the Import of Liquid Renewable Energy: Technology Cost Assessment, https://www.gie.eu/wp-content/uploads/filr/2598/DNV-GL_Study-GLE-Technologies-and-costs-analysis-on-imports-of-liquid-renewable-energy.pdf .",
+H2 liquefaction,investment,609.39,EUR/kW_H2,"IRENA (2022): Global Hydrogen Trade to Meet the 1.5° Climate Goal: Technology Review of Hydrogen Carriers, https://www.irena.org/publications/2022/Apr/Global-hydrogen-trade-Part-II , pg. 62f.",
+H2 liquefaction,lifetime,20.0,years,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9.",
 H2 pipeline,FOM,3.0,%/year,TODO, from old pypsa cost assumptions
 H2 pipeline,investment,267.0,EUR/MW/km,Welder et al https://doi.org/10.1016/j.energy.2018.05.059, from old pypsa cost assumptions
 H2 pipeline,lifetime,40.0,years,TODO, from old pypsa cost assumptions

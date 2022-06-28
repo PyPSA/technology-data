@@ -92,8 +92,8 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'direct air capture' : '403.a Direct air capture',
                'biomass CHP capture' : '401.a Post comb - small CHP',
                'cement capture' : '401.c Post comb - Cement kiln',
-               'methanolisation': '98 Methanol from power',
-               'Fischer-Tropsch': '102 Hydrogen to Jet',
+               #'methanolisation': '98 Methanol from power',
+               #'Fischer-Tropsch': '102 Hydrogen to Jet',
                'Haber-Bosch': '103 Hydrogen to Ammonia',
                'air separation unit': '103 Hydrogen to Ammonia',
                # 'electricity distribution rural': '101 2 el distri Rural',
@@ -727,7 +727,8 @@ def clean_up_units(tech_data):
                                                 'EUR/MWh':'EUR/MWh_e',
                                                  "MW": "MW_e"}))
 
-    tech_data.loc[('methanolisation', 'Variable O&M'), "unit"] = "EUR/MWh_MeOH"
+    if "methanolisation" in tech_data.index:
+        tech_data.loc[('methanolisation', 'Variable O&M'), "unit"] = "EUR/MWh_MeOH"
 
     return tech_data
 

@@ -6,6 +6,7 @@ Upcoming Release
 ================
 
 * **WARNING**: For some technologies the units used were changed. Check for correct usage in automatic workflows.
+* **WARNING**: The technology name "Haber-Bosch synthesis" was changed to "Haber-Bosch" for consistency.
 
 * Updated technology data datasheets from DEA:
   - Industrial Process Heat (Version 11/2021)

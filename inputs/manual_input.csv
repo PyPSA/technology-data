@@ -108,12 +108,12 @@ LOHC chemical,lifetime,2035,20,years,2020,"Runge et al 2020, pg.7, https://paper
 LOHC hydrogenation,investment,2015,51259.5439606197,EUR/MW_H2,2015,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9.",per MW H2 (LHV). For a large plant of 2000 MW capacity. Calculated based on base CAPEX of 40 MEUR for 300 t/day capacity and a scale factor of 0.6.
 LOHC hydrogenation,FOM,2015,3,%/year,2015,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9.",
 LOHC hydrogenation,lifetime,2015,20,years,2015,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9.",
+LOHC dehydrogenation,investment,2015,50728.0303189864,EUR/MW_H2,2015,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9.",per MW H2 (LHV). For a large plant of 1000 MW capacity. Calculated based on base CAPEX of 30 MEUR for 300 t/day capacity and a scale factor of 0.6.
+LOHC dehydrogenation,FOM,2015,3,%/year,2015,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9.",
+LOHC dehydrogenation,lifetime,2015,20,years,2015,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9.",
 LOHC dehydrogenation (small scale),investment,2035,839000,EUR/MW_H2,2020,"Runge et al 2020, pg.8, https://papers.ssrn.com/abstract=3623514",MW of H2 LHV. For a small plant of 0.9 MW capacity.
 LOHC dehydrogenation (small scale),FOM,2035,3,%/year,2020,"Runge et al 2020, pg.8, https://papers.ssrn.com/abstract=3623514",
 LOHC dehydrogenation (small scale),lifetime,2035,20,years,2020,"Runge et al 2020, pg.8, https://papers.ssrn.com/abstract=3623514",
-LOHC dehydrogenation,investment,2015,50728.0303189864,EUR/MW_H2,2015,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9.",per MW H2 (LHV). For a large plant of 1000 MW capacity. Calculated based on base CAPEX of 30 MEUR for 300 t/day capacity and a scale factor of 0.6.
-LOHC hydrogenation,FOM,2015,3,%/year,2015,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9.",
-LOHC hydrogenation,lifetime,2015,20,years,2015,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9.",
 NH3 (l) storage tank incl. liquefaction,investment,2020,146.66681333348,EUR/MWh_NH3,2010,"Calculated based on Morgan E. 2013: doi:10.7275/11KT-3F59 , Fig. 55, Fig 58.","Based on estimated for a double-wall liquid ammonia tank (~ambient pressure, -33°C), inner tank from stainless steel, outer tank from concrete including installations for liquefaction/condensation, boil-off gas recovery and safety installations; the necessary installations make only a small fraction of the total cost. The total cost are driven by material and working time on the tanks.
 While the costs do not scale strictly linearly, we here assume they do (good approximation c.f. ref. Fig 55.) and take the costs for a 9 kt NH3 (l) tank = 8 M$2010, which is smaller 4-5x smaller than the largest deployed tanks today.
 We assume an exchange rate of 1.17$ to 1 €.

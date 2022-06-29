@@ -185,15 +185,15 @@ biomass CHP,efficiency,0.3,per unit,"Danish Energy Agency, technology_data_for_e
 biomass CHP,efficiency-heat,0.71,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09c Straw, Large, 40 degree:  Heat efficiency, net, annual average"
 biomass CHP,investment,3135.77,EUR/kW_e,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09c Straw, Large, 40 degree:  Nominal investment "
 biomass CHP,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09c Straw, Large, 40 degree:  Technical lifetime"
-biomass CHP capture,FOM,3.0,%/year,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.a Post comb - small CHP
-biomass CHP capture,capture_rate,0.92,per unit,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.a Post comb - small CHP
-biomass CHP capture,compression-electricity-input,0.08,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.a Post comb - small CHP
-biomass CHP capture,compression-heat-output,0.14,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.a Post comb - small CHP
-biomass CHP capture,electricity-input,0.02,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.a Post comb - small CHP
-biomass CHP capture,heat-input,0.69,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.a Post comb - small CHP
-biomass CHP capture,heat-output,0.69,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.a Post comb - small CHP
-biomass CHP capture,investment,2550000.0,EUR/(tCO2/h),"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.a Post comb - small CHP
-biomass CHP capture,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.a Post comb - small CHP
+biomass CHP capture,FOM,3.0,%/year,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.a Post comb - small CHP
+biomass CHP capture,capture_rate,0.92,per unit,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.a Post comb - small CHP
+biomass CHP capture,compression-electricity-input,0.08,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.a Post comb - small CHP
+biomass CHP capture,compression-heat-output,0.14,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.a Post comb - small CHP
+biomass CHP capture,electricity-input,0.02,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.a Post comb - small CHP
+biomass CHP capture,heat-input,0.69,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.a Post comb - small CHP
+biomass CHP capture,heat-output,0.69,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.a Post comb - small CHP
+biomass CHP capture,investment,2550000.0,EUR/(tCO2/h),"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.a Post comb - small CHP
+biomass CHP capture,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.a Post comb - small CHP
 biomass EOP,FOM,3.57,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09c Straw, Large, 40 degree:  Fixed O&M"
 biomass EOP,VOM,2.1,EUR/MWh_e,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09c Straw, Large, 40 degree:  Variable O&M "
 biomass EOP,c_b,0.46,40°C/80°C,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09c Straw, Large, 40 degree:  Cb coefficient"
@@ -207,15 +207,15 @@ biomass HOP,VOM,2.87,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_d
 biomass HOP,efficiency,0.78,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09c Straw HOP:  Total efficiency , net, annual average"
 biomass HOP,investment,812.77,EUR/kW_th - heat output,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",09c Straw HOP:  Nominal investment 
 biomass HOP,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",09c Straw HOP:  Technical lifetime
-cement capture,FOM,3.0,%/year,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.c Post comb - Cement kiln
-cement capture,capture_rate,0.92,per unit,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.c Post comb - Cement kiln
-cement capture,compression-electricity-input,0.08,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.c Post comb - Cement kiln
-cement capture,compression-heat-output,0.14,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.c Post comb - Cement kiln
-cement capture,electricity-input,0.02,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.c Post comb - Cement kiln
-cement capture,heat-input,0.69,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.c Post comb - Cement kiln
-cement capture,heat-output,1.51,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.c Post comb - Cement kiln
-cement capture,investment,2400000.0,EUR/(tCO2/h),"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.c Post comb - Cement kiln
-cement capture,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",401.c Post comb - Cement kiln
+cement capture,FOM,3.0,%/year,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.c Post comb - Cement kiln
+cement capture,capture_rate,0.92,per unit,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.c Post comb - Cement kiln
+cement capture,compression-electricity-input,0.08,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.c Post comb - Cement kiln
+cement capture,compression-heat-output,0.14,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.c Post comb - Cement kiln
+cement capture,electricity-input,0.02,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.c Post comb - Cement kiln
+cement capture,heat-input,0.69,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.c Post comb - Cement kiln
+cement capture,heat-output,1.51,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.c Post comb - Cement kiln
+cement capture,investment,2400000.0,EUR/(tCO2/h),"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.c Post comb - Cement kiln
+cement capture,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.c Post comb - Cement kiln
 central air-sourced heat pump,FOM,0.23,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","40 Comp. hp, airsource 3 MW:  Fixed O&M"
 central air-sourced heat pump,VOM,2.35,EUR/MWh_th,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","40 Comp. hp, airsource 3 MW:  Variable O&M"
 central air-sourced heat pump,efficiency,3.62,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","40 Comp. hp, airsource 3 MW:  Total efficiency , net, annual average"
@@ -314,14 +314,14 @@ decentral water tank storage,FOM,1.0,%/year,HP, from old pypsa cost assumptions
 decentral water tank storage,discount rate,0.04,per unit,Palzer thesis, from old pypsa cost assumptions
 decentral water tank storage,investment,18.38,EUR/kWh,IWES Interaktion, from old pypsa cost assumptions
 decentral water tank storage,lifetime,20.0,years,HP, from old pypsa cost assumptions
-direct air capture,FOM,4.95,%/year,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",403.a Direct air capture
-direct air capture,compression-electricity-input,0.15,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",403.a Direct air capture
-direct air capture,compression-heat-output,0.2,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",403.a Direct air capture
-direct air capture,electricity-input,0.31,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",403.a Direct air capture
-direct air capture,heat-input,1.75,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",403.a Direct air capture
-direct air capture,heat-output,0.88,MWh/tCO2,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",403.a Direct air capture
-direct air capture,investment,5500000.0,EUR/(tCO2/h),"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",403.a Direct air capture
-direct air capture,lifetime,20.0,years,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",403.a Direct air capture
+direct air capture,FOM,4.95,%/year,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture
+direct air capture,compression-electricity-input,0.15,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture
+direct air capture,compression-heat-output,0.2,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture
+direct air capture,electricity-input,0.31,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture
+direct air capture,heat-input,1.75,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture
+direct air capture,heat-output,0.88,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture
+direct air capture,investment,5500000.0,EUR/(tCO2/h),"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture
+direct air capture,lifetime,20.0,years,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture
 electricity distribution grid,FOM,2.0,%/year,TODO, from old pypsa cost assumptions
 electricity distribution grid,investment,500.0,EUR/kW,TODO, from old pypsa cost assumptions
 electricity distribution grid,lifetime,40.0,years,TODO, from old pypsa cost assumptions
@@ -372,11 +372,11 @@ hydrogen storage underground,FOM,0.0,%/year,"Danish Energy Agency, technology_da
 hydrogen storage underground,VOM,0.0,EUR/MWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Variable O&M
 hydrogen storage underground,investment,1.75,EUR/kWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Specific investment
 hydrogen storage underground,lifetime,100.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Technical lifetime
-industrial heat pump medium temperature,FOM,0.11,%/year,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",302.a High temp. hp Up to 125 C:  Fixed O&M
-industrial heat pump medium temperature,VOM,3.21,EUR/MWh,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",302.a High temp. hp Up to 125 C:  Variable O&M
-industrial heat pump medium temperature,efficiency,2.75,per unit,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx","302.a High temp. hp Up to 125 C:  Total efficiency, net, annual average"
-industrial heat pump medium temperature,investment,754.4,EUR/kW,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",302.a High temp. hp Up to 125 C:  Nominal investment
-industrial heat pump medium temperature,lifetime,20.0,years,"Danish Energy Agency, technology_data_for_industrial_process_heat_0002.xlsx",302.a High temp. hp Up to 125 C:  Technical lifetime
+industrial heat pump medium temperature,FOM,0.11,%/year,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",302.a High temp. hp Up to 125 C:  Fixed O&M
+industrial heat pump medium temperature,VOM,3.21,EUR/MWh,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",302.a High temp. hp Up to 125 C:  Variable O&M
+industrial heat pump medium temperature,efficiency,2.75,per unit,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx","302.a High temp. hp Up to 125 C:  Total efficiency, net, annual average"
+industrial heat pump medium temperature,investment,754.4,EUR/kW,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",302.a High temp. hp Up to 125 C:  Nominal investment
+industrial heat pump medium temperature,lifetime,20.0,years,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",302.a High temp. hp Up to 125 C:  Technical lifetime
 lignite,CO2 intensity,0.41,tCO2/MWh_th,Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018,
 lignite,FOM,1.6,%/year,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
 lignite,VOM,3.5,EUR/MWh_e,Lazard s Levelized Cost of Energy Analysis - Version 13.0,

@@ -2,6 +2,63 @@
 Release Notes
 ##########################################
 
+Upcoming Release
+================
+
+* **WARNING**: For some technologies the units used were changed. Check for correct usage in automatic workflows.
+* **WARNING**: The technology name "Haber-Bosch synthesis" was changed to "Haber-Bosch" for consistency.
+
+* Updated technology data datasheets from DEA:
+  - Industrial Process Heat (Version 11/2021)
+  - Carbon Capture, Transport and Storage (Version 11/2021)
+  - Renewable Fuels (Version 04/2022)
+
+* Updated technologies (based on reviewer comments and subsequent investigation): (cf.`Pull Request #57 <https://github.com/PyPSA/technology-data/pull/57>`_)
+  - Methanation:
+    + Less optimistic number from report comparing multiple sources (incl. the source of the original number)
+  - Fischer-Tropsch:
+    + Mature technology (Hydrogen + Syngas to FTFs)
+    + Account for economies of scale (previous numbers for very small installations)
+    + Do not take value from DEA which is more focues on integrated Power-To-Liquid plant with low integration TRL
+    + Use same value for Fischer-Tropsch and Methanolisation based on source report
+    + Remove VOM for FTF, not reported in many sources and DEA numbers not reproduceable with original source
+  - Methanolisation:
+    + Mature technology (Hydrogen + CO2 to MeOH)
+    + Account for economies of scale (previous numbers for very small installations)
+    + Do not take value from DEA which is more focues on integrated Power-To-Liquid plant with low integration TRL
+    + Use same value for Fischer-Tropsch and Methanolisation based on source report
+  - Ammonia cracker:
+    + Mixed existing/new technology with existing large plants (for different purpose)
+    + Consider plant size: Higher scale up based on previously considered reference with expected economies of scale
+  - H2 liquefaction:
+    + Consider larger plant sizes based on recent IRENA report leading to economies of scale
+    + added: lower 2050 value
+    + Match plant size to other similar facility sizes (LOHC hydrogenation) in repository
+  - H2 evaporation:
+    + Previous value for very small-scale dispensing station
+    + Consider larger plant sizes based on recent IRENA report leading to economies of scale
+    + added: lower 2050 value
+    + Match plant size to other similar facility sizes (LOHC dehydrogenation) in repository
+  - LOHC hydrogenation:
+    + Small change in investment value due to change in caluclation method
+  - LOHC dehydrogenation:
+    + Same calulcation method as LOHC hydrogenation applied
+    + Larger facility considered with resulting economies of scale
+    + Distinguishing between "LOHC dehydrogenation (small scale)" e.g. a hydrogen refueling station, 
+      and "LOHC dehydrogenation" for large scale applications like large scale hydrogen imports
+  - Haber-Bosch:
+    + Use numbers based on DEA
+  - air separation unit:
+    + Use numbers based on DEA from Haber-Bosch ammonia plant for consistency
+  - CH4 liquefaction:
+    + Fix cost, similar to issue already reported in issue #54 and PR #55
+  - HVAC overhead
+    + Add correct source attribution
+  - HVDC overhead:
+    + Add correct source attribution
+  - HVDC inverter pair:
+    + Add correct source attribution
+
 Technology-Data 0.3.0 (1 October 2021)
 ===========================================
 

@@ -13,7 +13,7 @@ Upcoming Release
   - Carbon Capture, Transport and Storage (Version 11/2021)
   - Renewable Fuels (Version 04/2022)
 
-* Updated technologies (based on reviewer comments and subsequent investigation):
+* Updated technologies (based on reviewer comments and subsequent investigation): (cf.`Pull Request #57 <https://github.com/PyPSA/technology-data/pull/57>`_)
   - Methanation:
     + Less optimistic number from report comparing multiple sources (incl. the source of the original number)
   - Fischer-Tropsch:
@@ -21,6 +21,7 @@ Upcoming Release
     + Account for economies of scale (previous numbers for very small installations)
     + Do not take value from DEA which is more focues on integrated Power-To-Liquid plant with low integration TRL
     + Use same value for Fischer-Tropsch and Methanolisation based on source report
+    + Remove VOM for FTF, not reported in many sources and DEA numbers not reproduceable with original source
   - Methanolisation:
     + Mature technology (Hydrogen + CO2 to MeOH)
     + Account for economies of scale (previous numbers for very small installations)

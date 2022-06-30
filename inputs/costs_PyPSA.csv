@@ -204,18 +204,6 @@ decentral solar thermal,2030,lifetime,20,years,HP
 central solar thermal,2030,FOM,1.4,%/year,HP
 central solar thermal,2030,investment,140000,EUR/1000m2,HP
 central solar thermal,2030,lifetime,20,years,HP
-HVAC overhead,2030,investment,400,EUR/MW/km,Hagspiel
-HVAC overhead,2030,lifetime,40,years,Hagspiel
-HVAC overhead,2030,FOM,2,%/year,Hagspiel
-HVDC overhead,2030,investment,400,EUR/MW/km,Hagspiel
-HVDC overhead,2030,lifetime,40,years,Hagspiel
-HVDC overhead,2030,FOM,2,%/year,Hagspiel
-HVDC submarine,2030,investment,2000,EUR/MW/km,Own analysis of European submarine HVDC projects since 2000
-HVDC submarine,2030,lifetime,40,years,Hagspiel
-HVDC submarine,2030,FOM,2,%/year,Hagspiel
-HVDC inverter pair,2030,investment,150000,EUR/MW,Hagspiel
-HVDC inverter pair,2030,lifetime,40,years,Hagspiel
-HVDC inverter pair,2030,FOM,2,%/year,Hagspiel
 electricity distribution grid,2030,investment,500,EUR/kW,TODO
 electricity distribution grid,2030,lifetime,40,years,TODO
 electricity distribution grid,2030,FOM,2,%/year,TODO

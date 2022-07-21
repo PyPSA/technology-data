@@ -5,6 +5,9 @@ Release Notes
 Upcoming Release
 ================
 
+Technology-Data 0.4.0 (22 July 2022)
+===========================================
+
 * **WARNING**: For some technologies the units used were changed. Check for correct usage in automatic workflows.
 * **WARNING**: The technology name "Haber-Bosch synthesis" was changed to "Haber-Bosch" for consistency.
 
@@ -44,7 +47,7 @@ Upcoming Release
   - LOHC dehydrogenation:
     + Same calulcation method as LOHC hydrogenation applied
     + Larger facility considered with resulting economies of scale
-    + Distinguishing between "LOHC dehydrogenation (small scale)" e.g. a hydrogen refueling station, 
+    + Distinguishing between "LOHC dehydrogenation (small scale)" e.g. a hydrogen refueling station,
       and "LOHC dehydrogenation" for large scale applications like large scale hydrogen imports
   - Haber-Bosch:
     + Use numbers based on DEA

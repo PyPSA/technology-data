@@ -4,6 +4,12 @@ Release Notes
 
 Upcoming Release
 ================
+* Updated technologies
+  - biomass CHP: changed from Wood Pellets to Wood Chips which are generally used in biomass CHPs and more expensive.
+  - solid biomass fuel to 12 EUR/MWh_th based on JRC ENSPRESO datasets
+
+* New technologies
+  - new biomass technologies (BioSNG, BtL, biogas, biogas plus hydrogen, digestible biomass,digestible biomass to hydrogen, electric boiler steam, gas boiler steam, industrial heat pump high temperature, solid biomass boiler steam, solid bioass to hydrogen
 
 Technology-Data 0.4.0 (22 July 2022)
 ===========================================

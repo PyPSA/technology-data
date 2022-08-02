@@ -1,4 +1,4 @@
-version: 0.3.0
+version: 0.4.0
 
 # considered years for output data
 years : [2020, 2025, 2030, 2035, 2040, 2045, 2050]

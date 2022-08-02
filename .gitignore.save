@@ -17,4 +17,4 @@ gurobi.log
 *.fot
 *.cb
 *.cb2
-.*.lb
+.*.lb>>>>>>> c9daec6459a596b2b3241f7571102b6d8ad799bc

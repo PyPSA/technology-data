@@ -13,17 +13,18 @@ import numpy as np
 df_list = read_pdf(snakemake.input.fraunhofer,
                    pages="3-15",
                    multiple_tables=True)
-
+print(df_list)
 clean_df = []
 j = 0
 for i in range(len(df_list)):
     print(i)
     if len(df_list[i])==1:
-        print("table is droped ", i)
+        print("table is dropped ", i)
     if 'Komponente' in df_list[i].iloc[0].unique():
         print("table is added ", i)
         clean_df.append(df_list[i])
         j += 1
+        print(j)
         continue
     else:
         clean_df[j-1] = clean_df[j-1].append(df_list[i])

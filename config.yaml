@@ -1,4 +1,4 @@
-version: 0.2.0
+version: 0.3.0
 
 # considered years for output data
 years : [2020, 2025, 2030, 2035, 2040, 2045, 2050]
@@ -10,11 +10,12 @@ rate_inflation : 0.02
 #year for EUR outputs
 #NB: 2015 is standard year in DEA, and DEA is NOT yet adjusted
 #if this is changed, only non-DEA
+# DEA takes for solar PV eur_year 2020!
 eur_year : 2015
 
 # add solar from different source
 solar_utility_from_vartiaien : false
-solar_rooftop_from_etip : true
+solar_rooftop_from_etip : false
 
 # add fuel cell/electrolysis efficiencies from Budischak (DEA assumptions very conservative)
 h2_from_budischak : false
@@ -26,4 +27,4 @@ offwind_no_gridcosts : true
 desalination:
     salinity: 35 # in PSU (Practical Salinity Unit) = kg/m^3
 
-ndigits: 5
+ndigits: 2

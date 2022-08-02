@@ -18,3 +18,5 @@ gurobi.log
 *.cb
 *.cb2
 .*.lb
+.github/*
+.syncignore

@@ -303,7 +303,7 @@ def get_data_DEA(tech, data_in, expectation=None):
         # attr = excel[excel.index.str.contains(para)]
         attr = excel[[para in index for index in excel.index]]
         if len(attr) != 0:
-            df = df.append(attr)
+            df = pd.concat([df, attr])
     df.index = df.index.str.replace('€', 'EUR')
 
     df = df.reindex(columns=df.columns[df.columns.isin(years)])

@@ -18,4 +18,3 @@ gurobi.log
 *.cb
 *.cb2
 .*.lb
-.syncignore

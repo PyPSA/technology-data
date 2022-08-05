@@ -94,6 +94,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'electric boiler steam': '310.1 Electric boiler steam  ',
                'gas boiler steam': '311.1c Steam boiler Gas',
                'solid biomass boiler steam': '311.1e Steam boiler Wood',
+               'biomass boiler': '204 Biomass boiler, automatic',
                'electrolysis': '86 AEC 100MW', #'88 Alkaline Electrolyser',
                'direct air capture' : '403.a Direct air capture',
                'biomass CHP capture' : '401.a Post comb - small CHP',
@@ -160,6 +161,7 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'electric boiler steam':'H:I',
                     'gas boiler steam':'H:I',
                     'solid biomass boiler steam':'H:I',
+                    'biomass boiler': 'I:J',
                     'Fischer-Tropsch': 'I:J',
                     'Haber-Bosch': 'I:J',
                     'air separation unit': 'I:J',
@@ -340,6 +342,10 @@ def get_data_DEA(tech, data_in, expectation=None):
     if tech == 'Fischer-Tropsch':
         df.drop(df.loc[df.index.str.contains("l FT Liquids")].index, inplace=True)
 
+    if tech == 'biomass boiler':
+        df.drop(df.loc[df.index.str.contains("Possible additional")].index, inplace=True)
+        df.drop(df.loc[df.index.str.contains("Total efficiency")].index, inplace=True)
+	
     if tech == "Haber-Bosch":
         df.drop(df.loc[df.index.str.contains("Specific investment mark-up factor optional ASU")].index, inplace=True)
         df.drop(df.loc[df.index.str.contains("Specific investment (MEUR /TPD Ammonia output", regex=False)].index, inplace=True)

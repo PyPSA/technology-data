@@ -1247,7 +1247,7 @@ def carbon_flow(costs):
         co2_capture_rate = 0.98
 
         if tech == 'BtL':
-            inv_cost = 2000
+            inv_cost = 2500
             medium_out = 'oil'
             eta = 0.45
             source = "doi:10.1016/j.enpol.2017.05.013"

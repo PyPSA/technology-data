@@ -1353,6 +1353,11 @@ def carbon_flow(costs):
             costs.loc[(tech, 'CO2 stored'), 'unit'] = "tCO2/MWh_th"
             costs.loc[(tech, 'CO2 stored'), 'source'] = "Stoichiometric calculation"
 
+        #Adding pelletizing cost to biomass boiler
+        costs.loc[('biomass boiler', 'pelletizing cost'), 'value'] = 9
+        costs.loc[('biomass boiler', 'pelletizing cost'), 'unit'] = "EUR/MWh_pellets"
+        costs.loc[('biomass boiler', 'pelletizing cost'), 'source'] = "Assumption based on doi:10.1016/j.rser.2019.109506"
+
     return costs
 
 

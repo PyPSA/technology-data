@@ -1231,11 +1231,14 @@ def rename_ISE(costs_ISE):
 
     return costs_ISE
 
-def carbon_flow(costs):
+def carbon_flow(costs, year):
     # NB: This requires some digits of accuracy; rounding to two digits creates carbon inbalances when scaling up
     c_in_char = 0 # Carbon ending up in char: zero avoids inbalace -> assumed to be circulated back and eventually end up in one of the other output streams
     medium_out = ''
     CH4_specific_energy = 50 #GJ/t methane
+
+    data = np.interp(x=years, xp=[2020, 2030, 2040, 2050], fp=[3500, 3000, 2500, 2000])
+    btl_cost = pd.Series(data=data, index=years)
 
     for tech in ['BtL', 'BioSNG', 'methanation', 'Fischer-Tropsch', 'biogas', 'digestible biomass to hydrogen', 'solid biomass to hydrogen']:
         inv_cost = 0
@@ -1247,7 +1250,7 @@ def carbon_flow(costs):
         co2_capture_rate = 0.98
 
         if tech == 'BtL':
-            inv_cost = 2500
+            inv_cost = btl_cost[year]
             medium_out = 'oil'
             eta = 0.45
             source = "doi:10.1016/j.enpol.2017.05.013"
@@ -1549,7 +1552,7 @@ for year in years:
     costs = add_co2_intensity(costs)
 
     #carbon balances
-    costs = carbon_flow(costs)
+    costs = carbon_flow(costs,year)
 
     # include old pypsa costs
     check = pd.concat([costs_pypsa, costs], sort=True, axis=1)

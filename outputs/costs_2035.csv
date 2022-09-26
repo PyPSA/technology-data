@@ -18,7 +18,7 @@ BtL,FOM,2.74838,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xl
 BtL,VOM,1.06311,EUR/MWh_FT,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Variable O&M"
 BtL,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
 BtL,efficiency,0.45,per unit,doi:10.1016/j.enpol.2017.05.013,
-BtL,investment,2500.0,EUR/kW_th,doi:10.1016/j.enpol.2017.05.013,"85 Gasif. Ent. Flow FT, liq fu :  Specific investment"
+BtL,investment,2750.0,EUR/kW_th,doi:10.1016/j.enpol.2017.05.013,"85 Gasif. Ent. Flow FT, liq fu :  Specific investment"
 BtL,lifetime,25.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Technical lifetime"
 CCGT,FOM,3.32523,%/year,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Fixed O&M"
 CCGT,VOM,4.15,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx","05 Gas turb. CC, steam extract.:  Variable O&M"

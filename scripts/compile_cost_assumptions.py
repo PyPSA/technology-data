@@ -1240,6 +1240,9 @@ def carbon_flow(costs, year):
     data = np.interp(x=years, xp=[2020, 2030, 2040, 2050], fp=[3500, 3000, 2500, 2000])
     btl_cost = pd.Series(data=data, index=years)
 
+    data2 = np.interp(x=years, xp=[2020, 2030, 2040, 2050], fp=[0.35, 0.38, 0.40, 0.45])
+    btl_eta = pd.Series(data=data2, index=years)
+
     for tech in ['BtL', 'BioSNG', 'methanation', 'Fischer-Tropsch', 'biogas', 'digestible biomass to hydrogen', 'solid biomass to hydrogen']:
         inv_cost = 0
         eta = 0
@@ -1252,7 +1255,7 @@ def carbon_flow(costs, year):
         if tech == 'BtL':
             inv_cost = btl_cost[year]
             medium_out = 'oil'
-            eta = 0.45
+            eta = btl_eta[year]
             source = "doi:10.1016/j.enpol.2017.05.013"
 
         elif tech == 'BioSNG':

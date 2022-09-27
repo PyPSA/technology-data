@@ -1237,11 +1237,14 @@ def carbon_flow(costs, year):
     medium_out = ''
     CH4_specific_energy = 50 #GJ/t methane
 
-    data = np.interp(x=years, xp=[2020, 2030, 2040, 2050], fp=[3500, 3000, 2500, 2000])
-    btl_cost = pd.Series(data=data, index=years)
+    btlcost_data = np.interp(x=years, xp=[2020, 2050], fp=[3500, 2000])
+    btl_cost = pd.Series(data=btlcost_data, index=years)
 
-    data2 = np.interp(x=years, xp=[2020, 2030, 2040, 2050], fp=[0.35, 0.38, 0.40, 0.45])
-    btl_eta = pd.Series(data=data2, index=years)
+    bmH2cost_data = np.interp(x=years, xp=[2020, 2050], fp=[4000, 2500])
+    bmH2_cost = pd.Series(data=bmH2cost_data, index=years)
+
+    btleta_data = np.interp(x=years, xp=[2020, 2050], fp=[0.35, 0.45])
+    btl_eta = pd.Series(data=btleta_data, index=years)
 
     for tech in ['BtL', 'BioSNG', 'methanation', 'Fischer-Tropsch', 'biogas', 'digestible biomass to hydrogen', 'solid biomass to hydrogen']:
         inv_cost = 0
@@ -1288,13 +1291,13 @@ def carbon_flow(costs, year):
             AD_CO2_share = 0.1 #volumetric share in biogas (rest is CH4).
 
         elif tech == 'digestible biomass to hydrogen':
-            inv_cost = 2500
+            inv_cost = bmH2_cost[year]
             eta = 0.39
             FOM = 4.25
             source = 'Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014' #source_dict('HyNOW')
 
         elif tech == 'solid biomass to hydrogen':
-            inv_cost = 2500
+            inv_cost = bmH2_cost[year]
             eta = 0.56
             FOM = 4.25
             source = 'Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014' #source_dict('HyNOW')

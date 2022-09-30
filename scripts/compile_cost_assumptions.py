@@ -400,8 +400,8 @@ def add_conventional_data(costs):
     add technology data for conventional carriers from Lazards, DIW and BP
     """
     # nuclear from Lazards
-    costs.loc[('nuclear', 'investment'), 'value'] = 6000# / \
-        #(1 + snakemake.config['rate_inflation'])**(2019 - snakemake.config['eur_year'])
+    costs.loc[('nuclear', 'investment'), 'value'] = 8595 / \
+        (1 + snakemake.config['rate_inflation'])**(2019 - snakemake.config['eur_year'])
     costs.loc[('nuclear', 'investment'), 'unit'] = "EUR/kW_e"
     costs.loc[('nuclear', 'investment'), 'source'] = "Assumption based on 10.1016/j.energy.2020.117015"
 
@@ -429,7 +429,7 @@ def add_conventional_data(costs):
     costs.loc[('nuclear', 'lifetime'), 'source'] = source_dict['Lazards']
 
 
-    costs.loc[('nuclear_new', 'investment'), 'value'] = 6000
+    costs.loc[('nuclear_new', 'investment'), 'value'] = 8595
     costs.loc[('nuclear_new', 'investment'), 'unit'] = "EUR/kW_e"
     costs.loc[('nuclear_new', 'investment'), 'source'] = "Assumption based on 10.1016/j.energy.2020.117015"
 

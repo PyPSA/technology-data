@@ -11,14 +11,14 @@ BioSNG,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.201
 BioSNG,efficiency,0.62,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Bio SNG"
 BioSNG,investment,2050.0,EUR/kW_th,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Specific investment"
 BioSNG,lifetime,25.0,years,TODO,"84 Gasif. CFB, Bio-SNG:  Technical lifetime"
-BtL,C in fuel,0.32,per unit,Stoichiometric calculation,
-BtL,C stored,0.68,per unit,Stoichiometric calculation,
-BtL,CO2 stored,0.25,tCO2/MWh_th,Stoichiometric calculation,
+BtL,C in fuel,0.26,per unit,Stoichiometric calculation,
+BtL,C stored,0.74,per unit,Stoichiometric calculation,
+BtL,CO2 stored,0.27,tCO2/MWh_th,Stoichiometric calculation,
 BtL,FOM,2.53,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Fixed O&M"
 BtL,VOM,1.06,EUR/MWh_FT,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Variable O&M"
 BtL,capture rate,0.98,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
-BtL,efficiency,0.45,per unit,doi:10.1016/j.enpol.2017.05.013,
-BtL,investment,2000.0,EUR/kW_th,doi:10.1016/j.enpol.2017.05.013,"85 Gasif. Ent. Flow FT, liq fu :  Specific investment"
+BtL,efficiency,0.37,per unit,doi:10.1016/j.enpol.2017.05.013,
+BtL,investment,3250.0,EUR/kW_th,doi:10.1016/j.enpol.2017.05.013,"85 Gasif. Ent. Flow FT, liq fu :  Specific investment"
 BtL,lifetime,25.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Technical lifetime"
 CCGT,FOM,3.34,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","05 Gas turb. CC, steam extract.:  Fixed O&M"
 CCGT,VOM,4.3,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","05 Gas turb. CC, steam extract.:  Variable O&M"

@@ -1253,7 +1253,7 @@ def carbon_flow(costs, year):
         FOM = 0
         VOM = 0
         source = 'TODO'
-        co2_capture_rate = 0.98
+        co2_capture_rate = 0.90
 
         if tech == 'BtL':
             inv_cost = btl_cost[year]

@@ -24,8 +24,7 @@ of sources into CSV files to be read by energy system modelling software. The me
 
 
 This project is maintained by the  `Photovoltaic Solar Energy group <https://eng.au.dk/en/research/mechanical-engineering/energy-systems-and-thermodynamics/photovoltaic-solar-energy/>`_ at the Department of Engineering at
-`Aarhus University <https://international.au.dk/>`_ and the `Energy System Modelling group <https://www.iai.kit.edu/english/2338.php>`_ at the `Institute for Automation and Applied Informatics <https://www.iai.kit.edu/english/index.php>`_ at the `Karlsruhe Institute of Technology <http://www.kit.edu/english/index.php>`_.
-The ESM group is funded by the `Helmholtz Association <https://www.helmholtz.de/en/>`_ until 2024.
+`Aarhus University <https://international.au.dk/>`_ and the `Department of Digital Transformation in Energy Systems <https://www.ensys.tu-berlin.de>`_ at the `Technische Universität Berlin <https://www.tu.berlin>`_.
 
 
 Documentation

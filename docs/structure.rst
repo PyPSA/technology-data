@@ -6,11 +6,9 @@ Structure of the repository
 
 This repository has the following structure:
 
--  **inputs**: 
- input data in format .csv or .xlsx
+-  **inputs**: input data in format .csv or .xlsx
 
--  **outputs**: 
- technology data saved as ``costs_{year}.csv`` format for defined years. In the output ``costs_{year}.csv`` are specified
+-  **outputs**: technology data saved as ``costs_{year}.csv`` format for defined years. In the output ``costs_{year}.csv`` are specified
 
 	* technology (e.g. 'onwind')
 	* parameter (e.g. FOM)
@@ -40,11 +38,9 @@ This repository has the following structure:
 	* :mod:`convert_pdf_fraunhofer_to_dataframe.py` converts table from Fraunhofer ISE report in pdf to csv format for input data. Script can be modified to convert other .pdf sources to .csv format
 	* :mod:`retrieve_data_from_dea.py` downloads up-to-date technology data from DEA website and saves it in the **input** folder. Optional, also retrieves the documentation of the data into the folder **docu**
 
--  **docu**:
- reports, paper, additional information about the input data, format .pdf
+-  **docu**: reports, paper, additional information about the input data, format .pdf
 
--  **latex_tables**: 
- .tex files with tables of the cost.csv and two python scripts
+-  **latex_tables**: .tex files with tables of the cost.csv and two python scripts
 
 	* ``tables_in_latex.py`` to create .tex files with nice names
 	* ``tables_in_csv.py`` to create csv files with nice name (which can be used in latex with csv autotabular)

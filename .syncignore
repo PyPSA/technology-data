@@ -1,0 +1,13 @@
+.snakemake
+.git
+.pytest_cache
+.ipynb_checkpoints
+.vscode
+.github
+.DS_Store
+__pycache__
+*.pyc
+*.pyo
+*.ipynb
+docs
+latex_tables

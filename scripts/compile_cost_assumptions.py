@@ -107,6 +107,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'central hydrogen CHP': '12 LT-PEMFC CHP',
                'Haber-Bosch': '103 Hydrogen to Ammonia',
                'air separation unit': '103 Hydrogen to Ammonia',
+               'waste CHP': '08 WtE CHP, Large, 50 degree',
                # 'electricity distribution rural': '101 2 el distri Rural',
                # 'electricity distribution urban': '101 4 el distri  city',
                # 'gas distribution rural': '102 7 gas  Rural',
@@ -168,6 +169,7 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'Haber-Bosch': 'I:J',
                     'air separation unit': 'I:J',
                     'methanolisation': 'J:K',
+                    'waste CHP': 'I:J',
 }
 
 # since February 2022 DEA uses a new format for the technology data

@@ -72,6 +72,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'central coal CHP': '01 Coal CHP',
                'central gas CHP': '04 Gas turb. simple cycle, L',
                'central solid biomass CHP': '09a Wood Chips, Large 50 degree',
+               'central solid biomass CHP CC': '09a Wood Chips, Large 50 degree',
                'central air-sourced heat pump': '40 Comp. hp, airsource 3 MW',
                'central ground-sourced heat pump': '40 Absorption heat pump, DH',
                'central resistive heater': '41 Electric Boilers',
@@ -108,6 +109,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'Haber-Bosch': '103 Hydrogen to Ammonia',
                'air separation unit': '103 Hydrogen to Ammonia',
                'waste CHP': '08 WtE CHP, Large, 50 degree',
+               'waste CHP CC': '08 WtE CHP, Large, 50 degree',
                # 'electricity distribution rural': '101 2 el distri Rural',
                # 'electricity distribution urban': '101 4 el distri  city',
                # 'gas distribution rural': '102 7 gas  Rural',
@@ -135,7 +137,7 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'central gas CHP': 'I:J',
                     'central hydrogen CHP': 'I:J',
                     'central solid biomass CHP': 'I:J',
-                    # 'central solid biomass CHP CCS': 'I:J',
+                    'central solid biomass CHP CC': 'I:J',
                     'solar': '',
                     'central air-sourced heat pump': 'J:K',
                     'central ground-sourced heat pump': 'I:J',
@@ -170,6 +172,7 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'air separation unit': 'I:J',
                     'methanolisation': 'J:K',
                     'waste CHP': 'I:J',
+                    'waste CHP CC': 'I:J',
 }
 
 # since February 2022 DEA uses a new format for the technology data
@@ -1418,6 +1421,45 @@ def carbon_flow(costs,year):
 
     return costs
 
+def energy_penalty(costs):
+    # Energy penalty for biomass carbon capture
+    # Need to take steam production for CC into account, assumed with biomass, i.e. biomass efficiency is scaled down for el and heat
+    scalingFactor = 1 / (1 + costs.loc[('solid biomass', 'CO2 intensity'), 'value'] * costs.loc[
+        ('biomass CHP capture', 'heat-input'), 'value']
+                         / costs.loc[('solid biomass boiler steam', 'efficiency'), 'value'])
+    eta_steam = (1 - scalingFactor) * costs.loc[('solid biomass boiler steam', 'efficiency'), 'value']
+
+    for tech in ['central solid biomass CHP', 'waste CHP']:
+
+        # if tech == 'central solid biomass CHP':
+        eta_el = costs.loc[(tech, 'efficiency'), 'value'] * scalingFactor
+
+            # Adapting investment share of CHP due to steam boiler addition. Investment per MW_el.
+        costs.loc[(tech + ' CC', 'investment'), 'value'] = \
+            costs.loc[(tech, 'investment'), 'value'] \
+            + costs.loc[('solid biomass boiler steam', 'investment'), 'value'] * eta_steam / eta_el
+        costs.loc[(tech + ' CC', 'investment'), 'source'] = 'Combination of ' + tech + ' and solid biomass boiler steam'
+        costs.loc[(tech + ' CC', 'investment'), 'further description'] = ''
+
+        costs.loc[(tech + ' CC', 'VOM'), 'value'] = \
+            costs.loc[(tech, 'VOM'), 'value'] \
+            + costs.loc[('solid biomass boiler steam', 'VOM'), 'value'] * eta_steam / eta_el
+        costs.loc[(tech + ' CC', 'VOM'), 'source'] = 'Combination of ' + tech + ' and solid biomass boiler steam'
+        costs.loc[(tech + ' CC', 'VOM'), 'further description'] = ''
+
+        costs.loc[(tech + ' CC', 'efficiency'), 'value'] = \
+            costs.loc[(tech, 'efficiency'), 'value'] * scalingFactor
+        costs.loc[(tech + ' CC', 'efficiency'), 'source'] = 'Combination of ' + tech + ' and solid biomass boiler steam'
+        costs.loc[(tech + ' CC', 'efficiency'), 'further description'] = ''
+
+        if 'CHP' in tech:
+            costs.loc[(tech + ' CC', 'efficiency-heat'), 'value'] = \
+                costs.loc[(tech, 'efficiency-heat'), 'value'] * scalingFactor
+            costs.loc[(tech + ' CC', 'efficiency-heat'), 'source'] = 'Combination of ' + tech + ' and solid biomass boiler steam'
+        costs.loc[(tech + ' CC', 'efficiency-heat'), 'further description'] = ''
+
+    return costs
+
 def annuity(n,r=0.07):
     """
     Calculate the annuity factor for an asset with lifetime n years and
@@ -1717,6 +1759,9 @@ for year in years:
 
     #carbon balances
     costs = carbon_flow(costs,year)
+
+    #energy penalty of carbon capture
+    costs = energy_penalty(costs)
 
     # include old pypsa costs
     check = pd.concat([costs_pypsa, costs], sort=True, axis=1)

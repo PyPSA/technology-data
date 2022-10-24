@@ -95,13 +95,14 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'electric boiler steam': '310.1 Electric boiler steam  ',
                'gas boiler steam': '311.1c Steam boiler Gas',
                'solid biomass boiler steam': '311.1e Steam boiler Wood',
+               'solid biomass boiler steam CC': '311.1e Steam boiler Wood',
                'biomass boiler': '204 Biomass boiler, automatic',
                'electrolysis': '86 AEC 100MW', #'88 Alkaline Electrolyser',
-               'direct air capture' : '403.a Direct air capture',
-               'biomass CHP capture' : '401.a Post comb - small CHP',
-               'cement capture' : '401.c Post comb - Cement kiln',
-               'BioSNG' : '84 Gasif. CFB, Bio-SNG',
-               'BtL' : '85 Gasif. Ent. Flow FT, liq fu ',
+               'direct air capture': '403.a Direct air capture',
+               'biomass CHP capture': '401.a Post comb - small CHP',
+               'cement capture': '401.c Post comb - Cement kiln',
+               'BioSNG': '84 Gasif. CFB, Bio-SNG',
+               'BtL': '85 Gasif. Ent. Flow FT, liq fu ',
                'biogas plus hydrogen': '99 SNG from methan. of biogas',
                'methanolisation': '98 Methanol from power',
                'Fischer-Tropsch': '102 Hydrogen to Jet',
@@ -166,6 +167,7 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'electric boiler steam':'H:I',
                     'gas boiler steam':'H:I',
                     'solid biomass boiler steam':'H:I',
+                    'solid biomass boiler steam CC':'H:I',
                     'biomass boiler': 'I:J',
                     'Fischer-Tropsch': 'I:J',
                     'Haber-Bosch': 'I:J',
@@ -227,7 +229,7 @@ def get_data_DEA(tech, data_in, expectation=None):
     elif tech in ['direct air capture', 'cement capture', 'biomass CHP capture']:
         usecols = "A:F"
     elif tech in ['industrial heat pump medium temperature', 'industrial heat pump high temperature',
-                  'electric boiler steam', "gas boiler steam", "solid biomass boiler steam"]:
+                  'electric boiler steam', "gas boiler steam", "solid biomass boiler steam", "solid biomass boiler steam CC"]:
         usecols = "A:E"
     elif tech in ['Fischer-Tropsch', 'Haber-Bosch', 'air separation unit']:
         usecols = "B:F"
@@ -1429,21 +1431,21 @@ def energy_penalty(costs):
                          / costs.loc[('solid biomass boiler steam', 'efficiency'), 'value'])
     eta_steam = (1 - scalingFactor) * costs.loc[('solid biomass boiler steam', 'efficiency'), 'value']
 
-    for tech in ['central solid biomass CHP', 'waste CHP']:
+    for tech in ['central solid biomass CHP', 'waste CHP', 'solid biomass boiler steam']:
 
         # if tech == 'central solid biomass CHP':
-        eta_el = costs.loc[(tech, 'efficiency'), 'value'] * scalingFactor
+        eta_main = costs.loc[(tech, 'efficiency'), 'value'] * scalingFactor
 
             # Adapting investment share of CHP due to steam boiler addition. Investment per MW_el.
         costs.loc[(tech + ' CC', 'investment'), 'value'] = \
             costs.loc[(tech, 'investment'), 'value'] \
-            + costs.loc[('solid biomass boiler steam', 'investment'), 'value'] * eta_steam / eta_el
+            + costs.loc[('solid biomass boiler steam', 'investment'), 'value'] * eta_steam / eta_main
         costs.loc[(tech + ' CC', 'investment'), 'source'] = 'Combination of ' + tech + ' and solid biomass boiler steam'
         costs.loc[(tech + ' CC', 'investment'), 'further description'] = ''
 
         costs.loc[(tech + ' CC', 'VOM'), 'value'] = \
             costs.loc[(tech, 'VOM'), 'value'] \
-            + costs.loc[('solid biomass boiler steam', 'VOM'), 'value'] * eta_steam / eta_el
+            + costs.loc[('solid biomass boiler steam', 'VOM'), 'value'] * eta_steam / eta_main
         costs.loc[(tech + ' CC', 'VOM'), 'source'] = 'Combination of ' + tech + ' and solid biomass boiler steam'
         costs.loc[(tech + ' CC', 'VOM'), 'further description'] = ''
 
@@ -1456,7 +1458,7 @@ def energy_penalty(costs):
             costs.loc[(tech + ' CC', 'efficiency-heat'), 'value'] = \
                 costs.loc[(tech, 'efficiency-heat'), 'value'] * scalingFactor
             costs.loc[(tech + ' CC', 'efficiency-heat'), 'source'] = 'Combination of ' + tech + ' and solid biomass boiler steam'
-        costs.loc[(tech + ' CC', 'efficiency-heat'), 'further description'] = ''
+            costs.loc[(tech + ' CC', 'efficiency-heat'), 'further description'] = ''
 
     return costs
 

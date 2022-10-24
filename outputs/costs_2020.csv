@@ -304,12 +304,12 @@ central solid biomass CHP,investment,3534.65,EUR/kW_e,"Danish Energy Agency, tec
 central solid biomass CHP,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Technical lifetime"
 central solid biomass CHP,p_nom_ratio,1.0,per unit,, from old pypsa cost assumptions
 central solid biomass CHP CC,FOM,2.89,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Fixed O&M"
-central solid biomass CHP CC,VOM,7.76,EUR/MWh_e,Combination of central solid biomass CHP and solid biomass steam boiler,
+central solid biomass CHP CC,VOM,7.76,EUR/MWh_e,Combination of central solid biomass CHP and solid biomass boiler steam,
 central solid biomass CHP CC,c_b,0.35,50°C/100°C,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Cb coefficient"
 central solid biomass CHP CC,c_v,1.0,50°C/100°C,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Cv coefficient"
-central solid biomass CHP CC,efficiency,0.2,per unit,Combination of central solid biomass CHP and solid biomass steam boiler,
-central solid biomass CHP CC,efficiency-heat,0.61,per unit,Combination of central solid biomass CHP and solid biomass steam boiler,
-central solid biomass CHP CC,investment,4236.77,EUR/kW_e,Combination of central solid biomass CHP and solid biomass steam boiler,
+central solid biomass CHP CC,efficiency,0.2,per unit,Combination of central solid biomass CHP and solid biomass boiler steam,
+central solid biomass CHP CC,efficiency-heat,0.61,per unit,Combination of central solid biomass CHP and solid biomass boiler steam,
+central solid biomass CHP CC,investment,4236.77,EUR/kW_e,Combination of central solid biomass CHP and solid biomass boiler steam,
 central solid biomass CHP CC,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Technical lifetime"
 central water tank storage,FOM,0.52,%/year,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Fixed O&M
 central water tank storage,investment,0.58,EUR/kWhCapacity,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Specific investment
@@ -537,6 +537,11 @@ solid biomass boiler steam,VOM,2.78,EUR/MWh,"Danish Energy Agency, technology_da
 solid biomass boiler steam,efficiency,0.89,per unit,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx","311.1e Steam boiler Wood:  Total efficiency, net, annual average"
 solid biomass boiler steam,investment,618.18,EUR/kW,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",311.1e Steam boiler Wood:  Nominal investment
 solid biomass boiler steam,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",311.1e Steam boiler Wood:  Technical lifetime
+solid biomass boiler steam CC,FOM,5.45,%/year,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",311.1e Steam boiler Wood:  Fixed O&M
+solid biomass boiler steam CC,VOM,3.73,EUR/MWh,Combination of solid biomass boiler steam and solid biomass boiler steam,
+solid biomass boiler steam CC,efficiency,0.66,per unit,Combination of solid biomass boiler steam and solid biomass boiler steam,
+solid biomass boiler steam CC,investment,830.33,EUR/kW,Combination of solid biomass boiler steam and solid biomass boiler steam,
+solid biomass boiler steam CC,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",311.1e Steam boiler Wood:  Technical lifetime
 solid biomass to hydrogen,FOM,4.25,%/year,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",
 solid biomass to hydrogen,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
 solid biomass to hydrogen,efficiency,0.56,per unit,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",
@@ -551,12 +556,12 @@ waste CHP,efficiency-heat,0.76,per unit,"Danish Energy Agency, technology_data_f
 waste CHP,investment,8577.7,EUR/kW_e,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","08 WtE CHP, Large, 50 degree:  Nominal investment "
 waste CHP,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","08 WtE CHP, Large, 50 degree:  Technical lifetime"
 waste CHP CC,FOM,2.4,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","08 WtE CHP, Large, 50 degree:  Fixed O&M"
-waste CHP CC,VOM,31.48,EUR/MWh_e,Combination of waste CHP and solid biomass steam boiler,
+waste CHP CC,VOM,31.48,EUR/MWh_e,Combination of waste CHP and solid biomass boiler steam,
 waste CHP CC,c_b,0.28,50°C/100°C,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","08 WtE CHP, Large, 50 degree:  Cb coefficient"
 waste CHP CC,c_v,1.0,50°C/100°C,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","08 WtE CHP, Large, 50 degree:  Cv coefficient"
-waste CHP CC,efficiency,0.15,per unit,Combination of waste CHP and solid biomass steam boiler,
-waste CHP CC,efficiency-heat,0.57,per unit,Combination of waste CHP and solid biomass steam boiler,
-waste CHP CC,investment,9511.74,EUR/kW_e,Combination of waste CHP and solid biomass steam boiler,
+waste CHP CC,efficiency,0.15,per unit,Combination of waste CHP and solid biomass boiler steam,
+waste CHP CC,efficiency-heat,0.57,per unit,Combination of waste CHP and solid biomass boiler steam,
+waste CHP CC,investment,9511.74,EUR/kW_e,Combination of waste CHP and solid biomass boiler steam,
 waste CHP CC,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","08 WtE CHP, Large, 50 degree:  Technical lifetime"
 water tank charger,efficiency,0.84,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)
 water tank discharger,efficiency,0.84,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency)

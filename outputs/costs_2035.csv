@@ -271,6 +271,12 @@ central gas CHP,efficiency,0.42,per unit,"Danish Energy Agency, technology_data_
 central gas CHP,investment,550.0,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","04 Gas turb. simple cycle, L:  Nominal investment"
 central gas CHP,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","04 Gas turb. simple cycle, L:  Technical lifetime"
 central gas CHP,p_nom_ratio,1.0,per unit,, from old pypsa cost assumptions
+central gas CHP CC,FOM,3.35,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","04 Gas turb. simple cycle, L:  Fixed O&M"
+central gas CHP CC,VOM,4.15,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","04 Gas turb. simple cycle, L:  Variable O&M"
+central gas CHP CC,c_b,1.0,50oC/100oC,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","04 Gas turb. simple cycle, L:  Cb coefficient"
+central gas CHP CC,efficiency,0.42,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","04 Gas turb. simple cycle, L:  Electricity efficiency, annual average"
+central gas CHP CC,investment,550.0,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","04 Gas turb. simple cycle, L:  Nominal investment"
+central gas CHP CC,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","04 Gas turb. simple cycle, L:  Technical lifetime"
 central gas boiler,FOM,3.7,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",44 Natural Gas DH Only:  Fixed O&M
 central gas boiler,VOM,1.0,EUR/MWh_th,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",44 Natural Gas DH Only:  Variable O&M
 central gas boiler,efficiency,1.04,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","44 Natural Gas DH Only:  Total efficiency , net, annual average"
@@ -383,6 +389,21 @@ direct air capture,heat-input,1.75,MWh/tCO2,"Danish Energy Agency, technology_da
 direct air capture,heat-output,0.88,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture
 direct air capture,investment,5500000.0,EUR/(tCO2/h),"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture
 direct air capture,lifetime,20.0,years,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture
+direct firing gas,FOM,1.17,%/year,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",312.a Direct firing Natural Gas:  Fixed O&M
+direct firing gas,VOM,0.28,EUR/MWh,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",312.a Direct firing Natural Gas:  Variable O&M
+direct firing gas,efficiency,1.0,per unit,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx","312.a Direct firing Natural Gas:  Total efficiency, net, annual average"
+direct firing gas,investment,15.0,EUR/kW,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",312.a Direct firing Natural Gas:  Nominal investment
+direct firing gas,lifetime,15.0,years,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",312.a Direct firing Natural Gas:  Technical lifetime
+direct firing solid fuels,FOM,1.48,%/year,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",312.b Direct firing Sold Fuels:  Fixed O&M
+direct firing solid fuels,VOM,0.33,EUR/MWh,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",312.b Direct firing Sold Fuels:  Variable O&M
+direct firing solid fuels,efficiency,1.0,per unit,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx","312.b Direct firing Sold Fuels:  Total efficiency, net, annual average"
+direct firing solid fuels,investment,220.0,EUR/kW,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",312.b Direct firing Sold Fuels:  Nominal investment
+direct firing solid fuels,lifetime,15.0,years,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",312.b Direct firing Sold Fuels:  Technical lifetime
+direct firing solid fuels CC,FOM,1.48,%/year,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",312.b Direct firing Sold Fuels:  Fixed O&M
+direct firing solid fuels CC,VOM,1.05,EUR/MWh,Combination of direct firing solid fuels and solid biomass boiler steam,
+direct firing solid fuels CC,efficiency,0.78,per unit,Combination of direct firing solid fuels and solid biomass boiler steam,
+direct firing solid fuels CC,investment,366.05,EUR/kW,Combination of direct firing solid fuels and solid biomass boiler steam,
+direct firing solid fuels CC,lifetime,15.0,years,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",312.b Direct firing Sold Fuels:  Technical lifetime
 electric boiler steam,FOM,1.42,%/year,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",310.1 Electric boiler steam  :  Fixed O&M
 electric boiler steam,VOM,0.83,EUR/MWh,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",310.1 Electric boiler steam  :  Variable O&M
 electric boiler steam,efficiency,0.99,per unit,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx","310.1 Electric boiler steam  :  Total efficiency, net, annual average"

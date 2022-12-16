@@ -1057,8 +1057,6 @@ def order_data(tech_data):
                            (df.unit =="MWh_H2/MWh_e") |
                            df.unit.str.contains("MWh_FT/MWh_H2"))
                          & (~df.index.str.contains("name plate"))].copy()
-        # |        (df.index.str.contains("hereof recoverable for district heating"))
-        # print(efficiency)
 
         if tech == 'Fischer-Tropsch':
             efficiency[years] *= 100
@@ -1067,8 +1065,6 @@ def order_data(tech_data):
             efficiency_heat = df[df.index.str.contains("hereof recoverable for district heating")].copy()
             efficiency_heat["parameter"] = "efficiency-heat"
             clean_df[tech] = pd.concat([clean_df[tech], efficiency_heat])
-            print(tech, ' efficiency-heat: ', efficiency_heat)
-            input('press key')
 
         # take annual average instead of name plate efficiency
         if any(efficiency.index.str.contains("annual average")):

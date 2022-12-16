@@ -2,18 +2,18 @@ technology,parameter,value,unit,source,further description
 Ammonia cracker,FOM,4.3,%/year,"Ishimoto et al. (2020): 10.1016/j.ijhydene.2020.09.017 , table 7.",
 Ammonia cracker,investment,794849.98,EUR/MW_H2,"Ishimoto et al. (2020): 10.1016/j.ijhydene.2020.09.017 , table 6.",
 Ammonia cracker,lifetime,25.0,years,"Ishimoto et al. (2020): 10.1016/j.ijhydene.2020.09.017 , table 7.",
-BioSNG,C in fuel,0.36,per unit,Stoichiometric calculation,
-BioSNG,C stored,0.64,per unit,Stoichiometric calculation,
-BioSNG,CO2 stored,0.23,tCO2/MWh_th,Stoichiometric calculation,
+BioSNG,C in fuel,0.36,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",
+BioSNG,C stored,0.64,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",
+BioSNG,CO2 stored,0.23,tCO2/MWh_th,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",
 BioSNG,FOM,1.62,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Fixed O&M"
 BioSNG,VOM,1.65,EUR/MWh_th,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Variable O&M"
 BioSNG,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
 BioSNG,efficiency,0.66,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Bio SNG"
 BioSNG,investment,1550.0,EUR/kW_th,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Specific investment"
 BioSNG,lifetime,25.0,years,TODO,"84 Gasif. CFB, Bio-SNG:  Technical lifetime"
-BtL,C in fuel,0.29,per unit,Stoichiometric calculation,
-BtL,C stored,0.71,per unit,Stoichiometric calculation,
-BtL,CO2 stored,0.26,tCO2/MWh_th,Stoichiometric calculation,
+BtL,C in fuel,0.29,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",
+BtL,C stored,0.71,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",
+BtL,CO2 stored,0.26,tCO2/MWh_th,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",
 BtL,FOM,2.84,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Fixed O&M"
 BtL,VOM,1.06,EUR/MWh_FT,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Variable O&M"
 BtL,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
@@ -188,7 +188,7 @@ battery inverter,investment,100.0,EUR/kW,"Danish Energy Agency, technology_data_
 battery inverter,lifetime,10.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx, Note K.",:  Technical lifetime
 battery storage,investment,94.0,EUR/kWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Energy storage expansion cost investment
 battery storage,lifetime,30.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Technical lifetime
-biogas,CO2 stored,0.09,tCO2/MWh_th,Stoichiometric calculation,
+biogas,CO2 stored,0.09,tCO2/MWh_th,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",
 biogas,FOM,13.45,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","81 Biogas Plant, Basic conf.:  Total O&M"
 biogas,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
 biogas,efficiency,1.0,per unit,Assuming input biomass is already given in biogas output,
@@ -415,8 +415,17 @@ electricity distribution grid,lifetime,40.0,years,TODO, from old pypsa cost assu
 electricity grid connection,FOM,2.0,%/year,TODO, from old pypsa cost assumptions
 electricity grid connection,investment,140.0,EUR/kW,DEA, from old pypsa cost assumptions
 electricity grid connection,lifetime,40.0,years,TODO, from old pypsa cost assumptions
+electrobiofuels,C in fuel,0.93,per unit,Stoichiometric calculation,
+electrobiofuels,FOM,2.84,%/year,combination of BtL and electrofuels,
+electrobiofuels,VOM,3.1,EUR/MWh_th,combination of BtL and electrofuels,
+electrobiofuels,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
+electrobiofuels,efficiency-biomass,1.33,per unit,Stoichiometric calculation,
+electrobiofuels,efficiency-hydrogen,1.15,per unit,Stoichiometric calculation,
+electrobiofuels,efficiency-tot,0.61,per unit,Stoichiometric calculation,
+electrobiofuels,investment,3200.71,EUR/kW_th,combination of BtL and electrofuels,
 electrolysis,FOM,2.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100MW:  Fixed O&M 
 electrolysis,efficiency,0.72,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100MW:  Hydrogen
+electrolysis,efficiency-heat,0.12,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100MW:   - hereof recoverable for district heating
 electrolysis,investment,300.0,EUR/kW_e,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100MW:  Specific investment
 electrolysis,lifetime,32.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100MW:  Technical lifetime
 fuel cell,FOM,5.0,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",12 LT-PEMFC CHP:  Fixed O&M

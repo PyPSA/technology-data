@@ -262,7 +262,7 @@ def get_data_DEA(tech, data_in, expectation=None):
                           usecols=usecols,
                           skiprows=skiprows,
                           na_values="N.A")
-    print(excel)
+    # print(excel)
 
     excel.dropna(axis=1, how="all", inplace=True)
 
@@ -270,7 +270,7 @@ def get_data_DEA(tech, data_in, expectation=None):
     excel.index = excel.index.fillna(" ")
     excel.index = excel.index.astype(str)
     excel.dropna(axis=0, how="all", inplace=True)
-    print(excel)
+    # print(excel)
 
     if 2020 not in excel.columns:
         selection = excel[excel.isin([2020])].dropna(how="all").index
@@ -311,6 +311,7 @@ def get_data_DEA(tech, data_in, expectation=None):
                   "Output capacity expansion cost",
                   "Hydrogen output",
                   "Hydrogen (% total input_e (MWh / MWh))",
+                  " - hereof recoverable for district heating (%-points of heat loss)",
                   "Cb coefficient",
                   "Cv coefficient",
                   "Distribution network costs", "Technical life",
@@ -345,7 +346,7 @@ def get_data_DEA(tech, data_in, expectation=None):
 
     df = df.astype(float)
     df = df.mask(df.apply(pd.to_numeric, errors='coerce').isnull(), df.astype(str).apply(lambda x: x.str.strip()))
-    print(df)
+    # print(df)
 
     ## Modify data loaded from DEA on a per-technology case
     if (tech == "offwind") and snakemake.config['offwind_no_gridcosts']:
@@ -429,6 +430,7 @@ def get_data_DEA(tech, data_in, expectation=None):
         df_final["unit"] = (df_final.rename(index=lambda x:
                                             x[x.rfind("(")+1: x.rfind(")")]).index.values)
     df_final.index = df_final.index.str.replace(r" \(.*\)","", regex=True)
+
 
     return df_final
 
@@ -773,6 +775,7 @@ def clean_up_units(tech_data):
     tech_data.unit = tech_data.unit.str.replace("MW SNG", "MW_CH4")
     tech_data.unit = tech_data.unit.str.replace("EUR/MWh of total input", "EUR/MWh_e")
     tech_data.unit = tech_data.unit.str.replace("EUR/MWeh", "EUR/MWh_e")
+    tech_data.unit = tech_data.unit.str.replace("% -points of heat loss", "MWh_th/MWh_el")
 
 
     tech_data.unit = tech_data.unit.str.replace("FT Liquids Output, MWh/MWh Total Inpu", "MWh_FT/MWh_H2")
@@ -1054,9 +1057,18 @@ def order_data(tech_data):
                            (df.unit =="MWh_H2/MWh_e") |
                            df.unit.str.contains("MWh_FT/MWh_H2"))
                          & (~df.index.str.contains("name plate"))].copy()
+        # |        (df.index.str.contains("hereof recoverable for district heating"))
+        # print(efficiency)
 
         if tech == 'Fischer-Tropsch':
             efficiency[years] *= 100
+
+        if tech == 'electrolysis':
+            efficiency_heat = df[df.index.str.contains("hereof recoverable for district heating")].copy()
+            efficiency_heat["parameter"] = "efficiency-heat"
+            clean_df[tech] = pd.concat([clean_df[tech], efficiency_heat])
+            print(tech, ' efficiency-heat: ', efficiency_heat)
+            input('press key')
 
         # take annual average instead of name plate efficiency
         if any(efficiency.index.str.contains("annual average")):
@@ -1324,7 +1336,7 @@ def carbon_flow(costs,year):
     btleta_data = np.interp(x=years, xp=[2020, 2050], fp=[0.35, 0.45])
     btl_eta = pd.Series(data=btleta_data, index=years)
 
-    for tech in ['BtL', 'BioSNG', 'methanation', 'Fischer-Tropsch', 'biogas', 'digestible biomass to hydrogen', 'solid biomass to hydrogen']:
+    for tech in ['BtL', 'BioSNG', 'methanation', 'Fischer-Tropsch', 'biogas', 'digestible biomass to hydrogen', 'solid biomass to hydrogen', 'electrobiofuels']:
         inv_cost = 0
         eta = 0
         lifetime = 0
@@ -1338,6 +1350,7 @@ def carbon_flow(costs,year):
             medium_out = 'oil'
             eta = btl_eta[year]
             source = "doi:10.1016/j.enpol.2017.05.013"
+
 
         elif tech == 'BioSNG':
             medium_out = 'gas'
@@ -1389,6 +1402,74 @@ def carbon_flow(costs,year):
         costs.loc[(tech, 'capture rate'), 'unit'] = "per unit"
         costs.loc[(tech, 'capture rate'), 'source'] = "Assumption based on doi:10.1016/j.biombioe.2015.01.006"
 
+        if tech in ['BioSNG', 'BtL']:
+            input_CO2_intensity = costs.loc[('solid biomass', 'CO2 intensity'), 'value']
+
+            costs.loc[(tech, 'C in fuel'), 'value'] = costs.loc[(tech, 'efficiency'), 'value'] \
+                                                  * costs.loc[(medium_out, 'CO2 intensity'), 'value'] \
+                                                  / input_CO2_intensity
+            costs.loc[(tech, 'C stored'), 'value'] = 1 - costs.loc[(tech, 'C in fuel'), 'value'] - c_in_char
+            costs.loc[(tech, 'CO2 stored'), 'value'] = input_CO2_intensity * costs.loc[(tech, 'C stored'), 'value']
+
+            costs.loc[(tech, 'C in fuel'), 'unit'] = "per unit"
+            costs.loc[(tech, 'C stored'), 'unit'] = "per unit"
+            costs.loc[(tech, 'CO2 stored'), 'unit'] = "tCO2/MWh_th"
+
+            costs.loc[(tech, 'C in fuel'), 'source'] = "Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016"
+            costs.loc[(tech, 'C stored'), 'source'] = "Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016"
+            costs.loc[(tech, 'CO2 stored'), 'source'] = "Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016"
+
+        elif tech in ['electrobiofuels']:
+
+            input_CO2_intensity = costs.loc[('solid biomass', 'CO2 intensity'), 'value']
+            oil_CO2_intensity = costs.loc[('oil', 'CO2 intensity'), 'value']
+
+            costs.loc[('electrobiofuels', 'C in fuel'), 'value'] = (costs.loc[('BtL', 'C in fuel'), 'value']
+                                                                    + costs.loc[('BtL', 'C stored'), 'value']
+                                                                    * costs.loc[('Fischer-Tropsch', 'capture rate'), 'value'])
+            costs.loc[('electrobiofuels', 'C in fuel'), 'unit'] = 'per unit'
+            costs.loc[('electrobiofuels', 'C in fuel'), 'source'] = 'Stoichiometric calculation'
+
+            costs.loc[('electrobiofuels', 'efficiency-biomass'), 'value'] = costs.loc[('electrobiofuels', 'C in fuel'), 'value'] \
+                                                                            * input_CO2_intensity / oil_CO2_intensity
+            costs.loc[('electrobiofuels', 'efficiency-biomass'), 'unit'] = 'per unit'
+            costs.loc[('electrobiofuels', 'efficiency-biomass'), 'source'] = 'Stoichiometric calculation'
+
+
+            efuel_scale_factor = costs.loc[('BtL', 'C stored'), 'value'] * costs.loc[('Fischer-Tropsch', 'capture rate'), 'value']
+
+            costs.loc[('electrobiofuels', 'efficiency-hydrogen'), 'value'] = costs.loc[('Fischer-Tropsch', 'efficiency'), 'value']\
+                                                                             / efuel_scale_factor
+            costs.loc[('electrobiofuels', 'efficiency-hydrogen'), 'unit'] = 'per unit'
+            costs.loc[('electrobiofuels', 'efficiency-hydrogen'), 'source'] = 'Stoichiometric calculation'
+
+            costs.loc[('electrobiofuels', 'efficiency-tot'), 'value'] = (1 /
+                                                                         (1 / costs.loc[('electrobiofuels', 'efficiency-hydrogen'), 'value'] +
+                                                                          1 / costs.loc[('electrobiofuels', 'efficiency-biomass'), 'value']))
+            costs.loc[('electrobiofuels', 'efficiency-tot'), 'unit'] = 'per unit'
+            costs.loc[('electrobiofuels', 'efficiency-tot'), 'source'] = 'Stoichiometric calculation'
+
+            inv_cost = btl_cost[year] + costs.loc[('Fischer-Tropsch', 'investment'), 'value'] * efuel_scale_factor
+            VOM = costs.loc[('BtL', 'VOM'), 'value'] + costs.loc[('Fischer-Tropsch', 'VOM'), 'value'] * efuel_scale_factor
+            FOM = costs.loc[('BtL', 'FOM'), 'value']
+            medium_out = 'oil'
+            source = "combination of BtL and electrofuels"
+
+        elif tech in ['biogas','biogas plus hydrogen']:
+            CH4_density = 0.657 #kg/Nm3
+            CO2_density = 1.98 #kg/Nm3
+            CH4_vol_energy_density = CH4_specific_energy * CH4_density / (1000 * 3.6) #MJ/Nm3 -> MWh/Nm3
+            CO2_weight_share = AD_CO2_share * CO2_density
+
+            costs.loc[(tech, 'CO2 stored'), 'value'] = CO2_weight_share / CH4_vol_energy_density / 1000 #tCO2/MWh,in (NB: assuming the input is already given in the biogas potential and cost
+            costs.loc[(tech, 'CO2 stored'), 'unit'] = "tCO2/MWh_th"
+            costs.loc[(tech, 'CO2 stored'), 'source'] = "Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016"
+
+        #Adding pelletizing cost to biomass boiler
+        costs.loc[('biomass boiler', 'pelletizing cost'), 'value'] = 9
+        costs.loc[('biomass boiler', 'pelletizing cost'), 'unit'] = "EUR/MWh_pellets"
+        costs.loc[('biomass boiler', 'pelletizing cost'), 'source'] = "Assumption based on doi:10.1016/j.rser.2019.109506"
+
         if inv_cost > 0:
             costs.loc[(tech, 'investment'), 'value'] = inv_cost
             costs.loc[(tech, 'investment'), 'unit'] = "EUR/kW_th"
@@ -1408,38 +1489,6 @@ def carbon_flow(costs,year):
             costs.loc[(tech, 'VOM'), 'value'] = VOM
             costs.loc[(tech, 'VOM'), 'unit'] = "EUR/MWh_th"
             costs.loc[(tech, 'VOM'), 'source'] = source
-
-        if tech in ['BioSNG', 'BtL']:
-            input_CO2_intensity = costs.loc[('solid biomass', 'CO2 intensity'), 'value']
-
-            costs.loc[(tech, 'C in fuel'), 'value'] = costs.loc[(tech, 'efficiency'), 'value'] \
-                                                  * costs.loc[(medium_out, 'CO2 intensity'), 'value'] \
-                                                  / input_CO2_intensity
-            costs.loc[(tech, 'C stored'), 'value'] = 1 - costs.loc[(tech, 'C in fuel'), 'value'] - c_in_char
-            costs.loc[(tech, 'CO2 stored'), 'value'] = input_CO2_intensity * costs.loc[(tech, 'C stored'), 'value']
-
-            costs.loc[(tech, 'C in fuel'), 'unit'] = "per unit"
-            costs.loc[(tech, 'C stored'), 'unit'] = "per unit"
-            costs.loc[(tech, 'CO2 stored'), 'unit'] = "tCO2/MWh_th"
-
-            costs.loc[(tech, 'C in fuel'), 'source'] = "Stoichiometric calculation"
-            costs.loc[(tech, 'C stored'), 'source'] = "Stoichiometric calculation"
-            costs.loc[(tech, 'CO2 stored'), 'source'] = "Stoichiometric calculation"
-
-        elif tech in ['biogas','biogas plus hydrogen']:
-            CH4_density = 0.657 #kg/Nm3
-            CO2_density = 1.98 #kg/Nm3
-            CH4_vol_energy_density = CH4_specific_energy * CH4_density / (1000 * 3.6) #MJ/Nm3 -> MWh/Nm3
-            CO2_weight_share = AD_CO2_share * CO2_density
-
-            costs.loc[(tech, 'CO2 stored'), 'value'] = CO2_weight_share / CH4_vol_energy_density / 1000 #tCO2/MWh,in (NB: assuming the input is already given in the biogas potential and cost
-            costs.loc[(tech, 'CO2 stored'), 'unit'] = "tCO2/MWh_th"
-            costs.loc[(tech, 'CO2 stored'), 'source'] = "Stoichiometric calculation"
-
-        #Adding pelletizing cost to biomass boiler
-        costs.loc[('biomass boiler', 'pelletizing cost'), 'value'] = 9
-        costs.loc[('biomass boiler', 'pelletizing cost'), 'unit'] = "EUR/MWh_pellets"
-        costs.loc[('biomass boiler', 'pelletizing cost'), 'source'] = "Assumption based on doi:10.1016/j.rser.2019.109506"
 
     return costs
 

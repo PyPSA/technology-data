@@ -4,6 +4,7 @@
 _build
 gurobi.log
 *.log
+*/__pycache__
 
 ## Core latex/pdflatex auxiliary files:
 *.aux

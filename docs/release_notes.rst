@@ -10,6 +10,8 @@ Upcoming Release
 
 * New technologies
   - new biomass technologies (BioSNG, BtL, biogas, biogas plus hydrogen, digestible biomass,digestible biomass to hydrogen, electric boiler steam, gas boiler steam, industrial heat pump high temperature, solid biomass boiler steam, solid bioass to hydrogen, biomass boiler for decentral heating
+  - hydrogen storage tank type 1: Low pressure hydrogen tank storage (up to 200 bar)
+  - hydrogen storage compressor: Compressor for filling hydrogen storage tanks (compression from 30 to 250 bar)
 
 Technology-Data 0.4.0 (22 July 2022)
 ===========================================

@@ -1724,11 +1724,11 @@ def add_energy_storage_database(costs, data_year):
                 "year": data_year,
                 "parameter": param,
                 "value": ynew, 
-                "unit": df.loc[filter, "unit"].unique(),
-                "source": df.loc[filter, "source"].unique(),
+                "unit": df.loc[filter, "unit"].unique().item(),
+                "source": df.loc[filter, "source"].unique().item(),
                 'carrier': df.loc[filter, "carrier"].iloc[1],
-                'technology_type': df.loc[filter, "technology_type"].unique(),
-                'type': df.loc[filter, "type"].unique(),
+                'technology_type': df.loc[filter, "technology_type"].unique().item(),
+                'type': df.loc[filter, "type"].unique().item(),
                 'note': df.loc[filter, "note"].iloc[1],
                 'reference': df.loc[filter, "reference"].iloc[1],
             }])
@@ -1740,9 +1740,9 @@ def add_energy_storage_database(costs, data_year):
         df.loc[i,"further description"] = str(
             {
                 "carrier": df.loc[i,"carrier"],
-                "technology_type": df.loc[i,"technology_type"],
-                "type": df.loc[i,"type"],
-                "note": df.loc[i,"note"]
+                "technology_type": [df.loc[i,"technology_type"]],
+                "type": [df.loc[i,"type"]],
+                "note": [df.loc[i,"note"]],
             }
         )
     # keep only relevant columns
@@ -1899,6 +1899,8 @@ if __name__ == "__main__":
         # unify the cost from DIW2010
         costs_tot = unify_diw(costs_tot)
         costs_tot.drop("fixed", level=1, inplace=True)
+        
+        # format and sort
         costs_tot.sort_index(inplace=True)
-        costs_tot = round(costs_tot, ndigits=snakemake.config.get("ndigits", 2))
+        costs_tot.loc[:,'value'] = round(costs_tot.value.astype(float), snakemake.config.get("ndigits", 2))
         costs_tot.to_csv([v for v in snakemake.output if str(year) in v][0])

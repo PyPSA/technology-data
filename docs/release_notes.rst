@@ -13,6 +13,8 @@ Upcoming Release
   - hydrogen storage tank type 1: Low pressure hydrogen tank storage (up to 200 bar)
   - hydrogen storage compressor: Compressor for filling hydrogen storage tanks (compression from 30 to 250 bar)
 
+* Enable easy debugging of scripts by allowing python execution/ debugging in scripts
+
 Technology-Data 0.4.0 (22 July 2022)
 ===========================================
 

@@ -20,9 +20,12 @@ solar_rooftop_from_etip : false
 # add fuel cell/electrolysis efficiencies from Budischak (DEA assumptions very conservative)
 h2_from_budischak : false
 
+# add storage data from Parzen
+parzen_energy_storage: true
+
 # remove grid connection costs from DEA for offwind because they are calculated
 # seperately in pypsa-eur
-offwind_no_gridcosts : true
+offwind_no_gridcosts : false
 
 desalination:
     salinity: 35 # in PSU (Practical Salinity Unit) = kg/m^3

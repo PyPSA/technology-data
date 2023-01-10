@@ -10,6 +10,7 @@ Upcoming Release
 
 * New technologies
   - new biomass technologies (BioSNG, BtL, biogas, biogas plus hydrogen, digestible biomass,digestible biomass to hydrogen, electric boiler steam, gas boiler steam, industrial heat pump high temperature, solid biomass boiler steam, solid bioass to hydrogen, biomass boiler for decentral heating
+  - about 18 new energy storage technologies from PNNL "Energy Storage Grand Challenge Cost and Performance Assessment 2022"
 
 * Enable easy debugging of scripts by allowing python execution/ debugging in scripts
 

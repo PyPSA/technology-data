@@ -96,6 +96,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'hydrogen storage tank incl. compressor': '151a Hydrogen Storage - Tanks',
                'micro CHP': '219 LT-PEMFC mCHP - natural gas',
                'biogas' : '81 Biogas Plant, Basic conf.',
+               'biogas CC' : '81 Biogas Plant, Basic conf.',
                'biogas upgrading': '82 Biogas, upgrading',
                'battery': '180 Lithium Ion Battery',
                'industrial heat pump medium temperature': '302.a High temp. hp Up to 125 C',
@@ -169,6 +170,7 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'hydrogen storage tank incl. compressor': 'J:K',
                     'micro CHP': 'I:J',
                     'biogas': 'I:J',
+                    'biogas CC': 'I:J',
                     'biogas upgrading': 'I:J',
                     'electrolysis': 'I:J',
                     'battery': 'L,N',
@@ -1019,7 +1021,7 @@ def order_data(tech_data):
                 clean_df[tech] = pd.concat([clean_df[tech], fom])
 
         # ---- VOM -----
-        vom = df[df.index.str.contains("Variable O&M") & ((df.unit=="EUR/MWh") |
+        vom = df[df.index.str.contains("Variable O&M")  & ((df.unit=="EUR/MWh") |
                                                          (df.unit=="EUR/MWh_e") |
                                                          (df.unit=="EUR/MWh_th") |
                                                          (df.unit=="EUR/MWh_FT") |
@@ -1336,7 +1338,7 @@ def carbon_flow(costs,year):
     btleta_data = np.interp(x=years, xp=[2020, 2050], fp=[0.35, 0.45])
     btl_eta = pd.Series(data=btleta_data, index=years)
 
-    for tech in ['BtL', 'BioSNG', 'methanation', 'Fischer-Tropsch', 'biogas', 'digestible biomass to hydrogen', 'solid biomass to hydrogen', 'electrobiofuels']:
+    for tech in ['BtL', 'BioSNG', 'methanation', 'Fischer-Tropsch', 'biogas', 'biogas CC', 'digestible biomass to hydrogen', 'solid biomass to hydrogen', 'electrobiofuels']:
         inv_cost = 0
         eta = 0
         lifetime = 0
@@ -1356,7 +1358,7 @@ def carbon_flow(costs,year):
             medium_out = 'gas'
             lifetime = 25
 
-        elif tech == 'biogas':
+        elif tech in ['biogas', 'biogas CC']:
             eta = 1
             source = "Assuming input biomass is already given in biogas output"
             AD_CO2_share = 0.4 #volumetric share in biogas (rest is CH4)
@@ -1455,7 +1457,7 @@ def carbon_flow(costs,year):
             medium_out = 'oil'
             source = "combination of BtL and electrofuels"
 
-        elif tech in ['biogas','biogas plus hydrogen']:
+        elif tech in ['biogas', 'biogas CC', 'biogas plus hydrogen']:
             CH4_density = 0.657 #kg/Nm3
             CO2_density = 1.98 #kg/Nm3
             CH4_vol_energy_density = CH4_specific_energy * CH4_density / (1000 * 3.6) #MJ/Nm3 -> MWh/Nm3
@@ -1495,28 +1497,35 @@ def carbon_flow(costs,year):
 def energy_penalty(costs):
 
     # Energy penalty for biomass carbon capture
-    # Need to take steam production for CC into account, assumed with biomass,
-    # i.e. the input biomass is used also for steam, and the efficiency for el and heat is scaled down accordingly
+    # Need to take steam production for CC into account, assumed with the main feedstock,
+    # e.g. the input biomass is used also for steam, and the efficiency for el and heat is scaled down accordingly
 
-    for tech in ['central solid biomass CHP CC', 'waste CHP CC', 'central solid biomass CHP powerboost CC', 'solid biomass boiler steam CC', 'direct firing solid fuels CC', 'direct firing gas CC']:
+    for tech in ['central solid biomass CHP CC', 'waste CHP CC', 'central solid biomass CHP powerboost CC', 'solid biomass boiler steam CC', 'direct firing solid fuels CC', 'direct firing gas CC', 'biogas CC']:
 
         if 'powerboost' in tech:
             boiler = 'electric boiler steam'
             feedstock = 'solid biomass'
+            co2_capture = costs.loc[(feedstock, 'CO2 intensity'), 'value']
         elif 'gas' in tech:
             boiler = 'gas boiler steam'
             feedstock = 'gas'
+            co2_capture = costs.loc[(feedstock, 'CO2 intensity'), 'value']
+        elif 'biogas' in tech:
+            boiler = 'gas boiler steam'
+            co2_capture = costs.loc[(tech, 'CO2 stored'), 'value']
         else:
             boiler = 'solid biomass boiler steam'
             feedstock = 'solid biomass'
+            co2_capture = costs.loc[(feedstock, 'CO2 intensity'), 'value']
 
         #Scaling biomass input to account for heat demand of carbon capture
-        scalingFactor = 1 / (1 + costs.loc[(feedstock, 'CO2 intensity'), 'value'] * costs.loc[
+        scalingFactor = 1 / (1 + co2_capture * costs.loc[
             ('biomass CHP capture', 'heat-input'), 'value']
                              / costs.loc[(boiler, 'efficiency'), 'value'])
 
-        el_demand = (costs.loc[(feedstock, 'CO2 intensity'), 'value'] * costs.loc[
-            ('biomass CHP capture', 'heat-input'), 'value'] / costs.loc[(boiler, 'efficiency'), 'value'])
+
+        el_demand = (co2_capture * costs.loc[('biomass CHP capture', 'heat-input'), 'value']
+                     / costs.loc[(boiler, 'efficiency'), 'value'])
         eta_steam = (1 - scalingFactor) * costs.loc[(boiler, 'efficiency'), 'value']
         eta_old = costs.loc[(tech, 'efficiency'), 'value']
 
@@ -1531,6 +1540,13 @@ def energy_penalty(costs):
             + costs.loc[(boiler, 'investment'), 'value'] * eta_steam / eta_main
         costs.loc[(tech, 'investment'), 'source'] = 'Combination of ' + tech + ' and ' + boiler
         costs.loc[(tech, 'investment'), 'further description'] = ''
+
+        try:
+            costs.loc[(tech, 'VOM'), 'value']
+        except:
+            costs.loc[(tech, 'VOM'), 'value'] = 0
+
+        # print(tech, costs.loc[(tech, 'VOM'), 'value'])
 
         costs.loc[(tech, 'VOM'), 'value'] = costs.loc[(tech, 'VOM'), 'value'] * eta_old / eta_main \
             + costs.loc[(boiler, 'VOM'), 'value'] * eta_steam / eta_main

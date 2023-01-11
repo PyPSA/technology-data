@@ -1021,7 +1021,7 @@ def order_data(tech_data):
                 clean_df[tech] = pd.concat([clean_df[tech], fom])
 
         # ---- VOM -----
-        vom = df[df.index.str.contains("Variable O&M")  & ((df.unit=="EUR/MWh") |
+        vom = df[df.index.str.contains("Variable O&M") & ((df.unit=="EUR/MWh") |
                                                          (df.unit=="EUR/MWh_e") |
                                                          (df.unit=="EUR/MWh_th") |
                                                          (df.unit=="EUR/MWh_FT") |
@@ -1541,12 +1541,10 @@ def energy_penalty(costs):
         costs.loc[(tech, 'investment'), 'source'] = 'Combination of ' + tech + ' and ' + boiler
         costs.loc[(tech, 'investment'), 'further description'] = ''
 
-        try:
-            costs.loc[(tech, 'VOM'), 'value']
-        except:
-            costs.loc[(tech, 'VOM'), 'value'] = 0
-
-        # print(tech, costs.loc[(tech, 'VOM'), 'value'])
+        if costs.loc[(tech, 'VOM'), 'value']:
+            break
+        else:
+            costs.loc[(tech, 'VOM'), 'value'] = 0.
 
         costs.loc[(tech, 'VOM'), 'value'] = costs.loc[(tech, 'VOM'), 'value'] * eta_old / eta_main \
             + costs.loc[(boiler, 'VOM'), 'value'] * eta_steam / eta_main

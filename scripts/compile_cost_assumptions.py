@@ -1732,7 +1732,11 @@ def add_energy_storage_database(costs, data_year):
                 'note': df.loc[filter, "note"].iloc[1],
                 'reference': df.loc[filter, "reference"].iloc[1],
             }])
-            df = pd.concat([df, df_new], ignore_index=True)
+            # not concat if df year is 2021 or 2030 (otherwhise duplicate)
+            if year == 2021 or year == 2030:
+                continue
+            else:
+                df = pd.concat([df, df_new], ignore_index=True)
 
     # d) Combine metadata and add to cost database
     df.loc[:,"source"] = df["source"] + ", " + df["reference"]

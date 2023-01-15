@@ -1695,10 +1695,10 @@ def add_energy_storage_database(costs, data_year):
             df_tech = df.loc[(df.technology == tech) & (df.year == year)].copy()
             a = df_tech.loc[df_tech.unit=="EUR/MW-year", "value"].values
             b = df_tech.loc[df_tech.unit=="EUR/MW", "value"].values
-            df_tech.loc[df_tech.unit=="EUR/MW-year", "value"] = a / b  # EUR/MW-year / EUR/MW = %/year
+            df.loc[df_tech.loc[df_tech.unit=="EUR/MW-year"].index, "value"] = a / b  # EUR/MW-year / EUR/MW = %/year
             c = df_tech.loc[df_tech.unit=="EUR/MWh-year", "value"].values
             d = df_tech.loc[df_tech.unit=="EUR/MWh", "value"].values
-            df_tech.loc[df_tech.unit=="EUR/MWh-year", "value"] = c / d  # EUR/MWh-year / EUR/MWh = %/year
+            df.loc[df_tech.loc[df_tech.unit=="EUR/MWh-year"].index, "value"] = c / d  # EUR/MWh-year / EUR/MWh = %/year
 
     df.loc[:,"unit"] = df.unit.str.replace("EUR/MW-year", "%/year")
     df.loc[:,"unit"] = df.unit.str.replace("EUR/MWh-year", "%/year")
@@ -1708,9 +1708,9 @@ def add_energy_storage_database(costs, data_year):
     for tech in df.technology.unique():
         for param in df.parameter.unique():
             filter = (df.technology == tech) & (df.parameter == param)
-            y = df.loc[filter, "value"] # add random value to avoid duplicate issue with interpolate
+            y = df.loc[filter, "value"]
             if y.empty:
-                continue  # nothging to interpolate
+                continue  # nothing to interpolate
             if y.iloc[0]==y.iloc[1] or param=="efficiency" or param=="lifetime":
                 ynew = y.iloc[1]  # assume new value is the same as 2030
             if y.iloc[0]!=y.iloc[1]:
@@ -1733,7 +1733,7 @@ def add_energy_storage_database(costs, data_year):
                 'reference': df.loc[filter, "reference"].iloc[1],
             }])
             # not concat if df year is 2021 or 2030 (otherwhise duplicate)
-            if year == 2021 or year == 2030:
+            if data_year == 2021 or data_year == 2030:
                 continue
             else:
                 df = pd.concat([df, df_new], ignore_index=True)

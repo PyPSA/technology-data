@@ -1695,10 +1695,10 @@ def add_energy_storage_database(costs, data_year):
             df_tech = df.loc[(df.technology == tech) & (df.year == year)].copy()
             a = df_tech.loc[df_tech.unit=="EUR/MW-year", "value"].values
             b = df_tech.loc[df_tech.unit=="EUR/MW", "value"].values
-            df.loc[df_tech.loc[df_tech.unit=="EUR/MW-year"].index, "value"] = a / b  # EUR/MW-year / EUR/MW = %/year
+            df.loc[df_tech.loc[df_tech.unit=="EUR/MW-year"].index, "value"] = a / b * 100 # EUR/MW-year / EUR/MW = %/year
             c = df_tech.loc[df_tech.unit=="EUR/MWh-year", "value"].values
             d = df_tech.loc[df_tech.unit=="EUR/MWh", "value"].values
-            df.loc[df_tech.loc[df_tech.unit=="EUR/MWh-year"].index, "value"] = c / d  # EUR/MWh-year / EUR/MWh = %/year
+            df.loc[df_tech.loc[df_tech.unit=="EUR/MWh-year"].index, "value"] = c / d * 100 # EUR/MWh-year / EUR/MWh = %/year
 
     df.loc[:,"unit"] = df.unit.str.replace("EUR/MW-year", "%/year")
     df.loc[:,"unit"] = df.unit.str.replace("EUR/MWh-year", "%/year")

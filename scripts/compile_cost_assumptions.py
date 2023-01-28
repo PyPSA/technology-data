@@ -1711,12 +1711,27 @@ def add_energy_storage_database(costs, data_year):
             y = df.loc[filter, "value"]
             if y.empty:
                 continue  # nothing to interpolate
-            if y.iloc[0]==y.iloc[1] or param=="efficiency" or param=="lifetime":
+            elif y.iloc[0]==y.iloc[1] or param=="efficiency" or param=="lifetime":
                 ynew = y.iloc[1]  # assume new value is the same as 2030
-            if y.iloc[0]!=y.iloc[1]:
+            elif y.iloc[0]!=y.iloc[1]:
                 x = df.loc[filter, "year"] # both values 2021+2030
-                f = interpolate.interp1d(x, y, kind='linear', fill_value="extrapolate")
-                # copy previous row and change only "value" and "year"
+                # create a new point with 4 times the year difference (2066) but (1/2)^4 of the value difference
+                if tech=="Hydrogen-charger" or tech=="Hydrogen-discharger":
+                    x = pd.concat([x, pd.Series({"index":2039})], ignore_index=True)
+                    x = pd.concat([x, pd.Series({"index":2066})], ignore_index=True)
+                    # create every 9 year new points for linear interpolation which 2021-2030 difference is reduced by "factor"
+                    factor = 4  # the higher the more cost reduction
+                    y = pd.concat([y, pd.Series({"index": y.iloc[1] - ((y.iloc[0]-y.iloc[1])/factor**1)})], ignore_index=True)
+                    y = pd.concat([y, pd.Series({"index": y.iloc[1] - ((y.iloc[0]-y.iloc[1])/factor**1) - ((y.iloc[0]-y.iloc[1])/factor**2) - ((y.iloc[0]-y.iloc[1])/factor**3) - ((y.iloc[0]-y.iloc[1])/factor**4)})], ignore_index=True)
+                    f = interpolate.interp1d(x, y, kind='linear', fill_value="extrapolate")
+                else:
+                    x = pd.concat([x, pd.Series({"index":2039})], ignore_index=True)
+                    x = pd.concat([x, pd.Series({"index":2066})], ignore_index=True)
+                    # create every 9 year new points for linear interpolation which 2021-2030 difference is reduced by "factor"
+                    factor = 2  # the higher the more cost reduction
+                    y = pd.concat([y, pd.Series({"index": y.iloc[1] - ((y.iloc[0]-y.iloc[1])/factor**1)})], ignore_index=True)
+                    y = pd.concat([y, pd.Series({"index": y.iloc[1] - ((y.iloc[0]-y.iloc[1])/factor**1) - ((y.iloc[0]-y.iloc[1])/factor**2) - ((y.iloc[0]-y.iloc[1])/factor**3) - ((y.iloc[0]-y.iloc[1])/factor**4)})], ignore_index=True)
+                    f = interpolate.interp1d(x, y, kind='linear', fill_value="extrapolate")
                 ynew = f(data_year)
 
             df_new = pd.DataFrame([{

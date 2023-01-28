@@ -1717,7 +1717,7 @@ def add_energy_storage_database(costs, data_year):
                 x = df.loc[filter, "year"] # both values 2021+2030
                 # add new points for linear interpolation
                 # deal with hydrogen separately as extreme changes between 2021 and 2030
-                if tech=="Hydrogen-charger" or tech=="Hydrogen-discharger":
+                if tech=="Hydrogen-charger" or tech=="Hydrogen-discharger" or "Pumped-Heat-store":
                     x = pd.concat([x, pd.Series({"index":2039})], ignore_index=True)
                     x = pd.concat([x, pd.Series({"index":2066})], ignore_index=True)
                     # create every 9 year new points for linear interpolation which 2021-2030 difference is reduced by "factor"

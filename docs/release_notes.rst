@@ -15,6 +15,9 @@ Upcoming Release
 
 * Enable easy debugging of scripts by allowing python execution/ debugging in scripts
 
+* Breaking changes
+  - Renamed "hydrogen storage tank incl. compressor" to "hydrogen storage tank type 1 including compressor" for more clarity on the technology and consistency
+
 Technology-Data 0.4.0 (22 July 2022)
 ===========================================
 

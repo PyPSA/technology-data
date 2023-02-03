@@ -17,6 +17,7 @@ Upcoming Release
 
 * Breaking changes
   - Renamed "hydrogen storage tank incl. compressor" to "hydrogen storage tank type 1 including compressor" for more clarity on the technology and consistency
+  - Removed "hydrogen storage tank" technology assumption from old PyPSA assumptions which is superceeded by the "hydrogen storage tank type 1" assumptions
 
 Technology-Data 0.4.0 (22 July 2022)
 ===========================================

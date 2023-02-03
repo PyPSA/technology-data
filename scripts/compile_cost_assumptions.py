@@ -1214,7 +1214,6 @@ def rename_pypsa_old(costs_pypsa):
 
     # rename to new names
     costs_pypsa.rename({'central CHP': 'central gas CHP'}, inplace=True)
-    costs_pypsa.rename({'hydrogen storage': 'hydrogen storage tank'}, inplace=True)
     costs_pypsa.rename({'hydrogen underground storage': 'hydrogen storage underground'},
                        inplace=True)
 

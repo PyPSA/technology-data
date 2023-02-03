@@ -1230,7 +1230,7 @@ def add_manual_input(data):
 
     # Inflation adjustment for investment and VOM
     mask = df[df['parameter'].isin(['investment','VOM'])].index
-    df.loc[mask, 'value'] /= (1+snakemake.config['rate_inflation'])**(df.loc[mask, 'currency_year']-snakemake.config['eur_year'])
+    df.loc[mask, 'value'] /= (1+snakemake.config['rate_inflation'])**(df.loc[mask, 'currency_year'].astype(int)-snakemake.config['eur_year'])
 
     l = []
     for tech in df['technology'].unique():

@@ -4,6 +4,12 @@ Release Notes
 
 Upcoming Release
 ================
+
+* -
+
+Technology-Data 0.5.0 (08 Februrary 2023)
+===========================================
+
 * Updated technologies
   - biomass CHP: changed from Wood Pellets to Wood Chips which are generally used in biomass CHPs and more expensive.
   - solid biomass fuel to 12 EUR/MWh_th based on JRC ENSPRESO datasets

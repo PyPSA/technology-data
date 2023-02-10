@@ -4,10 +4,10 @@ Created on Thu Dec 12 16:10:15 2019
 
 @author: Marta
 """
-
+#%%
 import pandas as pd
 import numpy as np
-
+import os
 
 """
 Latex table including FOM, efficiencies and lifetimes
@@ -16,92 +16,165 @@ Latex table including FOM, efficiencies and lifetimes
 #write latex table
 # read 2020 costs
 idx = pd.IndexSlice
-costs = pd.read_csv('../outputs/costs_2020.csv',index_col=list(range(2))).sort_index()
+root_path = os.getcwd()
+costs = pd.read_csv(os.path.join(root_path, 'outputs', 'costs_2060.csv'),index_col=list(range(2))).sort_index()
 
 filename='table_inputs.tex'
              
 file = open(filename, 'w')
-technologies=['onwind', 'offwind', 'solar-utility', 'solar-rooftop', 'OCGT',
-              'CCGT', 'coal', 'lignite', 'nuclear', 'hydro', 'ror', 'PHS', 
-              'central gas CHP',
-              'biomass CHP', 
-              #'central coal CHP',
-              #'biomass HOP',
-              #'biomass EOP',
-              'HVDC overhead', 'HVDC inverter pair',
-              'battery storage',
-              'battery inverter',
-              'home battery storage',
-              'home battery inverter',
-              'electrolysis',
-              'fuel cell',
-              'hydrogen storage underground',
-              'hydrogen storage tank',
-              'direct air capture',
-              'methanation',
-              'central gas boiler',
-              'decentral gas boiler',
-              'central resistive heater',
-              'decentral resistive heater',
-              'central water tank storage',
-              'decentral water tank storage', 
-              'water tank charger',
-              'decentral air-sourced heat pump',
-              'central air-sourced heat pump',
-              'decentral ground-sourced heat pump',
-              'biomass CHP capture',
-              'Fischer-Tropsch',
-              'SMR',
-              'SMR CC'
-              ]
+technologies=[
+    'onwind', 'offwind', 'solar-utility', 'solar-rooftop', 'OCGT',
+    'CCGT', 'coal', 'lignite', 'nuclear', 'hydro', 'ror', 'PHS', 
+    'central gas CHP',
+    'biomass CHP', 
+    #'central coal CHP',
+    #'biomass HOP',
+    #'biomass EOP',
+    'HVDC overhead', 'HVDC inverter pair',
+    'battery storage',
+    'battery inverter',
+    'home battery storage',
+    'home battery inverter',
+    'electrolysis',
+    'fuel cell',
+    'hydrogen storage underground',
+    'hydrogen storage tank',
+    'direct air capture',
+    'methanation',
+    'central gas boiler',
+    'decentral gas boiler',
+    'central resistive heater',
+    'decentral resistive heater',
+    'central water tank storage',
+    'decentral water tank storage', 
+    'water tank charger',
+    'decentral air-sourced heat pump',
+    'central air-sourced heat pump',
+    'decentral ground-sourced heat pump',
+    'biomass CHP capture',
+    'Fischer-Tropsch',
+    'SMR',
+    'SMR CC',
+    # 'Compressed-Air-Adiabatic-bicharger',
+    # 'Compressed-Air-Adiabatic-store', 'Concrete-charger',
+    # 'Concrete-discharger', 'Concrete-store', 'Gravity-Brick-bicharger',
+    # 'Gravity-Brick-store', 'Gravity-Water-Aboveground-bicharger',
+    # 'Gravity-Water-Aboveground-store',
+    # 'Gravity-Water-Underground-bicharger',
+    # 'Gravity-Water-Underground-store', 'HighT-Molten-Salt-charger',
+    # 'HighT-Molten-Salt-discharger', 'HighT-Molten-Salt-store',
+    # 'Hydrogen-charger', 'Hydrogen-discharger', 'Hydrogen-store',
+    # 'Lead-Acid-bicharger', 'Lead-Acid-store', 'Liquid-Air-charger',
+    # 'Liquid-Air-discharger', 'Liquid-Air-store',
+    # 'Lithium-Ion-LFP-bicharger', 'Lithium-Ion-LFP-store',
+    # 'Lithium-Ion-NMC-bicharger', 'Lithium-Ion-NMC-store',
+    # 'LowT-Molten-Salt-charger', 'LowT-Molten-Salt-discharger',
+    # 'LowT-Molten-Salt-store', 'Ni-Zn-bicharger', 'Ni-Zn-store',
+    # 'Pumped-Heat-charger', 'Pumped-Heat-discharger',
+    # 'Pumped-Heat-store', 'Pumped-Storage-Hydro-bicharger',
+    # 'Pumped-Storage-Hydro-store', 'Sand-charger', 'Sand-discharger',
+    # 'Sand-store', 'Vanadium-Redox-Flow-bicharger',
+    # 'Vanadium-Redox-Flow-store', 'Zn-Air-bicharger', 'Zn-Air-store',
+    # 'Zn-Br-Flow-bicharger', 'Zn-Br-Flow-store',
+    # 'Zn-Br-Nonflow-bicharger', 'Zn-Br-Nonflow-store'
+]
 
-name={'onwind' : 'Onshore Wind',
-      'offwind' : 'Offshore Wind',
-      'solar-utility' : 'Solar PV (utility-scale)', 
-      'solar-rooftop' : 'Solar PV (rooftop)', 
-      'OCGT': 'OCGT', 
-      'CCGT': 'CCGT', 
-      'coal':  'Coal power plant', 
-      'lignite': 'Lignite', 
-      'nuclear': 'Nuclear',
-      'hydro':'Reservoir hydro', 
-      'ror':'Run of river',
-      'PHS':'PHS',
-      'battery inverter': 'Battery inverter', 
-      'battery storage': 'Battery storage',
-      'home battery inverter': 'Home battery inverter', 
-      'home battery storage': 'Home battery storage',
-      'hydrogen storage underground': 'H$_2$ storage underground',
-      'hydrogen storage tank': 'H$_2$ storage tank',
-      'electrolysis': 'Electrolysis', 
-      'fuel cell': 'Fuel cell',
-      'methanation': 'Methanation', 
-      'direct air capture': 'direct air capture',
-      'central gas boiler': 'Central gas boiler', 
-      'decentral gas boiler': 'Domestic gas boiler',
-      'central resistive heater':'Central resistive heater', 
-      'decentral resistive heater':'Domestic resistive heater',
-      'central gas CHP':' Gas CHP',
-      'central coal CHP':' Coal CHP',
-      'biomass CHP':'Biomass CHP',
-      'biomass EOP':'Biomass power plant',
-      'biomass HOP':'Biomass central heat plant',
-      'central water tank storage': 'Central water tank storage', 
-      'decentral water tank storage': 'Domestic water tank storage', 
-      'water tank charger': 'Water tank charger/discharger',
-      'HVDC overhead':'HVDC overhead', 
-      'HVDC inverter pair':'HVDC inverter pair',
-      #'central heat pump': 'Central heat pump', 
-      #'decentral heat pump': 'Decentral heat pump',
-      #'central ground-sourced heat pump': 'Central ground-sourced heat pump', 
-      'central air-sourced heat pump': 'Central air-sourced heat pump', 
-      'decentral air-sourced heat pump': 'Domestic air-sourced heat pump',
-      'decentral ground-sourced heat pump':  'Domestic ground-sourced heat pump',
-      'biomass CHP capture':'CO$_2$ capture in CHP',
-      'Fischer-Tropsch':'Fischer-Tropsch',
-      'SMR': 'Steam Methane Reforming',
-      'SMR CC': 'Steam Methane Reforming with CC'
-      }
+
+name={
+    'onwind' : 'Onshore Wind',
+    'offwind' : 'Offshore Wind',
+    'solar-utility' : 'Solar PV (utility-scale)', 
+    'solar-rooftop' : 'Solar PV (rooftop)', 
+    'OCGT': 'OCGT', 
+    'CCGT': 'CCGT', 
+    'coal':  'Coal power plant', 
+    'lignite': 'Lignite', 
+    'nuclear': 'Nuclear',
+    'hydro':'Reservoir hydro', 
+    'ror':'Run of river',
+    'PHS':'PHS',
+    'battery inverter': 'Battery inverter', 
+    'battery storage': 'Battery storage',
+    'home battery inverter': 'Home battery inverter', 
+    'home battery storage': 'Home battery storage',
+    'hydrogen storage underground': 'H$_2$ storage underground',
+    'hydrogen storage tank': 'H$_2$ storage tank',
+    'electrolysis': 'Electrolysis', 
+    'fuel cell': 'Fuel cell',
+    'methanation': 'Methanation', 
+    'direct air capture': 'direct air capture',
+    'central gas boiler': 'Central gas boiler', 
+    'decentral gas boiler': 'Domestic gas boiler',
+    'central resistive heater':'Central resistive heater', 
+    'decentral resistive heater':'Domestic resistive heater',
+    'central gas CHP':' Gas CHP',
+    'central coal CHP':' Coal CHP',
+    'biomass CHP':'Biomass CHP',
+    'biomass EOP':'Biomass power plant',
+    'biomass HOP':'Biomass central heat plant',
+    'central water tank storage': 'Central water tank storage', 
+    'decentral water tank storage': 'Domestic water tank storage', 
+    'water tank charger': 'Water tank charger/discharger',
+    'HVDC overhead':'HVDC overhead', 
+    'HVDC inverter pair':'HVDC inverter pair',
+    #'central heat pump': 'Central heat pump', 
+    #'decentral heat pump': 'Decentral heat pump',
+    #'central ground-sourced heat pump': 'Central ground-sourced heat pump', 
+    'central air-sourced heat pump': 'Central air-sourced heat pump', 
+    'decentral air-sourced heat pump': 'Domestic air-sourced heat pump',
+    'decentral ground-sourced heat pump':  'Domestic ground-sourced heat pump',
+    'biomass CHP capture':'CO$_2$ capture in CHP',
+    'Fischer-Tropsch':'Fischer-Tropsch',
+    'SMR': 'Steam Methane Reforming',
+    'SMR CC': 'Steam Methane Reforming with CC',
+    # 'Compressed-Air-Adiabatic-bicharger': 'Compressed-Air-Adiabatic-bicharger',
+    # 'Compressed-Air-Adiabatic-store': 'Compressed-Air-Adiabatic-store',
+    # 'Concrete-charger': 'Concrete-charger',
+    # 'Concrete-discharger': 'Concrete-discharger',
+    # 'Concrete-store': 'Concrete-store',
+    # 'Gravity-Brick-bicharger': 'Gravity-Brick-bicharger',
+    # 'Gravity-Brick-store': 'Gravity-Brick-store',
+    # 'Gravity-Water-Aboveground-bicharger': 'Gravity-Water-Aboveground-bicharger',
+    # 'Gravity-Water-Aboveground-store': 'Gravity-Water-Aboveground-store',
+    # 'Gravity-Water-Underground-bicharger': 'Gravity-Water-Underground-bicharger',
+    # 'Gravity-Water-Underground-store': 'Gravity-Water-Underground-store',
+    # 'HighT-Molten-Salt-charger': 'HighT-Molten-Salt-charger',
+    # 'HighT-Molten-Salt-discharger': 'HighT-Molten-Salt-discharger',
+    # 'HighT-Molten-Salt-store': 'HighT-Molten-Salt-store',
+    # 'Hydrogen-charger': 'Hydrogen-charger',
+    # 'Hydrogen-discharger': 'Hydrogen-discharger',
+    # 'Hydrogen-store': 'Hydrogen-store',
+    # 'Lead-Acid-bicharger': 'Lead-Acid-bicharger',
+    # 'Lead-Acid-store': 'Lead-Acid-store',
+    # 'Liquid-Air-charger': 'Liquid-Air-charger',
+    # 'Liquid-Air-discharger': 'Liquid-Air-discharger',
+    # 'Liquid-Air-store': 'Liquid-Air-store',
+    # 'Lithium-Ion-LFP-bicharger': 'Lithium-Ion-LFP-bicharger',
+    # 'Lithium-Ion-LFP-store': 'Lithium-Ion-LFP-store',
+    # 'Lithium-Ion-NMC-bicharger': 'Lithium-Ion-NMC-bicharger',
+    # 'Lithium-Ion-NMC-store': 'Lithium-Ion-NMC-store',
+    # 'LowT-Molten-Salt-charger': 'LowT-Molten-Salt-charger',
+    # 'LowT-Molten-Salt-discharger': 'LowT-Molten-Salt-discharger',
+    # 'LowT-Molten-Salt-store': 'LowT-Molten-Salt-store',
+    # 'Ni-Zn-bicharger': 'Ni-Zn-bicharger',
+    # 'Ni-Zn-store': 'Ni-Zn-store',
+    # 'Pumped-Heat-charger': 'Pumped-Heat-charger',
+    # 'Pumped-Heat-discharger': 'Pumped-Heat-discharger',
+    # 'Pumped-Heat-store': 'Pumped-Heat-store',
+    # 'Pumped-Storage-Hydro-bicharger': 'Pumped-Storage-Hydro-bicharger',
+    # 'Pumped-Storage-Hydro-store': 'Pumped-Storage-Hydro-store',
+    # 'Sand-charger': 'Sand-charger',
+    # 'Sand-discharger': 'Sand-discharger',
+    # 'Sand-store': 'Sand-store',
+    # 'Vanadium-Redox-Flow-bicharger': 'Vanadium-Redox-Flow-bicharger',
+    # 'Vanadium-Redox-Flow-store': 'Vanadium-Redox-Flow-store', 
+    # 'Zn-Air-bicharger': 'Zn-Air-bicharger',
+    # 'Zn-Air-store': 'Zn-Air-store',
+    # 'Zn-Br-Flow-bicharger': 'Zn-Br-Flow-bicharger',
+    # 'Zn-Br-Flow-store': 'Zn-Br-Flow-store',
+    # 'Zn-Br-Nonflow-bicharger': 'Zn-Br-Nonflow-bicharger',
+    # 'Zn-Br-Nonflow-store': 'Zn-Br-Nonflow-store',
+}
 
 dic_ref = {'Technology Data for Energy Plants for Electricity and District heating generation':'DEA_2019',
            'Impact of weighted average cost of capital, capital expenditure, and other parameters on future utility‐scale PV levelised cost of electricity': 'Vartiainen_2019',
@@ -124,6 +197,7 @@ dic_ref = {'Technology Data for Energy Plants for Electricity and District heati
            'Is a 100% renewable European power system feasible by 2050?': 'Zappa_2019, JRC_biomass',
            'Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018': 'German_Environment_Agency',
            'IEA WEM2017 97USD/boe = http://www.iea.org/media/weowebsite/2017/WEM_Documentation_WEO2017.pdf':'IEA_WEO2017',
+           'Danish Energy Agency, technology_data_for_el_and_dh.xlsx':'DEA_2019',
            'Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx':'DEA_2019',
            'Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx':'DEA_2019',
            'Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx, Note K.':'DEA_2019',
@@ -134,7 +208,8 @@ dic_ref = {'Technology Data for Energy Plants for Electricity and District heati
            'Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019, Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx' :'Ram_2019, DEA_2019',
            'Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019, Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx, Note K.' :'Ram_2019, DEA_2019',
            'TODO':'govUK',
-
+           'Viswanathan_2022': 'Viswanathan_2022',
+           'Georgiou_2018': 'Georgiou_2018',
 }
 
 # Solar thermal collector decentral & 270 & m$^{2}$ & 1.3 & 20 & variable & \cite{Henning20141003} \\
@@ -152,6 +227,11 @@ for technology in technologies:
         lifetime = str(int(costs.loc[idx[technology,'lifetime'],'value']))
     else:
         lifetime= ' '
+    if idx[technology,'investment'] in costs.index:
+        investment = str(int(int(costs.loc[idx[technology,'investment'],'value']/1000)))
+    else:
+        investment= ' '
+    investment
     if idx[technology,'efficiency'] in costs.index and technology not in ['onwind', 
           'offwind', 'central gas CHP', 'biomass CHP', 'battery storage', 
           'home battery storage', 'central coal CHP' 
@@ -171,17 +251,19 @@ for technology in technologies:
     else:
         source = costs.loc[idx[technology,'efficiency'],'source']
     if technology == 'water tank charger':
-       file.write(' ' +name[technology] 
-        + ' & ' +  FOM
-        + ' & ' +  lifetime
+       file.write(' ' + name[technology]
+        + ' & ' + investment
+        + ' & ' + FOM
+        + ' & ' + lifetime
         + ' & ' + efficiency
         + ' & ' + ' \\' + ' ') 
     else:        
-        file.write(' ' +name[technology] 
-        + ' & ' +  FOM
-        + ' & ' +  lifetime
+        file.write(' ' + name[technology] 
+        + ' & ' + investment
+        + ' & ' + FOM
+        + ' & ' + lifetime
         + ' & ' + efficiency
-        + ' & ' + ' \\' + 'cite{' + dic_ref[source]+ '} ')
+        + ' & ' + ' \\' + 'cite{' + dic_ref[source.split(sep=",")[0]] + '} ')
 
     file.write('\\') 
     file.write('\\') 
@@ -285,7 +367,3 @@ for fuel in [ 'coal', 'lignite', 'gas', 'oil','nuclear', 'solid biomass']:
     file.write('\\') 
 file.close()    
 
-
-
-
-    

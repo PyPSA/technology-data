@@ -82,7 +82,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
                # 'decentral water tank storage': '142 Small scale hot water tank',
                'fuel cell': '12 LT-PEMFC CHP',
                'hydrogen storage underground': '151c Hydrogen Storage - Caverns',
-               'hydrogen storage tank incl. compressor': '151a Hydrogen Storage - Tanks',
+               'hydrogen storage tank type 1 including compressor': '151a Hydrogen Storage - Tanks',
                'micro CHP': '219 LT-PEMFC mCHP - natural gas',
                'biogas' : '81 Biogas Plant, Basic conf.',
                'biogas upgrading': '82 Biogas, upgrading',
@@ -142,7 +142,7 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'central water tank storage': 'J:K',
                     'fuel cell': 'I:J',
                     'hydrogen storage underground': 'J:K',
-                    'hydrogen storage tank incl. compressor': 'J:K',
+                    'hydrogen storage tank type 1 including compressor': 'J:K',
                     'micro CHP': 'I:J',
                     'biogas': 'I:J',
                     'biogas upgrading': 'I:J',
@@ -255,7 +255,7 @@ def get_data_DEA(tech, data_in, expectation=None):
     uncertainty_columns = ["2050-optimist", "2050-pessimist"]
     if uncrtnty_lookup[tech]:
         # hydrogen storage sheets have reverse order of lower/upper estimates
-        if tech in ["hydrogen storage tank incl. compressor", "hydrogen storage cavern"]:
+        if tech in ["hydrogen storage tank type 1 including compressor", "hydrogen storage cavern"]:
             uncertainty_columns.reverse()
         excel.rename(columns={excel.columns[-2]: uncertainty_columns[0],
                                 excel.columns[-1]: uncertainty_columns[1]
@@ -890,12 +890,12 @@ def set_round_trip_efficiency(tech_data):
     """
 
     # hydrogen storage
-    to_drop = [("hydrogen storage tank incl. compressor", ' - Charge efficiency')]
-    to_drop.append(("hydrogen storage tank incl. compressor", ' - Discharge efficiency'))
+    to_drop = [("hydrogen storage tank type 1 including compressor", ' - Charge efficiency')]
+    to_drop.append(("hydrogen storage tank type 1 including compressor", ' - Discharge efficiency'))
     to_drop.append(("hydrogen storage underground", ' - Charge efficiency'))
     to_drop.append(("hydrogen storage underground", ' - Discharge efficiency'))
     tech_data.loc[("hydrogen storage underground", "Round trip efficiency"), years] *= 100
-    tech_data.loc[("hydrogen storage tank incl. compressor", "Round trip efficiency"), years] *= 100
+    tech_data.loc[("hydrogen storage tank type 1 including compressor", "Round trip efficiency"), years] *= 100
 
 
 
@@ -1233,7 +1233,6 @@ def rename_pypsa_old(costs_pypsa):
 
     # rename to new names
     costs_pypsa.rename({'central CHP': 'central gas CHP'}, inplace=True)
-    costs_pypsa.rename({'hydrogen storage': 'hydrogen storage tank'}, inplace=True)
     costs_pypsa.rename({'hydrogen underground storage': 'hydrogen storage underground'},
                        inplace=True)
 
@@ -1250,7 +1249,7 @@ def add_manual_input(data):
 
     # Inflation adjustment for investment and VOM
     mask = df[df['parameter'].isin(['investment','VOM'])].index
-    df.loc[mask, 'value'] /= (1+snakemake.config['rate_inflation'])**(df.loc[mask, 'currency_year']-snakemake.config['eur_year'])
+    df.loc[mask, 'value'] /= (1+snakemake.config['rate_inflation'])**(df.loc[mask, 'currency_year'].astype(int)-snakemake.config['eur_year'])
 
     l = []
     for tech in df['technology'].unique():

@@ -12,6 +12,7 @@ dependencies:
   - xlrd
   - openpyxl
   - scipy
+  - packaging
 
   - pip:
     - tabula-py

@@ -38,7 +38,7 @@ technologies=[
     'electrolysis',
     'fuel cell',
     'hydrogen storage underground',
-    'hydrogen storage tank',
+    'hydrogen storage tank type 1',
     'direct air capture',
     'methanation',
     'central gas boiler',
@@ -98,7 +98,7 @@ name={
     'home battery inverter': 'Home battery inverter', 
     'home battery storage': 'Home battery storage',
     'hydrogen storage underground': 'H$_2$ storage underground',
-    'hydrogen storage tank': 'H$_2$ storage tank',
+    'hydrogen storage tank type 1': 'H$_2$ storage tank',
     'electrolysis': 'Electrolysis', 
     'fuel cell': 'Fuel cell',
     'methanation': 'Methanation', 
@@ -235,7 +235,7 @@ for technology in technologies:
     if idx[technology,'efficiency'] in costs.index and technology not in ['onwind', 
           'offwind', 'central gas CHP', 'biomass CHP', 'battery storage', 
           'home battery storage', 'central coal CHP' 
-          'hydrogen storage underground', 'hydrogen storage tank', 
+          'hydrogen storage underground', 'hydrogen storage tank type 1', 
           'central water tank storage', 'decentral water tank storage',
           'decentral air-sourced heat pump', 'central ground-sourced heat pump',
           'decentral ground-sourced heat pump']:

@@ -4,6 +4,12 @@ Release Notes
 
 Upcoming Release
 ================
+
+* -
+
+Technology-Data 0.5.0 (08 Februrary 2023)
+===========================================
+
 * Updated technologies
   - biomass CHP: changed from Wood Pellets to Wood Chips which are generally used in biomass CHPs and more expensive.
   - solid biomass fuel to 12 EUR/MWh_th based on JRC ENSPRESO datasets
@@ -14,7 +20,14 @@ Upcoming Release
   - hydrogen storage compressor: Compressor for filling hydrogen storage tanks (compression from 30 to 250 bar)
   - 18 new energy storage technologies from PNNL "Energy Storage Grand Challenge Cost and Performance Assessment 2022"
 
-* Enable easy debugging of scripts by allowing python execution/ debugging in scripts
+* Changed technologies
+  - Renamed "hydrogen storage tank incl. compressor" to "hydrogen storage tank type 1 including compressor" for more clarity on the technology and consistency
+  - Removed "hydrogen storage tank" technology assumption from old PyPSA assumptions which is superceeded by the "hydrogen storage tank type 1" assumptions
+
+* Features
+  - Enable easy debugging of scripts by allowing python execution/ debugging in scripts
+  - The column "currency_year" in "manual_input.csv" can now be left blank and is only evaluated for "investment" and "VOM" entries
+
 
 Technology-Data 0.4.0 (22 July 2022)
 ===========================================

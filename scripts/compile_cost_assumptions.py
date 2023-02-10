@@ -1715,24 +1715,54 @@ def add_energy_storage_database(costs, data_year):
                 ynew = y.iloc[1]  # assume new value is the same as 2030
             elif y.iloc[0]!=y.iloc[1]:
                 x = df.loc[filter, "year"] # both values 2021+2030
-                # add new points for linear interpolation
-                # deal with hydrogen separately as extreme changes between 2021 and 2030
-                if tech=="Hydrogen-charger" or tech=="Hydrogen-discharger" or "Pumped-Heat-store":
-                    x = pd.concat([x, pd.Series({"index":2039})], ignore_index=True)
-                    x = pd.concat([x, pd.Series({"index":2066})], ignore_index=True)
-                    # create every 9 year new points for linear interpolation which 2021-2030 difference is reduced by "factor"
-                    factor = 4  # the higher the more cost reduction
-                    y = pd.concat([y, pd.Series({"index": y.iloc[1] - ((y.iloc[0]-y.iloc[1])/factor**1)})], ignore_index=True)
-                    y = pd.concat([y, pd.Series({"index": y.iloc[1] - ((y.iloc[0]-y.iloc[1])/factor**1) - ((y.iloc[0]-y.iloc[1])/factor**2) - ((y.iloc[0]-y.iloc[1])/factor**3) - ((y.iloc[0]-y.iloc[1])/factor**4)})], ignore_index=True)
-                    f = interpolate.interp1d(x, y, kind='linear', fill_value="extrapolate")
+                first_segment_diff = y.iloc[0]-y.iloc[1]
+                endp_first_segment = y.iloc[1]
+                # Below we create linear segments between 2021-2030
+                # While the first segment is known, the others are defined by the initial segments with a accumulating quadratic descreasing gradient
+                other_segments_points = [2034, 2039, 2044, 2049, 2054, 2059]
+                
+                def geometric_series(nominator, demoninator=1, number_of_terms=1, start=1):
+                    """
+                    A geometric series is a series with a constant ratio between successive terms.
+                    When moving to infinity the geometric series converges to a limit.
+                    https://en.wikipedia.org/wiki/Series_(mathematics)
+
+                    Example:
+                    --------
+                    nominator = 1
+                    demoninator = 2
+                    number_of_terms = 3
+                    start = 0  # 0 means it starts at the first term
+                    result = 1/1**0 + 1/2**1 + 1/2**2 = 1 + 1/2 + 1/4 = 1.75
+
+                    If moving to infinity the result converges to 2
+                    """
+                    return sum([nominator/demoninator**i for i in range(start, start+number_of_terms)])
+
+                if  tech=="Hydrogen-discharger" or tech=="Pumped-Heat-store":
+                    x1 = pd.concat([x,pd.DataFrame(other_segments_points)], ignore_index=True)
+                    y1 = y
+                    factor = 5
+                    for i in range(len(other_segments_points)): # -1 because of segments
+                        cost_at_year = endp_first_segment - geometric_series(nominator=first_segment_diff, demoninator=factor, number_of_terms=i+1)
+                        y1 = pd.concat([y1, pd.DataFrame([cost_at_year])], ignore_index=True)
+                    f = interpolate.interp1d(x1.squeeze(), y1.squeeze(), kind='linear', fill_value="extrapolate")
+                elif tech=="Hydrogen-charger":
+                    x2 = pd.concat([x,pd.DataFrame(other_segments_points)], ignore_index=True)
+                    y2 = y
+                    factor = 6.5
+                    for i in range(len(other_segments_points)):
+                        cost_at_year = endp_first_segment - geometric_series(nominator=first_segment_diff, demoninator=factor, number_of_terms=i+1)
+                        y2 = pd.concat([y2, pd.DataFrame([cost_at_year])], ignore_index=True)
+                    f = interpolate.interp1d(x2.squeeze(), y2.squeeze(), kind='linear', fill_value="extrapolate")  
                 else:
-                    x = pd.concat([x, pd.Series({"index":2039})], ignore_index=True)
-                    x = pd.concat([x, pd.Series({"index":2066})], ignore_index=True)
-                    # create every 9 year new points for linear interpolation which 2021-2030 difference is reduced by "factor"
-                    factor = 2  # the higher the more cost reduction
-                    y = pd.concat([y, pd.Series({"index": y.iloc[1] - ((y.iloc[0]-y.iloc[1])/factor**1)})], ignore_index=True)
-                    y = pd.concat([y, pd.Series({"index": y.iloc[1] - ((y.iloc[0]-y.iloc[1])/factor**1) - ((y.iloc[0]-y.iloc[1])/factor**2) - ((y.iloc[0]-y.iloc[1])/factor**3) - ((y.iloc[0]-y.iloc[1])/factor**4)})], ignore_index=True)
-                    f = interpolate.interp1d(x, y, kind='linear', fill_value="extrapolate")
+                    x3 = pd.concat([x,pd.DataFrame(other_segments_points)], ignore_index=True)
+                    y3 = y
+                    factor = 2
+                    for i in range(len(other_segments_points)):
+                        cost_at_year = endp_first_segment - geometric_series(nominator=first_segment_diff, demoninator=factor, number_of_terms=i+1)
+                        y3 = pd.concat([y3, pd.DataFrame([cost_at_year])], ignore_index=True)
+                    f = interpolate.interp1d(x3.squeeze(), y3.squeeze(), kind='linear', fill_value="extrapolate")
                 ynew = f(data_year)
 
             df_new = pd.DataFrame([{
@@ -1839,7 +1869,7 @@ if __name__ == "__main__":
 
     data = add_manual_input(data)
     # add costs for home batteries
-    data = add_home_battery_costs(data)
+    # data = add_home_battery_costs(data)
     # add SMR assumptions
     data = add_SMR_data(data)
     # add solar rooftop costs by taking the mean of commercial and residential

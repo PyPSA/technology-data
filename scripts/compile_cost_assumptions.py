@@ -1580,7 +1580,8 @@ if __name__ == "__main__":
     if 'snakemake' not in globals():
         import os
         from _helpers import mock_snakemake
-        os.chdir(os.path.join(os.getcwd(), "scripts"))
+        # os.chdir(os.path.join(os.getcwd(), "scripts"))
+        os.chdir(os.path.join(os.getcwd(), "technology-data", "scripts"))
         snakemake = mock_snakemake("compile_cost_assumptions")
     
     years = snakemake.config['years']
@@ -1689,6 +1690,15 @@ if __name__ == "__main__":
         costs = carbon_flow(costs,year)
 
         # include old pypsa costs
+
+        costs.loc[("geothermal", "VOM")] = pd.Series({
+            "value": "ja", "source": "die", "unit": "echt?", "further description": "ja"
+        })
+        costs.loc[("geothermal", "VOM"), "value"] = "value"
+        costs.loc[("geothermal", "VOM"), "source"] = "value"
+        costs.loc[("geothermal", "VOM"), "unit"] = "value"
+        costs.loc[("geothermal", "VOM"), "further description"] = "what"
+
         check = pd.concat([costs_pypsa, costs], sort=True, axis=1)
 
         # missing technologies
@@ -1704,6 +1714,15 @@ if __name__ == "__main__":
         to_add = costs_pypsa.loc[missing].drop("year", axis=1)
         to_add.loc[:,"further description"] = " from old pypsa cost assumptions"
         costs_tot = pd.concat([costs, to_add], sort=False)
+
+        import os
+        import sys
+        print(os.getcwd())
+        print(costs_tot.head())        
+        costs_tot.to_csv("intermediate_check.csv")
+
+        sys.exit()
+        break
 
         # single components missing
         comp_missing = costs_pypsa.index.difference(costs_tot.index)

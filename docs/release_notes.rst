@@ -5,7 +5,11 @@ Release Notes
 Upcoming Release
 ================
 
-* -
+* New technologies
+  - Added data for Enhanced Geothermal Systems, as given by Aghahosseini, Breyer 2020
+
+* Bug fixes
+  - Fixed a bug that ommited 'further description' from manually added data
 
 Technology-Data 0.5.0 (08 Februrary 2023)
 ===========================================

@@ -52,7 +52,9 @@ source_dict = {
 		# efficiencies + lifetime SMR / SMR + CC
                 "IEA": "IEA Global average levelised cost of hydrogen production by energy source and technology, 2019 and 2050 (2020), https://www.iea.org/data-and-statistics/charts/global-average-levelised-cost-of-hydrogen-production-by-energy-source-and-technology-2019-and-2050",
                 # SMR capture rate
-                "Timmerberg": "Hydrogen and hydrogen-derived fuels through methane decomposition of natural gas – GHG emissions and costs Timmerberg et al. (2020), https://doi.org/10.1016/j.ecmx.2020.100043"
+                "Timmerberg": "Hydrogen and hydrogen-derived fuels through methane decomposition of natural gas – GHG emissions and costs Timmerberg et al. (2020), https://doi.org/10.1016/j.ecmx.2020.100043",
+                # geothermal (enhanced geothermal systems)
+                "Aghahosseini2020": "Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551"
                 }
 
 # [DEA-sheet-names]
@@ -1227,6 +1229,7 @@ def rename_pypsa_old(costs_pypsa):
 def add_manual_input(data):
 
     df = pd.read_csv(snakemake.input['manual_input'], quotechar='"',sep=',', keep_default_na=False)
+    df = df.rename(columns={"further_description": "further description"})
 
     # Inflation adjustment for investment and VOM
     mask = df[df['parameter'].isin(['investment','VOM'])].index
@@ -1244,7 +1247,7 @@ def add_manual_input(data):
                       name=param)
             s['parameter'] = param
             s['technology'] = tech
-            for col in ['unit','source','further_description']:
+            for col in ['unit','source','further description']:
                 s[col] = "; and\n".join(c[col].unique().astype(str))
 
             l.append(s)
@@ -1403,6 +1406,51 @@ def carbon_flow(costs,year):
             costs.loc[(tech, 'CO2 stored'), 'source'] = "Stoichiometric calculation"
 
     return costs
+
+def add_egs_data(data):
+    """
+    Adds data of enhanced geothermal systems.
+
+    Data taken from Aghahosseini, Breyer 2020: From hot rock to useful energy...
+    
+    """ 
+    parameters = ["CO2 intensity", "lifetime", "VOM", "efficiency", "investment", "FOM"]
+    techs = ["geothermal"]
+    multi_i = pd.MultiIndex.from_product([techs, parameters])
+    geoth_df = pd.DataFrame(index=multi_i, columns=data.columns)
+    years = [col for col in data.columns if isinstance(col, int)]
+
+    # lifetime
+    geoth_df.loc[("geothermal", "lifetime"), years] = 30 #years
+    geoth_df.loc[("geothermal", "lifetime"), "unit"] = "years"
+    geoth_df.loc[("geothermal", "lifetime"), "source"] = source_dict["Aghahosseini2020"]
+
+    # co2 emissions
+    geoth_df.loc[("geothermal", "CO2 intensity"), years] = 0.12 # tCO2/MWh
+    geoth_df.loc[("geothermal", "CO2 intensity"), "unit"] = "tCO2/MWh"
+    geoth_df.loc[("geothermal", "CO2 intensity"), "source"] = source_dict["Aghahosseini2020"]
+    geoth_df.loc[("geothermal", "CO2 intensity"), "further description"] = "Likely to be improved; Average of 85 percent of global egs power plant capacity"
+
+    # investment, VOM, efficiency
+    geoth_df.loc[[
+        ("geothermal", "investment"), ("geothermal", "VOM"),
+        ("geothermal", "efficiency"), ("geothermal", "FOM")
+    ], "unit"] = "N/A"
+    geoth_df.loc[[
+        ("geothermal", "investment"), ("geothermal", "VOM"),
+        ("geothermal", "efficiency"), ("geothermal", "FOM")
+    ], "source"] = source_dict["Aghahosseini2020"]
+    geoth_df.loc[[
+        ("geothermal", "investment"), ("geothermal", "VOM"),
+        ("geothermal", "efficiency"), ("geothermal", "FOM")
+    ], years] = np.nan
+    geoth_df.loc[[
+        ("geothermal", "investment"), ("geothermal", "VOM"),
+        ("geothermal", "efficiency"), ("geothermal", "FOM")
+                  ], "further description"] = "Is added downstream due to geographical dependence."
+
+    return pd.concat([data, geoth_df])
+
 
 def annuity(n,r=0.07):
     """
@@ -1640,6 +1688,9 @@ if __name__ == "__main__":
     # add costs for gas pipelines
     data = pd.concat([data, costs_ISE.loc[["Gasnetz"]]], sort=True)
 
+    # add (enhanced) geothermal systems data
+    data = add_egs_data(data) 
+
     data = add_manual_input(data)
     # add costs for home batteries
     data = add_home_battery_costs(data)
@@ -1647,6 +1698,7 @@ if __name__ == "__main__":
     data = add_SMR_data(data)
     # add solar rooftop costs by taking the mean of commercial and residential
     data = add_mean_solar_rooftop(data)
+
     # %% (3) ------ add additional sources and save cost as csv ------------------
     # [RTD-target-multiindex-df]
     for year in years:
@@ -1690,15 +1742,6 @@ if __name__ == "__main__":
         costs = carbon_flow(costs,year)
 
         # include old pypsa costs
-
-        costs.loc[("geothermal", "VOM")] = pd.Series({
-            "value": "ja", "source": "die", "unit": "echt?", "further description": "ja"
-        })
-        costs.loc[("geothermal", "VOM"), "value"] = "value"
-        costs.loc[("geothermal", "VOM"), "source"] = "value"
-        costs.loc[("geothermal", "VOM"), "unit"] = "value"
-        costs.loc[("geothermal", "VOM"), "further description"] = "what"
-
         check = pd.concat([costs_pypsa, costs], sort=True, axis=1)
 
         # missing technologies
@@ -1714,15 +1757,6 @@ if __name__ == "__main__":
         to_add = costs_pypsa.loc[missing].drop("year", axis=1)
         to_add.loc[:,"further description"] = " from old pypsa cost assumptions"
         costs_tot = pd.concat([costs, to_add], sort=False)
-
-        import os
-        import sys
-        print(os.getcwd())
-        print(costs_tot.head())        
-        costs_tot.to_csv("intermediate_check.csv")
-
-        sys.exit()
-        break
 
         # single components missing
         comp_missing = costs_pypsa.index.difference(costs_tot.index)

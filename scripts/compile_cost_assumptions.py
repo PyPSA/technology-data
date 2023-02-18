@@ -1720,7 +1720,7 @@ def add_energy_storage_database(costs, data_year):
                 # While the first segment is known, the others are defined by the initial segments with a accumulating quadratic descreasing gradient
                 other_segments_points = [2034, 2039, 2044, 2049, 2054, 2059]
                 
-                def geometric_series(nominator, demoninator=1, number_of_terms=1, start=1):
+                def geometric_series(nominator, denominator=1, number_of_terms=1, start=1):
                     """
                     A geometric series is a series with a constant ratio between successive terms.
                     When moving to infinity the geometric series converges to a limit.
@@ -1729,21 +1729,21 @@ def add_energy_storage_database(costs, data_year):
                     Example:
                     --------
                     nominator = 1
-                    demoninator = 2
+                    denominator = 2
                     number_of_terms = 3
                     start = 0  # 0 means it starts at the first term
                     result = 1/1**0 + 1/2**1 + 1/2**2 = 1 + 1/2 + 1/4 = 1.75
 
                     If moving to infinity the result converges to 2
                     """
-                    return sum([nominator/demoninator**i for i in range(start, start+number_of_terms)])
+                    return sum([nominator/denominator**i for i in range(start, start+number_of_terms)])
 
                 if  tech=="Hydrogen-discharger" or tech=="Pumped-Heat-store":
                     x1 = pd.concat([x,pd.DataFrame(other_segments_points)], ignore_index=True)
                     y1 = y
                     factor = 5
                     for i in range(len(other_segments_points)): # -1 because of segments
-                        cost_at_year = endp_first_segment - geometric_series(nominator=first_segment_diff, demoninator=factor, number_of_terms=i+1)
+                        cost_at_year = endp_first_segment - geometric_series(nominator=first_segment_diff, denominator=factor, number_of_terms=i+1)
                         y1 = pd.concat([y1, pd.DataFrame([cost_at_year])], ignore_index=True)
                     f = interpolate.interp1d(x1.squeeze(), y1.squeeze(), kind='linear', fill_value="extrapolate")
                 elif tech=="Hydrogen-charger":
@@ -1751,7 +1751,7 @@ def add_energy_storage_database(costs, data_year):
                     y2 = y
                     factor = 6.5
                     for i in range(len(other_segments_points)):
-                        cost_at_year = endp_first_segment - geometric_series(nominator=first_segment_diff, demoninator=factor, number_of_terms=i+1)
+                        cost_at_year = endp_first_segment - geometric_series(nominator=first_segment_diff, denominator=factor, number_of_terms=i+1)
                         y2 = pd.concat([y2, pd.DataFrame([cost_at_year])], ignore_index=True)
                     f = interpolate.interp1d(x2.squeeze(), y2.squeeze(), kind='linear', fill_value="extrapolate")  
                 else:
@@ -1759,7 +1759,7 @@ def add_energy_storage_database(costs, data_year):
                     y3 = y
                     factor = 2
                     for i in range(len(other_segments_points)):
-                        cost_at_year = endp_first_segment - geometric_series(nominator=first_segment_diff, demoninator=factor, number_of_terms=i+1)
+                        cost_at_year = endp_first_segment - geometric_series(nominator=first_segment_diff, denominator=factor, number_of_terms=i+1)
                         y3 = pd.concat([y3, pd.DataFrame([cost_at_year])], ignore_index=True)
                     f = interpolate.interp1d(x3.squeeze(), y3.squeeze(), kind='linear', fill_value="extrapolate")
                 ynew = f(data_year)

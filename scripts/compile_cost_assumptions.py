@@ -1431,7 +1431,7 @@ def add_egs_data(data):
     geoth_df.loc[("geothermal", "CO2 intensity"), "source"] = source_dict["Aghahosseini2020"]
     geoth_df.loc[("geothermal", "CO2 intensity"), "further description"] = "Likely to be improved; Average of 85 percent of global egs power plant capacity"
 
-    # investment, VOM, efficiency
+    # investment, VOM, efficiency, FOM
     geoth_df.loc[[
         ("geothermal", "investment"), ("geothermal", "VOM"),
         ("geothermal", "efficiency"), ("geothermal", "FOM")
@@ -1628,8 +1628,7 @@ if __name__ == "__main__":
     if 'snakemake' not in globals():
         import os
         from _helpers import mock_snakemake
-        # os.chdir(os.path.join(os.getcwd(), "scripts"))
-        os.chdir(os.path.join(os.getcwd(), "technology-data", "scripts"))
+        os.chdir(os.path.join(os.getcwd(), "scripts"))
         snakemake = mock_snakemake("compile_cost_assumptions")
     
     years = snakemake.config['years']
@@ -1698,7 +1697,6 @@ if __name__ == "__main__":
     data = add_SMR_data(data)
     # add solar rooftop costs by taking the mean of commercial and residential
     data = add_mean_solar_rooftop(data)
-
     # %% (3) ------ add additional sources and save cost as csv ------------------
     # [RTD-target-multiindex-df]
     for year in years:

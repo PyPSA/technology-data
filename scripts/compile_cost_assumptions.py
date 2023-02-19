@@ -1435,7 +1435,7 @@ def add_egs_data(data):
     geoth_df.loc[[
         ("geothermal", "investment"), ("geothermal", "VOM"),
         ("geothermal", "efficiency"), ("geothermal", "FOM")
-    ], "unit"] = "N/A"
+    ], "unit"] = "tbd"
     geoth_df.loc[[
         ("geothermal", "investment"), ("geothermal", "VOM"),
         ("geothermal", "efficiency"), ("geothermal", "FOM")

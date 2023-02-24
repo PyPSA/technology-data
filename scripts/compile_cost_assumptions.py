@@ -1336,6 +1336,12 @@ def carbon_flow(costs,year):
     btleta_data = np.interp(x=years, xp=[2020, 2050], fp=[0.35, 0.45])
     btl_eta = pd.Series(data=btleta_data, index=years)
 
+    #Adding pelletizing cost to biomass boiler
+    costs.loc[('biomass boiler', 'pelletizing cost'), 'value'] = 9
+    costs.loc[('biomass boiler', 'pelletizing cost'), 'unit'] = "EUR/MWh_pellets"
+    costs.loc[('biomass boiler', 'pelletizing cost'), 'source'] = "Assumption based on doi:10.1016/j.rser.2019.109506"
+
+
     for tech in ['Fischer-Tropsch', 'methanolisation', 'BtL', 'BioSNG', 'biogas',
                  'biogas CC', 'digestible biomass to hydrogen',
                  'solid biomass to hydrogen', 'electrobiofuels']:
@@ -1346,6 +1352,12 @@ def carbon_flow(costs,year):
         VOM = 0
         source = 'TODO'
         co2_capture_rate = 0.90
+
+        if not (tech, "capture rate") in costs.index:
+            costs.loc[(tech, 'capture rate'), 'value'] = co2_capture_rate
+            costs.loc[(tech, 'capture rate'), 'unit'] = "per unit"
+            costs.loc[(tech, 'capture rate'), 'source'] = "Assumption based on doi:10.1016/j.biombioe.2015.01.006"
+
 
         if tech == 'BtL':
             inv_cost = btl_cost[year]
@@ -1399,10 +1411,6 @@ def carbon_flow(costs,year):
             costs.loc[(tech, 'efficiency'), 'value'] = eta
             costs.loc[(tech, 'efficiency'), 'unit'] = "per unit"
             costs.loc[(tech, 'efficiency'), 'source'] = source
-
-        costs.loc[(tech, 'capture rate'), 'value'] = co2_capture_rate
-        costs.loc[(tech, 'capture rate'), 'unit'] = "per unit"
-        costs.loc[(tech, 'capture rate'), 'source'] = "Assumption based on doi:10.1016/j.biombioe.2015.01.006"
 
         if tech in ['BioSNG', 'BtL']:
             input_CO2_intensity = costs.loc[('solid biomass', 'CO2 intensity'), 'value']
@@ -1466,11 +1474,6 @@ def carbon_flow(costs,year):
             costs.loc[(tech, 'CO2 stored'), 'value'] = CO2_weight_share / CH4_vol_energy_density / 1000 #tCO2/MWh,in (NB: assuming the input is already given in the biogas potential and cost
             costs.loc[(tech, 'CO2 stored'), 'unit'] = "tCO2/MWh_th"
             costs.loc[(tech, 'CO2 stored'), 'source'] = "Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016"
-
-        #Adding pelletizing cost to biomass boiler
-        costs.loc[('biomass boiler', 'pelletizing cost'), 'value'] = 9
-        costs.loc[('biomass boiler', 'pelletizing cost'), 'unit'] = "EUR/MWh_pellets"
-        costs.loc[('biomass boiler', 'pelletizing cost'), 'source'] = "Assumption based on doi:10.1016/j.rser.2019.109506"
 
         if inv_cost > 0:
             costs.loc[(tech, 'investment'), 'value'] = inv_cost

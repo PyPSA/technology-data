@@ -587,7 +587,7 @@ def add_co2_intensity(costs):
     costs.loc[('coal', 'CO2 intensity'), 'value'] = 93369 / 1e3 / TJ_to_MWh  # Steinkohle
     costs.loc[('lignite', 'CO2 intensity'), 'value'] = 113031 / 1e3 / TJ_to_MWh  # Rohbraunkohle Rheinland
     costs.loc[('oil', 'CO2 intensity'), 'value'] = 74020 / 1e3 / TJ_to_MWh  # Heizöl, leicht
-    costs.at[('solid biomass', 'CO2 intensity'), 'value'] = 0.3
+    costs.loc[('solid biomass', 'CO2 intensity'), 'value'] = 0.3
 
     oil_specific_energy = 44 #GJ/t
     CO2_CH2_mass_ratio = 44/14 #kg/kg (1 mol per mol)
@@ -1068,10 +1068,6 @@ def order_data(tech_data):
         if tech == 'Fischer-Tropsch':
             efficiency[years] *= 100
 
-        if tech == 'electrolysis':
-            efficiency_heat = df[df.index.str.contains("hereof recoverable for district heating")].copy()
-            efficiency_heat["parameter"] = "efficiency-heat"
-            clean_df[tech] = pd.concat([clean_df[tech], efficiency_heat])
 
         # take annual average instead of name plate efficiency
         if any(efficiency.index.str.contains("annual average")):

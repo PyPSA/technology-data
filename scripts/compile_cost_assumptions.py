@@ -1293,7 +1293,8 @@ def add_manual_input(data):
             l.append(s)
 
     new_df = pd.DataFrame(l).set_index(['technology','parameter'])
-    data = data.combine_first(new_df)
+    # overwrite DEA data with manual input
+    data = new_df.combine_first(data)
 
     return data
 
@@ -1335,7 +1336,9 @@ def carbon_flow(costs,year):
     btleta_data = np.interp(x=years, xp=[2020, 2050], fp=[0.35, 0.45])
     btl_eta = pd.Series(data=btleta_data, index=years)
 
-    for tech in ['BtL', 'BioSNG', 'methanation', 'Fischer-Tropsch', 'biogas', 'biogas CC', 'digestible biomass to hydrogen', 'solid biomass to hydrogen', 'electrobiofuels']:
+    for tech in ['Fischer-Tropsch', 'methanolisation', 'BtL', 'BioSNG', 'biogas',
+                 'biogas CC', 'digestible biomass to hydrogen',
+                 'solid biomass to hydrogen', 'electrobiofuels']:
         inv_cost = 0
         eta = 0
         lifetime = 0
@@ -1741,7 +1744,7 @@ if __name__ == "__main__":
         from _helpers import mock_snakemake
         os.chdir(os.path.join(os.getcwd(), "scripts"))
         snakemake = mock_snakemake("compile_cost_assumptions")
-    
+
     years = snakemake.config['years']
 
     # (1) DEA data

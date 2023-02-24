@@ -133,8 +133,8 @@ General liquid hydrocarbon storage (crude),investment,2012,128,EUR/m^3,2012,"Ste
 General liquid hydrocarbon storage (crude),FOM,2012,6.25,%/year,2012,"Stelter and Nishida 2013: https://webstore.iea.org/insights-series-2013-focus-on-energy-security , figure 7 and pg. 12 .",Assuming ca. 10 EUR/m^3/a (center value between stand alone and addon facility).
 General liquid hydrocarbon storage (crude),lifetime,2012,30,years,2012,"Stelter and Nishida 2013: https://webstore.iea.org/insights-series-2013-focus-on-energy-security , pg. 11.",
 methane storage tank incl. compressor,investment,2014,8460,EUR/m^3,2014,Storage costs per l: https://www.compositesworld.com/articles/pressure-vessels-for-alternative-fuels-2014-2023 (2021-02-10).,"Assume 5USD/l (= 4.23 EUR/l at 1.17 USD/EUR exchange rate) for type 1 pressure vessel for 200 bar storage and 100% surplus costs for including compressor costs with storage, based on similar assumptions by DEA for compressed hydrogen storage tanks."
-methane storage tank incl. compressor,FOM,2014,1.9,%/year,2014,"Guesstimate, based on hydrogen storage tank by DEA.",Based on assumptions for hydrogen storage tank incl. Compressor (by DEA).
-methane storage tank incl. compressor,lifetime,2014,30,years,2014,"Guesstimate, based on hydrogen storage tank by DEA.",Based on assumptions for hydrogen storage tank incl. Compressor (by DEA).
+methane storage tank incl. compressor,FOM,2014,1.9,%/year,2014,"Guesstimate, based on hydrogen storage tank type 1 including compressor by DEA.",Based on assumptions for hydrogen storage tank type 1 including compressor (by DEA).
+methane storage tank incl. compressor,lifetime,2014,30,years,2014,"Guesstimate, based on hydrogen storage tank type 1 including compressor by DEA.",Based on assumptions for hydrogen storage tank 1 including compressor (by DEA).
 LOHC loaded DBT storage,investment,2012,140.659340659341,EUR/t,2012,"Density via Wissenschaftliche Dienste des Deutschen Bundestages 2020, https://www.bundestag.de/resource/blob/816048/454e182d5956d45a664da9eb85486f76/WD-8-058-20-pdf-data.pdf , pg. 11.","Based on storage “General liquid hydrocarbon storage (crude)”, as similar properties are shared. Density of loaded LOHC H18-DBT is 0.91 t/m^3."
 LOHC loaded DBT storage,FOM,2012,6.25,%/year,2012,,"Based on storage “General liquid hydrocarbon storage (crude)”, as similar properties are shared."
 LOHC loaded DBT storage,lifetime,2012,30,years,2012,,"Based on storage “General liquid hydrocarbon storage (crude)”, as similar properties are shared."
@@ -212,3 +212,11 @@ csp-tower power block,lifetime,2020,30,years,2020,see solar-tower.,-
 csp-tower power block,lifetime,2030,30,years,2020,see solar-tower.,-
 csp-tower power block,lifetime,2040,30,years,2020,see solar-tower.,-
 csp-tower power block,lifetime,2050,30,years,2020,see solar-tower.,-
+hydrogen storage tank type 1,investment,2030,13.5,EUR/kWh_H2,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.","450 EUR/kg_H2 converted with LHV to MWh. For a type 1 hydrogen storage tank (steel, 15-250 bar). Currency year assumed 2020 for initial publication of reference; observe note in SI.4.3 that no currency year is explicitly stated in the reference."
+hydrogen storage tank type 1,FOM,2030,2,%/year,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.",-
+hydrogen storage tank type 1,lifetime,2030,20,years,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.",-
+hydrogen storage tank type 1,min_fill_level,2030,6,%,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.",-
+hydrogen storage compressor,investment,2030,87.69,EUR/kWh_H2,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.","2923 EUR/kg_H2. For a 206 kg/h compressor. Base CAPEX 40 528 EUR/kW_el with scale factor 0.4603. kg_H2 converted to MWh using LHV. Pressure range: 30 bar in, 250 bar out."
+hydrogen storage compressor,FOM,2030,4,%/year,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",-
+hydrogen storage compressor,lifetime,2030,15,years,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",-
+hydrogen storage compressor,compression-electricity-input,2030,0.05,MWh_el/MWh_H2,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",1.707 kWh/kg.

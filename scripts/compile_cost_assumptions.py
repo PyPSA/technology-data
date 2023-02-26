@@ -1414,7 +1414,7 @@ def add_egs_data(data):
     Data taken from Aghahosseini, Breyer 2020: From hot rock to useful energy...
     
     """ 
-    parameters = ["CO2 intensity", "lifetime", "VOM", "efficiency", "investment", "FOM"]
+    parameters = ["CO2 intensity", "lifetime"]
     techs = ["geothermal"]
     multi_i = pd.MultiIndex.from_product([techs, parameters])
     geoth_df = pd.DataFrame(index=multi_i, columns=data.columns)
@@ -1426,28 +1426,10 @@ def add_egs_data(data):
     geoth_df.loc[("geothermal", "lifetime"), "source"] = source_dict["Aghahosseini2020"]
 
     # co2 emissions
-    geoth_df.loc[("geothermal", "CO2 intensity"), years] = 0.12 # tCO2/MWh
-    geoth_df.loc[("geothermal", "CO2 intensity"), "unit"] = "tCO2/MWh"
+    geoth_df.loc[("geothermal", "CO2 intensity"), years] = 0.12 # tCO2/MWh_e
+    geoth_df.loc[("geothermal", "CO2 intensity"), "unit"] = "tCO2/MWh_e"
     geoth_df.loc[("geothermal", "CO2 intensity"), "source"] = source_dict["Aghahosseini2020"]
     geoth_df.loc[("geothermal", "CO2 intensity"), "further description"] = "Likely to be improved; Average of 85 percent of global egs power plant capacity"
-
-    # investment, VOM, efficiency, FOM
-    geoth_df.loc[[
-        ("geothermal", "investment"), ("geothermal", "VOM"),
-        ("geothermal", "efficiency"), ("geothermal", "FOM")
-    ], "unit"] = "tbd"
-    geoth_df.loc[[
-        ("geothermal", "investment"), ("geothermal", "VOM"),
-        ("geothermal", "efficiency"), ("geothermal", "FOM")
-    ], "source"] = source_dict["Aghahosseini2020"]
-    geoth_df.loc[[
-        ("geothermal", "investment"), ("geothermal", "VOM"),
-        ("geothermal", "efficiency"), ("geothermal", "FOM")
-    ], years] = np.nan
-    geoth_df.loc[[
-        ("geothermal", "investment"), ("geothermal", "VOM"),
-        ("geothermal", "efficiency"), ("geothermal", "FOM")
-                  ], "further description"] = "Is added downstream due to geographical dependence."
 
     return pd.concat([data, geoth_df])
 
@@ -1764,6 +1746,7 @@ if __name__ == "__main__":
             print("old c_v and c_b values are assumed where given")
         to_add = costs_pypsa.loc[comp_missing].drop("year", axis=1)
         to_add.loc[:, "further description"] = " from old pypsa cost assumptions"
+        to_add = to_add.drop("geothermal") # more data on geothermal is added downstream, so old assumptions are redundant
         costs_tot = pd.concat([costs_tot, to_add], sort=False)
 
         # unify the cost from DIW2010

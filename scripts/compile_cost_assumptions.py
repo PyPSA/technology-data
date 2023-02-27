@@ -1433,7 +1433,7 @@ def add_egs_data(data):
     geoth_df.loc[("geothermal", "CO2 intensity"), "source"] = source_dict["Aghahosseini2020"]
     geoth_df.loc[("geothermal", "CO2 intensity"), "further description"] = "Likely to be improved; Average of 85 percent of global egs power plant capacity"
 
-    # efficiency for electricity generation using organic rankine cycle
+    # efficiency for heat generation using organic rankine cycle
     geoth_df.loc[("geothermal", "efficiency residential heat"), years] = 0.8
     geoth_df.loc[("geothermal", "efficiency residential heat"), "unit"] = "per unit"
     geoth_df.loc[("geothermal", "efficiency residential heat"), "source"] = "{}; {}".format(source_dict["Aghahosseini2020"], source_dict["Breede2015"]) 

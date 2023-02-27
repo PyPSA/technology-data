@@ -5,7 +5,19 @@ Release Notes
 Upcoming Release
 ================
 
-* -
+Updated technologies
+ - updated cost assumptions for 'digestible biomass to hydrogen' and "solid biomass to hydrogen"
+
+* New technologies
+ - new biomass technologies ('biogas CC', 'central gas CHP CC', 'central hydrogen CHP', 'central solid biomass CHP CC', 'central solid biomass CHP powerboost CC',
+'direct firing gas', 'direct firing gas CC', 'direct firing solid fuels', 'direct firing solid fuels CC', 'electrobiofuels', 'solid biomass boiler steam CC', 'waste CHP', 'waste CHP CC',
+pelletizing cost for pellets from solid biomass residues)
+
+* Changed technologies
+ -
+
+* Features
+ - energy penalties for biomass usages, biogas and gas boilers with carbon capture (calculations will be provided in an upcoming paper
 
 Technology-Data 0.5.0 (08 Februrary 2023)
 ===========================================

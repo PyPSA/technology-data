@@ -54,7 +54,9 @@ source_dict = {
                 # SMR capture rate
                 "Timmerberg": "Hydrogen and hydrogen-derived fuels through methane decomposition of natural gas – GHG emissions and costs Timmerberg et al. (2020), https://doi.org/10.1016/j.ecmx.2020.100043",
                 # geothermal (enhanced geothermal systems)
-                "Aghahosseini2020": "Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551"
+                "Aghahosseini2020": "Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551",
+                # review of existing deep geothermal projects
+                "Breede2015": "Breede et al. 2015: Overcoming challenges in the classification of deep geothermal potential, https://eprints.gla.ac.uk/169585/",
                 }
 
 # [DEA-sheet-names]
@@ -1414,7 +1416,7 @@ def add_egs_data(data):
     Data taken from Aghahosseini, Breyer 2020: From hot rock to useful energy...
     
     """ 
-    parameters = ["CO2 intensity", "lifetime"]
+    parameters = ["CO2 intensity", "lifetime", "efficiency residential heat", "efficiency electricity"]
     techs = ["geothermal"]
     multi_i = pd.MultiIndex.from_product([techs, parameters])
     geoth_df = pd.DataFrame(index=multi_i, columns=data.columns)
@@ -1430,6 +1432,18 @@ def add_egs_data(data):
     geoth_df.loc[("geothermal", "CO2 intensity"), "unit"] = "tCO2/MWh_e"
     geoth_df.loc[("geothermal", "CO2 intensity"), "source"] = source_dict["Aghahosseini2020"]
     geoth_df.loc[("geothermal", "CO2 intensity"), "further description"] = "Likely to be improved; Average of 85 percent of global egs power plant capacity"
+
+    # efficiency for electricity generation using organic rankine cycle
+    geoth_df.loc[("geothermal", "efficiency residential heat"), years] = 0.8
+    geoth_df.loc[("geothermal", "efficiency residential heat"), "unit"] = "per unit"
+    geoth_df.loc[("geothermal", "efficiency residential heat"), "source"] = "{}; {}".format(source_dict["Aghahosseini2020"], source_dict["Breede2015"]) 
+    geoth_df.loc[("geothermal", "efficiency residential heat"), "further description"] = "This is a rough estimate, depends on local conditions; value under review"
+
+    # efficiency for electricity generation using organic rankine cycle
+    geoth_df.loc[("geothermal", "efficiency electricity"), years] = 0.1
+    geoth_df.loc[("geothermal", "efficiency electricity"), "unit"] = "per unit"
+    geoth_df.loc[("geothermal", "efficiency electricity"), "source"] = "{}; {}".format(source_dict["Aghahosseini2020"], source_dict["Breede2015"]) 
+    geoth_df.loc[("geothermal", "efficiency electricity"), "further description"] = "This is a rough estimate, depends on local conditions; value under review"
 
     return pd.concat([data, geoth_df])
 

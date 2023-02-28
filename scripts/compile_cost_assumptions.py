@@ -1428,8 +1428,8 @@ def add_egs_data(data):
     geoth_df.loc[("geothermal", "lifetime"), "source"] = source_dict["Aghahosseini2020"]
 
     # co2 emissions
-    geoth_df.loc[("geothermal", "CO2 intensity"), years] = 0.12 # tCO2/MWh_e
-    geoth_df.loc[("geothermal", "CO2 intensity"), "unit"] = "tCO2/MWh_e"
+    geoth_df.loc[("geothermal", "CO2 intensity"), years] = 0.12 # tCO2/MWh_el
+    geoth_df.loc[("geothermal", "CO2 intensity"), "unit"] = "tCO2/MWh_el"
     geoth_df.loc[("geothermal", "CO2 intensity"), "source"] = source_dict["Aghahosseini2020"]
     geoth_df.loc[("geothermal", "CO2 intensity"), "further description"] = "Likely to be improved; Average of 85 percent of global egs power plant capacity"
 

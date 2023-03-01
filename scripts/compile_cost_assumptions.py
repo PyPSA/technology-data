@@ -1541,10 +1541,6 @@ def energy_penalty(costs):
         eta_steam = (1 - scalingFactor) * costs.loc[(boiler, 'efficiency'), 'value']
         eta_old = costs.loc[(tech, 'efficiency'), 'value']
 
-        temp = costs.loc[(tech, 'efficiency'), 'value']
-        eta_main = costs.loc[(tech, 'efficiency'), 'value'] * scalingFactor
-        print('Adapting ',tech,' eta from ', temp, ' to ', eta_main)
-
         # Adapting investment share of tech due to steam boiler addition. Investment per MW_el.
         costs.loc[(tech, 'investment'), 'value'] = costs.loc[(tech, 'investment'), 'value'] * eta_old / eta_main \
             + costs.loc[(boiler, 'investment'), 'value'] * eta_steam / eta_main

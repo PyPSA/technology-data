@@ -1513,7 +1513,7 @@ def energy_penalty(costs):
     # Need to take steam production for CC into account, assumed with the main feedstock,
     # e.g. the input biomass is used also for steam, and the efficiency for el and heat is scaled down accordingly
 
-    for tech in ['central solid biomass CHP CC', 'waste CHP CC', 'central solid biomass CHP powerboost CC', 'solid biomass boiler steam CC', 'direct firing solid fuels CC', 'direct firing gas CC', 'biogas CC']:
+    for tech in ['central solid biomass CHP CC', 'waste CHP CC', 'solid biomass boiler steam CC', 'direct firing solid fuels CC', 'direct firing gas CC', 'biogas CC']:
 
         if 'powerboost' in tech:
             boiler = 'electric boiler steam'
@@ -1545,17 +1545,11 @@ def energy_penalty(costs):
         eta_main = costs.loc[(tech, 'efficiency'), 'value'] * scalingFactor
         print('Adapting ',tech,' eta from ', temp, ' to ', eta_main)
 
-        if 'powerboost' in tech:
-            scalingFactor = 1
-            eta_main = costs.loc[(tech, 'efficiency'), 'value'] - el_demand
-        # else:
-
         # Adapting investment share of tech due to steam boiler addition. Investment per MW_el.
         costs.loc[(tech, 'investment'), 'value'] = costs.loc[(tech, 'investment'), 'value'] * eta_old / eta_main \
             + costs.loc[(boiler, 'investment'), 'value'] * eta_steam / eta_main
         costs.loc[(tech, 'investment'), 'source'] = 'Combination of ' + tech + ' and ' + boiler
         costs.loc[(tech, 'investment'), 'further description'] = ''
-
 
         costs.loc[(tech, 'efficiency'), 'value'] = eta_main
         costs.loc[(tech, 'efficiency'), 'source'] = 'Combination of ' + tech + ' and ' + boiler

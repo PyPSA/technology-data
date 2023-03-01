@@ -1536,17 +1536,19 @@ def energy_penalty(costs):
             ('biomass CHP capture', 'heat-input'), 'value']
                              / costs.loc[(boiler, 'efficiency'), 'value'])
 
-
         el_demand = (co2_capture * costs.loc[('biomass CHP capture', 'heat-input'), 'value']
                      / costs.loc[(boiler, 'efficiency'), 'value'])
         eta_steam = (1 - scalingFactor) * costs.loc[(boiler, 'efficiency'), 'value']
         eta_old = costs.loc[(tech, 'efficiency'), 'value']
 
+        temp = costs.loc[(tech, 'efficiency'), 'value']
+        eta_main = costs.loc[(tech, 'efficiency'), 'value'] * scalingFactor
+        print('Adapting ',tech,' eta from ', temp, ' to ', eta_main)
+
         if 'powerboost' in tech:
             scalingFactor = 1
             eta_main = costs.loc[(tech, 'efficiency'), 'value'] - el_demand
-        else:
-            eta_main = costs.loc[(tech, 'efficiency'), 'value'] * scalingFactor
+        # else:
 
         # Adapting investment share of tech due to steam boiler addition. Investment per MW_el.
         costs.loc[(tech, 'investment'), 'value'] = costs.loc[(tech, 'investment'), 'value'] * eta_old / eta_main \
@@ -1554,15 +1556,6 @@ def energy_penalty(costs):
         costs.loc[(tech, 'investment'), 'source'] = 'Combination of ' + tech + ' and ' + boiler
         costs.loc[(tech, 'investment'), 'further description'] = ''
 
-        if costs.loc[(tech, 'VOM'), 'value']:
-            break
-        else:
-            costs.loc[(tech, 'VOM'), 'value'] = 0.
-
-        costs.loc[(tech, 'VOM'), 'value'] = costs.loc[(tech, 'VOM'), 'value'] * eta_old / eta_main \
-            + costs.loc[(boiler, 'VOM'), 'value'] * eta_steam / eta_main
-        costs.loc[(tech, 'VOM'), 'source'] = 'Combination of ' + tech + ' and ' + boiler
-        costs.loc[(tech, 'VOM'), 'further description'] = ''
 
         costs.loc[(tech, 'efficiency'), 'value'] = eta_main
         costs.loc[(tech, 'efficiency'), 'source'] = 'Combination of ' + tech + ' and ' + boiler
@@ -1576,6 +1569,15 @@ def energy_penalty(costs):
                  costs.loc[('biomass CHP capture', 'compression-heat-output'), 'value'])
             costs.loc[(tech, 'efficiency-heat'), 'source'] = 'Combination of ' + tech + ' and ' + boiler
             costs.loc[(tech, 'efficiency-heat'), 'further description'] = ''
+
+        if 'biogas CC' in tech:
+            costs.loc[(tech, 'VOM'), 'value'] = 0
+            costs.loc[(tech, 'VOM'), 'unit'] = 'EUR/MWh'
+
+        costs.loc[(tech, 'VOM'), 'value'] = costs.loc[(tech, 'VOM'), 'value'] * eta_old / eta_main \
+            + costs.loc[(boiler, 'VOM'), 'value'] * eta_steam / eta_main
+        costs.loc[(tech, 'VOM'), 'source'] = 'Combination of ' + tech + ' and ' + boiler
+        costs.loc[(tech, 'VOM'), 'further description'] = ''
 
     return costs
 

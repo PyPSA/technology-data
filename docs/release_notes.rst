@@ -5,7 +5,9 @@ Release Notes
 Upcoming Release
 ================
 
-* -
+* Updated technologies
+  - Fix: Unit for methanation investment costs is now correctly displayed as "EUR/kW_CH4" (`#82 <https://github.com/PyPSA/technology-data/issues/82#event-8638160137>`_)
+
 
 Technology-Data 0.5.0 (08 Februrary 2023)
 ===========================================

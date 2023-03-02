@@ -5,9 +5,21 @@ Release Notes
 Upcoming Release
 ================
 
-* Updated technologies
-  - Fix: Unit for methanation investment costs is now correctly displayed as "EUR/kW_CH4" (`#82 <https://github.com/PyPSA/technology-data/issues/82#event-8638160137>`_)
+Updated technologies
+ - updated cost assumptions for 'digestible biomass to hydrogen' and "solid biomass to hydrogen"
+- Fix: Unit for methanation investment costs is now correctly displayed as "EUR/kW_CH4" (`#82 <https://github.com/PyPSA/technology-data/issues/82#event-8638160137>`_)
 
+
+* New technologies
+ - new biomass technologies ('biogas CC', 'central gas CHP CC', 'central hydrogen CHP', 'central solid biomass CHP CC', 'central solid biomass CHP powerboost CC',
+'direct firing gas', 'direct firing gas CC', 'direct firing solid fuels', 'direct firing solid fuels CC', 'electrobiofuels', 'solid biomass boiler steam CC', 'waste CHP', 'waste CHP CC',
+pelletizing cost for pellets from solid biomass residues)
+
+* Changed technologies
+ -
+
+* Features
+ - energy penalties for biomass usages, biogas and gas boilers with carbon capture (calculations will be provided in an upcoming paper
 
 Technology-Data 0.5.0 (08 Februrary 2023)
 ===========================================

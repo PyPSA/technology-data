@@ -14,9 +14,22 @@ Updated technologies
  - new biomass technologies ('biogas CC', 'central gas CHP CC', 'central hydrogen CHP', 'central solid biomass CHP CC', 'central solid biomass CHP powerboost CC',
 'direct firing gas', 'direct firing gas CC', 'direct firing solid fuels', 'direct firing solid fuels CC', 'electrobiofuels', 'solid biomass boiler steam CC', 'waste CHP', 'waste CHP CC',
 pelletizing cost for pellets from solid biomass residues)
+  - H2 liquefaction (Conversion efficiency)
+  - CH4 liquefaction (Conversion efficiency)
+  - CO2 liquefaction (Conversion efficiency)
+  - LOHC hydrogenation (Conversion efficiency)
+  - Ammonia crackier (Conversion efficiency)
+  - Steam methane reforming (Conversion efficiency)
+  - Methanol steam reforming (Conversion efficiency)
+  - Fischer-Tropsch (Conversion efficiency)
+  - seawater RO desalination (Conversion efficiency)
+  - Haber-Bosch (Conversion efficiency)
+  - air separation unit (Conversion efficiency)
+  - direct air capture (Conversion efficiency)
 
 * Changed technologies
- -
+  - methanation (Conversion efficiency)
+  - methanolisation (Conversion efficiency)
 
 * Features
  - energy penalties for biomass usages, biogas and gas boilers with carbon capture (calculations will be provided in an upcoming paper

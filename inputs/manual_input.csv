@@ -224,3 +224,4 @@ hydrogen storage compressor,investment,2030,87.69,EUR/kWh_H2,2020,"Based on Stö
 hydrogen storage compressor,FOM,2030,4,%/year,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",-
 hydrogen storage compressor,lifetime,2030,15,years,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",-
 hydrogen storage compressor,compression-electricity-input,2030,0.05,MWh_el/MWh_H2,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",1.707 kWh/kg.
+seawater RO desalination,electricity-input,2030,0.003,MWHh_el/t_H2O,,"Caldera et al. (2016): Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Fig. 4.",Desalination using SWRO. Assume medium salinity of 35 Practical Salinity Units (PSUs) = 35 kg/m^3.

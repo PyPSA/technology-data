@@ -1,5 +1,6 @@
 technology,parameter,value,unit,source,further description
 Ammonia cracker,FOM,4.3,%/year,"Ishimoto et al. (2020): 10.1016/j.ijhydene.2020.09.017 , table 7.",
+Ammonia cracker,ammonia-input,1.46,MWh_NH3/MWh_H2,"ENGIE et al (2020): Ammonia to Green Hydrogen Feasibility Study (https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/880826/HS420_-_Ecuity_-_Ammonia_to_Green_Hydrogen.pdf), Fig. 10.",
 Ammonia cracker,investment,1062107.74,EUR/MW_H2,"Ishimoto et al. (2020): 10.1016/j.ijhydene.2020.09.017 , table 6.",
 Ammonia cracker,lifetime,25.0,years,"Ishimoto et al. (2020): 10.1016/j.ijhydene.2020.09.017 , table 7.",
 BioSNG,C in fuel,0.33,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",
@@ -41,12 +42,17 @@ CH4 (l) transport ship,capacity,58300.0,t_CH4,"Calculated, based on Fasihi et al
 CH4 (l) transport ship,investment,151000000.0,EUR,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CH4 (l) transport ship,lifetime,25.0,years,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CH4 evaporation,FOM,3.5,%/year,"Lochner and Bothe (2009): https://doi.org/10.1016/j.enpol.2008.12.012 and Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
+CH4 evaporation,electricity-input,0.04,MWh_el/MWh_CH4,"Pospíšil et al. (2019): Energy demand of liquefaction and regasification of natural gas and the potential of LNG for operative thermal energy storage (https://doi.org/10.1016/j.rser.2018.09.027), Table 2 and Table 3. alternative source 2: https://encyclopedia.airliquide.com/methane (accessed 2021-02-10).",
 CH4 evaporation,investment,87.6,EUR/kW_CH4,"Calculated, based on Lochner and Bothe (2009): https://doi.org/10.1016/j.enpol.2008.12.012 and Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CH4 evaporation,lifetime,30.0,years,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
+CH4 evaporation,methane-input,1.0,MWh_CH4/MWh_CH4,"Pospíšil et al. (2019): Energy demand of liquefaction and regasification of natural gas and the potential of LNG for operative thermal energy storage (https://doi.org/10.1016/j.rser.2018.09.027), Table 2 and Table 3. alternative source 2: https://encyclopedia.airliquide.com/methane (accessed 2021-02-10).",
 CH4 liquefaction,FOM,3.5,%/year,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CH4 liquefaction,investment,232.13,EUR/kW_CH4,"Calculated, based on Lochner and Bothe (2009): https://doi.org/10.1016/j.enpol.2008.12.012 and Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CH4 liquefaction,lifetime,25.0,years,"Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306",
 CO2 liquefaction,FOM,5.0,%/year,Mitsubish Heavy Industries Ltd. and IEA (2004): https://ieaghg.org/docs/General_Docs/Reports/PH4-30%20Ship%20Transport.pdf .,
+CO2 liquefaction,carbondioxide-input,1.0,t_CO2/t_CO2,Mitsubish Heavy Industries Ltd. and IEA (2004): https://ieaghg.org/docs/General_Docs/Reports/PH4-30%20Ship%20Transport.pdf .,
+CO2 liquefaction,electricity-input,0.12,MWh_el/t_CO2,Mitsubish Heavy Industries Ltd. and IEA (2004): https://ieaghg.org/docs/General_Docs/Reports/PH4-30%20Ship%20Transport.pdf .,
+CO2 liquefaction,heat-input,0.01,MWh_th/t_CO2,Mitsubish Heavy Industries Ltd. and IEA (2004): https://ieaghg.org/docs/General_Docs/Reports/PH4-30%20Ship%20Transport.pdf .,
 CO2 liquefaction,investment,16.03,EUR/t_CO2/h,Mitsubish Heavy Industries Ltd. and IEA (2004): https://ieaghg.org/docs/General_Docs/Reports/PH4-30%20Ship%20Transport.pdf .,
 CO2 liquefaction,lifetime,25.0,years,"Guesstimate, based on CH4 liquefaction.",
 CO2 pipeline,FOM,0.9,%/year,"Danish Energy Agency, Technology Data for Energy Transport (March 2021), Excel datasheet: 121 co2 pipeline.",
@@ -64,7 +70,10 @@ FT fuel transport ship,lifetime,15.0,years,"Assume comparable tanker as for LOHC
 Fischer-Tropsch,FOM,3.0,%/year,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), section 6.3.2.1.",
 Fischer-Tropsch,VOM,4.75,EUR/MWh_FT,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",102 Hydrogen to Jet:  Variable O&M
 Fischer-Tropsch,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
+Fischer-Tropsch,carbondioxide-input,0.41,t_CO2/MWh_FT,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Power to Jet Fuel.",
 Fischer-Tropsch,efficiency,0.8,per unit,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), section 6.3.2.2.","102 Hydrogen to Jet:  FT Liquids Output, MWh/MWh Total Input"
+Fischer-Tropsch,electricity-input,0.01,MWh_el/MWh_FT,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Power to Jet Fuel.",
+Fischer-Tropsch,hydrogen-input,1.78,MWh_H2/MWh_FT,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Power to Jet Fuel.",
 Fischer-Tropsch,investment,704056.13,EUR/MW_FT,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), table 8: “Reference scenario”.",102 Hydrogen to Jet:  Specific investment
 Fischer-Tropsch,lifetime,20.0,years,"Danish Energy Agency, Technology Data for Renewable Fuels (04/2022), Data sheet “Methanol to Power”.",102 Hydrogen to Jet:  Technical lifetime
 Gasnetz,FOM,2.5,%,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz
@@ -99,6 +108,8 @@ H2 evaporation,FOM,2.5,%/year,"DNV GL (2020): Study on the Import of Liquid Rene
 H2 evaporation,investment,143.64,EUR/kW_H2,"IRENA (2022): Global Hydrogen Trade to Meet the 1.5° Climate Goal: Technology Review of Hydrogen Carriers, https://www.irena.org/publications/2022/Apr/Global-hydrogen-trade-Part-II , pg. 62f.",
 H2 evaporation,lifetime,20.0,years,Guesstimate.,
 H2 liquefaction,FOM,2.5,%/year,"DNV GL (2020): Study on the Import of Liquid Renewable Energy: Technology Cost Assessment, https://www.gie.eu/wp-content/uploads/filr/2598/DNV-GL_Study-GLE-Technologies-and-costs-analysis-on-imports-of-liquid-renewable-energy.pdf .",
+H2 liquefaction,electricity-input,0.2,MWh_el/MWh_H2,"Heuser et al. (2019): Techno-economic analysis of a potential energy trading link between Patagonia and Japan based on CO2 free hydrogen (https://doi.org/10.1016/j.ijhydene.2018.12.156), table 1.",
+H2 liquefaction,hydrogen-input,1.02,MWh_H2/MWh_H2,"Heuser et al. (2019): Techno-economic analysis of a potential energy trading link between Patagonia and Japan based on CO2 free hydrogen (https://doi.org/10.1016/j.ijhydene.2018.12.156), table 1.",
 H2 liquefaction,investment,870.56,EUR/kW_H2,"IRENA (2022): Global Hydrogen Trade to Meet the 1.5° Climate Goal: Technology Review of Hydrogen Carriers, https://www.irena.org/publications/2022/Apr/Global-hydrogen-trade-Part-II , pg. 62f.",
 H2 liquefaction,lifetime,20.0,years,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9.",
 H2 pipeline,FOM,3.0,%/year,TODO, from old pypsa cost assumptions
@@ -118,8 +129,11 @@ HVDC submarine,investment,471.16,EUR/MW/km,Purvins et al. (2018): https://doi.or
 HVDC submarine,lifetime,40.0,years,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,
 Haber-Bosch,FOM,3.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Fixed O&M
 Haber-Bosch,VOM,0.02,EUR/MWh_NH3,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Variable O&M
+Haber-Bosch,electricity-input,0.25,MWh_el/MWh_NH3,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), table 11.",
+Haber-Bosch,hydrogen-input,1.15,MWh_H2/MWh_NH3,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), pg. 57.",
 Haber-Bosch,investment,1441.86,EUR/kW_NH3,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Specific investment
 Haber-Bosch,lifetime,30.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Technical lifetime
+Haber-Bosch,nitrogen-input,0.16,t_N2/MWh_NH3,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), pg. 57.",
 LNG storage tank,FOM,2.0,%/year,"Guesstimate, based on H2 (l) storage tank with comparable requirements.",
 LNG storage tank,investment,611.59,EUR/m^3,"Hurskainen 2019, https://cris.vtt.fi/en/publications/liquid-organic-hydrogen-carriers-lohc-concept-evaluation-and-tech pg. 46 (59).",
 LNG storage tank,lifetime,20.0,years,"Guesstimate, based on H2 (l) storage tank with comparable requirements.",
@@ -132,8 +146,11 @@ LOHC dehydrogenation (small scale),FOM,3.0,%/year,"Runge et al 2020, pg.8, https
 LOHC dehydrogenation (small scale),investment,759908.15,EUR/MW_H2,"Runge et al 2020, pg.8, https://papers.ssrn.com/abstract=3623514",
 LOHC dehydrogenation (small scale),lifetime,20.0,years,"Runge et al 2020, pg.8, https://papers.ssrn.com/abstract=3623514",
 LOHC hydrogenation,FOM,3.0,%/year,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9.",
+LOHC hydrogenation,electricity-input,0.0,MWh_el/t_HLOHC,Niermann et al. (2019): (https://doi.org/10.1039/C8EE02700E). 6A .,
+LOHC hydrogenation,hydrogen-input,1.87,MWh_H2/t_HLOHC,"Runge et al 2020, pg. 7, https://papers.ssrn.com/abstract=3623514",
 LOHC hydrogenation,investment,51259.54,EUR/MW_H2,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9.",
 LOHC hydrogenation,lifetime,20.0,years,"Reuß et al 2017, https://doi.org/10.1016/j.apenergy.2017.05.050 , Table 9.",
+LOHC hydrogenation,lohc-input,0.94,t_LOHC/t_HLOHC,"Runge et al 2020, pg. 7, https://papers.ssrn.com/abstract=3623514",
 LOHC loaded DBT storage,FOM,6.25,%/year,,
 LOHC loaded DBT storage,investment,149.27,EUR/t,"Density via Wissenschaftliche Dienste des Deutschen Bundestages 2020, https://www.bundestag.de/resource/blob/816048/454e182d5956d45a664da9eb85486f76/WD-8-058-20-pdf-data.pdf , pg. 11.",
 LOHC loaded DBT storage,lifetime,30.0,years,,
@@ -148,9 +165,10 @@ MeOH transport ship,FOM,5.0,%/year,"Assume comparable tanker as for LOHC transpo
 MeOH transport ship,capacity,75000.0,t_MeOH,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
 MeOH transport ship,investment,31700578.34,EUR,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
 MeOH transport ship,lifetime,15.0,years,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
-Methanol steam reforming,FOM,4.0,%/year,"Niermann et al (2021): 10.1016/j.rser.2020.110171 , table 4.",
-Methanol steam reforming,investment,16318.43,EUR/MW_H2,"Niermann et al (2021): 10.1016/j.rser.2020.110171 , table 4.",
-Methanol steam reforming,lifetime,20.0,years,"Niermann et al (2021): 10.1016/j.rser.2020.110171 , table 4.",
+Methanol steam reforming,FOM,4.0,%/year,"Niermann et al. (2021): Liquid Organic Hydrogen Carriers and alternatives for international transport of renewable hydrogen (https://doi.org/10.1016/j.rser.2020.110171), table 4.",
+Methanol steam reforming,investment,16318.43,EUR/MW_H2,"Niermann et al. (2021): Liquid Organic Hydrogen Carriers and alternatives for international transport of renewable hydrogen (https://doi.org/10.1016/j.rser.2020.110171), table 4.",
+Methanol steam reforming,lifetime,20.0,years,"Niermann et al. (2021): Liquid Organic Hydrogen Carriers and alternatives for international transport of renewable hydrogen (https://doi.org/10.1016/j.rser.2020.110171), table 4.",
+Methanol steam reforming,methanol-input,1.2,MWh_MeOH/MWh_H2,"Niermann et al. (2021): Liquid Organic Hydrogen Carriers and alternatives for international transport of renewable hydrogen (https://doi.org/10.1016/j.rser.2020.110171), table 4.",
 NH3 (l) storage tank incl. liquefaction,FOM,2.0,%/year,"Guesstimate, based on H2 (l) storage tank.",
 NH3 (l) storage tank incl. liquefaction,investment,161.93,EUR/MWh_NH3,"Calculated based on Morgan E. 2013: doi:10.7275/11KT-3F59 , Fig. 55, Fig 58.",
 NH3 (l) storage tank incl. liquefaction,lifetime,20.0,years,"Morgan E. 2013: doi:10.7275/11KT-3F59 , pg. 290",
@@ -179,7 +197,9 @@ SMR CC,lifetime,30.0,years,"IEA Global average levelised cost of hydrogen produc
 Steam methane reforming,FOM,3.0,%/year,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",
 Steam methane reforming,investment,470085.47,EUR/MW_H2,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",
 Steam methane reforming,lifetime,30.0,years,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",
+Steam methane reforming,methane-input,1.48,MWh_CH4/MWh_H2,"Keipi et al (2018): Economic analysis of hydrogen production by methane thermal decomposition (https://doi.org/10.1016/j.enconman.2017.12.063), table 2.",
 air separation unit,FOM,3.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Fixed O&M
+air separation unit,electricity-input,0.25,MWh_el/t_N2,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), p.288.",
 air separation unit,investment,810492.64,EUR/t_N2/h,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Specific investment
 air separation unit,lifetime,30.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Technical lifetime
 battery inverter,FOM,0.25,%/year,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Fixed O&M
@@ -399,8 +419,8 @@ digestible biomass to hydrogen,investment,3750.0,EUR/kW_th,"Zech et.al. DBFZ Rep
 direct air capture,FOM,4.95,%/year,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture
 direct air capture,compression-electricity-input,0.15,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture
 direct air capture,compression-heat-output,0.2,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture
-direct air capture,electricity-input,0.35,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture
-direct air capture,heat-input,2.5,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture
+direct air capture,electricity-input,0.4,MWh_el/t_CO2,"Beuttler et al (2019): The Role of Direct Air Capture in Mitigation of Antropogenic Greenhouse Gas emissions (https://doi.org/10.3389/fclim.2019.00010), alternative:  Breyer et al (2019).",403.a Direct air capture
+direct air capture,heat-input,1.6,MWh_th/t_CO2,"Beuttler et al (2019): The Role of Direct Air Capture in Mitigation of Antropogenic Greenhouse Gas emissions (https://doi.org/10.3389/fclim.2019.00010), alternative:  Breyer et al (2019).",403.a Direct air capture
 direct air capture,heat-output,1.25,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture
 direct air capture,investment,7000000.0,EUR/(tCO2/h),"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture
 direct air capture,lifetime,20.0,years,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture
@@ -517,7 +537,9 @@ lignite,fuel,2.9,EUR/MWh_th,DIW,
 lignite,investment,3845.51,EUR/kW_e,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
 lignite,lifetime,40.0,years,Lazard s Levelized Cost of Energy Analysis - Version 13.0,
 methanation,FOM,3.0,%/year,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), section 6.2.3.1",
-methanation,efficiency,0.8,per unit,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), section 6.2.3.1",
+methanation,carbondioxide-input,0.2,t_CO2/MWh_CH4,"Götz et al. (2016): Renewable Power-to-Gas: A technological and economic review (https://doi.org/10.1016/j.renene.2015.07.066), Fig. 11 .",
+methanation,efficiency,0.8,per unit,Palzer and Schaber thesis, from old pypsa cost assumptions
+methanation,hydrogen-input,1.28,MWh_H2/MWh_CH4,,
 methanation,investment,673.78,EUR/kW_CH4,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), table 6: “Reference scenario”.",
 methanation,lifetime,20.0,years,Guesstimate.,
 methane storage tank incl. compressor,FOM,1.9,%/year,"Guesstimate, based on hydrogen storage tank type 1 including compressor by DEA.",
@@ -526,6 +548,9 @@ methane storage tank incl. compressor,lifetime,30.0,years,"Guesstimate, based on
 methanolisation,FOM,3.0,%/year,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), section 6.3.2.1.",98 Methanol from power:  Fixed O&M
 methanolisation,VOM,6.27,EUR/MWh_MeOH,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",98 Methanol from power:  Variable O&M
 methanolisation,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
+methanolisation,carbondioxide-input,0.25,t_CO2/MWh_MeOH,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf) , pg. 66.",
+methanolisation,electricity-input,0.27,MWh_e/MWh_MeOH,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf) , pg. 65.",
+methanolisation,hydrogen-input,1.14,MWh_H2/MWh_MeOH,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf) , pg. 64.",
 methanolisation,investment,704056.13,EUR/MW_MeOH,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), table 8: “Reference scenario”.",98 Methanol from power:  Specific investment
 methanolisation,lifetime,20.0,years,"Danish Energy Agency, Technology Data for Renewable Fuels (04/2022), Data sheet “Methanol to Power”.",98 Methanol from power:  Technical lifetime
 micro CHP,FOM,6.43,%/year,"Danish Energy Agency, technologydatafor_heating_installations_marts_2018.xlsx",219 LT-PEMFC mCHP - natural gas:  Fixed O&M
@@ -564,6 +589,7 @@ ror,FOM,2.0,%/year,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa
 ror,efficiency,0.9,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 ror,investment,3312.24,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 ror,lifetime,80.0,years,IEA2010, from old pypsa cost assumptions
+seawater RO desalination,electricity-input,0.0,MWHh_el/t_H2O,"Caldera et al. (2016): Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Fig. 4.",
 seawater desalination,FOM,4.0,%/year,"Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Table 1.",
 seawater desalination,electricity-input,3.03,kWh/m^3-H2O,"Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Fig. 4.",
 seawater desalination,investment,36907.69,EUR/(m^3-H2O/h),"Caldera et al 2017: Learning Curve for Seawater Reverse Osmosis Desalination Plants: Capital Cost Trend of the Past, Present, and Future (https://doi.org/10.1002/2017WR021402), Table 4.",

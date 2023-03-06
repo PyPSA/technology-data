@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText:  The Technology Data Authors
+#
+# SPDX-License-Identifier: CC0-1.0
+
+repos:
+# Check for FSFE REUSE compliance (licences)
+- repo: https://github.com/fsfe/reuse-tool
+  rev: v1.1.2
+  hooks:
+  - id: reuse

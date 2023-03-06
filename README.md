@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText:  The Technology Data Authors
+
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/pypsa/technology-data?include_prereleases)
 [![Documentation](https://readthedocs.org/projects/technology-data/badge/?version=latest)](https://technology-data.readthedocs.io/en/latest/?badge=latest)
 ![Licence](https://img.shields.io/github/license/pypsa/technology-data)
@@ -21,11 +27,23 @@ The outputs are used in
 
 
 ## Licence
+[![REUSE status](https://api.reuse.software/badge/github.com/pypsa/technology-data)](https://api.reuse.software/info/github.com/pypsa/technology-data)
 
-Copyright 2019-2020 Marta Victoria (Aarhus University), Kun Zhu
-(Aarhus University), Elisabeth Zeyen (TUB), Tom Brown (TUB)
+The contents of this repository are released under multiple licences:
 
-The code in `scripts/` is released as free software under the
-[GPLv3](http://www.gnu.org/licenses/gpl-3.0.en.html), see LICENSE.txt.
-However, different licenses and terms of use may apply to the various
-input data.
+* Source code is licencesd as software under MIT licence
+* The documentation is licenced under CC-BY-4.0
+* The output files are licenced under CC-BY-4.0
+
+## Major contributors
+
+Major contributions by:
+
+* Marta Victoria (@martavp)
+* Tom Brown (@nworbmot)
+* Elisabeth Zeyen (@lisazeyen)
+* Johannes Hampp (@euronion)
+* Markus Millinger (@millingermarkus)
+* Max Parzen (@pz-max)
+* Fabian Neumann (@fneum)
+* Kun Zu (?)

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText:  The Technology Data Authors
+#
+# SPDX-License-Identifier: CC0-1.0
+
 name: technology-data
 channels:
   - conda-forge

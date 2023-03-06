@@ -1,3 +1,7 @@
+.. SPDX-FileCopyrightText:  The Technology Data Authors
+..
+.. SPDX-License-Identifier: CC-BY-4.0
+
 .. _installation:
 
 ##########################################

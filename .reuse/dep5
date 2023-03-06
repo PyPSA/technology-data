@@ -1,0 +1,32 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Technology Data
+Upstream-Contact:  <>
+Source: https://github.com/pypsa/technology-data
+
+Files: .github/*
+Copyright: The Technology Data Authors
+License: CC0-1.0
+
+Files: outputs/*
+Copyright: The Technology Data Authors
+License: CC-BY-4.0
+
+Files: latex_tables/*
+Copyright: The Technology Data Authors
+License: CC-BY-4.0
+
+Files: docs/data.csv
+Copyright: The Technology Data Authors
+License: CC-BY-4.0
+
+Files: docs/parameter.csv
+Copyright: The Technology Data Authors
+License: CC-BY-4.0
+
+Files: inputs/manual_input.csv
+Copyright: The Technology Data Authors
+License: CC-BY-4.0
+
+Files: inputs/costs_PyPSA.csv
+Copyright: The Technology Data Authors
+License: CC-BY-4.0

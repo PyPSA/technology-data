@@ -57,6 +57,8 @@ source_dict = {
                 "Aghahosseini2020": "Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551",
                 # review of existing deep geothermal projects
                 "Breede2015": "Breede et al. 2015: Overcoming challenges in the classification of deep geothermal potential, https://eprints.gla.ac.uk/169585/",
+                # Study of deep geothermal systems in the Northern Upper Rhine Graben
+                "Frey2022": "Frey et al. 2022: Techno-Economic Assessment of Geothermal Resources in the Variscan Basement of the Northern Upper Rhine Graben",
                 }
 
 # [DEA-sheet-names]
@@ -1437,13 +1439,19 @@ def add_egs_data(data):
     geoth_df.loc[("geothermal", "efficiency residential heat"), years] = 0.8
     geoth_df.loc[("geothermal", "efficiency residential heat"), "unit"] = "per unit"
     geoth_df.loc[("geothermal", "efficiency residential heat"), "source"] = "{}; {}".format(source_dict["Aghahosseini2020"], source_dict["Breede2015"]) 
-    geoth_df.loc[("geothermal", "efficiency residential heat"), "further description"] = "This is a rough estimate, depends on local conditions; value under review"
+    geoth_df.loc[("geothermal", "efficiency residential heat"), "further description"] = "This is a rough estimate, depends on local conditions"
 
     # efficiency for electricity generation using organic rankine cycle
     geoth_df.loc[("geothermal", "efficiency electricity"), years] = 0.1
     geoth_df.loc[("geothermal", "efficiency electricity"), "unit"] = "per unit"
     geoth_df.loc[("geothermal", "efficiency electricity"), "source"] = "{}; {}".format(source_dict["Aghahosseini2020"], source_dict["Breede2015"]) 
-    geoth_df.loc[("geothermal", "efficiency electricity"), "further description"] = "This is a rough estimate, depends on local conditions; value under review"
+    geoth_df.loc[("geothermal", "efficiency electricity"), "further description"] = "This is a rough estimate, depends on local conditions"
+
+    # relative additional capital cost of using residual heat for district heating (25 percent)
+    geoth_df.loc[("geothermal", "district heating cost"), years] = 0.25
+    geoth_df.loc[("geothermal", "district heating cost"), "unit"] = "%"
+    geoth_df.loc[("geothermal", "district heating cost"), "source"] = "{}".format(source_dict["Frey2022"]) 
+    geoth_df.loc[("geothermal", "district heating cost"), "further description"] = "If capital cost of electric generation from EGS is 100%, district heating adds additional 25%"
 
     return pd.concat([data, geoth_df])
 

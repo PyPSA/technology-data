@@ -59,6 +59,7 @@ source_dict = {
 sheet_names = {'onwind': '20 Onshore turbines',
                'offwind': '21 Offshore turbines',
                'solar-utility': '22 Utility-scale PV',
+               'solar-utility single-axis tracking': '22 Utility-scale PV tracker',
                'solar-rooftop residential': '22 Rooftop PV residential',
                'solar-rooftop commercial': '22 Rooftop PV commercial',
                'OCGT': '52 OCGT - Natural gas',
@@ -133,6 +134,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
 uncrtnty_lookup = {'onwind': 'J:K',
                     'offwind': 'J:K',
                     'solar-utility': 'J:K',
+                    'solar-utility single-axis tracking': 'J:K',
                     'solar-rooftop residential':  'J:K',
                     'solar-rooftop commercial':  'J:K',
                     'OCGT': 'I:J',
@@ -196,8 +198,11 @@ uncrtnty_lookup = {'onwind': 'J:K',
 # since February 2022 DEA uses a new format for the technology data
 # all excel sheets of updated technologies have a different layout and are
 # given in EUR_2020 money (instead of EUR_2015)
-new_format = ["solar-utility", 'solar-rooftop residential', 'solar-rooftop commercial',
-              "offwind"]
+new_format = ['solar-utility',
+              'solar-utility single-axis tracking',
+              'solar-rooftop residential',
+              'solar-rooftop commercial',
+              'offwind']
 # %% -------- FUNCTIONS ---------------------------------------------------
 
 def get_excel_sheets(excel_files):
@@ -1845,7 +1850,8 @@ if __name__ == "__main__":
             costs = add_solar_from_other(costs)
         else:
             solar_techs = ['solar', 'solar-rooftop', 'solar-rooftop commercial',
-                        'solar-rooftop residential', 'solar-utility']
+                        'solar-rooftop residential',
+                        'solar-utility', 'solar-utility single-axis tracking']
             costs = adjust_for_inflation(costs, solar_techs, 2020)
 
         # adjust for inflation all techs in new DEA format

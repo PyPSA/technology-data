@@ -11,9 +11,10 @@ Updated technologies
 
 
 * New technologies
- - new biomass technologies ('biogas CC', 'central gas CHP CC', 'central hydrogen CHP', 'central solid biomass CHP CC', 'central solid biomass CHP powerboost CC',
+  - new biomass technologies ('biogas CC', 'central gas CHP CC', 'central hydrogen CHP', 'central solid biomass CHP CC', 'central solid biomass CHP powerboost CC',
 'direct firing gas', 'direct firing gas CC', 'direct firing solid fuels', 'direct firing solid fuels CC', 'electrobiofuels', 'solid biomass boiler steam CC', 'waste CHP', 'waste CHP CC',
 pelletizing cost for pellets from solid biomass residues)
+  - "utility-scale single-axis tracking" PV (cost assumptions)
   - H2 liquefaction (Conversion efficiency)
   - CH4 liquefaction (Conversion efficiency)
   - CO2 liquefaction (Conversion efficiency)

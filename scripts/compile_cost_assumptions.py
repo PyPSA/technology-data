@@ -1304,7 +1304,7 @@ def add_manual_input(data):
             s['technology'] = tech
             for col in ['unit','source','further_description']:
                 s[col] = "; and\n".join(c[col].unique().astype(str))
-
+            s = s.rename({"further_description":"further description"}) # match column name between manual_input and original TD workflow
             l.append(s)
 
     new_df = pd.DataFrame(l).set_index(['technology','parameter'])

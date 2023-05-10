@@ -5,10 +5,13 @@ Release Notes
 Upcoming Release
 ================
 
-Updated technologies
- - updated cost assumptions for 'digestible biomass to hydrogen' and "solid biomass to hydrogen"
-- Fix: Unit for methanation investment costs is now correctly displayed as "EUR/kW_CH4" (`#82 <https://github.com/PyPSA/technology-data/issues/82#event-8638160137>`_)
+* General:
+  - Fix 'further_description' column from 'manual_inputs.csv' not being correctly parsed by the workflow
 
+* Updated technologies
+  - updated cost assumptions for 'digestible biomass to hydrogen' and "solid biomass to hydrogen"
+  - Fix: Unit for methanation investment costs is now correctly displayed as "EUR/kW_CH4" (`#82 <https://github.com/PyPSA/technology-data/issues/82#event-8638160137>`_)
+  - Fix source and description for 'solar' and 'solar-rooftop' to correctly indicate how they are calculated
 
 * New technologies
   - new biomass technologies ('biogas CC', 'central gas CHP CC', 'central hydrogen CHP', 'central solid biomass CHP CC', 'central solid biomass CHP powerboost CC',

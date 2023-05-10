@@ -1747,12 +1747,16 @@ def add_mean_solar_rooftop(data):
         rooftop[col] = data.loc["solar-rooftop residential"][col]
     # set multi index
     rooftop = pd.concat([rooftop], keys=["solar-rooftop"])
+    rooftop["source"] = "Calculated. See 'further description'."
+    rooftop["further description"] = "Mixed investment costs based on average of 50% 'solar-rooftop commercial' and 50% 'solar-rooftop residential'"
     # add to data
     data = pd.concat([data, rooftop])
     # add solar assuming 50% utility and 50% rooftop
     solar = (data.loc[["solar-rooftop", "solar-utility"]][years]).astype(float).groupby(level=1).mean()
     for col in data.columns[~data.columns.isin(years)]:
-        solar[col] = data.loc["solar-rooftop residential"][col]
+        solar[col] = data.loc["solar-rooftop residential"][col] 
+    solar["source"] = "Calculated. See 'further description'."
+    solar["further description"] = "Mixed investment costs based on average of 50% 'solar-rooftop' and 50% 'solar-utility'"
     # set multi index
     solar = pd.concat([solar], keys=["solar"])
     return pd.concat([data, solar])

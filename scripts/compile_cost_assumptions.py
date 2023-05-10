@@ -1304,7 +1304,7 @@ def add_manual_input(data):
             s['technology'] = tech
             for col in ['unit','source','further_description']:
                 s[col] = "; and\n".join(c[col].unique().astype(str))
-
+            s = s.rename({"further_description":"further description"}) # match column name between manual_input and original TD workflow
             l.append(s)
 
     new_df = pd.DataFrame(l).set_index(['technology','parameter'])
@@ -1747,12 +1747,16 @@ def add_mean_solar_rooftop(data):
         rooftop[col] = data.loc["solar-rooftop residential"][col]
     # set multi index
     rooftop = pd.concat([rooftop], keys=["solar-rooftop"])
+    rooftop["source"] = "Calculated. See 'further description'."
+    rooftop["further description"] = "Mixed investment costs based on average of 50% 'solar-rooftop commercial' and 50% 'solar-rooftop residential'"
     # add to data
     data = pd.concat([data, rooftop])
     # add solar assuming 50% utility and 50% rooftop
     solar = (data.loc[["solar-rooftop", "solar-utility"]][years]).astype(float).groupby(level=1).mean()
     for col in data.columns[~data.columns.isin(years)]:
-        solar[col] = data.loc["solar-rooftop residential"][col]
+        solar[col] = data.loc["solar-rooftop residential"][col] 
+    solar["source"] = "Calculated. See 'further description'."
+    solar["further description"] = "Mixed investment costs based on average of 50% 'solar-rooftop' and 50% 'solar-utility'"
     # set multi index
     solar = pd.concat([solar], keys=["solar"])
     return pd.concat([data, solar])

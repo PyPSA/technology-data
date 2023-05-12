@@ -30,6 +30,11 @@ pelletizing cost for pellets from solid biomass residues)
   - Haber-Bosch (Conversion efficiency)
   - air separation unit (Conversion efficiency)
   - direct air capture (Conversion efficiency)
+  - direct iron ore reduction (cost assumptions, conversion efficiencies)
+  - dry bulk carrier Capesize (cost assumptions)
+  - electric arc furnace (cost assumptions, conversion efficiencies)
+  - shipping fuel methanol (cost assumptions, emission intensity)
+  - iron ore DRI-ready (cost assumptions)
 
 * Changed technologies
   - methanation (Conversion efficiency)

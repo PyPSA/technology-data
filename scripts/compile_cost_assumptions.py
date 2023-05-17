@@ -1782,7 +1782,7 @@ def add_mean_solar_rooftop(data):
 
 
 def add_energy_storage_database(costs, data_year):
-    """Add energy storage database compiled by Parzen
+    """Add energy storage database compiled 
     
     Learning rate drop. For example, the nominal DC SB learning rate for RFBs is set at
     4.5%, 1.5% for lead-acid batteries, compared to 10% for Li-ion batteries, corresponding to cost drops of
@@ -1983,9 +1983,10 @@ def add_energy_storage_database(costs, data_year):
         )
     # keep only relevant columns
     df = df.loc[df.year == data_year,["technology", "parameter", "value", "unit", "source", "further description"]]
+    tech = df.technology.unique()
     df = df.set_index(['technology', 'parameter'])
 
-    return pd.concat([costs, df])
+    return pd.concat([costs, df]), tech
 
 
 # %% *************************************************************************
@@ -2092,7 +2093,8 @@ if __name__ == "__main__":
         costs = add_desalinsation_data(costs)
         # add energy storage database
         if snakemake.config['pnnl_energy_storage_database']:
-            costs = add_energy_storage_database(costs, year)
+            costs, tech = add_energy_storage_database(costs, year)
+            costs = adjust_for_inflation(costs, tech, 2020)
 
         # add electrolyzer and fuel cell efficiency from other source than DEA
         if snakemake.config['h2_from_budischak']:

@@ -10,8 +10,8 @@ dependencies:
   - numpy
   - beautifulsoup4
   - xlrd
-  - openpyxl
   - scipy
+  - openpyxl<=3.0.9
   - packaging
 
   - pip:

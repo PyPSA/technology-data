@@ -184,6 +184,7 @@ dic_ref = {'Technology Data for Energy Plants for Electricity and District heati
            #'NREL http://www.nrel.gov/docs/fy09osti/45873.pdf; 
            'IWES Interaktion':'Gerhardt_2015, DEA_2019',
            'Schaber thesis':'Schaber_2013',
+           'Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 ': 'Hagspiel_2014',
            'Hagspiel':'Hagspiel_2014',
            #'Fasihi':'Fasihi_2017',
            'Fasihi et al 2017, table 1, https://www.mdpi.com/2071-1050/9/2/306':'Fasihi_2017',
@@ -197,6 +198,7 @@ dic_ref = {'Technology Data for Energy Plants for Electricity and District heati
            'Is a 100% renewable European power system feasible by 2050?': 'Zappa_2019, JRC_biomass',
            'Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018': 'German_Environment_Agency',
            'IEA WEM2017 97USD/boe = http://www.iea.org/media/weowebsite/2017/WEM_Documentation_WEO2017.pdf':'IEA_WEO2017',
+           'Danish Energy Agency': 'DEA_2019',
            'Danish Energy Agency, technology_data_for_el_and_dh.xlsx':'DEA_2019',
            'Danish Energy Agency, technology_data_for_el_and_dh_-_0009.xlsx':'DEA_2019',
            'Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx':'DEA_2019',

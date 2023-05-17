@@ -1797,10 +1797,10 @@ def add_energy_storage_database(costs, data_year):
     """
     from scipy import interpolate
 
-    print(f"Add energy storage database compiled by Parzen for year {data_year}")
+    print(f"Add energy storage database compiled for year {data_year}")
     # a) Import csv file
     df = pd.read_excel(
-        snakemake.input["pnnl_energy_storage_database"],
+        snakemake.input["pnnl_energy_storage"],
         sheet_name="energy-storage-database",
         dtype={
             "technology": str,
@@ -1903,7 +1903,7 @@ def add_energy_storage_database(costs, data_year):
                 x = df.loc[filter, "year"] # both values 2021+2030
                 first_segment_diff = y.iloc[0]-y.iloc[1]
                 endp_first_segment = y.iloc[1]
-                ##
+                
                 # Below we create linear segments between 2021-2030
                 # While the first segment is known, the others are defined by the initial segments with a accumulating quadratic descreasing gradient
                 other_segments_points = [2034, 2039, 2044, 2049, 2054, 2059]
@@ -1950,7 +1950,17 @@ def add_energy_storage_database(costs, data_year):
                         cost_at_year = endp_first_segment - geometric_series(nominator=first_segment_diff, denominator=factor, number_of_terms=i+1)
                         y3 = pd.concat([y3, pd.DataFrame([cost_at_year])], ignore_index=True)
                     f = interpolate.interp1d(x3.squeeze(), y3.squeeze(), kind='linear', fill_value="extrapolate")
-                ynew = f(data_year)
+                
+                option = snakemake.config['energy_storage_database']['pnnl_energy_storage']
+                if option.get('approx_beyond_2030') == ["geometric_series"]:
+                    ynew = f(data_year)
+                if option.get('approx_beyond_2030') == ["same_as_2030"]:
+                    if data_year <= 2030:
+                        # apply linear interpolation
+                        ynew = f(data_year)
+                    if data_year > 2030:
+                        # apply same value as 2030
+                        ynew = y.iloc[1]  # assume new value is the same as 2030
 
             df_new = pd.DataFrame([{
                 "technology": tech,
@@ -2095,7 +2105,7 @@ if __name__ == "__main__":
         # add desalination and clean water tank storage
         costs = add_desalinsation_data(costs)
         # add energy storage database
-        if snakemake.config['energy_storage_database'].get("pnnl_energy_storage_database", True):
+        if snakemake.config['energy_storage_database']['pnnl_energy_storage'].get("add_data", True):
             costs, tech = add_energy_storage_database(costs, year)
             costs = adjust_for_inflation(costs, tech, 2020)
 

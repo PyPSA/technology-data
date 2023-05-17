@@ -1903,6 +1903,7 @@ def add_energy_storage_database(costs, data_year):
                 x = df.loc[filter, "year"] # both values 2021+2030
                 first_segment_diff = y.iloc[0]-y.iloc[1]
                 endp_first_segment = y.iloc[1]
+                ##
                 # Below we create linear segments between 2021-2030
                 # While the first segment is known, the others are defined by the initial segments with a accumulating quadratic descreasing gradient
                 other_segments_points = [2034, 2039, 2044, 2049, 2054, 2059]
@@ -2056,7 +2057,9 @@ if __name__ == "__main__":
 
     data = add_manual_input(data)
     # add costs for home batteries
-    data = add_home_battery_costs(data)
+
+    if snakemake.config["energy_storage_database"].get("ewg_home_battery", True):
+        data = add_home_battery_costs(data)
     # add SMR assumptions
     data = add_SMR_data(data)
     # add solar rooftop costs by taking the mean of commercial and residential
@@ -2092,12 +2095,12 @@ if __name__ == "__main__":
         # add desalination and clean water tank storage
         costs = add_desalinsation_data(costs)
         # add energy storage database
-        if snakemake.config['pnnl_energy_storage_database']:
+        if snakemake.config['energy_storage_database'].get("pnnl_energy_storage_database", True):
             costs, tech = add_energy_storage_database(costs, year)
             costs = adjust_for_inflation(costs, tech, 2020)
 
         # add electrolyzer and fuel cell efficiency from other source than DEA
-        if snakemake.config['h2_from_budischak']:
+        if snakemake.config["energy_storage_database"].get("h2_from_budischak", True):
             costs = add_h2_from_other(costs)
 
         # add data from conventional carriers

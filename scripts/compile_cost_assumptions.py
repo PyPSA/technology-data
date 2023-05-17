@@ -1800,7 +1800,7 @@ def add_energy_storage_database(costs, data_year):
     print(f"Add energy storage database compiled by Parzen for year {data_year}")
     # a) Import csv file
     df = pd.read_excel(
-        snakemake.input["parzen_energy_storage"],
+        snakemake.input["pnnl_energy_storage_database"],
         sheet_name="energy-storage-database",
         dtype={
             "technology": str,
@@ -2055,7 +2055,7 @@ if __name__ == "__main__":
 
     data = add_manual_input(data)
     # add costs for home batteries
-    # data = add_home_battery_costs(data)
+    data = add_home_battery_costs(data)
     # add SMR assumptions
     data = add_SMR_data(data)
     # add solar rooftop costs by taking the mean of commercial and residential
@@ -2091,7 +2091,7 @@ if __name__ == "__main__":
         # add desalination and clean water tank storage
         costs = add_desalinsation_data(costs)
         # add energy storage database
-        if snakemake.config['parzen_energy_storage']:
+        if snakemake.config['pnnl_energy_storage_database']:
             costs = add_energy_storage_database(costs, year)
 
         # add electrolyzer and fuel cell efficiency from other source than DEA

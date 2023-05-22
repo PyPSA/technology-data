@@ -22,7 +22,7 @@ energy_storage_database:
     ewg_home_battery: true  # add home battery data derived from DEA data and EWG study
     pnnl_energy_storage:
         add_data: true  # add storage data mainly from PNNL
-        approx_beyond_2030: ["geometric_series"]  # ["geometric_series"] or ["same_as_2030"]
+        approx_beyond_2030: ["same_as_2030"]  # ["geometric_series"] or ["same_as_2030"]
 
 # remove grid connection costs from DEA for offwind because they are calculated
 # seperately in pypsa-eur

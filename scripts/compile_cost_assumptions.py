@@ -720,7 +720,7 @@ def adjust_for_inflation(costs, techs, ref_year):
     return costs
 
 
-def clean_up_units(tech_data):
+def clean_up_units(tech_data, value_column="", source=""):
     """
     converts units of a pd.Dataframe tech_data to match:
     power: Mega Watt (MW)
@@ -728,8 +728,26 @@ def clean_up_units(tech_data):
     currency: Euro (EUR)
 
     clarifies if MW_th or MW_e
-
     """
+    from currency_converter import CurrencyConverter
+    from datetime import date
+    from currency_converter import ECB_URL
+
+    # Currency conversion
+    REPLACEMENTS = [
+        ('€', 'EUR'),
+        ('$', 'USD'),
+        ('₤', 'GBP'),
+    ]
+    # Download the full history, this will be up to date. Current value is:
+    # https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist.zip
+    c = CurrencyConverter(ECB_URL)
+    c = CurrencyConverter(fallback_on_missing_rate=True)
+
+    for old, new in REPLACEMENTS:
+        tech_data.unit = tech_data.unit.str.replace(old, new, regex=False)
+        tech_data.loc[tech_data.unit.str.contains(new), value_column] *= c.convert(1, new, "EUR", date=date(2020, 1, 1))
+        tech_data.unit = tech_data.unit.str.replace(new, "EUR")
 
     tech_data.unit = tech_data.unit.str.replace(" per ", "/")
     tech_data.unit = tech_data.unit.str.replace(" / ", "/")
@@ -737,27 +755,27 @@ def clean_up_units(tech_data):
     tech_data.unit = tech_data.unit.str.replace("J/s", "W")
 
     # units
-    tech_data.loc[tech_data.unit.str.contains("MEUR"), years] *= 1e6
+    tech_data.loc[tech_data.unit.str.contains("MEUR"), value_column] *= 1e6
     tech_data.unit = tech_data.unit.str.replace("MEUR", "EUR")
 
-    tech_data.loc[tech_data.unit.str.contains("mio EUR"), years] *= 1e6
+    tech_data.loc[tech_data.unit.str.contains("mio EUR"), value_column] *= 1e6
     tech_data.unit = tech_data.unit.str.replace("mio EUR", "EUR")
 
-    tech_data.loc[tech_data.unit.str.contains("1000EUR"), years] *= 1e3
+    tech_data.loc[tech_data.unit.str.contains("1000EUR"), value_column] *= 1e3
     tech_data.unit = tech_data.unit.str.replace("1000EUR", "EUR")
 
-    tech_data.loc[tech_data.unit.str.contains("kEUR"), years] *= 1e3
+    tech_data.loc[tech_data.unit.str.contains("kEUR"), value_column] *= 1e3
     tech_data.unit = tech_data.unit.str.replace("kEUR", "EUR")
 
-    tech_data.loc[tech_data.unit.str.contains("/kW"), years] *= 1e3
+    tech_data.loc[tech_data.unit.str.contains("/kW"), value_column] *= 1e3
 
-    tech_data.loc[tech_data.unit.str.contains("kW")  & ~tech_data.unit.str.contains("/kW"), years] /= 1e3
+    tech_data.loc[tech_data.unit.str.contains("kW")  & ~tech_data.unit.str.contains("/kW"), value_column] /= 1e3
     tech_data.unit = tech_data.unit.str.replace("kW", "MW")
 
-    tech_data.loc[tech_data.unit.str.contains("/GWh"), years] /= 1e3
+    tech_data.loc[tech_data.unit.str.contains("/GWh"), value_column] /= 1e3
     tech_data.unit = tech_data.unit.str.replace("/GWh", "/MWh")
 
-    tech_data.loc[tech_data.unit.str.contains("/GJ"), years] *= 3.6
+    tech_data.loc[tech_data.unit.str.contains("/GJ"), value_column] *= 3.6
     tech_data.unit = tech_data.unit.str.replace("/GJ", "/MWh")
 
     # Harmonise individual units so that they can be handled later
@@ -797,36 +815,37 @@ def clean_up_units(tech_data):
 
     # convert per unit costs to MW
     cost_per_unit = tech_data.unit.str.contains("/unit")
-    tech_data.loc[cost_per_unit, years] = tech_data.loc[cost_per_unit, years].apply(
+    tech_data.loc[cost_per_unit, value_column] = tech_data.loc[cost_per_unit, value_column].apply(
                                                 lambda x: (x / tech_data.loc[(x.name[0],
-                                                                            "Heat production capacity for one unit")][years]).iloc[0,:],
+                                                                            "Heat production capacity for one unit")][value_column]).iloc[0,:],
                                               axis=1)
     tech_data.loc[cost_per_unit, "unit"] = tech_data.loc[cost_per_unit,
                                                          "unit"].str.replace("/unit", "/MW_th")
 
-    # clarify MW -> MW_th
-    # see on p.278 of docu: "However, the primary purpose of the heat pumps in the
-    # technology catalogue is heating. In this chapter the unit MW is referring to
-    # the heat output (also MJ/s) unless otherwise noted"
-    techs_mwth = ['central air-sourced heat pump', 'central gas boiler',
-                  'central resistive heater', 'decentral air-sourced heat pump',
-                  'decentral gas boiler', 'decentral ground-sourced heat pump' ]
-    tech_data.loc[techs_mwth, "unit"] = (tech_data.loc[techs_mwth, "unit"]
-                                         .replace({"EUR/MW": "EUR/MW_th",
-                                                   "EUR/MW/year": "EUR/MW_th/year",
-                                                   'EUR/MWh':'EUR/MWh_th',
-                                                   "MW": "MW_th"}))
+    if source == "dea":
+        # clarify MW -> MW_th
+        # see on p.278 of docu: "However, the primary purpose of the heat pumps in the
+        # technology catalogue is heating. In this chapter the unit MW is referring to
+        # the heat output (also MJ/s) unless otherwise noted"
+        techs_mwth = ['central air-sourced heat pump', 'central gas boiler',
+                    'central resistive heater', 'decentral air-sourced heat pump',
+                    'decentral gas boiler', 'decentral ground-sourced heat pump' ]
+        tech_data.loc[techs_mwth, "unit"] = (tech_data.loc[techs_mwth, "unit"]
+                                            .replace({"EUR/MW": "EUR/MW_th",
+                                                    "EUR/MW/year": "EUR/MW_th/year",
+                                                    'EUR/MWh':'EUR/MWh_th',
+                                                    "MW": "MW_th"}))
 
-    # clarify MW -> MW_e
-    techs_e = ['fuel cell']
-    tech_data.loc[techs_e, "unit"] = (tech_data.loc[techs_e, "unit"]
-                                      .replace({"EUR/MW": "EUR/MW_e",
-                                                "EUR/MW/year": "EUR/MW_e/year",
-                                                'EUR/MWh':'EUR/MWh_e',
-                                                 "MW": "MW_e"}))
+        # clarify MW -> MW_e
+        techs_e = ['fuel cell']
+        tech_data.loc[techs_e, "unit"] = (tech_data.loc[techs_e, "unit"]
+                                        .replace({"EUR/MW": "EUR/MW_e",
+                                                    "EUR/MW/year": "EUR/MW_e/year",
+                                                    'EUR/MWh':'EUR/MWh_e',
+                                                    "MW": "MW_e"}))
 
-    if "methanolisation" in tech_data.index:
-        tech_data.loc[('methanolisation', 'Variable O&M'), "unit"] = "EUR/MWh_MeOH"
+        if "methanolisation" in tech_data.index:
+            tech_data.loc[('methanolisation', 'Variable O&M'), "unit"] = "EUR/MWh_MeOH"
 
     return tech_data
 
@@ -1761,6 +1780,226 @@ def add_mean_solar_rooftop(data):
     solar = pd.concat([solar], keys=["solar"])
     return pd.concat([data, solar])
 
+
+def add_energy_storage_database(costs, data_year):
+    """Add energy storage database compiled 
+    
+    Learning rate drop. For example, the nominal DC SB learning rate for RFBs is set at
+    4.5%, 1.5% for lead-acid batteries, compared to 10% for Li-ion batteries, corresponding to cost drops of
+    17%, 6%, and 35%, respectively. For the rest of the categories for battery-based systems, the learning
+    rates were kept the same for all batteries as described in the ESGC 2020 report.
+
+    Fix cost drop. Due to the uncertainties in both anticipated deployments and the correct learning rate to use during the
+    initial phase, this work assumes a fixed-cost drop for zinc batteries, gravity, and thermal storage
+    systems. For example, a 20% cost drop in DC SB and 10% drop in DCBOS was assumed for zinc batteries,
+    while keeping the cost drops for power equipment in line with Li-ion BESS, while system integration,
+    EPC, and project development costs are maintained at 90% of Li-ion BESS 2030 values.
+    """
+    from scipy import interpolate
+
+    print(f"Add energy storage database compiled for year {data_year}")
+    # a) Import csv file
+    df = pd.read_excel(
+        snakemake.input["pnnl_energy_storage"],
+        sheet_name="energy-storage-database",
+        dtype={
+            "technology": str,
+            "type": str,
+            "carrier": str,
+            "parameter": str,
+            "year": int,
+            "value": float,
+            "unit": str,
+            "source": str,
+            "note": str,
+            "reference": str,
+            "ref_size_MW": float,
+            "EP_ratio_h": float,
+            },
+    )
+    df = df.drop(columns=["ref_size_MW", "EP_ratio_h"])
+    df = df.fillna(df.dtypes.replace({"float64": 0.0, "O": "NULL"}))
+    df.loc[:,"unit"] = df.unit.str.replace("NULL", "per unit")
+
+    # b) Change data to PyPSA format (aggregation of components, units, currency, etc.) 
+    df = clean_up_units(df, "value")  # base clean up
+
+    # rewrite technology to be charger, store, discharger, bidirectional-charger
+    df.loc[:,"carrier"] = df.carrier.str.replace("NULL", "")
+    df.loc[:,"carrier"] = df["carrier"].apply(lambda x: x.split('-'))
+    carrier_list_len = df["carrier"].apply(lambda x: len(x))
+    carrier_str_len = df["carrier"].apply(lambda x: len(x[0]))
+    carrier_first_item =  df["carrier"].apply(lambda x: x[0])
+    carrier_last_item =  df["carrier"].apply(lambda x: x[-1])
+    bicharger_filter = (carrier_list_len == 3)
+    charger_filter = (carrier_list_len == 2) & (carrier_first_item == "elec")
+    discharger_filter = (carrier_list_len == 2) & (carrier_last_item == "elec")
+    store_filter = (carrier_list_len == 1) & (carrier_str_len > 0)
+    reference_filter = (carrier_list_len == 1) & (carrier_first_item == "reference_value")
+    df = df[~reference_filter]  # remove reference values
+    df.loc[bicharger_filter,"technology_type"] = "bicharger"
+    df.loc[charger_filter,"technology_type"] = "charger"
+    df.loc[discharger_filter,"technology_type"] = "discharger"
+    df.loc[store_filter,"technology_type"] = "store"
+    df.loc[df.unit=="EUR/MWh-year", "technology_type"] = "store"
+    # Some investment inputs need to be distributed between charger and discharger 
+    for tech in df.technology.unique():
+        nan_filter = (df.technology==tech) & (carrier_str_len==0) & (df.parameter=="investment")
+        store_filter = nan_filter & (df.unit=="EUR/MWh")
+        if not df.loc[store_filter].empty:
+            df.loc[store_filter, "technology_type"] = "store"  # value will be aggregated later in the groupby
+        # charger and discharger with 50% distribution e.g. in case of Hydrogen
+        power_filter = nan_filter & (df.unit=="EUR/MW")
+        if not df.loc[power_filter].empty:
+            agg = df.loc[power_filter].groupby(["technology", "year"]).sum(numeric_only=True)
+            charger_investment_filter = charger_filter & (df.technology==tech) & (df.parameter=="investment")
+            discharger_investment_filter = discharger_filter & (df.technology==tech) & (df.parameter=="investment")
+            df.loc[charger_investment_filter & df.year==2021, "value"] += agg.loc[(tech, 2021)]/2
+            df.loc[charger_investment_filter & df.year==2030, "value"] += agg.loc[(tech, 2030)]/2
+            df.loc[discharger_investment_filter & df.year==2021, "value"] += agg.loc[(tech, 2021)]/2
+            df.loc[discharger_investment_filter & df.year==2030, "value"] += agg.loc[(tech, 2030)]/2
+    df.loc[:,"technology"] = df["technology"] + "-" + df["technology_type"]
+
+    # aggregate technology_type and unit
+    df = df.groupby(["technology", "unit", "year"]).agg({
+        'technology': 'first',
+        'year': 'first',
+        'parameter': 'first',
+        'value': 'sum',
+        'unit': 'first',
+        'type': 'first',
+        'carrier': 'first',
+        'technology_type': 'first',
+        'source': 'first',
+        'note': 'first',
+        'reference': 'first',
+    }).reset_index(drop=True)
+
+    # calculate %/year FOM on aggregated values
+    for tech in df.technology.unique():
+        for year in df.year.unique():
+            df_tech = df.loc[(df.technology == tech) & (df.year == year)].copy()
+            a = df_tech.loc[df_tech.unit=="EUR/MW-year", "value"].values
+            b = df_tech.loc[df_tech.unit=="EUR/MW", "value"].values
+            df.loc[df_tech.loc[df_tech.unit=="EUR/MW-year"].index, "value"] = a / b * 100 # EUR/MW-year / EUR/MW = %/year
+            c = df_tech.loc[df_tech.unit=="EUR/MWh-year", "value"].values
+            d = df_tech.loc[df_tech.unit=="EUR/MWh", "value"].values
+            df.loc[df_tech.loc[df_tech.unit=="EUR/MWh-year"].index, "value"] = c / d * 100 # EUR/MWh-year / EUR/MWh = %/year
+
+    df.loc[:,"unit"] = df.unit.str.replace("EUR/MW-year", "%/year")
+    df.loc[:,"unit"] = df.unit.str.replace("EUR/MWh-year", "%/year")
+
+    # c) Linear Inter/Extrapolation
+    # data available for 2021 and 2030, but value for given "year" passed by function needs to be calculated
+    for tech in df.technology.unique():
+        for param in df.parameter.unique():
+            filter = (df.technology == tech) & (df.parameter == param)
+            y = df.loc[filter, "value"]
+            if y.empty:
+                continue  # nothing to interpolate
+            elif y.iloc[0]==y.iloc[1] or param=="efficiency" or param=="lifetime":
+                ynew = y.iloc[1]  # assume new value is the same as 2030
+            elif y.iloc[0]!=y.iloc[1]:
+                x = df.loc[filter, "year"] # both values 2021+2030
+                first_segment_diff = y.iloc[0]-y.iloc[1]
+                endp_first_segment = y.iloc[1]
+                
+                # Below we create linear segments between 2021-2030
+                # While the first segment is known, the others are defined by the initial segments with a accumulating quadratic descreasing gradient
+                other_segments_points = [2034, 2039, 2044, 2049, 2054, 2059]
+                
+                def geometric_series(nominator, denominator=1, number_of_terms=1, start=1):
+                    """
+                    A geometric series is a series with a constant ratio between successive terms.
+                    When moving to infinity the geometric series converges to a limit.
+                    https://en.wikipedia.org/wiki/Series_(mathematics)
+
+                    Example:
+                    --------
+                    nominator = 1
+                    denominator = 2
+                    number_of_terms = 3
+                    start = 0  # 0 means it starts at the first term
+                    result = 1/1**0 + 1/2**1 + 1/2**2 = 1 + 1/2 + 1/4 = 1.75
+
+                    If moving to infinity the result converges to 2
+                    """
+                    return sum([nominator/denominator**i for i in range(start, start+number_of_terms)])
+
+                if  tech=="Hydrogen-discharger" or tech=="Pumped-Heat-store":
+                    x1 = pd.concat([x,pd.DataFrame(other_segments_points)], ignore_index=True)
+                    y1 = y
+                    factor = 5
+                    for i in range(len(other_segments_points)): # -1 because of segments
+                        cost_at_year = endp_first_segment - geometric_series(nominator=first_segment_diff, denominator=factor, number_of_terms=i+1)
+                        y1 = pd.concat([y1, pd.DataFrame([cost_at_year])], ignore_index=True)
+                    f = interpolate.interp1d(x1.squeeze(), y1.squeeze(), kind='linear', fill_value="extrapolate")
+                elif tech=="Hydrogen-charger":
+                    x2 = pd.concat([x,pd.DataFrame(other_segments_points)], ignore_index=True)
+                    y2 = y
+                    factor = 6.5
+                    for i in range(len(other_segments_points)):
+                        cost_at_year = endp_first_segment - geometric_series(nominator=first_segment_diff, denominator=factor, number_of_terms=i+1)
+                        y2 = pd.concat([y2, pd.DataFrame([cost_at_year])], ignore_index=True)
+                    f = interpolate.interp1d(x2.squeeze(), y2.squeeze(), kind='linear', fill_value="extrapolate")  
+                else:
+                    x3 = pd.concat([x,pd.DataFrame(other_segments_points)], ignore_index=True)
+                    y3 = y
+                    factor = 2
+                    for i in range(len(other_segments_points)):
+                        cost_at_year = endp_first_segment - geometric_series(nominator=first_segment_diff, denominator=factor, number_of_terms=i+1)
+                        y3 = pd.concat([y3, pd.DataFrame([cost_at_year])], ignore_index=True)
+                    f = interpolate.interp1d(x3.squeeze(), y3.squeeze(), kind='linear', fill_value="extrapolate")
+                
+                option = snakemake.config['energy_storage_database']['pnnl_energy_storage']
+                if option.get('approx_beyond_2030') == ["geometric_series"]:
+                    ynew = f(data_year)
+                if option.get('approx_beyond_2030') == ["same_as_2030"]:
+                    if data_year <= 2030:
+                        # apply linear interpolation
+                        ynew = f(data_year)
+                    if data_year > 2030:
+                        # apply same value as 2030
+                        ynew = y.iloc[1]  # assume new value is the same as 2030
+
+            df_new = pd.DataFrame([{
+                "technology": tech,
+                "year": data_year,
+                "parameter": param,
+                "value": ynew, 
+                "unit": df.loc[filter, "unit"].unique().item(),
+                "source": df.loc[filter, "source"].unique().item(),
+                'carrier': df.loc[filter, "carrier"].iloc[1],
+                'technology_type': df.loc[filter, "technology_type"].unique().item(),
+                'type': df.loc[filter, "type"].unique().item(),
+                'note': df.loc[filter, "note"].iloc[1],
+                'reference': df.loc[filter, "reference"].iloc[1],
+            }])
+            # not concat if df year is 2021 or 2030 (otherwhise duplicate)
+            if data_year == 2021 or data_year == 2030:
+                continue
+            else:
+                df = pd.concat([df, df_new], ignore_index=True)
+
+    # d) Combine metadata and add to cost database
+    df.loc[:,"source"] = df["source"] + ", " + df["reference"]
+    for i in df.index:
+        df.loc[i,"further description"] = str(
+            {
+                "carrier": df.loc[i,"carrier"],
+                "technology_type": [df.loc[i,"technology_type"]],
+                "type": [df.loc[i,"type"]],
+                "note": [df.loc[i,"note"]],
+            }
+        )
+    # keep only relevant columns
+    df = df.loc[df.year == data_year,["technology", "parameter", "value", "unit", "source", "further description"]]
+    tech = df.technology.unique()
+    df = df.set_index(['technology', 'parameter'])
+
+    return pd.concat([costs, df]), tech
+
+
 # %% *************************************************************************
 #  ---------- MAIN ------------------------------------------------------------
 if __name__ == "__main__":
@@ -1782,7 +2021,7 @@ if __name__ == "__main__":
     # concat into pd.Dataframe
     tech_data = pd.concat(d_by_tech).sort_index()
     # clean up units
-    tech_data = clean_up_units(tech_data)
+    tech_data = clean_up_units(tech_data, years, source="dea")
 
     # (b) ------ specific assumptions for some technologies -----------------------
 
@@ -1828,7 +2067,9 @@ if __name__ == "__main__":
 
     data = add_manual_input(data)
     # add costs for home batteries
-    data = add_home_battery_costs(data)
+
+    if snakemake.config["energy_storage_database"].get("ewg_home_battery", True):
+        data = add_home_battery_costs(data)
     # add SMR assumptions
     data = add_SMR_data(data)
     # add solar rooftop costs by taking the mean of commercial and residential
@@ -1863,9 +2104,13 @@ if __name__ == "__main__":
         costs = adjust_for_inflation(costs, new_format_without_solar, 2020)
         # add desalination and clean water tank storage
         costs = add_desalinsation_data(costs)
+        # add energy storage database
+        if snakemake.config['energy_storage_database']['pnnl_energy_storage'].get("add_data", True):
+            costs, tech = add_energy_storage_database(costs, year)
+            costs = adjust_for_inflation(costs, tech, 2020)
 
         # add electrolyzer and fuel cell efficiency from other source than DEA
-        if snakemake.config['h2_from_budischak']:
+        if snakemake.config["energy_storage_database"].get("h2_from_budischak", True):
             costs = add_h2_from_other(costs)
 
         # add data from conventional carriers
@@ -1880,7 +2125,7 @@ if __name__ == "__main__":
         costs = energy_penalty(costs)
 
         # include old pypsa costs
-        check = pd.concat([costs_pypsa, costs], sort=True, axis=1)
+        check = pd.concat([costs_pypsa, costs], sort=True)
 
         # missing technologies
         missing = costs_pypsa.index.levels[0].difference(costs.index.levels[0])
@@ -1909,6 +2154,8 @@ if __name__ == "__main__":
         # unify the cost from DIW2010
         costs_tot = unify_diw(costs_tot)
         costs_tot.drop("fixed", level=1, inplace=True)
+        
+        # format and sort
         costs_tot.sort_index(inplace=True)
-        costs_tot = round(costs_tot, ndigits=snakemake.config.get("ndigits", 2))
+        costs_tot.loc[:,'value'] = round(costs_tot.value.astype(float), snakemake.config.get("ndigits", 2))
         costs_tot.to_csv([v for v in snakemake.output if str(year) in v][0])

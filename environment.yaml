@@ -10,8 +10,10 @@ dependencies:
   - numpy
   - beautifulsoup4
   - xlrd
+  - scipy
   - openpyxl<=3.0.9
   - packaging
 
   - pip:
     - tabula-py
+    - currencyconverter

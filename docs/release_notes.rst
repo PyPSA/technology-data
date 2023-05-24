@@ -7,6 +7,7 @@ Upcoming Release
 
 * General:
   - Fix 'further_description' column from 'manual_inputs.csv' not being correctly parsed by the workflow
+  - Adjust electrolysis currency year to 2015
 
 * Updated technologies
   - updated cost assumptions for 'digestible biomass to hydrogen' and "solid biomass to hydrogen"
@@ -14,6 +15,7 @@ Upcoming Release
   - Fix source and description for 'solar' and 'solar-rooftop' to correctly indicate how they are calculated
 
 * New technologies
+  - 17 new energy storage technologies
   - new biomass technologies ('biogas CC', 'central gas CHP CC', 'central hydrogen CHP', 'central solid biomass CHP CC', 'central solid biomass CHP powerboost CC',
 'direct firing gas', 'direct firing gas CC', 'direct firing solid fuels', 'direct firing solid fuels CC', 'electrobiofuels', 'solid biomass boiler steam CC', 'waste CHP', 'waste CHP CC',
 pelletizing cost for pellets from solid biomass residues)

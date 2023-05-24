@@ -202,7 +202,8 @@ new_format = ['solar-utility',
               'solar-utility single-axis tracking',
               'solar-rooftop residential',
               'solar-rooftop commercial',
-              'offwind']
+              'offwind',
+              'electrolysis']
 # %% -------- FUNCTIONS ---------------------------------------------------
 
 def get_excel_sheets(excel_files):
@@ -260,7 +261,7 @@ def get_data_DEA(tech, data_in, expectation=None):
     usecols += f",{uncrtnty_lookup[tech]}"
 
 
-    if tech in new_format:
+    if (tech in new_format) and (tech!="electrolysis"):
         skiprows = [0]
     else:
         skiprows = [0,1]
@@ -428,7 +429,7 @@ def get_data_DEA(tech, data_in, expectation=None):
     df_final = df_final.fillna(method='ffill', axis=1)
 
     df_final["source"] = source_dict["DEA"] + ", " + excel_file.replace("inputs/","")
-    if tech in new_format:
+    if tech in new_format and (tech!="electrolysis"):
         for attr in ["investment", "Fixed O&M"]:
             to_drop = df[df.index.str.contains(attr) &
                          ~df.index.str.contains("\(\*total\)")].index

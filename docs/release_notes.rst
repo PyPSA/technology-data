@@ -5,6 +5,9 @@ Release Notes
 Upcoming Release
 ================
 
+Technology-Data 0.6.0 (24 May 2023)
+===========================================
+
 * General:
   - Fix 'further_description' column from 'manual_inputs.csv' not being correctly parsed by the workflow
   - Adjust electrolysis currency year to 2015

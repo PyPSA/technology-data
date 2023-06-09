@@ -245,7 +245,7 @@ hydrogen storage tank type 1,investment,2030,13.5,EUR/kWh_H2,2020,"Based on Stö
 hydrogen storage tank type 1,FOM,2030,2,%/year,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.",-
 hydrogen storage tank type 1,lifetime,2030,20,years,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.",-
 hydrogen storage tank type 1,min_fill_level,2030,6,%,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.",-
-hydrogen storage compressor,investment,2030,87.69,EUR/kWh_H2,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.","2923 EUR/kg_H2. For a 206 kg/h compressor. Base CAPEX 40 528 EUR/kW_el with scale factor 0.4603. kg_H2 converted to MWh using LHV. Pressure range: 30 bar in, 250 bar out."
+hydrogen storage compressor,investment,2030,87.69,EUR/kW_H2,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.","2923 EUR/kg_H2. For a 206 kg/h compressor. Base CAPEX 40 528 EUR/kW_el with scale factor 0.4603. kg_H2 converted to MWh using LHV. Pressure range: 30 bar in, 250 bar out."
 hydrogen storage compressor,FOM,2030,4,%/year,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",-
 hydrogen storage compressor,lifetime,2030,15,years,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",-
 hydrogen storage compressor,compression-electricity-input,2030,0.05,MWh_el/MWh_H2,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",1.707 kWh/kg.

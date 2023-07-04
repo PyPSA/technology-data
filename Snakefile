@@ -54,7 +54,7 @@ rule convert_EWG:
         "scripts/convert_pdf_EWG_to_dataframe.py"
 
 
-rule compile_intl_cost_assumptions:
+rule compile_global_costs:
     input:
         dea_indonesia="inputs/dea_-_all_technologies_Indonesia.xlsx",
     output:

@@ -25,8 +25,8 @@ The script is structured as follows:
 @author: Marta, Lisa
 """
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 
 # ---------- sources -------------------------------------------------------
 source_dict = {
@@ -150,6 +150,10 @@ uncrtnty_lookup = {'onwind': 'J:K',
                     'central solid biomass CHP': 'I:J',
                     'central solid biomass CHP CC': 'I:J',
                     'central solid biomass CHP powerboost CC': 'I:J',
+                    'coal': 'I:J',
+                    'geothermal': 'I:J',
+                    'hydro': 'I:J',
+                    'Pumped-Storage-Hydro-store': 'I:J',
                     # 'solid biomass power': 'J:K',
                     # 'solid biomass power CC': 'J:K',
                     'solar': '',
@@ -730,9 +734,9 @@ def clean_up_units(tech_data, value_column="", source=""):
 
     clarifies if MW_th or MW_e
     """
-    from currency_converter import CurrencyConverter
     from datetime import date
-    from currency_converter import ECB_URL
+
+    from currency_converter import ECB_URL, CurrencyConverter
 
     # Currency conversion
     REPLACEMENTS = [
@@ -2006,6 +2010,7 @@ def add_energy_storage_database(costs, data_year):
 if __name__ == "__main__":
     if 'snakemake' not in globals():
         import os
+
         from _helpers import mock_snakemake
         os.chdir(os.path.join(os.getcwd(), "scripts"))
         snakemake = mock_snakemake("compile_cost_assumptions")

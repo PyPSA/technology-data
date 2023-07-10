@@ -656,11 +656,11 @@ gas storage,investment,0.03,EUR/kWh,Danish Energy Agency,"150 Underground Storag
 gas storage,lifetime,100.0,years,TODO no source,"estimation: most underground storage are already build, they do have a long lifetime"
 gas storage charger,investment,14.34,EUR/kW,Danish Energy Agency,"150 Underground Storage of Gas, Process equipment (units converted)"
 gas storage discharger,investment,4.78,EUR/kW,Danish Energy Agency,"150 Underground Storage of Gas, Process equipment (units converted)"
-geothermal,CO2 intensity,0.03,tCO2/MWhth,https://www.eia.gov/environment/emissions/co2_vol_mass.php, from old pypsa cost assumptions
-geothermal,FOM,2.36,%/year,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
-geothermal,efficiency,0.24,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
-geothermal,investment,3392.0,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
-geothermal,lifetime,40.0,years,IEA2010, from old pypsa cost assumptions
+geothermal,CO2 intensity,0.12,tCO2/MWh_th,"Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551",Likely to be improved; Average of 85 percent of global egs power plant capacity
+geothermal,district heating cost,0.25,%,Frey et al. 2022: Techno-Economic Assessment of Geothermal Resources in the Variscan Basement of the Northern Upper Rhine Graben,"If capital cost of electric generation from EGS is 100%, district heating adds additional 25%"
+geothermal,efficiency electricity,0.1,per unit,"Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551; Breede et al. 2015: Overcoming challenges in the classification of deep geothermal potential, https://eprints.gla.ac.uk/169585/","This is a rough estimate, depends on local conditions"
+geothermal,efficiency residential heat,0.8,per unit,"Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551; Breede et al. 2015: Overcoming challenges in the classification of deep geothermal potential, https://eprints.gla.ac.uk/169585/","This is a rough estimate, depends on local conditions"
+geothermal,lifetime,30.0,years,"Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551",
 helmeth,FOM,3.0,%/year,no source, from old pypsa cost assumptions
 helmeth,efficiency,0.8,per unit,HELMETH press release, from old pypsa cost assumptions
 helmeth,investment,2000.0,EUR/kW,no source, from old pypsa cost assumptions
@@ -677,7 +677,7 @@ hydro,investment,2208.16,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348,
 hydro,lifetime,80.0,years,IEA2010, from old pypsa cost assumptions
 hydrogen storage compressor,FOM,4.0,%/year,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",-
 hydrogen storage compressor,compression-electricity-input,0.05,MWh_el/MWh_H2,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",1.707 kWh/kg.
-hydrogen storage compressor,investment,79.42,EUR/kWh_H2,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.","2923 EUR/kg_H2. For a 206 kg/h compressor. Base CAPEX 40 528 EUR/kW_el with scale factor 0.4603. kg_H2 converted to MWh using LHV. Pressure range: 30 bar in, 250 bar out."
+hydrogen storage compressor,investment,79.42,EUR/kW_H2,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.","2923 EUR/kg_H2. For a 206 kg/h compressor. Base CAPEX 40 528 EUR/kW_el with scale factor 0.4603. kg_H2 converted to MWh using LHV. Pressure range: 30 bar in, 250 bar out."
 hydrogen storage compressor,lifetime,15.0,years,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",-
 hydrogen storage tank type 1,FOM,2.0,%/year,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.",-
 hydrogen storage tank type 1,investment,12.23,EUR/kWh_H2,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.","450 EUR/kg_H2 converted with LHV to MWh. For a type 1 hydrogen storage tank (steel, 15-250 bar). Currency year assumed 2020 for initial publication of reference; observe note in SI.4.3 that no currency year is explicitly stated in the reference."

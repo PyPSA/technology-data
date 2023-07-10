@@ -17,3 +17,8 @@ jobs:
       shell: bash -l {0}
       run: |
         snakemake --cores all -f compile_cost_assumptions
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: technology-data
+        path: outputs/

@@ -36,6 +36,11 @@ pelletizing cost for pellets from solid biomass residues)
   - air separation unit (Conversion efficiency)
   - direct air capture (Conversion efficiency)
   - Added data for Enhanced Geothermal Systems, as given by Aghahosseini, Breyer 2020
+  - direct iron ore reduction (cost assumptions, conversion efficiencies)
+  - dry bulk carrier Capesize (cost assumptions)
+  - electric arc furnace (cost assumptions, conversion efficiencies)
+  - shipping fuel methanol (cost assumptions, emission intensity)
+  - iron ore DRI-ready (cost assumptions)
 
 * Changed technologies
   - methanation (Conversion efficiency)

@@ -35,6 +35,7 @@ pelletizing cost for pellets from solid biomass residues)
   - Haber-Bosch (Conversion efficiency)
   - air separation unit (Conversion efficiency)
   - direct air capture (Conversion efficiency)
+  - Added data for Enhanced Geothermal Systems, as given by Aghahosseini, Breyer 2020
 
 * Changed technologies
   - methanation (Conversion efficiency)
@@ -42,6 +43,8 @@ pelletizing cost for pellets from solid biomass residues)
 
 * Features
  - energy penalties for biomass usages, biogas and gas boilers with carbon capture (calculations will be provided in an upcoming paper
+* Bug fixes
+  - Fixed a bug that ommited 'further description' from manually added data
 
 Technology-Data 0.5.0 (08 Februrary 2023)
 ===========================================

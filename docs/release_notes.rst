@@ -5,6 +5,13 @@ Release Notes
 Upcoming Release
 ================
 
+Technology-Data 0.6.2 (7 August 2023)
+=====================================
+
+* Use DEA electrolysis and fuel cell assumptions by default.
+
+* Add steam generation of methanolisation process.
+
 Technology-Data 0.6.1 (4 August 2023)
 ===========================================
 

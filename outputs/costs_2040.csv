@@ -650,13 +650,13 @@ electrobiofuels,efficiency-hydrogen,1.25,per unit,Stoichiometric calculation,
 electrobiofuels,efficiency-tot,0.64,per unit,Stoichiometric calculation,
 electrobiofuels,investment,362825.01,EUR/kW_th,combination of BtL and electrofuels,
 electrolysis,FOM,2.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100MW:  Fixed O&M 
-electrolysis,efficiency,0.8,per unit,budischak2013,86 AEC 100MW:  Hydrogen
+electrolysis,efficiency,0.72,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100MW:  Hydrogen
 electrolysis,efficiency-heat,0.12,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100MW:   - hereof recoverable for district heating
 electrolysis,investment,271.72,EUR/kW_e,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100MW:  Specific investment
 electrolysis,lifetime,32.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100MW:  Technical lifetime
 fuel cell,FOM,5.0,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",12 LT-PEMFC CHP:  Fixed O&M
 fuel cell,c_b,1.25,50oC/100oC,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",12 LT-PEMFC CHP:  Cb coefficient
-fuel cell,efficiency,0.58,per unit,budischak2013,"12 LT-PEMFC CHP:  Electricity efficiency, annual average"
+fuel cell,efficiency,0.5,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","12 LT-PEMFC CHP:  Electricity efficiency, annual average"
 fuel cell,investment,950.0,EUR/kW_e,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",12 LT-PEMFC CHP:  Nominal investment
 fuel cell,lifetime,10.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",12 LT-PEMFC CHP:  Technical lifetime
 gas,CO2 intensity,0.2,tCO2/MWh_th,Stoichiometric calculation with 50 GJ/t CH4,
@@ -737,6 +737,7 @@ methanolisation,VOM,6.27,EUR/MWh_MeOH,"Danish Energy Agency, data_sheets_for_ren
 methanolisation,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
 methanolisation,carbondioxide-input,0.25,t_CO2/MWh_MeOH,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf) , pg. 66.",
 methanolisation,electricity-input,0.27,MWh_e/MWh_MeOH,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf) , pg. 65.",
+methanolisation,heat-output,0.1,MWh_th/MWh_MeOH,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf) , pg. 65.",steam generation of 2 GJ/t_MeOH
 methanolisation,hydrogen-input,1.14,MWh_H2/MWh_MeOH,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf) , pg. 64.",189 kg_H2 per t_MeOH
 methanolisation,investment,565647.83,EUR/MW_MeOH,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), table 8: “Reference scenario”.","Well developed technology, no significant learning expected."
 methanolisation,lifetime,20.0,years,"Danish Energy Agency, Technology Data for Renewable Fuels (04/2022), Data sheet “Methanol to Power”.",

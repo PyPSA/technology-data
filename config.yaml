@@ -1,4 +1,4 @@
-version: 0.4.0
+version: 0.6.2
 
 # considered years for output data
 years : [2020, 2025, 2030, 2035, 2040, 2045, 2050]
@@ -18,7 +18,7 @@ solar_utility_from_vartiaien : false
 solar_rooftop_from_etip : false
 
 energy_storage_database:
-    h2_from_budischak: true  # add fuel cell/electrolysis efficiencies from Budischak (DEA assumptions very conservative)
+    h2_from_budischak: false  # add fuel cell/electrolysis efficiencies from Budischak (DEA assumptions very conservative)
     ewg_home_battery: true  # add home battery data derived from DEA data and EWG study
     pnnl_energy_storage:
         add_data: true  # add storage data mainly from PNNL

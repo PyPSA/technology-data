@@ -164,7 +164,7 @@ HVDC overhead,FOM,2.0,%/year,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.
 HVDC overhead,investment,432.97,EUR/MW/km,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
 HVDC overhead,lifetime,40.0,years,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
 HVDC submarine,FOM,0.35,%/year,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,"Based on estimated costs for a NA-EU connector (bidirectional,4 GW, 3000km length and ca. 3000m depth). Costs in return based on existing/currently under construction undersea cables."
-HVDC submarine,investment,471.16,EUR/MW/km,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,"Based on estimated costs for a NA-EU connector (bidirectional,4 GW, 3000km length and ca. 3000m depth). Costs in return based on existing/currently under construction undersea cables."
+HVDC submarine,investment,932.33,EUR/MW/km,Härtel et al. (2017): https://doi.org/10.1016/j.epsr.2017.06.008 .,Table 1
 HVDC submarine,lifetime,40.0,years,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,"Based on estimated costs for a NA-EU connector (bidirectional,4 GW, 3000km length and ca. 3000m depth). Costs in return based on existing/currently under construction undersea cables."
 Haber-Bosch,FOM,3.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Fixed O&M
 Haber-Bosch,VOM,0.02,EUR/MWh_NH3,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Variable O&M

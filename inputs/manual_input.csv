@@ -38,7 +38,7 @@ HVAC overhead,FOM,2030,2,%/year,2011,"Hagspiel et al. (2014): doi:10.1016/j.ener
 HVDC overhead,investment,2030,400,EUR/MW/km,2011,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
 HVDC overhead,lifetime,2030,40,years,2011,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
 HVDC overhead,FOM,2030,2,%/year,2011,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
-HVDC submarine,investment,2030,500,EUR/MW/km,2018,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,"Based on estimated costs for a NA-EU connector (bidirectional,4 GW, 3000km length and ca. 3000m depth). Costs in return based on existing/currently under construction undersea cables."
+HVDC submarine,investment,2030,970,EUR/MW/km,2017,Härtel et al. (2017): https://doi.org/10.1016/j.epsr.2017.06.008 .,"Table 1"
 HVDC submarine,FOM,2030,0.35,%/year,2018,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,"Based on estimated costs for a NA-EU connector (bidirectional,4 GW, 3000km length and ca. 3000m depth). Costs in return based on existing/currently under construction undersea cables."
 HVDC submarine,lifetime,2030,40,years,2018,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,"Based on estimated costs for a NA-EU connector (bidirectional,4 GW, 3000km length and ca. 3000m depth). Costs in return based on existing/currently under construction undersea cables."
 HVDC inverter pair,investment,2030,150000,EUR/MW,2011,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",

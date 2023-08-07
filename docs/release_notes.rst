@@ -12,6 +12,8 @@ Technology-Data 0.6.2 (7 August 2023)
 
 * Add steam generation of methanolisation process.
 
+* Use HVDC submarine cable cost from Härtel et al. (2017).
+
 Technology-Data 0.6.1 (4 August 2023)
 ===========================================
 

@@ -19,7 +19,7 @@ BtL,CO2 stored,0.27,tCO2/MWh_th,"Stoichiometric calculation, doi:10.1016/j.apene
 BtL,FOM,2.67,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Fixed O&M"
 BtL,VOM,1.06,EUR/MWh_FT,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Variable O&M"
 BtL,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
-BtL,efficiency,0.38,per unit,doi:10.1016/j.enpol.2017.05.013,
+BtL,efficiency,0.38,per unit,doi:10.1016/j.enpol.2017.05.013,"85 Gasif. Ent. Flow FT, liq fu :  Electricity Output, MWh/MWh Total Input"
 BtL,investment,3000.0,EUR/kW_th,doi:10.1016/j.enpol.2017.05.013,"85 Gasif. Ent. Flow FT, liq fu :  Specific investment"
 BtL,lifetime,25.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Technical lifetime"
 CCGT,FOM,3.35,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","05 Gas turb. CC, steam extract.:  Fixed O&M"
@@ -439,6 +439,17 @@ biomass boiler,efficiency,0.86,per unit,"Danish Energy Agency, technologydatafor
 biomass boiler,investment,649.3,EUR/kW_th,"Danish Energy Agency, technologydatafor_heating_installations_marts_2018.xlsx","204 Biomass boiler, automatic:  Specific investment"
 biomass boiler,lifetime,20.0,years,"Danish Energy Agency, technologydatafor_heating_installations_marts_2018.xlsx","204 Biomass boiler, automatic:  Technical lifetime"
 biomass boiler,pelletizing cost,9.0,EUR/MWh_pellets,Assumption based on doi:10.1016/j.rser.2019.109506,
+biomass-to-methanol,C in fuel,0.41,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",
+biomass-to-methanol,C stored,0.59,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",
+biomass-to-methanol,CO2 stored,0.22,tCO2/MWh_th,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",
+biomass-to-methanol,FOM,1.33,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",97 Methanol from biomass gasif.:  Fixed O&M
+biomass-to-methanol,VOM,13.6,EUR/MWh_MeOH,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",97 Methanol from biomass gasif.:  Variable O&M
+biomass-to-methanol,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
+biomass-to-methanol,efficiency,0.61,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","97 Methanol from biomass gasif.:  Methanol Output, MWh/MWh Total Input"
+biomass-to-methanol,efficiency-electricity,0.02,MWh_e/MWh_th,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","97 Methanol from biomass gasif.:  Electricity Output, MWh/MWh Total Input"
+biomass-to-methanol,efficiency-heat,0.22,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","97 Methanol from biomass gasif.:  District heat  Output, MWh/MWh Total Input"
+biomass-to-methanol,investment,2921.13,EUR/kW_MeOH,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",97 Methanol from biomass gasif.:  Specific investment
+biomass-to-methanol,lifetime,20.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",97 Methanol from biomass gasif.:  Technical lifetime
 cement capture,FOM,3.0,%/year,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.c Post comb - Cement kiln
 cement capture,capture_rate,0.9,per unit,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.c Post comb - Cement kiln
 cement capture,compression-electricity-input,0.08,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.c Post comb - Cement kiln
@@ -732,6 +743,7 @@ methanation,lifetime,20.0,years,Guesstimate.,"Based on lifetime for methanolisat
 methane storage tank incl. compressor,FOM,1.9,%/year,"Guesstimate, based on hydrogen storage tank type 1 including compressor by DEA.",Based on assumptions for hydrogen storage tank type 1 including compressor (by DEA).
 methane storage tank incl. compressor,investment,8629.2,EUR/m^3,Storage costs per l: https://www.compositesworld.com/articles/pressure-vessels-for-alternative-fuels-2014-2023 (2021-02-10).,"Assume 5USD/l (= 4.23 EUR/l at 1.17 USD/EUR exchange rate) for type 1 pressure vessel for 200 bar storage and 100% surplus costs for including compressor costs with storage, based on similar assumptions by DEA for compressed hydrogen storage tanks."
 methane storage tank incl. compressor,lifetime,30.0,years,"Guesstimate, based on hydrogen storage tank type 1 including compressor by DEA.",Based on assumptions for hydrogen storage tank 1 including compressor (by DEA).
+methanol,CO2 intensity,0.25,tCO2/MWh_th,,
 methanolisation,FOM,3.0,%/year,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), section 6.3.2.1.",
 methanolisation,VOM,6.27,EUR/MWh_MeOH,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",98 Methanol from power:  Variable O&M
 methanolisation,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,

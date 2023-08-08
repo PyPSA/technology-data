@@ -7,6 +7,8 @@ Upcoming Release
 
 * Add biomass-to-methanol route from DEA.
 
+* Add electric compression losses for hydrogen and gas pipelines from DEA.
+
 Technology-Data 0.6.2 (7 August 2023)
 =====================================
 

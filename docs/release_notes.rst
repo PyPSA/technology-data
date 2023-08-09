@@ -9,6 +9,8 @@ Upcoming Release
 
 * Add electric compression losses for hydrogen and gas pipelines from DEA.
 
+* Add methanol-to-kerosene from `Concawe report <https://www.concawe.eu/wp-content/uploads/Rpt_22-17.pdf>`_.
+
 Technology-Data 0.6.2 (7 August 2023)
 =====================================
 

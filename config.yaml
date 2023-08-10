@@ -31,4 +31,4 @@ offwind_no_gridcosts : true
 desalination:
     salinity: 35 # in PSU (Practical Salinity Unit) = kg/m^3
 
-ndigits: 2
+ndigits: 4

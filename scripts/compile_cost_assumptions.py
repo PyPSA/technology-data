@@ -2184,7 +2184,7 @@ if __name__ == "__main__":
     costs_vehicles = pd.read_csv(snakemake.input.fraunhofer_vehicles_costs,
                             engine="python",
                             index_col=[0,1],
-                            encoding='utf-8')
+                            encoding="ISO-8859-1")
     # rename + reorder to fit to other data
     costs_vehicles = rename_ISE_vehicles(costs_vehicles)
     # add costs for vehicles

@@ -1658,7 +1658,7 @@ def add_egs_data(data):
     Data taken from Aghahosseini, Breyer 2020: From hot rock to useful energy...
     
     """ 
-    parameters = ["CO2 intensity", "lifetime", "efficiency residential heat", "efficiency electricity"]
+    parameters = ["CO2 intensity", "lifetime", "efficiency residential heat", "efficiency electricity", "FOM"]
     techs = ["geothermal"]
     multi_i = pd.MultiIndex.from_product([techs, parameters])
     geoth_df = pd.DataFrame(index=multi_i, columns=data.columns)
@@ -1692,6 +1692,12 @@ def add_egs_data(data):
     geoth_df.loc[("geothermal", "district heating cost"), "unit"] = "%"
     geoth_df.loc[("geothermal", "district heating cost"), "source"] = "{}".format(source_dict["Frey2022"]) 
     geoth_df.loc[("geothermal", "district heating cost"), "further description"] = "If capital cost of electric generation from EGS is 100%, district heating adds additional 25%"
+
+    # fixed operational costs
+    geoth_df.loc[("geothermal", "FOM"), years] = 2.
+    geoth_df.loc[("geothermal", "FOM"), "unit"] = "%/year"
+    geoth_df.loc[("geothermal", "FOM"), "source"] = source_dict["Aghahosseini2020"] 
+    geoth_df.loc[("geothermal", "FOM"), "further description"] = "Both for flash, binary and ORC plants. See Supplemental Material for details"
 
     return pd.concat([data, geoth_df])
 

@@ -1400,6 +1400,7 @@ def rename_ISE(costs_ISE):
 
     return costs_ISE
 
+
 def rename_ISE_vehicles(costs_vehicles):
     """
     rename ISE_vehicles costs to fit to tech data
@@ -1431,7 +1432,6 @@ def rename_ISE_vehicles(costs_vehicles):
     costs_vehicles.unit.replace({"a": "years", "% Invest": "%"}, inplace=True)
     costs_vehicles["source"] = source_dict["vehicles"]
     costs_vehicles['further description'] =  costs_vehicles.reset_index()["technology"].values
-
     return costs_vehicles
 
 def carbon_flow(costs,year):
@@ -2186,7 +2186,7 @@ if __name__ == "__main__":
                             index_col=[0,2]).sort_index()
     # rename some techs and convert units
     costs_pypsa = rename_pypsa_old(costs_pypsa)
-	
+
     # (b1) ------- add vehicle costs from Fraunhofer vehicle study ------------------------
     costs_vehicles = pd.read_csv(snakemake.input.fraunhofer_vehicles_costs,
                             engine="python",
@@ -2194,9 +2194,13 @@ if __name__ == "__main__":
                             encoding="ISO-8859-1")
     # rename + reorder to fit to other data
     costs_vehicles = rename_ISE_vehicles(costs_vehicles)
+    if 'NT' in costs_vehicles.index:
+    	costs_vehicles.drop(['NT'], axis=0, inplace=True)
+
     # add costs for vehicles
     data = pd.concat([data, costs_vehicles], sort=True)
-	
+
+
     # (b) ------- add costs from Fraunhofer ISE study --------------------------
     costs_ISE = pd.read_csv(snakemake.input.fraunhofer_costs,
                             engine="python",

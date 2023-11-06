@@ -796,9 +796,8 @@ offwind-ac-station,investment,250.0,EUR/kWel,DEA https://ens.dk/en/our-services/
 offwind-dc-connection-submarine,investment,2000.0,EUR/MW/km,DTU report based on Fig 34 of https://ec.europa.eu/energy/sites/ener/files/documents/2014_nsog_report.pdf, from old pypsa cost assumptions
 offwind-dc-connection-underground,investment,1000.0,EUR/MW/km,Haertel 2017; average + 13% learning reduction, from old pypsa cost assumptions
 offwind-dc-station,investment,400.0,EUR/kWel,Haertel 2017; assuming one onshore and one offshore node + 13% learning reduction, from old pypsa cost assumptions
-offwind-float,FOM,1.15,%/year,https://doi.org/10.1016/j.adapen.2021.100067,
-offwind-float,VOM,2.7172,EUR/MWhel,https://doi.org/10.1016/j.adapen.2021.100067,
-offwind-float,investment,2128.4674,EUR/kWel,https://doi.org/10.1016/j.adapen.2021.100067,
+offwind-float,FOM,1.305,%/year,https://doi.org/10.1016/j.adapen.2021.100067,
+offwind-float,investment,1603.1435,EUR/kWel,https://doi.org/10.1016/j.adapen.2021.100067,
 offwind-float,lifetime,20.0,years,C. Maienza 2020 A life cycle cost model for floating offshore wind farms,
 offwind-float-connection-submarine,investment,2000.0,EUR/MW/km,DTU report based on Fig 34 of https://ec.europa.eu/energy/sites/ener/files/documents/2014_nsog_report.pdf, from old pypsa cost assumptions
 offwind-float-connection-underground,investment,1000.0,EUR/MW/km,Haertel 2017; average + 13% learning reduction, from old pypsa cost assumptions

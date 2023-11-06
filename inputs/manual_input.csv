@@ -302,3 +302,7 @@ electric arc furnace,hbi-input,2020,1,t_hbi/t_steel,2020,-,Assume HBI instead of
 shipping fuel methanol,fuel,2020,72,EUR/MWh_th,2020,"Based on (source 1) Hampp et al (2022), https://arxiv.org/abs/2107.01092, and (source 2): https://www.methanol.org/methanol-price-supply-demand/; both accessed: 2022-12-03.",400 EUR/t assuming range roughly in the long-term range for green methanol (source 1) and late 2020+beyond values for grey methanol (source 2).
 shipping fuel methanol,CO2 intensity,2020,0.2482,t_CO2/MWh_th,2020,-,Based on stochiometric composition.
 iron ore DRI-ready,commodity,2020,97.73,EUR/t,2020,"Model assumptions from MPP Steel Transition Tool: https://missionpossiblepartnership.org/action-sectors/steel/, accessed: 2022-12-03.","DRI ready assumes 65% iron content, requiring no additional benefication."
+offwind-float,investment,2030,2350,EUR/kWel,2020,https://doi.org/10.1016/j.adapen.2021.100067,
+offwind-float,FOM,2030,1.15,%/year,2020,https://doi.org/10.1016/j.adapen.2021.100067,
+offwind-float,VOM,2030,3,EUR/MWhel,2020,https://doi.org/10.1016/j.adapen.2021.100067,
+offwind-float,lifetime,2030,20,years,2020,C. Maienza 2020 A life cycle cost model for floating offshore wind farms,

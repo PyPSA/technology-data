@@ -7,15 +7,17 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
-  - python
+  - python>=3.9
   - pip
   - snakemake-minimal
   - pandas>=1.1.0,<1.3
   - numpy
   - beautifulsoup4
   - xlrd
+  - scipy
   - openpyxl<=3.0.9
   - packaging
 
   - pip:
     - tabula-py
+    - currencyconverter

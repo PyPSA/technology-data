@@ -7,13 +7,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: conda-incubator/setup-miniconda@v2.1.1 
+    - uses: mamba-org/setup-micromamba@v1
       with:
-          python-version: 3.8
-          environment-file: environment.yaml
-          activate-environment: technology-data
-          auto-activate-base: false
+        micromamba-version: latest
+        environment-file: environment.yaml
+        log-level: debug
+        init-shell: bash
+        cache-environment: true
+        cache-downloads: true
     - name: Test snakemake workflow
       shell: bash -l {0}
       run: |
         snakemake --cores all -f compile_cost_assumptions
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: technology-data
+        path: outputs/

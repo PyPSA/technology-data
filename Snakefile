@@ -10,6 +10,7 @@ rule compile_cost_assumptions:
         pypsa_costs = "inputs/costs_PyPSA.csv",
         fraunhofer_costs = "inputs/Fraunhofer_ISE_costs.csv",
         fraunhofer_energy_prices = "inputs/Fraunhofer_ISE_energy_prices.csv",
+	    fraunhofer_vehicles_costs = "inputs/Fraunhofer_ISE_vehicles_costs.csv",
         EWG_costs = "inputs/EWG_costs.csv",
         dea_transport = "inputs/energy_transport_data_sheet_dec_2017.xlsx",
         dea_renewable_fuels = "inputs/data_sheets_for_renewable_fuels.xlsx",
@@ -18,6 +19,7 @@ rule compile_cost_assumptions:
         dea_heating = "inputs/technologydatafor_heating_installations_marts_2018.xlsx",
         dea_industrial = "inputs/technology_data_for_industrial_process_heat.xlsx",
         dea_ccts = "inputs/technology_data_for_carbon_capture_transport_storage.xlsx",
+        pnnl_energy_storage = "inputs/pnnl-energy-storage-database.xlsx",
         manual_input = "inputs/manual_input.csv"
     output:
         expand("outputs/costs_{year}.csv", year = config["years"])

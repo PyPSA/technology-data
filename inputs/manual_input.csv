@@ -309,3 +309,6 @@ offwind-float,investment,2040,1960,EUR/kWel,2020,https://doi.org/10.1016/j.adape
 offwind-float,FOM,2040,1.22,%/year,2020,https://doi.org/10.1016/j.adapen.2021.100067,
 offwind-float,investment,2050,1580,EUR/kWel,2020,https://doi.org/10.1016/j.adapen.2021.100067,
 offwind-float,FOM,2050,1.39,%/year,2020,https://doi.org/10.1016/j.adapen.2021.100067,
+offwind-float-station,investment,2030,400,EUR/kWel,2017,Haertel 2017; assuming one onshore and one offshore node + 13% learning reduction,
+offwind-float-connection-submarine,investment,2030,2000,EUR/MW/km,2014,DTU report based on Fig 34 of https://ec.europa.eu/energy/sites/ener/files/documents/2014_nsog_report.pdf,
+offwind-float-connection-underground,investment,2030,1000,EUR/MW/km,2017,Haertel 2017; average + 13% learning reduction,

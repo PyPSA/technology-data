@@ -5,6 +5,8 @@ Release Notes
 Upcoming Release
 ================
 
+* Add floating wind cost data
+
 * Add biomass-to-methanol route from DEA.
 
 * Add electric compression losses for hydrogen and gas pipelines from DEA.

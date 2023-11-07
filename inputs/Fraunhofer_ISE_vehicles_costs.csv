@@ -1,0 +1,38 @@
+Komponente,Gr��e,Einheit,2020,2025,2030,2035,2040,2045,2050
+LKW H2- Brennstoffzelle,Investition,EUR/LKW,151574,122291,116497,117600,120177,122939,125710
+LKW H2- Brennstoffzelle,Lebensdauer,a,15,15,15,15,15,15,15
+LKW H2- Brennstoffzelle,M/O-Kosten,% Invest,10.1,12.5,13.1,13,12.7,12.4,12.2
+LKW H2- Brennstoffzelle,Wirkungsgrad*,%,56,56,56,56,56,56,56
+LKW ICE- Fl�ssigtreibstoff,Investition,EUR/LKW,99772,102543,105315,108086,110858,113629,116401
+LKW ICE- Fl�ssigtreibstoff,Lebensdauer,a,15,15,15,15,15,15,15
+LKW ICE- Fl�ssigtreibstoff,M/O-Kosten,% Invest,18,17.5,17.1,16.6,16.2,15.8,15.5
+LKW ICE- Fl�ssigtreibstoff,Wirkungsgrad*,%,37.3,37.3,37.3,37.3,37.3,37.3,37.3
+LKW Ladeinfrastruktur Brennstoffzellen Fahrzeuge * LKW,Investition,EUR/Lades�ule,2243051,2000991,1787894,1787894,1787894,1787894,1787894
+LKW Ladeinfrastruktur Brennstoffzellen Fahrzeuge * LKW,Lebensdauer,a,30,30,30,30,30,30,30
+LKW Ladeinfrastruktur Brennstoffzellen Fahrzeuge * LKW,M/O-Kosten,% Invest,2.2,2.2,2.2,2.2,2.2,2.2,2.2
+PKW H2- Brennstoffzelle,Investition,EUR/PKW,55000,43500,33226,30720,29440,28160,26880
+PKW H2- Brennstoffzelle,Lebensdauer,a,15,15,15,15,15,15,15
+PKW H2- Brennstoffzelle,M/O-Kosten,% Invest,1.1,1.1,1.1,1.1,1.2,1.2,1.2
+PKW H2- Brennstoffzelle,Wirkungsgrad*,%,48,48,48,48,48,48,48
+PKW ICE- Fl�ssigtreibstoff,Investition,EUR/PKW,23561,24309,24999,25622,26167,26610,26880
+PKW ICE- Fl�ssigtreibstoff,Lebensdauer,a,15,15,15,15,15,15,15
+PKW ICE- Fl�ssigtreibstoff,M/O-Kosten,% Invest,1.6,1.6,1.6,1.6,1.6,1.6,1.6
+PKW ICE- Fl�ssigtreibstoff,Wirkungsgrad*,%,21.5,21.5,21.5,21.5,21.5,21.5,21.5
+PKW Ladeinfrastruktur Brennstoffzellen Fahrzeuge * PKW,Investition,EUR/Lades�ule,2243051,2000991,1787894,1788360,1788360,1788360,1788360
+PKW Ladeinfrastruktur Brennstoffzellen Fahrzeuge * PKW,Lebensdauer,a,30,30,30,30,30,30,30
+PKW Ladeinfrastruktur Brennstoffzellen Fahrzeuge * PKW,M/O-Kosten,% Invest,2.2,2.2,2.2,2.2,2.2,2.2,2.2
+PKW Ladeinfrastruktur schnell  (reine) Batteriefahrzeuge*,Investition,EUR/Lades�ule,629102,527507,448894,448894,448894,448894,448894
+PKW Ladeinfrastruktur schnell  (reine) Batteriefahrzeuge*,Lebensdauer,a,30,30,30,30,30,30,30
+PKW Ladeinfrastruktur schnell  (reine) Batteriefahrzeuge*,M/O-Kosten,% Invest,1.6,1.6,1.6,1.6,1.6,1.6,1.6
+Ladeinfrastruktur langsam (reine) Batteriefahrzeuge*,Investition,EUR/Lades�ule,1283,1126,1005,1005,1005,1005,1005
+Ladeinfrastruktur langsam (reine) Batteriefahrzeuge*,Lebensdauer,a,30,30,30,30,30,30,30
+Ladeinfrastruktur langsam (reine) Batteriefahrzeuge*,M/O-Kosten,% Invest,1.8,1.8,1.8,1.8,1.8,1.8,1.8
+NT,Wirkungsgrad el.,%,62.9,63.4,63.9,64.4,64.9,65.4,65.9
+NT,Wirkungsgrad th.,%,27.9,28.1,28.3,28.5,28.7,28.9,29.1
+PKW Batterie-Elektromotor,Investition,EUR/PKW,33000,28812,24624,24358,24092,23827,23561
+PKW Batterie-Elektromotor,Lebensdauer,a,15,15,15,15,15,15,15
+PKW Batterie-Elektromotor,M/O-Kosten,% Invest,0.9,0.9,0.9,0.9,0.9,0.9,0.9
+PKW Batterie-Elektromotor,Wirkungsgrad*,%,68,68,68,68,68,68,68
+LKW Batterie-Elektromotor,Investition,EUR/LKW,204067,165765,136400,134700,133000,131200,129400
+LKW Batterie-Elektromotor,Lebensdauer,a,15,15,15,15,15,15,15
+LKW Batterie-Elektromotor,M/O-Kosten,% Invest,14,14,15,16,16,16,16

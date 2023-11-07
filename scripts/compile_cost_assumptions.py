@@ -59,6 +59,8 @@ source_dict = {
                 "Breede2015": "Breede et al. 2015: Overcoming challenges in the classification of deep geothermal potential, https://eprints.gla.ac.uk/169585/",
                 # Study of deep geothermal systems in the Northern Upper Rhine Graben
                 "Frey2022": "Frey et al. 2022: Techno-Economic Assessment of Geothermal Resources in the Variscan Basement of the Northern Upper Rhine Graben",
+		# vehicles 
+		"vehicles" : "PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html"
                 }
 
 # [DEA-sheet-names]
@@ -1398,6 +1400,40 @@ def rename_ISE(costs_ISE):
 
     return costs_ISE
 
+
+def rename_ISE_vehicles(costs_vehicles):
+    """
+    rename ISE_vehicles costs to fit to tech data
+    """
+
+    costs_vehicles.rename(index = {"Investition": "investment",
+                          "Lebensdauer": "lifetime",
+                          "M/O-Kosten": "FOM",
+			"Wirkungsgrad*" : "Efficiency (carrier to wheel)",
+			"PKW Batterie-Elektromotor" : "Battery electric (passenger cars)",
+			"LKW Batterie-Elektromotor" : "Battery electric (trucks)",
+			"LKW H2- Brennstoffzelle": "Hydrogen fuel cell (trucks)",
+			"PKW H2- Brennstoffzelle": "Hydrogen fuel cell (passenger cars)",
+			"LKW ICE- Flï¿½ssigtreibstoff": "Liquid fuels ICE (trucks)",
+			"PKW ICE- Flï¿½ssigtreibstoff": "Liquid fuels ICE (passenger cars)",
+			"LKW Ladeinfrastruktur Brennstoffzellen Fahrzeuge * LKW": "Charging infrastructure fuel cell vehicles trucks",
+			"PKW Ladeinfrastruktur Brennstoffzellen Fahrzeuge * PKW": "Charging infrastructure fuel cell vehicles passenger cars",
+			"PKW Ladeinfrastruktur schnell  (reine) Batteriefahrzeuge*" : "Charging infrastructure fast (purely) battery electric vehicles passenger cars",
+			"Ladeinfrastruktur langsam (reine) Batteriefahrzeuge*" : "Charging infrastructure slow (purely) battery electric vehicles passenger cars"},
+                 columns = {"Einheit": "unit",
+                            "2020": 2020,
+                            "2025": 2025,
+                            "2030": 2030,
+                            "2035": 2035,
+                            "2040": 2040,
+                            "2045": 2045,
+                            "2050": 2050}, inplace=True)
+    costs_vehicles.index.names = ["technology", "parameter"]
+    costs_vehicles.unit.replace({"a": "years", "% Invest": "%"}, inplace=True)
+    costs_vehicles["source"] = source_dict["vehicles"]
+    costs_vehicles['further description'] =  costs_vehicles.reset_index()["technology"].values
+    return costs_vehicles
+
 def carbon_flow(costs,year):
     # NB: This requires some digits of accuracy; rounding to two digits creates carbon inbalances when scaling up
     c_in_char = 0 # Carbon ending up in char: zero avoids inbalace -> assumed to be circulated back and eventually end up in one of the other output streams
@@ -2150,6 +2186,20 @@ if __name__ == "__main__":
                             index_col=[0,2]).sort_index()
     # rename some techs and convert units
     costs_pypsa = rename_pypsa_old(costs_pypsa)
+
+    # (b1) ------- add vehicle costs from Fraunhofer vehicle study ------------------------
+    costs_vehicles = pd.read_csv(snakemake.input.fraunhofer_vehicles_costs,
+                            engine="python",
+                            index_col=[0,1],
+                            encoding="ISO-8859-1")
+    # rename + reorder to fit to other data
+    costs_vehicles = rename_ISE_vehicles(costs_vehicles)
+    if 'NT' in costs_vehicles.index:
+    	costs_vehicles.drop(['NT'], axis=0, inplace=True)
+
+    # add costs for vehicles
+    data = pd.concat([data, costs_vehicles], sort=True)
+
 
     # (b) ------- add costs from Fraunhofer ISE study --------------------------
     costs_ISE = pd.read_csv(snakemake.input.fraunhofer_costs,

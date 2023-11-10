@@ -7,26 +7,19 @@ Files: .github/*
 Copyright: The Technology Data Authors
 License: CC0-1.0
 
-Files: outputs/*
+Files:
+  docs/data.csv
+  docs/parameter.csv
+  inputs/manual_input.csv
+  inputs/costs_PyPSA.csv
+  latex_tables/*
+  outputs/*
 Copyright: The Technology Data Authors
 License: CC-BY-4.0
 
-Files: latex_tables/*
+# Code files in latex_tables are licensed under MIT, not CC-BY-4.0
+# (Last paragraph takes precedence by DEP5 specification)
+Files:
+  latex_tables/*.py
 Copyright: The Technology Data Authors
-License: CC-BY-4.0
-
-Files: docs/data.csv
-Copyright: The Technology Data Authors
-License: CC-BY-4.0
-
-Files: docs/parameter.csv
-Copyright: The Technology Data Authors
-License: CC-BY-4.0
-
-Files: inputs/manual_input.csv
-Copyright: The Technology Data Authors
-License: CC-BY-4.0
-
-Files: inputs/costs_PyPSA.csv
-Copyright: The Technology Data Authors
-License: CC-BY-4.0
+License: MIT

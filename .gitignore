@@ -21,3 +21,5 @@ gurobi.log
 *.cb
 *.cb2
 .*.lb
+
+.vscode/

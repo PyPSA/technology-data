@@ -732,7 +732,6 @@ gas storage discharger,investment,4.7796,EUR/kW,Danish Energy Agency,"150 Underg
 geothermal,CO2 intensity,0.12,tCO2/MWh_th,"Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551",Likely to be improved; Average of 85 percent of global egs power plant capacity
 geothermal,FOM,2.0,%/year,"Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551","Both for flash, binary and ORC plants. See Supplemental Material for details"
 geothermal,district heating cost,0.25,%,Frey et al. 2022: Techno-Economic Assessment of Geothermal Resources in the Variscan Basement of the Northern Upper Rhine Graben,"If capital cost of electric generation from EGS is 100%, district heating adds additional 25%"
-geothermal,efficiency electricity,0.1,per unit,"Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551; Breede et al. 2015: Overcoming challenges in the classification of deep geothermal potential, https://eprints.gla.ac.uk/169585/","This is a rough estimate, depends on local conditions"
 geothermal,efficiency residential heat,0.8,per unit,"Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551; Breede et al. 2015: Overcoming challenges in the classification of deep geothermal potential, https://eprints.gla.ac.uk/169585/","This is a rough estimate, depends on local conditions"
 geothermal,lifetime,30.0,years,"Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551",
 helmeth,FOM,3.0,%/year,no source, from old pypsa cost assumptions
@@ -834,9 +833,9 @@ offwind-dc-station,investment,400.0,EUR/kWel,Haertel 2017; assuming one onshore 
 offwind-float,FOM,1.22,%/year,https://doi.org/10.1016/j.adapen.2021.100067,
 offwind-float,investment,1775.2324,EUR/kWel,https://doi.org/10.1016/j.adapen.2021.100067,
 offwind-float,lifetime,20.0,years,C. Maienza 2020 A life cycle cost model for floating offshore wind farms,
-offwind-float-connection-submarine,investment,2000.0,EUR/MW/km,DTU report based on Fig 34 of https://ec.europa.eu/energy/sites/ener/files/documents/2014_nsog_report.pdf, from old pypsa cost assumptions
-offwind-float-connection-underground,investment,1000.0,EUR/MW/km,Haertel 2017; average + 13% learning reduction, from old pypsa cost assumptions
-offwind-float-station,investment,400.0,EUR/kWel,Haertel 2017; assuming one onshore and one offshore node + 13% learning reduction, from old pypsa cost assumptions
+offwind-float-connection-submarine,investment,2040.0,EUR/MW/km,DTU report based on Fig 34 of https://ec.europa.eu/energy/sites/ener/files/documents/2014_nsog_report.pdf,
+offwind-float-connection-underground,investment,961.1688,EUR/MW/km,Haertel 2017; average + 13% learning reduction,
+offwind-float-station,investment,384.4675,EUR/kWel,Haertel 2017; assuming one onshore and one offshore node + 13% learning reduction,
 oil,CO2 intensity,0.2571,tCO2/MWh_th,Stoichiometric calculation with 44 GJ/t diesel and -CH2- approximation of diesel,
 oil,FOM,2.4365,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",50 Diesel engine farm:  Fixed O&M
 oil,VOM,6.0,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",50 Diesel engine farm:  Variable O&M
@@ -848,6 +847,10 @@ onwind,FOM,1.1858,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xl
 onwind,VOM,1.242,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",20 Onshore turbines:  Variable O&M
 onwind,investment,977.5652,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",20 Onshore turbines:  Nominal investment 
 onwind,lifetime,30.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",20 Onshore turbines:  Technical lifetime
+organic rankine cycle,FOM,2.0,%/year,"Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551","Both for flash, binary and ORC plants. See Supplemental Material for details"
+organic rankine cycle,efficiency,0.1,per unit,"Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551; Breede et al. 2015: Overcoming challenges in the classification of deep geothermal potential, https://eprints.gla.ac.uk/169585/","This is a rough estimate, depends on input temperature, implies ~150 C"
+organic rankine cycle,investment,1900.0,USD/kW,"Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551","Also varies based on input temperature, implies ~150 C"
+organic rankine cycle,lifetime,30.0,years,"Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551",
 ror,FOM,2.0,%/year,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 ror,efficiency,0.9,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 ror,investment,3312.2424,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions

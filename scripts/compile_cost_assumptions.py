@@ -1694,19 +1694,19 @@ def add_egs_data(data):
     Data taken from Aghahosseini, Breyer 2020: From hot rock to useful energy...
     
     """ 
-    parameters = ["CO2 intensity", "lifetime", "efficiency residential heat", "efficiency electricity", "FOM"]
+    parameters = ["CO2 intensity", "lifetime", "efficiency residential heat", "FOM"]
     techs = ["geothermal"]
     multi_i = pd.MultiIndex.from_product([techs, parameters])
     geoth_df = pd.DataFrame(index=multi_i, columns=data.columns)
     years = [col for col in data.columns if isinstance(col, int)]
 
     # lifetime
-    geoth_df.loc[("geothermal", "lifetime"), years] = 30 #years
+    geoth_df.loc[("geothermal", "lifetime"), years] = 30
     geoth_df.loc[("geothermal", "lifetime"), "unit"] = "years"
     geoth_df.loc[("geothermal", "lifetime"), "source"] = source_dict["Aghahosseini2020"]
 
     # co2 emissions
-    geoth_df.loc[("geothermal", "CO2 intensity"), years] = 0.12 # tCO2/MWh_el
+    geoth_df.loc[("geothermal", "CO2 intensity"), years] = 0.12
     geoth_df.loc[("geothermal", "CO2 intensity"), "unit"] = "tCO2/MWh_el"
     geoth_df.loc[("geothermal", "CO2 intensity"), "source"] = source_dict["Aghahosseini2020"]
     geoth_df.loc[("geothermal", "CO2 intensity"), "further description"] = "Likely to be improved; Average of 85 percent of global egs power plant capacity"
@@ -1716,12 +1716,6 @@ def add_egs_data(data):
     geoth_df.loc[("geothermal", "efficiency residential heat"), "unit"] = "per unit"
     geoth_df.loc[("geothermal", "efficiency residential heat"), "source"] = "{}; {}".format(source_dict["Aghahosseini2020"], source_dict["Breede2015"]) 
     geoth_df.loc[("geothermal", "efficiency residential heat"), "further description"] = "This is a rough estimate, depends on local conditions"
-
-    # efficiency for electricity generation using organic rankine cycle
-    geoth_df.loc[("geothermal", "efficiency electricity"), years] = 0.1
-    geoth_df.loc[("geothermal", "efficiency electricity"), "unit"] = "per unit"
-    geoth_df.loc[("geothermal", "efficiency electricity"), "source"] = "{}; {}".format(source_dict["Aghahosseini2020"], source_dict["Breede2015"]) 
-    geoth_df.loc[("geothermal", "efficiency electricity"), "further description"] = "This is a rough estimate, depends on local conditions"
 
     # relative additional capital cost of using residual heat for district heating (25 percent)
     geoth_df.loc[("geothermal", "district heating cost"), years] = 0.25
@@ -1736,6 +1730,46 @@ def add_egs_data(data):
     geoth_df.loc[("geothermal", "FOM"), "further description"] = "Both for flash, binary and ORC plants. See Supplemental Material for details"
 
     return pd.concat([data, geoth_df])
+
+
+def add_orc_data(data):
+    """
+    Adds data on organic Rankine cycles.
+
+    Data taken from Aghahosseini, Breyer 2020: From hot rock to useful energy...
+
+    """
+
+    parameters = ["lifetime", "efficiency", "FOM", "investment"]
+    techs = ["organic rankine cycle"]
+    multi_i = pd.MultiIndex.from_product([techs, parameters])
+    orc_df = pd.DataFrame(index=multi_i, columns=data.columns)
+    years = [col for col in data.columns if isinstance(col, int)]
+
+    # lifetime
+    orc_df.loc[("organic rankine cycle", "lifetime"), years] = 30
+    orc_df.loc[("organic rankine cycle", "lifetime"), "unit"] = "years"
+    orc_df.loc[("organic rankine cycle", "lifetime"), "source"] = source_dict["Aghahosseini2020"]
+
+    # efficiency
+    orc_df.loc[("organic rankine cycle", "efficiency"), years] = 0.1
+    orc_df.loc[("organic rankine cycle", "efficiency"), "unit"] = "per unit"
+    orc_df.loc[("organic rankine cycle", "efficiency"), "source"] = "{}; {}".format(source_dict["Aghahosseini2020"], source_dict["Breede2015"]) 
+    orc_df.loc[("organic rankine cycle", "efficiency"), "further description"] = "This is a rough estimate, depends on input temperature, implies ~150 C"
+
+    # fixed operational costs
+    orc_df.loc[("organic rankine cycle", "FOM"), years] = 2.
+    orc_df.loc[("organic rankine cycle", "FOM"), "unit"] = "%/year"
+    orc_df.loc[("organic rankine cycle", "FOM"), "source"] = source_dict["Aghahosseini2020"] 
+    orc_df.loc[("organic rankine cycle", "FOM"), "further description"] = "Both for flash, binary and ORC plants. See Supplemental Material for details"
+
+    # investment cost
+    orc_df.loc[("organic rankine cycle", "investment"), years] = 1900.
+    orc_df.loc[("organic rankine cycle", "investment"), "unit"] = "USD/kW"
+    orc_df.loc[("organic rankine cycle", "investment"), "source"] = source_dict["Aghahosseini2020"] 
+    orc_df.loc[("organic rankine cycle", "investment"), "further description"] = "Also varies based on input temperature, implies ~150 C"
+
+    return pd.concat([data, orc_df])
 
 
 def annuity(n,r=0.07):
@@ -2213,6 +2247,8 @@ if __name__ == "__main__":
 
     # add (enhanced) geothermal systems data
     data = add_egs_data(data) 
+    # add organic rankine cycle data
+    data = add_orc_data(data)
 
     data = add_manual_input(data)
     # add costs for home batteries

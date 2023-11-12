@@ -17,6 +17,8 @@ Upcoming Release
 
 * Added FOM for enhanced geothermal systems.
 
+* Added data for Organic Rankine Cycles.
+
 Technology-Data 0.6.2 (7 August 2023)
 =====================================
 

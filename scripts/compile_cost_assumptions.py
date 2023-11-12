@@ -1765,7 +1765,7 @@ def add_orc_data(data):
 
     # investment cost
     orc_df.loc[("organic rankine cycle", "investment"), years] = 1900.
-    orc_df.loc[("organic rankine cycle", "investment"), "unit"] = "USD/kW"
+    orc_df.loc[("organic rankine cycle", "investment"), "unit"] = "USD/kW_el"
     orc_df.loc[("organic rankine cycle", "investment"), "source"] = source_dict["Aghahosseini2020"] 
     orc_df.loc[("organic rankine cycle", "investment"), "further description"] = "Also varies based on input temperature, implies ~150 C"
 

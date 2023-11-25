@@ -19,6 +19,10 @@ Upcoming Release
 
 * Added data for Organic Rankine Cycles.
 
+* Moved efficiency for electricity generation from geothermal to ORC.
+
+* Moved addition of geothermal data from `compile_cost_assumptions.py` to `manual_input.csv`.
+
 Technology-Data 0.6.2 (7 August 2023)
 =====================================
 

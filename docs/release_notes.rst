@@ -17,6 +17,12 @@ Upcoming Release
 
 * Added FOM for enhanced geothermal systems.
 
+* Costs for 'fuel' provided in the manual_inputs.csv are now also adjusted for inflation.
+
+* Updated cost assumptions for 'nuclear', 'coal', and 'lignite' to Lazard's LCoE V16 (2023).
+
+* Updated source for 'fuel' costs of 'gas', 'uranium', 'coal', and 'lignite' to DIW (2013) data.
+
 Technology-Data 0.6.2 (7 August 2023)
 =====================================
 

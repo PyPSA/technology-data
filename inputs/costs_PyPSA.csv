@@ -9,10 +9,7 @@ PHS,2030,lifetime,80,years,IEA2010
 hydro,2030,lifetime,80,years,IEA2010
 ror,2030,lifetime,80,years,IEA2010
 OCGT,2030,lifetime,30,years,IEA2010
-nuclear,2030,lifetime,45,years,ECF2010 in DIW DataDoc http://hdl.handle.net/10419/80348
 CCGT,2030,lifetime,30,years,IEA2010
-coal,2030,lifetime,40,years,IEA2010
-lignite,2030,lifetime,40,years,IEA2010
 geothermal,2030,lifetime,40,years,IEA2010
 biomass,2030,lifetime,30,years,ECF2010 in DIW DataDoc http://hdl.handle.net/10419/80348
 oil,2030,lifetime,30,years,ECF2010 in DIW DataDoc http://hdl.handle.net/10419/80348
@@ -21,15 +18,12 @@ offwind,2030,investment,2506,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80
 solar,2030,investment,600,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
 biomass,2030,investment,2209,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
 geothermal,2030,investment,3392,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
-coal,2030,investment,1300,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348 PC (Advanced/SuperC)
-lignite,2030,investment,1500,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
 solar-rooftop,2030,investment,725,EUR/kWel,ETIP PV
 solar-utility,2030,investment,425,EUR/kWel,ETIP PV
 PHS,2030,investment,2000,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
 hydro,2030,investment,2000,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
 ror,2030,investment,3000,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
 OCGT,2030,investment,400,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
-nuclear,2030,investment,6000,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
 CCGT,2030,investment,800,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
 oil,2030,investment,400,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348
 onwind,2030,FOM,2.961083,%/year,DIW DataDoc http://hdl.handle.net/10419/80348
@@ -39,8 +33,6 @@ solar-rooftop,2030,FOM,2,%/year,ETIP PV
 solar-utility,2030,FOM,3,%/year,ETIP PV
 biomass,2030,FOM,4.526935,%/year,DIW DataDoc http://hdl.handle.net/10419/80348
 geothermal,2030,FOM,2.358491,%/year,DIW DataDoc http://hdl.handle.net/10419/80348
-coal,2030,FOM,1.923076,%/year,DIW DataDoc http://hdl.handle.net/10419/80348 PC (Advanced/SuperC)
-lignite,2030,FOM,2.0,%/year,DIW DataDoc http://hdl.handle.net/10419/80348 PC (Advanced/SuperC)
 oil,2030,FOM,1.5,%/year,DIW DataDoc http://hdl.handle.net/10419/80348
 PHS,2030,FOM,1,%/year,DIW DataDoc http://hdl.handle.net/10419/80348
 hydro,2030,FOM,1,%/year,DIW DataDoc http://hdl.handle.net/10419/80348
@@ -50,18 +42,10 @@ OCGT,2030,FOM,3.75,%/year,DIW DataDoc http://hdl.handle.net/10419/80348
 onwind,2030,VOM,0.015,EUR/MWhel,RES costs made up to fix curtailment order
 offwind,2030,VOM,0.02,EUR/MWhel,RES costs made up to fix curtailment order
 solar,2030,VOM,0.01,EUR/MWhel,RES costs made up to fix curtailment order
-coal,2030,VOM,6,EUR/MWhel,DIW DataDoc http://hdl.handle.net/10419/80348 PC (Advanced/SuperC)
-lignite,2030,VOM,7,EUR/MWhel,DIW DataDoc http://hdl.handle.net/10419/80348
 CCGT,2030,VOM,4,EUR/MWhel,DIW DataDoc http://hdl.handle.net/10419/80348
 OCGT,2030,VOM,3,EUR/MWhel,DIW DataDoc http://hdl.handle.net/10419/80348
-nuclear,2030,VOM,8,EUR/MWhel,DIW DataDoc http://hdl.handle.net/10419/80348
-gas,2030,fuel,21.6,EUR/MWhth,IEA2011b
-uranium,2030,fuel,3,EUR/MWhth,DIW DataDoc http://hdl.handle.net/10419/80348
 oil,2030,VOM,3,EUR/MWhel,DIW DataDoc http://hdl.handle.net/10419/80348
-nuclear,2030,fuel,3,EUR/MWhth,IEA2011b
 biomass,2030,fuel,7,EUR/MWhth,IEA2011b
-coal,2030,fuel,8.4,EUR/MWhth,IEA2011b
-lignite,2030,fuel,2.9,EUR/MWhth,IEA2011b
 biogas,2030,fuel,59,EUR/MWhth,JRC and Zappa
 solid biomass,2030,fuel,25.2,EUR/MWhth,JRC and Zappa
 oil,2030,fuel,50,EUR/MWhth,IEA WEM2017 97USD/boe = http://www.iea.org/media/weowebsite/2017/WEM_Documentation_WEO2017.pdf
@@ -72,13 +56,8 @@ OCGT,2030,efficiency,0.39,per unit,DIW DataDoc http://hdl.handle.net/10419/80348
 CCGT,2030,efficiency,0.5,per unit,DIW DataDoc http://hdl.handle.net/10419/80348
 biomass,2030,efficiency,0.468,per unit,DIW DataDoc http://hdl.handle.net/10419/80348
 geothermal,2030,efficiency,0.239,per unit,DIW DataDoc http://hdl.handle.net/10419/80348
-nuclear,2030,efficiency,0.337,per unit,DIW DataDoc http://hdl.handle.net/10419/80348
 gas,2030,CO2 intensity,0.187,tCO2/MWhth,https://www.eia.gov/environment/emissions/co2_vol_mass.php
-coal,2030,efficiency,0.464,per unit,DIW DataDoc http://hdl.handle.net/10419/80348 PC (Advanced/SuperC)
-lignite,2030,efficiency,0.447,per unit,DIW DataDoc http://hdl.handle.net/10419/80348
 oil,2030,efficiency,0.393,per unit,DIW DataDoc http://hdl.handle.net/10419/80348 CT
-coal,2030,CO2 intensity,0.354,tCO2/MWhth,https://www.eia.gov/environment/emissions/co2_vol_mass.php
-lignite,2030,CO2 intensity,0.4,tCO2/MWhth,German sources
 oil,2030,CO2 intensity,0.248,tCO2/MWhth,https://www.eia.gov/environment/emissions/co2_vol_mass.php
 geothermal,2030,CO2 intensity,0.026,tCO2/MWhth,https://www.eia.gov/environment/emissions/co2_vol_mass.php
 solid biomass,2030,CO2 intensity,0.3,tCO2/MWhth,TODO

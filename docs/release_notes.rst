@@ -17,6 +17,8 @@ Upcoming Release
 
 * Added FOM for enhanced geothermal systems.
 
+* Updated hydrogen pipeline costs based on most recent `EHB report <https://ehb.eu/files/downloads/EHB-2023-20-Nov-FINAL-design.pdf>`_. 
+
 Technology-Data 0.6.2 (7 August 2023)
 =====================================
 

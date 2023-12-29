@@ -23,6 +23,8 @@ Upcoming Release
 
 * Updated source for 'fuel' costs of 'gas', 'uranium', 'coal', and 'lignite' to DIW (2013) data.
 
+* Updated hydrogen pipeline costs based on most recent `EHB report <https://ehb.eu/files/downloads/EHB-2023-20-Nov-FINAL-design.pdf>`_. 
+
 Technology-Data 0.6.2 (7 August 2023)
 =====================================
 

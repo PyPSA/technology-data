@@ -23,6 +23,12 @@ Upcoming Release
 
 * Moved addition of geothermal data from `compile_cost_assumptions.py` to `manual_input.csv`.
 
+* Costs for 'fuel' provided in the manual_inputs.csv are now also adjusted for inflation.
+
+* Updated cost assumptions for 'nuclear', 'coal', and 'lignite' to Lazard's LCoE V16 (2023).
+
+* Updated source for 'fuel' costs of 'gas', 'uranium', 'coal', and 'lignite' to DIW (2013) data.
+
 * Updated hydrogen pipeline costs based on most recent `EHB report <https://ehb.eu/files/downloads/EHB-2023-20-Nov-FINAL-design.pdf>`_. 
 
 Technology-Data 0.6.2 (7 August 2023)

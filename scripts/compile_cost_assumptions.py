@@ -35,8 +35,6 @@ source_dict = {
                 'Vartiaien': 'Impact of weighted average cost of capital, capital expenditure, and other parameters on future utility‐scale PV levelised cost of electricity',
                 # solar rooftop
                 'ETIP': 'European PV Technology and Innovation Platform',
-                # nuclear, coal, lignite
-                'Lazards': 'Lazard s Levelized Cost of Energy Analysis - Version 13.0',
                 # fuel cost
                 'zappa':  'Is a 100% renewable European power system feasible by 2050?',
                 # co2 intensity
@@ -506,96 +504,6 @@ def add_desalinsation_data(costs):
 
     costs = adjust_for_inflation(costs, ['seawater desalination'], 2015)
     costs = adjust_for_inflation(costs, ['clean water tank storage'], 2013)
-
-    return costs
-
-def add_conventional_data(costs):
-    """"
-    add technology data for conventional carriers from Lazards, DIW and BP
-    """
-    # nuclear from Lazards
-    costs.loc[('nuclear', 'investment'), 'value'] = 8595 / \
-        (1 + snakemake.config['rate_inflation'])**(2019 - snakemake.config['eur_year'])
-    costs.loc[('nuclear', 'investment'), 'unit'] = "EUR/kW_e"
-    costs.loc[('nuclear', 'investment'), 'source'] = source_dict['Lazards']
-
-    costs.loc[('nuclear', 'FOM'), 'value'] = 1.4
-    costs.loc[('nuclear', 'FOM'), 'unit'] = "%/year"
-    costs.loc[('nuclear', 'FOM'), 'source'] = source_dict['Lazards']
-
-    costs.loc[('nuclear', 'VOM'), 'value'] = 3.5
-    costs.loc[('nuclear', 'VOM'), 'unit'] = "EUR/MWh_e"
-    costs.loc[('nuclear', 'VOM'), 'source'] = source_dict['Lazards']
-
-    costs.loc[('nuclear', 'efficiency'), 'value'] = 0.33
-    costs.loc[('nuclear', 'efficiency'), 'unit'] = "per unit"
-    costs.loc[('nuclear', 'efficiency'), 'source'] = source_dict['Lazards']
-
-    costs.loc[('nuclear', 'fuel'), 'value'] = 2.6
-    costs.loc[('nuclear', 'fuel'), 'unit'] = 'EUR/MWh_th'
-    costs.loc[('nuclear', 'fuel'), 'source'] = source_dict['Lazards']
-    costs.loc[('uranium', 'fuel'), 'value'] = 2.6
-    costs.loc[('uranium', 'fuel'), 'unit'] = 'EUR/MWh_th'
-    costs.loc[('uranium', 'fuel'), 'source'] = source_dict['Lazards']
-
-    costs.loc[('nuclear', 'lifetime'), 'value'] = 40
-    costs.loc[('nuclear', 'lifetime'), 'unit'] = "years"
-    costs.loc[('nuclear', 'lifetime'), 'source'] = source_dict['Lazards']
-
-    # coal from Lazards and BP 2019
-    costs.loc[('coal', 'investment'), 'value'] = 4162.5 / \
-        (1 + snakemake.config['rate_inflation'])**(2019 - snakemake.config['eur_year'])
-    costs.loc[('coal', 'investment'), 'unit'] = "EUR/kW_e"
-    costs.loc[('coal', 'investment'), 'source'] = source_dict['Lazards']
-
-    costs.loc[('coal', 'FOM'), 'value'] = 1.6
-    costs.loc[('coal', 'FOM'), 'unit'] = "%/year"
-    costs.loc[('coal', 'FOM'), 'source'] = source_dict['Lazards']
-
-    costs.loc[('coal', 'VOM'), 'value'] = 3.5
-    costs.loc[('coal', 'VOM'), 'unit'] = "EUR/MWh_e"
-    costs.loc[('coal', 'VOM'), 'source'] = source_dict['Lazards']
-
-    costs.loc[('coal', 'efficiency'), 'value'] = 0.33
-    costs.loc[('coal', 'efficiency'), 'unit'] = "per unit"
-    costs.loc[('coal', 'efficiency'), 'source'] = source_dict['Lazards']
-
-    costs.loc[('coal', 'fuel'), 'value'] = 8.15
-    costs.loc[('coal', 'fuel'), 'unit'] = 'EUR/MWh_th'
-    costs.loc[('coal', 'fuel'), 'source'] = 'BP 2019'
-    costs.loc[('gas', 'fuel'), 'value'] = 20.1
-    costs.loc[('gas', 'fuel'), 'unit'] = 'EUR/MWh_th'
-    costs.loc[('gas', 'fuel'), 'source'] = 'BP 2019'
-
-    costs.loc[('coal', 'lifetime'), 'value'] = 40
-    costs.loc[('coal', 'lifetime'), 'unit'] = "years"
-    costs.loc[('coal', 'lifetime'), 'source'] = source_dict['Lazards']
-
-    # lignite from Lazards and DIW
-    costs.loc[('lignite', 'investment'), 'value'] = 4162.5 / \
-        (1 + snakemake.config['rate_inflation'])**(2019 - snakemake.config['eur_year'])
-    costs.loc[('lignite', 'investment'), 'unit'] = "EUR/kW_e"
-    costs.loc[('lignite', 'investment'), 'source'] = source_dict['Lazards']
-
-    costs.loc[('lignite', 'FOM'), 'value'] = 1.6
-    costs.loc[('lignite', 'FOM'), 'unit'] = "%/year"
-    costs.loc[('lignite', 'FOM'), 'source'] = source_dict['Lazards']
-
-    costs.loc[('lignite', 'VOM'), 'value'] = 3.5
-    costs.loc[('lignite', 'VOM'), 'unit'] = "EUR/MWh_e"
-    costs.loc[('lignite', 'VOM'), 'source'] = source_dict['Lazards']
-
-    costs.loc[('lignite', 'efficiency'), 'value'] = 0.33
-    costs.loc[('lignite', 'efficiency'), 'unit'] = 'per unit'
-    costs.loc[('lignite', 'efficiency'), 'source'] = source_dict['Lazards']
-
-    costs.loc[('lignite', 'fuel'), 'value'] = 2.9
-    costs.loc[('lignite', 'fuel'), 'unit'] = 'EUR/MWh_th'
-    costs.loc[('lignite', 'fuel'), 'source'] = 'DIW'
-
-    costs.loc[('lignite', 'lifetime'), 'value'] = 40
-    costs.loc[('lignite', 'lifetime'), 'unit']  = "years"
-    costs.loc[('lignite', 'lifetime'), 'source'] = source_dict['Lazards']
 
     return costs
 
@@ -1351,7 +1259,7 @@ def add_manual_input(data):
     df = df.rename(columns={"further_description": "further description"})
 
     # Inflation adjustment for investment and VOM
-    mask = df[df['parameter'].isin(['investment','VOM'])].index
+    mask = df[df['parameter'].isin(['investment','VOM','fuel'])].index
     df.loc[mask, 'value'] /= (1+snakemake.config['rate_inflation'])**(df.loc[mask, 'currency_year'].astype(int)-snakemake.config['eur_year'])
 
     l = []
@@ -2210,8 +2118,6 @@ if __name__ == "__main__":
         if snakemake.config["energy_storage_database"].get("h2_from_budischak", True):
             costs = add_h2_from_other(costs)
 
-        # add data from conventional carriers
-        costs = add_conventional_data(costs)
         # CO2 intensity
         costs = add_co2_intensity(costs)
 

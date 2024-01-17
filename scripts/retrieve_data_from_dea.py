@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+
+# SPDX-FileCopyrightText: The Technology Data Authors
+#
+# SPDX-License-Identifier: MIT
+
 # -*- coding: utf-8 -*-
 """
 Created on Mon May  4 18:48:11 2020

@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+# SPDX-FileCopyrightText: The Technology Data Authors
+#
+# SPDX-License-Identifier: MIT
 #
 # PyPSA documentation build configuration file, created by
 # sphinx-quickstart on Tue Jan  5 10:04:42 2016.
@@ -202,8 +205,10 @@ html_theme_options = {
 # If true, "Created using Sphinx" is shown in the HTML footer. Default is True.
 #html_show_sphinx = True
 
-# If true, "(C) Copyright ..." is shown in the HTML footer. Default is True.
-#html_show_copyright = True
+# Copyright ..." is shown in the HTML footer. Default is True.
+# SPDX-FileCopyrightText:  The Technology Data Authors
+#
+# SPDX-License-Identifier: MIT
 
 # If true, an OpenSearch description file will be output, and all pages will
 # contain a <link> tag referring to it.  The value of this option must be the

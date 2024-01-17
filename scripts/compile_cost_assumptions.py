@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+
+# SPDX-FileCopyrightText: The Technology Data Authors
+#
+# SPDX-License-Identifier: MIT
+
 # -*- coding: utf-8 -*-
 """
 Script creates cost csv for choosen years from different source (source_dict).
@@ -22,7 +27,6 @@ The script is structured as follows:
         (b) Fraunhofer ISE cost assumptions
     (3) merge data from all sources for every year and save it as a csv
 
-@author: Marta, Lisa
 """
 
 import pandas as pd

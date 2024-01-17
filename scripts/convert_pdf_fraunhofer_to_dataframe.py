@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+
+# SPDX-FileCopyrightText: The Technology Data Authors
+#
+# SPDX-License-Identifier: MIT
+
 # -*- coding: utf-8 -*-
 """
 script to convert the technology data assumptions of the Fraunhofer ISE Study

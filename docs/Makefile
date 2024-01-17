@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText:  The Technology Data Authors
+#
+# SPDX-License-Identifier: MIT
+
 # Makefile for Sphinx documentation
 #
 

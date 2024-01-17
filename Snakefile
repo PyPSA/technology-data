@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText:  The Technology Data Authors
+#
+# SPDX-License-Identifier: MIT
 
 configfile: "config.yaml"
 

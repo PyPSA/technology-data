@@ -1317,7 +1317,7 @@ def rename_ISE_vehicles(costs_vehicles):
     costs_vehicles.rename(index = {"Investition": "investment",
                           "Lebensdauer": "lifetime",
                           "M/O-Kosten": "FOM",
-			"Wirkungsgrad*" : "Efficiency (carrier to wheel)",
+			"Wirkungsgrad*" : "efficiency",
 			"PKW Batterie-Elektromotor" : "Battery electric (passenger cars)",
 			"LKW Batterie-Elektromotor" : "Battery electric (trucks)",
 			"LKW H2- Brennstoffzelle": "Hydrogen fuel cell (trucks)",
@@ -2104,7 +2104,7 @@ if __name__ == "__main__":
     costs_vehicles = rename_ISE_vehicles(costs_vehicles)
     if 'NT' in costs_vehicles.index:
     	costs_vehicles.drop(['NT'], axis=0, inplace=True)
-
+    costs_vehicles = convert_units(costs_vehicles)
     # add costs for vehicles
     data = pd.concat([data, costs_vehicles], sort=True)
 
@@ -2115,7 +2115,7 @@ if __name__ == "__main__":
                             index_col=[0,1],
                             encoding = "ISO-8859-1")
     # rename + reorder to fit to other data
-    costs_ISE = rename_ISE(costs_ISE)
+    costs_ISE = rename_ISE(costs_ISE)   
     # add costs for gas pipelines
     data = pd.concat([data, costs_ISE.loc[["Gasnetz"]]], sort=True)
 

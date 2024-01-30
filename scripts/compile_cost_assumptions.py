@@ -100,9 +100,9 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'hydrogen storage underground': '151c Hydrogen Storage - Caverns',
                'hydrogen storage tank type 1 including compressor': '151a Hydrogen Storage - Tanks',
                'micro CHP': '219 LT-PEMFC mCHP - natural gas',
-               'biogas' : '81 Biogas Plant, Basic conf.',
-               'biogas CC' : '81 Biogas Plant, Basic conf.',
-               'biogas upgrading': '82 Biogas, upgrading',
+               'biogas' : '81 Biogas, Basic plant, small',
+               'biogas CC' : '81 Biogas, Basic plant, small',
+               'biogas upgrading': '82 Upgrading 3,000 Nm3 per h',
                'battery': '180 Lithium Ion Battery',
                'industrial heat pump medium temperature': '302.a High temp. hp Up to 125 C',
                'industrial heat pump high temperature': '302.b High temp. hp Up to 150',
@@ -111,7 +111,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'solid biomass boiler steam': '311.1e Steam boiler Wood',
                'solid biomass boiler steam CC': '311.1e Steam boiler Wood',
                'biomass boiler': '204 Biomass boiler, automatic',
-               'electrolysis': '86 AEC 100MW', #'88 Alkaline Electrolyser',
+               'electrolysis': '86 AEC 100 MW', 
                'direct air capture': '403.a Direct air capture',
                'biomass CHP capture': '401.a Post comb - small CHP',
                'cement capture': '401.c Post comb - Cement kiln',
@@ -119,7 +119,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'BtL': '85 Gasif. Ent. Flow FT, liq fu ',
                'biomass-to-methanol': '97 Methanol from biomass gasif.',
                'biogas plus hydrogen': '99 SNG from methan. of biogas',
-               'methanolisation': '98 Methanol from power',
+               'methanolisation': '98 Methanol from hydrogen',
                'Fischer-Tropsch': '102 Hydrogen to Jet',
                'central hydrogen CHP': '12 LT-PEMFC CHP',
                'Haber-Bosch': '103 Hydrogen to Ammonia',
@@ -269,7 +269,7 @@ def get_data_DEA(tech, data_in, expectation=None):
     usecols += f",{uncrtnty_lookup[tech]}"
 
 
-    if (tech in new_format) and (tech!="electrolysis"):
+    if (tech in new_format) or ("renewable_fuels" in excel_file):
         skiprows = [0]
     else:
         skiprows = [0,1]
@@ -404,30 +404,26 @@ def get_data_DEA(tech, data_in, expectation=None):
         df.drop(df.loc[df.index.str.contains("Variable O&M (EUR /t Ammonia)", regex=False)].index, inplace=True)
 
     if tech == "air separation unit":
-        # Bugfix: DEA renewable fuels 04/2022 has wrong unit (MEUR instead of kEUR)
-        df.index = df.index.str.replace("Fixed O&M (MEUR /TPD Ammonia)", "Fixed O&M (kEUR /TPD Ammonia)", regex=False)
-
+      
         # Calculate ASU cost separate to HB facility in terms of t N2 output
+        # To add the cost of an ASU a multiplication factor of 1.06-1.09
+        # should be applied to the total Specific Investment
         df.loc[[
-            "Specific investment (MEUR /TPD Ammonia output)",
-            "Fixed O&M (kEUR /TPD Ammonia)",
-            "Variable O&M (EUR /t Ammonia)"
-            ]] *= (df.loc["Specific investment mark-up factor optional ASU"] - 1.) / excel.loc["N2 Consumption, t/t Ammonia"]
-        # Convert output to hourly generation
-        df.loc[[
-            "Specific investment (MEUR /TPD Ammonia output)",
-            "Fixed O&M (kEUR /TPD Ammonia)",
-            ]] *= 24
-
+            "Specific investment [MEUR /MW Ammonia output]",
+            "Fixed O&M [kEUR/MW Ammonia/year]",
+            "Variable O&M [EUR/MWh Ammonia]"
+            ]] *= df.loc["Specific investment mark-up factor optional ASU"]
+                 #  / excel.loc["N2 Consumption, [t/t] Ammonia"]
+       
         # Rename costs for correct units
-        df.index = df.index.str.replace("MEUR /TPD Ammonia output", "MEUR/t_N2/h")
-        df.index = df.index.str.replace("kEUR /TPD Ammonia", "kEUR/t_N2/h/year")
-        df.index = df.index.str.replace("EUR /t Ammonia", "EUR/t_N2")
+        # df.index = df.index.str.replace("MEUR /MW Ammonia output", "MEUR/MW_N2/h")
+        # df.index = df.index.str.replace("kEUR/MW Ammonia/year", "kEUR/MW_N2/h/year")
+        # df.index = df.index.str.replace("EUR/MWh Ammonia", "EUR/MWh_N2")
 
         df.drop(df.loc[df.index.str.contains("Specific investment mark-up factor optional ASU")].index, inplace=True)
-        df.drop(df.loc[df.index.str.contains("Specific investment (MEUR /MW Ammonia output)", regex=False)].index, inplace=True)
-        df.drop(df.loc[df.index.str.contains("Fixed O&M (kEUR/MW Ammonia/year)", regex=False)].index, inplace=True)
-        df.drop(df.loc[df.index.str.contains("Variable O&M (EUR/MWh Ammonia)", regex=False)].index, inplace=True)
+        # df.drop(df.loc[df.index.str.contains("Specific investment [MEUR /MW Ammonia output]", regex=False)].index, inplace=True)
+        # df.drop(df.loc[df.index.str.contains("Fixed O&M [kEUR/MW Ammonia/year]", regex=False)].index, inplace=True)
+        # df.drop(df.loc[df.index.str.contains("Variable O&M [EUR/MWh Ammonia]", regex=False)].index, inplace=True)
 
     if "solid biomass power" in tech:
         df.index = df.index.str.replace("EUR/MWeh", "EUR/MWh")
@@ -913,7 +909,7 @@ def order_data(tech_data):
     """
 
     clean_df = {}
-    for tech in tech_data.index.levels[0]:
+    for tech in tech_data.index.get_level_values(0).unique():
         clean_df[tech] = pd.DataFrame()
         switch = False
         df = tech_data.loc[tech]
@@ -1123,6 +1119,7 @@ def add_description(data):
     # add excel sheet names to data frame
     wished_order = list(years) + ["unit", "source", "further description"]
     data = data.reindex(columns=wished_order)
+    data.index.set_names(["technology", "parameter"], inplace=True)
     sheets = data.reset_index()["technology"].map(sheet_names).fillna("")
     sheets.index = data.index
     data["further description"] = sheets + ":  " + data["further description"]
@@ -1280,6 +1277,7 @@ def add_manual_input(data):
             l.append(s)
 
     new_df = pd.DataFrame(l).set_index(['technology','parameter'])
+    data.index.set_names(["technology", "parameter"], inplace=True)
     # overwrite DEA data with manual input
     data = new_df.combine_first(data)
 

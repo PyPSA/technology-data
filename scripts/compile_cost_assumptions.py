@@ -360,11 +360,16 @@ def get_data_DEA(tech, data_in, expectation=None):
     # replace missing data
     df.replace("-", np.nan, inplace=True)
     # average data  in format "lower_value-upper_value"
-    df = df.applymap(lambda x: (float((x).split("-")[0])
-                                + float((x).split("-")[1]))/2 if (type(x)==str and "-" in x) else x)
+    df = df.apply(lambda row: row.apply(lambda x: (float(x.split("-")[0])
+                                                   + float(x.split("-")[1]))
+                                        / 2 if isinstance(x, str) and "-" in x else x),
+                  axis=1)
+
     # remove symbols "~", ">", "<" and " "
     for sym in ["~", ">", "<", " "]:
-        df = df.applymap(lambda x: x.replace(sym,"") if type(x)==str else x)
+        df = df.apply(lambda col: col.apply(lambda x: x.replace(sym, "")
+                                            if isinstance(x, str) else x))
+
 
     df = df.astype(float)
     df = df.mask(df.apply(pd.to_numeric, errors='coerce').isnull(), df.astype(str).apply(lambda x: x.str.strip()))
@@ -436,7 +441,7 @@ def get_data_DEA(tech, data_in, expectation=None):
         df_final.loc[index, :] = values
 
     # if year-specific data is missing and not fixed by interpolation fill forward with same values
-    df_final = df_final.fillna(method='ffill', axis=1)
+    df_final = df_final.ffill(axis=1)
 
     df_final["source"] = source_dict["DEA"] + ", " + excel_file.replace("inputs/","")
     if tech in new_format and (tech!="electrolysis"):
@@ -773,6 +778,7 @@ def clean_up_units(tech_data, value_column="", source=""):
                                                     "MW": "MW_e"}))
 
         if "methanolisation" in tech_data.index:
+            tech_data = tech_data.sort_index()
             tech_data.loc[('methanolisation', 'Variable O&M'), "unit"] = "EUR/MWh_MeOH"
 
     return tech_data
@@ -945,7 +951,7 @@ def order_data(tech_data):
         if len(investment):
             fixed = df[(df.index.str.contains("Fixed O&M") |
                         df.index.str.contains("Total O&M")) &
-                       ((df.unit==investment.unit[0]+"/year")|
+                       ((df.unit==investment.unit.iloc[0]+"/year")|
                         (df.unit=="EUR/MW/km/year")|
                         (df.unit=="EUR/MW/year")|
                         (df.unit=="EUR/MW_e/y, 2020")|
@@ -954,7 +960,7 @@ def order_data(tech_data):
                         (df.unit=="EUR/MW_MeOH/year")|
                         (df.unit=="EUR/MW_CH4/year")|
                         (df.unit=='% of specific investment/year')|
-                        (df.unit==investment.unit.str.split(" ")[0][0]+"/year"))].copy()
+                        (df.unit==investment.unit.str.split(" ").iloc[0][0]+"/year"))].copy()
             if (len(fixed)!=1) and (len(df[df.index.str.contains("Fixed O&M")])!=0):
                 switch = True
                 print("check FOM: ", tech, " ",
@@ -1165,7 +1171,7 @@ def add_gas_storage(data):
     gas_storage.dropna(axis=1, how="all", inplace=True)
 
     # establishment of one cavern ~ 100*1e6 Nm3 = 1.1 TWh
-    investment = gas_storage.loc['Total cost, 100 mio Nm3 active volume'][0]
+    investment = gas_storage.loc['Total cost, 100 mio Nm3 active volume'].iloc[0]
     # convert million EUR/1.1 TWh -> EUR/kWh
     investment /= (1.1 * 1e3)
     data.loc[("gas storage", "investment"), years] = investment
@@ -2101,7 +2107,7 @@ if __name__ == "__main__":
     # rename + reorder to fit to other data
     costs_vehicles = rename_ISE_vehicles(costs_vehicles)
     if 'NT' in costs_vehicles.index:
-    	costs_vehicles.drop(['NT'], axis=0, inplace=True)
+    	costs_vehicles.drop(['NT'], axis=0, inplace=True, level=0)
     costs_vehicles = convert_units(costs_vehicles)
     # add costs for vehicles
     data = pd.concat([data, costs_vehicles], sort=True)

@@ -327,8 +327,9 @@ def get_data_DEA(tech, data_in, expectation=None):
     parameters = ["efficiency", "investment", "Fixed O&M",
                   "Variable O&M", "production capacity for one unit",
                   "Output capacity expansion cost",
-                  "Hydrogen output",
+                  "Hydrogen Output",
                   "Hydrogen (% total input_e (MWh / MWh))",
+                  "Hydrogen [% total input_e",
                   " - hereof recoverable for district heating (%-points of heat loss)",
                   "Cb coefficient",
                   "Cv coefficient",
@@ -339,8 +340,8 @@ def get_data_DEA(tech, data_in, expectation=None):
                   'capture rate',
                   "FT Liquids Output, MWh/MWh Total Input",
                   " - hereof recoverable for district heating (%-points of heat loss)",
-                  "Bio SNG (% of fuel input)",
-                  "Methanol Output",
+                  "Bio SNG Output [% of fuel input]", 
+                  "Methanol Output", 
                   "District heat  Output",
                   "Electricity Output",
                   "Total O&M"]
@@ -785,7 +786,8 @@ def clean_up_units(tech_data, value_column="", source=""):
         if "methanolisation" in tech_data.index:
             tech_data = tech_data.sort_index()
             tech_data.loc[('methanolisation', 'Variable O&M'), "unit"] = "EUR/MWh_MeOH"
-
+    
+    tech_data.unit = tech_data.unit.str.replace("\)", "")
     return tech_data
 
 
@@ -942,6 +944,7 @@ def order_data(tech_data):
                         (df.unit=="EUR/MWh/year") |
                         (df.unit=="EUR/MW_e, 2020") |
                         (df.unit=="EUR/MW input") |
+                        (df.unit=='EUR/MW-methanol') |
                         (df.unit=="EUR/t_N2/h")) # air separation unit
                     ].copy()
         if len(investment)!=1:
@@ -962,6 +965,7 @@ def order_data(tech_data):
                         (df.unit=="EUR/MW_e/y, 2020")|
                         (df.unit=="EUR/MW_e/y")|
                         (df.unit=="EUR/MW_FT/year")|
+                        (df.unit=="EUR/MWh_FT")|
                         (df.unit=="EUR/MW_MeOH/year")|
                         (df.unit=="EUR/MW_CH4/year")|
                         (df.unit=='% of specific investment/year')|
@@ -1033,6 +1037,7 @@ def order_data(tech_data):
                            (df.unit =="MWh_MeOH/MWh_th") |
                            (df.unit =="MWh_e/MWh_th") |
                            (df.unit =="MWh_th/MWh_th") |
+                           (df.unit =='MWh/MWh Total Input') |
                            df.unit.str.contains("MWh_FT/MWh_H2"))
                          & (~df.index.str.contains("name plate"))].copy()
 

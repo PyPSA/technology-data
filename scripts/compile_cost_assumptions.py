@@ -453,6 +453,7 @@ def get_data_DEA(tech, data_in, expectation=None):
         df_final["unit"] = (df_final.rename(index=lambda x:
                                             x[x.rfind("[")+1: x.rfind("]")]).index.values)
     else:
+        df_final.index = df_final.index.str.replace("\[", "(", regex=True).str.replace("\]", ")", regex=True)
         df_final["unit"] = (df_final.rename(index=lambda x:
                                             x[x.rfind("(")+1: x.rfind(")")]).index.values)
     df_final.index = df_final.index.str.replace(r" \(.*\)","", regex=True)
@@ -687,10 +688,14 @@ def clean_up_units(tech_data, value_column="", source=""):
 
     tech_data.loc[tech_data.unit.str.contains("mio EUR"), value_column] *= 1e6
     tech_data.unit = tech_data.unit.str.replace("mio EUR", "EUR")
+    
+    tech_data.loc[tech_data.unit.str.contains("mill. EUR"), value_column] *= 1e6
+    tech_data.unit = tech_data.unit.str.replace("mill. EUR", "EUR")
 
     tech_data.loc[tech_data.unit.str.contains("1000EUR"), value_column] *= 1e3
     tech_data.unit = tech_data.unit.str.replace("1000EUR", "EUR")
 
+    tech_data.unit = tech_data.unit.str.replace("k EUR", "kEUR")
     tech_data.loc[tech_data.unit.str.contains("kEUR"), value_column] *= 1e3
     tech_data.unit = tech_data.unit.str.replace("kEUR", "EUR")
 
@@ -989,6 +994,7 @@ def order_data(tech_data):
                                                          (df.unit=="EUR/MWh/km") |
                                                          (df.unit=="EUR/MWh") |
                                                          (df.unit=="EUR/MWhoutput") |
+                                                         (df.unit=="EUR/MWh_CH4") |
                                                          (tech == "biogas upgrading"))].copy()
         if len(vom)==1:
             vom.loc[:,"parameter"] = "VOM"
@@ -1898,10 +1904,11 @@ def add_energy_storage_database(costs, data_year):
             agg = df.loc[power_filter].groupby(["technology", "year"]).sum(numeric_only=True)
             charger_investment_filter = charger_filter & (df.technology==tech) & (df.parameter=="investment")
             discharger_investment_filter = discharger_filter & (df.technology==tech) & (df.parameter=="investment")
-            df.loc[charger_investment_filter & df.year==2021, "value"] += agg.loc[(tech, 2021)]/2
-            df.loc[charger_investment_filter & df.year==2030, "value"] += agg.loc[(tech, 2030)]/2
-            df.loc[discharger_investment_filter & df.year==2021, "value"] += agg.loc[(tech, 2021)]/2
-            df.loc[discharger_investment_filter & df.year==2030, "value"] += agg.loc[(tech, 2030)]/2
+            for a in [2021, 2030]:
+                df_year = (df.year == a)
+                df.loc[charger_investment_filter & df_year, "value"] += agg.loc[(tech, a)]/2
+                df.loc[discharger_investment_filter & df_year, "value"] += agg.loc[(tech, a)]/2
+            
     df.loc[:,"technology"] = df["technology"] + "-" + df["technology_type"]
 
     # aggregate technology_type and unit

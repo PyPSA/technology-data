@@ -339,6 +339,7 @@ def get_data_DEA(tech, data_in, expectation=None):
                   'Heat input', 'Heat  input', 'Electricity input', 'Eletricity input', 'Heat out',
                   'capture rate',
                   "FT Liquids Output, MWh/MWh Total Input",
+                  " - hereof recoverable for district heating [%-points of heat loss]",
                   " - hereof recoverable for district heating (%-points of heat loss)",
                   "Bio SNG Output [% of fuel input]", 
                   "Methanol Output", 
@@ -1913,8 +1914,10 @@ def add_energy_storage_database(costs, data_year):
                 df_year = (df.year == a)
                 df.loc[charger_investment_filter & df_year, "value"] += agg.loc[(tech, a)]/2
                 df.loc[discharger_investment_filter & df_year, "value"] += agg.loc[(tech, a)]/2
-            
-    df.loc[:,"technology"] = df["technology"] + "-" + df["technology_type"]
+
+    index = df.loc[df["technology_type"]!="nan"].index
+    df.technology_type.replace("nan", np.nan, inplace=True)
+    df.loc[index,"technology"] = df.loc[index, "technology"] + "-" + df.loc[index, "technology_type"]
 
     # aggregate technology_type and unit
     df = df.groupby(["technology", "unit", "year"]).agg({

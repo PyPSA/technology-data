@@ -212,6 +212,7 @@ new_format = ['solar-utility',
               'solar-rooftop commercial',
               'offwind',
               'electrolysis']
+
 # %% -------- FUNCTIONS ---------------------------------------------------
 
 def get_excel_sheets(excel_files):
@@ -645,7 +646,10 @@ def adjust_for_inflation(costs, techs, ref_year):
     """
 
     inflation = (1 + snakemake.config['rate_inflation'])**(ref_year - snakemake.config['eur_year'])
-    costs.loc[(techs, 'investment'), 'value'] /= inflation
+    paras = ["investment", "VOM", "fixed"]
+    filter_i = costs.index.get_level_values(0).isin(techs) & costs.index.get_level_values(1).isin(paras) 
+    costs.loc[filter_i, 'value'] /= inflation
+
 
     return costs
 

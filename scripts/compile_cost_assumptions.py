@@ -507,8 +507,8 @@ def add_desalinsation_data(costs):
     costs.loc[(tech, 'lifetime'), 'unit'] = "years"
     costs.loc[(tech, 'lifetime'), 'source'] = source_dict['Caldera2016'] + ", Table 1."
 
-    costs = adjust_for_inflation(costs, ['seawater desalination'], 2015)
-    costs = adjust_for_inflation(costs, ['clean water tank storage'], 2013)
+    costs = adjust_for_inflation(costs, ['seawater desalination'], 2015, ["value"])
+    costs = adjust_for_inflation(costs, ['clean water tank storage'], 2013, ["value"])
 
     return costs
 
@@ -633,7 +633,7 @@ def get_data_from_DEA(data_in, expectation=None):
 
     return d_by_tech
 
-def adjust_for_inflation(costs, techs, ref_year):
+def adjust_for_inflation(costs, techs, ref_year, col):
     """
     adjust the investment costs for the specified techs for inflation.
 
@@ -646,9 +646,10 @@ def adjust_for_inflation(costs, techs, ref_year):
     """
 
     inflation = (1 + snakemake.config['rate_inflation'])**(ref_year - snakemake.config['eur_year'])
-    paras = ["investment", "VOM", "fixed"]
+    paras = ["investment", "VOM", "fixed", "fuel"]
     filter_i = costs.index.get_level_values(0).isin(techs) & costs.index.get_level_values(1).isin(paras) 
-    costs.loc[filter_i, 'value'] /= inflation
+
+    costs.loc[filter_i, col] = costs.loc[filter_i, col].div(inflation.loc[filter_i], axis=0)
 
 
     return costs
@@ -1277,7 +1278,7 @@ def add_manual_input(data):
     df = pd.read_csv(snakemake.input['manual_input'], quotechar='"',sep=',', keep_default_na=False)
     df = df.rename(columns={"further_description": "further description"})
 
-    # Inflation adjustment for investment and VOM
+    # Inflation adjustment 
     mask = df[df['parameter'].isin(['investment','VOM','fuel'])].index
     df.loc[mask, 'value'] /= (1+snakemake.config['rate_inflation'])**(df.loc[mask, 'currency_year'].astype(int)-snakemake.config['eur_year'])
 
@@ -2109,7 +2110,12 @@ if __name__ == "__main__":
     data = add_gas_storage(data)
     # add carbon capture
     data = add_carbon_capture(data, tech_data)
-
+    
+    # adjust for inflation
+    data["currency_year"] = [2015 if x not in new_format else 2020 for x in
+                             data.index.get_level_values(0)]
+    techs = data.index.get_level_values(0)
+    data = adjust_for_inflation(data, techs, data.currency_year, years)
 
     # %% (2) -- get data from other sources which need formatting -----------------
     # (a)  ---------- get old pypsa costs ---------------------------------------
@@ -2177,17 +2183,16 @@ if __name__ == "__main__":
             solar_techs = ['solar', 'solar-rooftop', 'solar-rooftop commercial',
                         'solar-rooftop residential',
                         'solar-utility', 'solar-utility single-axis tracking']
-            costs = adjust_for_inflation(costs, solar_techs, 2020)
+
 
         # adjust for inflation all techs in new DEA format
         new_format_without_solar = [tech for tech in new_format if tech not in solar_techs]
-        costs = adjust_for_inflation(costs, new_format_without_solar, 2020)
         # add desalination and clean water tank storage
         costs = add_desalinsation_data(costs)
         # add energy storage database
         if snakemake.config['energy_storage_database']['pnnl_energy_storage'].get("add_data", True):
             costs, tech = add_energy_storage_database(costs, year)
-            costs = adjust_for_inflation(costs, tech, 2020)
+            costs = adjust_for_inflation(costs, tech, 2020, ["value"])
 
         # add electrolyzer and fuel cell efficiency from other source than DEA
         if snakemake.config["energy_storage_database"].get("h2_from_budischak", True):

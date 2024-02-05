@@ -11,7 +11,7 @@ rate_inflation : 0.02
 #NB: 2015 is standard year in DEA, and DEA is NOT yet adjusted
 #if this is changed, only non-DEA
 # DEA takes for solar PV eur_year 2020!
-eur_year : 2015
+eur_year : 2020
 
 # add solar from different source
 solar_utility_from_vartiaien : false

@@ -744,9 +744,11 @@ def clean_up_units(tech_data, value_column="", source=""):
 
     tech_data.unit = tech_data.unit.str.replace("FT Liquids Output, MWh/MWh Total Inpu", "MWh_FT/MWh_H2")
     # biomass-to-methanol-specific
-    tech_data.unit = tech_data.unit.str.replace("Methanol Output, MWh/MWh Total Inpu", "MWh_MeOH/MWh_th")
-    tech_data.unit = tech_data.unit.str.replace("District heat  Output, MWh/MWh Total Inpu", "MWh_th/MWh_th")
-    tech_data.unit = tech_data.unit.str.replace("Electricity Output, MWh/MWh Total Inpu", "MWh_e/MWh_th")
+    if isinstance(tech_data.index, pd.MultiIndex):
+        tech_data.loc[tech_data.index.get_level_values(1)=="Methanol Output,", "unit"] = "MWh_MeOH/MWh_th"
+        tech_data.loc[tech_data.index.get_level_values(1)=='District heat  Output,', "unit"] =  "MWh_th/MWh_th"
+        tech_data.loc[tech_data.index.get_level_values(1)=='Electricity Output,', "unit"] =  "MWh_e/MWh_th"
+       
     # Ammonia-specific
     tech_data.unit = tech_data.unit.str.replace("MW Ammonia output", "MW_NH3") #specific investment
     tech_data.unit = tech_data.unit.str.replace("MW Ammonia", "MW_NH3") #fom

@@ -413,26 +413,28 @@ def get_data_DEA(tech, data_in, expectation=None):
 
     if tech == "air separation unit":
       
-        # Calculate ASU cost separate to HB facility in terms of t N2 output
-        # To add the cost of an ASU a multiplication factor of 1.06-1.09
-        # should be applied to the total Specific Investment
+       # Calculate ASU cost separate to HB facility in terms of t N2 output
         df.loc[[
-            "Specific investment [MEUR /MW Ammonia output]",
-            "Fixed O&M [kEUR/MW Ammonia/year]",
-            "Variable O&M [EUR/MWh Ammonia]"
-            ]] *= df.loc["Specific investment mark-up factor optional ASU"]
-                 #  / excel.loc["N2 Consumption, [t/t] Ammonia"]
-       
+            "Specific investment [MEUR /TPD Ammonia output]",
+            "Fixed O&M [kEUR /TPD Ammonia]",
+            "Variable O&M [EUR /t Ammonia]"
+            ]] *= (df.loc["Specific investment mark-up factor optional ASU"] - 1.) / excel.loc["N2 Consumption, [t/t] Ammonia"]
+        # Convert output to hourly generation
+        df.loc[[
+            "Specific investment [MEUR /TPD Ammonia output]",
+            "Fixed O&M [kEUR /TPD Ammonia]",
+            ]] *= 24
+
         # Rename costs for correct units
-        # df.index = df.index.str.replace("MEUR /MW Ammonia output", "MEUR/MW_N2/h")
-        # df.index = df.index.str.replace("kEUR/MW Ammonia/year", "kEUR/MW_N2/h/year")
-        # df.index = df.index.str.replace("EUR/MWh Ammonia", "EUR/MWh_N2")
+        df.index = df.index.str.replace("MEUR /TPD Ammonia output", "MEUR/t_N2/h")
+        df.index = df.index.str.replace("kEUR /TPD Ammonia", "kEUR/t_N2/h/year")
+        df.index = df.index.str.replace("EUR /t Ammonia", "EUR/t_N2")
 
         df.drop(df.loc[df.index.str.contains("Specific investment mark-up factor optional ASU")].index, inplace=True)
-        # df.drop(df.loc[df.index.str.contains("Specific investment [MEUR /MW Ammonia output]", regex=False)].index, inplace=True)
-        # df.drop(df.loc[df.index.str.contains("Fixed O&M [kEUR/MW Ammonia/year]", regex=False)].index, inplace=True)
-        # df.drop(df.loc[df.index.str.contains("Variable O&M [EUR/MWh Ammonia]", regex=False)].index, inplace=True)
-
+        df.drop(df.loc[df.index.str.contains("Specific investment [MEUR /MW Ammonia output]", regex=False)].index, inplace=True)
+        df.drop(df.loc[df.index.str.contains("Fixed O&M [kEUR/MW Ammonia/year]", regex=False)].index, inplace=True)
+        df.drop(df.loc[df.index.str.contains("Variable O&M [EUR/MWh Ammonia]", regex=False)].index, inplace=True)
+        
     if "solid biomass power" in tech:
         df.index = df.index.str.replace("EUR/MWeh", "EUR/MWh")
 
@@ -749,9 +751,11 @@ def clean_up_units(tech_data, value_column="", source=""):
 
     tech_data.unit = tech_data.unit.str.replace("FT Liquids Output, MWh/MWh Total Inpu", "MWh_FT/MWh_H2")
     # biomass-to-methanol-specific
-    tech_data.unit = tech_data.unit.str.replace("Methanol Output, MWh/MWh Total Inpu", "MWh_MeOH/MWh_th")
-    tech_data.unit = tech_data.unit.str.replace("District heat  Output, MWh/MWh Total Inpu", "MWh_th/MWh_th")
-    tech_data.unit = tech_data.unit.str.replace("Electricity Output, MWh/MWh Total Inpu", "MWh_e/MWh_th")
+    if isinstance(tech_data.index, pd.MultiIndex):
+        tech_data.loc[tech_data.index.get_level_values(1)=="Methanol Output,", "unit"] = "MWh_MeOH/MWh_th"
+        tech_data.loc[tech_data.index.get_level_values(1)=='District heat  Output,', "unit"] =  "MWh_th/MWh_th"
+        tech_data.loc[tech_data.index.get_level_values(1)=='Electricity Output,', "unit"] =  "MWh_e/MWh_th"
+       
     # Ammonia-specific
     tech_data.unit = tech_data.unit.str.replace("MW Ammonia output", "MW_NH3") #specific investment
     tech_data.unit = tech_data.unit.str.replace("MW Ammonia", "MW_NH3") #fom
@@ -1915,14 +1919,11 @@ def add_energy_storage_database(costs, data_year):
             agg = df.loc[power_filter].groupby(["technology", "year"]).sum(numeric_only=True)
             charger_investment_filter = charger_filter & (df.technology==tech) & (df.parameter=="investment")
             discharger_investment_filter = discharger_filter & (df.technology==tech) & (df.parameter=="investment")
-            for a in [2021, 2030]:
-                df_year = (df.year == a)
-                df.loc[charger_investment_filter & df_year, "value"] += agg.loc[(tech, a)]/2
-                df.loc[discharger_investment_filter & df_year, "value"] += agg.loc[(tech, a)]/2
-
-    index = df.loc[df["technology_type"]!="nan"].index
-    df.technology_type.replace("nan", np.nan, inplace=True)
-    df.loc[index,"technology"] = df.loc[index, "technology"] + "-" + df.loc[index, "technology_type"]
+            df.loc[charger_investment_filter & df.year==2021, "value"] += agg.loc[(tech, 2021)]/2
+            df.loc[charger_investment_filter & df.year==2030, "value"] += agg.loc[(tech, 2030)]/2
+            df.loc[discharger_investment_filter & df.year==2021, "value"] += agg.loc[(tech, 2021)]/2
+            df.loc[discharger_investment_filter & df.year==2030, "value"] += agg.loc[(tech, 2030)]/2
+    df.loc[:,"technology"] = df["technology"] + "-" + df["technology_type"]
 
     # aggregate technology_type and unit
     df = df.groupby(["technology", "unit", "year"]).agg({

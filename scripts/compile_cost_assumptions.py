@@ -1914,14 +1914,11 @@ def add_energy_storage_database(costs, data_year):
             agg = df.loc[power_filter].groupby(["technology", "year"]).sum(numeric_only=True)
             charger_investment_filter = charger_filter & (df.technology==tech) & (df.parameter=="investment")
             discharger_investment_filter = discharger_filter & (df.technology==tech) & (df.parameter=="investment")
-            for a in [2021, 2030]:
-                df_year = (df.year == a)
-                df.loc[charger_investment_filter & df_year, "value"] += agg.loc[(tech, a)]/2
-                df.loc[discharger_investment_filter & df_year, "value"] += agg.loc[(tech, a)]/2
-
-    index = df.loc[df["technology_type"]!="nan"].index
-    df.technology_type.replace("nan", np.nan, inplace=True)
-    df.loc[index,"technology"] = df.loc[index, "technology"] + "-" + df.loc[index, "technology_type"]
+            df.loc[charger_investment_filter & df.year==2021, "value"] += agg.loc[(tech, 2021)]/2
+            df.loc[charger_investment_filter & df.year==2030, "value"] += agg.loc[(tech, 2030)]/2
+            df.loc[discharger_investment_filter & df.year==2021, "value"] += agg.loc[(tech, 2021)]/2
+            df.loc[discharger_investment_filter & df.year==2030, "value"] += agg.loc[(tech, 2030)]/2
+    df.loc[:,"technology"] = df["technology"] + "-" + df["technology_type"]
 
     # aggregate technology_type and unit
     df = df.groupby(["technology", "unit", "year"]).agg({

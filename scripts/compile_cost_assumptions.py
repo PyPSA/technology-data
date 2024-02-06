@@ -412,26 +412,28 @@ def get_data_DEA(tech, data_in, expectation=None):
 
     if tech == "air separation unit":
       
-        # Calculate ASU cost separate to HB facility in terms of t N2 output
-        # To add the cost of an ASU a multiplication factor of 1.06-1.09
-        # should be applied to the total Specific Investment
+       # Calculate ASU cost separate to HB facility in terms of t N2 output
         df.loc[[
-            "Specific investment [MEUR /MW Ammonia output]",
-            "Fixed O&M [kEUR/MW Ammonia/year]",
-            "Variable O&M [EUR/MWh Ammonia]"
-            ]] *= df.loc["Specific investment mark-up factor optional ASU"]
-                 #  / excel.loc["N2 Consumption, [t/t] Ammonia"]
-       
+            "Specific investment [MEUR /TPD Ammonia output]",
+            "Fixed O&M [kEUR /TPD Ammonia]",
+            "Variable O&M [EUR /t Ammonia]"
+            ]] *= (df.loc["Specific investment mark-up factor optional ASU"] - 1.) / excel.loc["N2 Consumption, [t/t] Ammonia"]
+        # Convert output to hourly generation
+        df.loc[[
+            "Specific investment [MEUR /TPD Ammonia output]",
+            "Fixed O&M [kEUR /TPD Ammonia]",
+            ]] *= 24
+
         # Rename costs for correct units
-        # df.index = df.index.str.replace("MEUR /MW Ammonia output", "MEUR/MW_N2/h")
-        # df.index = df.index.str.replace("kEUR/MW Ammonia/year", "kEUR/MW_N2/h/year")
-        # df.index = df.index.str.replace("EUR/MWh Ammonia", "EUR/MWh_N2")
+        df.index = df.index.str.replace("MEUR /TPD Ammonia output", "MEUR/t_N2/h")
+        df.index = df.index.str.replace("kEUR /TPD Ammonia", "kEUR/t_N2/h/year")
+        df.index = df.index.str.replace("EUR /t Ammonia", "EUR/t_N2")
 
         df.drop(df.loc[df.index.str.contains("Specific investment mark-up factor optional ASU")].index, inplace=True)
-        # df.drop(df.loc[df.index.str.contains("Specific investment [MEUR /MW Ammonia output]", regex=False)].index, inplace=True)
-        # df.drop(df.loc[df.index.str.contains("Fixed O&M [kEUR/MW Ammonia/year]", regex=False)].index, inplace=True)
-        # df.drop(df.loc[df.index.str.contains("Variable O&M [EUR/MWh Ammonia]", regex=False)].index, inplace=True)
-
+        df.drop(df.loc[df.index.str.contains("Specific investment [MEUR /MW Ammonia output]", regex=False)].index, inplace=True)
+        df.drop(df.loc[df.index.str.contains("Fixed O&M [kEUR/MW Ammonia/year]", regex=False)].index, inplace=True)
+        df.drop(df.loc[df.index.str.contains("Variable O&M [EUR/MWh Ammonia]", regex=False)].index, inplace=True)
+        
     if "solid biomass power" in tech:
         df.index = df.index.str.replace("EUR/MWeh", "EUR/MWh")
 

@@ -5,6 +5,12 @@ Release Notes
 Upcoming Release
 ================
 
+* Updated to latest release of DEA renewable fuels (released January 2024). With the following changes
+  * The following technologies have updated assumptions: ['BioSNG', 'BtL', 'Fischer-Tropsch', 'Haber-Bosch', 'air separation unit', 'biogas', 'biogas CC', 'biogas plus hydrogen', 'biogas upgrading', 'biomass-to-methanol', 'electrobiofuels', 'electrolysis', 'methanolisation']
+  * biogas upgrading and biogas plant are differentiated in new data set between small and large plant, we assume small plant here
+  * methanol from power changed to methanol from hydrogen, VOM are zero in new data set
+  * CAREFUL: biogas upgrading units changed for VOM and investment from per input to per output units
+
 * Add floating wind cost data
 
 * Add biomass-to-methanol route from DEA.
@@ -23,7 +29,7 @@ Upcoming Release
 
 * Updated source for 'fuel' costs of 'gas', 'uranium', 'coal', and 'lignite' to DIW (2013) data.
 
-* Updated hydrogen pipeline costs based on most recent `EHB report <https://ehb.eu/files/downloads/EHB-2023-20-Nov-FINAL-design.pdf>`_. 
+* Updated hydrogen pipeline costs based on most recent `EHB report <https://ehb.eu/files/downloads/EHB-2023-20-Nov-FINAL-design.pdf>`_.
 
 Technology-Data 0.6.2 (7 August 2023)
 =====================================

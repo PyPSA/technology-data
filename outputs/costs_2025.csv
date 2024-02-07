@@ -15,18 +15,18 @@ BioSNG,C in fuel,0.3321,per unit,"Stoichiometric calculation, doi:10.1016/j.apen
 BioSNG,C stored,0.6679,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",
 BioSNG,CO2 stored,0.2449,tCO2/MWh_th,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",
 BioSNG,FOM,1.6195,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Fixed O&M"
-BioSNG,VOM,2.2,EUR/MWh_th,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Variable O&M"
+BioSNG,VOM,2.3395,EUR/MWh_th,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Variable O&M"
 BioSNG,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
-BioSNG,efficiency,0.615,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Bio SNG"
-BioSNG,investment,2050.0,EUR/kW_th,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Specific investment"
+BioSNG,efficiency,0.615,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Bio SNG Output"
+BioSNG,investment,2179.97,EUR/kW_th,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Specific investment"
 BioSNG,lifetime,25.0,years,TODO,"84 Gasif. CFB, Bio-SNG:  Technical lifetime"
 BtL,C in fuel,0.2571,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",
 BtL,C stored,0.7429,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",
 BtL,CO2 stored,0.2724,tCO2/MWh_th,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",
 BtL,FOM,2.5263,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Fixed O&M"
-BtL,VOM,1.0626,EUR/MWh_FT,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Variable O&M"
+BtL,VOM,1.1299,EUR/MWh_FT,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Variable O&M"
 BtL,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
-BtL,efficiency,0.3667,per unit,doi:10.1016/j.enpol.2017.05.013,"85 Gasif. Ent. Flow FT, liq fu :  Electricity Output, MWh/MWh Total Input"
+BtL,efficiency,0.3667,per unit,doi:10.1016/j.enpol.2017.05.013,"85 Gasif. Ent. Flow FT, liq fu :  Electricity Output"
 BtL,investment,3250.0,EUR/kW_th,doi:10.1016/j.enpol.2017.05.013,"85 Gasif. Ent. Flow FT, liq fu :  Specific investment"
 BtL,lifetime,25.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Technical lifetime"
 CCGT,FOM,3.3392,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","05 Gas turb. CC, steam extract.:  Fixed O&M"
@@ -108,7 +108,7 @@ FT fuel transport ship,capacity,75000.0,t_FTfuel,"Assume comparable tanker as fo
 FT fuel transport ship,investment,31700578.344,EUR,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
 FT fuel transport ship,lifetime,15.0,years,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",
 Fischer-Tropsch,FOM,3.0,%/year,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), section 6.3.2.1.",
-Fischer-Tropsch,VOM,4.75,EUR/MWh_FT,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",102 Hydrogen to Jet:  Variable O&M
+Fischer-Tropsch,VOM,5.0512,EUR/MWh_FT,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",102 Hydrogen to Jet:  Variable O&M
 Fischer-Tropsch,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
 Fischer-Tropsch,carbondioxide-input,0.343,t_CO2/MWh_FT,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","Input per 1t FT liquid fuels output, carbon efficiency increases with years (4.3, 3.9, 3.6, 3.3 t_CO2/t_FT from 2020-2050 with LHV 11.95 MWh_th/t_FT)."
 Fischer-Tropsch,efficiency,0.799,per unit,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), section 6.3.2.2.",
@@ -195,10 +195,10 @@ HVDC submarine,FOM,0.35,%/year,Purvins et al. (2018): https://doi.org/10.1016/j.
 HVDC submarine,investment,932.3337,EUR/MW/km,Härtel et al. (2017): https://doi.org/10.1016/j.epsr.2017.06.008 .,Table 1
 HVDC submarine,lifetime,40.0,years,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,"Based on estimated costs for a NA-EU connector (bidirectional,4 GW, 3000km length and ca. 3000m depth). Costs in return based on existing/currently under construction undersea cables."
 Haber-Bosch,FOM,3.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Fixed O&M
-Haber-Bosch,VOM,0.02,EUR/MWh_NH3,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Variable O&M
+Haber-Bosch,VOM,0.0213,EUR/MWh_NH3,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Variable O&M
 Haber-Bosch,electricity-input,0.2473,MWh_el/MWh_NH3,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), table 11.",Assume 5 GJ/t_NH3 for compressors and NH3 LHV = 5.16666 MWh/t_NH3.
 Haber-Bosch,hydrogen-input,1.1484,MWh_H2/MWh_NH3,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), pg. 57.","178 kg_H2 per t_NH3, LHV for both assumed."
-Haber-Bosch,investment,1441.8589,EUR/kW_NH3,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Specific investment
+Haber-Bosch,investment,1533.2728,EUR/kW_NH3,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Specific investment
 Haber-Bosch,lifetime,30.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Technical lifetime
 Haber-Bosch,nitrogen-input,0.1597,t_N2/MWh_NH3,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), pg. 57.",".33 MWh electricity are required for ASU per t_NH3, considering 0.4 MWh are required per t_N2 and LHV of NH3 of 5.1666 Mwh."
 HighT-Molten-Salt-charger,FOM,1.075,%/year,"Viswanathan_2022, NULL","{'carrier': ['elec', 'salthight'], 'technology_type': ['charger'], 'type': ['thermal'], 'note': ['Guesstimate, 50% on charger']}"
@@ -415,7 +415,7 @@ Zn-Br-Nonflow-store,investment,233721.2052,EUR/MWh,"Viswanathan_2022, p.59 (p.81
 Zn-Br-Nonflow-store,lifetime,15.0,years,"Viswanathan_2022, p.59 (p.81)","{'carrier': ['znbr'], 'technology_type': ['store'], 'type': ['electrochemical'], 'note': ['NULL']}"
 air separation unit,FOM,3.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Fixed O&M
 air separation unit,electricity-input,0.25,MWh_el/t_N2,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), p.288.","For consistency reasons use value from Danish Energy Agency. DEA also reports range of values (0.2-0.4 MWh/t_N2) on pg. 288. Other efficienices reported are even higher, e.g. 0.11 Mwh/t_N2 from Morgan (2013): Techno-Economic Feasibility Study of Ammonia Plants Powered by Offshore Wind ."
-air separation unit,investment,810492.641,EUR/t_N2/h,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Specific investment
+air separation unit,investment,861855.7642,EUR/t_N2/h,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Specific investment
 air separation unit,lifetime,30.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Technical lifetime
 battery inverter,FOM,0.2512,%/year,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Fixed O&M
 battery inverter,efficiency,0.955,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Round trip efficiency DC
@@ -424,25 +424,26 @@ battery inverter,lifetime,10.0,years,"Danish Energy Agency, technology_data_cata
 battery storage,investment,187.0,EUR/kWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Energy storage expansion cost investment
 battery storage,lifetime,22.5,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Technical lifetime
 biogas,CO2 stored,0.0868,tCO2/MWh_th,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",
-biogas,FOM,12.0732,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","81 Biogas Plant, Basic conf.:  Total O&M"
+biogas,FOM,7.7769,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","81 Biogas, Basic plant, small:  Total O&M"
 biogas,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
 biogas,efficiency,1.0,per unit,Assuming input biomass is already given in biogas output,
 biogas,fuel,59.0,EUR/MWhth,JRC and Zappa, from old pypsa cost assumptions
-biogas,investment,1625.1574,EUR/kW,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","81 Biogas Plant, Basic conf.:  Specific investment"
-biogas,lifetime,20.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","81 Biogas Plant, Basic conf.:  Technical lifetime"
+biogas,investment,1097.9155,EUR/kW,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","81 Biogas, Basic plant, small:  Specific investment"
+biogas,lifetime,20.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","81 Biogas, Basic plant, small:  Technical lifetime"
 biogas CC,CO2 stored,0.0868,tCO2/MWh_th,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",
-biogas CC,FOM,12.0732,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","81 Biogas Plant, Basic conf.:  Total O&M"
+biogas CC,FOM,7.7769,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","81 Biogas, Basic plant, small:  Total O&M"
 biogas CC,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
 biogas CC,efficiency,1.0,per unit,Assuming input biomass is already given in biogas output,
-biogas CC,investment,1625.1574,EUR/kW,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","81 Biogas Plant, Basic conf.:  Specific investment"
-biogas CC,lifetime,20.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","81 Biogas Plant, Basic conf.:  Technical lifetime"
+biogas CC,investment,1097.9155,EUR/kW,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","81 Biogas, Basic plant, small:  Specific investment"
+biogas CC,lifetime,20.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","81 Biogas, Basic plant, small:  Technical lifetime"
 biogas plus hydrogen,FOM,4.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Fixed O&M
-biogas plus hydrogen,investment,831.6,EUR/kW_CH4,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Specific investment
+biogas plus hydrogen,VOM,4.2111,EUR/MWh_CH4,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Variable O&M
+biogas plus hydrogen,investment,884.3234,EUR/kW_CH4,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Specific investment
 biogas plus hydrogen,lifetime,25.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Technical lifetime
-biogas upgrading,FOM,2.5,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","82 Biogas, upgrading:  Fixed O&M "
-biogas upgrading,VOM,3.4373,EUR/MWh input,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","82 Biogas, upgrading:  Variable O&M"
-biogas upgrading,investment,402.0,EUR/kW input,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","82 Biogas, upgrading:  investment (upgrading, methane redution and grid injection)"
-biogas upgrading,lifetime,15.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","82 Biogas, upgrading:  Technical lifetime"
+biogas upgrading,FOM,17.0397,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","82 Upgrading 3,000 Nm3 per h:  Fixed O&M "
+biogas upgrading,VOM,4.4251,EUR/MWh output,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","82 Upgrading 3,000 Nm3 per h:  Variable O&M"
+biogas upgrading,investment,205.2039,EUR/kW,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","82 Upgrading 3,000 Nm3 per h:  investment (upgrading, methane redution and grid injection)"
+biogas upgrading,lifetime,20.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","82 Upgrading 3,000 Nm3 per h:  Technical lifetime"
 biomass,FOM,4.5269,%/year,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 biomass,efficiency,0.468,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions
 biomass,fuel,7.0,EUR/MWhth,IEA2011b, from old pypsa cost assumptions
@@ -487,12 +488,12 @@ biomass-to-methanol,C in fuel,0.4028,per unit,"Stoichiometric calculation, doi:1
 biomass-to-methanol,C stored,0.5972,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",
 biomass-to-methanol,CO2 stored,0.219,tCO2/MWh_th,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",
 biomass-to-methanol,FOM,1.1905,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",97 Methanol from biomass gasif.:  Fixed O&M
-biomass-to-methanol,VOM,17.0036,EUR/MWh_MeOH,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",97 Methanol from biomass gasif.:  Variable O&M
+biomass-to-methanol,VOM,18.0816,EUR/MWh_MeOH,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",97 Methanol from biomass gasif.:  Variable O&M
 biomass-to-methanol,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
-biomass-to-methanol,efficiency,0.595,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","97 Methanol from biomass gasif.:  Methanol Output, MWh/MWh Total Input"
-biomass-to-methanol,efficiency-electricity,0.02,MWh_e/MWh_th,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","97 Methanol from biomass gasif.:  Electricity Output, MWh/MWh Total Input"
-biomass-to-methanol,efficiency-heat,0.22,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","97 Methanol from biomass gasif.:  District heat  Output, MWh/MWh Total Input"
-biomass-to-methanol,investment,4089.5813,EUR/kW_MeOH,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",97 Methanol from biomass gasif.:  Specific investment
+biomass-to-methanol,efficiency,0.595,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","97 Methanol from biomass gasif.:  Methanol Output,"
+biomass-to-methanol,efficiency-electricity,0.02,MWh_e/MWh_th,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","97 Methanol from biomass gasif.:  Electricity Output,"
+biomass-to-methanol,efficiency-heat,0.22,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","97 Methanol from biomass gasif.:  District heat  Output,"
+biomass-to-methanol,investment,4348.8608,EUR/kW_MeOH,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",97 Methanol from biomass gasif.:  Specific investment
 biomass-to-methanol,lifetime,20.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",97 Methanol from biomass gasif.:  Technical lifetime
 cement capture,FOM,3.0,%/year,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.c Post comb - Cement kiln
 cement capture,capture_rate,0.9,per unit,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.c Post comb - Cement kiln
@@ -705,17 +706,17 @@ electricity grid connection,investment,140.0,EUR/kW,DEA, from old pypsa cost ass
 electricity grid connection,lifetime,40.0,years,TODO, from old pypsa cost assumptions
 electrobiofuels,C in fuel,0.9257,per unit,Stoichiometric calculation,
 electrobiofuels,FOM,2.5263,%/year,combination of BtL and electrofuels,
-electrobiofuels,VOM,4.2383,EUR/MWh_th,combination of BtL and electrofuels,
+electrobiofuels,VOM,4.507,EUR/MWh_th,combination of BtL and electrofuels,
 electrobiofuels,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
 electrobiofuels,efficiency-biomass,1.32,per unit,Stoichiometric calculation,
 electrobiofuels,efficiency-hydrogen,1.1951,per unit,Stoichiometric calculation,
 electrobiofuels,efficiency-tot,0.6272,per unit,Stoichiometric calculation,
 electrobiofuels,investment,473961.8141,EUR/kW_th,combination of BtL and electrofuels,
-electrolysis,FOM,2.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100MW:  Fixed O&M 
-electrolysis,efficiency,0.6725,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100MW:  Hydrogen
-electrolysis,efficiency-heat,0.175,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100MW:   - hereof recoverable for district heating
-electrolysis,investment,498.1519,EUR/kW_e,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100MW:  Specific investment
-electrolysis,lifetime,27.5,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100MW:  Technical lifetime
+electrolysis,FOM,4.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Fixed O&M 
+electrolysis,efficiency,0.5874,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Hydrogen Output
+electrolysis,efficiency-heat,0.264,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:   - hereof recoverable for district heating
+electrolysis,investment,792.5145,EUR/kW_e,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Specific investment
+electrolysis,lifetime,25.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Technical lifetime
 fuel cell,FOM,5.0,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",12 LT-PEMFC CHP:  Fixed O&M
 fuel cell,c_b,1.25,50oC/100oC,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",12 LT-PEMFC CHP:  Cb coefficient
 fuel cell,efficiency,0.5,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","12 LT-PEMFC CHP:  Electricity efficiency, annual average"
@@ -806,7 +807,6 @@ methanol-to-olefins/aromatics,investment,2628000.0,EUR/(t_HVC/h),"DECHEMA 2017: 
 methanol-to-olefins/aromatics,lifetime,30.0,years,Guesstimate,same as steam cracker
 methanol-to-olefins/aromatics,methanol-input,18.03,MWh_MeOH/t_HVC,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), Sections 4.5 (for ethylene and propylene) and 4.6 (for BTX)","Weighted average: 2.83 t_MeOH/t_ethylene+propylene for 21.7 Mt of ethylene and 17 Mt of propylene, 4.2 t_MeOH/t_BTX for 15.7 Mt of BTX. Assuming 5.54 MWh_MeOH/t_MeOH. "
 methanolisation,FOM,3.0,%/year,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), section 6.3.2.1.",
-methanolisation,VOM,6.2687,EUR/MWh_MeOH,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",98 Methanol from power:  Variable O&M
 methanolisation,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,
 methanolisation,carbondioxide-input,0.248,t_CO2/MWh_MeOH,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf) , pg. 66.",
 methanolisation,electricity-input,0.271,MWh_e/MWh_MeOH,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf) , pg. 65.",

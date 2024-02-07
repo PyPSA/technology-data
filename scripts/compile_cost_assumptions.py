@@ -100,9 +100,9 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'hydrogen storage underground': '151c Hydrogen Storage - Caverns',
                'hydrogen storage tank type 1 including compressor': '151a Hydrogen Storage - Tanks',
                'micro CHP': '219 LT-PEMFC mCHP - natural gas',
-               'biogas' : '81 Biogas Plant, Basic conf.',
-               'biogas CC' : '81 Biogas Plant, Basic conf.',
-               'biogas upgrading': '82 Biogas, upgrading',
+               'biogas' : '81 Biogas, Basic plant, small',
+               'biogas CC' : '81 Biogas, Basic plant, small',
+               'biogas upgrading': '82 Upgrading 3,000 Nm3 per h',
                'battery': '180 Lithium Ion Battery',
                'industrial heat pump medium temperature': '302.a High temp. hp Up to 125 C',
                'industrial heat pump high temperature': '302.b High temp. hp Up to 150',
@@ -111,7 +111,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'solid biomass boiler steam': '311.1e Steam boiler Wood',
                'solid biomass boiler steam CC': '311.1e Steam boiler Wood',
                'biomass boiler': '204 Biomass boiler, automatic',
-               'electrolysis': '86 AEC 100MW', #'88 Alkaline Electrolyser',
+               'electrolysis': '86 AEC 100 MW', 
                'direct air capture': '403.a Direct air capture',
                'biomass CHP capture': '401.a Post comb - small CHP',
                'cement capture': '401.c Post comb - Cement kiln',
@@ -119,7 +119,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'BtL': '85 Gasif. Ent. Flow FT, liq fu ',
                'biomass-to-methanol': '97 Methanol from biomass gasif.',
                'biogas plus hydrogen': '99 SNG from methan. of biogas',
-               'methanolisation': '98 Methanol from power',
+               'methanolisation': '98 Methanol from hydrogen',
                'Fischer-Tropsch': '102 Hydrogen to Jet',
                'central hydrogen CHP': '12 LT-PEMFC CHP',
                'Haber-Bosch': '103 Hydrogen to Ammonia',
@@ -269,7 +269,7 @@ def get_data_DEA(tech, data_in, expectation=None):
     usecols += f",{uncrtnty_lookup[tech]}"
 
 
-    if (tech in new_format) and (tech!="electrolysis"):
+    if (tech in new_format) or ("renewable_fuels" in excel_file):
         skiprows = [0]
     else:
         skiprows = [0,1]
@@ -327,8 +327,9 @@ def get_data_DEA(tech, data_in, expectation=None):
     parameters = ["efficiency", "investment", "Fixed O&M",
                   "Variable O&M", "production capacity for one unit",
                   "Output capacity expansion cost",
-                  "Hydrogen output",
+                  "Hydrogen Output",
                   "Hydrogen (% total input_e (MWh / MWh))",
+                  "Hydrogen [% total input_e",
                   " - hereof recoverable for district heating (%-points of heat loss)",
                   "Cb coefficient",
                   "Cv coefficient",
@@ -338,9 +339,10 @@ def get_data_DEA(tech, data_in, expectation=None):
                   'Heat input', 'Heat  input', 'Electricity input', 'Eletricity input', 'Heat out',
                   'capture rate',
                   "FT Liquids Output, MWh/MWh Total Input",
+                  " - hereof recoverable for district heating [%-points of heat loss]",
                   " - hereof recoverable for district heating (%-points of heat loss)",
-                  "Bio SNG (% of fuel input)",
-                  "Methanol Output",
+                  "Bio SNG Output [% of fuel input]", 
+                  "Methanol Output", 
                   "District heat  Output",
                   "Electricity Output",
                   "Total O&M"]
@@ -360,11 +362,16 @@ def get_data_DEA(tech, data_in, expectation=None):
     # replace missing data
     df.replace("-", np.nan, inplace=True)
     # average data  in format "lower_value-upper_value"
-    df = df.applymap(lambda x: (float((x).split("-")[0])
-                                + float((x).split("-")[1]))/2 if (type(x)==str and "-" in x) else x)
+    df = df.apply(lambda row: row.apply(lambda x: (float(x.split("-")[0])
+                                                   + float(x.split("-")[1]))
+                                        / 2 if isinstance(x, str) and "-" in x else x),
+                  axis=1)
+
     # remove symbols "~", ">", "<" and " "
     for sym in ["~", ">", "<", " "]:
-        df = df.applymap(lambda x: x.replace(sym,"") if type(x)==str else x)
+        df = df.apply(lambda col: col.apply(lambda x: x.replace(sym, "")
+                                            if isinstance(x, str) else x))
+
 
     df = df.astype(float)
     df = df.mask(df.apply(pd.to_numeric, errors='coerce').isnull(), df.astype(str).apply(lambda x: x.str.strip()))
@@ -404,19 +411,17 @@ def get_data_DEA(tech, data_in, expectation=None):
         df.drop(df.loc[df.index.str.contains("Variable O&M (EUR /t Ammonia)", regex=False)].index, inplace=True)
 
     if tech == "air separation unit":
-        # Bugfix: DEA renewable fuels 04/2022 has wrong unit (MEUR instead of kEUR)
-        df.index = df.index.str.replace("Fixed O&M (MEUR /TPD Ammonia)", "Fixed O&M (kEUR /TPD Ammonia)", regex=False)
-
-        # Calculate ASU cost separate to HB facility in terms of t N2 output
+      
+       # Calculate ASU cost separate to HB facility in terms of t N2 output
         df.loc[[
-            "Specific investment (MEUR /TPD Ammonia output)",
-            "Fixed O&M (kEUR /TPD Ammonia)",
-            "Variable O&M (EUR /t Ammonia)"
-            ]] *= (df.loc["Specific investment mark-up factor optional ASU"] - 1.) / excel.loc["N2 Consumption, t/t Ammonia"]
+            "Specific investment [MEUR /TPD Ammonia output]",
+            "Fixed O&M [kEUR /TPD Ammonia]",
+            "Variable O&M [EUR /t Ammonia]"
+            ]] *= (df.loc["Specific investment mark-up factor optional ASU"] - 1.) / excel.loc["N2 Consumption, [t/t] Ammonia"]
         # Convert output to hourly generation
         df.loc[[
-            "Specific investment (MEUR /TPD Ammonia output)",
-            "Fixed O&M (kEUR /TPD Ammonia)",
+            "Specific investment [MEUR /TPD Ammonia output]",
+            "Fixed O&M [kEUR /TPD Ammonia]",
             ]] *= 24
 
         # Rename costs for correct units
@@ -425,10 +430,10 @@ def get_data_DEA(tech, data_in, expectation=None):
         df.index = df.index.str.replace("EUR /t Ammonia", "EUR/t_N2")
 
         df.drop(df.loc[df.index.str.contains("Specific investment mark-up factor optional ASU")].index, inplace=True)
-        df.drop(df.loc[df.index.str.contains("Specific investment (MEUR /MW Ammonia output)", regex=False)].index, inplace=True)
-        df.drop(df.loc[df.index.str.contains("Fixed O&M (kEUR/MW Ammonia/year)", regex=False)].index, inplace=True)
-        df.drop(df.loc[df.index.str.contains("Variable O&M (EUR/MWh Ammonia)", regex=False)].index, inplace=True)
-
+        df.drop(df.loc[df.index.str.contains("Specific investment [MEUR /MW Ammonia output]", regex=False)].index, inplace=True)
+        df.drop(df.loc[df.index.str.contains("Fixed O&M [kEUR/MW Ammonia/year]", regex=False)].index, inplace=True)
+        df.drop(df.loc[df.index.str.contains("Variable O&M [EUR/MWh Ammonia]", regex=False)].index, inplace=True)
+        
     if "solid biomass power" in tech:
         df.index = df.index.str.replace("EUR/MWeh", "EUR/MWh")
 
@@ -440,7 +445,7 @@ def get_data_DEA(tech, data_in, expectation=None):
         df_final.loc[index, :] = values
 
     # if year-specific data is missing and not fixed by interpolation fill forward with same values
-    df_final = df_final.fillna(method='ffill', axis=1)
+    df_final = df_final.ffill(axis=1)
 
     df_final["source"] = source_dict["DEA"] + ", " + excel_file.replace("inputs/","")
     if tech in new_format and (tech!="electrolysis"):
@@ -452,6 +457,7 @@ def get_data_DEA(tech, data_in, expectation=None):
         df_final["unit"] = (df_final.rename(index=lambda x:
                                             x[x.rfind("[")+1: x.rfind("]")]).index.values)
     else:
+        df_final.index = df_final.index.str.replace("\[", "(", regex=True).str.replace("\]", ")", regex=True)
         df_final["unit"] = (df_final.rename(index=lambda x:
                                             x[x.rfind("(")+1: x.rfind(")")]).index.values)
     df_final.index = df_final.index.str.replace(r" \(.*\)","", regex=True)
@@ -686,10 +692,14 @@ def clean_up_units(tech_data, value_column="", source=""):
 
     tech_data.loc[tech_data.unit.str.contains("mio EUR"), value_column] *= 1e6
     tech_data.unit = tech_data.unit.str.replace("mio EUR", "EUR")
+    
+    tech_data.loc[tech_data.unit.str.contains("mill. EUR"), value_column] *= 1e6
+    tech_data.unit = tech_data.unit.str.replace("mill. EUR", "EUR")
 
     tech_data.loc[tech_data.unit.str.contains("1000EUR"), value_column] *= 1e3
     tech_data.unit = tech_data.unit.str.replace("1000EUR", "EUR")
 
+    tech_data.unit = tech_data.unit.str.replace("k EUR", "kEUR")
     tech_data.loc[tech_data.unit.str.contains("kEUR"), value_column] *= 1e3
     tech_data.unit = tech_data.unit.str.replace("kEUR", "EUR")
 
@@ -736,9 +746,11 @@ def clean_up_units(tech_data, value_column="", source=""):
 
     tech_data.unit = tech_data.unit.str.replace("FT Liquids Output, MWh/MWh Total Inpu", "MWh_FT/MWh_H2")
     # biomass-to-methanol-specific
-    tech_data.unit = tech_data.unit.str.replace("Methanol Output, MWh/MWh Total Inpu", "MWh_MeOH/MWh_th")
-    tech_data.unit = tech_data.unit.str.replace("District heat  Output, MWh/MWh Total Inpu", "MWh_th/MWh_th")
-    tech_data.unit = tech_data.unit.str.replace("Electricity Output, MWh/MWh Total Inpu", "MWh_e/MWh_th")
+    if isinstance(tech_data.index, pd.MultiIndex):
+        tech_data.loc[tech_data.index.get_level_values(1)=="Methanol Output,", "unit"] = "MWh_MeOH/MWh_th"
+        tech_data.loc[tech_data.index.get_level_values(1)=='District heat  Output,', "unit"] =  "MWh_th/MWh_th"
+        tech_data.loc[tech_data.index.get_level_values(1)=='Electricity Output,', "unit"] =  "MWh_e/MWh_th"
+       
     # Ammonia-specific
     tech_data.unit = tech_data.unit.str.replace("MW Ammonia output", "MW_NH3") #specific investment
     tech_data.unit = tech_data.unit.str.replace("MW Ammonia", "MW_NH3") #fom
@@ -777,8 +789,10 @@ def clean_up_units(tech_data, value_column="", source=""):
                                                     "MW": "MW_e"}))
 
         if "methanolisation" in tech_data.index:
+            tech_data = tech_data.sort_index()
             tech_data.loc[('methanolisation', 'Variable O&M'), "unit"] = "EUR/MWh_MeOH"
-
+    
+    tech_data.unit = tech_data.unit.str.replace("\)", "")
     return tech_data
 
 
@@ -913,7 +927,7 @@ def order_data(tech_data):
     """
 
     clean_df = {}
-    for tech in tech_data.index.levels[0]:
+    for tech in tech_data.index.get_level_values(0).unique():
         clean_df[tech] = pd.DataFrame()
         switch = False
         df = tech_data.loc[tech]
@@ -935,6 +949,7 @@ def order_data(tech_data):
                         (df.unit=="EUR/MWh/year") |
                         (df.unit=="EUR/MW_e, 2020") |
                         (df.unit=="EUR/MW input") |
+                        (df.unit=='EUR/MW-methanol') |
                         (df.unit=="EUR/t_N2/h")) # air separation unit
                     ].copy()
         if len(investment)!=1:
@@ -949,16 +964,17 @@ def order_data(tech_data):
         if len(investment):
             fixed = df[(df.index.str.contains("Fixed O&M") |
                         df.index.str.contains("Total O&M")) &
-                       ((df.unit==investment.unit[0]+"/year")|
+                       ((df.unit==investment.unit.iloc[0]+"/year")|
                         (df.unit=="EUR/MW/km/year")|
                         (df.unit=="EUR/MW/year")|
                         (df.unit=="EUR/MW_e/y, 2020")|
                         (df.unit=="EUR/MW_e/y")|
                         (df.unit=="EUR/MW_FT/year")|
+                        (df.unit=="EUR/MWh_FT")|
                         (df.unit=="EUR/MW_MeOH/year")|
                         (df.unit=="EUR/MW_CH4/year")|
                         (df.unit=='% of specific investment/year')|
-                        (df.unit==investment.unit.str.split(" ")[0][0]+"/year"))].copy()
+                        (df.unit==investment.unit.str.split(" ").iloc[0][0]+"/year"))].copy()
             if (len(fixed)!=1) and (len(df[df.index.str.contains("Fixed O&M")])!=0):
                 switch = True
                 print("check FOM: ", tech, " ",
@@ -987,6 +1003,7 @@ def order_data(tech_data):
                                                          (df.unit=="EUR/MWh/km") |
                                                          (df.unit=="EUR/MWh") |
                                                          (df.unit=="EUR/MWhoutput") |
+                                                         (df.unit=="EUR/MWh_CH4") |
                                                          (tech == "biogas upgrading"))].copy()
         if len(vom)==1:
             vom.loc[:,"parameter"] = "VOM"
@@ -1011,6 +1028,7 @@ def order_data(tech_data):
         # ----- efficiencies ------
         efficiency = df[(df.index.str.contains("efficiency") |
                          (df.index.str.contains("Hydrogen output, at LHV"))|
+                         (df.index.str.contains("Hydrogen Output"))|
                          (df.index.str.contains("FT Liquids Output, MWh/MWh Total Input"))|
                          (df.index.str.contains("Methanol Output"))|
                          (df.index.str.contains("District heat  Output"))|
@@ -1025,6 +1043,7 @@ def order_data(tech_data):
                            (df.unit =="MWh_MeOH/MWh_th") |
                            (df.unit =="MWh_e/MWh_th") |
                            (df.unit =="MWh_th/MWh_th") |
+                           (df.unit =='MWh/MWh Total Input') |
                            df.unit.str.contains("MWh_FT/MWh_H2"))
                          & (~df.index.str.contains("name plate"))].copy()
 
@@ -1043,7 +1062,7 @@ def order_data(tech_data):
             efficiency_heat = efficiency[with_heat_recovery].copy()
             efficiency_heat["parameter"] = "efficiency-heat"
             clean_df[tech] = pd.concat([clean_df[tech], efficiency_heat])
-            efficiency_h2 = efficiency[efficiency.index.str.contains("Hydrogen")].copy()
+            efficiency_h2 = efficiency[efficiency.index.str.contains("Hydrogen Output")].copy()
             efficiency_h2["parameter"] = "efficiency"
             clean_df[tech] = pd.concat([clean_df[tech], efficiency_h2])
 
@@ -1123,6 +1142,7 @@ def add_description(data):
     # add excel sheet names to data frame
     wished_order = list(years) + ["unit", "source", "further description"]
     data = data.reindex(columns=wished_order)
+    data.index.set_names(["technology", "parameter"], inplace=True)
     sheets = data.reset_index()["technology"].map(sheet_names).fillna("")
     sheets.index = data.index
     data["further description"] = sheets + ":  " + data["further description"]
@@ -1168,7 +1188,7 @@ def add_gas_storage(data):
     gas_storage.dropna(axis=1, how="all", inplace=True)
 
     # establishment of one cavern ~ 100*1e6 Nm3 = 1.1 TWh
-    investment = gas_storage.loc['Total cost, 100 mio Nm3 active volume'][0]
+    investment = gas_storage.loc['Total cost, 100 mio Nm3 active volume'].iloc[0]
     # convert million EUR/1.1 TWh -> EUR/kWh
     investment /= (1.1 * 1e3)
     data.loc[("gas storage", "investment"), years] = investment
@@ -1280,6 +1300,7 @@ def add_manual_input(data):
             l.append(s)
 
     new_df = pd.DataFrame(l).set_index(['technology','parameter'])
+    data.index.set_names(["technology", "parameter"], inplace=True)
     # overwrite DEA data with manual input
     data = new_df.combine_first(data)
 
@@ -2103,7 +2124,7 @@ if __name__ == "__main__":
     # rename + reorder to fit to other data
     costs_vehicles = rename_ISE_vehicles(costs_vehicles)
     if 'NT' in costs_vehicles.index:
-    	costs_vehicles.drop(['NT'], axis=0, inplace=True)
+    	costs_vehicles.drop(['NT'], axis=0, inplace=True, level=0)
     costs_vehicles = convert_units(costs_vehicles)
     # add costs for vehicles
     data = pd.concat([data, costs_vehicles], sort=True)

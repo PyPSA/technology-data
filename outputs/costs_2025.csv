@@ -713,7 +713,7 @@ electrobiofuels,efficiency-hydrogen,1.1951,per unit,Stoichiometric calculation,
 electrobiofuels,efficiency-tot,0.6272,per unit,Stoichiometric calculation,
 electrobiofuels,investment,473961.8141,EUR/kW_th,combination of BtL and electrofuels,
 electrolysis,FOM,4.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Fixed O&M 
-electrolysis,efficiency,0.264,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:   - hereof recoverable for district heating
+electrolysis,efficiency,0.5874,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Hydrogen Output
 electrolysis,efficiency-heat,0.264,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:   - hereof recoverable for district heating
 electrolysis,investment,792.5145,EUR/kW_e,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Specific investment
 electrolysis,lifetime,25.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Technical lifetime

@@ -657,7 +657,7 @@ def adjust_for_inflation(costs, techs, ref_year, col):
     """
 
     inflation = (1 + snakemake.config['rate_inflation'])**(ref_year - snakemake.config['eur_year'])
-    paras = ["investment", "VOM", "fixed", "fuel"]
+    paras = ["investment", "VOM", "fuel"]
     filter_i = costs.index.get_level_values(0).isin(techs) & costs.index.get_level_values(1).isin(paras) 
 
     costs.loc[filter_i, col] = costs.loc[filter_i, col].div(inflation.loc[filter_i], axis=0)
@@ -2275,7 +2275,6 @@ if __name__ == "__main__":
         costs_tot = unify_diw(costs_tot)
         costs_tot.drop("fixed", level=1, inplace=True)
         
-        breakpoint()
         # adjust for inflation
         techs = costs_tot.index.get_level_values(0).unique()
         costs_tot = adjust_for_inflation(data, techs, costs_tot.currency_year, years)

@@ -1522,7 +1522,7 @@ def carbon_flow(costs,year):
             costs.loc[('electrobiofuels', 'efficiency-biomass'), 'source'] = 'Stoichiometric calculation'
 
 
-            efuel_scale_factor = costs.loc[('BtL', 'C stored'), 'value'][0] * costs.loc[('Fischer-Tropsch', 'capture rate'), 'value'][0]
+            efuel_scale_factor = costs.loc[('BtL', 'C stored'), 'value']* costs.loc[('Fischer-Tropsch', 'capture rate'), 'value']
 
             costs.loc[('electrobiofuels', 'efficiency-hydrogen'), 'value'] = costs.loc[('Fischer-Tropsch', 'efficiency'), 'value']\
                                                                              / efuel_scale_factor
@@ -2266,7 +2266,8 @@ if __name__ == "__main__":
             print("old c_v and c_b values are assumed where given")
         to_add = costs_pypsa.loc[comp_missing].drop("year", axis=1)
         to_add.loc[:, "further description"] = " from old pypsa cost assumptions"
-        to_add = to_add.drop("geothermal") # more data on geothermal is added downstream, so old assumptions are redundant
+        # more data on geothermal is added downstream, so old assumptions are redundant
+        to_add = to_add.drop("geothermal") 
         # TODO check currency year from old pypsa cost assumptions
         to_add["currency_year"] = 2015
         costs_tot = pd.concat([costs_tot, to_add], sort=False)
@@ -2277,9 +2278,10 @@ if __name__ == "__main__":
         
         # adjust for inflation
         techs = costs_tot.index.get_level_values(0).unique()
-        costs_tot = adjust_for_inflation(data, techs, costs_tot.currency_year, years)
+        costs_tot = adjust_for_inflation(costs_tot, techs, costs_tot.currency_year, ["value"])
         
         # format and sort
         costs_tot.sort_index(inplace=True)
-        costs_tot.loc[:,'value'] = round(costs_tot.value.astype(float), snakemake.config.get("ndigits", 2))
+        costs_tot.loc[:,'value'] = round(costs_tot.value.astype(float),
+                                         snakemake.config.get("ndigits", 2))
         costs_tot.to_csv([v for v in snakemake.output if str(year) in v][0])

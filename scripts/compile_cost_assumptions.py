@@ -656,7 +656,7 @@ def adjust_for_inflation(costs, techs, ref_year, col):
         Dataframe containing the costs data with multiindex on technology and one index key 'investment'.
     """
 
-    inflation = (1 + snakemake.config['rate_inflation'])**(ref_year - snakemake.config['eur_year'])
+    inflation = (1 + snakemake.config['rate_inflation'])**(ref_year - snakemake.config['eur_year']).astype(float)
     paras = ["investment", "VOM", "fuel"]
     filter_i = costs.index.get_level_values(0).isin(techs) & costs.index.get_level_values(1).isin(paras) 
 

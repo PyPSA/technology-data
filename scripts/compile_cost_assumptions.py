@@ -362,6 +362,7 @@ def get_data_DEA(tech, data_in, expectation=None):
 
     # replace missing data
     df.replace("-", np.nan, inplace=True)
+    df = df.infer_objects() 
     # average data  in format "lower_value-upper_value"
     df = df.apply(lambda row: row.apply(lambda x: (float(x.split("-")[0])
                                                    + float(x.split("-")[1]))
@@ -447,6 +448,7 @@ def get_data_DEA(tech, data_in, expectation=None):
 
     # if year-specific data is missing and not fixed by interpolation fill forward with same values
     df_final = df_final.ffill(axis=1)
+    df_final = df_final.infer_objects()
 
     df_final["source"] = source_dict["DEA"] + ", " + excel_file.replace("inputs/","")
     if tech in new_format and (tech!="electrolysis"):

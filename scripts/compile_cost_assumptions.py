@@ -27,6 +27,7 @@ The script is structured as follows:
 
 import pandas as pd
 import numpy as np
+pd.set_option('future.no_silent_downcasting', True)
 
 # ---------- sources -------------------------------------------------------
 source_dict = {
@@ -362,7 +363,6 @@ def get_data_DEA(tech, data_in, expectation=None):
 
     # replace missing data
     df.replace("-", np.nan, inplace=True)
-    df = df.infer_objects() 
     # average data  in format "lower_value-upper_value"
     df = df.apply(lambda row: row.apply(lambda x: (float(x.split("-")[0])
                                                    + float(x.split("-")[1]))
@@ -413,13 +413,15 @@ def get_data_DEA(tech, data_in, expectation=None):
         df.drop(df.loc[df.index.str.contains("Variable O&M (EUR /t Ammonia)", regex=False)].index, inplace=True)
 
     if tech == "air separation unit":
-      
-       # Calculate ASU cost separate to HB facility in terms of t N2 output
+        divisor = ((df.loc["Specific investment mark-up factor optional ASU"] - 1.0)
+                    / excel.loc["N2 Consumption, [t/t] Ammonia"]).astype(float)
+        
+        # Calculate ASU cost separate to HB facility in terms of t N2 output
         df.loc[[
             "Specific investment [MEUR /TPD Ammonia output]",
             "Fixed O&M [kEUR /TPD Ammonia]",
             "Variable O&M [EUR /t Ammonia]"
-            ]] *= (df.loc["Specific investment mark-up factor optional ASU"] - 1.) / excel.loc["N2 Consumption, [t/t] Ammonia"]
+            ]] *= divisor
         # Convert output to hourly generation
         df.loc[[
             "Specific investment [MEUR /TPD Ammonia output]",
@@ -448,7 +450,6 @@ def get_data_DEA(tech, data_in, expectation=None):
 
     # if year-specific data is missing and not fixed by interpolation fill forward with same values
     df_final = df_final.ffill(axis=1)
-    df_final = df_final.infer_objects()
 
     df_final["source"] = source_dict["DEA"] + ", " + excel_file.replace("inputs/","")
     if tech in new_format and (tech!="electrolysis"):
@@ -484,7 +485,8 @@ def add_desalinsation_data(costs):
     costs.loc[(tech, 'investment'), 'value'] = c
     costs.loc[(tech, 'investment'), 'unit'] = "EUR/(m^3-H2O/h)"
     costs.loc[(tech, 'investment'), 'source'] = source_dict['Caldera2017'] + ", Table 4."
-
+    costs.loc[(tech, 'investment'), 'currency_year'] = 2015
+    
     costs.loc[(tech, 'FOM'), 'value'] = 4.
     costs.loc[(tech, 'FOM'), 'unit'] = "%/year"
     costs.loc[(tech, 'FOM'), 'source'] = source_dict['Caldera2016'] + ", Table 1."
@@ -502,6 +504,7 @@ def add_desalinsation_data(costs):
     costs.loc[(tech, 'investment'), 'value'] = 65
     costs.loc[(tech, 'investment'), 'unit'] = "EUR/m^3-H2O"
     costs.loc[(tech, 'investment'), 'source'] = source_dict['Caldera2016'] + ", Table 1."
+    costs.loc[(tech, 'investment'), 'currency_year'] = 2013
 
     costs.loc[(tech, 'FOM'), 'value'] = 2
     costs.loc[(tech, 'FOM'), 'unit'] = "%/year"
@@ -510,9 +513,6 @@ def add_desalinsation_data(costs):
     costs.loc[(tech, 'lifetime'), 'value'] = 30
     costs.loc[(tech, 'lifetime'), 'unit'] = "years"
     costs.loc[(tech, 'lifetime'), 'source'] = source_dict['Caldera2016'] + ", Table 1."
-
-    costs = adjust_for_inflation(costs, ['seawater desalination'], 2015, ["value"])
-    costs = adjust_for_inflation(costs, ['clean water tank storage'], 2013, ["value"])
 
     return costs
 
@@ -576,22 +576,27 @@ def add_solar_from_other(costs):
     if snakemake.config['solar_utility_from_vartiaien']:
         costs.loc[('solar-utility', 'investment'), 'value'] = solar_uti[year]
         costs.loc[('solar-utility', 'investment'), 'source'] = source_dict['Vartiaien']
+        costs.loc[('solar-utility', 'investment'), 'currency_year'] = 2019
 
         costs.loc[('solar-utility', 'lifetime'), 'value'] = 30
         costs.loc[('solar-utility', 'lifetime'), 'source'] = source_dict['Vartiaien']
+        costs.loc[('solar-utility', 'lifetime'), 'currency_year'] = 2019
 
     if snakemake.config['solar_rooftop_from_etip']:
         # solar rooftop from ETIP 2019
         costs.loc[('solar-rooftop', 'investment'), 'value'] = solar_roof[year]
         costs.loc[('solar-rooftop', 'investment'), 'source'] = source_dict['ETIP']
+        costs.loc[('solar-rooftop', 'investment'), 'currency_year'] = 2019
 
         costs.loc[('solar-rooftop', 'lifetime'), 'value'] = 30
         costs.loc[('solar-rooftop', 'lifetime'), 'source'] = source_dict['ETIP']
+        costs.loc[('solar-rooftop', 'lifetime'), 'currency_year'] = 2019
 
     # lifetime&efficiency for solar
     costs.loc[('solar', 'lifetime'), 'value'] = costs.loc[(
         ['solar-rooftop', 'solar-utility'], 'lifetime'), 'value'].mean()
     costs.loc[('solar', 'lifetime'), 'unit'] = 'years'
+    costs.loc[('solar', 'lifetime'), 'currency_year'] = 2019
     costs.loc[('solar', 'lifetime'),
               'source'] = 'Assuming 50% rooftop, 50% utility'
     # costs.loc[('solar', 'efficiency'), 'value'] = 1
@@ -607,19 +612,21 @@ def add_h2_from_other(costs):
     costs.loc[('electrolysis', 'efficiency'), 'value'] = 0.8
     costs.loc[('fuel cell', 'efficiency'), 'value'] = 0.58
     costs.loc[('electrolysis', 'efficiency'), 'source'] = 'budischak2013'
+    costs.loc[('electrolysis', 'efficiency'), 'currency_year'] =  2013
     costs.loc[('fuel cell', 'efficiency'), 'source'] = 'budischak2013'
+    costs.loc[('fuel cell', 'efficiency'), 'currency_year'] =  2013
 
     return costs
 
 # [unify-diw-inflation]
 def unify_diw(costs):
     """"
-    include inflation for the DIW costs from 2010
+    add currency year for the DIW costs from 2010
     """
-    inflation = (1 + snakemake.config['rate_inflation'])**(2010 - snakemake.config['eur_year'])
-    costs.loc[('PHS', 'investment'), 'value'] /= inflation
-    costs.loc[('ror', 'investment'), 'value'] /= inflation
-    costs.loc[('hydro', 'investment'), 'value'] /= inflation
+
+    costs.loc[('PHS', 'investment'), 'currency_year'] = 2010
+    costs.loc[('ror', 'investment'), 'currency_year'] = 2010
+    costs.loc[('hydro', 'investment'), 'currency_year'] = 2010
 
     return costs
 
@@ -1201,10 +1208,13 @@ def add_gas_storage(data):
     data.loc[("gas storage", "investment"), "source"] = source_dict["DEA"]
     data.loc[("gas storage", "investment"), "further description"] = "150 Underground Storage of Gas, Establishment of one cavern (units converted)"
     data.loc[("gas storage", "investment"), "unit"] = "EUR/kWh"
+    data.loc[("gas storage", "investment"), "currency_year"] = 2015
+    
     data.loc[("gas storage", "lifetime"), years] = 100
     data.loc[("gas storage", "lifetime"), "source"] = "TODO no source"
     data.loc[("gas storage", "lifetime"), "further description"] = "estimation: most underground storage are already build, they do have a long lifetime"
     data.loc[("gas storage", "lifetime"), "unit"] = "years"
+    
 
     # process equipment, injection (2200MW) withdrawl (6600MW)
     # assuming half of investment costs for injection, half for withdrawl
@@ -1212,12 +1222,17 @@ def add_gas_storage(data):
     investment_discharge = gas_storage.loc["Total investment cost"].iloc[0,0]/2/6600*1e3
     data.loc[("gas storage charger", "investment"), years] = investment_charge
     data.loc[("gas storage discharger", "investment"), years] = investment_discharge
+    
     data.loc[("gas storage charger", "investment"), "source"] = source_dict["DEA"]
     data.loc[("gas storage charger", "investment"), "further description"] = "150 Underground Storage of Gas, Process equipment (units converted)"
     data.loc[("gas storage charger", "investment"), "unit"] = "EUR/kW"
+    data.loc[("gas storage charger", "investment"), "currency_year"] = 2015
+
+    
     data.loc[("gas storage discharger", "investment"), "source"] = source_dict["DEA"]
     data.loc[("gas storage discharger", "investment"), "further description"] = "150 Underground Storage of Gas, Process equipment (units converted)"
     data.loc[("gas storage discharger", "investment"), "unit"] = "EUR/kW"
+    data.loc[("gas storage charger", "investment"), "currency_year"] = 2015
 
     # operation + maintenance 400-500 million m³ = 4.4-5.5 TWh
     FOM = gas_storage.loc["Total, incl. administration"].iloc[0] /(5.5*investment*1e3)*100
@@ -1284,10 +1299,7 @@ def add_manual_input(data):
     df = pd.read_csv(snakemake.input['manual_input'], quotechar='"',sep=',', keep_default_na=False)
     df = df.rename(columns={"further_description": "further description"})
 
-    # Inflation adjustment 
-    mask = df[df['parameter'].isin(['investment','VOM','fuel'])].index
-    df.loc[mask, 'value'] /= (1+snakemake.config['rate_inflation'])**(df.loc[mask, 'currency_year'].astype(int)-snakemake.config['eur_year'])
-
+   
     l = []
     for tech in df['technology'].unique():
         c0 = df[df['technology'] == tech]
@@ -1300,6 +1312,10 @@ def add_manual_input(data):
                       name=param)
             s['parameter'] = param
             s['technology'] = tech
+            try:
+                s["currency_year"] = int(c["currency_year"].values[0]) 
+            except ValueError:
+                s["currency_year"] = np.nan
             for col in ['unit','source','further description']:
                 s[col] = "; and\n".join(c[col].unique().astype(str))
             s = s.rename({"further_description":"further description"}) # match column name between manual_input and original TD workflow
@@ -1329,9 +1345,11 @@ def rename_ISE(costs_ISE):
                             "2045": 2045,
                             "2050": 2050}, inplace=True)
     costs_ISE.index.names = ["technology", "parameter"]
-    costs_ISE.unit.replace({"a": "years", "% Invest": "%"}, inplace=True)
+    costs_ISE["unit"] = costs_ISE.unit.replace({"a": "years", "% Invest": "%"})
     costs_ISE["source"] = source_dict["ISE"]
     costs_ISE['further description'] = costs_ISE.reset_index()["technology"].values
+    # could not find specific currency year in report, assume year of publication
+    costs_ISE['currency_year'] = 2020
 
     return costs_ISE
 
@@ -1364,8 +1382,10 @@ def rename_ISE_vehicles(costs_vehicles):
                             "2045": 2045,
                             "2050": 2050}, inplace=True)
     costs_vehicles.index.names = ["technology", "parameter"]
-    costs_vehicles.unit.replace({"a": "years", "% Invest": "%"}, inplace=True)
+    costs_vehicles["unit"] = costs_vehicles.unit.replace({"a": "years", "% Invest": "%"})
     costs_vehicles["source"] = source_dict["vehicles"]
+    # could not find specific currency year in report, assume year of publication
+    costs_vehicles["currency_year"] = 2020
     costs_vehicles['further description'] =  costs_vehicles.reset_index()["technology"].values
     return costs_vehicles
 
@@ -1387,6 +1407,7 @@ def carbon_flow(costs,year):
     #Adding pelletizing cost to biomass boiler
     costs.loc[('biomass boiler', 'pelletizing cost'), 'value'] = 9
     costs.loc[('biomass boiler', 'pelletizing cost'), 'unit'] = "EUR/MWh_pellets"
+    costs.loc[('biomass boiler', 'pelletizing cost'), 'currency_year'] = 2019
     costs.loc[('biomass boiler', 'pelletizing cost'), 'source'] = "Assumption based on doi:10.1016/j.rser.2019.109506"
 
 
@@ -1398,6 +1419,7 @@ def carbon_flow(costs,year):
         lifetime = 0
         FOM = 0
         VOM = 0
+        currency_year = np.nan
         source = 'TODO'
         co2_capture_rate = 0.90
 
@@ -1412,6 +1434,7 @@ def carbon_flow(costs,year):
             medium_out = 'oil'
             eta = btl_eta[year]
             source = "doi:10.1016/j.enpol.2017.05.013"
+            currency_year = 2017
 
         if tech == 'biomass-to-methanol':
             medium_out = 'methanol'
@@ -1441,6 +1464,7 @@ def carbon_flow(costs,year):
             costs.loc[(tech, 'heat output'), 'value'] = heat_out
             costs.loc[(tech, 'heat output'), 'unit'] = "MWh_th/MWh_CH4"
             costs.loc[(tech, 'heat output'), 'source'] = source
+            currency_year = costs.loc[('biogas plus hydrogen', 'VOM'), "currency_year"]
 
             #TODO: this needs to be refined based on e.g. stoichiometry:
             AD_CO2_share = 0.1 #volumetric share in biogas (rest is CH4).
@@ -1449,12 +1473,14 @@ def carbon_flow(costs,year):
             inv_cost = bmH2_cost[year]
             eta = 0.39
             FOM = 4.25
+            currency_year = 2014
             source = 'Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014' #source_dict('HyNOW')
 
         elif tech == 'solid biomass to hydrogen':
             inv_cost = bmH2_cost[year]
             eta = 0.56
             FOM = 4.25
+            currency_year = 2014
             source = 'Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014' #source_dict('HyNOW')
 
         if eta > 0:
@@ -1496,7 +1522,7 @@ def carbon_flow(costs,year):
             costs.loc[('electrobiofuels', 'efficiency-biomass'), 'source'] = 'Stoichiometric calculation'
 
 
-            efuel_scale_factor = costs.loc[('BtL', 'C stored'), 'value'] * costs.loc[('Fischer-Tropsch', 'capture rate'), 'value']
+            efuel_scale_factor = costs.loc[('BtL', 'C stored'), 'value'][0] * costs.loc[('Fischer-Tropsch', 'capture rate'), 'value'][0]
 
             costs.loc[('electrobiofuels', 'efficiency-hydrogen'), 'value'] = costs.loc[('Fischer-Tropsch', 'efficiency'), 'value']\
                                                                              / efuel_scale_factor
@@ -1513,6 +1539,7 @@ def carbon_flow(costs,year):
             VOM = costs.loc[('BtL', 'VOM'), 'value'] + costs.loc[('Fischer-Tropsch', 'VOM'), 'value'] * efuel_scale_factor
             FOM = costs.loc[('BtL', 'FOM'), 'value']
             medium_out = 'oil'
+            currency_year = costs.loc[('BtL', 'VOM'), "currency_year"]
             source = "combination of BtL and electrofuels"
 
         elif tech in ['biogas', 'biogas CC', 'biogas plus hydrogen']:
@@ -1529,6 +1556,7 @@ def carbon_flow(costs,year):
             costs.loc[(tech, 'investment'), 'value'] = inv_cost
             costs.loc[(tech, 'investment'), 'unit'] = "EUR/kW_th"
             costs.loc[(tech, 'investment'), 'source'] = source
+            costs.loc[(tech, 'investment'), 'currency_year'] = currency_year
 
         if lifetime > 0:
             costs.loc[(tech, 'lifetime'), 'value'] = lifetime
@@ -1544,6 +1572,7 @@ def carbon_flow(costs,year):
             costs.loc[(tech, 'VOM'), 'value'] = VOM
             costs.loc[(tech, 'VOM'), 'unit'] = "EUR/MWh_th"
             costs.loc[(tech, 'VOM'), 'source'] = source
+            costs.loc[(tech, 'VOM'), 'source'] = currency_year
 
     return costs
 
@@ -1669,7 +1698,9 @@ def add_egs_data(data):
     geoth_df.loc[("geothermal", "FOM"), "unit"] = "%/year"
     geoth_df.loc[("geothermal", "FOM"), "source"] = source_dict["Aghahosseini2020"] 
     geoth_df.loc[("geothermal", "FOM"), "further description"] = "Both for flash, binary and ORC plants. See Supplemental Material for details"
-
+    
+    geoth_df = geoth_df.dropna(axis=1, how='all')
+    
     return pd.concat([data, geoth_df])
 
 
@@ -1813,6 +1844,7 @@ def add_SMR_data(data):
     SMR_df.loc[("SMR CC", "investment"), years] = SMR_CCS
     SMR_df.loc[(techs, "investment"), "source"] = source_dict["DEA"]
     SMR_df.loc[(techs, "investment"), "unit"] = "EUR/MW_CH4"
+    SMR_df.loc[(techs, "investment"), "currency_year"] = 2015
     SMR_df.loc[(techs, "investment"), "further description"] = "Technology data for renewable fuels, in pdf on table 3 p.311"
 
     # carbon capture rate
@@ -1820,7 +1852,9 @@ def add_SMR_data(data):
     SMR_df.loc[("SMR CC", "capture_rate"), "source"] = source_dict["IEA"]
     SMR_df.loc[("SMR CC", "capture_rate"), "unit"] = "EUR/MW_CH4"
     SMR_df.loc[("SMR CC", "capture_rate"), "further description"] = "wide range: capture rates betwen 54%-90%"
-
+    
+    SMR_df = SMR_df.dropna(axis=1, how='all')
+    
     return pd.concat([data, SMR_df])
 
 
@@ -2117,8 +2151,7 @@ if __name__ == "__main__":
     # adjust for inflation
     data["currency_year"] = [2015 if x not in new_format else 2020 for x in
                              data.index.get_level_values(0)]
-    techs = data.index.get_level_values(0)
-    data = adjust_for_inflation(data, techs, data.currency_year, years)
+    
 
     # %% (2) -- get data from other sources which need formatting -----------------
     # (a)  ---------- get old pypsa costs ---------------------------------------
@@ -2166,7 +2199,8 @@ if __name__ == "__main__":
     # %% (3) ------ add additional sources and save cost as csv ------------------
     # [RTD-target-multiindex-df]
     for year in years:
-        costs = (data[[year, "unit", "source", "further description"]]
+        costs = (data[[year, "unit", "source", "further description",
+                       "currency_year"]]
                 .rename(columns={year: "value"}))
         costs["value"] = costs["value"].astype(float)
 
@@ -2174,28 +2208,23 @@ if __name__ == "__main__":
         costs.loc[('solid biomass', 'fuel'), 'value'] = 12
         costs.loc[('solid biomass', 'fuel'), 'unit'] = 'EUR/MWh_th'
         costs.loc[('solid biomass', 'fuel'), 'source'] = "JRC ENSPRESO ca avg for MINBIOWOOW1 (secondary forest residue wood chips), ENS_Ref for 2040"
-
+        costs.loc[('solid biomass', 'fuel'), 'currency_year'] = 2010 
+        
         costs.loc[('digestible biomass', 'fuel'), 'value'] = 15
         costs.loc[('digestible biomass', 'fuel'), 'unit'] = 'EUR/MWh_th'
         costs.loc[('digestible biomass', 'fuel'), 'source'] = "JRC ENSPRESO ca avg for MINBIOAGRW1, ENS_Ref for 2040"
-
+        costs.loc[('digestible biomass', 'fuel'), 'currency_year'] = 2010 
+        
         # add solar data from other source than DEA
         if any([snakemake.config['solar_utility_from_vartiaien'], snakemake.config['solar_rooftop_from_etip']]):
             costs = add_solar_from_other(costs)
-        else:
-            solar_techs = ['solar', 'solar-rooftop', 'solar-rooftop commercial',
-                        'solar-rooftop residential',
-                        'solar-utility', 'solar-utility single-axis tracking']
 
-
-        # adjust for inflation all techs in new DEA format
-        new_format_without_solar = [tech for tech in new_format if tech not in solar_techs]
         # add desalination and clean water tank storage
         costs = add_desalinsation_data(costs)
         # add energy storage database
         if snakemake.config['energy_storage_database']['pnnl_energy_storage'].get("add_data", True):
             costs, tech = add_energy_storage_database(costs, year)
-            costs = adjust_for_inflation(costs, tech, 2020, ["value"])
+            costs.loc[tech, "currency_year"] = 2020
 
         # add electrolyzer and fuel cell efficiency from other source than DEA
         if snakemake.config["energy_storage_database"].get("h2_from_budischak", True):
@@ -2204,10 +2233,10 @@ if __name__ == "__main__":
         # CO2 intensity
         costs = add_co2_intensity(costs)
 
-        #carbon balances
+        # carbon balances
         costs = carbon_flow(costs,year)
 
-        #energy penalty of carbon capture
+        # energy penalty of carbon capture
         costs = energy_penalty(costs)
 
         # include old pypsa costs
@@ -2225,6 +2254,8 @@ if __name__ == "__main__":
 
         to_add = costs_pypsa.loc[missing].drop("year", axis=1)
         to_add.loc[:,"further description"] = " from old pypsa cost assumptions"
+        # TODO check currency year from old pypsa cost assumptions
+        to_add["currency_year"] = 2015
         costs_tot = pd.concat([costs, to_add], sort=False)
 
         # single components missing
@@ -2236,11 +2267,18 @@ if __name__ == "__main__":
         to_add = costs_pypsa.loc[comp_missing].drop("year", axis=1)
         to_add.loc[:, "further description"] = " from old pypsa cost assumptions"
         to_add = to_add.drop("geothermal") # more data on geothermal is added downstream, so old assumptions are redundant
+        # TODO check currency year from old pypsa cost assumptions
+        to_add["currency_year"] = 2015
         costs_tot = pd.concat([costs_tot, to_add], sort=False)
 
         # unify the cost from DIW2010
         costs_tot = unify_diw(costs_tot)
         costs_tot.drop("fixed", level=1, inplace=True)
+        
+        breakpoint()
+        # adjust for inflation
+        techs = costs_tot.index.get_level_values(0).unique()
+        costs_tot = adjust_for_inflation(data, techs, costs_tot.currency_year, years)
         
         # format and sort
         costs_tot.sort_index(inplace=True)

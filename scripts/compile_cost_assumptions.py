@@ -2131,7 +2131,8 @@ def prepare_inflation_rate(fn):
     
     # add inflation for 2023
     inflation_rate.loc[2023] = 0.064
-    return inflation_rate.iloc[:,0]/100
+    
+    return inflation_rate
     
 # %% *************************************************************************
 #  ---------- MAIN ------------------------------------------------------------

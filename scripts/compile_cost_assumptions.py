@@ -1057,6 +1057,7 @@ def order_data(tech_data):
         # ----- efficiencies ------
         efficiency = df[(df.index.str.contains("efficiency") |
                          (df.index.str.contains("Hydrogen output, at LHV"))|
+                         (df.index.str.contains("Hydrogen Output"))|
                          (df.index.str.contains("FT Liquids Output, MWh/MWh Total Input"))|
                          (df.index.str.contains("Methanol Output"))|
                          (df.index.str.contains("District heat  Output"))|
@@ -1090,7 +1091,7 @@ def order_data(tech_data):
             efficiency_heat = efficiency[with_heat_recovery].copy()
             efficiency_heat["parameter"] = "efficiency-heat"
             clean_df[tech] = pd.concat([clean_df[tech], efficiency_heat])
-            efficiency_h2 = efficiency[efficiency.index.str.contains("Hydrogen")].copy()
+            efficiency_h2 = efficiency[efficiency.index.str.contains("Hydrogen Output")].copy()
             efficiency_h2["parameter"] = "efficiency"
             clean_df[tech] = pd.concat([clean_df[tech], efficiency_h2])
 

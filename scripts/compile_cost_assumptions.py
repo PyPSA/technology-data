@@ -27,8 +27,10 @@ The script is structured as follows:
 
 import pandas as pd
 import numpy as np
-pd.set_option('future.no_silent_downcasting', True)
-
+try:
+    pd.set_option('future.no_silent_downcasting', True)
+except Exception:
+    pass
 # ---------- sources -------------------------------------------------------
 source_dict = {
                 'DEA': 'Danish Energy Agency',
@@ -48,7 +50,7 @@ source_dict = {
                 # home battery storage and inverter investment costs
                 "EWG": "Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019",
                 "HyNOW" : "Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",
-		# efficiencies + lifetime SMR / SMR + CC
+		        # efficiencies + lifetime SMR / SMR + CC
                 "IEA": "IEA Global average levelised cost of hydrogen production by energy source and technology, 2019 and 2050 (2020), https://www.iea.org/data-and-statistics/charts/global-average-levelised-cost-of-hydrogen-production-by-energy-source-and-technology-2019-and-2050",
                 # SMR capture rate
                 "Timmerberg": "Hydrogen and hydrogen-derived fuels through methane decomposition of natural gas – GHG emissions and costs Timmerberg et al. (2020), https://doi.org/10.1016/j.ecmx.2020.100043",
@@ -58,8 +60,8 @@ source_dict = {
                 "Breede2015": "Breede et al. 2015: Overcoming challenges in the classification of deep geothermal potential, https://eprints.gla.ac.uk/169585/",
                 # Study of deep geothermal systems in the Northern Upper Rhine Graben
                 "Frey2022": "Frey et al. 2022: Techno-Economic Assessment of Geothermal Resources in the Variscan Basement of the Northern Upper Rhine Graben",
-		# vehicles 
-		"vehicles" : "PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html"
+		        # vehicles 
+		        "vehicles" : "PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html"
                 }
 
 # [DEA-sheet-names]

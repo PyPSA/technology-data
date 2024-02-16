@@ -2127,6 +2127,10 @@ def prepare_inflation_rate(fn):
     inflation_rate.rename(index=lambda x: int(x), inplace=True)
     inflation_rate = inflation_rate.astype(float)
     
+    inflation_rate = inflation_rate.iloc[:,0]/100
+    
+    # add inflation for 2023
+    inflation_rate.loc[2023] = 0.064
     return inflation_rate.iloc[:,0]/100
     
 # %% *************************************************************************

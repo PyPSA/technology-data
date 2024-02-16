@@ -5,6 +5,8 @@ Release Notes
 .. Upcoming Release
 .. ================
 
+* Update currency year from 2015 to 2020. Add a currency year for each data input
+
 Technology-Data 0.7.0 (7 February 2024)
 =======================================
 

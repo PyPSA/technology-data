@@ -646,7 +646,7 @@ def get_data_from_DEA(data_in, expectation=None):
 
     return d_by_tech
 
-def adjust_for_inflation(costs, techs, ref_year, col):
+def adjust_for_inflation(inflation_rate, costs, techs, ref_year, col):
     """
     adjust the investment costs for the specified techs for inflation.
 
@@ -657,12 +657,25 @@ def adjust_for_inflation(costs, techs, ref_year, col):
     costs: pd.Dataframe
         Dataframe containing the costs data with multiindex on technology and one index key 'investment'.
     """
+    
+    def get_factor(inflation_rate, ref_year, eur_year):
+        if (pd.isna(ref_year)) or (ref_year<1900): return np.nan
+        mean = inflation_rate.mean()
+        if ref_year<= eur_year:
+            new_index = np.arange(ref_year, eur_year+1)
+            df = 1 + inflation_rate.reindex(new_index).fillna(mean)    
+            return df.cumprod().shift().fillna(1).loc[eur_year]
+        else:
+            new_index = np.arange(eur_year, ref_year+1)
+            df = 1 + inflation_rate.reindex(new_index).fillna(mean)
+            return 1/df.cumprod().shift().fillna(1).loc[ref_year]
+    
+    inflation = costs_tot.currency_year.apply(lambda x: get_factor(inflation_rate, x, snakemake.config['eur_year']))
 
-    inflation = (1 + snakemake.config['rate_inflation'])**(ref_year - snakemake.config['eur_year']).astype(float)
     paras = ["investment", "VOM", "fuel"]
     filter_i = costs.index.get_level_values(0).isin(techs) & costs.index.get_level_values(1).isin(paras) 
 
-    costs.loc[filter_i, col] = costs.loc[filter_i, col].div(inflation.loc[filter_i], axis=0)
+    costs.loc[filter_i, col] = costs.loc[filter_i, col].mul(inflation.loc[filter_i], axis=0)
 
 
     return costs
@@ -1541,7 +1554,7 @@ def carbon_flow(costs,year):
             VOM = costs.loc[('BtL', 'VOM'), 'value'] + costs.loc[('Fischer-Tropsch', 'VOM'), 'value'] * efuel_scale_factor
             FOM = costs.loc[('BtL', 'FOM'), 'value']
             medium_out = 'oil'
-            currency_year = costs.loc[('BtL', 'VOM'), "currency_year"]
+            currency_year = costs.loc[('Fischer-Tropsch', 'investment'), "currency_year"]
             source = "combination of BtL and electrofuels"
 
         elif tech in ['biogas', 'biogas CC', 'biogas plus hydrogen']:
@@ -1574,7 +1587,7 @@ def carbon_flow(costs,year):
             costs.loc[(tech, 'VOM'), 'value'] = VOM
             costs.loc[(tech, 'VOM'), 'unit'] = "EUR/MWh_th"
             costs.loc[(tech, 'VOM'), 'source'] = source
-            costs.loc[(tech, 'VOM'), 'source'] = currency_year
+            costs.loc[(tech, 'VOM'), 'currency_year'] = currency_year
 
     return costs
 
@@ -2103,6 +2116,18 @@ def add_energy_storage_database(costs, data_year):
     return pd.concat([costs, df]), tech
 
 
+def prepare_inflation_rate(fn):
+    """read in annual inflation rate from Eurostat
+    https://ec.europa.eu/eurostat/databrowser/view/teicp000/default/table?lang=en 
+    """
+    inflation_rate = pd.read_excel(fn,
+                                   sheet_name="Blatt 1", index_col=0,
+                                   header=[8]).dropna(axis=0)
+    inflation_rate.rename(index=lambda x: int(x), inplace=True)
+    inflation_rate = inflation_rate.astype(float)
+    
+    return inflation_rate.iloc[:,0]/100
+    
 # %% *************************************************************************
 #  ---------- MAIN ------------------------------------------------------------
 if __name__ == "__main__":
@@ -2113,6 +2138,9 @@ if __name__ == "__main__":
         snakemake = mock_snakemake("compile_cost_assumptions")
 
     years = snakemake.config['years']
+    inflation_rate = prepare_inflation_rate(snakemake.input.inflation_rate)
+    
+  
 
     # (1) DEA data
     # (a)-------- get data from DEA excel sheets ----------------------------------
@@ -2280,7 +2308,9 @@ if __name__ == "__main__":
         
         # adjust for inflation
         techs = costs_tot.index.get_level_values(0).unique()
-        costs_tot = adjust_for_inflation(costs_tot, techs, costs_tot.currency_year, ["value"])
+        costs_tot["currency_year"] = costs_tot.currency_year.astype(float)
+        costs_tot = adjust_for_inflation(inflation_rate, costs_tot, techs,
+                                         costs_tot.currency_year, ["value"])
         
         # format and sort
         costs_tot.sort_index(inplace=True)

@@ -4,6 +4,7 @@ configfile: "config.yaml"
 
 rule compile_cost_assumptions:
     input:
+        inflation_rate = "inputs/prc_hicp_aind_page_spreadsheet.xlsx",
         pypsa_costs = "inputs/costs_PyPSA.csv",
         fraunhofer_costs = "inputs/Fraunhofer_ISE_costs.csv",
         fraunhofer_energy_prices = "inputs/Fraunhofer_ISE_energy_prices.csv",

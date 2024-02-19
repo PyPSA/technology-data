@@ -2119,19 +2119,18 @@ def add_energy_storage_database(costs, data_year):
 
 def prepare_inflation_rate(fn):
     """read in annual inflation rate from Eurostat
-    https://ec.europa.eu/eurostat/databrowser/view/teicp000/default/table?lang=en 
+    https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/dataflow/ESTAT/prc_hicp_aind/1.0?references=descendants&detail=referencepartial&format=sdmx_2.1_generic&compressed=true
     """
     inflation_rate = pd.read_excel(fn,
-                                   sheet_name="Blatt 1", index_col=0,
-                                   header=[8]).dropna(axis=0)
+                                   sheet_name="Sheet 1", index_col=0,
+                                   header=[8])
+    inflation_rate = (inflation_rate.loc["European Union - 27 countries (from 2020)"]
+                      .dropna()).loc["2001"::]
     inflation_rate.rename(index=lambda x: int(x), inplace=True)
     inflation_rate = inflation_rate.astype(float)
     
-    inflation_rate = inflation_rate.iloc[:,0]/100
-    
-    # add inflation for 2023
-    inflation_rate.loc[2023] = 0.064
-    
+    inflation_rate /= 100
+        
     return inflation_rate
     
 # %% *************************************************************************

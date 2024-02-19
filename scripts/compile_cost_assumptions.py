@@ -660,21 +660,21 @@ def adjust_for_inflation(inflation_rate, costs, techs, ref_year, col):
     
     def get_factor(inflation_rate, ref_year, eur_year):
         if (pd.isna(ref_year)) or (ref_year<1900): return np.nan
+        if ref_year == eur_year: return 1
         mean = inflation_rate.mean()
-        if ref_year<= eur_year:
-            new_index = np.arange(ref_year, eur_year+1)
+        if ref_year< eur_year:
+            new_index = np.arange(ref_year+1, eur_year+1)
             df = 1 + inflation_rate.reindex(new_index).fillna(mean)    
-            return df.cumprod().shift().fillna(1).loc[eur_year]
+            return df.cumprod().loc[eur_year]
         else:
-            new_index = np.arange(eur_year, ref_year+1)
+            new_index = np.arange(eur_year+1, ref_year+1)
             df = 1 + inflation_rate.reindex(new_index).fillna(mean)
-            return 1/df.cumprod().shift().fillna(1).loc[ref_year]
+            return 1/df.cumprod().loc[ref_year]
     
-    inflation = costs_tot.currency_year.apply(lambda x: get_factor(inflation_rate, x, snakemake.config['eur_year']))
+    inflation = costs.currency_year.apply(lambda x: get_factor(inflation_rate, x, snakemake.config['eur_year']))
 
     paras = ["investment", "VOM", "fuel"]
     filter_i = costs.index.get_level_values(0).isin(techs) & costs.index.get_level_values(1).isin(paras) 
-
     costs.loc[filter_i, col] = costs.loc[filter_i, col].mul(inflation.loc[filter_i], axis=0)
 
 

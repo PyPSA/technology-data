@@ -65,45 +65,45 @@ source_dict = {
                 }
 
 # [DEA-sheet-names]
-sheet_names = {'onwind': '20 Onshore turbines',
-               'offwind': '21 Offshore turbines',
-               'solar-utility': '22 Utility-scale PV',
-               'solar-utility single-axis tracking': '22 Utility-scale PV tracker',
+sheet_names = {'onwind': '20 Onshore turbines', # 2015
+               'offwind': '21 Offshore turbines', # 2020
+               'solar-utility': '22 Utility-scale PV', #2020
+               'solar-utility single-axis tracking': '22 Utility-scale PV tracker', 
                'solar-rooftop residential': '22 Rooftop PV residential',
                'solar-rooftop commercial': '22 Rooftop PV commercial',
-               'OCGT': '52 OCGT - Natural gas',
-               'CCGT': '05 Gas turb. CC, steam extract.',
-               'oil': '50 Diesel engine farm',
-               'biomass CHP': '09c Straw, Large, 40 degree',
-               'biomass EOP': '09c Straw, Large, 40 degree',
-               'biomass HOP': '09c Straw HOP',
-               'central coal CHP': '01 Coal CHP',
-               'central gas CHP': '04 Gas turb. simple cycle, L',
-               'central gas CHP CC': '04 Gas turb. simple cycle, L',
-               'central solid biomass CHP': '09a Wood Chips, Large 50 degree',
-               'central solid biomass CHP CC': '09a Wood Chips, Large 50 degree',
-               'central solid biomass CHP powerboost CC': '09a Wood Chips, Large 50 degree',
+               'OCGT': '52 OCGT - Natural gas', # 2015?
+               'CCGT': '05 Gas turb. CC, steam extract.', # 2015
+               'oil': '50 Diesel engine farm', # 2015?
+               'biomass CHP': '09c Straw, Large, 40 degree', # 2015?
+               'biomass EOP': '09c Straw, Large, 40 degree', # 2015?
+               'biomass HOP': '09c Straw HOP', # 2015?
+               'central coal CHP': '01 Coal CHP', # 2015
+               'central gas CHP': '04 Gas turb. simple cycle, L', # 2015
+               'central gas CHP CC': '04 Gas turb. simple cycle, L', #2015
+               'central solid biomass CHP': '09a Wood Chips, Large 50 degree', # 2015
+               'central solid biomass CHP CC': '09a Wood Chips, Large 50 degree', # 2015
+               'central solid biomass CHP powerboost CC': '09a Wood Chips, Large 50 degree', # 2015
                # 'solid biomass power': '09a Wood Chips extract. plant',
                # 'solid biomass power CC': '09a Wood Chips extract. plant',
-               'central air-sourced heat pump': '40 Comp. hp, airsource 3 MW',
+               'central air-sourced heat pump': '40 Comp. hp, airsource 3 MW', # 2015
                'central ground-sourced heat pump': '40 Absorption heat pump, DH',
-               'central resistive heater': '41 Electric Boilers',
-               'central gas boiler': '44 Natural Gas DH Only',
-               'decentral gas boiler': '202 Natural gas boiler',
-               'direct firing gas': '312.a Direct firing Natural Gas',
+               'central resistive heater': '41 Electric Boilers', # 2015
+               'central gas boiler': '44 Natural Gas DH Only', # 2015
+               'decentral gas boiler': '202 Natural gas boiler', # ?
+               'direct firing gas': '312.a Direct firing Natural Gas', # ?
                'direct firing gas CC': '312.a Direct firing Natural Gas',
-               'direct firing solid fuels': '312.b Direct firing Sold Fuels',
+               'direct firing solid fuels': '312.b Direct firing Sold Fuels', # ?
                'direct firing solid fuels CC': '312.b Direct firing Sold Fuels',
-               'decentral ground-sourced heat pump': '207.7 Ground source existing',
-               'decentral air-sourced heat pump': '207.3 Air to water existing',
+               'decentral ground-sourced heat pump': '207.7 Ground source existing', # ?
+               'decentral air-sourced heat pump': '207.3 Air to water existing', # ?
                # 'decentral resistive heater': '216 Electric heating',
-               'central water tank storage': '140 PTES seasonal',
+               'central water tank storage': '140 PTES seasonal', # 2015
                # 'decentral water tank storage': '142 Small scale hot water tank',
-               'fuel cell': '12 LT-PEMFC CHP',
-               'hydrogen storage underground': '151c Hydrogen Storage - Caverns',
-               'hydrogen storage tank type 1 including compressor': '151a Hydrogen Storage - Tanks',
-               'micro CHP': '219 LT-PEMFC mCHP - natural gas',
-               'biogas' : '81 Biogas, Basic plant, small',
+               'fuel cell': '12 LT-PEMFC CHP', # 2015
+               'hydrogen storage underground': '151c Hydrogen Storage - Caverns', # 2015
+               'hydrogen storage tank type 1 including compressor': '151a Hydrogen Storage - Tanks', # 2015
+               'micro CHP': '219 LT-PEMFC mCHP - natural gas', # 2020
+               'biogas' : '81 Biogas, Basic plant, small', 
                'biogas CC' : '81 Biogas, Basic plant, small',
                'biogas upgrading': '82 Upgrading 3,000 Nm3 per h',
                'battery': '180 Lithium Ion Battery',

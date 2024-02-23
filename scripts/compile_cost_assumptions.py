@@ -1292,7 +1292,7 @@ def add_carbon_capture(data, tech_data):
         data.loc[(tech,"capture_rate"), 'unit'] = 'per unit'
 
 
-    for tech in ['direct air capture', 'cement capture', 'biomass CHP capture']:  
+    for tech in ['direct air capture', 'cement capture', 'biomass CHP capture']:
 
         data.loc[(tech,"investment"), years] = tech_data.loc[(tech,'Specific investment'), years].values[0]*1e6
         data.loc[(tech,"investment"), 'unit'] = 'EUR/(tCO2/h)'

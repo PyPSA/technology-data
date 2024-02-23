@@ -845,7 +845,7 @@ def clean_up_units(tech_data, value_column="", source=""):
 
         if "methanolisation" in tech_data.index:
             tech_data = tech_data.sort_index()
-            tech_data.loc[("methanolisation", "Variable O&M"), "unit"] = "EUR/MWh_MeOH"
+            tech_data.loc[('methanolisation', 'Variable O&M'), "unit"] = "EUR/MWh_MeOH"
     
     tech_data.unit = tech_data.unit.str.replace("\)", "")
     return tech_data
@@ -1292,7 +1292,7 @@ def add_carbon_capture(data, tech_data):
         data.loc[(tech,"capture_rate"), 'unit'] = 'per unit'
 
 
-    for tech in ['direct air capture','cement capture', 'biomass CHP capture']:  
+    for tech in ['direct air capture', 'cement capture', 'biomass CHP capture']:  
 
         data.loc[(tech,"investment"), years] = tech_data.loc[(tech,'Specific investment'), years].values[0]*1e6
         data.loc[(tech,"investment"), 'unit'] = 'EUR/(tCO2/h)'

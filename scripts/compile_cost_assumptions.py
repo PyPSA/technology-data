@@ -2349,5 +2349,3 @@ if __name__ == "__main__":
         costs_tot.loc[:,'value'] = round(costs_tot.value.astype(float),
                                          snakemake.config.get("ndigits", 2))
         costs_tot.to_csv([v for v in snakemake.output if str(year) in v][0])
-
-        

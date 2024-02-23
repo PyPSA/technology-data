@@ -229,17 +229,17 @@ cost_year_2020 = ['solar-utility',
               'Fischer-Tropsch'
               ]
 
-cost_year_2019 = ['direct firing gas',
-                'direct firing gas CC',
-                'direct firing solid fuels',
-                'direct firing solid fuels CC',
-                'industrial heat pump medium temperature',
-                'industrial heat pump high temperature',
-                'electric boiler steam',
-                'gas boiler steam',
-                'solid biomass boiler steam',
-                'solid biomass boiler steam CC',
-                ]
+# cost_year_2019 = ['direct firing gas',
+#                 'direct firing gas CC',
+#                 'direct firing solid fuels',
+#                 'direct firing solid fuels CC',
+#                 'industrial heat pump medium temperature',
+#                 'industrial heat pump high temperature',
+#                 'electric boiler steam',
+#                 'gas boiler steam',
+#                 'solid biomass boiler steam',
+#                 'solid biomass boiler steam CC',
+#                 ]
 
 
 # %% -------- FUNCTIONS ---------------------------------------------------
@@ -299,7 +299,7 @@ def get_data_DEA(tech, data_in, expectation=None):
     usecols += f",{uncrtnty_lookup[tech]}"
 
 
-    if (tech in cost_year_2019) or (tech in cost_year_2020) or ("renewable_fuels" in excel_file):
+    if ((tech in cost_year_2019) or (tech in cost_year_2020) or ("renewable_fuels" in excel_file)):
         skiprows = [0]
     else:
         skiprows = [0,1]
@@ -480,7 +480,8 @@ def get_data_DEA(tech, data_in, expectation=None):
     df_final = df_final.ffill(axis=1)
 
     df_final["source"] = source_dict["DEA"] + ", " + excel_file.replace("inputs/","")
-    if tech in (cost_year_2019+cost_year_2020) and (tech!="electrolysis"):
+    no_drop = ["electrolysis", "direct air capture","cement capture", "biomass CHP capture", "BtL", "biomass boilder steam"]
+    if tech in (cost_year_2019 + cost_year_2020) and (not tech in no_drop):
         for attr in ["investment", "Fixed O&M"]:
             to_drop = df[df.index.str.contains(attr) &
                          ~df.index.str.contains("\(\*total\)")].index
@@ -845,7 +846,7 @@ def clean_up_units(tech_data, value_column="", source=""):
 
         if "methanolisation" in tech_data.index:
             tech_data = tech_data.sort_index()
-            tech_data.loc[('methanolisation', 'Variable O&M'), "unit"] = "EUR/MWh_MeOH"
+            tech_data.loc[("methanolisation", "Variable O&M [EUR/MWh-methanol]"), "unit"] = "EUR/MWh_MeOH"
     
     tech_data.unit = tech_data.unit.str.replace("\)", "")
     return tech_data
@@ -1292,7 +1293,7 @@ def add_carbon_capture(data, tech_data):
         data.loc[(tech,"capture_rate"), 'unit'] = 'per unit'
 
 
-    for tech in ['direct air capture', 'cement capture', 'biomass CHP capture']:
+    for tech in ['cement capture', 'biomass CHP capture']: # 'direct air capture', 
 
         data.loc[(tech,"investment"), years] = tech_data.loc[(tech,'Specific investment'), years].values[0]*1e6
         data.loc[(tech,"investment"), 'unit'] = 'EUR/(tCO2/h)'
@@ -2348,3 +2349,9 @@ if __name__ == "__main__":
         costs_tot.loc[:,'value'] = round(costs_tot.value.astype(float),
                                          snakemake.config.get("ndigits", 2))
         costs_tot.to_csv([v for v in snakemake.output if str(year) in v][0])
+
+
+# minimum two things missing:
+# ('solid biomass boiler steam', 'efficiency') 
+# ('BtL', 'FOM')
+        

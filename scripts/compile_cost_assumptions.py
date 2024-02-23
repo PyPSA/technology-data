@@ -229,17 +229,17 @@ cost_year_2020 = ['solar-utility',
               'Fischer-Tropsch'
               ]
 
-# cost_year_2019 = ['direct firing gas',
-#                 'direct firing gas CC',
-#                 'direct firing solid fuels',
-#                 'direct firing solid fuels CC',
-#                 'industrial heat pump medium temperature',
-#                 'industrial heat pump high temperature',
-#                 'electric boiler steam',
-#                 'gas boiler steam',
-#                 'solid biomass boiler steam',
-#                 'solid biomass boiler steam CC',
-#                 ]
+cost_year_2019 = ['direct firing gas',
+                'direct firing gas CC',
+                'direct firing solid fuels',
+                'direct firing solid fuels CC',
+                'industrial heat pump medium temperature',
+                'industrial heat pump high temperature',
+                'electric boiler steam',
+                'gas boiler steam',
+                'solid biomass boiler steam',
+                'solid biomass boiler steam CC',
+                ]
 
 
 # %% -------- FUNCTIONS ---------------------------------------------------
@@ -480,8 +480,8 @@ def get_data_DEA(tech, data_in, expectation=None):
     df_final = df_final.ffill(axis=1)
 
     df_final["source"] = source_dict["DEA"] + ", " + excel_file.replace("inputs/","")
-    no_drop = ["electrolysis", "direct air capture","cement capture", "biomass CHP capture", "BtL", "biomass boilder steam"]
-    if tech in (cost_year_2019 + cost_year_2020) and (not tech in no_drop):
+    no_drop = ["electrolysis", "direct air capture","cement capture", "biomass CHP capture", "BtL"]
+    if tech in cost_year_2020 and (not tech in no_drop):
         for attr in ["investment", "Fixed O&M"]:
             to_drop = df[df.index.str.contains(attr) &
                          ~df.index.str.contains("\(\*total\)")].index
@@ -2350,8 +2350,4 @@ if __name__ == "__main__":
                                          snakemake.config.get("ndigits", 2))
         costs_tot.to_csv([v for v in snakemake.output if str(year) in v][0])
 
-
-# minimum two things missing:
-# ('solid biomass boiler steam', 'efficiency') 
-# ('BtL', 'FOM')
         

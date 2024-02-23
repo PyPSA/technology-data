@@ -480,8 +480,7 @@ def get_data_DEA(tech, data_in, expectation=None):
     df_final = df_final.ffill(axis=1)
 
     df_final["source"] = source_dict["DEA"] + ", " + excel_file.replace("inputs/","")
-    no_drop = ["electrolysis", "direct air capture","cement capture", "biomass CHP capture", "BtL"]
-    if tech in cost_year_2020 and (not tech in no_drop):
+    if tech in cost_year_2020 and (not ("for_carbon_capture_transport_storage" in excel_file)) and (not ("renewable_fuels" in excel_file)):
         for attr in ["investment", "Fixed O&M"]:
             to_drop = df[df.index.str.contains(attr) &
                          ~df.index.str.contains("\(\*total\)")].index
@@ -846,7 +845,7 @@ def clean_up_units(tech_data, value_column="", source=""):
 
         if "methanolisation" in tech_data.index:
             tech_data = tech_data.sort_index()
-            tech_data.loc[("methanolisation", "Variable O&M [EUR/MWh-methanol]"), "unit"] = "EUR/MWh_MeOH"
+            tech_data.loc[("methanolisation", "Variable O&M"), "unit"] = "EUR/MWh_MeOH"
     
     tech_data.unit = tech_data.unit.str.replace("\)", "")
     return tech_data

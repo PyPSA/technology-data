@@ -65,70 +65,70 @@ source_dict = {
                 }
 
 # [DEA-sheet-names]
-sheet_names = {'onwind': '20 Onshore turbines', # 2015dc
-               'offwind': '21 Offshore turbines', # 2020dc
-               'solar-utility': '22 Utility-scale PV', #2020dc
-               'solar-utility single-axis tracking': '22 Utility-scale PV tracker', # 2020
-               'solar-rooftop residential': '22 Rooftop PV residential', # 2020
-               'solar-rooftop commercial': '22 Rooftop PV commercial', # 2020
-               'OCGT': '52 OCGT - Natural gas', # 2015dc
-               'CCGT': '05 Gas turb. CC, steam extract.', # 2015dc
-               'oil': '50 Diesel engine farm', # 2015dc
-               'biomass CHP': '09c Straw, Large, 40 degree', # 2015
-               'biomass EOP': '09c Straw, Large, 40 degree', # 2015
-               'biomass HOP': '09c Straw HOP', # 2015
-               'central coal CHP': '01 Coal CHP', # 2015
-               'central gas CHP': '04 Gas turb. simple cycle, L', # 2015
-               'central gas CHP CC': '04 Gas turb. simple cycle, L', # 2015
-               'central solid biomass CHP': '09a Wood Chips, Large 50 degree', # 2015
-               'central solid biomass CHP CC': '09a Wood Chips, Large 50 degree', # 2015
-               'central solid biomass CHP powerboost CC': '09a Wood Chips, Large 50 degree', # 2015
+sheet_names = {'onwind': '20 Onshore turbines',
+               'offwind': '21 Offshore turbines', 
+               'solar-utility': '22 Utility-scale PV',
+               'solar-utility single-axis tracking': '22 Utility-scale PV tracker',
+               'solar-rooftop residential': '22 Rooftop PV residential',
+               'solar-rooftop commercial': '22 Rooftop PV commercial',
+               'OCGT': '52 OCGT - Natural gas',
+               'CCGT': '05 Gas turb. CC, steam extract.',
+               'oil': '50 Diesel engine farm',
+               'biomass CHP': '09c Straw, Large, 40 degree',
+               'biomass EOP': '09c Straw, Large, 40 degree',
+               'biomass HOP': '09c Straw HOP',
+               'central coal CHP': '01 Coal CHP',
+               'central gas CHP': '04 Gas turb. simple cycle, L',
+               'central gas CHP CC': '04 Gas turb. simple cycle, L',
+               'central solid biomass CHP': '09a Wood Chips, Large 50 degree',
+               'central solid biomass CHP CC': '09a Wood Chips, Large 50 degree',
+               'central solid biomass CHP powerboost CC': '09a Wood Chips, Large 50 degree',
                # 'solid biomass power': '09a Wood Chips extract. plant',
                # 'solid biomass power CC': '09a Wood Chips extract. plant',
-               'central air-sourced heat pump': '40 Comp. hp, airsource 3 MW', # 2015
-               'central ground-sourced heat pump': '40 Absorption heat pump, DH', # 2015
-               'central resistive heater': '41 Electric Boilers', # 2015
-               'central gas boiler': '44 Natural Gas DH Only', # 2015
-               'decentral gas boiler': '202 Natural gas boiler', # 2015
-               'direct firing gas': '312.a Direct firing Natural Gas', # 2019dc
-               'direct firing gas CC': '312.a Direct firing Natural Gas', # 2019dc
-               'direct firing solid fuels': '312.b Direct firing Sold Fuels', # 2019dc
-               'direct firing solid fuels CC': '312.b Direct firing Sold Fuels', # 2019dc
-               'decentral ground-sourced heat pump': '207.7 Ground source existing', # 2015
-               'decentral air-sourced heat pump': '207.3 Air to water existing', # 2015dc
+               'central air-sourced heat pump': '40 Comp. hp, airsource 3 MW',
+               'central ground-sourced heat pump': '40 Absorption heat pump, DH',
+               'central resistive heater': '41 Electric Boilers',
+               'central gas boiler': '44 Natural Gas DH Only',
+               'decentral gas boiler': '202 Natural gas boiler',
+               'direct firing gas': '312.a Direct firing Natural Gas',
+               'direct firing gas CC': '312.a Direct firing Natural Gas',
+               'direct firing solid fuels': '312.b Direct firing Sold Fuels',
+               'direct firing solid fuels CC': '312.b Direct firing Sold Fuels',
+               'decentral ground-sourced heat pump': '207.7 Ground source existing',
+               'decentral air-sourced heat pump': '207.3 Air to water existing',
                # 'decentral resistive heater': '216 Electric heating',
-               'central water tank storage': '140 PTES seasonal', # 2015
+               'central water tank storage': '140 PTES seasonal',
                # 'decentral water tank storage': '142 Small scale hot water tank',
-               'fuel cell': '12 LT-PEMFC CHP', # 2015
-               'hydrogen storage underground': '151c Hydrogen Storage - Caverns', # 2015dc
-               'hydrogen storage tank type 1 including compressor': '151a Hydrogen Storage - Tanks', # 2015dc
-               'micro CHP': '219 LT-PEMFC mCHP - natural gas', # 2015dc
-               'biogas' : '81 Biogas, Basic plant, small',  # 2020dc
-               'biogas CC' : '81 Biogas, Basic plant, small', # 2020dc
-               'biogas upgrading': '82 Upgrading 3,000 Nm3 per h', # 2020dc
-               'battery': '180 Lithium Ion Battery', # 2015
-               'industrial heat pump medium temperature': '302.a High temp. hp Up to 125 C', # 2019dcd
-               'industrial heat pump high temperature': '302.b High temp. hp Up to 150', # 2019dc
-               'electric boiler steam': '310.1 Electric boiler steam  ', # 2019dc
-               'gas boiler steam': '311.1c Steam boiler Gas', # 2019dc
-               'solid biomass boiler steam': '311.1e Steam boiler Wood', # 2019dc
-               'solid biomass boiler steam CC': '311.1e Steam boiler Wood', # 2019dc
-               'biomass boiler': '204 Biomass boiler, automatic', # <2018
-               'electrolysis': '86 AEC 100 MW', # 2020dc
-               'direct air capture': '403.a Direct air capture', # 2020dc
-               'biomass CHP capture': '401.a Post comb - small CHP',  # 2020dc
-               'cement capture': '401.c Post comb - Cement kiln', # 2020dc
-               'BioSNG': '84 Gasif. CFB, Bio-SNG', # 2020dc
-               'BtL': '85 Gasif. Ent. Flow FT, liq fu ', # 2020dc
-               'biomass-to-methanol': '97 Methanol from biomass gasif.', # 2020dc
-               'biogas plus hydrogen': '99 SNG from methan. of biogas', # 2020dc
-               'methanolisation': '98 Methanol from hydrogen', # 2020dc
-               'Fischer-Tropsch': '102 Hydrogen to Jet', # 2020dc
-               'central hydrogen CHP': '12 LT-PEMFC CHP', # 2015
-               'Haber-Bosch': '103 Hydrogen to Ammonia', # 2015dc
-               'air separation unit': '103 Hydrogen to Ammonia', # 2015dc
-               'waste CHP': '08 WtE CHP, Large, 50 degree', # 2015
-               'waste CHP CC': '08 WtE CHP, Large, 50 degree', # 2015
+               'fuel cell': '12 LT-PEMFC CHP',
+               'hydrogen storage underground': '151c Hydrogen Storage - Caverns',
+               'hydrogen storage tank type 1 including compressor': '151a Hydrogen Storage - Tanks',
+               'micro CHP': '219 LT-PEMFC mCHP - natural gas',
+               'biogas' : '81 Biogas, Basic plant, small',
+               'biogas CC' : '81 Biogas, Basic plant, small',
+               'biogas upgrading': '82 Upgrading 3,000 Nm3 per h',
+               'battery': '180 Lithium Ion Battery',
+               'industrial heat pump medium temperature': '302.a High temp. hp Up to 125 C',
+               'industrial heat pump high temperature': '302.b High temp. hp Up to 150',
+               'electric boiler steam': '310.1 Electric boiler steam  ',
+               'gas boiler steam': '311.1c Steam boiler Gas',
+               'solid biomass boiler steam': '311.1e Steam boiler Wood',
+               'solid biomass boiler steam CC': '311.1e Steam boiler Wood',
+               'biomass boiler': '204 Biomass boiler, automatic',
+               'electrolysis': '86 AEC 100 MW',
+               'direct air capture': '403.a Direct air capture',
+               'biomass CHP capture': '401.a Post comb - small CHP',
+               'cement capture': '401.c Post comb - Cement kiln',
+               'BioSNG': '84 Gasif. CFB, Bio-SNG',
+               'BtL': '85 Gasif. Ent. Flow FT, liq fu ',
+               'biomass-to-methanol': '97 Methanol from biomass gasif.',
+               'biogas plus hydrogen': '99 SNG from methan. of biogas',
+               'methanolisation': '98 Methanol from hydrogen',
+               'Fischer-Tropsch': '102 Hydrogen to Jet',
+               'central hydrogen CHP': '12 LT-PEMFC CHP',
+               'Haber-Bosch': '103 Hydrogen to Ammonia',
+               'air separation unit': '103 Hydrogen to Ammonia',
+               'waste CHP': '08 WtE CHP, Large, 50 degree',
+               'waste CHP CC': '08 WtE CHP, Large, 50 degree',
                # 'electricity distribution rural': '101 2 el distri Rural',
                # 'electricity distribution urban': '101 4 el distri  city',
                # 'gas distribution rural': '102 7 gas  Rural',
@@ -2210,9 +2210,13 @@ if __name__ == "__main__":
     data = add_carbon_capture(data, tech_data)
     
     # adjust for inflation
-    data["currency_year"] = [2015 if x not in (cost_year_2020 or cost_year_2019) else 2019 if x in cost_year_2019 else 2020 for x in
-                             data.index.get_level_values(0)]
-    
+    for x in data.index.get_level_values("technology"):
+        if x in cost_year_2020:
+            data.at[x, "currency_year"] = 2020
+        elif x in cost_year_2019:
+            data.at[x, "currency_year"] = 2019
+        else:
+            data.at[x, "currency_year"] = 2015
 
     # %% (2) -- get data from other sources which need formatting -----------------
     # (a)  ---------- get old pypsa costs ---------------------------------------

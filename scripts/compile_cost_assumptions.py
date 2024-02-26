@@ -66,7 +66,7 @@ source_dict = {
 
 # [DEA-sheet-names]
 sheet_names = {'onwind': '20 Onshore turbines',
-               'offwind': '21 Offshore turbines', 
+               'offwind': '21 Offshore turbines',
                'solar-utility': '22 Utility-scale PV',
                'solar-utility single-axis tracking': '22 Utility-scale PV tracker',
                'solar-rooftop residential': '22 Rooftop PV residential',
@@ -114,7 +114,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'solid biomass boiler steam': '311.1e Steam boiler Wood',
                'solid biomass boiler steam CC': '311.1e Steam boiler Wood',
                'biomass boiler': '204 Biomass boiler, automatic',
-               'electrolysis': '86 AEC 100 MW',
+               'electrolysis': '86 AEC 100 MW', 
                'direct air capture': '403.a Direct air capture',
                'biomass CHP capture': '401.a Post comb - small CHP',
                'cement capture': '401.c Post comb - Cement kiln',

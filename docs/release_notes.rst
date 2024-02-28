@@ -5,13 +5,18 @@ Release Notes
 .. Upcoming Release
 .. ================
 
+
+Technology-Data 0.8.1 (28 February 2024)
+========================================
+* adjust currency year in some DEA input data
+
 Technology-Data 0.8.0 (19 February 2024)
 =======================================
 
 * Update currency year from 2015 to 2020. Add a currency year for each data
   input. The inflation rate is taken `Eurostat HICP - annual data (average index
   and rate of change)
-  <https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/dataflow/ESTAT/prc_hicp_aind/1.0?references=descendants&detail=referencepartial&format=sdmx_2.1_generic&compressed=true>`_. 
+  <https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/dataflow/ESTAT/prc_hicp_aind/1.0?references=descendants&detail=referencepartial&format=sdmx_2.1_generic&compressed=true>`_.
 
 Technology-Data 0.7.0 (7 February 2024)
 =======================================

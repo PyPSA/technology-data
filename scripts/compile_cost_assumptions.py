@@ -209,12 +209,38 @@ uncrtnty_lookup = {'onwind': 'J:K',
 # since February 2022 DEA uses a new format for the technology data
 # all excel sheets of updated technologies have a different layout and are
 # given in EUR_2020 money (instead of EUR_2015)
-new_format = ['solar-utility',
+cost_year_2020 = ['solar-utility',
               'solar-utility single-axis tracking',
               'solar-rooftop residential',
               'solar-rooftop commercial',
               'offwind',
-              'electrolysis']
+              'electrolysis',
+              'biogas',
+              'biogas CC',
+              'biogas upgrading',
+              'direct air capture',
+              'biomass CHP capture',
+              'cement capture',
+              'BioSNG',
+              'BtL',
+              'biomass-to-methanol',
+              'biogas plus hydrogen',
+              'methanolisation',
+              'Fischer-Tropsch'
+              ]
+
+cost_year_2019 = ['direct firing gas',
+                'direct firing gas CC',
+                'direct firing solid fuels',
+                'direct firing solid fuels CC',
+                'industrial heat pump medium temperature',
+                'industrial heat pump high temperature',
+                'electric boiler steam',
+                'gas boiler steam',
+                'solid biomass boiler steam',
+                'solid biomass boiler steam CC',
+                ]
+
 
 # %% -------- FUNCTIONS ---------------------------------------------------
 
@@ -273,7 +299,7 @@ def get_data_DEA(tech, data_in, expectation=None):
     usecols += f",{uncrtnty_lookup[tech]}"
 
 
-    if (tech in new_format) or ("renewable_fuels" in excel_file):
+    if ((tech in cost_year_2019) or (tech in cost_year_2020) or ("renewable_fuels" in excel_file)):
         skiprows = [0]
     else:
         skiprows = [0,1]
@@ -454,7 +480,7 @@ def get_data_DEA(tech, data_in, expectation=None):
     df_final = df_final.ffill(axis=1)
 
     df_final["source"] = source_dict["DEA"] + ", " + excel_file.replace("inputs/","")
-    if tech in new_format and (tech!="electrolysis"):
+    if tech in cost_year_2020 and (not ("for_carbon_capture_transport_storage" in excel_file)) and (not ("renewable_fuels" in excel_file)):
         for attr in ["investment", "Fixed O&M"]:
             to_drop = df[df.index.str.contains(attr) &
                          ~df.index.str.contains("\(\*total\)")].index
@@ -2184,9 +2210,13 @@ if __name__ == "__main__":
     data = add_carbon_capture(data, tech_data)
     
     # adjust for inflation
-    data["currency_year"] = [2015 if x not in new_format else 2020 for x in
-                             data.index.get_level_values(0)]
-    
+    for x in data.index.get_level_values("technology"):
+        if x in cost_year_2020:
+            data.at[x, "currency_year"] = 2020
+        elif x in cost_year_2019:
+            data.at[x, "currency_year"] = 2019
+        else:
+            data.at[x, "currency_year"] = 2015
 
     # %% (2) -- get data from other sources which need formatting -----------------
     # (a)  ---------- get old pypsa costs ---------------------------------------

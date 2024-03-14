@@ -2,8 +2,30 @@
 Release Notes
 ##########################################
 
-Upcoming Release
-================
+.. Upcoming Release
+.. ================
+
+
+Technology-Data 0.8.1 (28 February 2024)
+========================================
+* adjust currency year in some DEA input data
+
+Technology-Data 0.8.0 (19 February 2024)
+=======================================
+
+* Update currency year from 2015 to 2020. Add a currency year for each data
+  input. The inflation rate is taken `Eurostat HICP - annual data (average index
+  and rate of change)
+  <https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/dataflow/ESTAT/prc_hicp_aind/1.0?references=descendants&detail=referencepartial&format=sdmx_2.1_generic&compressed=true>`_.
+
+Technology-Data 0.7.0 (7 February 2024)
+=======================================
+
+* Updated to latest release of DEA renewable fuels (released January 2024). With the following changes
+  * The following technologies have updated assumptions: ['BioSNG', 'BtL', 'Fischer-Tropsch', 'Haber-Bosch', 'air separation unit', 'biogas', 'biogas CC', 'biogas plus hydrogen', 'biogas upgrading', 'biomass-to-methanol', 'electrobiofuels', 'electrolysis', 'methanolisation']
+  * biogas upgrading and biogas plant are differentiated in new data set between small and large plant, we assume small plant here
+  * methanol from power changed to methanol from hydrogen, VOM are zero in new data set
+  * CAREFUL: biogas upgrading units changed for VOM and investment from per input to per output units
 
 * Add floating wind cost data
 
@@ -29,7 +51,7 @@ Upcoming Release
 
 * Updated source for 'fuel' costs of 'gas', 'uranium', 'coal', and 'lignite' to DIW (2013) data.
 
-* Updated hydrogen pipeline costs based on most recent `EHB report <https://ehb.eu/files/downloads/EHB-2023-20-Nov-FINAL-design.pdf>`_. 
+* Updated hydrogen pipeline costs based on most recent `EHB report <https://ehb.eu/files/downloads/EHB-2023-20-Nov-FINAL-design.pdf>`_.
 
 Technology-Data 0.6.2 (7 August 2023)
 =====================================

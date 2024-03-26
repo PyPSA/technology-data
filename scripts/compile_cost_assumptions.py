@@ -1702,7 +1702,7 @@ def add_egs_data(data):
     """ 
     parameters = ["CO2 intensity", "lifetime", "efficiency residential heat", "efficiency electricity", "FOM"]
     techs = ["geothermal"]
-    multi_i = pd.MultiIndex.from_product([techs, parameters])
+    multi_i = pd.MultiIndex.from_product([techs, parameters], names=["technology", "parameter"])
     geoth_df = pd.DataFrame(index=multi_i, columns=data.columns)
     years = [col for col in data.columns if isinstance(col, int)]
 
@@ -1855,7 +1855,7 @@ def add_SMR_data(data):
     """
     parameters = ["FOM", "investment", "lifetime", "efficiency"]
     techs = ["SMR", "SMR CC"]
-    multi_i = pd.MultiIndex.from_product([techs, parameters])
+    multi_i = pd.MultiIndex.from_product([techs, parameters], names=["technology", "parameter"])
     SMR_df = pd.DataFrame(index=multi_i, columns=data.columns)
 
     # efficiencies per unit in LHV (stays constant 2019 to 2050)
@@ -1912,6 +1912,7 @@ def add_mean_solar_rooftop(data):
     rooftop["source"] = "Calculated. See 'further description'."
     rooftop["further description"] = "Mixed investment costs based on average of 50% 'solar-rooftop commercial' and 50% 'solar-rooftop residential'"
     # add to data
+    rooftop.index.names = data.index.names
     data = pd.concat([data, rooftop])
     # add solar assuming 50% utility and 50% rooftop
     solar = (data.loc[["solar-rooftop", "solar-utility"]][years]).astype(float).groupby(level=1).mean()
@@ -1921,6 +1922,7 @@ def add_mean_solar_rooftop(data):
     solar["further description"] = "Mixed investment costs based on average of 50% 'solar-rooftop' and 50% 'solar-utility'"
     # set multi index
     solar = pd.concat([solar], keys=["solar"])
+    solar.index.names = data.index.names
     return pd.concat([data, solar])
 
 

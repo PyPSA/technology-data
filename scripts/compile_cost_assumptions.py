@@ -2358,6 +2358,8 @@ if __name__ == "__main__":
     data = add_SMR_data(data)
     # add solar rooftop costs by taking the mean of commercial and residential
     data = add_mean_solar_rooftop(data)
+    
+    data.index.names = ["technology", "parameter"]
     # %% (3) ------ add additional sources and save cost as csv ------------------
     # [RTD-target-multiindex-df]
     for year in years:

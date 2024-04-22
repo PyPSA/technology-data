@@ -242,7 +242,7 @@ cost_year_2019 = ['direct firing gas',
                 ]
 
 
-# %% -------- FUNCTIONS ---------------------------------------------------
+# -------- FUNCTIONS ---------------------------------------------------
 
 def get_excel_sheets(excel_files):
     """"
@@ -273,6 +273,102 @@ def get_sheet_location(tech, sheet_names, data_in):
     return None
 
 #
+
+def get_dea_vehicle_data(fn, data):
+    """
+    Get heavy-duty vehicle data from DEA.
+    """
+    sheet_names = ['Diesel L1', 'Diesel L2', 'Diesel L3',
+                   'Diesel B1', 'Diesel B2',
+                   'BEV L1', 'BEV L2', 'BEV L3',
+                   'BEV B1', 'BEV B2',
+                   'FCV L1', 'FCV L2', 'FCV L3',
+                   'FCV B1', 'FCV B2']
+    excel = pd.read_excel(fn,
+                          sheet_name=sheet_names,
+                          index_col=0,
+                          usecols="A:F",
+                          na_values="no data")
+    
+    wished_index = ["Typical vehicle lifetime (years)",
+                      "Typical fuel cell lifetime (years)",
+                      "Typical battery lifetime (years)",
+                      "Upfront vehicle cost (€)",
+                      "-           Cost of battery/Fuelcell",
+                      # "-           Cost of Powertrain",
+                      "Fixed maintenance cost (€/year)",
+                      "Variable maintenance cost (€/km)",
+                      "Motor size (kW)",
+                      ]
+    
+    # clarify DEA names
+    types = {"L1": "Truck Solo max 26 tons",
+             "L2": "Truck Trailer max 56 tons",
+             "L3": "Truck Semi-Trailer max 50 tons",
+             "B1": "Bus city",
+             "B2": "Coach"}
+    
+    for sheet in excel.keys():
+        df = excel[sheet]
+        tech = sheet.split()[0] + " " + types.get(sheet.split()[1], "")
+        df = df.iloc[1:,:].set_axis(df.iloc[0], axis=1)
+        # "Fuel energy - typical load (MJ/km)" 
+        # represents efficiency for average weight vehicle carries during normal
+        # operation, currently assuming mean between urban, regional and long haul
+        assert df.index[27] == 'Fuel energy - typical load (MJ/km)'
+        efficiency = df.iloc[28:31].mean()  
+        df = df[df.index.isin(wished_index)]
+        df.loc["efficiency (MJ/km)"] = efficiency
+        df = df.reindex(columns=pd.Index(years).union(df.columns))
+        df = df.interpolate(axis=1, limit_direction="both")
+        df = df[years]
+        
+        # add column for units
+        df["unit"] = (df.rename(index=lambda x:
+                    x[x.rfind("(")+1: x.rfind(")")]).index.values)
+        df["unit"] = df.unit.str.replace("€", "EUR")
+        # remove units from index
+        df.index = df.index.str.replace(r" \(.*\)","", regex=True) 
+        
+        # convert MJ in kWh -> 1 kWh = 3.6 MJ
+        df_i = df.index[df.unit=="MJ/km"]
+        df.loc[df_i, years] /= 3.6
+        df.loc[df_i, "unit"] = "kWh/km"      
+        
+        # convert FOM in % of investment/year
+        df.loc["Fixed maintenance cost", years] /= (df.loc["Upfront vehicle cost", years]
+                                                    * 100)
+        df.loc["Fixed maintenance cost", "unit"] = "%/year"
+        
+        # clarify costs are per vehicle
+        df.loc["Upfront vehicle cost", "unit"] += "/vehicle"
+        
+        # add source + cost year
+        df["source"] = f"Danish Energy Agency, {fn}"
+        # cost year is 2022 p.12
+        df["currency_year"] = 2022
+        
+        # FOM, VOM,efficiency, lifetime, investment
+        rename = {'Typical vehicle lifetime': "lifetime",
+                  'Upfront vehicle cost': "investment",
+                  'Fixed maintenance cost': "FOM",
+                  'Variable maintenance cost': "VOM",
+                  "-           Cost of battery/Fuelcell": "investment battery"}
+        
+        df = df.rename(index=rename)
+        battery_cols = ["Typical fuel cell lifetime",
+                        "Typical battery lifetime"]
+        if any([col in df.index for col in battery_cols]):
+            breakpoint()
+            
+        to_keep = ['Motor size', 'lifetime', "FOM", "VOM", "efficiency"]
+        df = df[df.index.isin(to_keep)]
+        
+        df = pd.concat([df], keys=[tech], names=["technology", "parameter"])
+        
+        data = pd.concat([data, df])
+        
+        
 def get_data_DEA(tech, data_in, expectation=None):
     """
     interpolate cost for a given technology from DEA database sheet
@@ -2171,7 +2267,7 @@ if __name__ == "__main__":
     years = snakemake.config['years']
     inflation_rate = prepare_inflation_rate(snakemake.input.inflation_rate)
     
-  
+    # p.77 Figure 51 share of vehicle-km driven by truck
 
     # (1) DEA data
     # (a)-------- get data from DEA excel sheets ----------------------------------

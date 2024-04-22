@@ -351,11 +351,12 @@ def get_dea_vehicle_data(fn, data):
                   'Upfront vehicle cost': "investment",
                   'Fixed maintenance cost': "FOM",
                   'Variable maintenance cost': "VOM",
-                  "-           Cost of battery/Fuelcell": "investment battery"}
+                  }
         
         df = df.rename(index=rename)
             
-        to_keep = ['Motor size', 'lifetime', "FOM", "VOM", "efficiency"]
+        to_keep = ['Motor size', 'lifetime', "FOM", "VOM", "efficiency",
+                   "investment"]
         df = df[df.index.isin(to_keep)]
         
         df = pd.concat([df], keys=[tech], names=["technology", "parameter"])

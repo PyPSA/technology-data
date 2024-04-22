@@ -291,11 +291,7 @@ def get_dea_vehicle_data(fn, data):
                           na_values="no data")
     
     wished_index = ["Typical vehicle lifetime (years)",
-                      "Typical fuel cell lifetime (years)",
-                      "Typical battery lifetime (years)",
                       "Upfront vehicle cost (€)",
-                      "-           Cost of battery/Fuelcell",
-                      # "-           Cost of Powertrain",
                       "Fixed maintenance cost (€/year)",
                       "Variable maintenance cost (€/km)",
                       "Motor size (kW)",
@@ -347,6 +343,8 @@ def get_dea_vehicle_data(fn, data):
         df["source"] = f"Danish Energy Agency, {fn}"
         # cost year is 2022 p.12
         df["currency_year"] = 2022
+        # add sheet name
+        df['further description'] = sheet
         
         # FOM, VOM,efficiency, lifetime, investment
         rename = {'Typical vehicle lifetime': "lifetime",
@@ -356,10 +354,6 @@ def get_dea_vehicle_data(fn, data):
                   "-           Cost of battery/Fuelcell": "investment battery"}
         
         df = df.rename(index=rename)
-        battery_cols = ["Typical fuel cell lifetime",
-                        "Typical battery lifetime"]
-        if any([col in df.index for col in battery_cols]):
-            breakpoint()
             
         to_keep = ['Motor size', 'lifetime', "FOM", "VOM", "efficiency"]
         df = df[df.index.isin(to_keep)]
@@ -367,6 +361,8 @@ def get_dea_vehicle_data(fn, data):
         df = pd.concat([df], keys=[tech], names=["technology", "parameter"])
         
         data = pd.concat([data, df])
+        
+    return data
         
         
 def get_data_DEA(tech, data_in, expectation=None):
@@ -2304,7 +2300,7 @@ if __name__ == "__main__":
     data = add_gas_storage(data)
     # add carbon capture
     data = add_carbon_capture(data, tech_data)
-    
+
     # adjust for inflation
     for x in data.index.get_level_values("technology"):
         if x in cost_year_2020:
@@ -2313,6 +2309,11 @@ if __name__ == "__main__":
             data.at[x, "currency_year"] = 2019
         else:
             data.at[x, "currency_year"] = 2015
+    
+    # add heavy duty assumptions, cost year is 2022
+    data = get_dea_vehicle_data(snakemake.input.dea_vehicles, data) 
+    
+    
 
     # %% (2) -- get data from other sources which need formatting -----------------
     # (a)  ---------- get old pypsa costs ---------------------------------------

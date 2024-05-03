@@ -5,6 +5,7 @@ Release Notes
 .. Upcoming Release
 .. ================
 
+* add heavy duty and shipping technology assumptions from DEA
 
 Technology-Data 0.8.1 (28 February 2024)
 ========================================

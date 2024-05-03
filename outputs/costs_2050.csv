@@ -133,6 +133,24 @@ Concrete-discharger,lifetime,35.0,years,"Viswanathan_2022, p.107 (p.129)","{'car
 Concrete-store,FOM,0.3308,%/year,"Viswanathan_2022, p 104 (p.126)","{'carrier': ['concrete'], 'technology_type': ['store'], 'type': ['thermal'], 'note': ['not provided calculated as for hydrogen']}",2020.0
 Concrete-store,investment,24044.2324,EUR/MWh,"Viswanathan_2022, p.98 (p.120)","{'carrier': ['concrete'], 'technology_type': ['store'], 'type': ['thermal'], 'note': ['SB and BOS 0.85 of 2021 value']}",2020.0
 Concrete-store,lifetime,35.0,years,"Viswanathan_2022, p.107 (p.129)","{'carrier': ['concrete'], 'technology_type': ['store'], 'type': ['thermal'], 'note': ['NULL']}",2020.0
+"Container feeder, ammonia",efficiency,0.7754,MWh/km,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container feeder, ammonia",2023.0
+"Container feeder, ammonia",investment,34966212.0251,EUR,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container feeder, ammonia",2023.0
+"Container feeder, ammonia",lifetime,30.0,years,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container feeder, ammonia",2023.0
+"Container feeder, diesel",efficiency,0.7718,MWh/km,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container feeder, diesel",2023.0
+"Container feeder, diesel",investment,34966212.0251,EUR,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container feeder, diesel",2023.0
+"Container feeder, diesel",lifetime,30.0,years,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container feeder, diesel",2023.0
+"Container feeder, methanol",efficiency,0.7711,MWh/km,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container feeder, methanol",2023.0
+"Container feeder, methanol",investment,34966212.0251,EUR,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container feeder, methanol",2023.0
+"Container feeder, methanol",lifetime,30.0,years,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container feeder, methanol",2023.0
+"Container, ammonia",efficiency,1.7094,MWh/km,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container, ammonia",2023.0
+"Container, ammonia",investment,119652947.2851,EUR,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container, ammonia",2023.0
+"Container, ammonia",lifetime,32.0,years,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container, ammonia",2023.0
+"Container, diesel",efficiency,1.6399,MWh/km,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container, diesel",2023.0
+"Container, diesel",investment,119652947.2851,EUR,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container, diesel",2023.0
+"Container, diesel",lifetime,33.0,years,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container, diesel",2023.0
+"Container, methanol",efficiency,1.7001,MWh/km,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container, methanol",2023.0
+"Container, methanol",investment,119652947.2851,EUR,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container, methanol",2023.0
+"Container, methanol",lifetime,33.0,years,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container, methanol",2023.0
 Diesel Bus city,FOM,0.0004,%/year,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel B1,2022.0
 Diesel Bus city,Motor size,250.0,kW,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel B1,2022.0
 Diesel Bus city,VOM,0.1068,EUR/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel B1,2022.0
@@ -475,6 +493,15 @@ Steam methane reforming,FOM,3.0,%/year,"International Energy Agency (2015): Tech
 Steam methane reforming,investment,497454.611,EUR/MW_H2,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",Large scale SMR facility (150-300 MW). Currency conversion 1.17 USD = 1 EUR.,2015.0
 Steam methane reforming,lifetime,30.0,years,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",Large scale SMR facility (150-300 MW).,2015.0
 Steam methane reforming,methane-input,1.483,MWh_CH4/MWh_H2,"Keipi et al (2018): Economic analysis of hydrogen production by methane thermal decomposition (https://doi.org/10.1016/j.enconman.2017.12.063), table 2.","Large scale SMR plant producing 2.5 kg/s H2 output (assuming 33.3333 MWh/t H2 LHV), with 6.9 kg/s CH4 input (feedstock) and 2 kg/s CH4 input (energy). Neglecting water consumption.",
+"Tank&bulk, diesel",efficiency,0.462,MWh/km,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Tank&bulk, diesel",2023.0
+"Tank&bulk, diesel",investment,35129312.4041,EUR,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Tank&bulk, diesel",2023.0
+"Tank&bulk, diesel",lifetime,25.0,years,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Tank&bulk, diesel",2023.0
+"Tank&bulk, methanol",efficiency,0.4695,MWh/km,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Tank&bulk, methanol",2023.0
+"Tank&bulk, methanol",investment,35129312.4041,EUR,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Tank&bulk, methanol",2023.0
+"Tank&bulk, methanol",lifetime,25.0,years,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Tank&bulk, methanol",2023.0
+"Tankbulk, ammonia",efficiency,0.471,MWh/km,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Tankbulk, ammonia",2023.0
+"Tankbulk, ammonia",investment,35129312.4041,EUR,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Tankbulk, ammonia",2023.0
+"Tankbulk, ammonia",lifetime,25.0,years,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Tankbulk, ammonia",2023.0
 Vanadium-Redox-Flow-bicharger,FOM,2.4395,%/year,"Viswanathan_2022, p.28 (p.50)","{'carrier': ['elec', 'vanadium', 'elec'], 'technology_type': ['bicharger'], 'type': ['electrochemical'], 'note': ['30% assumed of power components every 10 years']}",2020.0
 Vanadium-Redox-Flow-bicharger,efficiency,0.8062,per unit,"Viswanathan_2022, p.42 (p.64)","{'carrier': ['elec', 'vanadium', 'elec'], 'technology_type': ['bicharger'], 'type': ['electrochemical'], 'note': ['AC-AC efficiency at transformer level 0.65^0.5']}",2020.0
 Vanadium-Redox-Flow-bicharger,investment,129023.0526,EUR/MW,"Viswanathan_2022, p.42 (p.64)","{'carrier': ['elec', 'vanadium', 'elec'], 'technology_type': ['bicharger'], 'type': ['electrochemical'], 'note': ['Power Equipment']}",2020.0

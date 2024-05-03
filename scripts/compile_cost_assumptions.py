@@ -274,6 +274,104 @@ def get_sheet_location(tech, sheet_names, data_in):
 
 #
 
+def get_dea_maritime_data(fn, data):
+    """
+    Get technology data for shipping from DEA.
+    """
+    sheet_names = ['Container feeder, diesel',
+                   'Container feeder, methanol',
+                   'Container feeder, ammonia',
+                   'Container, diesel',
+                   'Container, methanol',
+                   'Container, ammonia',
+                   'Tank&bulk, diesel',
+                   'Tank&bulk, methanol',
+                   'Tankbulk, ammonia',    
+        ]
+    excel = pd.read_excel(fn,
+                          sheet_name=sheet_names,
+                          index_col=[0,1],
+                          usecols="A:F",
+                          na_values="N/A")
+    
+    wished_index = ["Typical ship lifetime (years)",
+                      "Upfront ship cost (mill. €)",
+                      "Fixed O&M (€/year)",
+                      "Variable O&M (€/nm)",
+                      ]
+    
+    
+    for sheet in excel.keys():
+        df = excel[sheet]
+        df = df.iloc[1:,:].set_axis(df.iloc[0], axis=1)
+        
+        assert "Typical operational speed" in df.index.get_level_values(1)[22]
+        # in unit GJ/nm
+        efficiency = df.iloc[22]
+        
+        df = df[df.index.get_level_values(1).isin(wished_index)]
+        df = df.droplevel(level=0)
+        df.loc["efficiency (GJ/nm)"] = efficiency
+        df = df.reindex(columns=pd.Index(years).union(df.columns))
+        df = df.astype(float)
+        df = df.interpolate(axis=1, limit_direction="both")
+        df = df[years]
+        
+        # dropna
+        df = df.dropna(how="all", axis=0)
+        # add column for units
+        df["unit"] = (df.rename(index=lambda x:
+                    x[x.rfind("(")+1: x.rfind(")")]).index.values)
+        df["unit"] = df.unit.str.replace("€", "EUR")
+        # remove units from index
+        df.index = df.index.str.replace(r" \(.*\)","", regex=True)
+        
+        # convert million Euro -> Euro
+        df_i = df[df.unit == 'mill. EUR'].index
+        df.loc[df_i, years] *= 1e6
+        df.loc[df_i, "unit"] = "EUR"
+        
+        # convert FOM in % of investment/year
+        if 'Fixed O&M' in df.index:
+            df.loc['Fixed O&M', years] /= (df.loc['Upfront ship cost', years]
+                                                        * 100)
+            df.loc['Fixed O&M', "unit"] = "%/year"
+        
+        # convert nm in km
+        # 1 Nautical Mile (nm) = 1.852 Kilometers (km)
+        df_i = df[df.unit.str.contains('/nm')].index
+        df.loc[df_i, years] /= 1.852
+        df.loc[df_i, "unit"] = df.loc[df_i, "unit"].str.replace("/nm", "/km")
+        
+        # 1 GJ = 1/3600 * 1e9 Wh = 1/3600 * 1e3 MWh
+        df_i = df[df.unit.str.contains('GJ')].index
+        df.loc[df_i, years] *= 1e3/3600
+        df.loc[df_i, "unit"] = df.loc[df_i, "unit"].str.replace("GJ", "MWh")
+        
+        # add source + cost year
+        df["source"] = f"Danish Energy Agency, {fn}"
+        # cost year is 2023 p.10
+        df["currency_year"] = 2023
+        # add sheet name
+        df['further description'] = sheet
+        
+        # FOM, VOM,efficiency, lifetime, investment
+        rename = {'Typical ship lifetime': "lifetime",
+                  'Upfront ship cost': "investment",
+                  'Fixed O&M': "FOM",
+                  'Variable O&M': "VOM",
+                  }
+        
+        df = df.rename(index=rename)
+                    
+        df = pd.concat([df], keys=[sheet], names=["technology", "parameter"])
+        
+        data = pd.concat([data, df])
+        
+    return data
+        
+        
+    
 def get_dea_vehicle_data(fn, data):
     """
     Get heavy-duty vehicle data from DEA.
@@ -2314,7 +2412,8 @@ if __name__ == "__main__":
     # add heavy duty assumptions, cost year is 2022
     data = get_dea_vehicle_data(snakemake.input.dea_vehicles, data) 
     
-    
+    # add shipping data
+    data = get_dea_maritime_data(snakemake.input.dea_ship, data)
 
     # %% (2) -- get data from other sources which need formatting -----------------
     # (a)  ---------- get old pypsa costs ---------------------------------------

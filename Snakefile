@@ -17,7 +17,7 @@ rule compile_cost_assumptions:
         dea_generation = "inputs/technology_data_for_el_and_dh.xlsx",
         dea_heating = "inputs/technologydatafor_heating_installations_marts_2018.xlsx",
         dea_industrial = "inputs/technology_data_for_industrial_process_heat.xlsx",
-        dea_ship_avia = "inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx",
+        dea_ship = "inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx",
         dea_ccts = "inputs/technology_data_for_carbon_capture_transport_storage.xlsx",
         pnnl_energy_storage = "inputs/pnnl-energy-storage-database.xlsx",
         manual_input = "inputs/manual_input.csv"

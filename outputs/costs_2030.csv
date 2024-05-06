@@ -839,8 +839,8 @@ offwind-float,FOM,1.15,%/year,https://doi.org/10.1016/j.adapen.2021.100067,,2020
 offwind-float,investment,2350.0,EUR/kWel,https://doi.org/10.1016/j.adapen.2021.100067,,2020.0
 offwind-float,lifetime,20.0,years,C. Maienza 2020 A life cycle cost model for floating offshore wind farms,,2020.0
 offwind-float-connection-submarine,investment,2118.5597,EUR/MW/km,DTU report based on Fig 34 of https://ec.europa.eu/energy/sites/ener/files/documents/2014_nsog_report.pdf,,2014.0
-offwind-float-connection-underground,investment,1039.4778,EUR/MW/km,Haertel 2017; average + 13% learning reduction,,2017.0
-offwind-float-station,investment,415.7911,EUR/kWel,Haertel 2017; assuming one onshore and one offshore node + 13% learning reduction,,2017.0
+offwind-float-connection-underground,investment,1039.4778,EUR/MW/km,Haertel 2017, average + 13% learning reduction,2017.0
+offwind-float-station,investment,415.7911,EUR/kWel,Haertel 2017, assuming one onshore and one offshore node + 13% learning reduction,2017.0
 oil,CO2 intensity,0.2571,tCO2/MWh_th,Stoichiometric calculation with 44 GJ/t diesel and -CH2- approximation of diesel,,
 oil,FOM,2.463,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",50 Diesel engine farm:  Fixed O&M,2015.0
 oil,VOM,6.3493,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",50 Diesel engine farm:  Variable O&M,2015.0

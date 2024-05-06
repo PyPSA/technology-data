@@ -715,7 +715,7 @@ electrobiofuels,investment,512440.2631,EUR/kW_th,combination of BtL and electrof
 electrolysis,FOM,4.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Fixed O&M ,2020.0
 electrolysis,efficiency,0.5874,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Hydrogen Output,2020.0
 electrolysis,efficiency-heat,0.264,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:   - hereof recoverable for district heating,2020.0
-electrolysis,investment,875.0,EUR/kW_e,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Specific investment,2020.0
+electrolysis,investment,1672.8244,EUR/kW_e,private communications; IEA https://iea.blob.core.windows.net/assets/9e0c82d4-06d2-496b-9542-f184ba803645/TheRoleofE-fuelsinDecarbonisingTransport.pdf,,2023.0
 electrolysis,lifetime,25.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Technical lifetime,2020.0
 fuel cell,FOM,5.0,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",12 LT-PEMFC CHP:  Fixed O&M,2015.0
 fuel cell,c_b,1.25,50oC/100oC,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",12 LT-PEMFC CHP:  Cb coefficient,2015.0

@@ -344,6 +344,8 @@ def get_data_DEA(tech, data_in, expectation=None):
     excel.loc[swap, "2050-optimist"] = tmp
 
     if expectation:
+        # drop duplicates
+        excel = excel[~excel.index.duplicated()]
         excel.loc[:,2050] = excel.loc[:,f"2050-{expectation}"].combine_first(excel.loc[:,2050])
     excel.drop(columns=uncertainty_columns, inplace=True)
 
@@ -1039,6 +1041,8 @@ def order_data(tech_data):
                 clean_df[tech] = pd.concat([clean_df[tech], fixed])
                 fom = pd.DataFrame(columns=fixed.columns)
                 if not any(fixed.unit.str.contains('% of specific investment/year')):
+                    investment[investment==0] = float('nan')
+                    investment = investment.ffill(axis=1).fillna(0)
                     fom[years] = fixed[years]/investment[years].values*100
                 else:
                     fom[years] = fixed[years]

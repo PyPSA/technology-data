@@ -3,10 +3,13 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
-  - python>=3.9,<3.11
+  - python>=3.8
   - pip
-  - snakemake-minimal
-  - pandas>=1.1.0
+  # for debugging
+  - pypsa>=0.26.1
+  # for running the package
+  - snakemake-minimal>=8.5
+  - pandas>=2.1
   - numpy
   - beautifulsoup4
   - xlrd

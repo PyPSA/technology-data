@@ -339,7 +339,7 @@ lignite,efficiency,2020,0.33,p.u.,2023,"Lazard's levelized cost of energy analys
 lignite,fuel,2020,2.9,EUR/MWh_th,2010,"DIW (2013): Current and propsective costs of electricity generation until 2050, http://hdl.handle.net/10419/80348 , pg. 80 text below figure 10, accessed: 2023-12-14.","Based on IEA 2011 data, 10 USD/t."
 gas,fuel,2020,21.6,EUR/MWh_th,2010,"DIW (2013): Current and propsective costs of electricity generation until 2050, http://hdl.handle.net/10419/80348 , pg. 80 text below figure 10, accessed: 2023-12-14.",Based on IEA 2011 data.
 electrolysis,investment,2020,2000,EUR/kW_e,2020,"private communications; IEA https://iea.blob.core.windows.net/assets/9e0c82d4-06d2-496b-9542-f184ba803645/TheRoleofE-fuelsinDecarbonisingTransport.pdf",
-electrolysis,investment,2025,2000,EUR/kW_e,2020,"private communications; IEA https://iea.blob.core.windows.net/assets/9e0c82d4-06d2-496b-9542-f184ba803645/TheRoleofE-fuelsinDecarbonisingTransport.pdf",
+electrolysis,investment,2025,1800,EUR/kW_e,2020,"private communications; IEA https://iea.blob.core.windows.net/assets/9e0c82d4-06d2-496b-9542-f184ba803645/TheRoleofE-fuelsinDecarbonisingTransport.pdf",
 electrolysis,investment,2030,1500,EUR/kW_e,2020,"private communications; IEA https://iea.blob.core.windows.net/assets/9e0c82d4-06d2-496b-9542-f184ba803645/TheRoleofE-fuelsinDecarbonisingTransport.pdf",
 electrolysis,investment,2040,1200,EUR/kW_e,2020,"private communications; IEA https://iea.blob.core.windows.net/assets/9e0c82d4-06d2-496b-9542-f184ba803645/TheRoleofE-fuelsinDecarbonisingTransport.pdf",
 electrolysis,investment,2050,1000,EUR/kW_e,2020,"private communications; IEA https://iea.blob.core.windows.net/assets/9e0c82d4-06d2-496b-9542-f184ba803645/TheRoleofE-fuelsinDecarbonisingTransport.pdf",

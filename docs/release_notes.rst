@@ -5,10 +5,24 @@ Release Notes
 .. Upcoming Release
 .. ================
 
-* add heavy duty and shipping technology assumptions from DEA
+Technology-Data 0.9.0 (12 May 2024)
+===================================
+
+* update electrolyser investment costs based on latest communications (https://github.com/PyPSA/technology-data/pull/129)
+
+* add heavy duty and shipping technology assumptions from DEA (https://github.com/PyPSA/technology-data/pull/128)
+
+* add data for Organic Rankine Cycles (ORC) and geothermal energy (https://github.com/PyPSA/technology-data/pull/111)
+
+* bugfix for retrieving optimistic and pessimistic value ranges from DEA (https://github.com/PyPSA/technology-data/pull/130)
+
+* update ``mock_snakemake()`` to work with snakemake v8 (https://github.com/PyPSA/technology-data/pull/127)
+
+* compatibility with newer pandas versions (https://github.com/PyPSA/technology-data/pull/126)
 
 Technology-Data 0.8.1 (28 February 2024)
 ========================================
+
 * adjust currency year in some DEA input data
 
 Technology-Data 0.8.0 (19 February 2024)

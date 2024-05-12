@@ -2452,8 +2452,6 @@ if __name__ == "__main__":
     # add costs for gas pipelines
     data = pd.concat([data, costs_ISE.loc[["Gasnetz"]]], sort=True)
 
-    # add (enhanced) geothermal systems data
-    data = add_egs_data(data) 
 
     data = add_manual_input(data)
     # add costs for home batteries

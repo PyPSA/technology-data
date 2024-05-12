@@ -40,6 +40,12 @@ Technology-Data 0.7.0 (7 February 2024)
 
 * Added FOM for enhanced geothermal systems.
 
+* Added data for Organic Rankine Cycles.
+
+* Moved efficiency for electricity generation from geothermal to ORC.
+
+* Moved addition of geothermal data from `compile_cost_assumptions.py` to `manual_input.csv`.
+
 * Costs for 'fuel' provided in the manual_inputs.csv are now also adjusted for inflation.
 
 * Updated cost assumptions for 'nuclear', 'coal', and 'lignite' to Lazard's LCoE V16 (2023).

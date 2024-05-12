@@ -4,6 +4,36 @@ Ammonia cracker,ammonia-input,1.46,MWh_NH3/MWh_H2,"ENGIE et al (2020): Ammonia t
 Ammonia cracker,investment,982536.4099,EUR/MW_H2,"Ishimoto et al. (2020): 10.1016/j.ijhydene.2020.09.017 , table 6.","Calculated. For a small (200 t_NH3/d input) facility. Base cost for facility: 51 MEUR at capacity 20 000m^3_NH3/h = 339 t_NH3/d input. Cost scaling exponent 0.67. Ammonia density 0.7069 kg/m^3. Conversion efficiency of cracker: 0.685. Ammonia LHV: 5.167 MWh/t_NH3.; and
 Calculated. For a large (2500 t_NH3/d input) facility. Base cost for facility: 51 MEUR at capacity 20 000m^3_NH3/h = 339 t_NH3/d input. Cost scaling exponent 0.67. Ammonia density 0.7069 kg/m^3. Conversion efficiency of cracker: 0.685. Ammonia LHV: 5.167 MWh/t_NH3.",2015.0
 Ammonia cracker,lifetime,25.0,years,"Ishimoto et al. (2020): 10.1016/j.ijhydene.2020.09.017 , table 7.",,2015.0
+BEV Bus city,FOM,0.0003,%/year,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV B1,2022.0
+BEV Bus city,Motor size,372.4138,kW,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV B1,2022.0
+BEV Bus city,VOM,0.0952,EUR/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV B1,2022.0
+BEV Bus city,efficiency,0.7965,kWh/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV B1,2022.0
+BEV Bus city,investment,214506.8497,EUR/vehicle,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV B1,2022.0
+BEV Bus city,lifetime,12.0,years,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV B1,2022.0
+BEV Coach,FOM,0.0002,%/year,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV B2,2022.0
+BEV Coach,Motor size,418.9655,kW,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV B2,2022.0
+BEV Coach,VOM,0.0952,EUR/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV B2,2022.0
+BEV Coach,efficiency,0.7797,kWh/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV B2,2022.0
+BEV Coach,investment,295046.6532,EUR/vehicle,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV B2,2022.0
+BEV Coach,lifetime,12.0,years,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV B2,2022.0
+BEV Truck Semi-Trailer max 50 tons,FOM,0.0004,%/year,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV L3,2022.0
+BEV Truck Semi-Trailer max 50 tons,Motor size,641.3793,kW,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV L3,2022.0
+BEV Truck Semi-Trailer max 50 tons,VOM,0.0952,EUR/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV L3,2022.0
+BEV Truck Semi-Trailer max 50 tons,efficiency,1.3144,kWh/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV L3,2022.0
+BEV Truck Semi-Trailer max 50 tons,investment,151213.8954,EUR/vehicle,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV L3,2022.0
+BEV Truck Semi-Trailer max 50 tons,lifetime,10.5,years,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV L3,2022.0
+BEV Truck Solo max 26 tons,FOM,0.0002,%/year,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV L1,2022.0
+BEV Truck Solo max 26 tons,Motor size,412.069,kW,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV L1,2022.0
+BEV Truck Solo max 26 tons,VOM,0.0952,EUR/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV L1,2022.0
+BEV Truck Solo max 26 tons,efficiency,0.8284,kWh/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV L1,2022.0
+BEV Truck Solo max 26 tons,investment,251193.9654,EUR/vehicle,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV L1,2022.0
+BEV Truck Solo max 26 tons,lifetime,13.8,years,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV L1,2022.0
+BEV Truck Trailer max 56 tons,FOM,0.0003,%/year,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV L2,2022.0
+BEV Truck Trailer max 56 tons,Motor size,832.7586,kW,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV L2,2022.0
+BEV Truck Trailer max 56 tons,VOM,0.0952,EUR/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV L2,2022.0
+BEV Truck Trailer max 56 tons,efficiency,1.4589,kWh/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV L2,2022.0
+BEV Truck Trailer max 56 tons,investment,167722.8037,EUR/vehicle,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV L2,2022.0
+BEV Truck Trailer max 56 tons,lifetime,13.8,years,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",BEV L2,2022.0
 Battery electric (passenger cars),FOM,0.9,%,PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html,Battery electric (passenger cars),2020.0
 Battery electric (passenger cars),efficiency,0.68,per unit,PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html,Battery electric (passenger cars),2020.0
 Battery electric (passenger cars),investment,24358.0,EUR/PKW,PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html,Battery electric (passenger cars),2020.0
@@ -103,6 +133,84 @@ Concrete-discharger,lifetime,35.0,years,"Viswanathan_2022, p.107 (p.129)","{'car
 Concrete-store,FOM,0.3308,%/year,"Viswanathan_2022, p 104 (p.126)","{'carrier': ['concrete'], 'technology_type': ['store'], 'type': ['thermal'], 'note': ['not provided calculated as for hydrogen']}",2020.0
 Concrete-store,investment,24044.2324,EUR/MWh,"Viswanathan_2022, p.98 (p.120)","{'carrier': ['concrete'], 'technology_type': ['store'], 'type': ['thermal'], 'note': ['SB and BOS 0.85 of 2021 value']}",2020.0
 Concrete-store,lifetime,35.0,years,"Viswanathan_2022, p.107 (p.129)","{'carrier': ['concrete'], 'technology_type': ['store'], 'type': ['thermal'], 'note': ['NULL']}",2020.0
+"Container feeder, ammonia",efficiency,0.7754,MWh/km,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container feeder, ammonia",2023.0
+"Container feeder, ammonia",investment,36714522.6264,EUR,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container feeder, ammonia",2023.0
+"Container feeder, ammonia",lifetime,30.0,years,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container feeder, ammonia",2023.0
+"Container feeder, diesel",efficiency,0.7718,MWh/km,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container feeder, diesel",2023.0
+"Container feeder, diesel",investment,34966212.0251,EUR,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container feeder, diesel",2023.0
+"Container feeder, diesel",lifetime,30.0,years,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container feeder, diesel",2023.0
+"Container feeder, methanol",efficiency,0.7711,MWh/km,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container feeder, methanol",2023.0
+"Container feeder, methanol",investment,35884174.4147,EUR,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container feeder, methanol",2023.0
+"Container feeder, methanol",lifetime,30.0,years,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container feeder, methanol",2023.0
+"Container, ammonia",efficiency,1.7094,MWh/km,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container, ammonia",2023.0
+"Container, ammonia",investment,125635594.6493,EUR,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container, ammonia",2023.0
+"Container, ammonia",lifetime,31.5,years,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container, ammonia",2023.0
+"Container, diesel",efficiency,1.6399,MWh/km,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container, diesel",2023.0
+"Container, diesel",investment,119652947.2851,EUR,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container, diesel",2023.0
+"Container, diesel",lifetime,32.5,years,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container, diesel",2023.0
+"Container, methanol",efficiency,1.7001,MWh/km,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container, methanol",2023.0
+"Container, methanol",investment,122644270.9672,EUR,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container, methanol",2023.0
+"Container, methanol",lifetime,32.5,years,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Container, methanol",2023.0
+Diesel Bus city,FOM,0.0004,%/year,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel B1,2022.0
+Diesel Bus city,Motor size,250.0,kW,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel B1,2022.0
+Diesel Bus city,VOM,0.1068,EUR/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel B1,2022.0
+Diesel Bus city,efficiency,1.8862,kWh/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel B1,2022.0
+Diesel Bus city,investment,150756.2732,EUR/vehicle,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel B1,2022.0
+Diesel Bus city,lifetime,12.0,years,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel B1,2022.0
+Diesel Coach,FOM,0.0003,%/year,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel B2,2022.0
+Diesel Coach,Motor size,350.0,kW,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel B2,2022.0
+Diesel Coach,VOM,0.1068,EUR/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel B2,2022.0
+Diesel Coach,efficiency,2.0089,kWh/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel B2,2022.0
+Diesel Coach,investment,231296.0768,EUR/vehicle,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel B2,2022.0
+Diesel Coach,lifetime,12.0,years,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel B2,2022.0
+Diesel Truck Semi-Trailer max 50 tons,FOM,0.0005,%/year,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L3,2022.0
+Diesel Truck Semi-Trailer max 50 tons,Motor size,380.0,kW,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L3,2022.0
+Diesel Truck Semi-Trailer max 50 tons,VOM,0.1068,EUR/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L3,2022.0
+Diesel Truck Semi-Trailer max 50 tons,efficiency,3.1541,kWh/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L3,2022.0
+Diesel Truck Semi-Trailer max 50 tons,investment,142012.114,EUR/vehicle,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L3,2022.0
+Diesel Truck Semi-Trailer max 50 tons,lifetime,10.5,years,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L3,2022.0
+Diesel Truck Solo max 26 tons,FOM,0.0004,%/year,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L1,2022.0
+Diesel Truck Solo max 26 tons,Motor size,273.1034,kW,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L1,2022.0
+Diesel Truck Solo max 26 tons,VOM,0.1068,EUR/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L1,2022.0
+Diesel Truck Solo max 26 tons,efficiency,2.0148,kWh/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L1,2022.0
+Diesel Truck Solo max 26 tons,investment,155444.0931,EUR/vehicle,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L1,2022.0
+Diesel Truck Solo max 26 tons,lifetime,13.8,years,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L1,2022.0
+Diesel Truck Trailer max 56 tons,FOM,0.0004,%/year,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L2,2022.0
+Diesel Truck Trailer max 56 tons,Motor size,382.3529,kW,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L2,2022.0
+Diesel Truck Trailer max 56 tons,VOM,0.1068,EUR/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L2,2022.0
+Diesel Truck Trailer max 56 tons,efficiency,3.1242,kWh/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L2,2022.0
+Diesel Truck Trailer max 56 tons,investment,177515.1425,EUR/vehicle,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L2,2022.0
+Diesel Truck Trailer max 56 tons,lifetime,13.8,years,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L2,2022.0
+FCV Bus city,FOM,0.0002,%/year,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV B1,2022.0
+FCV Bus city,Motor size,405.5172,kW,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV B1,2022.0
+FCV Bus city,VOM,0.0979,EUR/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV B1,2022.0
+FCV Bus city,efficiency,1.484,kWh/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV B1,2022.0
+FCV Bus city,investment,289935.0389,EUR/vehicle,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV B1,2022.0
+FCV Bus city,lifetime,12.0,years,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV B1,2022.0
+FCV Coach,FOM,0.0002,%/year,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV B2,2022.0
+FCV Coach,Motor size,405.5172,kW,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV B2,2022.0
+FCV Coach,VOM,0.0952,EUR/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV B2,2022.0
+FCV Coach,efficiency,1.4658,kWh/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV B2,2022.0
+FCV Coach,investment,356840.1722,EUR/vehicle,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV B2,2022.0
+FCV Coach,lifetime,12.0,years,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV B2,2022.0
+FCV Truck Semi-Trailer max 50 tons,FOM,0.0004,%/year,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV L3,2022.0
+FCV Truck Semi-Trailer max 50 tons,Motor size,535.3448,kW,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV L3,2022.0
+FCV Truck Semi-Trailer max 50 tons,VOM,0.0952,EUR/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV L3,2022.0
+FCV Truck Semi-Trailer max 50 tons,efficiency,2.4337,kWh/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV L3,2022.0
+FCV Truck Semi-Trailer max 50 tons,investment,139809.9795,EUR/vehicle,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV L3,2022.0
+FCV Truck Semi-Trailer max 50 tons,lifetime,10.5,years,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV L3,2022.0
+FCV Truck Solo max 26 tons,FOM,0.0002,%/year,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV L1,2022.0
+FCV Truck Solo max 26 tons,Motor size,398.2759,kW,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV L1,2022.0
+FCV Truck Solo max 26 tons,VOM,0.0952,EUR/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV L1,2022.0
+FCV Truck Solo max 26 tons,efficiency,1.6195,kWh/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV L1,2022.0
+FCV Truck Solo max 26 tons,investment,235054.9487,EUR/vehicle,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV L1,2022.0
+FCV Truck Solo max 26 tons,lifetime,13.8,years,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV L1,2022.0
+FCV Truck Trailer max 56 tons,FOM,0.0002,%/year,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV L2,2022.0
+FCV Truck Trailer max 56 tons,Motor size,398.2759,kW,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV L2,2022.0
+FCV Truck Trailer max 56 tons,VOM,0.0952,EUR/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV L2,2022.0
+FCV Truck Trailer max 56 tons,efficiency,2.7049,kWh/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV L2,2022.0
+FCV Truck Trailer max 56 tons,investment,257125.9981,EUR/vehicle,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV L2,2022.0
+FCV Truck Trailer max 56 tons,lifetime,13.8,years,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV L2,2022.0
 FT fuel transport ship,FOM,5.0,%/year,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",,2020.0
 FT fuel transport ship,capacity,75000.0,t_FTfuel,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",,2020.0
 FT fuel transport ship,investment,35000000.0,EUR,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",,2020.0
@@ -385,6 +493,15 @@ Steam methane reforming,FOM,3.0,%/year,"International Energy Agency (2015): Tech
 Steam methane reforming,investment,497454.611,EUR/MW_H2,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",Large scale SMR facility (150-300 MW). Currency conversion 1.17 USD = 1 EUR.,2015.0
 Steam methane reforming,lifetime,30.0,years,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",Large scale SMR facility (150-300 MW).,2015.0
 Steam methane reforming,methane-input,1.483,MWh_CH4/MWh_H2,"Keipi et al (2018): Economic analysis of hydrogen production by methane thermal decomposition (https://doi.org/10.1016/j.enconman.2017.12.063), table 2.","Large scale SMR plant producing 2.5 kg/s H2 output (assuming 33.3333 MWh/t H2 LHV), with 6.9 kg/s CH4 input (feedstock) and 2 kg/s CH4 input (energy). Neglecting water consumption.",
+"Tank&bulk, diesel",efficiency,0.462,MWh/km,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Tank&bulk, diesel",2023.0
+"Tank&bulk, diesel",investment,35129312.4041,EUR,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Tank&bulk, diesel",2023.0
+"Tank&bulk, diesel",lifetime,25.0,years,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Tank&bulk, diesel",2023.0
+"Tank&bulk, methanol",efficiency,0.4695,MWh/km,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Tank&bulk, methanol",2023.0
+"Tank&bulk, methanol",investment,36007545.2142,EUR,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Tank&bulk, methanol",2023.0
+"Tank&bulk, methanol",lifetime,25.0,years,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Tank&bulk, methanol",2023.0
+"Tankbulk, ammonia",efficiency,0.471,MWh/km,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Tankbulk, ammonia",2023.0
+"Tankbulk, ammonia",investment,36885778.0243,EUR,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Tankbulk, ammonia",2023.0
+"Tankbulk, ammonia",lifetime,25.0,years,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Tankbulk, ammonia",2023.0
 Vanadium-Redox-Flow-bicharger,FOM,2.4395,%/year,"Viswanathan_2022, p.28 (p.50)","{'carrier': ['elec', 'vanadium', 'elec'], 'technology_type': ['bicharger'], 'type': ['electrochemical'], 'note': ['30% assumed of power components every 10 years']}",2020.0
 Vanadium-Redox-Flow-bicharger,efficiency,0.8062,per unit,"Viswanathan_2022, p.42 (p.64)","{'carrier': ['elec', 'vanadium', 'elec'], 'technology_type': ['bicharger'], 'type': ['electrochemical'], 'note': ['AC-AC efficiency at transformer level 0.65^0.5']}",2020.0
 Vanadium-Redox-Flow-bicharger,investment,129023.0526,EUR/MW,"Viswanathan_2022, p.42 (p.64)","{'carrier': ['elec', 'vanadium', 'elec'], 'technology_type': ['bicharger'], 'type': ['electrochemical'], 'note': ['Power Equipment']}",2020.0

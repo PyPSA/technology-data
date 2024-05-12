@@ -242,7 +242,7 @@ cost_year_2019 = ['direct firing gas',
                 ]
 
 
-# %% -------- FUNCTIONS ---------------------------------------------------
+# -------- FUNCTIONS ---------------------------------------------------
 
 def get_excel_sheets(excel_files):
     """"
@@ -273,6 +273,197 @@ def get_sheet_location(tech, sheet_names, data_in):
     return None
 
 #
+
+def get_dea_maritime_data(fn, data):
+    """
+    Get technology data for shipping from DEA.
+    """
+    sheet_names = ['Container feeder, diesel',
+                   'Container feeder, methanol',
+                   'Container feeder, ammonia',
+                   'Container, diesel',
+                   'Container, methanol',
+                   'Container, ammonia',
+                   'Tank&bulk, diesel',
+                   'Tank&bulk, methanol',
+                   'Tankbulk, ammonia',    
+        ]
+    excel = pd.read_excel(fn,
+                          sheet_name=sheet_names,
+                          index_col=[0,1],
+                          usecols="A:F",
+                          na_values="N/A")
+    
+    wished_index = ["Typical ship lifetime (years)",
+                      "Upfront ship cost (mill. €)",
+                      "Fixed O&M (€/year)",
+                      "Variable O&M (€/nm)",
+                      ]
+    
+    
+    for sheet in excel.keys():
+        df = excel[sheet]
+        df = df.iloc[1:,:].set_axis(df.iloc[0], axis=1)
+        
+        assert "Typical operational speed" in df.index.get_level_values(1)[22]
+        # in unit GJ/nm
+        efficiency = df.iloc[22]
+        
+        df = df[df.index.get_level_values(1).isin(wished_index)]
+        df = df.droplevel(level=0)
+        df.loc["efficiency (GJ/nm)"] = efficiency
+        df = df.reindex(columns=pd.Index(years).union(df.columns))
+        df = df.astype(float)
+        df = df.interpolate(axis=1, limit_direction="both")
+        df = df[years]
+        
+        # dropna
+        df = df.dropna(how="all", axis=0)
+        # add column for units
+        df["unit"] = (df.rename(index=lambda x:
+                    x[x.rfind("(")+1: x.rfind(")")]).index.values)
+        df["unit"] = df.unit.str.replace("€", "EUR")
+        # remove units from index
+        df.index = df.index.str.replace(r" \(.*\)","", regex=True)
+        
+        # convert million Euro -> Euro
+        df_i = df[df.unit == 'mill. EUR'].index
+        df.loc[df_i, years] *= 1e6
+        df.loc[df_i, "unit"] = "EUR"
+        
+        # convert FOM in % of investment/year
+        if 'Fixed O&M' in df.index:
+            df.loc['Fixed O&M', years] /= (df.loc['Upfront ship cost', years]
+                                                        * 100)
+            df.loc['Fixed O&M', "unit"] = "%/year"
+        
+        # convert nm in km
+        # 1 Nautical Mile (nm) = 1.852 Kilometers (km)
+        df_i = df[df.unit.str.contains('/nm')].index
+        df.loc[df_i, years] /= 1.852
+        df.loc[df_i, "unit"] = df.loc[df_i, "unit"].str.replace("/nm", "/km")
+        
+        # 1 GJ = 1/3600 * 1e9 Wh = 1/3600 * 1e3 MWh
+        df_i = df[df.unit.str.contains('GJ')].index
+        df.loc[df_i, years] *= 1e3/3600
+        df.loc[df_i, "unit"] = df.loc[df_i, "unit"].str.replace("GJ", "MWh")
+        
+        # add source + cost year
+        df["source"] = f"Danish Energy Agency, {fn}"
+        # cost year is 2023 p.10
+        df["currency_year"] = 2023
+        # add sheet name
+        df['further description'] = sheet
+        
+        # FOM, VOM,efficiency, lifetime, investment
+        rename = {'Typical ship lifetime': "lifetime",
+                  'Upfront ship cost': "investment",
+                  'Fixed O&M': "FOM",
+                  'Variable O&M': "VOM",
+                  }
+        
+        df = df.rename(index=rename)
+                    
+        df = pd.concat([df], keys=[sheet], names=["technology", "parameter"])
+        
+        data = pd.concat([data, df])
+        
+    return data
+        
+        
+    
+def get_dea_vehicle_data(fn, data):
+    """
+    Get heavy-duty vehicle data from DEA.
+    """
+    sheet_names = ['Diesel L1', 'Diesel L2', 'Diesel L3',
+                   'Diesel B1', 'Diesel B2',
+                   'BEV L1', 'BEV L2', 'BEV L3',
+                   'BEV B1', 'BEV B2',
+                   'FCV L1', 'FCV L2', 'FCV L3',
+                   'FCV B1', 'FCV B2']
+    excel = pd.read_excel(fn,
+                          sheet_name=sheet_names,
+                          index_col=0,
+                          usecols="A:F",
+                          na_values="no data")
+    
+    wished_index = ["Typical vehicle lifetime (years)",
+                      "Upfront vehicle cost (€)",
+                      "Fixed maintenance cost (€/year)",
+                      "Variable maintenance cost (€/km)",
+                      "Motor size (kW)",
+                      ]
+    
+    # clarify DEA names
+    types = {"L1": "Truck Solo max 26 tons",
+             "L2": "Truck Trailer max 56 tons",
+             "L3": "Truck Semi-Trailer max 50 tons",
+             "B1": "Bus city",
+             "B2": "Coach"}
+    
+    for sheet in excel.keys():
+        df = excel[sheet]
+        tech = sheet.split()[0] + " " + types.get(sheet.split()[1], "")
+        df = df.iloc[1:,:].set_axis(df.iloc[0], axis=1)
+        # "Fuel energy - typical load (MJ/km)" 
+        # represents efficiency for average weight vehicle carries during normal
+        # operation, currently assuming mean between urban, regional and long haul
+        assert df.index[27] == 'Fuel energy - typical load (MJ/km)'
+        efficiency = df.iloc[28:31].mean()  
+        df = df[df.index.isin(wished_index)]
+        df.loc["efficiency (MJ/km)"] = efficiency
+        df = df.reindex(columns=pd.Index(years).union(df.columns))
+        df = df.interpolate(axis=1, limit_direction="both")
+        df = df[years]
+        
+        # add column for units
+        df["unit"] = (df.rename(index=lambda x:
+                    x[x.rfind("(")+1: x.rfind(")")]).index.values)
+        df["unit"] = df.unit.str.replace("€", "EUR")
+        # remove units from index
+        df.index = df.index.str.replace(r" \(.*\)","", regex=True) 
+        
+        # convert MJ in kWh -> 1 kWh = 3.6 MJ
+        df_i = df.index[df.unit=="MJ/km"]
+        df.loc[df_i, years] /= 3.6
+        df.loc[df_i, "unit"] = "kWh/km"      
+        
+        # convert FOM in % of investment/year
+        df.loc["Fixed maintenance cost", years] /= (df.loc["Upfront vehicle cost", years]
+                                                    * 100)
+        df.loc["Fixed maintenance cost", "unit"] = "%/year"
+        
+        # clarify costs are per vehicle
+        df.loc["Upfront vehicle cost", "unit"] += "/vehicle"
+        
+        # add source + cost year
+        df["source"] = f"Danish Energy Agency, {fn}"
+        # cost year is 2022 p.12
+        df["currency_year"] = 2022
+        # add sheet name
+        df['further description'] = sheet
+        
+        # FOM, VOM,efficiency, lifetime, investment
+        rename = {'Typical vehicle lifetime': "lifetime",
+                  'Upfront vehicle cost': "investment",
+                  'Fixed maintenance cost': "FOM",
+                  'Variable maintenance cost': "VOM",
+                  }
+        
+        df = df.rename(index=rename)
+            
+        to_keep = ['Motor size', 'lifetime', "FOM", "VOM", "efficiency",
+                   "investment"]
+        df = df[df.index.isin(to_keep)]
+        
+        df = pd.concat([df], keys=[tech], names=["technology", "parameter"])
+        
+        data = pd.concat([data, df])
+        
+    return data
+        
+        
 def get_data_DEA(tech, data_in, expectation=None):
     """
     interpolate cost for a given technology from DEA database sheet
@@ -344,6 +535,8 @@ def get_data_DEA(tech, data_in, expectation=None):
     excel.loc[swap, "2050-optimist"] = tmp
 
     if expectation:
+        # drop duplicates
+        excel = excel[~excel.index.duplicated()]
         excel.loc[:,2050] = excel.loc[:,f"2050-{expectation}"].combine_first(excel.loc[:,2050])
     excel.drop(columns=uncertainty_columns, inplace=True)
 
@@ -1039,6 +1232,8 @@ def order_data(tech_data):
                 clean_df[tech] = pd.concat([clean_df[tech], fixed])
                 fom = pd.DataFrame(columns=fixed.columns)
                 if not any(fixed.unit.str.contains('% of specific investment/year')):
+                    investment[investment==0] = float('nan')
+                    investment = investment.ffill(axis=1).fillna(0)
                     fom[years] = fixed[years]/investment[years].values*100
                 else:
                     fom[years] = fixed[years]
@@ -2173,7 +2368,7 @@ if __name__ == "__main__":
     years = snakemake.config['years']
     inflation_rate = prepare_inflation_rate(snakemake.input.inflation_rate)
     
-  
+    # p.77 Figure 51 share of vehicle-km driven by truck
 
     # (1) DEA data
     # (a)-------- get data from DEA excel sheets ----------------------------------
@@ -2210,7 +2405,7 @@ if __name__ == "__main__":
     data = add_gas_storage(data)
     # add carbon capture
     data = add_carbon_capture(data, tech_data)
-    
+
     # adjust for inflation
     for x in data.index.get_level_values("technology"):
         if x in cost_year_2020:
@@ -2219,6 +2414,12 @@ if __name__ == "__main__":
             data.at[x, "currency_year"] = 2019
         else:
             data.at[x, "currency_year"] = 2015
+    
+    # add heavy duty assumptions, cost year is 2022
+    data = get_dea_vehicle_data(snakemake.input.dea_vehicles, data) 
+    
+    # add shipping data
+    data = get_dea_maritime_data(snakemake.input.dea_ship, data)
 
     # %% (2) -- get data from other sources which need formatting -----------------
     # (a)  ---------- get old pypsa costs ---------------------------------------
@@ -2261,6 +2462,8 @@ if __name__ == "__main__":
     data = add_SMR_data(data)
     # add solar rooftop costs by taking the mean of commercial and residential
     data = add_mean_solar_rooftop(data)
+    
+    data.index.names = ["technology", "parameter"]
     # %% (3) ------ add additional sources and save cost as csv ------------------
     # [RTD-target-multiindex-df]
     for year in years:

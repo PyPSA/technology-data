@@ -15,7 +15,7 @@ Clone the repository `technology-data <https://github.com/PyPSA/technology-data>
 
 .. code:: bash
 
-    projects % git clone git@github.com:PyPSA/technology-data.git
+    projects % git clone https://github.com/PyPSA/technology-data.git
 
 If you want to use the technology-data with `PyPSA-Eur <https://github.com/PyPSA/pypsa-eur>`_ or `PyPSA-Eur-Sec <https://github.com/PyPSA/pypsa-eur-sec>`_ the repository should be cloned in a parallel directory.
 

@@ -7,6 +7,7 @@ Release Notes
 
 Technology-Data 0.9.0 (12 May 2024)
 ===================================
+* add methanol-to-kerosene cost data (https://github.com/PyPSA/technology-data/pull/136)
 
 * update electrolyser investment costs based on latest communications (https://github.com/PyPSA/technology-data/pull/129)
 

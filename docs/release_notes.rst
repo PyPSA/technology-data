@@ -7,6 +7,8 @@ Release Notes
 
 * added fuel costs for bioethanol crops, rape seed, and manure from JRC ENSPRESO
 
+* added fuel costs for fuelwood from JRC ENSPRESO
+
 Technology-Data 0.9.0 (12 May 2024)
 ===================================
 * add methanol-to-kerosene cost data (https://github.com/PyPSA/technology-data/pull/136)

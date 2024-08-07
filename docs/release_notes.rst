@@ -5,9 +5,16 @@ Release Notes
 .. Upcoming Release
 .. ================
 
+Technology-Data 0.9.1 (7 August 2024)
+=====================================
+
 * added fuel costs for bioethanol crops, rape seed, and manure from JRC ENSPRESO
 
 * added fuel costs for fuelwood from JRC ENSPRESO
+
+* added hull for HVDC underground cost based on HVDC submarine cost
+
+* added methanol-to-kerosene cost data from Concawe report
 
 Technology-Data 0.9.0 (12 May 2024)
 ===================================

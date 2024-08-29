@@ -537,6 +537,10 @@ air separation unit,FOM,3.0,%/year,"Danish Energy Agency, data_sheets_for_renewa
 air separation unit,electricity-input,0.25,MWh_el/t_N2,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), p.288.","For consistency reasons use value from Danish Energy Agency. DEA also reports range of values (0.2-0.4 MWh/t_N2) on pg. 288. Other efficienices reported are even higher, e.g. 0.11 Mwh/t_N2 from Morgan (2013): Techno-Economic Feasibility Study of Ammonia Plants Powered by Offshore Wind .",
 air separation unit,investment,912034.4091,EUR/t_N2/h,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Specific investment,2015.0
 air separation unit,lifetime,30.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Technical lifetime,2015.0
+allam,VOM,2.0,EUR/MWh,Own assumption. TODO: Find better technology data and cost assumptions,,2020.0
+allam,efficiency,0.6,p.u.,Own assumption. TODO: Find better technology data and cost assumptions,,2020.0
+allam,investment,1500.0,EUR/kW,Own assumption. TODO: Find better technology data and cost assumptions,,2020.0
+allam,lifetime,30.0,years,Own assumption. TODO: Find better technology data and cost assumptions,,2020.0
 battery inverter,FOM,0.2512,%/year,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Fixed O&M,2015.0
 battery inverter,efficiency,0.955,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Round trip efficiency DC,2015.0
 battery inverter,investment,227.5176,EUR/kW,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Output capacity expansion cost investment,2015.0

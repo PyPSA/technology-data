@@ -383,3 +383,7 @@ fuelwood,fuel,2020,14.066770723441,EUR/MWhth,2010,"JRC ENSPRESO ca avg for MINBI
 fuelwood,fuel,2030,12.767964974663,EUR/MWhth,2010,"JRC ENSPRESO ca avg for MINBIOWOO (FuelwoodRW), ENS_BaU_GFTM",
 fuelwood,fuel,2040,11.5992033141145,EUR/MWhth,2010,"JRC ENSPRESO ca avg for MINBIOWOO (FuelwoodRW), ENS_BaU_GFTM",
 fuelwood,fuel,2050,10.5474097062402,EUR/MWhth,2010,"JRC ENSPRESO ca avg for MINBIOWOO (FuelwoodRW), ENS_BaU_GFTM",
+allam,investment,2030,1500,EUR/kW,2020,Own assumption. TODO: Find better technology data and cost assumptions,
+allam,VOM,2030,2,EUR/MWh,2020,Own assumption. TODO: Find better technology data and cost assumptions,
+allam,efficiency,2030,0.6,p.u.,2020,Own assumption. TODO: Find better technology data and cost assumptions,
+allam,lifetime,2030,30,years,2020,Own assumption. TODO: Find better technology data and cost assumptions,

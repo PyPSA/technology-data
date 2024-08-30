@@ -1294,16 +1294,17 @@ def order_data(tech_data):
                            (df.unit =="MWh_e/MWh_th") |
                            (df.unit =="MWh_th/MWh_th") |
                            (df.unit =='MWh/MWh Total Input') |
-                           df.unit.str.contains("MWh_FT/MWh_H2"))
-                         & (~df.index.str.contains("name plate"))].copy()
+                           df.unit.str.contains("MWh_FT/MWh_H2"))].copy()
 
         if tech == 'Fischer-Tropsch':
             efficiency[years] *= 100
 
 
-        # take annual average instead of name plate efficiency
-        if any(efficiency.index.str.contains("annual average")):
+        # take annual average instead of name plate efficiency, unless central air-sourced heat pump
+        if any(efficiency.index.str.contains("annual average")) and tech != "central air-sourced heat pump":
             efficiency = efficiency[efficiency.index.str.contains("annual average")]
+        elif any(efficiency.index.str.contains("name plate")):
+            efficiency = efficiency[efficiency.index.str.contains("name plate")]
 
         # hydrogen electrolysiswith recoverable heat
         heat_recovery_label = "hereof recoverable for district heating"

@@ -11,6 +11,8 @@ Technology-Data 0.9.2 (30 August 2024)
 
 * for central air-sourced heat pump use name plate efficiency
 
+* added preliminary Allam cycle gas turbine costs
+
 Technology-Data 0.9.1 (7 August 2024)
 =====================================
 

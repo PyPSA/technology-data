@@ -19,6 +19,28 @@ The outputs are used in
 [PyPSA-Eur](https://github.com/PyPSA/pypsa-eur) and
 [PyPSA-Eur-Sec](https://github.com/PyPSA/pypsa-eur-sec).
 
+## Contributions welcome!
+
+We are happy to receive contributions, either as feedback, corrections, modifications or addition of new technology entries.
+You can either open an *Issue* on GitHub for reporting potentials problems, providing feedback or suggesting additional entries.
+Alternatively you can also directly open a *Pull Request* already containing suggested modifications.
+
+All sizes and qualities of contributions are welcome. After an the *Issue* or *Pull Request* we'll assist with comments and leads to get your contribution included into the repository.
+
+## Unit conventions
+
+The following conventions are recommended for new additions to the repository.
+Care must be taken with legacy entries, of which not all follow these conventions.
+
+* Energy units: Use MWh and MW or kWh and kW
+  Thermal energy content: When referring to the thermal energy content of a mass or volume, use the Lower Heating Value (LHV)
+* Currency-values are specified in EUR
+* Ambigiuous units are avoided by specifying whether the unit applies to the input or the output of a process, e.g. the capacity of hydrogen electrolysis "MW_e" refers to "MW" of electricity input capacity whilst "MW_H2" refers to "MW" of output hydrogen
+* Specification is always done using a subscript, e.g. "MWh_e" (MWh of electricity), "MWh_th" (MWh of thermal energy), "t_CO2" (t of CO2)
+* Multiple units are concatenated using an asterisk an space before and after the asterisk " * ", e.g. "m^3 * h"
+* Combined units are written as a single unit, e.g. "MWh" (instead of "MW*h")
+* Multiple units in the demoninator are encapsulated in brackets, e.g. "EUR/(m^3_water * h)" instead of "EUR/m^3_water/h
+
 
 ## Licence
 

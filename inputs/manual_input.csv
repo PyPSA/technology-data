@@ -39,16 +39,16 @@ CH4 (g) pipeline,electricity-input,2020,0.01,MW_e/1000km/MW_CH4,2015,"Danish Ene
 CH4 (g) fill compressor station,investment,2040,1654.96,EUR/MW_CH4,2020,"Guesstimate, based on H2 (g) pipeline and fill compressor station cost.","Assume same ratio as between H2 (g) pipeline and fill compressor station, i.e. 1:19 , due to a lack of reliable numbers."
 CH4 (g) fill compressor station,lifetime,2040,20,years,2020,Assume same as for H2 (g) fill compressor station.,-
 CH4 (g) fill compressor station,FOM,2040,1.7,%/year,2020,Assume same as for H2 (g) fill compressor station.,-
-HVAC overhead,investment,2030,400,EUR/MW/km,2011,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
+HVAC overhead,investment,2030,500,EUR/MW/km,2011,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
 HVAC overhead,lifetime,2030,40,years,2011,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
 HVAC overhead,FOM,2030,2,%/year,2011,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
-HVDC overhead,investment,2030,400,EUR/MW/km,2011,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
+HVDC overhead,investment,2030,500,EUR/MW/km,2011,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
 HVDC overhead,lifetime,2030,40,years,2011,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
 HVDC overhead,FOM,2030,2,%/year,2011,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
-HVDC submarine,investment,2030,970,EUR/MW/km,2017,Härtel et al. (2017): https://doi.org/10.1016/j.epsr.2017.06.008 .,Table 1
+HVDC submarine,investment,2030,1200,EUR/MW/km,2017,Härtel et al. (2017): https://doi.org/10.1016/j.epsr.2017.06.008 .,Table 1
 HVDC submarine,FOM,2030,0.35,%/year,2018,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,"Based on estimated costs for a NA-EU connector (bidirectional,4 GW, 3000km length and ca. 3000m depth). Costs in return based on existing/currently under construction undersea cables."
 HVDC submarine,lifetime,2030,40,years,2018,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,"Based on estimated costs for a NA-EU connector (bidirectional,4 GW, 3000km length and ca. 3000m depth). Costs in return based on existing/currently under construction undersea cables."
-HVDC underground,investment,2030,970,EUR/MW/km,2017,Härtel et al. (2017): https://doi.org/10.1016/j.epsr.2017.06.008 .,Table 1 (same as for HVDC submarine)
+HVDC underground,investment,2030,1200,EUR/MW/km,2017,Härtel et al. (2017): https://doi.org/10.1016/j.epsr.2017.06.008 .,Table 1 (same as for HVDC submarine)
 HVDC underground,FOM,2030,0.35,%/year,2018,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,"Based on estimated costs for a NA-EU connector (bidirectional,4 GW, 3000km length and ca. 3000m depth). Costs in return based on existing/currently under construction undersea cables. (same as for HVDC submarine)"
 HVDC underground,lifetime,2030,40,years,2018,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,"Based on estimated costs for a NA-EU connector (bidirectional,4 GW, 3000km length and ca. 3000m depth). Costs in return based on existing/currently under construction undersea cables. (same as for HVDC submarine)"
 HVDC inverter pair,investment,2030,150000,EUR/MW,2011,"Hagspiel et al. (2014): doi:10.1016/j.energy.2014.01.025 , table A.2 .",
@@ -320,8 +320,8 @@ electric arc furnace,FOM,2020,30,%/year,2020,"Model assumptions from MPP Steel T
 electric arc furnace,lifetime,2020,40,years,2020,"Model assumptions from MPP Steel Transition Tool: https://github.com/missionpossiblepartnership/mpp-steel-model/blob/9eca52db92bd2d9715f30e98ccaaf36677fdb516/mppsteel/data/import_data/CAPEX%20OPEX%20Per%20Technology.xlsx, accessed: 2022-12-05.",MPP steel model distinguishes between plant lifetime (40 years) and investment cycle (20 years). Choose plant lifetime.
 electric arc furnace,electricity-input,2020,0.6395,MWh_el/t_steel,2020,"Mission Possible Partnership (2022): Steel Model (https://github.com/missionpossiblepartnership/mpp-steel-model/blob/9eca52db92bd2d9715f30e98ccaaf36677fdb516/mppsteel/data/import_data/Technology%20Business%20Cases.csv, accessed: 2022-12-03).",Based on process ‘EAF’. 
 electric arc furnace,hbi-input,2020,1,t_hbi/t_steel,2020,-,Assume HBI instead of scrap as input.Scrap would require higher input (in tonnes) as steel content is lower.
-shipping fuel methanol,fuel,2020,72,EUR/MWh_th,2020,"Based on (source 1) Hampp et al (2022), https://arxiv.org/abs/2107.01092, and (source 2): https://www.methanol.org/methanol-price-supply-demand/; both accessed: 2022-12-03.",400 EUR/t assuming range roughly in the long-term range for green methanol (source 1) and late 2020+beyond values for grey methanol (source 2).
-shipping fuel methanol,CO2 intensity,2020,0.2482,t_CO2/MWh_th,2020,-,Based on stochiometric composition.
+shipping fuel methanol,fuel,2040,100,EUR/MWh_th,2020,"Based on https://arxiv.org/abs/2404.03927",
+shipping fuel methanol,CO2 intensity,2040,0,t_CO2/MWh_th,2020,-,Based on stochiometric composition. Assuming green methanol.
 iron ore DRI-ready,commodity,2020,97.73,EUR/t,2020,"Model assumptions from MPP Steel Transition Tool: https://missionpossiblepartnership.org/action-sectors/steel/, accessed: 2022-12-03.","DRI ready assumes 65% iron content, requiring no additional benefication."
 offwind-float,investment,2030,2350,EUR/kWel,2020,https://doi.org/10.1016/j.adapen.2021.100067,
 offwind-float,FOM,2030,1.15,%/year,2020,https://doi.org/10.1016/j.adapen.2021.100067,
@@ -362,11 +362,11 @@ geothermal,lifetime,2020,30,years,2020,"Aghahosseini, Breyer 2020: From hot rock
 geothermal,district heat-input,2020,0.8,MWh_thdh/MWh_th,2020,"Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551; Breede et al. 2015: Overcoming challenges in the classification of deep geothermal potential, https://eprints.gla.ac.uk/169585/","Heat-input, District Heat-output. This is an assessment of typical heat losses when heat is transmitted from the EGS plant to the DH network, This is a rough estimate, depends on local conditions"
 geothermal,FOM,2020,2,%/year,2020,"Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551",See Supplemental Material of source for details
 geothermal,district heat surcharge,2020,25,%,2020,Frey et al. 2022: Techno-Economic Assessment of Geothermal Resources in the Variscan Basement of the Northern Upper Rhine Graben,"If capital cost of electric generation from EGS is 100%, district heating adds additional 25%. Costs incurred by piping."
-electrolysis,investment,2020,2000,EUR/kW_e,2020,private communications; IEA https://iea.blob.core.windows.net/assets/9e0c82d4-06d2-496b-9542-f184ba803645/TheRoleofE-fuelsinDecarbonisingTransport.pdf,
-electrolysis,investment,2025,1800,EUR/kW_e,2020,private communications; IEA https://iea.blob.core.windows.net/assets/9e0c82d4-06d2-496b-9542-f184ba803645/TheRoleofE-fuelsinDecarbonisingTransport.pdf,
-electrolysis,investment,2030,1500,EUR/kW_e,2020,private communications; IEA https://iea.blob.core.windows.net/assets/9e0c82d4-06d2-496b-9542-f184ba803645/TheRoleofE-fuelsinDecarbonisingTransport.pdf,
-electrolysis,investment,2040,1200,EUR/kW_e,2020,private communications; IEA https://iea.blob.core.windows.net/assets/9e0c82d4-06d2-496b-9542-f184ba803645/TheRoleofE-fuelsinDecarbonisingTransport.pdf,
-electrolysis,investment,2050,1000,EUR/kW_e,2020,private communications; IEA https://iea.blob.core.windows.net/assets/9e0c82d4-06d2-496b-9542-f184ba803645/TheRoleofE-fuelsinDecarbonisingTransport.pdf,
+electrolysis,investment,2020,1800,EUR/kW_e,2020,private communications; IEA https://iea.blob.core.windows.net/assets/9e0c82d4-06d2-496b-9542-f184ba803645/TheRoleofE-fuelsinDecarbonisingTransport.pdf,
+electrolysis,investment,2025,1400,EUR/kW_e,2020,private communications; IEA https://iea.blob.core.windows.net/assets/9e0c82d4-06d2-496b-9542-f184ba803645/TheRoleofE-fuelsinDecarbonisingTransport.pdf,
+electrolysis,investment,2030,1100,EUR/kW_e,2020,private communications; IEA https://iea.blob.core.windows.net/assets/9e0c82d4-06d2-496b-9542-f184ba803645/TheRoleofE-fuelsinDecarbonisingTransport.pdf,
+electrolysis,investment,2040,800,EUR/kW_e,2020,private communications; IEA https://iea.blob.core.windows.net/assets/9e0c82d4-06d2-496b-9542-f184ba803645/TheRoleofE-fuelsinDecarbonisingTransport.pdf,
+electrolysis,investment,2050,600,EUR/kW_e,2020,private communications; IEA https://iea.blob.core.windows.net/assets/9e0c82d4-06d2-496b-9542-f184ba803645/TheRoleofE-fuelsinDecarbonisingTransport.pdf,
 bioethanol crops,fuel,2020,54.6434100368518,EUR/MWhth,2010,"JRC ENSPRESO ca avg for MINBIOCRP11 (Bioethanol barley, wheat, grain maize, oats, other cereals and rye), ENS_BaU_GFTM",
 bioethanol crops,fuel,2030,72.477665790641,EUR/MWhth,2010,"JRC ENSPRESO ca avg for MINBIOCRP11 (Bioethanol barley, wheat, grain maize, oats, other cereals and rye), ENS_BaU_GFTM",
 bioethanol crops,fuel,2040,75.7178710725453,EUR/MWhth,2010,"JRC ENSPRESO ca avg for MINBIOCRP11 (Bioethanol barley, wheat, grain maize, oats, other cereals and rye), ENS_BaU_GFTM",

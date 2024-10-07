@@ -7,6 +7,9 @@ dependencies:
   - pip
   # for running the package
   - snakemake-minimal>=8.5
+  - pypsa
+  - pyarrow
+  - fastparquet
   - pandas>=2.1
   - numpy
   - beautifulsoup4

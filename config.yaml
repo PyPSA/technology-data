@@ -2,6 +2,7 @@ version: 0.9.2
 
 # considered years for output data
 years : [2020, 2025, 2030, 2035, 2040, 2045, 2050]
+atb_input_years : [2022, 2024]
 
 expectation : "" # tech data uncertainty, possible options [None, "optimist", "pessimist"]
 

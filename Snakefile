@@ -28,10 +28,10 @@ rule compile_cost_assumptions:
     conda: "environment.yaml"
     script: "scripts/compile_cost_assumptions.py"
 
-
 rule compile_cost_assumptions_nrel:
     input:
-        expand("outputs/costs_{year}.csv", year = config["years"])
+        cost_files_to_modify=expand("outputs/costs_{year}.csv", year = config["years"]),
+        atb_input_files=expand("inputs/atb_e_{year}.parquet", year = config["atb_input_years"])
     output:
         expand("outputs/US/costs_{year}.csv", year = config["years"])
     threads: 1

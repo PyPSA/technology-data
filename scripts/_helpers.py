@@ -1,5 +1,19 @@
 from pathlib import Path
 import re
+import os
+
+import snakemake as sm
+from pypsa.descriptors import Dict
+from snakemake.api import Workflow
+from snakemake.common import SNAKEFILE_CHOICES
+from snakemake.script import Snakemake
+from snakemake.settings import (
+    ConfigSettings,
+    DAGSettings,
+    ResourceSettings,
+    StorageSettings,
+    WorkflowSettings,
+)
 
 
 class Dict(dict):
@@ -84,20 +98,6 @@ def mock_snakemake(
         keyword arguments fixing the wildcards. Only necessary if wildcards are
         needed.
     """
-    import os
-
-    import snakemake as sm
-    from pypsa.descriptors import Dict
-    from snakemake.api import Workflow
-    from snakemake.common import SNAKEFILE_CHOICES
-    from snakemake.script import Snakemake
-    from snakemake.settings import (
-        ConfigSettings,
-        DAGSettings,
-        ResourceSettings,
-        StorageSettings,
-        WorkflowSettings,
-    )
 
     script_dir = Path(__file__).parent.resolve()
     if root_dir is None:

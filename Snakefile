@@ -29,6 +29,17 @@ rule compile_cost_assumptions:
     script: "scripts/compile_cost_assumptions.py"
 
 
+rule compile_cost_assumptions_nrel:
+    input:
+        expand("outputs/costs_{year}.csv", year = config["years"])
+    output:
+        expand("outputs/US/costs_{year}.csv", year = config["years"])
+    threads: 1
+    resources: mem=500
+    conda: "environment.yaml"
+    script: "scripts/compile_cost_assumptions_nrel.py"
+
+
 # rule convert_fraunhofer:
 #     input:
 #         fraunhofer = "docu/Anhang-Studie-Wege-zu-einem-klimaneutralen-Energiesystem.pdf"

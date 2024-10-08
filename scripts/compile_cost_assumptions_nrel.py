@@ -12,7 +12,7 @@ def read_atb_input_file(input_file_list):
     return dataframe_list
 
 
-def pre_process_input_file(input_file_list, list_years, list_columns_to_keep, list_core_metric_parameter_to_keep):
+def filter_input_file(input_file_list, list_years, list_columns_to_keep, list_core_metric_parameter_to_keep):
     atb_input_df_list = read_atb_input_file(input_file_list)
     list_core_metric_parameter_to_keep = [str(x).casefold() for x in list_core_metric_parameter_to_keep]
     list_years = [str(x).casefold() for x in list_years]
@@ -42,6 +42,46 @@ def pre_process_input_file(input_file_list, list_years, list_columns_to_keep, li
     atb_input_df_2022 = atb_input_df_2022.drop_duplicates(keep="first")
     atb_input_df_2024 = atb_input_df_2024.drop_duplicates(keep="first")
 
+    return atb_input_df_2022, atb_input_df_2024
+
+
+def calculate_fom_percentage(x, dataframe):
+
+    # Note: for technologies as Coal Retrofit or Natural Gas Retrofit,
+    # the Fixed O&M is normalized by Additional OCC. Else, the Fixed O&M is
+    # normalized by the CAPEX
+
+    if x["core_metric_parameter"].casefold() == "fixed o&m":
+        if "retrofit" in x["technology"].casefold():
+            fom_perc_value = x.value / dataframe.query(
+                "core_metric_parameter.str.casefold() == 'additional occ' & "
+                "core_metric_case == @x.core_metric_case & "
+                "core_metric_variable == @x.core_metric_variable & "
+                "technology == @x.technology & "
+                "technology_alias == @x.technology_alias & "
+                "techdetail == @x.techdetail & "
+                "display_name == @x.display_name & "
+                "scenario == @x.scenario")["value"]*100.0
+        else:
+            fom_perc_value = x.value / dataframe.query(
+                "core_metric_parameter.str.casefold() == 'capex' & "
+                "core_metric_case == @x.core_metric_case & "
+                "core_metric_variable == @x.core_metric_variable & "
+                "technology == @x.technology & "
+                "technology_alias == @x.technology_alias & "
+                "techdetail == @x.techdetail & "
+                "display_name == @x.display_name & "
+                "scenario == @x.scenario")["value"]*100.0
+
+        return round(fom_perc_value.values[0], 2)
+    else:
+        return x.value
+
+
+def pre_process_input_file(input_file_list, list_years, list_columns_to_keep, list_core_metric_parameter_to_keep):
+    atb_input_df_2022, atb_input_df_2024 = filter_input_file(input_file_list, list_years, list_columns_to_keep, list_core_metric_parameter_to_keep)
+    atb_input_df_2022["value"] = atb_input_df_2022.apply(lambda x: calculate_fom_percentage(x, atb_input_df_2022), axis=1)
+    atb_input_df_2024["value"] = atb_input_df_2024.apply(lambda x: calculate_fom_percentage(x, atb_input_df_2024), axis=1)
     return atb_input_df_2022, atb_input_df_2024
 
 

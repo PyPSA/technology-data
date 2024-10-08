@@ -5,6 +5,7 @@ Release Notes
 .. Upcoming Release
 .. ================
 
+* fixed DEA technology data sheet name for central water tank storage to point to actual PTES data
 
 Technology-Data 0.9.2 (30 August 2024)
 ======================================

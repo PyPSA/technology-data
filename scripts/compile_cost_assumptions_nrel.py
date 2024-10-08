@@ -72,7 +72,6 @@ def calculate_fom_percentage(x, dataframe):
                 "techdetail == @x.techdetail & "
                 "display_name == @x.display_name & "
                 "scenario == @x.scenario")["value"]*100.0
-
         return round(fom_perc_value.values[0], 2)
     else:
         return x.value
@@ -82,6 +81,8 @@ def pre_process_input_file(input_file_list, list_years, list_columns_to_keep, li
     atb_input_df_2022, atb_input_df_2024 = filter_input_file(input_file_list, list_years, list_columns_to_keep, list_core_metric_parameter_to_keep)
     atb_input_df_2022["value"] = atb_input_df_2022.apply(lambda x: calculate_fom_percentage(x, atb_input_df_2022), axis=1)
     atb_input_df_2024["value"] = atb_input_df_2024.apply(lambda x: calculate_fom_percentage(x, atb_input_df_2024), axis=1)
+    atb_input_df_2022["units"] = atb_input_df_2022.apply(lambda x: "%-yr" if x["core_metric_parameter"].casefold() == "fixed o&m" else x["units"], axis=1)
+    atb_input_df_2024["units"] = atb_input_df_2024.apply(lambda x: "%-yr" if x["core_metric_parameter"].casefold() == "fixed o&m" else x["units"], axis=1)
     return atb_input_df_2022, atb_input_df_2024
 
 

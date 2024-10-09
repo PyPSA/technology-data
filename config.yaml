@@ -5,7 +5,7 @@ years : [2020, 2025, 2030, 2035, 2040, 2045, 2050]
 
 nrel_atb:
     nrel_atb_input_years : [2022, 2024]
-    nrel_atb_columns_to_keep : ["core_metric_parameter", "core_metric_case", "core_metric_variable", "technology", "technology_alias", "techdetail", "display_name", "scenario", "units", "value"]
+    nrel_atb_columns_to_keep : ["atb_year", "core_metric_parameter", "core_metric_case", "core_metric_variable", "technology", "technology_alias", "techdetail", "display_name", "scenario", "units", "value"]
     nrel_atb_core_metric_parameter_to_keep : ["CAPEX", "CF", "Fixed O&M", "Variable O&M", "Fuel", "WACC Real", "Additional OCC"]
 
 expectation : "" # tech data uncertainty, possible options [None, "optimist", "pessimist"]

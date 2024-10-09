@@ -77,12 +77,37 @@ def calculate_fom_percentage(x, dataframe):
         return x.value
 
 
+def replace_technology_name():
+    conversion_dict = {
+        "newAvgCF2ndGen": "coal",
+    }
+
 def pre_process_input_file(input_file_list, list_years, list_columns_to_keep, list_core_metric_parameter_to_keep):
     atb_input_df_2022, atb_input_df_2024 = filter_input_file(input_file_list, list_years, list_columns_to_keep, list_core_metric_parameter_to_keep)
     atb_input_df_2022["value"] = atb_input_df_2022.apply(lambda x: calculate_fom_percentage(x, atb_input_df_2022), axis=1)
     atb_input_df_2024["value"] = atb_input_df_2024.apply(lambda x: calculate_fom_percentage(x, atb_input_df_2024), axis=1)
     atb_input_df_2022["units"] = atb_input_df_2022.apply(lambda x: "%-yr" if x["core_metric_parameter"].casefold() == "fixed o&m" else x["units"], axis=1)
     atb_input_df_2024["units"] = atb_input_df_2024.apply(lambda x: "%-yr" if x["core_metric_parameter"].casefold() == "fixed o&m" else x["units"], axis=1)
+
+    atb_cost_df_2020 = atb_input_df_2022.loc[
+                       :,
+                       ("techdetail", "core_metric_parameter", "value", "units", "display_name", "atb_year", "scenario", "core_metric_case")
+                       ].rename(columns={"techdetail": "technology", "core_metric_parameter": "parameter", "units": "unit", "display_name": "further description", "atb_year": "currency_year"})
+    atb_cost_df_2020["source"] = "NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F"
+
+    # techdetail --> technology
+    # core_metric_parameter --> parameter
+    # value --> value
+    # units --> unit
+    # source --> NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB
+    # display_name --> further description
+    # atb_year --> currency_year
+
+    # create a new column technology_alias_detail = technology_alias.concat(techdetail)
+    # Note: core_metric_variable is used such that costs_(core_metric_variable).csv
+
+
+
     return atb_input_df_2022, atb_input_df_2024
 
 

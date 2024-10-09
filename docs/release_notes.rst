@@ -5,6 +5,7 @@ Release Notes
 .. Upcoming Release
 .. ================
 
+* added geothermal district heating as `central geothermal-sourced heat pump` based on DEA technology catalogue ("45.1.a Geothermal DH, 1200m, E")
 
 Technology-Data 0.9.2 (30 August 2024)
 ======================================

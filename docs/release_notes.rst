@@ -7,6 +7,9 @@ Release Notes
 
 * fixed DEA technology data sheet name for central water tank storage to point to actual PTES data
 
+* added geothermal district heating as `central geothermal-sourced heat pump` based on DEA technology catalogue ("45.1.a Geothermal DH, 1200m, E")
+
+
 Technology-Data 0.9.2 (30 August 2024)
 ======================================
 

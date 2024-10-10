@@ -77,37 +77,60 @@ def calculate_fom_percentage(x, dataframe):
         return x.value
 
 
-def replace_technology_name():
+def replace_technology_name(dataframe, column_name):
     conversion_dict = {
-        "newAvgCF2ndGen": "coal",
+        "Coal_newAvgCF2ndGen": "coal",
+        "Natural_Gas_CTAvgCF": "CCGT",
+        "Hydropower_NPD1": "hydro",
+        "Hydropower_NSD1": "ror",
+        "Pumped_Storage_Hydropower_NatlClass1": "PHS",
+        "Nuclear_Nuclear": "nuclear",
+        "Geothermal_HydroFlash": "geothermal",
+        "Land-Based_Wind_Class1": "onwind",
+        "Offshore_Wind_Class1": "offwind",
+        "Utility_PV_Class1": "solar-utility",
+        "Commercial_PV_Class1": "solar-rooftop",
+        "Utility-Scale_Battery_Storage_4Hr_Battery_Storage": "battery storage",
+        "Biopower_Dedicated": "biomass",
     }
+    dataframe[column_name] = dataframe[column_name].replace(conversion_dict)
+    return dataframe
+
+
+def concatenate_columns(dataframe, column_name, column_name_list):
+    dataframe[column_name] = dataframe[column_name_list].astype(str).agg('_'.join, axis=1)
+    dataframe[column_name] = dataframe[column_name].str.replace(" ", "_")
+    return dataframe
+
 
 def pre_process_input_file(input_file_list, list_years, list_columns_to_keep, list_core_metric_parameter_to_keep):
+
     atb_input_df_2022, atb_input_df_2024 = filter_input_file(input_file_list, list_years, list_columns_to_keep, list_core_metric_parameter_to_keep)
+
+    # normalize Fixed O&M by CAPEX (or Additional OCC for retrofit technologies)
     atb_input_df_2022["value"] = atb_input_df_2022.apply(lambda x: calculate_fom_percentage(x, atb_input_df_2022), axis=1)
     atb_input_df_2024["value"] = atb_input_df_2024.apply(lambda x: calculate_fom_percentage(x, atb_input_df_2024), axis=1)
+
+    # modify the unit of the normalized Fixed O&M to %-yr
     atb_input_df_2022["units"] = atb_input_df_2022.apply(lambda x: "%-yr" if x["core_metric_parameter"].casefold() == "fixed o&m" else x["units"], axis=1)
     atb_input_df_2024["units"] = atb_input_df_2024.apply(lambda x: "%-yr" if x["core_metric_parameter"].casefold() == "fixed o&m" else x["units"], axis=1)
 
-    atb_cost_df_2020 = atb_input_df_2022.loc[
-                       :,
-                       ("techdetail", "core_metric_parameter", "value", "units", "display_name", "atb_year", "scenario", "core_metric_case")
-                       ].rename(columns={"techdetail": "technology", "core_metric_parameter": "parameter", "units": "unit", "display_name": "further description", "atb_year": "currency_year"})
-    atb_cost_df_2020["source"] = "NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F"
+    # create a new column technology_alias_detail from the concatenation of the technology_alias and techdetail columns
+    concatenate_columns(atb_input_df_2022, "technology_alias_detail", ["technology_alias", "techdetail"])
+    concatenate_columns(atb_input_df_2024, "technology_alias_detail", ["technology_alias", "techdetail"])
 
-    # techdetail --> technology
-    # core_metric_parameter --> parameter
-    # value --> value
-    # units --> unit
-    # source --> NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB
-    # display_name --> further description
-    # atb_year --> currency_year
+    # replace technology_alias_detail with PyPSA technology names
+    replace_technology_name(atb_input_df_2022, "technology_alias_detail")
+    replace_technology_name(atb_input_df_2024, "technology_alias_detail")
 
-    # create a new column technology_alias_detail = technology_alias.concat(techdetail)
+    # add source column
+    atb_input_df_2022["source"] = "NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F"
+    atb_input_df_2024["source"] = "NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F"
+
+    atb_input_df_2022 = atb_input_df_2022.loc[:, ("technology_alias_detail", "core_metric_parameter", "value", "units", "source", "display_name", "atb_year")].rename(columns={"technology_alias_detail": "technology", "core_metric_parameter": "parameter", "units": "unit", "display_name": "further description", "atb_year": "currency_year"})
+    atb_input_df_2024 = atb_input_df_2024.loc[:, ("technology_alias_detail", "core_metric_parameter", "value", "units", "source", "display_name", "atb_year")].rename(columns={"technology_alias_detail": "technology", "core_metric_parameter": "parameter", "units": "unit", "display_name": "further description", "atb_year": "currency_year"})
+
     # Note: core_metric_variable is used such that costs_(core_metric_variable).csv
-
-
-
     return atb_input_df_2022, atb_input_df_2024
 
 
@@ -128,11 +151,9 @@ if __name__ == "__main__":
 
     print(df_2022.columns)
     df_2022.to_csv("2022_data.csv")
-    print(df_2022["core_metric_parameter"].unique())
-    print(df_2022["core_metric_variable"].unique())
+    print(df_2022["parameter"].unique())
     print(df_2022.shape)
     print(df_2024.columns)
     df_2024.to_csv("2024_data.csv")
-    print(df_2024["core_metric_parameter"].unique())
-    print(df_2024["core_metric_variable"].unique())
+    print(df_2024["parameter"].unique())
     print(df_2024.shape)

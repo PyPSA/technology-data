@@ -77,22 +77,7 @@ def calculate_fom_percentage(x, dataframe):
         return x.value
 
 
-def replace_technology_name(dataframe, column_name):
-    conversion_dict = {
-        "Coal_newAvgCF2ndGen": "coal",
-        "Natural_Gas_CTAvgCF": "CCGT",
-        "Hydropower_NPD1": "hydro",
-        "Hydropower_NSD1": "ror",
-        "Pumped_Storage_Hydropower_NatlClass1": "PHS",
-        "Nuclear_Nuclear": "nuclear",
-        "Geothermal_HydroFlash": "geothermal",
-        "Land-Based_Wind_Class1": "onwind",
-        "Offshore_Wind_Class1": "offwind",
-        "Utility_PV_Class1": "solar-utility",
-        "Commercial_PV_Class1": "solar-rooftop",
-        "Utility-Scale_Battery_Storage_4Hr_Battery_Storage": "battery storage",
-        "Biopower_Dedicated": "biomass",
-    }
+def replace_value_name(dataframe, conversion_dict, column_name):
     dataframe[column_name] = dataframe[column_name].replace(conversion_dict)
     return dataframe
 
@@ -103,7 +88,7 @@ def concatenate_columns(dataframe, column_name, column_name_list):
     return dataframe
 
 
-def pre_process_input_file(input_file_list, list_years, list_columns_to_keep, list_core_metric_parameter_to_keep):
+def pre_process_input_file(input_file_list, list_years, list_columns_to_keep, list_core_metric_parameter_to_keep, nrel_source):
 
     atb_input_df_2022, atb_input_df_2024 = filter_input_file(input_file_list, list_years, list_columns_to_keep, list_core_metric_parameter_to_keep)
 
@@ -119,16 +104,61 @@ def pre_process_input_file(input_file_list, list_years, list_columns_to_keep, li
     concatenate_columns(atb_input_df_2022, "technology_alias_detail", ["technology_alias", "techdetail"])
     concatenate_columns(atb_input_df_2024, "technology_alias_detail", ["technology_alias", "techdetail"])
 
+    technology_conversion_dict = {
+        "Coal_newAvgCF2ndGen": "coal",
+        "Natural_Gas_CTAvgCF": "CCGT",
+        "Hydropower_NPD1": "hydro",
+        "Hydropower_NSD1": "ror",
+        "Pumped_Storage_Hydropower_NatlClass1": "PHS",
+        "Nuclear_Nuclear": "nuclear",
+        "Geothermal_HydroFlash": "geothermal",
+        "Land-Based_Wind_Class1": "onwind",
+        "Offshore_Wind_Class1": "offwind",
+        "Utility_PV_Class1": "solar-utility",
+        "Commercial_PV_Class1": "solar-rooftop",
+        "Utility-Scale_Battery_Storage_4Hr_Battery_Storage": "battery storage",
+        "Biopower_Dedicated": "biomass",
+    }
+
     # replace technology_alias_detail with PyPSA technology names
-    replace_technology_name(atb_input_df_2022, "technology_alias_detail")
-    replace_technology_name(atb_input_df_2024, "technology_alias_detail")
+    replace_value_name(atb_input_df_2022, technology_conversion_dict, "technology_alias_detail")
+    replace_value_name(atb_input_df_2024, technology_conversion_dict, "technology_alias_detail")
 
     # add source column
-    atb_input_df_2022["source"] = "NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F"
-    atb_input_df_2024["source"] = "NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F"
+    atb_input_df_2022["source"] = nrel_source
+    atb_input_df_2024["source"] = nrel_source
 
-    atb_input_df_2022 = atb_input_df_2022.loc[:, ("technology_alias_detail", "core_metric_parameter", "value", "units", "source", "display_name", "atb_year")].rename(columns={"technology_alias_detail": "technology", "core_metric_parameter": "parameter", "units": "unit", "display_name": "further description", "atb_year": "currency_year"})
-    atb_input_df_2024 = atb_input_df_2024.loc[:, ("technology_alias_detail", "core_metric_parameter", "value", "units", "source", "display_name", "atb_year")].rename(columns={"technology_alias_detail": "technology", "core_metric_parameter": "parameter", "units": "unit", "display_name": "further description", "atb_year": "currency_year"})
+    column_rename_dict = {
+        "technology_alias_detail": "technology",
+        "core_metric_parameter": "parameter",
+        "units": "unit",
+        "display_name": "further description",
+        "atb_year": "currency_year",
+        "core_metric_case": "financial_case"
+    }
+
+
+    # here you need to keep the core_metric_variable because this is what you need to split the atb --> cost_year.csv
+    # ("technology_alias_detail", "core_metric_parameter", "value", "units", "source", "display_name", "atb_year", "scenario", "core_metric_case") = nrel_atb_columns_to_keep - le righe che non mi servono
+    atb_input_df_2022 = atb_input_df_2022.loc[:, ("technology_alias_detail", "core_metric_parameter", "value", "units", "source", "display_name", "atb_year", "scenario", "core_metric_case")].rename(columns=column_rename_dict)
+    atb_input_df_2024 = atb_input_df_2024.loc[:, ("technology_alias_detail", "core_metric_parameter", "value", "units", "source", "display_name", "atb_year", "scenario", "core_metric_case")].rename(columns=column_rename_dict)
+
+    parameter_conversion_dict = {
+        "CAPEX": "investment",
+        "Fixed O&M": "FOM",
+        "Variable O&M": "VOM",
+        "Fuel": "fuel",
+        "Additional OCC": "investment",
+        "WACC Real": "discount rate"
+    }
+
+    # replace parameter with PyPSA cost parameter names
+    replace_value_name(atb_input_df_2022, parameter_conversion_dict, "parameter")
+    replace_value_name(atb_input_df_2024, parameter_conversion_dict, "parameter")
+
+    # Filter the technolies in atb_input_* with those in PyPSA
+    # These rows should be replacing existing values in the next costs_....csv files
+    # The rows which do not correspond to pypsa technologies are to be appended to the costs_....csv files
 
     # Note: core_metric_variable is used such that costs_(core_metric_variable).csv
     return atb_input_df_2022, atb_input_df_2024
@@ -142,12 +172,13 @@ if __name__ == "__main__":
     input_file_list_atb = snakemake.input.nrel_atb_input_files
     nrel_atb_columns_to_keep = snakemake.config["nrel_atb"]["nrel_atb_columns_to_keep"]
     nrel_atb_core_metric_parameter_to_keep = snakemake.config["nrel_atb"]["nrel_atb_core_metric_parameter_to_keep"]
+    nrel_atb_source_link = snakemake.config["nrel_atb"]["nrel_atb_source_link"]
 
     for i, input_file in enumerate(snakemake.input.cost_files_to_modify):
         cost_df = pd.read_csv(input_file).set_index("technology")
         cost_df.to_csv(snakemake.output[i])
 
-    df_2022, df_2024 = pre_process_input_file(input_file_list_atb, year_list, nrel_atb_columns_to_keep, nrel_atb_core_metric_parameter_to_keep)
+    df_2022, df_2024 = pre_process_input_file(input_file_list_atb, year_list, nrel_atb_columns_to_keep, nrel_atb_core_metric_parameter_to_keep, nrel_atb_source_link)
 
     print(df_2022.columns)
     df_2022.to_csv("2022_data.csv")

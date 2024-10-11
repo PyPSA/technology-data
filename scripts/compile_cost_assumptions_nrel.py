@@ -137,11 +137,10 @@ def pre_process_input_file(input_file_list, list_years, list_columns_to_keep, li
         "core_metric_case": "financial_case"
     }
 
+    tuple_output_columns_to_keep = ("technology_alias_detail", "core_metric_parameter", "value", "units", "source", "display_name", "atb_year", "scenario", "core_metric_case", "core_metric_variable")
 
-    # here you need to keep the core_metric_variable because this is what you need to split the atb --> cost_year.csv
-    # ("technology_alias_detail", "core_metric_parameter", "value", "units", "source", "display_name", "atb_year", "scenario", "core_metric_case") = nrel_atb_columns_to_keep - le righe che non mi servono
-    atb_input_df_2022 = atb_input_df_2022.loc[:, ("technology_alias_detail", "core_metric_parameter", "value", "units", "source", "display_name", "atb_year", "scenario", "core_metric_case")].rename(columns=column_rename_dict)
-    atb_input_df_2024 = atb_input_df_2024.loc[:, ("technology_alias_detail", "core_metric_parameter", "value", "units", "source", "display_name", "atb_year", "scenario", "core_metric_case")].rename(columns=column_rename_dict)
+    atb_input_df_2022 = atb_input_df_2022.loc[:, tuple_output_columns_to_keep].rename(columns=column_rename_dict)
+    atb_input_df_2024 = atb_input_df_2024.loc[:, tuple_output_columns_to_keep].rename(columns=column_rename_dict)
 
     parameter_conversion_dict = {
         "CAPEX": "investment",

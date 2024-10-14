@@ -7,6 +7,7 @@ from _helpers import mock_snakemake
 
 
 def filter_input_file(input_file_path, list_years, list_columns_to_keep, list_core_metric_parameter_to_keep):
+
     atb_input_df = pd.read_parquet(input_file_path)
     list_core_metric_parameter_to_keep = [str(x).casefold() for x in list_core_metric_parameter_to_keep]
     list_years = [str(x).casefold() for x in list_years]
@@ -26,10 +27,10 @@ def filter_input_file(input_file_path, list_years, list_columns_to_keep, list_co
     atb_input_df = atb_input_df.loc[atb_input_df["core_metric_parameter"].str.casefold().isin(list_core_metric_parameter_to_keep)]
 
     # --> select rows based on core_metric_variable
-    if input_file_path.stem == "atb_e_2022":
+    if input_file_path.name == "atb_e_2022.parquet":
         # Note: 2020 data are fetched from the input file atb_e_2022.
         atb_input_df = atb_input_df.loc[atb_input_df["core_metric_variable"].astype(str).str.casefold() == list_years[0]]
-    elif input_file_path.stem == "atb_e_2024":
+    elif input_file_path.name == "atb_e_2024.parquet":
         # Note: 2025, 2030, 2035, 2040, 2045, 2050 data are fetched from the input file atb_e_2024.*
         atb_input_df = atb_input_df.loc[atb_input_df["core_metric_variable"].astype(str).str.casefold().isin(list_years[1:])]
     else:

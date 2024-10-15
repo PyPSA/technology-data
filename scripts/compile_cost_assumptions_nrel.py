@@ -92,22 +92,24 @@ def pre_process_input_file(input_file_list, list_years, list_columns_to_keep, li
 
     atb_input_df_2022, atb_input_df_2024 = dictionary_list[0], dictionary_list[1]
 
-    # normalize Fixed O&M by CAPEX (or Additional OCC for retrofit technologies)
+    # Normalize Fixed O&M by CAPEX (or Additional OCC for retrofit technologies)
     atb_input_df_2022["value"] = atb_input_df_2022.apply(lambda x: calculate_fom_percentage(x, atb_input_df_2022), axis=1)
     atb_input_df_2024["value"] = atb_input_df_2024.apply(lambda x: calculate_fom_percentage(x, atb_input_df_2024), axis=1)
 
-    # modify the unit of the normalized Fixed O&M to %-yr
+    # Modify the unit of the normalized Fixed O&M to %-yr
     atb_input_df_2022["units"] = atb_input_df_2022.apply(lambda x: "%-yr" if x["core_metric_parameter"].casefold() == "fixed o&m" else x["units"], axis=1)
     atb_input_df_2024["units"] = atb_input_df_2024.apply(lambda x: "%-yr" if x["core_metric_parameter"].casefold() == "fixed o&m" else x["units"], axis=1)
 
-    # create a new column technology_alias_detail from the concatenation of the technology_alias and techdetail columns
+    # Create a new column technology_alias_detail from the concatenation of the technology_alias and techdetail columns
     concatenate_columns(atb_input_df_2022, "technology_alias_detail", ["technology_alias", "techdetail"])
     concatenate_columns(atb_input_df_2024, "technology_alias_detail", ["technology_alias", "techdetail"])
 
+    # For WACC_Real, Hydropower provides just one row. This one row has to be associated with all types of hydropower
+    # The one WACC_Real value is replicated such that each type of hydropower has its own WACC_Real entry
     atb_input_df_2022 = repeat_values(atb_input_df_2022, ["Hydropower_NPD1", "Hydropower_NSD1"], "technology_alias_detail", "Hydropower_*", 2)
     atb_input_df_2024 = repeat_values(atb_input_df_2024, ["Hydropower_NPD1", "Hydropower_NSD1"], "technology_alias_detail", "Hydropower_*", 2)
 
-    # replace technology_alias_detail with PyPSA technology names
+    # Replace technology_alias_detail with PyPSA technology names
     technology_conversion_dict_atb = {
         "Coal_Coal-new": "coal",
         "Coal_newAvgCF2ndGen": "coal",
@@ -141,11 +143,11 @@ def pre_process_input_file(input_file_list, list_years, list_columns_to_keep, li
     replace_value_name(atb_input_df_2022, technology_conversion_dict_atb, "technology_alias_detail")
     replace_value_name(atb_input_df_2024, technology_conversion_dict_atb, "technology_alias_detail")
 
-    # add source column
+    # Add source column
     atb_input_df_2022["source"] = nrel_source
     atb_input_df_2024["source"] = nrel_source
 
-    # rename columns and consider just columns to keep for output (**)
+    # Rename columns and consider just columns used in PyPSA
     column_rename_dict = {
         "technology_alias_detail": "technology",
         "core_metric_parameter": "parameter",
@@ -159,7 +161,7 @@ def pre_process_input_file(input_file_list, list_years, list_columns_to_keep, li
     atb_input_df_2022 = atb_input_df_2022.loc[:, tuple_output_columns_to_keep].rename(columns=column_rename_dict)
     atb_input_df_2024 = atb_input_df_2024.loc[:, tuple_output_columns_to_keep].rename(columns=column_rename_dict)
 
-    # replace parameter with PyPSA cost parameter names
+    # Replace parameter with PyPSA cost parameter names
     parameter_conversion_dict = {
         "CAPEX": "investment",
         "Fixed O&M": "FOM",

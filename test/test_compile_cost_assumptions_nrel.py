@@ -85,8 +85,10 @@ def test_repeat_values():
     assert string_comparison_df.empty
 
 
-# def test_calculate_fom_percentage():
-#     test_df = pd.DataFrame({"Name": ["Tom", "Paul", "Sarah"], "Age": [31, 42, 56]})
-#     calculate_fom_percentage(row, test_df)
+def test_calculate_fom_percentage():
+    test_df = pd.read_csv(pathlib.Path(path_cwd, "test", "test_data", "coal_test.csv"))
+    test_df["value"] = test_df.apply(lambda x: calculate_fom_percentage(x, test_df), axis=1)
+    test_df.to_csv("output_fom_test.csv")
+    assert False
 
 

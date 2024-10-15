@@ -54,9 +54,9 @@ def calculate_fom_percentage(x, dataframe):
 
     if x["core_metric_parameter"].casefold() == "fixed o&m":
         if "retrofit" in x["technology"].casefold():
-            fom_perc_value = x.value / dataframe.query("atb_year == @x.atb_year & core_metric_parameter.str.casefold() == 'additional occ' & core_metric_case == @x.core_metric_case & core_metric_variable == @x.core_metric_variable & technology == @x.technology & technology_alias == @x.technology_alias & techdetail == @x.techdetail & display_name == @x.display_name & scenario == @x.scenario")["value"]*100.0
+            fom_perc_value = x.value / dataframe.query("atb_year == @x.atb_year & core_metric_parameter.str.casefold() == 'additional occ' & core_metric_case == @x.core_metric_case & core_metric_variable == @x.core_metric_variable & technology == @x.technology & technology_alias == @x.technology_alias & display_name == @x.display_name & scenario == @x.scenario")["value"]*100.0
         else:
-            fom_perc_value = x.value / dataframe.query("atb_year == @x.atb_year & core_metric_parameter.str.casefold() == 'capex' & core_metric_case == @x.core_metric_case & core_metric_variable == @x.core_metric_variable & technology == @x.technology & technology_alias == @x.technology_alias & techdetail == @x.techdetail & display_name == @x.display_name & scenario == @x.scenario")["value"]*100.0
+            fom_perc_value = x.value / dataframe.query("atb_year == @x.atb_year & core_metric_parameter.str.casefold() == 'capex' & core_metric_case == @x.core_metric_case & core_metric_variable == @x.core_metric_variable & technology == @x.technology & technology_alias == @x.technology_alias & display_name == @x.display_name & scenario == @x.scenario")["value"]*100.0
         return round(fom_perc_value.values[0], 2)
     else:
         return x.value

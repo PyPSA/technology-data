@@ -84,11 +84,11 @@ def test_repeat_values():
     assert numeric_comparison_df.empty
     assert string_comparison_df.empty
 
-
-def test_calculate_fom_percentage():
+@pytest.mark.parametrize(
+    "display_name, expected",
+    [("Coal-new", 2.13), ("Coal-95%-CCS", 2.06), ("Coal-99%-CCS", 2.05), ("Coal-IGCC", 2.38), ("Coal-IGCC-90%-CCS", 2.37), ("Coal integrated retrofit 90%-CCS", 7.37), ("Coal integrated retrofit 95%-CCS", 7.22)],
+)
+def test_calculate_fom_percentage(display_name, expected):
     test_df = pd.read_csv(pathlib.Path(path_cwd, "test", "test_data", "coal_test.csv"))
     test_df["value"] = test_df.apply(lambda x: calculate_fom_percentage(x, test_df), axis=1)
-    test_df.to_csv("output_fom_test.csv")
-    assert False
-
-
+    assert test_df.loc[(test_df["display_name"] == display_name) & (test_df["core_metric_parameter"] == "Fixed O&M")]["value"].item() == expected

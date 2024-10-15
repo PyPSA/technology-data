@@ -60,9 +60,30 @@ def test_concatenate_columns():
 
 
 def test_repeat_values():
-    dataframe = pd.read_csv("/Users/fabriziofinozzi/Desktop/OpenEnergyTransition/repo/technology-data/intermediate_atp_2022.csv")
-    repeat_values(dataframe, "technology_alias_detail")
-    assert False
+    test_df = pd.DataFrame({"Name": ["Tom", "Paul", "Sarah", "Sabrina"], "Age": [31, 31, 31, 12],
+                            "City": ["Rome", "Rome", "Rome", "Berlin"]})
+
+    # Numeric values
+    numeric_reference_df = pd.DataFrame(
+        {"Name": ["Sabrina", "Tom", "Tom", "Tom", "Paul", "Paul", "Paul", "Sarah", "Sarah", "Sarah"],
+         "Age": [12, 40, 41, 42, 40, 41, 42, 40, 41, 42],
+         "City": ["Berlin", "Rome", "Rome", "Rome", "Rome", "Rome", "Rome", "Rome", "Rome", "Rome"]
+         })
+    numeric_output_df = repeat_values(test_df, [40, 41, 42], "Age", 31, 3)
+    numeric_comparison_df = numeric_output_df.compare(numeric_reference_df)
+
+    # String values
+    string_reference_df = pd.DataFrame(
+        {"Name": ["Sabrina", "Tom", "Tom", "Tom", "Paul", "Paul", "Paul", "Sarah", "Sarah", "Sarah"],
+         "Age": [12, 31, 31, 31, 31, 31, 31, 31, 31, 31],
+         "City": ["Berlin", "Munich", "Paris", "Mainz", "Munich", "Paris", "Mainz", "Munich", "Paris", "Mainz"]
+         })
+    string_output_df = repeat_values(test_df, ["Munich", "Paris", "Mainz"], "City", "rome", 3)
+    string_comparison_df = string_output_df.compare(string_reference_df)
+
+    assert numeric_comparison_df.empty
+    assert string_comparison_df.empty
+
 
 # def test_calculate_fom_percentage():
 #     test_df = pd.DataFrame({"Name": ["Tom", "Paul", "Sarah"], "Age": [31, 42, 56]})

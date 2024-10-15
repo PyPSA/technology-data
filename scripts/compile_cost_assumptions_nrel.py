@@ -73,13 +73,13 @@ def concatenate_columns(dataframe, column_name, column_name_list):
     return dataframe
 
 
-def repeat_values(dataframe, column_name):
-    dataframe_to_repeat = dataframe.query("technology_alias_detail.str.casefold() == 'hydropower_*'")
-    dataframe_to_keep = dataframe.query("technology_alias_detail.str.casefold() != 'hydropower_*'")
-    dataframe_repeated = pd.DataFrame(np.repeat(dataframe_to_repeat.values, 2, axis=0), columns=dataframe_to_repeat.columns)
-    dataframe_repeated.loc[0::2, column_name] = "Hydropower_NPD1"
-    dataframe_repeated.loc[1::2, column_name] = "Hydropower_NSD1"
-    return pd.concat([dataframe_to_keep, dataframe_repeated])
+def repeat_values(dataframe, values_list, column_name, value_to_filter, n_repeat):
+    dataframe_to_repeat = dataframe.loc[dataframe[column_name].astype(str).str.casefold() == str(value_to_filter).casefold()]
+    dataframe_to_keep = dataframe.loc[dataframe[column_name].astype(str).str.casefold() != str(value_to_filter).casefold()]
+    dataframe_repeated = pd.DataFrame(np.repeat(dataframe_to_repeat.values, n_repeat, axis=0), columns=dataframe_to_repeat.columns)
+    for i_rep in range(n_repeat):
+        dataframe_repeated.loc[i_rep::n_repeat, column_name] = values_list[i_rep]
+    return pd.concat([dataframe_to_keep, dataframe_repeated], ignore_index=True)
 
 
 def pre_process_input_file(input_file_list, list_years, list_columns_to_keep, list_core_metric_parameter_to_keep, nrel_source):
@@ -104,8 +104,8 @@ def pre_process_input_file(input_file_list, list_years, list_columns_to_keep, li
     concatenate_columns(atb_input_df_2022, "technology_alias_detail", ["technology_alias", "techdetail"])
     concatenate_columns(atb_input_df_2024, "technology_alias_detail", ["technology_alias", "techdetail"])
 
-    atb_input_df_2022 = repeat_values(atb_input_df_2022, "technology_alias_detail")
-    atb_input_df_2024 = repeat_values(atb_input_df_2024, "technology_alias_detail")
+    atb_input_df_2022 = repeat_values(atb_input_df_2022, ["Hydropower_NPD1", "Hydropower_NSD1"], "technology_alias_detail", "Hydropower_*", 2)
+    atb_input_df_2024 = repeat_values(atb_input_df_2024, ["Hydropower_NPD1", "Hydropower_NSD1"], "technology_alias_detail", "Hydropower_*", 2)
 
     # replace technology_alias_detail with PyPSA technology names
     technology_conversion_dict_atb = {

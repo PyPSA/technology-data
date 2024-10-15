@@ -9,13 +9,13 @@ import pandas as pd
 sys.path.append("./scripts")
 
 from test.conftest import get_config_dict
-from compile_cost_assumptions_nrel import calculate_fom_percentage, concatenate_columns, filter_input_file, replace_value_name
+from compile_cost_assumptions_nrel import calculate_fom_percentage, concatenate_columns, filter_input_file, repeat_values, replace_value_name
 
 path_cwd = pathlib.Path.cwd()
 
 @pytest.mark.parametrize(
     "year, expected",
-    [(2019, "atb_e_2019 - the input file considered is not among the needed ones: atb_e_2022.parquet, atb_e_2024.parquet"), (2022, (3098, 12)), (2024, (20334, 12))],
+    [(2019, "atb_e_2019 - the input file considered is not among the needed ones: atb_e_2022.parquet, atb_e_2024.parquet"), (2022, (3092, 12)), (2024, (20334, 12))],
 )
 def test_filter_input_file(get_config_dict, year, expected):
     """
@@ -42,7 +42,7 @@ def test_replace_value_name():
     """
     test_df = pd.DataFrame({"Name": ["Tom", "Paul", "John", "Sarah"], "Age": [31, 42, 12, 56], "Country": ["US", "DE", "UK", "IT"]})
     reference_df = pd.DataFrame({"Name": ["Tom", "Paul", "John", "Sarah"], "Age": [31, 42, 12, 56], "Country": ["United States", "Germany", "United Kingdom", "IT"]})
-    conversion_dict = {"US": "United States", "DE": "Germany", "UK": "United Kingdom"}
+    conversion_dict = {"US": "United States", "DE": "Germany", "UK": "United Kingdom", "ES": "Spain"}
     output_df = replace_value_name(test_df, conversion_dict, "Country")
     comparison_df = output_df.compare(reference_df)
     assert comparison_df.empty
@@ -59,8 +59,13 @@ def test_concatenate_columns():
     assert comparison_df.empty
 
 
-def test_calculate_fom_percentage():
-    test_df = pd.DataFrame({"Name": ["Tom", "Paul", "Sarah"], "Age": [31, 42, 56]})
-    calculate_fom_percentage(row, test_df)
+def test_repeat_values():
+    dataframe = pd.read_csv("/Users/fabriziofinozzi/Desktop/OpenEnergyTransition/repo/technology-data/intermediate_atp_2022.csv")
+    repeat_values(dataframe, "technology_alias_detail")
+    assert False
+
+# def test_calculate_fom_percentage():
+#     test_df = pd.DataFrame({"Name": ["Tom", "Paul", "Sarah"], "Age": [31, 42, 56]})
+#     calculate_fom_percentage(row, test_df)
 
 

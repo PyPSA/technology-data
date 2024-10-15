@@ -3,6 +3,7 @@
 
 import pandas as pd
 import pathlib
+import numpy as np
 from _helpers import mock_snakemake
 
 
@@ -39,6 +40,9 @@ def filter_input_file(input_file_path, list_years, list_columns_to_keep, list_co
     # --> drop duplicated rows
     atb_input_df = atb_input_df.drop_duplicates(keep="first")
 
+    # --> remove technology AEO
+    atb_input_df = atb_input_df.query("technology.str.casefold() != 'aeo'")
+
     return atb_input_df
 
 
@@ -69,6 +73,15 @@ def concatenate_columns(dataframe, column_name, column_name_list):
     return dataframe
 
 
+def repeat_values(dataframe, column_name):
+    dataframe_to_repeat = dataframe.query("technology_alias_detail.str.casefold() == 'hydropower_*'")
+    dataframe_to_keep = dataframe.query("technology_alias_detail.str.casefold() != 'hydropower_*'")
+    dataframe_repeated = pd.DataFrame(np.repeat(dataframe_to_repeat.values, 2, axis=0), columns=dataframe_to_repeat.columns)
+    dataframe_repeated.loc[0::2, column_name] = "Hydropower_NPD1"
+    dataframe_repeated.loc[1::2, column_name] = "Hydropower_NSD1"
+    return pd.concat([dataframe_to_keep, dataframe_repeated])
+
+
 def pre_process_input_file(input_file_list, list_years, list_columns_to_keep, list_core_metric_parameter_to_keep, nrel_source):
 
     # read inputs and filter relevant columns and relevant core_metric_variables (i.e. the years to consider)
@@ -91,16 +104,22 @@ def pre_process_input_file(input_file_list, list_years, list_columns_to_keep, li
     concatenate_columns(atb_input_df_2022, "technology_alias_detail", ["technology_alias", "techdetail"])
     concatenate_columns(atb_input_df_2024, "technology_alias_detail", ["technology_alias", "techdetail"])
 
+    atb_input_df_2022 = repeat_values(atb_input_df_2022, "technology_alias_detail")
+    atb_input_df_2024 = repeat_values(atb_input_df_2024, "technology_alias_detail")
+
     # replace technology_alias_detail with PyPSA technology names
-    technology_conversion_dict = {
+    technology_conversion_dict_atb = {
+        "Coal_Coal-new": "coal",
         "Coal_newAvgCF2ndGen": "coal",
         "Coal_*": "coal",
+        "Natural_Gas_NG_Combustion_Turbine_(F-Frame)": "CCGT",
         "Natural_Gas_CTAvgCF": "CCGT",
         "Natural_Gas_*": "CCGT",
         "Hydropower_NPD1": "hydro",
         "Hydropower_NSD1": "ror",
-        #"Hydropower_*": "hydro", # TODO: this values need to be duplicated because Hydropower_* becomes both hydro and ror
         "Pumped_Storage_Hydropower_NatlClass1": "PHS",
+        "Pumped_Storage_Hydropower_*": "PHS",
+        "Nuclear_Large": "nuclear",
         "Nuclear_Nuclear": "nuclear",
         "Nuclear_*": "nuclear",
         "Geothermal_HydroFlash": "geothermal",
@@ -119,8 +138,8 @@ def pre_process_input_file(input_file_list, list_years, list_columns_to_keep, li
         "CSP_Class2": "csp-tower",
         "CSP_*": "csp-tower",
     }
-    replace_value_name(atb_input_df_2022, technology_conversion_dict, "technology_alias_detail")
-    replace_value_name(atb_input_df_2024, technology_conversion_dict, "technology_alias_detail")
+    replace_value_name(atb_input_df_2022, technology_conversion_dict_atb, "technology_alias_detail")
+    replace_value_name(atb_input_df_2024, technology_conversion_dict_atb, "technology_alias_detail")
 
     # add source column
     atb_input_df_2022["source"] = nrel_source

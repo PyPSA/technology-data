@@ -110,7 +110,6 @@ def test_pre_process_input_file(get_config_dict, input_file_year, year, expected
     output_df = pre_process_input_file(input_file_path, year, nrel_atb_columns_to_keep, nrel_atb_core_metric_parameter_to_keep, nrel_atb_source_link)
     reference_parameter_list = sorted(["investment", "CF", "FOM", "VOM", "fuel", "discount rate"])
     output_parameter_list = sorted(list(output_df["parameter"].unique()))
-    print(output_parameter_list, reference_parameter_list)
     assert output_df.shape == expected
     assert len(output_parameter_list) == len(reference_parameter_list)
     assert all([x == y for x, y in zip(reference_parameter_list, output_parameter_list)])

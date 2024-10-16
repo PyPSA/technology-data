@@ -9,29 +9,28 @@ import pandas as pd
 sys.path.append("./scripts")
 
 from test.conftest import get_config_dict
-from compile_cost_assumptions_nrel import calculate_fom_percentage, concatenate_columns, filter_input_file, repeat_values, replace_value_name
+from compile_cost_assumptions_nrel import calculate_fom_percentage, concatenate_columns, filter_input_file, pre_process_input_file, repeat_values, replace_value_name
 
 path_cwd = pathlib.Path.cwd()
 
 @pytest.mark.parametrize(
-    "year, expected",
-    [(2019, "atb_e_2019 - the input file considered is not among the needed ones: atb_e_2022.parquet, atb_e_2024.parquet"), (2022, (3092, 12)), (2024, (20334, 12))],
+    "file_year, year, expected",
+    [(2019, 2020, "atb_e_2019 - the input file considered is not among the needed ones: atb_e_2022.parquet, atb_e_2024.parquet"), (2022, 2020, (3092, 12)), (2024, 2025, (3213, 12)), (2024, 2030, (3405, 12)), (2024, 2035, (3429, 12)), (2024, 2040, (3429, 12)), (2024, 2045, (3429, 12)), (2024, 2050, (3429, 12))],
 )
-def test_filter_input_file(get_config_dict, year, expected):
+def test_filter_input_file(get_config_dict, file_year, year, expected):
     """
     Verify what returned by filter_input_file.
     """
     config_dict = get_config_dict
-    list_years = config_dict["years"]
     list_columns_to_keep = config_dict["nrel_atb"]["nrel_atb_columns_to_keep"]
     list_core_metric_parameter_to_keep = config_dict["nrel_atb"]["nrel_atb_core_metric_parameter_to_keep"]
-    input_file_path = pathlib.Path(path_cwd, "inputs", "atb_e_{}.parquet".format(year))
-    if year in [2022, 2024]:
-        input_file = filter_input_file(input_file_path, list_years, list_columns_to_keep, list_core_metric_parameter_to_keep)
+    input_file_path = pathlib.Path(path_cwd, "inputs", "atb_e_{}.parquet".format(file_year))
+    if file_year in [2022, 2024]:
+        input_file = filter_input_file(input_file_path, year, list_columns_to_keep, list_core_metric_parameter_to_keep)
         assert input_file.shape == expected
     else:
         with pytest.raises(Exception) as excinfo:
-            input_file = filter_input_file(input_file_path, list_years, list_columns_to_keep,
+            input_file = filter_input_file(input_file_path, year, list_columns_to_keep,
                                            list_core_metric_parameter_to_keep)
         assert str(excinfo.value) == expected
 
@@ -98,3 +97,20 @@ def test_calculate_fom_percentage(display_name, expected):
     test_df = pd.read_csv(pathlib.Path(path_cwd, "test", "test_data", "coal_test.csv"))
     test_df["value"] = test_df.apply(lambda x: calculate_fom_percentage(x, test_df), axis=1)
     assert test_df.loc[(test_df["display_name"] == display_name) & (test_df["core_metric_parameter"] == "Fixed O&M")]["value"].item() == expected
+
+@pytest.mark.parametrize(
+    "input_file_year, year, expected", [(2022, 2020, (3098, 11)), (2024, 2050, (3435, 11))],
+)
+def test_pre_process_input_file(get_config_dict, input_file_year, year, expected):
+    config_dict = get_config_dict
+    input_file_path = pathlib.Path(path_cwd, "inputs", "atb_e_{}.parquet".format(input_file_year))
+    nrel_atb_columns_to_keep = config_dict["nrel_atb"]["nrel_atb_columns_to_keep"]
+    nrel_atb_core_metric_parameter_to_keep = config_dict["nrel_atb"]["nrel_atb_core_metric_parameter_to_keep"]
+    nrel_atb_source_link = config_dict["nrel_atb"]["nrel_atb_source_link"]
+    output_df = pre_process_input_file(input_file_path, year, nrel_atb_columns_to_keep, nrel_atb_core_metric_parameter_to_keep, nrel_atb_source_link)
+    reference_parameter_list = sorted(["investment", "CF", "FOM", "VOM", "fuel", "discount rate"])
+    output_parameter_list = sorted(list(output_df["parameter"].unique()))
+    print(output_parameter_list, reference_parameter_list)
+    assert output_df.shape == expected
+    assert len(output_parameter_list) == len(reference_parameter_list)
+    assert all([x == y for x, y in zip(reference_parameter_list, output_parameter_list)])

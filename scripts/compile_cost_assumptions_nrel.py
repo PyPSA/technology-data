@@ -7,11 +7,11 @@ import numpy as np
 from _helpers import mock_snakemake
 
 
-def filter_input_file(input_file_path, list_years, list_columns_to_keep, list_core_metric_parameter_to_keep):
+def filter_input_file(input_file_path, year, list_columns_to_keep, list_core_metric_parameter_to_keep):
 
     atb_input_df = pd.read_parquet(input_file_path)
     list_core_metric_parameter_to_keep = [str(x).casefold() for x in list_core_metric_parameter_to_keep]
-    list_years = [str(x).casefold() for x in list_years]
+    year_string = str(year).casefold()
 
     # --> select columns
     for column_name in list_columns_to_keep:
@@ -30,10 +30,10 @@ def filter_input_file(input_file_path, list_years, list_columns_to_keep, list_co
     # --> select rows based on core_metric_variable
     if input_file_path.name == "atb_e_2022.parquet":
         # Note: 2020 data are fetched from the input file atb_e_2022.
-        atb_input_df = atb_input_df.loc[atb_input_df["core_metric_variable"].astype(str).str.casefold() == list_years[0]]
+        atb_input_df = atb_input_df.loc[atb_input_df["core_metric_variable"].astype(str).str.casefold() == year_string]
     elif input_file_path.name == "atb_e_2024.parquet":
         # Note: 2025, 2030, 2035, 2040, 2045, 2050 data are fetched from the input file atb_e_2024.*
-        atb_input_df = atb_input_df.loc[atb_input_df["core_metric_variable"].astype(str).str.casefold().isin(list_years[1:])]
+        atb_input_df = atb_input_df.loc[atb_input_df["core_metric_variable"].astype(str).str.casefold() == year_string]
     else:
         raise Exception("{} - the input file considered is not among the needed ones: atb_e_2022.parquet, atb_e_2024.parquet".format(input_file_path.stem))
 
@@ -82,32 +82,24 @@ def repeat_values(dataframe, values_list, column_name, value_to_filter, n_repeat
     return pd.concat([dataframe_to_keep, dataframe_repeated], ignore_index=True)
 
 
-def pre_process_input_file(input_file_list, list_years, list_columns_to_keep, list_core_metric_parameter_to_keep, nrel_source):
+def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_core_metric_parameter_to_keep, nrel_source):
 
     # read inputs and filter relevant columns and relevant core_metric_variables (i.e. the years to consider)
-    dictionary_list = []
-    for file_path in input_file_list:
-        file_path_val = pathlib.Path(file_path)
-        dictionary_list.append(filter_input_file(file_path_val, list_years, list_columns_to_keep, list_core_metric_parameter_to_keep))
 
-    atb_input_df_2022, atb_input_df_2024 = dictionary_list[0], dictionary_list[1]
+    atb_input_df = filter_input_file(pathlib.Path(input_file_path), year, list_columns_to_keep, list_core_metric_parameter_to_keep)
 
     # Normalize Fixed O&M by CAPEX (or Additional OCC for retrofit technologies)
-    atb_input_df_2022["value"] = atb_input_df_2022.apply(lambda x: calculate_fom_percentage(x, atb_input_df_2022), axis=1)
-    atb_input_df_2024["value"] = atb_input_df_2024.apply(lambda x: calculate_fom_percentage(x, atb_input_df_2024), axis=1)
+    atb_input_df["value"] = atb_input_df.apply(lambda x: calculate_fom_percentage(x, atb_input_df), axis=1)
 
     # Modify the unit of the normalized Fixed O&M to %-yr
-    atb_input_df_2022["units"] = atb_input_df_2022.apply(lambda x: "%-yr" if x["core_metric_parameter"].casefold() == "fixed o&m" else x["units"], axis=1)
-    atb_input_df_2024["units"] = atb_input_df_2024.apply(lambda x: "%-yr" if x["core_metric_parameter"].casefold() == "fixed o&m" else x["units"], axis=1)
+    atb_input_df["units"] = atb_input_df.apply(lambda x: "%-yr" if x["core_metric_parameter"].casefold() == "fixed o&m" else x["units"], axis=1)
 
     # Create a new column technology_alias_detail from the concatenation of the technology_alias and techdetail columns
-    concatenate_columns(atb_input_df_2022, "technology_alias_detail", ["technology_alias", "techdetail"])
-    concatenate_columns(atb_input_df_2024, "technology_alias_detail", ["technology_alias", "techdetail"])
+    concatenate_columns(atb_input_df, "technology_alias_detail", ["technology_alias", "techdetail"])
 
     # For WACC_Real, Hydropower provides just one row. This one row has to be associated with all types of hydropower
     # The one WACC_Real value is replicated such that each type of hydropower has its own WACC_Real entry
-    atb_input_df_2022 = repeat_values(atb_input_df_2022, ["Hydropower_NPD1", "Hydropower_NSD1"], "technology_alias_detail", "Hydropower_*", 2)
-    atb_input_df_2024 = repeat_values(atb_input_df_2024, ["Hydropower_NPD1", "Hydropower_NSD1"], "technology_alias_detail", "Hydropower_*", 2)
+    atb_input_df = repeat_values(atb_input_df, ["Hydropower_NPD1", "Hydropower_NSD1"], "technology_alias_detail", "Hydropower_*", 2)
 
     # Replace technology_alias_detail with PyPSA technology names
     technology_conversion_dict_atb = {
@@ -140,12 +132,10 @@ def pre_process_input_file(input_file_list, list_years, list_columns_to_keep, li
         "CSP_Class2": "csp-tower",
         "CSP_*": "csp-tower",
     }
-    replace_value_name(atb_input_df_2022, technology_conversion_dict_atb, "technology_alias_detail")
-    replace_value_name(atb_input_df_2024, technology_conversion_dict_atb, "technology_alias_detail")
+    replace_value_name(atb_input_df, technology_conversion_dict_atb, "technology_alias_detail")
 
     # Add source column
-    atb_input_df_2022["source"] = nrel_source
-    atb_input_df_2024["source"] = nrel_source
+    atb_input_df["source"] = nrel_source
 
     # Rename columns and consider just columns used in PyPSA
     column_rename_dict = {
@@ -158,8 +148,7 @@ def pre_process_input_file(input_file_list, list_years, list_columns_to_keep, li
     }
 
     tuple_output_columns_to_keep = ("technology_alias_detail", "core_metric_parameter", "value", "units", "source", "display_name", "atb_year", "scenario", "core_metric_case", "core_metric_variable", "tax_credit_case")
-    atb_input_df_2022 = atb_input_df_2022.loc[:, tuple_output_columns_to_keep].rename(columns=column_rename_dict)
-    atb_input_df_2024 = atb_input_df_2024.loc[:, tuple_output_columns_to_keep].rename(columns=column_rename_dict)
+    atb_input_df = atb_input_df.loc[:, tuple_output_columns_to_keep].rename(columns=column_rename_dict)
 
     # Replace parameter with PyPSA cost parameter names
     parameter_conversion_dict = {
@@ -170,15 +159,17 @@ def pre_process_input_file(input_file_list, list_years, list_columns_to_keep, li
         "Additional OCC": "investment",
         "WACC Real": "discount rate"
     }
-    replace_value_name(atb_input_df_2022, parameter_conversion_dict, "parameter")
-    replace_value_name(atb_input_df_2024, parameter_conversion_dict, "parameter")
+    replace_value_name(atb_input_df, parameter_conversion_dict, "parameter")
 
-    # Filter the technologies in atb_input_* with those in PyPSA
-    # These rows should be replacing existing values in the next costs_....csv files
-    # The rows which do not correspond to pypsa technologies are to be appended to the costs_....csv files
+    return atb_input_df
 
-    # Note: core_metric_variable is used such that costs_(core_metric_variable).csv
-    return atb_input_df_2022, atb_input_df_2024
+    #new_atb_input_df_2022 = atb_input_df_2022.set_index(["technology", "parameter"])
+    #new_atb_input_df_2024 = atb_input_df_2024.set_index(["technology", "parameter"])
+    #return new_atb_input_df_2022, new_atb_input_df_2024
+
+
+def update_cost_values(cost_dataframe, atb_dataframe):
+    pass
 
 
 if __name__ == "__main__":
@@ -191,17 +182,27 @@ if __name__ == "__main__":
     nrel_atb_core_metric_parameter_to_keep = snakemake.config["nrel_atb"]["nrel_atb_core_metric_parameter_to_keep"]
     nrel_atb_source_link = snakemake.config["nrel_atb"]["nrel_atb_source_link"]
 
-    for i, input_file in enumerate(snakemake.input.cost_files_to_modify):
-        cost_df = pd.read_csv(input_file).set_index("technology")
+    cost_atb_2022, cost_atb_2024 = pre_process_input_file(input_file_list_atb, year_list, nrel_atb_columns_to_keep, nrel_atb_core_metric_parameter_to_keep, nrel_atb_source_link)
+
+    for i, input_file_name in enumerate(snakemake.input.cost_files_to_modify):
+        input_file_path = pathlib.Path(input_file_name)
+        cost_df = pd.read_csv(input_file_path).reset_index()
+        if input_file_path.name == "costs_2020.csv":
+            update_cost_values(cost_df, cost_atb_2022)
+        elif input_file_path.name in ["costs_2025.csv", "costs_2030.csv", "costs_2035.csv", "costs_2040.csv", "costs_2045.csv", "costs_2050.csv"]:
+            #filtered_cost_atb_2024 =
+            update_cost_values(cost_df, filtered_cost_atb_2024)
+        else:
+            raise Exception("{} is not among the costs files to consider".format(input_file_path.name))
+
+
         cost_df.to_csv(snakemake.output[i])
 
-    df_2022, df_2024 = pre_process_input_file(input_file_list_atb, year_list, nrel_atb_columns_to_keep, nrel_atb_core_metric_parameter_to_keep, nrel_atb_source_link)
-
-    print(df_2022.columns)
-    df_2022.to_csv("2022_data.csv")
-    print(df_2022["parameter"].unique())
-    print(df_2022.shape)
-    print(df_2024.columns)
-    df_2024.to_csv("2024_data.csv")
-    print(df_2024["parameter"].unique())
-    print(df_2024.shape)
+    print(cost_atb_2022.columns)
+    cost_atb_2022.to_csv("2022_data.csv")
+    print(cost_atb_2022["parameter"].unique())
+    print(cost_atb_2022.shape)
+    print(cost_atb_2024.columns)
+    cost_atb_2024.to_csv("2024_data.csv")
+    print(cost_atb_2024["parameter"].unique())
+    print(cost_atb_2024.shape)

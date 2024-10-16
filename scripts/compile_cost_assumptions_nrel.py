@@ -163,12 +163,8 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
 
     return atb_input_df
 
-    #new_atb_input_df_2022 = atb_input_df_2022.set_index(["technology", "parameter"])
-    #new_atb_input_df_2024 = atb_input_df_2024.set_index(["technology", "parameter"])
-    #return new_atb_input_df_2022, new_atb_input_df_2024
-
-
 def update_cost_values(cost_dataframe, atb_dataframe):
+
     pass
 
 
@@ -178,31 +174,38 @@ if __name__ == "__main__":
 
     year_list = snakemake.config['years']
     input_file_list_atb = snakemake.input.nrel_atb_input_files
+    cost_file_list = snakemake.input.cost_files_to_modify
     nrel_atb_columns_to_keep = snakemake.config["nrel_atb"]["nrel_atb_columns_to_keep"]
     nrel_atb_core_metric_parameter_to_keep = snakemake.config["nrel_atb"]["nrel_atb_core_metric_parameter_to_keep"]
     nrel_atb_source_link = snakemake.config["nrel_atb"]["nrel_atb_source_link"]
 
-    cost_atb_2022, cost_atb_2024 = pre_process_input_file(input_file_list_atb, year_list, nrel_atb_columns_to_keep, nrel_atb_core_metric_parameter_to_keep, nrel_atb_source_link)
+    if len(year_list) != len(cost_file_list):
+        raise Exception("The cost files {} are more than the considered years {}".format(year_list, cost_file_list))
 
-    for i, input_file_name in enumerate(snakemake.input.cost_files_to_modify):
-        input_file_path = pathlib.Path(input_file_name)
-        cost_df = pd.read_csv(input_file_path).reset_index()
-        if input_file_path.name == "costs_2020.csv":
-            update_cost_values(cost_df, cost_atb_2022)
-        elif input_file_path.name in ["costs_2025.csv", "costs_2030.csv", "costs_2035.csv", "costs_2040.csv", "costs_2045.csv", "costs_2050.csv"]:
-            #filtered_cost_atb_2024 =
-            update_cost_values(cost_df, filtered_cost_atb_2024)
+    for year_val in year_list:
+
+        # get the cost file to modify
+        cost_path_list = [path for path in snakemake.input.cost_files_to_modify if str(year_val) in path]
+        if len(cost_path_list) == 1:
+            cost_path = cost_path_list[0]
+            cost_df = pd.read_csv(cost_path).reset_index()
         else:
-            raise Exception("{} is not among the costs files to consider".format(input_file_path.name))
+            raise Exception("Please verify the list of cost files. It may contain duplicates.")
 
+        # get the atb values for a given year
+        if year_val == 2020:
+            # choose atb_e_2022
+            input_file_atb = input_file_list_atb[0]
+            atb_input_df = pre_process_input_file(input_file_atb, year_val, nrel_atb_columns_to_keep,
+                                   nrel_atb_core_metric_parameter_to_keep, nrel_atb_source_link)
+        elif year_val in year_list[1:]:
+            # choose atb_e_2024
+            input_file_atb = input_file_list_atb[1]
+            atb_input_df = pre_process_input_file(input_file_atb, year_val, nrel_atb_columns_to_keep,
+                                   nrel_atb_core_metric_parameter_to_keep, nrel_atb_source_link)
+        else:
+            raise Exception("{} is not a considered year".format(year_val))
 
-        cost_df.to_csv(snakemake.output[i])
+        # update the cost file
+        update_cost_values(cost_df, atb_input_df)
 
-    print(cost_atb_2022.columns)
-    cost_atb_2022.to_csv("2022_data.csv")
-    print(cost_atb_2022["parameter"].unique())
-    print(cost_atb_2022.shape)
-    print(cost_atb_2024.columns)
-    cost_atb_2024.to_csv("2024_data.csv")
-    print(cost_atb_2024["parameter"].unique())
-    print(cost_atb_2024.shape)

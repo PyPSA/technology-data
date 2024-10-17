@@ -126,7 +126,7 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
         "Utility_PV_*": "solar-utility",
         "Commercial_PV_Class1": "solar-rooftop",
         "Commercial_PV_*": "solar-rooftop",
-        "Utility-Scale_Battery_Storage_4Hr_Battery_Storage": "battery storage",
+        "Utility-Scale_Battery_Storage_6Hr_Battery_Storage": "battery storage",
         "Biopower_Dedicated": "biomass",
         "Biopower_*": "biomass",
         "CSP_Class2": "csp-tower",

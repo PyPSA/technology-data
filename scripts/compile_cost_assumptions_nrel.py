@@ -3,7 +3,6 @@
 
 import pandas as pd
 import pathlib
-import numpy as np
 from _helpers import mock_snakemake
 
 
@@ -20,22 +19,23 @@ def get_convertion_dictionary(flag):
     elif flag.casefold() == "technology":
         return {
             "Coal_Coal-new": "coal",
-            "Coal_newAvgCF2ndGen": "coal",
+            "Coal-new -> 2nd Gen Tech": "coal",
             "Natural_Gas_NG_Combustion_Turbine_(F-Frame)": "CCGT",
             "Natural_Gas_CTAvgCF": "CCGT",
-            "Hydropower_NPD1": "hydro",
-            "Hydropower_NSD1": "ror",
-            "Pumped_Storage_Hydropower_NatlClass1": "PHS",
-            "Nuclear_Large": "nuclear",
-            "Nuclear_Nuclear": "nuclear",
-            "Geothermal_HydroFlash": "geothermal",
-            "Land-Based_Wind_Class1": "onwind",
-            "Offshore_Wind_Class1": "offwind",
-            "Utility_PV_Class1": "solar-utility",
-            "Commercial_PV_Class1": "solar-rooftop",
-            "Utility-Scale_Battery_Storage_4Hr_Battery_Storage": "battery storage",
-            "Biopower_Dedicated": "biomass",
-            "CSP_Class2": "csp-tower",
+            "Hydropower - NPD 1": "hydro",
+            "Hydropower - NSD 1": "ror",
+            "Pumped Storage Hydropower - National Class 1": "PHS",
+            "Nuclear - Large": "nuclear",
+            "Nuclear": "nuclear",
+            "Geothermal - Hydro / Flash": "geothermal",
+            "Land-Based Wind - Class 1 - Technology 1": "onwind",
+            "Land-Based Wind - Class 1": "onwind",
+            "Offshore Wind - Class 1": "offwind",
+            "Utility PV - Class 1": "solar-utility",
+            "Commercial PV - Class 1": "solar-rooftop",
+            "Utility-Scale Battery Storage - 6Hr": "battery storage",
+            "Biopower - Dedicated": "biomass",
+            "CSP - Class 2": "csp-tower",
         }
     elif flag.casefold() == "output_column":
         return {

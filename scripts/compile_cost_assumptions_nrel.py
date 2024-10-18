@@ -150,13 +150,13 @@ def update_cost_values(cost_dataframe, atb_dataframe, conversion_dictionary, col
     # query to keep the technologies currently NOT included in PyPSA
     query_string_part_one = "~technology.str.casefold().isin(@values_to_keep)"
 
-    # query to keep the technologies currently included in PyPSA for which the columns ["financial_case", "scenario", "tax_credit_case"] are valid values
-    query_string_part_two = "technology.str.casefold().isin(@values_to_keep) & ~(scenario.isna() & financial_case.isna() & tax_credit_case.isna())"
+    # query to keep the technologies currently included in PyPSA for which the columns ["financial_case", "scenario"] are valid values
+    query_string_part_two = "technology.str.casefold().isin(@values_to_keep) & ~(scenario.isna() & financial_case.isna())"
 
     # query to replace the entries corresponding to technologies currently included in PyPSA with valus from NREL and keep value other technologies
     query_string = "{} | {}".format(query_string_part_one, query_string_part_two)
 
-    new_cost_dataframe = pd.concat([cost_dataframe, atb_dataframe]).query(query_string).reset_index(drop=True).set_index(["technology", "parameter"])
+    new_cost_dataframe = pd.concat([cost_dataframe, atb_dataframe]).query(query_string).reset_index(drop=True)
 
     return new_cost_dataframe
 

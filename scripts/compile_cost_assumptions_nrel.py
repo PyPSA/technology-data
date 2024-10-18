@@ -202,13 +202,11 @@ if __name__ == "__main__":
             input_file_atb = input_file_list_atb[0]
             atb_e_df = pre_process_input_file(input_file_atb, year_val, nrel_atb_columns_to_keep,
                                    nrel_atb_core_metric_parameter_to_keep, nrel_atb_source_link)
-            atb_e_df.to_csv("{}_data.csv".format(year_val))
         elif year_val in year_list[1:]:
             # choose atb_e_2024
             input_file_atb = input_file_list_atb[1]
             atb_e_df = pre_process_input_file(input_file_atb, year_val, nrel_atb_columns_to_keep,
                                    nrel_atb_core_metric_parameter_to_keep, nrel_atb_source_link)
-            atb_e_df.to_csv("{}_data.csv".format(year_val))
         else:
             raise Exception("{} is not a considered year".format(year_val))
 

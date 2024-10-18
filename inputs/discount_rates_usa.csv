@@ -1,4 +1,4 @@
-technology,parameter,year,value,unit,currency_year,core_metric_case,tax_credit_case,scenario,source,further_description
+technology,parameter,year,value,unit,currency_year,financial_case,tax_credit_case,scenario,source,further_description
 biomass,discount rate,2025,0.0535409772976367,per unit,-,Market,PTC,Advanced,"NREL, NREL ATB 2024",
 biomass,discount rate,2025,0.0535409772976367,per unit,-,Market,PTC,Moderate,"NREL, NREL ATB 2024",
 biomass,discount rate,2025,0.0535409772976367,per unit,-,Market,PTC,Conservative,"NREL, NREL ATB 2024",

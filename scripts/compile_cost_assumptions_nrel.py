@@ -132,7 +132,7 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
 
     # Rename columns and consider just columns used in PyPSA
     column_rename_dict = get_convertion_dictionary("output_column")
-    tuple_output_columns_to_keep = ("display_name", "core_metric_parameter", "value", "units", "source", "further description", "atb_year", "scenario", "core_metric_case", "core_metric_variable", "tax_credit_case")
+    tuple_output_columns_to_keep = ("display_name", "core_metric_parameter", "value", "units", "source", "further description", "atb_year", "scenario", "core_metric_case", "tax_credit_case")
     atb_input_df = atb_input_df.loc[:, tuple_output_columns_to_keep].rename(columns=column_rename_dict)
 
     # Replace parameter with PyPSA cost parameter names
@@ -141,8 +141,24 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
 
     return atb_input_df
 
-def update_cost_values(cost_dataframe, atb_dataframe):
-    pass
+
+def update_cost_values(cost_dataframe, atb_dataframe, conversion_dictionary, columns_to_add_list):
+    for column_name in columns_to_add_list:
+        cost_dataframe[column_name] = pd.Series(dtype="str")
+    values_to_keep = [str(x).casefold() for x in set(conversion_dictionary.values())]
+
+    # query to keep the technologies currently NOT included in PyPSA
+    query_string_part_one = "~technology.str.casefold().isin(@values_to_keep)"
+
+    # query to keep the technologies currently included in PyPSA for which the columns ["financial_case", "scenario", "tax_credit_case"] are valid values
+    query_string_part_two = "technology.str.casefold().isin(@values_to_keep) & ~(scenario.isna() & financial_case.isna() & tax_credit_case.isna())"
+
+    # query to replace the entries corresponding to technologies currently included in PyPSA with valus from NREL and keep value other technologies
+    query_string = "{} | {}".format(query_string_part_one, query_string_part_two)
+
+    new_cost_dataframe = pd.concat([cost_dataframe, atb_dataframe]).query(query_string).reset_index(drop=True)
+
+    return new_cost_dataframe
 
 
 if __name__ == "__main__":

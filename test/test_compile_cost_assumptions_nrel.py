@@ -5,11 +5,12 @@ import pathlib
 import pytest
 import sys
 import pandas as pd
+import numpy as np
 
 sys.path.append("./scripts")
 
 from test.conftest import get_config_dict
-from compile_cost_assumptions_nrel import calculate_fom_percentage, filter_input_file, pre_process_input_file, replace_value_name
+from compile_cost_assumptions_nrel import calculate_fom_percentage, filter_input_file, get_convertion_dictionary, pre_process_input_file, replace_value_name, update_cost_values
 
 path_cwd = pathlib.Path.cwd()
 
@@ -75,3 +76,27 @@ def test_pre_process_input_file(get_config_dict, input_file_year, year, expected
     assert output_df.shape == expected
     assert len(output_parameter_list) == len(reference_parameter_list)
     assert all([x == y for x, y in zip(reference_parameter_list, output_parameter_list)])
+
+def test_update_cost_values():
+
+    test_atb_df = pd.DataFrame({
+        "technology": ["coal", "CCGT", "hydro", "ror", "offwind", "onwind", "Offshore Wind - Class 3", "Offshore Wind - Class 10"],
+        "financial_case": ["Market", "R&D", "Market", "Market", "Market", "R&D", "Market", "R&D"],
+        "scenario": ["Advanced", "Conservative", "Moderate", "Advanced", "Conservative", "Moderate", "Conservative", "Moderate"],
+        "tax_credit_case": ["ITC", "ITC", "ITC", "ITC", "ITC", "ITC", "ITC", "ITC"]
+    })
+
+    test_cost_df = pd.DataFrame()
+    test_cost_df["technology"] = ["coal", "CCGT", "hydro", "ror", "offwind", "onwind", "BEV Bus City", "Ammonia cracker"]
+
+    reference_df = pd.DataFrame({
+        "technology": ["BEV Bus City", "Ammonia cracker", "coal", "CCGT", "hydro", "ror", "offwind", "onwind", "Offshore Wind - Class 3", "Offshore Wind - Class 10"],
+        "financial_case": [np.nan, np.nan, "Market", "R&D", "Market", "Market", "Market", "R&D", "Market", "R&D"],
+        "scenario": [np.nan, np.nan, "Advanced", "Conservative", "Moderate", "Advanced", "Conservative", "Moderate", "Conservative", "Moderate"],
+        "tax_credit_case": [np.nan, np.nan, "ITC", "ITC", "ITC", "ITC", "ITC", "ITC", "ITC", "ITC"]
+    })
+
+    technology_conversion_dictionary = get_convertion_dictionary("technology")
+    output_df = update_cost_values(test_cost_df, test_atb_df, technology_conversion_dictionary, ["financial_case", "scenario", "tax_credit_case"])
+    comparison_df = output_df.compare(reference_df)
+    assert comparison_df.empty

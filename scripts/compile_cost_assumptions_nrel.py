@@ -142,7 +142,7 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
     return atb_input_df.reset_index(drop=True)
 
 
-def update_cost_values(cost_dataframe, atb_dataframe, conversion_dictionary, columns_to_add_list):
+def update_cost_values(cost_dataframe, atb_dataframe, discount_dataframe, conversion_dictionary, columns_to_add_list):
     for column_name in columns_to_add_list:
         cost_dataframe[column_name] = pd.Series(dtype="str")
     values_to_keep = [str(x).casefold() for x in set(conversion_dictionary.values())]
@@ -157,6 +157,7 @@ def update_cost_values(cost_dataframe, atb_dataframe, conversion_dictionary, col
     query_string = "{} | {}".format(query_string_part_one, query_string_part_two)
 
     new_cost_dataframe = pd.concat([cost_dataframe, atb_dataframe]).query(query_string).reset_index(drop=True)
+    new_cost_dataframe = pd.concat([new_cost_dataframe, discount_dataframe])
 
     return new_cost_dataframe
 
@@ -167,6 +168,7 @@ if __name__ == "__main__":
 
     year_list = snakemake.config['years']
     input_file_list_atb = snakemake.input.nrel_atb_input_files
+    input_file_discount_rate = snakemake.input.nrel_atb_input_discount_rate
     cost_file_list = snakemake.input.cost_files_to_modify
     nrel_atb_columns_to_keep = snakemake.config["nrel_atb"]["nrel_atb_columns_to_keep"]
     nrel_atb_core_metric_parameter_to_keep = snakemake.config["nrel_atb"]["nrel_atb_core_metric_parameter_to_keep"]
@@ -174,6 +176,8 @@ if __name__ == "__main__":
 
     if len(year_list) != len(cost_file_list):
         raise Exception("The cost files {} are more than the considered years {}".format(year_list, cost_file_list))
+
+    discount_rate_df = pd.read_csv(input_file_discount_rate)
 
     for year_val in year_list:
 
@@ -201,8 +205,12 @@ if __name__ == "__main__":
         else:
             raise Exception("{} is not a considered year".format(year_val))
 
+        # get the discount rate file
+        discount_rate_year_df = discount_rate_df.loc[discount_rate_df["year"] == year_val]
+        discount_rate_year_df = discount_rate_year_df.loc[:, ("technology", "parameter", "value", "unit", "source", "further description", "currency_year", "financial_case", "scenario", "tax_credit_case")].reset_index(drop=True)
+
         # update the cost file
-        updated_cost_df = update_cost_values(cost_df, atb_e_df, get_convertion_dictionary("technology"), ["financial_case", "scenario", "tax_credit_case"])
+        updated_cost_df = update_cost_values(cost_df, atb_e_df, discount_rate_year_df, get_convertion_dictionary("technology"), ["financial_case", "scenario", "tax_credit_case"])
 
         # output the modified cost file
         output_cost_path_list = [path for path in snakemake.output if str(year_val) in path]

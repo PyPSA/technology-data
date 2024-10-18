@@ -18,18 +18,18 @@ def get_convertion_dictionary(flag):
         }
     elif flag.casefold() == "technology":
         return {
-            "Coal_Coal-new": "coal",
             "Coal-new -> 2nd Gen Tech": "coal",
-            "Natural_Gas_NG_Combustion_Turbine_(F-Frame)": "CCGT",
-            "Natural_Gas_CTAvgCF": "CCGT",
+            "Coal-new": "coal",
+            "NG F-Frame CT": "CCGT",
+            "NG Combustion Turbine (F-Frame)": "CCGT",
             "Hydropower - NPD 1": "hydro",
             "Hydropower - NSD 1": "ror",
             "Pumped Storage Hydropower - National Class 1": "PHS",
             "Nuclear - Large": "nuclear",
-            "Nuclear": "nuclear",
+            "Nuclear - AP100": "nuclear",
             "Geothermal - Hydro / Flash": "geothermal",
-            "Land-Based Wind - Class 1 - Technology 1": "onwind",
             "Land-Based Wind - Class 1": "onwind",
+            "Land-Based Wind - Class 1 - Technology 1": "onwind",
             "Offshore Wind - Class 1": "offwind",
             "Utility PV - Class 1": "solar-utility",
             "Commercial PV - Class 1": "solar-rooftop",

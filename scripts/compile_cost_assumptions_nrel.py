@@ -139,7 +139,7 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
     parameter_conversion_dict = get_convertion_dictionary("parameter")
     atb_input_df = replace_value_name(atb_input_df, parameter_conversion_dict, "parameter")
 
-    return atb_input_df
+    return atb_input_df.reset_index(drop=True)
 
 
 def update_cost_values(cost_dataframe, atb_dataframe, conversion_dictionary, columns_to_add_list):
@@ -156,7 +156,7 @@ def update_cost_values(cost_dataframe, atb_dataframe, conversion_dictionary, col
     # query to replace the entries corresponding to technologies currently included in PyPSA with valus from NREL and keep value other technologies
     query_string = "{} | {}".format(query_string_part_one, query_string_part_two)
 
-    new_cost_dataframe = pd.concat([cost_dataframe, atb_dataframe]).query(query_string).reset_index(drop=True)
+    new_cost_dataframe = pd.concat([cost_dataframe, atb_dataframe]).query(query_string).reset_index(drop=True).set_index(["technology", "parameter"])
 
     return new_cost_dataframe
 
@@ -181,7 +181,7 @@ if __name__ == "__main__":
         input_cost_path_list = [path for path in snakemake.input.cost_files_to_modify if str(year_val) in path]
         if len(input_cost_path_list) == 1:
             input_cost_path = input_cost_path_list[0]
-            cost_df = pd.read_csv(input_cost_path).reset_index()
+            cost_df = pd.read_csv(input_cost_path).reset_index(drop=True)
         else:
             raise Exception("Please verify the list of cost files. It may contain duplicates.")
 
@@ -202,13 +202,13 @@ if __name__ == "__main__":
             raise Exception("{} is not a considered year".format(year_val))
 
         # update the cost file
-        update_cost_values(cost_df, atb_e_df)
+        updated_cost_df = update_cost_values(cost_df, atb_e_df, get_convertion_dictionary("technology"), ["financial_case", "scenario", "tax_credit_case"])
 
         # output the modified cost file
         output_cost_path_list = [path for path in snakemake.output if str(year_val) in path]
         if len(output_cost_path_list) == 1:
             output_cost_path = output_cost_path_list[0]
-            cost_df.to_csv(output_cost_path)
+            updated_cost_df.to_csv(output_cost_path)
         else:
             raise Exception("Please verify the list of cost files. It may contain duplicates.")
 

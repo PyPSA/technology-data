@@ -139,10 +139,13 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
     parameter_conversion_dict = get_convertion_dictionary("parameter")
     atb_input_df = replace_value_name(atb_input_df, parameter_conversion_dict, "parameter")
 
+    # Cast currency_year from int to float
+    atb_input_df["currency_year"] = atb_input_df["currency_year"].astype(float)
+
     return atb_input_df.reset_index(drop=True)
 
 
-def update_cost_values(cost_dataframe, atb_dataframe, discount_dataframe, conversion_dictionary, columns_to_add_list):
+def update_cost_values(cost_dataframe, atb_dataframe, conversion_dictionary, columns_to_add_list):
     for column_name in columns_to_add_list:
         cost_dataframe[column_name] = pd.Series(dtype="str")
     values_to_keep = [str(x).casefold() for x in set(conversion_dictionary.values())]
@@ -157,9 +160,13 @@ def update_cost_values(cost_dataframe, atb_dataframe, discount_dataframe, conver
     query_string = "{} | {}".format(query_string_part_one, query_string_part_two)
 
     new_cost_dataframe = pd.concat([cost_dataframe, atb_dataframe]).query(query_string).reset_index(drop=True)
-    new_cost_dataframe = pd.concat([new_cost_dataframe, discount_dataframe])
 
     return new_cost_dataframe
+
+
+def add_discount_rate_value(cost_dataframe, discount_rate_dataframe):
+    discount_rate_dataframe["further description"] = pd.Series(dtype=str)
+    return pd.concat([cost_dataframe, discount_rate_dataframe]).reset_index(drop=True)
 
 
 if __name__ == "__main__":
@@ -210,7 +217,10 @@ if __name__ == "__main__":
         discount_rate_year_df = discount_rate_year_df.loc[:, ("technology", "parameter", "value", "unit", "source", "further description", "currency_year", "financial_case", "scenario", "tax_credit_case")].reset_index(drop=True)
 
         # update the cost file
-        updated_cost_df = update_cost_values(cost_df, atb_e_df, discount_rate_year_df, get_convertion_dictionary("technology"), ["financial_case", "scenario", "tax_credit_case"])
+        updated_cost_df = update_cost_values(cost_df, atb_e_df, get_convertion_dictionary("technology"), ["financial_case", "scenario", "tax_credit_case"])
+
+        # add discount rate
+        updated_cost_df = add_discount_rate_value(updated_cost_df, discount_rate_year_df)
 
         # output the modified cost file
         output_cost_path_list = [path for path in snakemake.output if str(year_val) in path]

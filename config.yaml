@@ -8,7 +8,6 @@ nrel_atb:
     nrel_atb_columns_to_keep : ["atb_year", "core_metric_parameter", "core_metric_case", "core_metric_variable", "technology", "technology_alias", "display_name", "scenario", "units", "value", "tax_credit_case"]
     nrel_atb_core_metric_parameter_to_keep : ["CAPEX", "CF", "Fixed O&M", "Variable O&M", "Fuel", "Additional OCC"]
     nrel_atb_source_link : "NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F"
-    pypsa_technology_list : []
 
 expectation : "" # tech data uncertainty, possible options [None, "optimist", "pessimist"]
 

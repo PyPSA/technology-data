@@ -9,7 +9,7 @@ Release Notes
 
 * added geothermal district heating as `central geothermal-sourced heat pump` based on DEA technology catalogue ("45.1.a Geothermal DH, 1200m, E")
 
-* include NREL/ATB costs for electricity in a dedicated US cost ouputs
+* include NREL/ATB costs for electricity in a dedicated US cost outputs
 
 
 Technology-Data 0.9.2 (30 August 2024)

@@ -133,7 +133,7 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
     # Modify the unit of the normalized Fixed O&M to %-yr
     atb_input_df["units"] = atb_input_df.apply(lambda x: "%-yr" if x["core_metric_parameter"].casefold() == "fixed o&m" else x["units"], axis=1)
 
-    # Replace technology_alias_detail with PyPSA technology names
+    # Replace the display_name column values with PyPSA technology names
     technology_conversion_dict_atb = get_convertion_dictionary("technology")
     atb_input_df = replace_value_name(atb_input_df, technology_conversion_dict_atb, "display_name")
 

@@ -88,7 +88,19 @@ def filter_input_file(input_file_path, year, list_columns_to_keep, list_core_met
     return atb_file_df
 
 
-def calculate_fom_percentage(x, dataframe):
+def get_query_string(column_list, column_to_exclude, parameter_value):
+    if set(column_to_exclude).issubset(set(column_list)):
+        column_to_use_list = list(set(column_list)-set(column_to_exclude))
+        query_list = sorted(["{}.str.casefold() == '{}'".format(column_name, parameter_value) if column_name == "core_metric_parameter" else "{} == @x.{}".format(
+            column_name, column_name) for column_name in column_to_use_list])
+        query_string = " & ".join(query_list)
+    else:
+        exception_message = "The following columns {} are not included in the original list".format(list(set(column_to_exclude).difference(set(column_list))))
+        raise Exception(exception_message)
+    return query_string.strip()
+
+
+def calculate_fom_percentage(x, dataframe, columns_list):
 
     # Note: for technologies as Coal Retrofit or Natural Gas Retrofit,
     # the Fixed O&M is normalized by Additional OCC. Else, the Fixed O&M is
@@ -96,9 +108,10 @@ def calculate_fom_percentage(x, dataframe):
 
     if x["core_metric_parameter"].casefold() == "fixed o&m":
         if "retrofit" in x["technology"].casefold():
-            fom_perc_value = x.value / dataframe.query("atb_year == @x.atb_year & core_metric_parameter.str.casefold() == 'additional occ' & core_metric_case == @x.core_metric_case & core_metric_variable == @x.core_metric_variable & technology == @x.technology & technology_alias == @x.technology_alias & display_name == @x.display_name & scenario == @x.scenario")["value"]*100.0
+            query_string = get_query_string(columns_list, ["units", "value", "tax_credit_case"], "additional occ")
         else:
-            fom_perc_value = x.value / dataframe.query("atb_year == @x.atb_year & core_metric_parameter.str.casefold() == 'capex' & core_metric_case == @x.core_metric_case & core_metric_variable == @x.core_metric_variable & technology == @x.technology & technology_alias == @x.technology_alias & display_name == @x.display_name & scenario == @x.scenario")["value"]*100.0
+            query_string = get_query_string(columns_list, ["units", "value", "tax_credit_case"], "capex")
+        fom_perc_value = x.value / dataframe.query(query_string)["value"]*100.0
         return round(fom_perc_value.values[0], 2)
     else:
         return x.value
@@ -115,7 +128,7 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
     atb_input_df = filter_input_file(pathlib.Path(input_file_path), year, list_columns_to_keep, list_core_metric_parameter_to_keep)
 
     # Normalize Fixed O&M by CAPEX (or Additional OCC for retrofit technologies)
-    atb_input_df["value"] = atb_input_df.apply(lambda x: calculate_fom_percentage(x, atb_input_df), axis=1)
+    atb_input_df["value"] = atb_input_df.apply(lambda x: calculate_fom_percentage(x, atb_input_df, list_columns_to_keep), axis=1)
 
     # Modify the unit of the normalized Fixed O&M to %-yr
     atb_input_df["units"] = atb_input_df.apply(lambda x: "%-yr" if x["core_metric_parameter"].casefold() == "fixed o&m" else x["units"], axis=1)

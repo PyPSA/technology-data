@@ -8,6 +8,7 @@ dependencies:
   # for running the package
   - snakemake-minimal>=8.5
   - pandas>=2.1
+  - pypsa
   - numpy
   - beautifulsoup4
   - xlrd

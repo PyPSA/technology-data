@@ -21,7 +21,7 @@ path_cwd = pathlib.Path.cwd()
 )
 def test_filter_input_file(get_config_dict, file_year, year, expected):
     """
-    Verify what returned by filter_input_file.
+    The test verifies what is returned by filter_input_file.
     """
     config_dict = get_config_dict
     list_columns_to_keep = config_dict["nrel_atb"]["nrel_atb_columns_to_keep"]
@@ -41,7 +41,7 @@ def test_filter_input_file(get_config_dict, file_year, year, expected):
 
 def test_replace_value_name():
     """
-    Verify what returned by replace_value_name.
+    The test verifies what is returned by replace_value_name.
     """
     test_df = pd.DataFrame({"Name": ["Tom", "Paul", "John", "Sarah"], "Age": [31, 42, 12, 56], "Country": ["US", "DE", "UK", "IT"]})
     reference_df = pd.DataFrame({"Name": ["Tom", "Paul", "John", "Sarah"], "Age": [31, 42, 12, 56], "Country": ["United States", "Germany", "United Kingdom", "IT"]})
@@ -57,7 +57,7 @@ def test_replace_value_name():
 )
 def test_calculate_fom_percentage(get_config_dict, display_name, expected):
     """
-    Verify what returned by calculate_fom_percentage.
+    The test verifies what is returned by calculate_fom_percentage.
     """
     config_dict = get_config_dict
     columns_list = config_dict["nrel_atb"]["nrel_atb_columns_to_keep"]
@@ -70,6 +70,9 @@ def test_calculate_fom_percentage(get_config_dict, display_name, expected):
     "input_file_year, year, expected", [(2022, 2020, (3002, 10)), (2024, 2050, (3336, 10))],
 )
 def test_pre_process_input_file(get_config_dict, input_file_year, year, expected):
+    """
+    The test verifies what is returned by pre_process_input_file.
+    """
     config_dict = get_config_dict
     input_file_path = pathlib.Path(path_cwd, "inputs", "atb_e_{}.parquet".format(input_file_year))
     nrel_atb_columns_to_keep = config_dict["nrel_atb"]["nrel_atb_columns_to_keep"]
@@ -84,7 +87,9 @@ def test_pre_process_input_file(get_config_dict, input_file_year, year, expected
 
 
 def test_update_cost_values():
-
+    """
+    The test verifies what is returned by update_cost_values.
+    """
     test_atb_df = pd.DataFrame({
         "technology": ["coal", "CCGT", "hydro", "ror", "offwind", "onwind", "Offshore Wind - Class 3", "Offshore Wind - Class 10"],
         "financial_case": ["Market", "R&D", "Market", "Market", "Market", "R&D", "Market", "R&D"],
@@ -112,6 +117,9 @@ def test_update_cost_values():
         "parameter_value, columns_to_exclude, expected", [("additional occ", ["units", "value", "tax_credit_case"], "atb_year == @x.atb_year & core_metric_case == @x.core_metric_case & core_metric_parameter.str.casefold() == 'additional occ' & core_metric_variable == @x.core_metric_variable & display_name == @x.display_name & scenario == @x.scenario & technology == @x.technology & technology_alias == @x.technology_alias"), ("capex", ["units", "value", "tax_credit_case"], "atb_year == @x.atb_year & core_metric_case == @x.core_metric_case & core_metric_parameter.str.casefold() == 'capex' & core_metric_variable == @x.core_metric_variable & display_name == @x.display_name & scenario == @x.scenario & technology == @x.technology & technology_alias == @x.technology_alias"), ("fail_test", ["random_column", "value", "tax_credit_case"], "The following columns ['random_column'] are not included in the original list")],
     )
 def test_get_query_string(get_config_dict, parameter_value, columns_to_exclude, expected):
+    """
+    The test verifies what is returned by get_query_string.
+    """
     config_dict = get_config_dict
     columns_list = config_dict["nrel_atb"]["nrel_atb_columns_to_keep"]
     if parameter_value == "fail_test":

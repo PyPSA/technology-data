@@ -911,7 +911,7 @@ industrial heat pump medium temperature,efficiency,2.7,per unit,"Danish Energy A
 industrial heat pump medium temperature,investment,784.2516,EUR/kW,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",302.a High temp. hp Up to 125 C:  Nominal investment,2019.0
 industrial heat pump medium temperature,lifetime,20.0,years,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",302.a High temp. hp Up to 125 C:  Technical lifetime,2019.0
 iron ore DRI-ready,commodity,97.73,EUR/t,"Model assumptions from MPP Steel Transition Tool: https://missionpossiblepartnership.org/action-sectors/steel/, accessed: 2022-12-03.","DRI ready assumes 65% iron content, requiring no additional benefication.",2020.0
-iron-air battery,FOM,0.0,%/year,"Form Energy, FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",,2020.0
+iron-air battery,FOM,1.0,%/year,"Form Energy, FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",,2020.0
 iron-air battery,investment,15.61,EUR/kWh,"Form Energy, FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",,2020.0
 iron-air battery,lifetime,17.5,years,"Form Energy, FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",,2020.0
 iron-air battery charge,efficiency,0.71,per unit,"Form Energy, FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",,2020.0

@@ -20,7 +20,7 @@ energy_storage_database:
         approx_beyond_2030: ["same_as_2030"]  # ["geometric_series"] or ["same_as_2030"]
 
 # remove grid connection costs from DEA for offwind because they are calculated
-# seperately in pypsa-eur
+# separately in pypsa-eur
 offwind_no_gridcosts : true
 
 desalination:

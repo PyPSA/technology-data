@@ -11,6 +11,8 @@ Release Notes
 
 * added iron-air battery cost data from Form Energy
 
+* Fix minor issues in the code
+
 
 Technology-Data 0.9.2 (30 August 2024)
 ======================================

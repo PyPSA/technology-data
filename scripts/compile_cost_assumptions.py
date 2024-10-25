@@ -777,7 +777,7 @@ def add_co2_intensity(costs):
 
 def add_solar_from_other(costs):
     """"
-    add solar from other sources than DEA (since the life time assumed in
+    add solar from other sources than DEA (since the lifetime assumed in
     DEA is very optimistic)
     """
 

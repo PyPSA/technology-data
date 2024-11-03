@@ -139,74 +139,80 @@ sheet_names = {'onwind': '20 Onshore turbines',
                # 'DH distribution low T': '103_16 DH_Distr New area LTDH',
                # 'gas pipeline': '102 6 gas Main distri line',
                # "DH main transmission": "103_11 DH transmission",
+               'biochar pyrolysis': '105 Slow pyrolysis, Straw',
+               #'biomethanation': '106 Biomethanation of biogas',
+               'electrolysis small': '86 AEC 10 MW',
                }
 # [DEA-sheet-names]
 
 uncrtnty_lookup = {'onwind': 'J:K',
-                    'offwind': 'J:K',
-                    'solar-utility': 'J:K',
-                    'solar-utility single-axis tracking': 'J:K',
-                    'solar-rooftop residential':  'J:K',
-                    'solar-rooftop commercial':  'J:K',
-                    'OCGT': 'I:J',
-                    'CCGT': 'I:J',
-                    'oil': 'I:J',
-                    'biomass CHP': 'I:J',
-                    'biomass EOP': 'I:J',
-                    'biomass HOP': 'I:J',
-                    'central coal CHP': '',
-                    'central gas CHP': 'I:J',
-                    'central gas CHP CC': 'I:J',
-                    'central hydrogen CHP': 'I:J',
-                    'central solid biomass CHP': 'I:J',
-                    'central solid biomass CHP CC': 'I:J',
-                    'central solid biomass CHP powerboost CC': 'I:J',
-                    # 'solid biomass power': 'J:K',
-                    # 'solid biomass power CC': 'J:K',
-                    'solar': '',
-                    'central air-sourced heat pump': 'J:K',
-                    'central geothermal-sourced heat pump': 'H:K',
-                    'central ground-sourced heat pump': 'I:J',
-                    'central resistive heater': 'I:J',
-                    'central gas boiler': 'I:J',
-                    'decentral gas boiler': 'I:J',
-                    'direct firing gas': 'H:I',
-                    'direct firing gas CC': 'H:I',
-                    'direct firing solid fuels': 'H:I',
-                    'direct firing solid fuels CC': 'H:I',
-                    'decentral ground-sourced heat pump': 'I:J',
-                    'decentral air-sourced heat pump': 'I:J',
-                    'central water tank storage': 'J:K',
-                    'fuel cell': 'I:J',
-                    'hydrogen storage underground': 'J:K',
-                    'hydrogen storage tank type 1 including compressor': 'J:K',
-                    'micro CHP': 'I:J',
-                    'biogas': 'I:J',
-                    'biogas CC': 'I:J',
-                    'biogas upgrading': 'I:J',
-                    'electrolysis': 'I:J',
-                    'battery': 'L,N',
-                    'direct air capture': 'I:J',
-                    'cement capture': 'I:J',
-                    'biomass CHP capture': 'I:J',
-                    'BioSNG' : 'I:J',
-                    'BtL' : 'J:K',
-                    'biomass-to-methanol' : 'J:K',
-                    'biogas plus hydrogen' : 'J:K',
-                    'industrial heat pump medium temperature':'H:I',
-                    'industrial heat pump high temperature':'H:I',
-                    'electric boiler steam':'H:I',
-                    'gas boiler steam':'H:I',
-                    'solid biomass boiler steam':'H:I',
-                    'solid biomass boiler steam CC':'H:I',
-                    'biomass boiler': 'I:J',
-                    'Fischer-Tropsch': 'I:J',
-                    'Haber-Bosch': 'I:J',
-                    'air separation unit': 'I:J',
-                    'methanolisation': 'J:K',
-                    'waste CHP': 'I:J',
-                    'waste CHP CC': 'I:J',
-}
+                   'offwind': 'J:K',
+                   'solar-utility': 'J:K',
+                   'solar-utility single-axis tracking': 'J:K',
+                   'solar-rooftop residential': 'J:K',
+                   'solar-rooftop commercial': 'J:K',
+                   'OCGT': 'I:J',
+                   'CCGT': 'I:J',
+                   'oil': 'I:J',
+                   'biomass CHP': 'I:J',
+                   'biomass EOP': 'I:J',
+                   'biomass HOP': 'I:J',
+                   'central coal CHP': '',
+                   'central gas CHP': 'I:J',
+                   'central gas CHP CC': 'I:J',
+                   'central hydrogen CHP': 'I:J',
+                   'central solid biomass CHP': 'I:J',
+                   'central solid biomass CHP CC': 'I:J',
+                   'central solid biomass CHP powerboost CC': 'I:J',
+                   # 'solid biomass power': 'J:K',
+                   # 'solid biomass power CC': 'J:K',
+                   'solar': '',
+                   'central air-sourced heat pump': 'J:K',
+                   'central geothermal-sourced heat pump': 'H:K',
+                   'central ground-sourced heat pump': 'I:J',
+                   'central resistive heater': 'I:J',
+                   'central gas boiler': 'I:J',
+                   'decentral gas boiler': 'I:J',
+                   'direct firing gas': 'H:I',
+                   'direct firing gas CC': 'H:I',
+                   'direct firing solid fuels': 'H:I',
+                   'direct firing solid fuels CC': 'H:I',
+                   'decentral ground-sourced heat pump': 'I:J',
+                   'decentral air-sourced heat pump': 'I:J',
+                   'central water tank storage': 'J:K',
+                   'fuel cell': 'I:J',
+                   'hydrogen storage underground': 'J:K',
+                   'hydrogen storage tank type 1 including compressor': 'J:K',
+                   'micro CHP': 'I:J',
+                   'biogas': 'I:J',
+                   'biogas CC': 'I:J',
+                   'biogas upgrading': 'I:J',
+                   'electrolysis': 'I:J',
+                   'battery': 'L,N',
+                   'direct air capture': 'I:J',
+                   'cement capture': 'I:J',
+                   'biomass CHP capture': 'I:J',
+                   'BioSNG': 'I:J',
+                   'BtL': 'J:K',
+                   'biomass-to-methanol': 'J:K',
+                   'biogas plus hydrogen': 'J:K',
+                   'industrial heat pump medium temperature': 'H:I',
+                   'industrial heat pump high temperature': 'H:I',
+                   'electric boiler steam': 'H:I',
+                   'gas boiler steam': 'H:I',
+                   'solid biomass boiler steam': 'H:I',
+                   'solid biomass boiler steam CC': 'H:I',
+                   'biomass boiler': 'I:J',
+                   'Fischer-Tropsch': 'I:J',
+                   'Haber-Bosch': 'I:J',
+                   'air separation unit': 'I:J',
+                   'methanolisation': 'J:K',
+                   'waste CHP': 'I:J',
+                   'waste CHP CC': 'I:J',
+                   'biochar pyrolysis': 'J:K',
+                   'biomethanation': 'J:K',
+                   'electrolysis small': 'I:J',
+                   }
 
 # since February 2022 DEA uses a new format for the technology data
 # all excel sheets of updated technologies have a different layout and are
@@ -228,7 +234,10 @@ cost_year_2020 = ['solar-utility',
               'biomass-to-methanol',
               'biogas plus hydrogen',
               'methanolisation',
-              'Fischer-Tropsch'
+              'Fischer-Tropsch',
+              'biochar pyrolysis',
+              'biomethanation',
+              'electrolysis small',
               ]
 
 cost_year_2019 = ['direct firing gas',
@@ -464,7 +473,7 @@ def get_dea_vehicle_data(fn, data):
         data = pd.concat([data, df])
         
     return data
-        
+
         
 def get_data_DEA(tech, data_in, expectation=None):
     """
@@ -570,8 +579,17 @@ def get_data_DEA(tech, data_in, expectation=None):
                   "Methanol Output", 
                   "District heat  Output",
                   "Electricity Output",
-                  "Total O&M"]
-
+                  "Total O&M",
+                  "Biochar Output",  # biochar pyrolysis
+                  "Pyrolysis oil Output",  # biochar pyrolysis
+                  "Pyrolysis gas Output",  # biochar pyrolysis
+                  "Heat Output",  # biochar pyrolysis
+                  "Specific energy content [GJ/ton] biochar",  # biochar pyrolysis
+                  'Electricity Consumption',
+                  'Feedstock Consumption',  # biochar pyrolysis
+                  'Methane Output',
+                  'CO2 Consumption',
+                  'Hydrogen Consumption']
 
     df = pd.DataFrame()
     for para in parameters:
@@ -663,6 +681,9 @@ def get_data_DEA(tech, data_in, expectation=None):
         
     if "solid biomass power" in tech:
         df.index = df.index.str.replace("EUR/MWeh", "EUR/MWh")
+
+    if "biochar pyrolysis" in tech:
+        df = biochar_pyrolysis_harmonise_dea(df)
 
     df_final = pd.DataFrame(index=df.index, columns=years)
 
@@ -853,6 +874,65 @@ def unify_diw(costs):
 
     return costs
 
+def biochar_pyrolysis_harmonise_dea (df):
+    # data for 2020 not available
+    if 2020 in df.columns:
+        df.drop(columns=2020, inplace=True)
+    # normalize biochar and total heat output to feedstock input
+    idx = df.index.str.contains("Total Input")
+    idx2 = df.index.str.contains("Feedstock Consumption")
+    df.loc[idx] = df.loc[idx].astype(float) / df.loc[idx2].values.astype(float)
+    df.index = df.index.str.replace("Total Input", "feedstock")
+
+    # all pyrolysis product except char are combusted for heat
+    df_sum = pd.concat(
+        (df.iloc[df.index.str.contains("Pyrolysis oil Output")],
+         df.iloc[df.index.str.contains("Pyrolysis gas Output")],
+         df.iloc[df.index.str.contains("Heat Output")]), axis=0).sum(axis=0, skipna=False)
+    df.iloc[df.index.str.contains("Heat Output")] = df_sum * 100
+
+    to_drop = df[df.index.str.contains("Pyrolysis oil Output") |
+                 df.index.str.contains("Pyrolysis gas Output") | df.index.str.contains(
+        "Electricity Consumption") |
+                 df.index.str.contains("Feedstock Consumption")].index
+    df.drop(to_drop, inplace=True)
+
+    # normalizing costs to biochar output
+    df_divid = pd.concat((df.iloc[df.index.str.contains("Biochar Output")],
+                          df.iloc[df.index.str.contains("Heat Output")]), axis=0).sum(axis=0, skipna=False)
+    biochar_totoutput = df.iloc[df.index.str.contains("Biochar Output")] / df_divid
+    idx3 = df.index.str.contains("EUR")
+    df.loc[idx3] = df.loc[idx3].values.astype(float) / biochar_totoutput.values.astype(float)
+    df.index = df.index.str.replace(" output from pyrolysis process", "", regex=True)
+
+    #rename units
+    df.rename(index={df.loc[df.index.str.contains('Specific investment')].index[0]:
+                         df.loc[df.index.str.contains("Specific investment")].index.str.replace(
+                             "MW", "MW_biochar")[0],
+                     df.loc[df.index.str.contains('Fixed O&M')].index[0]:
+                         df.loc[df.index.str.contains("Fixed O&M")].index.str.replace(
+                             "MW", "MW_biochar")[0],
+                     df.loc[df.index.str.contains("Variable O&M")].index[0]:
+                         df.loc[df.index.str.contains("Variable O&M")].index.str.replace(
+                             "MWh", "MWh_biochar")[0]}, inplace=True)
+
+    df_div = df.iloc[df.index.str.contains("Specific energy content")].astype(float) / 3.6
+    df.iloc[df.index.str.contains("Specific energy content")] = df.iloc[df.index.str.contains(
+        "Biochar Output")].astype(float) / df_div.values.astype(float)
+
+    df.rename(
+        index={df.loc[df.index.str.contains("Specific energy content")].index.values[
+                   0]: 'yield biochar [ton biochar/MWh_feedstock]',
+               df.loc[df.index.str.contains("Biochar Output")].index.values[
+                   0]: 'efficiency biochar [MWh_biochar/MWh_feedstock]',
+               df.loc[df.index.str.contains("Heat Output")].index.values[
+                   0]: 'efficiency heat [% MWh_feedstock]'}, inplace=True)
+
+    #df = df.astype(float)
+    #df = df.mask(df.apply(pd.to_numeric, errors='coerce').isna(), df.astype(str).apply(lambda x: x.str.strip()))
+
+    return df
+
 
 def get_data_from_DEA(data_in, expectation=None):
     """
@@ -992,8 +1072,6 @@ def clean_up_units(tech_data, value_column="", source=""):
     tech_data.unit = tech_data.unit.str.replace("EUR/MWh of total input", "EUR/MWh_e")
     tech_data.unit = tech_data.unit.str.replace("EUR/MWeh", "EUR/MWh_e")
     tech_data.unit = tech_data.unit.str.replace("% -points of heat loss", "MWh_th/MWh_el")
-
-
     tech_data.unit = tech_data.unit.str.replace("FT Liquids Output, MWh/MWh Total Inpu", "MWh_FT/MWh_H2")
     # biomass-to-methanol-specific
     if isinstance(tech_data.index, pd.MultiIndex):
@@ -1185,24 +1263,26 @@ def order_data(tech_data):
         # --- investment ----
         investment = df[(df.index.str.contains("investment") |
                          df.index.str.contains("Distribution network costs"))
-                     & ((df.unit=="EUR/MW")|
-                        (df.unit=="EUR/MW_e")|
-                        (df.unit=="EUR/MW_th - heat output")|
-                        (df.unit=="EUR/MW_th excluding drive energy")|
-                        (df.unit=="EUR/MW_th") |
-                        (df.unit=="EUR/MW_MeOH") |
-                        (df.unit=="EUR/MW_FT/year") |
-                        (df.unit=="EUR/MW_NH3") |
-                        (df.unit=="EUR/MWhCapacity") |
-                        (df.unit=="EUR/MWh") |
-                        (df.unit=="EUR/MW_CH4") |
-                        (df.unit=="EUR/MWh/year") |
-                        (df.unit=="EUR/MW_e, 2020") |
-                        (df.unit=="EUR/MW input") |
-                        (df.unit=='EUR/MW-methanol') |
-                        (df.unit=="EUR/t_N2/h")) # air separation unit
-                    ].copy()
-        if len(investment)!=1:
+                        & ((df.unit == "EUR/MW") |
+                           (df.unit == "EUR/MW_e") |
+                           (df.unit == "EUR/MW_th - heat output") |
+                           (df.unit == "EUR/MW_th excluding drive energy") |
+                           (df.unit == "EUR/MW_th") |
+                           (df.unit == "EUR/MW_MeOH") |
+                           (df.unit == "EUR/MW_FT/year") |
+                           (df.unit == "EUR/MW_NH3") |
+                           (df.unit == "EUR/MWhCapacity") |
+                           (df.unit == "EUR/MWh") |
+                           (df.unit == "EUR/MW_CH4") |
+                           (df.unit == "EUR/MWh/year") |
+                           (df.unit == "EUR/MW_e, 2020") |
+                           (df.unit == "EUR/MW input") |
+                           (df.unit == 'EUR/MW-methanol') |
+                           (df.unit == "EUR/t_N2/h") | # air separation unit
+                           (df.unit == 'EUR/MW_biochar'))
+                        ].copy()
+
+        if len(investment) != 1:
             switch = True
             print("check investment: ", tech, " ",
                   df[df.index.str.contains("investment")].unit)
@@ -1214,18 +1294,20 @@ def order_data(tech_data):
         if len(investment):
             fixed = df[(df.index.str.contains("Fixed O&M") |
                         df.index.str.contains("Total O&M")) &
-                       ((df.unit==investment.unit.iloc[0]+"/year")|
-                        (df.unit=="EUR/MW/km/year")|
-                        (df.unit=="EUR/MW/year")|
-                        (df.unit=="EUR/MW_e/y, 2020")|
-                        (df.unit=="EUR/MW_e/y")|
-                        (df.unit=="EUR/MW_FT/year")|
-                        (df.unit=="EUR/MWh_FT")|
-                        (df.unit=="EUR/MW_MeOH/year")|
-                        (df.unit=="EUR/MW_CH4/year")|
-                        (df.unit=='% of specific investment/year')|
-                        (df.unit==investment.unit.str.split(" ").iloc[0][0]+"/year"))].copy()
-            if (len(fixed)!=1) and (len(df[df.index.str.contains("Fixed O&M")])!=0):
+                       ((df.unit == investment.unit.iloc[0] + "/year") |
+                        (df.unit == "EUR/MW/km/year") |
+                        (df.unit == "EUR/MW/year") |
+                        (df.unit == "EUR/MW_e/y, 2020") |
+                        (df.unit == "EUR/MW_e/y") |
+                        (df.unit == "EUR/MW_FT/year") |
+                        (df.unit == "EUR/MWh_FT") |
+                        (df.unit == "EUR/MW_MeOH/year") |
+                        (df.unit == "EUR/MW_CH4/year") |
+                        (df.unit == 'EUR/MW_biochar/year') |
+                        (df.unit == '% of specific investment/year') |
+                        (df.unit == investment.unit.str.split(" ").iloc[0][0] + "/year"))].copy()
+
+            if (len(fixed) != 1) and (len(df[df.index.str.contains("Fixed O&M")]) != 0):
                 switch = True
                 print("check FOM: ", tech, " ",
                       df[df.index.str.contains("Fixed O&M")].unit)
@@ -1245,20 +1327,21 @@ def order_data(tech_data):
                 clean_df[tech] = pd.concat([clean_df[tech], fom])
 
         # ---- VOM -----
-        vom = df[df.index.str.contains("Variable O&M") & ((df.unit=="EUR/MWh") |
-                                                         (df.unit=="EUR/MWh_e") |
-                                                         (df.unit=="EUR/MWh_th") |
-                                                         (df.unit=="EUR/MWh_FT") |
-                                                         (df.unit=="EUR/MWh_NH3") |
-                                                         (df.unit=="EUR/MWh_MeOH") |
-                                                         (df.unit=="EUR/MWh/year") |
-                                                         (df.unit=="EUR/MWh/km") |
-                                                         (df.unit=="EUR/MWh") |
-                                                         (df.unit=="EUR/MWhoutput") |
-                                                         (df.unit=="EUR/MWh_CH4") |
-                                                         (tech == "biogas upgrading"))].copy()
-        if len(vom)==1:
-            vom.loc[:,"parameter"] = "VOM"
+        vom = df[df.index.str.contains("Variable O&M") & ((df.unit == "EUR/MWh") |
+                                                          (df.unit == "EUR/MWh_e") |
+                                                          (df.unit == "EUR/MWh_th") |
+                                                          (df.unit == "EUR/MWh_FT") |
+                                                          (df.unit == "EUR/MWh_NH3") |
+                                                          (df.unit == "EUR/MWh_MeOH") |
+                                                          (df.unit == "EUR/MWh/year") |
+                                                          (df.unit == "EUR/MWh/km") |
+                                                          (df.unit == "EUR/MWh") |
+                                                          (df.unit == "EUR/MWhoutput") |
+                                                          (df.unit == "EUR/MWh_CH4") |
+                                                          (df.unit == 'EUR/MWh_biochar')|
+                                                          (tech == "biogas upgrading"))].copy()
+        if len(vom) == 1:
+            vom.loc[:, "parameter"] = "VOM"
             clean_df[tech] = pd.concat([clean_df[tech], vom])
 
         elif len(vom)!=1 and len(df[df.index.str.contains("Variable O&M")])!=0:
@@ -1278,25 +1361,30 @@ def order_data(tech_data):
 
 
         # ----- efficiencies ------
-        efficiency = df[(df.index.str.contains("efficiency") |
-                         (df.index.str.contains("Hydrogen output, at LHV"))|
-                         (df.index.str.contains("Hydrogen Output"))|
-                         (df.index.str.contains("FT Liquids Output, MWh/MWh Total Input"))|
-                         (df.index.str.contains("Methanol Output"))|
-                         (df.index.str.contains("District heat  Output"))|
-                         (df.index.str.contains("Electricity Output"))|
-                         (df.index.str.contains("hereof recoverable for district heating"))|
-                         (df.index.str.contains("Bio SNG"))|
+        efficiency = df[((df.index.str.contains("efficiency")) |
+                         (df.index.str.contains("Hydrogen output, at LHV")) |
+                         (df.index.str.contains("Hydrogen Output")) |
+                         (df.index.str.contains("FT Liquids Output, MWh/MWh Total Input")) |
+                         (df.index.str.contains("Methanol Output")) |
+                         (df.index.str.contains("District heat  Output")) |
+                         (df.index.str.contains("Electricity Output")) |
+                         (df.index.str.contains("hereof recoverable for district heating")) |
+                         (df.index.str.contains("Bio SNG")) |
+                         (df.index.str.contains("biochar")) |
                          (df.index == ("Hydrogen")))
-                         & ((df.unit=="%") |  (df.unit =="% total size") |
-                           (df.unit =="% of fuel input") |
-                           (df.unit =="MWh_H2/MWh_e") |
-                           (df.unit =="%-points of heat loss") |
-                           (df.unit =="MWh_MeOH/MWh_th") |
-                           (df.unit =="MWh_e/MWh_th") |
-                           (df.unit =="MWh_th/MWh_th") |
-                           (df.unit =='MWh/MWh Total Input') |
-                           df.unit.str.contains("MWh_FT/MWh_H2"))].copy()
+                        & ((df.unit == "%") | (df.unit == "% total size") |
+                           (df.unit == "% of fuel input") |
+                           (df.unit == "MWh_H2/MWh_e") |
+                           (df.unit == "%-points of heat loss") |
+                           (df.unit == "MWh_MeOH/MWh_th") |
+                           (df.unit == "MWh_e/MWh_th") |
+                           (df.unit == "MWh_th/MWh_th") |
+                           (df.unit == 'MWh/MWh Total Input') |
+                           df.unit.str.contains("MWh_FT/MWh_H2") |
+                           df.unit.str.contains("MWh_biochar/MWh_feedstock") |
+                           df.unit.str.contains("ton biochar/MWh_feedstock") |
+                           df.unit.str.contains("MWh_CH4/MWh_H2") |
+                           df.unit.str.contains("% MWh_feedstock"))].copy()
 
         if tech == 'Fischer-Tropsch':
             efficiency[years] *= 100
@@ -1342,8 +1430,19 @@ def order_data(tech_data):
             efficiency_meoh.loc[:,years] *= 100 # in %
             clean_df[tech] = pd.concat([clean_df[tech], efficiency_meoh])
 
-        elif len(efficiency)!=1:
-            switch  = True
+        elif tech == "biochar pyrolysis":
+            efficiency_biochar = efficiency[efficiency.index.str.contains("efficiency biochar")].copy()
+            efficiency_biochar["parameter"] = "efficiency-biochar"
+            clean_df[tech] = pd.concat([clean_df[tech], efficiency_biochar])
+            efficiency_biochar_mass = efficiency[efficiency.index.str.contains("yield biochar")].copy()
+            efficiency_biochar_mass["parameter"] = "yield-biochar"
+            clean_df[tech] = pd.concat([clean_df[tech], efficiency_biochar_mass])
+            efficiency_heat = efficiency[efficiency.index.str.contains("efficiency heat")].copy()
+            efficiency_heat["parameter"] = "efficiency-heat"
+            clean_df[tech] = pd.concat([clean_df[tech], efficiency_heat])
+
+        elif len(efficiency) != 1:
+            switch = True
             if not any(efficiency.index.str.contains("Round trip")):
                 print("check efficiency: ", tech, " ",
                        df[df.index.str.contains("efficiency")].unit)
@@ -2420,7 +2519,7 @@ if __name__ == "__main__":
     
     # add heavy duty assumptions, cost year is 2022
     data = get_dea_vehicle_data(snakemake.input.dea_vehicles, data) 
-    
+
     # add shipping data
     data = get_dea_maritime_data(snakemake.input.dea_ship, data)
 
@@ -2546,13 +2645,13 @@ if __name__ == "__main__":
         # unify the cost from DIW2010
         costs_tot = unify_diw(costs_tot)
         costs_tot.drop("fixed", level=1, inplace=True)
-        
+
         # adjust for inflation
         techs = costs_tot.index.get_level_values(0).unique()
         costs_tot["currency_year"] = costs_tot.currency_year.astype(float)
         costs_tot = adjust_for_inflation(inflation_rate, costs_tot, techs,
                                          costs_tot.currency_year, ["value"])
-        
+
         # format and sort
         costs_tot.sort_index(inplace=True)
         costs_tot.loc[:,'value'] = round(costs_tot.value.astype(float),

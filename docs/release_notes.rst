@@ -5,6 +5,10 @@ Release Notes
 .. Upcoming Release
 .. ================
 
+* added Pyrolysis for biochar 
+
+* fixed unit formatting in DEA technology data sheets 105 (slow pyrolysis)
+
 * fixed DEA technology data sheet name for central water tank storage to point to actual PTES data
 
 * added geothermal district heating as `central geothermal-sourced heat pump` based on DEA technology catalogue ("45.1.a Geothermal DH, 1200m, E")

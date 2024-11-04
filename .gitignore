@@ -2,6 +2,8 @@
 
 .snakemake
 _build
+.idea
+.vscode
 gurobi.log
 *.log
 */__pycache__

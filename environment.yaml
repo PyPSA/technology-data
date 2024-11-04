@@ -10,6 +10,7 @@ dependencies:
   - pyarrow
   - fastparquet
   - pandas>=2.1
+  - pypsa
   - numpy
   - beautifulsoup4
   - xlrd

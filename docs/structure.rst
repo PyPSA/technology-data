@@ -17,7 +17,7 @@ This repository has the following structure:
 	* source (e.g. DEA, excel_file_name.xlsx)
 	* further description (specific assumptions, sheet name if data from a multi-sheet Excel file)
 
--  **conifg**: 
+-  **config**:
 
 	.. literalinclude:: ../config.yaml
 	   :language: yaml

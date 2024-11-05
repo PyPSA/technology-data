@@ -1486,15 +1486,15 @@ def order_data(tech_data):
     data = pd.concat([data, charger_tank], sort=True)
 
     # add water pit charger/ discharger
-    charger_pit = tech_data.loc[("central water tank storage", "Round trip efficiency")].copy()
+    charger_pit = tech_data.loc[("central water pit storage", "Round trip efficiency")].copy()
     charger_pit["further description"] = "efficiency from sqr(Round trip efficiency)"
     charger_pit[years] = charger_pit[years]**0.5*10
     charger_pit.rename(index={"Round trip efficiency": "efficiency"},
                    level=1, inplace=True)
-    charger_pit.rename(index={'central water tank storage':"water tank charger"},
+    charger_pit.rename(index={'central water pit storage':"water pit charger"},
                    level=0, inplace=True)
     data = pd.concat([data, charger_pit], sort=True)
-    charger_pit.rename(index={"water tank charger": "water tank discharger"},
+    charger_pit.rename(index={"water pit charger": "water pit discharger"},
                    level=0, inplace=True)
     data = pd.concat([data, charger_pit], sort=True)
 

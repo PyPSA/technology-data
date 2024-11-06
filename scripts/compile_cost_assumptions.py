@@ -87,6 +87,9 @@ sheet_names = {'onwind': '20 Onshore turbines',
                # 'solid biomass power CC': '09a Wood Chips extract. plant',
                'central air-sourced heat pump': '40 Comp. hp, airsource 3 MW',
                'central geothermal-sourced heat pump': '45.1.a Geothermal DH, 1200m, E',
+               'central geothermal heat source': '45.1.a Geothermal DH, 1200m, E',
+               'central excess-heat-sourced heat pump': '40 Comp. hp, excess heat 10 MW',
+               'central water-sourced heat pump': '40 Comp. hp, seawater 20 MW',
                'central ground-sourced heat pump': '40 Absorption heat pump, DH',
                'central resistive heater': '41 Electric Boilers',
                'central gas boiler': '44 Natural Gas DH Only',
@@ -170,6 +173,9 @@ uncrtnty_lookup = {'onwind': 'J:K',
                    'solar': '',
                    'central air-sourced heat pump': 'J:K',
                    'central geothermal-sourced heat pump': 'H:K',
+                   'central geothermal heat source': 'H:K',
+                   'central excess-heat-sourced heat pump': 'H:K',
+                   'central water-sourced heat pump': 'H:K',
                    'central ground-sourced heat pump': 'I:J',
                    'central resistive heater': 'I:J',
                    'central gas boiler': 'I:J',
@@ -497,6 +503,8 @@ def get_data_DEA(tech, data_in, expectation=None):
         usecols = "A:E"
     elif tech in ['Fischer-Tropsch', 'Haber-Bosch', 'air separation unit']:
         usecols = "B:F"
+    elif tech in ["central water-sourced heat pump"]:
+        usecols = "B:K"
     else:
         usecols = "B:G"
 
@@ -591,7 +599,10 @@ def get_data_DEA(tech, data_in, expectation=None):
                   'Feedstock Consumption',  # biochar pyrolysis
                   'Methane Output',
                   'CO2 Consumption',
-                  'Hydrogen Consumption']
+                  'Hydrogen Consumption',
+                  ' - of which is equipment excluding heat pump',
+                  ' - of which is heat pump including its installation',
+                  ]
 
     df = pd.DataFrame()
     for para in parameters:
@@ -686,6 +697,12 @@ def get_data_DEA(tech, data_in, expectation=None):
 
     if "biochar pyrolysis" in tech:
         df = biochar_pyrolysis_harmonise_dea(df)
+    
+    elif tech == "central geothermal-sourced heat pump":
+        df.loc["Nominal investment (MEUR per MW)"] = df.loc[" - of which is heat pump including its installation"]
+        
+    elif tech == "central geothermal heat source":
+        df.loc["Nominal investment (MEUR per MW)"] = df.loc[" - of which is equipment excluding heat pump"]
 
     df_final = pd.DataFrame(index=df.index, columns=years)
 

@@ -716,6 +716,9 @@ central solid biomass CHP powerboost CC,efficiency,0.2664,per unit,"Danish Energ
 central solid biomass CHP powerboost CC,efficiency-heat,0.8282,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Heat efficiency, net, annual average",2015.0
 central solid biomass CHP powerboost CC,investment,3390.8967,EUR/kW_e,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Nominal investment ",2015.0
 central solid biomass CHP powerboost CC,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Technical lifetime",2015.0
+central water pit storage,FOM,0.6171,%/year,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Fixed O&M,2015.0
+central water pit storage,investment,0.5144,EUR/kWhCapacity,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Specific investment,2015.0
+central water pit storage,lifetime,25.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Technical lifetime,2015.0
 central water tank storage,FOM,0.2901,%/year,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Fixed O&M,2015.0
 central water tank storage,investment,3.1374,EUR/kWhCapacity,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Specific investment,2015.0
 central water tank storage,lifetime,40.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Technical lifetime,2015.0
@@ -923,6 +926,11 @@ industrial heat pump medium temperature,efficiency,2.825,per unit,"Danish Energy
 industrial heat pump medium temperature,investment,720.005,EUR/kW,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",302.a High temp. hp Up to 125 C:  Nominal investment,2019.0
 industrial heat pump medium temperature,lifetime,20.0,years,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",302.a High temp. hp Up to 125 C:  Technical lifetime,2019.0
 iron ore DRI-ready,commodity,97.73,EUR/t,"Model assumptions from MPP Steel Transition Tool: https://missionpossiblepartnership.org/action-sectors/steel/, accessed: 2022-12-03.","DRI ready assumes 65% iron content, requiring no additional benefication.",2020.0
+iron-air battery,FOM,1.1808,%/year,"Form Energy, FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",,2020.0
+iron-air battery,investment,10.4,EUR/kWh,"Form Energy, FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",,2020.0
+iron-air battery,lifetime,17.5,years,"Form Energy, FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",,2020.0
+iron-air battery charge,efficiency,0.74,per unit,"Form Energy, FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",,2020.0
+iron-air battery discharge,efficiency,0.63,per unit,"Form Energy, FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",,2020.0
 lignite,CO2 intensity,0.4069,tCO2/MWh_th,Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018,,
 lignite,FOM,1.31,%/year,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.","Calculated based on average of listed range, i.e. (39.5+91.25) USD/kW_e/a /2 / (1.09 USD/EUR) / investment cost * 100. Note: Assume same costs as for hard coal, as cost structure is apparently comparable, see https://diglib.tugraz.at/download.php?id=6093e88b63f93&location=browse and https://iea.blob.core.windows.net/assets/ae17da3d-e8a5-4163-a3ec-2e6fb0b5677d/Projected-Costs-of-Generating-Electricity-2020.pdf . ",2023.0
 lignite,VOM,3.2612,EUR/MWh_e,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.","Calculated based on average of listed range, i.e. (3+5.5)USD/MWh_e/2 / (1.09 USD/EUR). Note: Assume same costs as for hard coal, as cost structure is apparently comparable, see https://diglib.tugraz.at/download.php?id=6093e88b63f93&location=browse and https://iea.blob.core.windows.net/assets/ae17da3d-e8a5-4163-a3ec-2e6fb0b5677d/Projected-Costs-of-Generating-Electricity-2020.pdf . ",2023.0
@@ -1067,5 +1075,7 @@ waste CHP CC,efficiency,0.2144,per unit,"Danish Energy Agency, technology_data_f
 waste CHP CC,efficiency-heat,0.7624,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","08 WtE CHP, Large, 50 degree:  Heat efficiency, net, annual average",2015.0
 waste CHP CC,investment,7755.9852,EUR/kW_e,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","08 WtE CHP, Large, 50 degree:  Nominal investment ",2015.0
 waste CHP CC,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","08 WtE CHP, Large, 50 degree:  Technical lifetime",2015.0
+water pit charger,efficiency,0.8367,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency),2015.0
+water pit discharger,efficiency,0.8367,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency),2015.0
 water tank charger,efficiency,0.9899,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency),2015.0
 water tank discharger,efficiency,0.9899,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency),2015.0

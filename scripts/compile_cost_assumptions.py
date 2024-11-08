@@ -504,7 +504,7 @@ def get_data_DEA(tech, data_in, expectation=None):
     elif tech in ['Fischer-Tropsch', 'Haber-Bosch', 'air separation unit']:
         usecols = "B:F"
     elif tech in ["central water-sourced heat pump"]:
-        usecols = "B:K"
+        usecols = "B,I,K"
     else:
         usecols = "B:G"
 
@@ -531,6 +531,33 @@ def get_data_DEA(tech, data_in, expectation=None):
     excel.index = excel.index.astype(str)
     excel.dropna(axis=0, how="all", inplace=True)
     # print(excel)
+
+    if tech in ["central water-sourced heat pump"]:
+        # use only upper uncertainty range for systems without existing water intake
+        # convert "Uncertainty (2025)"" to "2025", "Uncertainty (2050)"" to "2050" (and so on if more years are added)
+        this_years = excel.loc[:,excel.iloc[1,:]=="Lower"].iloc[0,:].str.slice(-5,-1).astype(int)
+        # get values in upper uncertainty range
+        excel = excel.loc[:,excel.iloc[1,:]=="Upper"]
+        # rename columns to years constructed above
+        excel.columns = this_years
+        # add missing years
+        for y in years:
+            if y not in excel.columns:
+                excel[y] = np.nan
+
+        # Sort columns by year
+        excel = excel.reindex(sorted(excel.columns), axis=1)
+
+        # drop row Energy/technical data (not needed, contains strings which break interpolation)
+        excel = excel[~excel.index.str.contains("Energy/technical data")]
+
+        # Interpolate to fill in NaN values
+        excel = excel.astype(float).interpolate(axis=1, method="linear")
+        # Extrapolation for missing values (not native in pandas)
+        # Currently, this is only first column (2020), since DEA data is available for 2025 and 2050
+        if excel.iloc[:, 0].isnull().all():
+            excel.iloc[:, 0] = excel.iloc[:, 1] + (excel.iloc[:, 1] - excel.iloc[:, 2]) / (excel.columns[2] - excel.columns[1]) * (excel.columns[1] - excel.columns[0])
+
 
     if 2020 not in excel.columns:
         selection = excel[excel.isin([2020])].dropna(how="all").index

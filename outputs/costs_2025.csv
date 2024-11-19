@@ -717,9 +717,11 @@ central solid biomass CHP powerboost CC,efficiency-heat,0.825,per unit,"Danish E
 central solid biomass CHP powerboost CC,investment,3642.4702,EUR/kW_e,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Nominal investment ",2015.0
 central solid biomass CHP powerboost CC,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Technical lifetime",2015.0
 central water pit storage,FOM,0.5338,%/year,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Fixed O&M,2015.0
+central water pit storage,energy to power ratio,150.0,h,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Ratio between energy storage and input capacity,2015.0
 central water pit storage,investment,0.5947,EUR/kWhCapacity,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Specific investment,2015.0
 central water pit storage,lifetime,22.5,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Technical lifetime,2015.0
 central water tank storage,FOM,0.2901,%/year,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Fixed O&M,2015.0
+central water tank storage,energy to power ratio,60.3448,h,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Ratio between energy storage and input capacity,2015.0
 central water tank storage,investment,3.1374,EUR/kWhCapacity,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Specific investment,2015.0
 central water tank storage,lifetime,40.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Technical lifetime,2015.0
 clean water tank storage,FOM,2.0,%/year,"Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Table 1.",,

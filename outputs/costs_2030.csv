@@ -650,6 +650,11 @@ central coal CHP,c_v,0.15,50oC/100oC,"Danish Energy Agency, technology_data_for_
 central coal CHP,efficiency,0.52,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","01 Coal CHP:  Electricity efficiency, condensation mode, net",2015.0
 central coal CHP,investment,1968.7948,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",01 Coal CHP:  Nominal investment,2015.0
 central coal CHP,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",01 Coal CHP:  Technical lifetime,2015.0
+central excess-heat-sourced heat pump,FOM,0.3504,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","40 Comp. hp, excess heat 10 MW:  Fixed O&M",2015.0
+central excess-heat-sourced heat pump,VOM,2.127,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","40 Comp. hp, excess heat 10 MW:  Variable O&M",2015.0
+central excess-heat-sourced heat pump,efficiency,5.3,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","40 Comp. hp, excess heat 10 MW:  Total efficiency , net, annual average",2015.0
+central excess-heat-sourced heat pump,investment,604.0659,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","40 Comp. hp, excess heat 10 MW:  Specific investment",2015.0
+central excess-heat-sourced heat pump,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","40 Comp. hp, excess heat 10 MW:  Technical lifetime",2015.0
 central gas CHP,FOM,3.3214,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","04 Gas turb. simple cycle, L:  Fixed O&M",2015.0
 central gas CHP,VOM,4.4445,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","04 Gas turb. simple cycle, L:  Variable O&M",2015.0
 central gas CHP,c_b,1.0,50oC/100oC,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","04 Gas turb. simple cycle, L:  Cb coefficient",2015.0
@@ -669,9 +674,13 @@ central gas boiler,VOM,1.0582,EUR/MWh_th,"Danish Energy Agency, technology_data_
 central gas boiler,efficiency,1.04,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","44 Natural Gas DH Only:  Total efficiency , net, annual average",2015.0
 central gas boiler,investment,52.9111,EUR/kW_th,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",44 Natural Gas DH Only:  Nominal investment,2015.0
 central gas boiler,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",44 Natural Gas DH Only:  Technical lifetime,2015.0
-central geothermal-sourced heat pump,FOM,0.8526,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","45.1.a Geothermal DH, 1200m, E:  Fixed O&M",2015.0
+central geothermal heat source,FOM,1.4735,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","45.1.a Geothermal DH, 1200m, E:  Fixed O&M",2015.0
+central geothermal heat source,VOM,6.4843,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","45.1.a Geothermal DH, 1200m, E:  Variable O&M",2015.0
+central geothermal heat source,investment,1529.6854,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","45.1.a Geothermal DH, 1200m, E:  Nominal investment",2015.0
+central geothermal heat source,lifetime,30.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","45.1.a Geothermal DH, 1200m, E:  Technical lifetime",2015.0
+central geothermal-sourced heat pump,FOM,3.7314,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","45.1.a Geothermal DH, 1200m, E:  Fixed O&M",2015.0
 central geothermal-sourced heat pump,VOM,6.4843,EUR/MWh_th,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","45.1.a Geothermal DH, 1200m, E:  Variable O&M",2015.0
-central geothermal-sourced heat pump,investment,2643.6464,EUR/kW_th,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","45.1.a Geothermal DH, 1200m, E:  Nominal investment",2015.0
+central geothermal-sourced heat pump,investment,604.0659,EUR/kW_th,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","45.1.a Geothermal DH, 1200m, E:  Nominal investment",2015.0
 central geothermal-sourced heat pump,lifetime,30.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","45.1.a Geothermal DH, 1200m, E:  Technical lifetime",2015.0
 central ground-sourced heat pump,FOM,0.394,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","40 Absorption heat pump, DH:  Fixed O&M",2015.0
 central ground-sourced heat pump,VOM,1.3268,EUR/MWh_th,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","40 Absorption heat pump, DH:  Variable O&M",2015.0
@@ -724,6 +733,11 @@ central water tank storage,FOM,0.2901,%/year,"Danish Energy Agency, technology_d
 central water tank storage,energy to power ratio,60.3448,h,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Ratio between energy storage and input capacity,2015.0
 central water tank storage,investment,3.1374,EUR/kWhCapacity,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Specific investment,2015.0
 central water tank storage,lifetime,40.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Technical lifetime,2015.0
+central water-sourced heat pump,FOM,0.5,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","40 Comp. hp, seawater 20 MW:  Fixed O&M",2015.0
+central water-sourced heat pump,VOM,1.6826,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","40 Comp. hp, seawater 20 MW:  Variable O&M",2015.0
+central water-sourced heat pump,efficiency,3.82,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","40 Comp. hp, seawater 20 MW:  Total efficiency , net, annual average",2015.0
+central water-sourced heat pump,investment,1058.2216,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","40 Comp. hp, seawater 20 MW:  Specific investment",2015.0
+central water-sourced heat pump,lifetime,40.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","40 Comp. hp, seawater 20 MW:  Technical lifetime",2015.0
 clean water tank storage,FOM,2.0,%/year,"Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Table 1.",,
 clean water tank storage,investment,69.1286,EUR/m^3-H2O,"Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Table 1.",,2013.0
 clean water tank storage,lifetime,30.0,years,"Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Table 1.",,
@@ -928,6 +942,11 @@ industrial heat pump medium temperature,efficiency,2.7,per unit,"Danish Energy A
 industrial heat pump medium temperature,investment,784.2516,EUR/kW,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",302.a High temp. hp Up to 125 C:  Nominal investment,2019.0
 industrial heat pump medium temperature,lifetime,20.0,years,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",302.a High temp. hp Up to 125 C:  Technical lifetime,2019.0
 iron ore DRI-ready,commodity,97.73,EUR/t,"Model assumptions from MPP Steel Transition Tool: https://missionpossiblepartnership.org/action-sectors/steel/, accessed: 2022-12-03.","DRI ready assumes 65% iron content, requiring no additional benefication.",2020.0
+iron-air battery,FOM,1.0,%/year,"Form Energy, FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",,2020.0
+iron-air battery,investment,15.61,EUR/kWh,"Form Energy, FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",,2020.0
+iron-air battery,lifetime,17.5,years,"Form Energy, FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",,2020.0
+iron-air battery charge,efficiency,0.71,per unit,"Form Energy, FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",,2020.0
+iron-air battery discharge,efficiency,0.6,per unit,"Form Energy, FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",,2020.0
 lignite,CO2 intensity,0.4069,tCO2/MWh_th,Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018,,
 lignite,FOM,1.31,%/year,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.","Calculated based on average of listed range, i.e. (39.5+91.25) USD/kW_e/a /2 / (1.09 USD/EUR) / investment cost * 100. Note: Assume same costs as for hard coal, as cost structure is apparently comparable, see https://diglib.tugraz.at/download.php?id=6093e88b63f93&location=browse and https://iea.blob.core.windows.net/assets/ae17da3d-e8a5-4163-a3ec-2e6fb0b5677d/Projected-Costs-of-Generating-Electricity-2020.pdf . ",2023.0
 lignite,VOM,3.2612,EUR/MWh_e,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.","Calculated based on average of listed range, i.e. (3+5.5)USD/MWh_e/2 / (1.09 USD/EUR). Note: Assume same costs as for hard coal, as cost structure is apparently comparable, see https://diglib.tugraz.at/download.php?id=6093e88b63f93&location=browse and https://iea.blob.core.windows.net/assets/ae17da3d-e8a5-4163-a3ec-2e6fb0b5677d/Projected-Costs-of-Generating-Electricity-2020.pdf . ",2023.0

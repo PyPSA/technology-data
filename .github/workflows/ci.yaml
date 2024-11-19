@@ -6,8 +6,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: mamba-org/setup-micromamba@v1
+    - uses: actions/checkout@v4
+    - uses: mamba-org/setup-micromamba@v2
       with:
         micromamba-version: latest
         environment-file: environment.yaml
@@ -20,7 +20,7 @@ jobs:
       run: |
         snakemake --cores all -f compile_cost_assumptions
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: technology-data
         path: outputs/

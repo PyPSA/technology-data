@@ -115,6 +115,20 @@ Charging infrastructure fuel cell vehicles trucks,lifetime,30.0,years,PATHS TO A
 Charging infrastructure slow (purely) battery electric vehicles passenger cars,FOM,1.8,%,PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html,Charging infrastructure slow (purely) battery electric vehicles passenger cars,2020.0
 Charging infrastructure slow (purely) battery electric vehicles passenger cars,investment,1005.0,EUR/Ladesï¿½ule,PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html,Charging infrastructure slow (purely) battery electric vehicles passenger cars,2020.0
 Charging infrastructure slow (purely) battery electric vehicles passenger cars,lifetime,30.0,years,PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html,Charging infrastructure slow (purely) battery electric vehicles passenger cars,2020.0
+Coal integrated retrofit 90%-CCS,capture_rate,0.9,per unit,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,
+Coal integrated retrofit 90%-CCS,efficiency,0.386,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,
+Coal integrated retrofit 95%-CCS,capture_rate,0.95,per unit,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,
+Coal integrated retrofit 95%-CCS,efficiency,0.386,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,
+Coal-95%-CCS,capture_rate,0.95,per unit,"NREL, NREL ATB 2024",,
+Coal-95%-CCS,efficiency,0.403,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
+Coal-95%-CCS,lifetime,40.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
+Coal-99%-CCS,capture_rate,0.99,per unit,"NREL, NREL ATB 2024",,
+Coal-99%-CCS,efficiency,0.403,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
+Coal-99%-CCS,lifetime,40.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
+Coal-IGCC,efficiency,0.53,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
+Coal-IGCC,lifetime,40.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
+Coal-IGCC-90%-CCS,capture_rate,0.9,per unit,"NREL, NREL ATB 2024",,
+Coal-IGCC-90%-CCS,lifetime,40.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
 Compressed-Air-Adiabatic-bicharger,FOM,0.9265,%/year,"Viswanathan_2022, p.64 (p.86) Figure 4.14","{'carrier': ['elec', 'pair', 'elec'], 'technology_type': ['bicharger'], 'type': ['mechanical'], 'note': ['NULL']}",2020.0
 Compressed-Air-Adiabatic-bicharger,efficiency,0.7211,per unit,"Viswanathan_2022, p.59 (p.81)","{'carrier': ['elec', 'pair', 'elec'], 'technology_type': ['bicharger'], 'type': ['mechanical'], 'note': ['AC-AC efficiency at transformer level 0.52^0.5']}",2020.0
 Compressed-Air-Adiabatic-bicharger,investment,946180.9426,EUR/MW,"Viswanathan_2022, p.59 (p.81)","{'carrier': ['elec', 'pair', 'elec'], 'technology_type': ['bicharger'], 'type': ['mechanical'], 'note': ['Turbine Compressor BOP EPC Management']}",2020.0
@@ -231,7 +245,7 @@ General liquid hydrocarbon storage (crude),FOM,6.25,%/year,"Stelter and Nishida 
 General liquid hydrocarbon storage (crude),investment,137.8999,EUR/m^3,"Stelter and Nishida 2013: https://webstore.iea.org/insights-series-2013-focus-on-energy-security , pg. 8F .",Assumed 20% lower than for product storage. Crude or middle distillate tanks are usually larger compared to product storage due to lower requirements on safety and different construction method. Reference size used here: 80 000 – 120 000 m^3 .,2012.0
 General liquid hydrocarbon storage (crude),lifetime,30.0,years,"Stelter and Nishida 2013: https://webstore.iea.org/insights-series-2013-focus-on-energy-security , pg. 11.",,2012.0
 General liquid hydrocarbon storage (product),FOM,6.25,%/year,"Stelter and Nishida 2013: https://webstore.iea.org/insights-series-2013-focus-on-energy-security , figure 7 and pg. 12 .",Assuming ca. 10 EUR/m^3/a (center value between stand alone and addon facility).,2012.0
-General liquid hydrocarbon storage (product),investment,172.3748,EUR/m^3,"Stelter and Nishida 2013: https://webstore.iea.org/insights-series-2013-focus-on-energy-security , pg. 8F .",Assumed at the higher end for addon facilities/mid-range for stand-alone facilities. Product storage usually smaller due to higher requirements on safety and different construction method. Reference size used here: 40 000 – 60 000 m^3 .,2012.0
+General liquid hydrocarbon storage (product),investment,172.3748,EUR/m^3,"Stelter and Nishida 2013: https://webstore.iea.org/insights-series-2013-focus-on-energy-security , pg. 8F .",Assumed at the higher end for addon facilities/mid-range for stand-alone facilities. Product storage usually smaller due to higher requirements on safety and different construction method. Reference size used here: 40 000 - 60 000 m^3 .,2012.0
 General liquid hydrocarbon storage (product),lifetime,30.0,years,"Stelter and Nishida 2013: https://webstore.iea.org/insights-series-2013-focus-on-energy-security , pg. 11.",,2012.0
 Gravity-Brick-bicharger,FOM,1.5,%/year,"Viswanathan_2022, p.76 (p.98) Sentence 1 in 4.7.2 Operating Costs","{'carrier': ['elec', 'gravity', 'elec'], 'technology_type': ['bicharger'], 'type': ['mechanical'], 'note': ['1.5 percent of capital cost']}",2020.0
 Gravity-Brick-bicharger,efficiency,0.9274,per unit,"Viswanathan_2022, p.77 (p.99) Table 4.36","{'carrier': ['elec', 'gravity', 'elec'], 'technology_type': ['bicharger'], 'type': ['mechanical'], 'note': ['AC-AC efficiency at transformer level 0.86^0.5']}",2020.0
@@ -323,6 +337,49 @@ HighT-Molten-Salt-discharger,lifetime,35.0,years,"Viswanathan_2022, p.107 (p.129
 HighT-Molten-Salt-store,FOM,0.3308,%/year,"Viswanathan_2022, p 104 (p.126)","{'carrier': ['salthight'], 'technology_type': ['store'], 'type': ['thermal'], 'note': ['not provided calculated as for hydrogen']}",2020.0
 HighT-Molten-Salt-store,investment,94107.5489,EUR/MWh,"Viswanathan_2022, p.98 (p.120)","{'carrier': ['salthight'], 'technology_type': ['store'], 'type': ['thermal'], 'note': ['SB and BOS 0.85 of 2021 value']}",2020.0
 HighT-Molten-Salt-store,lifetime,35.0,years,"Viswanathan_2022, p.107 (p.129)","{'carrier': ['salthight'], 'technology_type': ['store'], 'type': ['thermal'], 'note': ['NULL']}",2020.0
+Hydrogen - Alkaline electrolyzer,FOM,0.03,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
+Hydrogen - Alkaline electrolyzer,efficiency,0.7325,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
+Hydrogen - Alkaline electrolyzer,investment,924.0878,€/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
+Hydrogen - Alkaline electrolyzer,lifetime,10.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
+Hydrogen - Biomass gasification,efficiency,0.4375,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
+Hydrogen - Biomass gasification,investment,1467.7693,€/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
+Hydrogen - Biomass gasification,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
+Hydrogen - Biomass gasification w/ CCS,FOM,0.02,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
+Hydrogen - Biomass gasification w/ CCS,efficiency,0.421,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
+Hydrogen - Biomass gasification w/ CCS,investment,3015.5325,€/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
+Hydrogen - Biomass gasification w/ CCS,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
+Hydrogen - Coal gasification,FOM,0.06,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
+Hydrogen - Coal gasification,efficiency,0.6735,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
+Hydrogen - Coal gasification,investment,399.2305,€/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
+Hydrogen - Coal gasification,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
+Hydrogen - Coal gasification w/ CCS,FOM,0.07,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
+Hydrogen - Coal gasification w/ CCS,efficiency,0.609,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
+Hydrogen - Coal gasification w/ CCS,investment,649.5969,€/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
+Hydrogen - Coal gasification w/ CCS,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
+Hydrogen - Heavy oil partial oxidation,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
+Hydrogen - Heavy oil partial oxidation,efficiency,0.734,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
+Hydrogen - Heavy oil partial oxidation,investment,491.0535,€/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
+Hydrogen - Heavy oil partial oxidation,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
+Hydrogen - Natural gas steam reforming,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
+Hydrogen - Natural gas steam reforming,efficiency,0.7685,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
+Hydrogen - Natural gas steam reforming,investment,180.0632,€/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
+Hydrogen - Natural gas steam reforming,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
+Hydrogen - Natural gas steam reforming w/ CCS,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
+Hydrogen - Natural gas steam reforming w/ CCS,efficiency,0.6515,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
+Hydrogen - Natural gas steam reforming w/ CCS,investment,323.8999,€/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
+Hydrogen - Natural gas steam reforming w/ CCS,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
+Hydrogen - PEM electrolyzer,FOM,0.03,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
+Hydrogen - PEM electrolyzer,efficiency,0.6912,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
+Hydrogen - PEM electrolyzer,investment,1535.3854,€/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
+Hydrogen - PEM electrolyzer,lifetime,10.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
+Hydrogen - SOEC,FOM,0.03,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
+Hydrogen - SOEC,efficiency,0.855,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
+Hydrogen - SOEC,investment,2672.979,€/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
+Hydrogen - SOEC,lifetime,10.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
+Hydrogen - Solid biomass steam reforming,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
+Hydrogen - Solid biomass steam reforming,efficiency,0.712,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
+Hydrogen - Solid biomass steam reforming,investment,590.7702,€/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
+Hydrogen - Solid biomass steam reforming,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
 Hydrogen fuel cell (passenger cars),FOM,1.1,%,PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html,Hydrogen fuel cell (passenger cars),2020.0
 Hydrogen fuel cell (passenger cars),efficiency,0.48,per unit,PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html,Hydrogen fuel cell (passenger cars),2020.0
 Hydrogen fuel cell (passenger cars),investment,30720.0,EUR/PKW,PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html,Hydrogen fuel cell (passenger cars),2020.0
@@ -428,6 +485,18 @@ Methanol steam reforming,FOM,4.0,%/year,"Niermann et al. (2021): Liquid Organic 
 Methanol steam reforming,investment,18016.8665,EUR/MW_H2,"Niermann et al. (2021): Liquid Organic Hydrogen Carriers and alternatives for international transport of renewable hydrogen (https://doi.org/10.1016/j.rser.2020.110171), table 4.","For high temperature steam reforming plant with a capacity of 200 MW_H2 output (6t/h). Reference plant of 1 MW (30kg_H2/h) costs 150kEUR, scale factor of 0.6 assumed.",2020.0
 Methanol steam reforming,lifetime,20.0,years,"Niermann et al. (2021): Liquid Organic Hydrogen Carriers and alternatives for international transport of renewable hydrogen (https://doi.org/10.1016/j.rser.2020.110171), table 4.",,2020.0
 Methanol steam reforming,methanol-input,1.201,MWh_MeOH/MWh_H2,"Niermann et al. (2021): Liquid Organic Hydrogen Carriers and alternatives for international transport of renewable hydrogen (https://doi.org/10.1016/j.rser.2020.110171), table 4.",Assuming per 1 t_H2 (with LHV 33.3333 MWh/t): 4.5 MWh_th and 3.2 MWh_el are required. We assume electricity can be substituted / provided with 1:1 as heat energy.,
+NG 2-on-1 Combined Cycle (F-Frame),efficiency,0.573,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,
+NG 2-on-1 Combined Cycle (F-Frame),lifetime,30.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
+NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,capture_rate,0.95,per unit,"NREL, NREL ATB 2024",,
+NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,efficiency,0.527,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,
+NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,lifetime,30.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
+NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,capture_rate,0.97,per unit,"NREL, NREL ATB 2024",,
+NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,efficiency,0.525,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,
+NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,lifetime,30.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
+NG Combined Cycle F-Class integrated retrofit 90%-CCS,capture_rate,0.9,per unit,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,
+NG Combined Cycle F-Class integrated retrofit 90%-CCS,efficiency,0.536,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,
+NG Combined Cycle F-Class integrated retrofit 95%-CCS,capture_rate,0.95,per unit,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,
+NG Combined Cycle F-Class integrated retrofit 95%-CCS,efficiency,0.536,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,
 NH3 (l) storage tank incl. liquefaction,FOM,2.0,%/year,"Guesstimate, based on H2 (l) storage tank.",,2010.0
 NH3 (l) storage tank incl. liquefaction,investment,166.8201,EUR/MWh_NH3,"Calculated based on Morgan E. 2013: doi:10.7275/11KT-3F59 , Fig. 55, Fig 58.","Based on estimated for a double-wall liquid ammonia tank (~ambient pressure, -33°C), inner tank from stainless steel, outer tank from concrete including installations for liquefaction/condensation, boil-off gas recovery and safety installations; the necessary installations make only a small fraction of the total cost. The total cost are driven by material and working time on the tanks.
 While the costs do not scale strictly linearly, we here assume they do (good approximation c.f. ref. Fig 55.) and take the costs for a 9 kt NH3 (l) tank = 8 M$2010, which is smaller 4-5x smaller than the largest deployed tanks today.
@@ -728,7 +797,7 @@ clean water tank storage,lifetime,30.0,years,"Caldera et al 2016: Local cost of 
 coal,CO2 intensity,0.3361,tCO2/MWh_th,Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018,,
 coal,FOM,1.31,%/year,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.","Calculated based on average of listed range, i.e. (39.5+91.25) USD/kW_e/a /2 / (1.09 USD/EUR) / investment cost * 100.",2023.0
 coal,VOM,3.2612,EUR/MWh_e,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.","Calculated based on average of listed range, i.e. (3+5.5)USD/MWh_e/2 / (1.09 USD/EUR).",2023.0
-coal,efficiency,0.33,p.u.,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.","Calculated based on average of listed range, i.e. 1 / ((8.75+12) MMbtu/MWh_th /2 / (3.4095 MMbtu/MWh_th)), rounded up.",2023.0
+coal,efficiency,0.356,p.u.,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.","Calculated based on average of listed range, i.e. 1 / ((8.75+12) MMbtu/MWh_th /2 / (3.4095 MMbtu/MWh_th)), rounded up.",2023.0
 coal,fuel,9.5542,EUR/MWh_th,"DIW (2013): Current and propsective costs of electricity generation until 2050, http://hdl.handle.net/10419/80348 , pg. 80 text below figure 10, accessed: 2023-12-14.","Based on IEA 2011 data, 99 USD/t.",2010.0
 coal,investment,3827.1629,EUR/kW_e,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.","Higher costs include coal plants with CCS, but since using here for calculating the average nevertheless. Calculated based on average of listed range, i.e. (3200+6775) USD/kW_e/2 / (1.09 USD/EUR).",2023.0
 coal,lifetime,40.0,years,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.",,2023.0

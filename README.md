@@ -16,8 +16,7 @@ standardized cost years, technology names, units and source information. For fur
 
 
 The outputs are used in
-[PyPSA-Eur](https://github.com/PyPSA/pypsa-eur) and
-[PyPSA-Eur-Sec](https://github.com/PyPSA/pypsa-eur-sec).
+[PyPSA-Eur](https://github.com/PyPSA/pypsa-eur) and [PyPSA-Earth](https://github.com/pypsa-meets-earth/pypsa-earth).
 
 
 ## Licence

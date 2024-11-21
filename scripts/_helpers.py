@@ -3,9 +3,9 @@ import re
 import os
 
 import snakemake as sm
-from pypsa.descriptors import Dict
 from snakemake.script import Snakemake
 
+Dict = dict
 
 class Dict(dict):
     """

@@ -629,7 +629,9 @@ def get_data_DEA(tech, data_in, expectation=None):
                   'Hydrogen Consumption',
                   ' - of which is equipment excluding heat pump',
                   ' - of which is heat pump including its installation',
-                  ]
+                  'Input capacity',
+                  'Output capacity',
+                  'Energy storage capacity']
 
     df = pd.DataFrame()
     for para in parameters:
@@ -724,10 +726,10 @@ def get_data_DEA(tech, data_in, expectation=None):
 
     if "biochar pyrolysis" in tech:
         df = biochar_pyrolysis_harmonise_dea(df)
-    
+
     elif tech == "central geothermal-sourced heat pump":
         df.loc["Nominal investment (MEUR per MW)"] = df.loc[" - of which is heat pump including its installation"]
-        
+
     elif tech == "central geothermal heat source":
         df.loc["Nominal investment (MEUR per MW)"] = df.loc[" - of which is equipment excluding heat pump"]
 
@@ -1541,6 +1543,30 @@ def order_data(tech_data):
     charger_pit.rename(index={"water pit charger": "water pit discharger"},
                    level=0, inplace=True)
     data = pd.concat([data, charger_pit], sort=True)
+
+    # add energy to power ratio for water pit storage
+    power_ratio_pit = tech_data.loc[("central water pit storage", "Input capacity for one unit")].copy().squeeze()
+    storage_capacity_pit = tech_data.loc[("central water pit storage", "Energy storage capacity for one unit")].copy().squeeze()
+
+    power_ratio_pit[years] = storage_capacity_pit[years].div(power_ratio_pit[years])
+    power_ratio_pit["further description"] = "Ratio between energy storage and input capacity"
+    power_ratio_pit["unit"] = "h"
+    power_ratio_pit = power_ratio_pit.to_frame().T
+    power_ratio_pit.rename(index={"Input capacity for one unit": "energy to power ratio"},
+                            level=1, inplace=True)
+    data = pd.concat([data, power_ratio_pit], sort=True)
+
+    # add energy to power ratio for water tank storage
+    power_ratio_tank = tech_data.loc[("central water tank storage", "Input capacity for one unit")].copy().squeeze()
+    storage_capacity_tank = tech_data.loc[("central water tank storage", "Energy storage capacity for one unit")].copy().squeeze()
+
+    power_ratio_tank[years] = storage_capacity_tank[years].div(power_ratio_tank[years])
+    power_ratio_tank["further description"] = "Ratio between energy storage and input capacity"
+    power_ratio_tank["unit"] = "h"
+    power_ratio_tank = power_ratio_tank.to_frame().T
+    power_ratio_tank.rename(index={"Input capacity for one unit": "energy to power ratio"},
+                            level=1, inplace=True)
+    data = pd.concat([data, power_ratio_tank], sort=True)
 
     return data
 

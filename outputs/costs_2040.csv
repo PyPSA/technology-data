@@ -726,9 +726,11 @@ central solid biomass CHP powerboost CC,efficiency-heat,0.8269,per unit,"Danish 
 central solid biomass CHP powerboost CC,investment,3442.0984,EUR/kW_e,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Nominal investment ",2015.0
 central solid biomass CHP powerboost CC,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Technical lifetime",2015.0
 central water pit storage,FOM,0.5934,%/year,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Fixed O&M,2015.0
+central water pit storage,energy to power ratio,150.0,h,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Ratio between energy storage and input capacity,2015.0
 central water pit storage,investment,0.535,EUR/kWhCapacity,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Specific investment,2015.0
 central water pit storage,lifetime,25.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Technical lifetime,2015.0
 central water tank storage,FOM,0.2901,%/year,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Fixed O&M,2015.0
+central water tank storage,energy to power ratio,60.3448,h,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Ratio between energy storage and input capacity,2015.0
 central water tank storage,investment,3.1374,EUR/kWhCapacity,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Specific investment,2015.0
 central water tank storage,lifetime,40.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Technical lifetime,2015.0
 central water-sourced heat pump,FOM,0.5,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","40 Comp. hp, seawater 20 MW:  Fixed O&M",2015.0

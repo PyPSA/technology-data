@@ -23,6 +23,7 @@ Release Notes
 
 * added iron-air battery cost data from Form Energy
 
+* added energy to power ratio for central water pit storage and central water tank storage
 
 Technology-Data 0.9.2 (30 August 2024)
 ======================================

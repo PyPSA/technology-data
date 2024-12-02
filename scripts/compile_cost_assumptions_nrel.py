@@ -237,7 +237,7 @@ if __name__ == "__main__":
         output_cost_path_list = [path for path in snakemake.output if str(year_val) in path]
         if len(output_cost_path_list) == 1:
             output_cost_path = output_cost_path_list[0]
-            updated_cost_df.to_csv(output_cost_path)
+            updated_cost_df.to_csv(output_cost_path, index=False)
         else:
             raise Exception("Please verify the list of cost files. It may contain duplicates.")
 

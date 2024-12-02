@@ -131,7 +131,10 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
     atb_input_df["value"] = atb_input_df.apply(lambda x: calculate_fom_percentage(x, atb_input_df, list_columns_to_keep), axis=1)
 
     # Modify the unit of the normalized Fixed O&M to %-yr
-    atb_input_df["units"] = atb_input_df.apply(lambda x: "%-yr" if x["core_metric_parameter"].casefold() == "fixed o&m" else x["units"], axis=1)
+    atb_input_df["units"] = atb_input_df.apply(lambda x: "%/year" if x["core_metric_parameter"].casefold() == "fixed o&m" else x["units"], axis=1)
+
+    # Aggiungi la logica per modificare "units" in base a "CF"
+    atb_input_df["units"] = atb_input_df.apply(lambda x: "per unit" if x["core_metric_parameter"].casefold() == "cf" else x["units"], axis=1)
 
     # Replace the display_name column values with PyPSA technology names
     technology_conversion_dict_atb = get_convertion_dictionary("technology")

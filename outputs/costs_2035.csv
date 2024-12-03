@@ -125,9 +125,10 @@ Coal-95%-CCS,lifetime,40.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
 Coal-99%-CCS,capture_rate,0.99,per unit,"NREL, NREL ATB 2024",,
 Coal-99%-CCS,efficiency,0.403,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
 Coal-99%-CCS,lifetime,40.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
-Coal-IGCC,efficiency,0.53,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
+Coal-IGCC,efficiency,0.5,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
 Coal-IGCC,lifetime,40.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
 Coal-IGCC-90%-CCS,capture_rate,0.9,per unit,"NREL, NREL ATB 2024",,
+Coal-IGCC-90%-CCS,efficiency,0.403,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
 Coal-IGCC-90%-CCS,lifetime,40.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
 Compressed-Air-Adiabatic-bicharger,FOM,0.9265,%/year,"Viswanathan_2022, p.64 (p.86) Figure 4.14","{'carrier': ['elec', 'pair', 'elec'], 'technology_type': ['bicharger'], 'type': ['mechanical'], 'note': ['NULL']}",2020.0
 Compressed-Air-Adiabatic-bicharger,efficiency,0.7211,per unit,"Viswanathan_2022, p.59 (p.81)","{'carrier': ['elec', 'pair', 'elec'], 'technology_type': ['bicharger'], 'type': ['mechanical'], 'note': ['AC-AC efficiency at transformer level 0.52^0.5']}",2020.0

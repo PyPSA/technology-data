@@ -5,6 +5,12 @@ Release Notes
 .. Upcoming Release
 .. ================
 
+* added water-sourced heat pumps based on upper uncertainty bounds from DEA technology catalogue ("40 Comp. hp, seawater 20 MW")
+
+* **WARNING**: Costs for central geothermal heating are split into `central geothermal heat source` and `central geothermal-sourced heat pump`. Make sure to use the costs of both for full systems!
+
+* added geothermal district heating as `central geothermal-sourced heat pump` and `central goethermal heat source` based on DEA technology catalogue ("45.1.a Geothermal DH, 1200m, E")
+
 * added Pyrolysis for biochar
 
 * fixed unit formatting in DEA technology data sheets 105 (slow pyrolysis)
@@ -19,6 +25,7 @@ Release Notes
 
 * include NREL/ATB costs for electricity in a dedicated US cost outputs
 
+* added energy to power ratio for central water pit storage and central water tank storage
 
 Technology-Data 0.9.2 (30 August 2024)
 ======================================

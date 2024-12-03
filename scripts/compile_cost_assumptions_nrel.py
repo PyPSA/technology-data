@@ -130,8 +130,23 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
     # Normalize Fixed O&M by CAPEX (or Additional OCC for retrofit technologies)
     atb_input_df["value"] = atb_input_df.apply(lambda x: calculate_fom_percentage(x, atb_input_df, list_columns_to_keep), axis=1)
 
-    # Modify the unit of the normalized Fixed O&M to %-yr
-    atb_input_df["units"] = atb_input_df.apply(lambda x: "%-yr" if x["core_metric_parameter"].casefold() == "fixed o&m" else x["units"], axis=1)
+    # Modify the unit of the normalized Fixed O&M to %/yr
+    atb_input_df["units"] = atb_input_df.apply(lambda x: "%/year" if x["core_metric_parameter"].casefold() == "fixed o&m" else x["units"], axis=1)
+
+    # Modify the unit of CF to per unit
+    atb_input_df["units"] = atb_input_df.apply(lambda x: "per unit" if x["core_metric_parameter"].casefold() == "cf" else x["units"], axis=1)
+
+    # Modify the unit of Additional OCC to USD/kW instead of $/kW
+    atb_input_df["units"] = atb_input_df.apply(lambda x: "USD/kW" if x["core_metric_parameter"].casefold() == "additional occ" else x["units"], axis=1)
+
+    # Modify the unit of CAPEX to USD/kW instead of $/kW
+    atb_input_df["units"] = atb_input_df.apply(lambda x: "USD/kW" if x["core_metric_parameter"].casefold() == "capex" else x["units"], axis=1)
+
+    # Modify the unit of Variable O&M to USD/MWh instead of $/MWh
+    atb_input_df["units"] = atb_input_df.apply(lambda x: "USD/MWh" if x["core_metric_parameter"].casefold() == "variable o&m" else x["units"], axis=1)
+
+    # Modify the unit of Fuel cost O&M to USD/MWh instead of $/MWh
+    atb_input_df["units"] = atb_input_df.apply(lambda x: "USD/MWh" if x["core_metric_parameter"].casefold() == "fuel" else x["units"], axis=1)
 
     # Replace the display_name column values with PyPSA technology names
     technology_conversion_dict_atb = get_convertion_dictionary("technology")
@@ -237,7 +252,7 @@ if __name__ == "__main__":
         output_cost_path_list = [path for path in snakemake.output if str(year_val) in path]
         if len(output_cost_path_list) == 1:
             output_cost_path = output_cost_path_list[0]
-            updated_cost_df.to_csv(output_cost_path)
+            updated_cost_df.to_csv(output_cost_path, index=False)
         else:
             raise Exception("Please verify the list of cost files. It may contain duplicates.")
 

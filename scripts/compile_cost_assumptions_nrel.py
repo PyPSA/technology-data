@@ -173,23 +173,32 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
     return atb_input_df.reset_index(drop=True)
 
 
-def update_cost_values(cost_dataframe, atb_dataframe, conversion_dictionary, columns_to_add_list):
+def update_cost_values(cost_dataframe, atb_dataframe, technology_dictionary, parameter_dictionary, columns_to_add_list):
+
+    # The data coming from NREL/ATB contain the columns "financial_case", "scenario", "tax_credit_case".
+    # Such columns are NOT present in the former cost csv. They are added here
     for column_name in columns_to_add_list:
         cost_dataframe[column_name] = pd.Series(dtype="str")
-    values_to_keep = [str(x).casefold() for x in set(conversion_dictionary.values())]
+    technologies_from_nrel = [str(x).casefold() for x in set(technology_dictionary.values())]
+    parameters_from_nrel = [str(x).casefold() for x in set(parameter_dictionary.values())]
 
-    # query to keep the technologies currently NOT included in PyPSA
-    query_string_part_one = "~technology.str.casefold().isin(@values_to_keep)"
+    # Query the rows from the former cost csv file.
+    # --> The selection is done by means of an OR operator.
+    # --> The two operands for this logical operation are returned by the two queries below
 
-    # query to keep the technologies currently included in PyPSA for which the columns ["financial_case", "scenario"] are valid values
-    query_string_part_two = "technology.str.casefold().isin(@values_to_keep) & ~(scenario.isna() & financial_case.isna())"
+    # --> QUERY 1: this query selects all the rows corresponding to the technologies NOT updated with NREL-ATB data
+    query_string_part_one = "~technology.str.casefold().isin(@technologies_from_nrel)"
 
-    # query to replace the entries corresponding to technologies currently included in PyPSA with valus from NREL and keep value other technologies
-    query_string = "{} | {}".format(query_string_part_one, query_string_part_two)
+    # --> QUERY 2: some of the parameters of the technologies to be updated with NREL-ATB data are NOT present
+    # --> in the NREL-ATB dataset. They are instead added to the former cost csv files by means of the
+    # --> manual_input.csv. They should be kept in the final output. This query selects such rows
+    query_string_part_two = "technology.str.casefold().isin(@technologies_from_nrel) & ~parameter.str.casefold().isin(@parameters_from_nrel)"
 
-    new_cost_dataframe = pd.concat([cost_dataframe, atb_dataframe]).query(query_string).reset_index(drop=True)
+    query_string = ("{} | {}").format(query_string_part_one, query_string_part_two)
 
-    return new_cost_dataframe
+    updated_cost_dataframe = pd.concat([cost_dataframe.query(query_string), atb_dataframe]).reset_index(drop=True)
+
+    return updated_cost_dataframe
 
 
 def add_discount_rate_value(cost_dataframe, discount_rate_dataframe):
@@ -243,7 +252,7 @@ if __name__ == "__main__":
         discount_rate_year_df = discount_rate_year_df.loc[:, ("technology", "parameter", "value", "unit", "source", "further description", "currency_year", "financial_case", "scenario", "tax_credit_case")].reset_index(drop=True)
 
         # update the cost file
-        updated_cost_df = update_cost_values(cost_df, atb_e_df, get_convertion_dictionary("technology"), ["financial_case", "scenario", "tax_credit_case"])
+        updated_cost_df = update_cost_values(cost_df, atb_e_df, get_convertion_dictionary("technology"), get_convertion_dictionary("parameter"), ["financial_case", "scenario", "tax_credit_case"])
 
         # add discount rate
         updated_cost_df = add_discount_rate_value(updated_cost_df, discount_rate_year_df)

@@ -23,7 +23,11 @@ Release Notes
 
 * added iron-air battery cost data from Form Energy
 
-* include NREL/ATB costs for electricity in a dedicated US cost outputs
+* include NREL/ATB costs for electricity generation technologies in a dedicated US cost outputs
+
+* include ICCT techno-economic parameters for electrolyzers, hydrogen storage, Fischer-Tropsch, Direct air capture
+
+* include JRC data for fossil- and biomass-based hydrogen production technologies (with and without CCS)
 
 * added energy to power ratio for central water pit storage and central water tank storage
 

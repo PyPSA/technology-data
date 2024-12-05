@@ -219,28 +219,14 @@ methanol-to-kerosene,lifetime,2050,30,years,-,"Concawe (2022): E-Fuels: A techno
 methanol-to-kerosene,investment,2050,200000,EUR/MW_kerosene,2020,"Concawe (2022): E-Fuels: A technoeconomic assessment of European domestic production and imports towards 2050 (https://www.concawe.eu/wp-content/uploads/Rpt_22-17.pdf), table 94.",
 methanol-to-kerosene,FOM,2050,4.5,%/year,2020,"Concawe (2022): E-Fuels: A technoeconomic assessment of European domestic production and imports towards 2050 (https://www.concawe.eu/wp-content/uploads/Rpt_22-17.pdf), table 94.",
 methanol-to-kerosene,VOM,2050,1.35,EUR/MWh_kerosene,2020,"Concawe (2022): E-Fuels: A technoeconomic assessment of European domestic production and imports towards 2050 (https://www.concawe.eu/wp-content/uploads/Rpt_22-17.pdf), table 94.",
-Fischer-Tropsch,efficiency,2020,0.799,per unit,2017,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), section 6.3.2.2.",
-Fischer-Tropsch,investment,2020,788000,EUR/MW_FT,2017,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), table 8: “Reference scenario”.","Well developed technology, no significant learning expected."
-Fischer-Tropsch,lifetime,2020,20,years,2017,"Danish Energy Agency, Technology Data for Renewable Fuels (04/2022), Data sheet “Methanol to Power”.",
-Fischer-Tropsch,FOM,2020,3,%/year,2017,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), section 6.3.2.1.",
-Fischer-Tropsch,investment,2030,677000,EUR/MW_FT,2017,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), table 8: “Reference scenario”.","Well developed technology, no significant learning expected."
-Fischer-Tropsch,lifetime,2030,20,years,2017,"Danish Energy Agency, Technology Data for Renewable Fuels (04/2022), Data sheet “Methanol to Power”.",
-Fischer-Tropsch,FOM,2030,3,%/year,2017,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), section 6.3.2.1.",
-Fischer-Tropsch,investment,2050,500000,EUR/MW_FT,2017,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), table 8: “Reference scenario”.","Well developed technology, no significant learning expected."
-Fischer-Tropsch,lifetime,2050,20,years,2017,"Danish Energy Agency, Technology Data for Renewable Fuels (04/2022), Data sheet “Methanol to Power”.",
-Fischer-Tropsch,FOM,2050,3,%/year,2017,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), section 6.3.2.1.",
-Fischer-Tropsch,hydrogen-input,2020,1.531,MWh_H2/MWh_FT,,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","0.995 MWh_H2 per output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output)."
-Fischer-Tropsch,hydrogen-input,2030,1.421,MWh_H2/MWh_FT,,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","0.995 MWh_H2 per output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output)."
-Fischer-Tropsch,hydrogen-input,2040,1.363,MWh_H2/MWh_FT,,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","0.995 MWh_H2 per output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output)."
-Fischer-Tropsch,hydrogen-input,2050,1.327,MWh_H2/MWh_FT,,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","0.995 MWh_H2 per output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output)."
-Fischer-Tropsch,electricity-input,2020,0.008,MWh_el/MWh_FT,,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","0.005 MWh_el input per FT output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output)."
-Fischer-Tropsch,electricity-input,2030,0.007,MWh_el/MWh_FT,,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","0.005 MWh_el input per FT output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output)."
-Fischer-Tropsch,electricity-input,2040,0.007,MWh_el/MWh_FT,,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","0.005 MWh_el input per FT output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output)."
-Fischer-Tropsch,electricity-input,2050,0.007,MWh_el/MWh_FT,,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","0.005 MWh_el input per FT output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output)."
-Fischer-Tropsch,carbondioxide-input,2020,0.36,t_CO2/MWh_FT,,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","Input per 1t FT liquid fuels output, carbon efficiency increases with years (4.3, 3.9, 3.6, 3.3 t_CO2/t_FT from 2020-2050 with LHV 11.95 MWh_th/t_FT)."
-Fischer-Tropsch,carbondioxide-input,2030,0.326,t_CO2/MWh_FT,,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","Input per 1t FT liquid fuels output, carbon efficiency increases with years (4.3, 3.9, 3.6, 3.3 t_CO2/t_FT from 2020-2050 with LHV 11.95 MWh_th/t_FT)."
-Fischer-Tropsch,carbondioxide-input,2040,0.301,t_CO2/MWh_FT,,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","Input per 1t FT liquid fuels output, carbon efficiency increases with years (4.3, 3.9, 3.6, 3.3 t_CO2/t_FT from 2020-2050 with LHV 11.95 MWh_th/t_FT)."
-Fischer-Tropsch,carbondioxide-input,2050,0.276,t_CO2/MWh_FT,,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","Input per 1t FT liquid fuels output, carbon efficiency increases with years (4.3, 3.9, 3.6, 3.3 t_CO2/t_FT from 2020-2050 with LHV 11.95 MWh_th/t_FT)."
+Fischer-Tropsch,efficiency,2020,0.7,per unit,,ICCT IRA e-fuels assumptions ,
+Fischer-Tropsch,investment,2020,1696429,USD/MW_FT,2022,ICCT IRA e-fuels assumptions ,"Well developed technology, no significant learning expected."
+Fischer-Tropsch,lifetime,2020,20,years,,ICCT IRA e-fuels assumptions ,
+Fischer-Tropsch,FOM,2020,4,%/year,2022,ICCT IRA e-fuels assumptions ,
+Fischer-Tropsch,lifetime,2030,30,years,,ICCT IRA e-fuels assumptions ,
+Fischer-Tropsch,hydrogen-input,2020,1.43,MWh_H2/MWh_FT,,ICCT IRA e-fuels assumptions ,"0.995 MWh_H2 per output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output)."
+Fischer-Tropsch,electricity-input,2020,0.04,MWh_el/MWh_FT,,ICCT IRA e-fuels assumptions ,"0.005 MWh_el input per FT output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output)."
+Fischer-Tropsch,carbondioxide-input,2020,0.32,t_CO2/MWh_FT,,ICCT IRA e-fuels assumptions ,"Input per 1t FT liquid fuels output, carbon efficiency increases with years (4.3, 3.9, 3.6, 3.3 t_CO2/t_FT from 2020-2050 with LHV 11.95 MWh_th/t_FT)."
 methanolisation,investment,2020,788000,EUR/MW_MeOH,2017,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), table 8: “Reference scenario”.","Well developed technology, no significant learning expected."
 methanolisation,lifetime,2020,20,years,2017,"Danish Energy Agency, Technology Data for Renewable Fuels (04/2022), Data sheet “Methanol to Power”.",
 methanolisation,FOM,2020,3,%/year,2017,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), section 6.3.2.1.",
@@ -290,21 +276,24 @@ csp-tower power block,lifetime,2020,30,years,2020,see solar-tower.,-
 csp-tower power block,lifetime,2030,30,years,2020,see solar-tower.,-
 csp-tower power block,lifetime,2040,30,years,2020,see solar-tower.,-
 csp-tower power block,lifetime,2050,30,years,2020,see solar-tower.,-
-hydrogen storage tank type 1,investment,2030,13.5,EUR/kWh_H2,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.","450 EUR/kg_H2 converted with LHV to MWh. For a type 1 hydrogen storage tank (steel, 15-250 bar). Currency year assumed 2020 for initial publication of reference; observe note in SI.4.3 that no currency year is explicitly stated in the reference."
-hydrogen storage tank type 1,FOM,2030,2,%/year,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.",-
-hydrogen storage tank type 1,lifetime,2030,20,years,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.",-
-hydrogen storage tank type 1,min_fill_level,2030,6,%,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.",-
-hydrogen storage compressor,investment,2030,87.69,EUR/kW_H2,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.","2923 EUR/kg_H2. For a 206 kg/h compressor. Base CAPEX 40 528 EUR/kW_el with scale factor 0.4603. kg_H2 converted to MWh using LHV. Pressure range: 30 bar in, 250 bar out."
-hydrogen storage compressor,FOM,2030,4,%/year,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",-
-hydrogen storage compressor,lifetime,2030,15,years,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",-
-hydrogen storage compressor,compression-electricity-input,2030,0.05,MWh_el/MWh_H2,2020,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",1.707 kWh/kg.
+hydrogen storage tank type 1,investment,2020,16.87,USD/kWh_H2,2022,ICCT IRA e-fuels assumptions ,
+hydrogen storage tank type 1,FOM,2020,4,%/year,2022,ICCT IRA e-fuels assumptions ,-
+hydrogen storage tank type 1,lifetime,2020,30,years,,ICCT IRA e-fuels assumptions ,-
+hydrogen storage tank type 1,min_fill_level,2020,6,%,,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.",-
+hydrogen storage compressor,investment,2020,2.28,USD/kWh_H2,2022,ICCT IRA e-fuels assumptions ,
+hydrogen storage compressor,FOM,2020,4,%/year,2022,ICCT IRA e-fuels assumptions ,-
+hydrogen storage compressor,lifetime,2020,30,years,,ICCT IRA e-fuels assumptions ,-
+hydrogen storage compressor,compression-electricity-input,2020,0.05,MWh_el/MWh_H2,,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",1.707 kWh/kg.
 seawater RO desalination,electricity-input,0,0.003,MWHh_el/t_H2O,,"Caldera et al. (2016): Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Fig. 4.",Desalination using SWRO. Assume medium salinity of 35 Practical Salinity Units (PSUs) = 35 kg/m^3.
 Haber-Bosch,electricity-input,0,0.2473,MWh_el/MWh_NH3,-,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), table 11.",Assume 5 GJ/t_NH3 for compressors and NH3 LHV = 5.16666 MWh/t_NH3.
 Haber-Bosch,nitrogen-input,0,0.1597,t_N2/MWh_NH3,-,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), pg. 57.",".33 MWh electricity are required for ASU per t_NH3, considering 0.4 MWh are required per t_N2 and LHV of NH3 of 5.1666 Mwh."
 Haber-Bosch,hydrogen-input,0,1.1484,MWh_H2/MWh_NH3,-,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), pg. 57.","178 kg_H2 per t_NH3, LHV for both assumed."
 air separation unit,electricity-input,0,0.25,MWh_el/t_N2,-,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), p.288.","For consistency reasons use value from Danish Energy Agency. DEA also reports range of values (0.2-0.4 MWh/t_N2) on pg. 288. Other efficienices reported are even higher, e.g. 0.11 Mwh/t_N2 from Morgan (2013): Techno-Economic Feasibility Study of Ammonia Plants Powered by Offshore Wind ."
-direct air capture,electricity-input,0,0.4,MWh_el/t_CO2,-,"Beuttler et al (2019): The Role of Direct Air Capture in Mitigation of Antropogenic Greenhouse Gas emissions (https://doi.org/10.3389/fclim.2019.00010), alternative:  Breyer et al (2019).","0.4 MWh based on Beuttler et al (2019) for Climeworks LT DAC, alternative value: 0.182 MWh based on Breyer et al (2019). Should already include electricity for water scrubbing and compression (high quality CO2 output)."
-direct air capture,heat-input,0,1.6,MWh_th/t_CO2,-,"Beuttler et al (2019): The Role of Direct Air Capture in Mitigation of Antropogenic Greenhouse Gas emissions (https://doi.org/10.3389/fclim.2019.00010), alternative:  Breyer et al (2019).","Thermal energy demand. Provided via air-sourced heat pumps. 1.6 MWh based on Beuttler et al (2019) for Climeworks LT DAC, alternative value: 1.102 MWh based on Breyer et al (2019)."
+direct air capture,years,2020,30,years,,ICCT IRA e-fuels assumptions ,
+direct air capture,FOM,2020,1.3,%/year,2022,ICCT IRA e-fuels assumptions ,
+direct air capture,investment,2020,12398844.91,USD/t_CO2/h,2022,ICCT IRA e-fuels assumptions ,
+direct air capture,electricity-input,2020,0.24,MWh_el/t_CO2,,ICCT IRA e-fuels assumptions ,
+direct air capture,heat-input,2020,1.17,MWh_th/t_CO2,,ICCT IRA e-fuels assumptions ,
 dry bulk carrier Capesize,capacity,2020,180000,t,2020,-,"DWT; corresponds to size of Capesize bulk carriers which have previously docked at the habour in Hamburg, Germany. Short of 200 kt limit for VLBCs."
 dry bulk carrier Capesize,investment,2020,40000000,EUR,2020,"Based on https://www.hellenicshippingnews.com/dry-bulk-carriers-in-high-demand-as-rates-keep-rallying/, accessed: 2022-12-03.","See figure for ‘Dry Bulk Newbuild Prices’, Capesize at end of 2020. Exchange rate: 1.15 USD = 1 EUR."
 dry bulk carrier Capesize,FOM,2020,4,%/year,2020,"Based on https://www.hellenicshippingnews.com/capesize-freight-returns-below-operating-expense-levels-but-shipowners-reject-lay-ups/, accessed: 2022-12-03.","5000 USD/d OPEX, exchange rate: 1.15 USD = 1 EUR; absolute value calculate relative to investment cost."
@@ -418,9 +407,9 @@ NG Combined Cycle F-Class integrated retrofit 95%-CCS,efficiency,2030,0.536,p.u.
 Hydrogen - Natural gas steam reforming,lifetime,2020,20,years,-,"JRC, 01_JRC-EU-TIMES Full model ",
 Hydrogen - Coal gasification,lifetime,2020,20,years,-,"JRC, 01_JRC-EU-TIMES Full model ",
 Hydrogen - Heavy oil partial oxidation,lifetime,2020,20,years,-,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - Alkaline electrolyzer,lifetime,2020,10,years,-,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - PEM electrolyzer,lifetime,2020,10,years,-,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - SOEC,lifetime,2020,10,years,-,"JRC, 01_JRC-EU-TIMES Full model ",
+Hydrogen - Alkaline electrolyzer,lifetime,2020,30,years,-,ICCT IRA e-fuels assumptions ,
+Hydrogen - PEM electrolyzer,lifetime,2020,30,years,-,ICCT IRA e-fuels assumptions ,
+Hydrogen - SOEC,lifetime,2020,30,years,-,ICCT IRA e-fuels assumptions ,
 Hydrogen - Solid biomass steam reforming,lifetime,2020,20,years,-,"JRC, 01_JRC-EU-TIMES Full model ",
 Hydrogen - Biomass gasification,lifetime,2020,20,years,-,"JRC, 01_JRC-EU-TIMES Full model ",
 Hydrogen - Natural gas steam reforming w/ CCS,lifetime,2020,20,years,-,"JRC, 01_JRC-EU-TIMES Full model ",
@@ -431,15 +420,18 @@ Hydrogen - Natural gas steam reforming,efficiency,2050,0.787,p.u.,-,"JRC, 01_JRC
 Hydrogen - Coal gasification,efficiency,2020,0.56,p.u.,-,"JRC, 01_JRC-EU-TIMES Full model ",
 Hydrogen - Coal gasification,efficiency,2050,0.787,p.u.,-,"JRC, 01_JRC-EU-TIMES Full model ",
 Hydrogen - Heavy oil partial oxidation,efficiency,2020,0.734,p.u.,-,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - Alkaline electrolyzer,efficiency,2020,0.7,p.u.,-,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - Alkaline electrolyzer,efficiency,2030,0.71,p.u.,-,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - Alkaline electrolyzer,efficiency,2050,0.8,p.u.,-,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - PEM electrolyzer,efficiency,2020,0.63,p.u.,-,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - PEM electrolyzer,efficiency,2030,0.68,p.u.,-,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - PEM electrolyzer,efficiency,2050,0.725,p.u.,-,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - SOEC,efficiency,2020,0.82,p.u.,-,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - SOEC,efficiency,2030,0.84,p.u.,-,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - SOEC,efficiency,2050,0.9,p.u.,-,"JRC, 01_JRC-EU-TIMES Full model ",
+Hydrogen - Alkaline electrolyzer,efficiency,2020,0.65,p.u.,-,ICCT IRA e-fuels assumptions ,
+Hydrogen - Alkaline electrolyzer,efficiency,2030,0.69,p.u.,-,ICCT IRA e-fuels assumptions ,
+Hydrogen - Alkaline electrolyzer,efficiency,2040,0.74,p.u.,-,ICCT IRA e-fuels assumptions ,
+Hydrogen - Alkaline electrolyzer,efficiency,2050,0.78,p.u.,-,ICCT IRA e-fuels assumptions ,
+Hydrogen - PEM electrolyzer,efficiency,2020,0.63,p.u.,-,ICCT IRA e-fuels assumptions ,
+Hydrogen - PEM electrolyzer,efficiency,2030,0.68,p.u.,-,ICCT IRA e-fuels assumptions ,
+Hydrogen - PEM electrolyzer,efficiency,2040,0.71,p.u.,-,ICCT IRA e-fuels assumptions ,
+Hydrogen - PEM electrolyzer,efficiency,2050,0.73,p.u.,-,ICCT IRA e-fuels assumptions ,
+Hydrogen - SOEC,efficiency,2020,0.82,p.u.,-,ICCT IRA e-fuels assumptions ,
+Hydrogen - SOEC,efficiency,2030,0.84,p.u.,-,ICCT IRA e-fuels assumptions ,
+Hydrogen - SOEC,efficiency,2040,0.87,p.u.,-,ICCT IRA e-fuels assumptions ,
+Hydrogen - SOEC,efficiency,2050,0.9,p.u.,-,ICCT IRA e-fuels assumptions ,
 Hydrogen - Solid biomass steam reforming,efficiency,2020,0.712,p.u.,-,"JRC, 01_JRC-EU-TIMES Full model ",
 Hydrogen - Biomass gasification,efficiency,2020,0.35,p.u.,-,"JRC, 01_JRC-EU-TIMES Full model ",
 Hydrogen - Biomass gasification,efficiency,2050,0.525,p.u.,-,"JRC, 01_JRC-EU-TIMES Full model ",
@@ -454,15 +446,18 @@ Hydrogen - Natural gas steam reforming,investment,2030,158.31,EUR/kW,2010,"JRC, 
 Hydrogen - Coal gasification,investment,2020,425.42,EUR/kW,2010,"JRC, 01_JRC-EU-TIMES Full model ",
 Hydrogen - Coal gasification,investment,2030,351,EUR/kW,2010,"JRC, 01_JRC-EU-TIMES Full model ",
 Hydrogen - Heavy oil partial oxidation,investment,2020,431.73,EUR/kW,2010,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - Alkaline electrolyzer,investment,2020,1216.55,EUR/kW,2010,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - Alkaline electrolyzer,investment,2030,849.9,EUR/kW,2010,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - Alkaline electrolyzer,investment,2050,700.1,EUR/kW,2010,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - PEM electrolyzer,investment,2020,1700,EUR/kW,2010,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - PEM electrolyzer,investment,2030,1499.85,EUR/kW,2010,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - PEM electrolyzer,investment,2050,900.04,EUR/kW,2010,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - SOEC,investment,2020,4666.59,EUR/kW,2010,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - SOEC,investment,2030,2800.08,EUR/kW,2010,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - SOEC,investment,2050,1000,EUR/kW,2010,"JRC, 01_JRC-EU-TIMES Full model ",
+Hydrogen - Alkaline electrolyzer,investment,2020,1146,USD/kW,2022,ICCT IRA e-fuels assumptions ,
+Hydrogen - Alkaline electrolyzer,investment,2030,936,USD/kW,2022,ICCT IRA e-fuels assumptions ,
+Hydrogen - Alkaline electrolyzer,investment,2040,765,USD/kW,2022,ICCT IRA e-fuels assumptions ,
+Hydrogen - Alkaline electrolyzer,investment,2050,625,USD/kW,2022,ICCT IRA e-fuels assumptions ,
+Hydrogen - PEM electrolyzer,investment,2020,1371,USD/kW,2022,ICCT IRA e-fuels assumptions ,
+Hydrogen - PEM electrolyzer,investment,2030,1120,USD/kW,2022,ICCT IRA e-fuels assumptions ,
+Hydrogen - PEM electrolyzer,investment,2040,915,USD/kW,2022,ICCT IRA e-fuels assumptions ,
+Hydrogen - PEM electrolyzer,investment,2050,748,USD/kW,2022,ICCT IRA e-fuels assumptions ,
+Hydrogen - SOEC,investment,2020,1561,USD/kW,2022,ICCT IRA e-fuels assumptions ,
+Hydrogen - SOEC,investment,2030,1276,USD/kW,2022,ICCT IRA e-fuels assumptions ,
+Hydrogen - SOEC,investment,2040,1042,USD/kW,2022,ICCT IRA e-fuels assumptions ,
+Hydrogen - SOEC,investment,2050,852,USD/kW,2022,ICCT IRA e-fuels assumptions ,
 Hydrogen - Solid biomass steam reforming,investment,2020,519.4,EUR/kW,2010,"JRC, 01_JRC-EU-TIMES Full model ",
 Hydrogen - Biomass gasification,investment,2020,1290.45,EUR/kW,2010,"JRC, 01_JRC-EU-TIMES Full model ",
 Hydrogen - Natural gas steam reforming w/ CCS,investment,2030,284.77,EUR/kW,2010,"JRC, 01_JRC-EU-TIMES Full model ",
@@ -474,15 +469,15 @@ Hydrogen - Natural gas steam reforming,FOM,2030,0.05,%/year,2010,"JRC, 01_JRC-EU
 Hydrogen - Coal gasification,FOM,2020,0.06,%/year,2010,"JRC, 01_JRC-EU-TIMES Full model ",
 Hydrogen - Coal gasification,FOM,2030,0.06,%/year,2010,"JRC, 01_JRC-EU-TIMES Full model ",
 Hydrogen - Heavy oil partial oxidation,FOM,2020,0.05,%/year,2010,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - Alkaline electrolyzer,FOM,2020,0.03,%/year,2010,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - Alkaline electrolyzer,FOM,2030,0.03,%/year,2010,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - Alkaline electrolyzer,FOM,2050,0.03,%/year,2010,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - PEM electrolyzer,FOM,2020,0.03,%/year,2010,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - PEM electrolyzer,FOM,2030,0.03,%/year,2010,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - PEM electrolyzer,FOM,2050,0.03,%/year,2010,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - SOEC,FOM,2020,0.03,%/year,2010,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - SOEC,FOM,2030,0.03,%/year,2010,"JRC, 01_JRC-EU-TIMES Full model ",
-Hydrogen - SOEC,FOM,2050,0.03,%/year,2010,"JRC, 01_JRC-EU-TIMES Full model ",
+Hydrogen - Alkaline electrolyzer,FOM,2020,0.04,%/year,2022,ICCT IRA e-fuels assumptions ,
+Hydrogen - Alkaline electrolyzer,FOM,2030,0.04,%/year,2022,ICCT IRA e-fuels assumptions ,
+Hydrogen - Alkaline electrolyzer,FOM,2050,0.04,%/year,2022,ICCT IRA e-fuels assumptions ,
+Hydrogen - PEM electrolyzer,FOM,2020,0.04,%/year,2022,ICCT IRA e-fuels assumptions ,
+Hydrogen - PEM electrolyzer,FOM,2030,0.04,%/year,2022,ICCT IRA e-fuels assumptions ,
+Hydrogen - PEM electrolyzer,FOM,2050,0.04,%/year,2022,ICCT IRA e-fuels assumptions ,
+Hydrogen - SOEC,FOM,2020,0.04,%/year,2022,ICCT IRA e-fuels assumptions ,
+Hydrogen - SOEC,FOM,2030,0.04,%/year,2022,ICCT IRA e-fuels assumptions ,
+Hydrogen - SOEC,FOM,2050,0.04,%/year,2022,ICCT IRA e-fuels assumptions ,
 Hydrogen - Solid biomass steam reforming,FOM,2020,0.04,%/year,2010,"JRC, 01_JRC-EU-TIMES Full model ",
 Hydrogen - Solid biomass steam reforming,FOM,2020,0.05,%/year,2010,"JRC, 01_JRC-EU-TIMES Full model ",
 Hydrogen - Natural gas steam reforming w/ CCS,FOM,2030,0.05,%/year,2010,"JRC, 01_JRC-EU-TIMES Full model ",

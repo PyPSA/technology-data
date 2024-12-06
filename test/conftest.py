@@ -66,8 +66,7 @@ def atb_cost_dataframe():
             "further description": ["a", "b", "c", "d", "e", "f"],
             "currency_year": [2020, 2020, 2020, 2020, 2020, 2020],
             "financial_case": ["R&D", "R&D", "R&D", "R&D", "R&D", "R&D"],
-            "scenario": ["Moderate", "Moderate", "Moderate", "Moderate", "Moderate", "Moderate"],
-            "tax_credit_case": ["ITC", "ITC", "ITC", "ITC", "ITC", "ITC"],
+            "scenario": ["Moderate", "Moderate", "Moderate", "Moderate", "Moderate", "Moderate"]
         },
         index=[0, 1, 2, 3, 4, 5],
     )

@@ -16,7 +16,7 @@ path_cwd = pathlib.Path.cwd()
 
 @pytest.mark.parametrize(
     "file_year, year, expected",
-    [(2019, 2020, "atb_e_2019 - the input file considered is not among the needed ones: atb_e_2022.parquet, atb_e_2024.parquet"), (2022, 2020, (3002, 11)), (2024, 2025, (3126, 11)), (2024, 2030, (3312, 11)), (2024, 2035, (3336, 11)), (2024, 2040, (3336, 11)), (2024, 2045, (3336, 11)), (2024, 2050, (3336, 11))],
+    [(2019, 2020, "atb_e_2019 - the input file considered is not among the needed ones: atb_e_2022.parquet, atb_e_2024.parquet"), (2022, 2020, (3002, 10)), (2024, 2025, (3036, 10)), (2024, 2030, (3222, 10)), (2024, 2035, (3246, 10)), (2024, 2040, (3246, 10)), (2024, 2045, (3246, 10)), (2024, 2050, (3246, 10))],
 )
 def test_filter_input_file(config, file_year, year, expected):
     """
@@ -64,7 +64,7 @@ def test_calculate_fom_percentage(config, display_name, expected):
 
 
 @pytest.mark.parametrize(
-    "input_file_year, year, expected", [(2022, 2020, (3002, 10)), (2024, 2050, (3336, 10))],
+    "input_file_year, year, expected", [(2022, 2020, (3002, 9)), (2024, 2050, (3246, 9))],
 )
 def test_pre_process_input_file(config, input_file_year, year, expected):
     """
@@ -96,20 +96,19 @@ def test_update_cost_values(cost_dataframe, atb_cost_dataframe):
             "further description": ["g", "h", "a", "b", "c", "d", "e", "f"],
             "currency_year": [2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020],
             "financial_case": [np.nan, np.nan, "R&D", "R&D", "R&D", "R&D", "R&D", "R&D"],
-            "scenario": [np.nan, np.nan, "Moderate", "Moderate", "Moderate", "Moderate", "Moderate", "Moderate"],
-            "tax_credit_case": [np.nan, np.nan, "ITC", "ITC", "ITC", "ITC", "ITC", "ITC"]
+            "scenario": [np.nan, np.nan, "Moderate", "Moderate", "Moderate", "Moderate", "Moderate", "Moderate"]
         }
     )
     technology_dictionary = get_convertion_dictionary("technology")
     parameter_dictionary = get_convertion_dictionary("parameter")
-    columns_to_add_list = ["financial_case", "scenario", "tax_credit_case"]
+    columns_to_add_list = ["financial_case", "scenario"]
     output_df = update_cost_values(cost_dataframe, atb_cost_dataframe, technology_dictionary, parameter_dictionary, columns_to_add_list)
     comparison_df = output_df.compare(reference_df)
     assert comparison_df.empty
 
 
 @pytest.mark.parametrize(
-        "parameter_value, columns_to_exclude, expected", [("additional occ", ["units", "value", "tax_credit_case"], "atb_year == @x.atb_year & core_metric_case == @x.core_metric_case & core_metric_parameter.str.casefold() == 'additional occ' & core_metric_variable == @x.core_metric_variable & display_name == @x.display_name & scenario == @x.scenario & technology == @x.technology & technology_alias == @x.technology_alias"), ("capex", ["units", "value", "tax_credit_case"], "atb_year == @x.atb_year & core_metric_case == @x.core_metric_case & core_metric_parameter.str.casefold() == 'capex' & core_metric_variable == @x.core_metric_variable & display_name == @x.display_name & scenario == @x.scenario & technology == @x.technology & technology_alias == @x.technology_alias"), ("fail_test", ["random_column", "value", "tax_credit_case"], "The following columns ['random_column'] are not included in the original list")],
+        "parameter_value, columns_to_exclude, expected", [("additional occ", ["units", "value"], "atb_year == @x.atb_year & core_metric_case == @x.core_metric_case & core_metric_parameter.str.casefold() == 'additional occ' & core_metric_variable == @x.core_metric_variable & display_name == @x.display_name & scenario == @x.scenario & technology == @x.technology & technology_alias == @x.technology_alias"), ("capex", ["units", "value"], "atb_year == @x.atb_year & core_metric_case == @x.core_metric_case & core_metric_parameter.str.casefold() == 'capex' & core_metric_variable == @x.core_metric_variable & display_name == @x.display_name & scenario == @x.scenario & technology == @x.technology & technology_alias == @x.technology_alias"), ("fail_test", ["random_column", "value"], "The following columns ['random_column'] are not included in the original list")],
     )
 def test_get_query_string(config, parameter_value, columns_to_exclude, expected):
     """

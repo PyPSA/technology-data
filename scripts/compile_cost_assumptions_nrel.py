@@ -34,6 +34,7 @@ def get_convertion_dictionary(flag):
             "Utility PV - Class 1": "solar-utility",
             "Commercial PV - Class 1": "solar-rooftop",
             "Utility-Scale Battery Storage - 6Hr": "battery storage",
+            "Biopower": "biomass",
             "Biopower - Dedicated": "biomass",
             "CSP - Class 2": "csp-tower",
         }
@@ -108,9 +109,9 @@ def calculate_fom_percentage(x, dataframe, columns_list):
 
     if x["core_metric_parameter"].casefold() == "fixed o&m":
         if "retrofit" in x["technology"].casefold():
-            query_string = get_query_string(columns_list, ["units", "value", "tax_credit_case"], "additional occ")
+            query_string = get_query_string(columns_list, ["units", "value"], "additional occ")
         else:
-            query_string = get_query_string(columns_list, ["units", "value", "tax_credit_case"], "capex")
+            query_string = get_query_string(columns_list, ["units", "value"], "capex")
         fom_perc_value = x.value / dataframe.query(query_string)["value"]*100.0
         return round(fom_perc_value.values[0], 2)
     else:
@@ -160,7 +161,7 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
 
     # Rename columns and consider just columns used in PyPSA
     column_rename_dict = get_convertion_dictionary("output_column")
-    tuple_output_columns_to_keep = ("display_name", "core_metric_parameter", "value", "units", "source", "further description", "atb_year", "scenario", "core_metric_case", "tax_credit_case")
+    tuple_output_columns_to_keep = ("display_name", "core_metric_parameter", "value", "units", "source", "further description", "atb_year", "scenario", "core_metric_case")
     atb_input_df = atb_input_df.loc[:, tuple_output_columns_to_keep].rename(columns=column_rename_dict)
 
     # Replace parameter with PyPSA cost parameter names
@@ -175,7 +176,7 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
 
 def update_cost_values(cost_dataframe, atb_dataframe, technology_dictionary, parameter_dictionary, columns_to_add_list):
 
-    # The data coming from NREL/ATB contain the columns "financial_case", "scenario", "tax_credit_case".
+    # The data coming from NREL/ATB contain the columns "financial_case", "scenario".
     # Such columns are NOT present in the former cost csv. They are added here
     for column_name in columns_to_add_list:
         cost_dataframe[column_name] = pd.Series(dtype="str")
@@ -249,10 +250,10 @@ if __name__ == "__main__":
 
         # get the discount rate file
         discount_rate_year_df = discount_rate_df.loc[discount_rate_df["year"] == year_val]
-        discount_rate_year_df = discount_rate_year_df.loc[:, ("technology", "parameter", "value", "unit", "source", "further description", "currency_year", "financial_case", "scenario", "tax_credit_case")].reset_index(drop=True)
+        discount_rate_year_df = discount_rate_year_df.loc[:, ("technology", "parameter", "value", "unit", "source", "further description", "currency_year", "financial_case", "scenario")].reset_index(drop=True)
 
         # update the cost file
-        updated_cost_df = update_cost_values(cost_df, atb_e_df, get_convertion_dictionary("technology"), get_convertion_dictionary("parameter"), ["financial_case", "scenario", "tax_credit_case"])
+        updated_cost_df = update_cost_values(cost_df, atb_e_df, get_convertion_dictionary("technology"), get_convertion_dictionary("parameter"), ["financial_case", "scenario"])
 
         # add discount rate
         updated_cost_df = add_discount_rate_value(updated_cost_df, discount_rate_year_df)

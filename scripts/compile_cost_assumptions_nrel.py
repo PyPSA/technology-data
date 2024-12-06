@@ -26,7 +26,7 @@ def get_convertion_dictionary(flag):
             "Hydropower - NSD 1": "ror",
             "Pumped Storage Hydropower - National Class 1": "PHS",
             "Nuclear - Large": "nuclear",
-            "Nuclear - AP100": "nuclear",
+            "Nuclear - AP1000": "nuclear",
             "Geothermal - Hydro / Flash": "geothermal",
             "Land-Based Wind - Class 1": "onwind",
             "Land-Based Wind - Class 1 - Technology 1": "onwind",

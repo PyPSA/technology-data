@@ -37,6 +37,27 @@ def get_convertion_dictionary(flag):
             "Biopower": "biomass",
             "Biopower - Dedicated": "biomass",
             "CSP - Class 2": "csp-tower",
+            # Necessary to align ATB 2022 and ATB 2024 nomenclature
+            "Land-Based Wind - Class 2": "Land-Based Wind - Class 2 - Technology 1",
+            "Land-Based Wind - Class 3": "Land-Based Wind - Class 3 - Technology 1",
+            "Land-Based Wind - Class 4": "Land-Based Wind - Class 4 - Technology 1",
+            "Land-Based Wind - Class 5": "Land-Based Wind - Class 5 - Technology 1",
+            "Land-Based Wind - Class 6": "Land-Based Wind - Class 6 - Technology 1",
+            "Land-Based Wind - Class 7": "Land-Based Wind - Class 7 - Technology 1",
+            "Land-Based Wind - Class 8": "Land-Based Wind - Class 8 - Technology 2",
+            "Land-Based Wind - Class 9": "Land-Based Wind - Class 9 - Technology 3",
+            "Land-Based Wind - Class 10": "Land-Based Wind - Class 10 - Technology 4",
+            "NG F-Frame CC": "NG 2-on-1 Combined Cycle (F-Frame)",
+            "NG H-Frame CC": "NG 2-on-1 Combined Cycle (H-Frame)",
+            "NG combined cycle 95% CCS (F-frame basis -> 2nd Gen Tech)": "NG 2-on-1 Combined Cycle (F-Frame) 95% CCS",
+            "NG combined cycle 95% CCS (H-frame basis -> 2nd Gen Tech)": "NG 2-on-1 Combined Cycle (H-Frame) 95% CCS",
+            "NG combined cycle Max CCS (F-frame basis -> 2nd Gen Tech)": "NG 2-on-1 Combined Cycle (F-Frame) 97% CCS",
+            "NG combined cycle Max CCS (H-frame basis -> 2nd Gen Tech)": "NG 2-on-1 Combined Cycle (H-Frame) 97% CCS",
+            "Coal-CCS-95% -> 2nd Gen Tech": "Coal-95%-CCS",
+            "Coal-Max-CCS -> 2nd Gen Tech": "Coal-99%-CCS",
+            "Coal-IGCC": "Coal - IGCC",
+            "CSP - Class 7": "CSP - Class 8",
+            "Nuclear - Small Modular Reactor": "Nuclear - Small",
         }
     elif flag.casefold() == "output_column":
         return {

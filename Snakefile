@@ -32,7 +32,8 @@ rule compile_cost_assumptions_nrel:
     input:
         cost_files_to_modify=expand("outputs/costs_{year}.csv", year = config["years"]),
         nrel_atb_input_files=expand("inputs/atb_e_{year}.parquet", year = config["nrel_atb"]["nrel_atb_input_years"]),
-        nrel_atb_input_discount_rate="inputs/discount_rates_usa.csv"
+        nrel_atb_input_discount_rate="inputs/discount_rates_usa.csv",
+        nrel_atb_input_fuel_costs="inputs/fuel_costs_usa.csv"
     output:
         expand("outputs/US/costs_{year}.csv", year = config["years"])
     threads: 1

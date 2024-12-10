@@ -241,14 +241,6 @@ def update_cost_values(cost_dataframe, atb_dataframe, technology_dictionary, par
     return updated_cost_dataframe
 
 
-def add_discount_rate_value(cost_dataframe, discount_rate_dataframe):
-    """
-    add docstring
-    """
-    discount_rate_dataframe["further description"] = pd.Series(dtype=str)
-    return pd.concat([cost_dataframe, discount_rate_dataframe]).reset_index(drop=True)
-
-
 if __name__ == "__main__":
     if 'snakemake' not in globals():
         snakemake = mock_snakemake("compile_cost_assumptions_nrel")
@@ -256,6 +248,7 @@ if __name__ == "__main__":
     year_list = snakemake.config['years']
     input_file_list_atb = snakemake.input.nrel_atb_input_files
     input_file_discount_rate = snakemake.input.nrel_atb_input_discount_rate
+    input_file_fuel_costs = snakemake.input.nrel_atb_input_fuel_costs
     cost_file_list = snakemake.input.cost_files_to_modify
     nrel_atb_columns_to_keep = snakemake.config["nrel_atb"]["nrel_atb_columns_to_keep"]
     nrel_atb_core_metric_parameter_to_keep = snakemake.config["nrel_atb"]["nrel_atb_core_metric_parameter_to_keep"]
@@ -265,7 +258,11 @@ if __name__ == "__main__":
     if len(year_list) != len(cost_file_list):
         raise Exception("The cost files {} are more than the considered years {}".format(year_list, cost_file_list))
 
+    # get the discount rate values for the US
     discount_rate_df = pd.read_csv(input_file_discount_rate)
+
+    # get the fuel costs values for the US
+    fuel_costs_df = pd.read_csv(input_file_fuel_costs)
 
     for year_val in year_list:
 
@@ -295,11 +292,18 @@ if __name__ == "__main__":
         discount_rate_year_df = discount_rate_df.loc[discount_rate_df["year"] == year_val]
         discount_rate_year_df = discount_rate_year_df.loc[:, ("technology", "parameter", "value", "unit", "source", "further description", "currency_year", "financial_case", "scenario")].reset_index(drop=True)
 
+        # get the fuel costs file
+        fuel_costs_year_df = fuel_costs_df.loc[discount_rate_df["year"] == year_val]
+        fuel_costs_year_df = fuel_costs_year_df.loc[:, ("technology", "parameter", "value", "unit", "source", "further description", "currency_year", "financial_case", "scenario")].reset_index(drop=True)
+
         # update the cost file
         updated_cost_df = update_cost_values(cost_df, atb_e_df, get_convertion_dictionary("technology"), get_convertion_dictionary("parameter"), ["financial_case", "scenario"])
 
         # add discount rate
-        updated_cost_df = add_discount_rate_value(updated_cost_df, discount_rate_year_df)
+        updated_cost_df = pd.concat([updated_cost_df, discount_rate_year_df]).reset_index(drop=True)
+
+        # add fuel costs
+        updated_cost_df = pd.concat([updated_cost_df, fuel_costs_year_df]).reset_index(drop=True)
 
         # output the modified cost file
         output_cost_path_list = [path for path in snakemake.output if str(year_val) in path]

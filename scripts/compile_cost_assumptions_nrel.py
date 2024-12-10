@@ -8,7 +8,17 @@ from _helpers import mock_snakemake
 
 def get_convertion_dictionary(flag):
     """
-    add docstring
+    The function provides conversion dictionaries.
+
+    Input arguments
+    - flag : str
+
+    Output
+    Conversion dictionary:
+    - flag == parameter: it returns a conversion dictionary that renames the parameter values to the PyPSA standard
+    - flag == pypsa_technology_name: it returns a conversion dictionary that renames the technology names to the PyPSA nomenclature
+    - flag == atb_technology_name: it returns a conversion dictionary that is necessary to align the atb_e_2022 nomenclature to the atb_e 2024 one
+    - flag == output_column: it returns a conversion dictionary that renames the column names of the cost dataframe
     """
     if flag.casefold() == "parameter":
         return {
@@ -19,7 +29,7 @@ def get_convertion_dictionary(flag):
             "Additional OCC": "investment",
             "WACC Real": "discount rate"
         }
-    elif flag.casefold() == "technology":
+    elif flag.casefold() == "pypsa_technology_name":
         return {
             "Coal-new -> 2nd Gen Tech": "coal",
             "Coal-new": "coal",
@@ -39,8 +49,10 @@ def get_convertion_dictionary(flag):
             "Utility-Scale Battery Storage - 6Hr": "battery storage",
             "Biopower": "biomass",
             "Biopower - Dedicated": "biomass",
-            "CSP - Class 2": "csp-tower",
-            # Necessary to align ATB 2022 and ATB 2024 nomenclature
+            "CSP - Class 2": "csp-tower"
+        }
+    elif flag.casefold() == "atb_technology_name":
+        return {
             "Land-Based Wind - Class 2": "Land-Based Wind - Class 2 - Technology 1",
             "Land-Based Wind - Class 3": "Land-Based Wind - Class 3 - Technology 1",
             "Land-Based Wind - Class 4": "Land-Based Wind - Class 4 - Technology 1",
@@ -76,7 +88,17 @@ def get_convertion_dictionary(flag):
 
 def filter_input_file(input_file_path, year, list_columns_to_keep, list_core_metric_parameter_to_keep, list_tech_to_remove):
     """
-    add docstring
+    The function filters the input cost dataframe from NREL/ATB.
+
+    Input arguments
+    - input_file_path : str, NREL/ATB file path
+    - year: int, year for the cost assumption
+    - list_columns_to_keep: list, columns from NREL/ATB dataset that are relevant
+    - list_core_metric_parameter_to_keep: list, values of the core_metric_paramater that are relevant
+    - list_tech_to_remove: list, technologies names that are should be excluded
+
+    Output
+    - NREL/ATB DataFrame
     """
     atb_file_df = pd.read_parquet(input_file_path)
     list_core_metric_parameter_to_keep = [str(x).casefold() for x in list_core_metric_parameter_to_keep]
@@ -116,13 +138,23 @@ def filter_input_file(input_file_path, year, list_columns_to_keep, list_core_met
     return atb_file_df
 
 
-def get_query_string(column_list, column_to_exclude, parameter_value):
+def get_query_string(column_list, column_to_exclude, fom_normalization_parameter):
     """
-    add docstring
+    The Fixed O&M values from the NREL/ATB database ought to be normalized by Additional OCC
+    (for retrofits technologies) or CAPEX (for any other technology). The function returns the
+    query strings that links Fixed O&M values to the corresponding Additional OCC and CAPEX values
+
+    Input arguments
+    - column_list : list, list of the columns to consider in the query
+    - column_to_exclude: list, list of the columns that should not be considered in the query
+    - fom_normalization_parameter: str, this value is equal to either Additional OCC or CAPEX
+
+    Output
+    - query_string: str, query string
     """
     if set(column_to_exclude).issubset(set(column_list)):
         column_to_use_list = list(set(column_list)-set(column_to_exclude))
-        query_list = sorted(["{}.str.casefold() == '{}'".format(column_name, parameter_value) if column_name == "core_metric_parameter" else "{} == @x.{}".format(
+        query_list = sorted(["{}.str.casefold() == '{}'".format(column_name, fom_normalization_parameter) if column_name == "core_metric_parameter" else "{} == @x.{}".format(
             column_name, column_name) for column_name in column_to_use_list])
         query_string = " & ".join(query_list)
     else:
@@ -131,29 +163,33 @@ def get_query_string(column_list, column_to_exclude, parameter_value):
     return query_string.strip()
 
 
-def calculate_fom_percentage(x, dataframe, columns_list):
+def calculate_fom_percentage(row, dataframe, columns_list):
     """
-    add docstring
-    """
-    # Note: for technologies as Coal Retrofit or Natural Gas Retrofit,
-    # the Fixed O&M is normalized by Additional OCC. Else, the Fixed O&M is
-    # normalized by the CAPEX
+    The Fixed O&M values from the NREL/ATB database ought to be normalized by Additional OCC
+    (for retrofits technologies) or CAPEX (for any other technology). The function returns the
+    query strings that links Fixed O&M values to the corresponding Additional OCC and CAPEX values
 
-    if x["core_metric_parameter"].casefold() == "fixed o&m":
-        if "retrofit" in x["technology"].casefold():
+    Input arguments
+    - row : row, row of the cost DataFrame
+    - dataframe: DataFrame, the cost DataFrame
+    - column_list: list, list of the columns to consider in the query
+
+    Output
+    - float, normalized value of Fixed O&M
+    """
+
+    if row["core_metric_parameter"].casefold() == "fixed o&m":
+        if "retrofit" in row["technology"].casefold():
             query_string = get_query_string(columns_list, ["units", "value"], "additional occ")
         else:
             query_string = get_query_string(columns_list, ["units", "value"], "capex")
-        fom_perc_value = x.value / dataframe.query(query_string)["value"]*100.0
+        fom_perc_value = row.value / dataframe.query(query_string)["value"]*100.0
         return round(fom_perc_value.values[0], 2)
     else:
-        return x.value
+        return row.value
 
 
 def replace_value_name(dataframe, conversion_dict, column_name):
-    """
-    add docstring
-    """
     dataframe[column_name] = dataframe[column_name].replace(conversion_dict)
     return dataframe
 
@@ -166,28 +202,32 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
     atb_input_df = filter_input_file(pathlib.Path(input_file_path), year, list_columns_to_keep, list_core_metric_parameter_to_keep, tech_to_remove)
 
     # Normalize Fixed O&M by CAPEX (or Additional OCC for retrofit technologies)
-    atb_input_df["value"] = atb_input_df.apply(lambda x: calculate_fom_percentage(x, atb_input_df, list_columns_to_keep), axis=1)
+    atb_input_df["value"] = atb_input_df.apply(lambda row: calculate_fom_percentage(row, atb_input_df, list_columns_to_keep), axis=1)
 
     # Modify the unit of the normalized Fixed O&M to %/yr
-    atb_input_df["units"] = atb_input_df.apply(lambda x: "%/year" if x["core_metric_parameter"].casefold() == "fixed o&m" else x["units"], axis=1)
+    atb_input_df["units"] = atb_input_df.apply(lambda row: "%/year" if row["core_metric_parameter"].casefold() == "fixed o&m" else row["units"], axis=1)
 
     # Modify the unit of CF to per unit
-    atb_input_df["units"] = atb_input_df.apply(lambda x: "per unit" if x["core_metric_parameter"].casefold() == "cf" else x["units"], axis=1)
+    atb_input_df["units"] = atb_input_df.apply(lambda row: "per unit" if row["core_metric_parameter"].casefold() == "cf" else row["units"], axis=1)
 
     # Modify the unit of Additional OCC to USD/kW instead of $/kW
-    atb_input_df["units"] = atb_input_df.apply(lambda x: "USD/kW" if x["core_metric_parameter"].casefold() == "additional occ" else x["units"], axis=1)
+    atb_input_df["units"] = atb_input_df.apply(lambda row: "USD/kW" if row["core_metric_parameter"].casefold() == "additional occ" else row["units"], axis=1)
 
     # Modify the unit of CAPEX to USD/kW instead of $/kW
-    atb_input_df["units"] = atb_input_df.apply(lambda x: "USD/kW" if x["core_metric_parameter"].casefold() == "capex" else x["units"], axis=1)
+    atb_input_df["units"] = atb_input_df.apply(lambda row: "USD/kW" if row["core_metric_parameter"].casefold() == "capex" else row["units"], axis=1)
 
     # Modify the unit of Variable O&M to USD/MWh instead of $/MWh
-    atb_input_df["units"] = atb_input_df.apply(lambda x: "USD/MWh" if x["core_metric_parameter"].casefold() == "variable o&m" else x["units"], axis=1)
+    atb_input_df["units"] = atb_input_df.apply(lambda row: "USD/MWh" if row["core_metric_parameter"].casefold() == "variable o&m" else row["units"], axis=1)
 
     # Modify the unit of Fuel cost O&M to USD/MWh instead of $/MWh
-    atb_input_df["units"] = atb_input_df.apply(lambda x: "USD/MWh" if x["core_metric_parameter"].casefold() == "fuel" else x["units"], axis=1)
+    atb_input_df["units"] = atb_input_df.apply(lambda row: "USD/MWh" if row["core_metric_parameter"].casefold() == "fuel" else row["units"], axis=1)
 
     # Replace the display_name column values with PyPSA technology names
-    technology_conversion_dict_atb = get_convertion_dictionary("technology")
+    technology_conversion_dict_pypsa = get_convertion_dictionary("pypsa_technology_name")
+    atb_input_df = replace_value_name(atb_input_df, technology_conversion_dict_pypsa, "display_name")
+
+    # Uniform the display_name nomenclature of atb_e_2022 to the one of atb_e_2024
+    technology_conversion_dict_atb = get_convertion_dictionary("atb_technology_name")
     atb_input_df = replace_value_name(atb_input_df, technology_conversion_dict_atb, "display_name")
 
     # Add source column
@@ -224,7 +264,7 @@ def update_cost_values(cost_dataframe, atb_dataframe, technology_dictionary, par
 
     # Query the rows from the former cost csv file.
     # --> The selection is done by means of an OR operator.
-    # --> The two operands for this logical operation are returned by the two queries below
+    # --> The two operands for this logical operation are returned by the queries below
 
     # --> QUERY 1: this query selects all the rows corresponding to the technologies NOT updated with NREL-ATB data
     query_string_part_one = "~technology.str.casefold().isin(@technologies_from_nrel)"
@@ -297,7 +337,7 @@ if __name__ == "__main__":
         fuel_costs_year_df = fuel_costs_year_df.loc[:, ("technology", "parameter", "value", "unit", "source", "further description", "currency_year", "financial_case", "scenario")].reset_index(drop=True)
 
         # update the cost file
-        updated_cost_df = update_cost_values(cost_df, atb_e_df, get_convertion_dictionary("technology"), get_convertion_dictionary("parameter"), ["financial_case", "scenario"])
+        updated_cost_df = update_cost_values(cost_df, atb_e_df, get_convertion_dictionary("pypsa_technology_name"), get_convertion_dictionary("parameter"), ["financial_case", "scenario"])
 
         # add discount rate
         updated_cost_df = pd.concat([updated_cost_df, discount_rate_year_df]).reset_index(drop=True)

@@ -107,10 +107,10 @@ def test_update_cost_values(cost_dataframe, atb_cost_dataframe):
             "scenario": [np.nan, np.nan, "Moderate", "Moderate", "Moderate", "Moderate", "Moderate", "Moderate"]
         }
     )
-    technology_dictionary = get_convertion_dictionary("technology")
+    pypsa_technology_dictionary = get_convertion_dictionary("pypsa_technology_name")
     parameter_dictionary = get_convertion_dictionary("parameter")
     columns_to_add_list = ["financial_case", "scenario"]
-    output_df = update_cost_values(cost_dataframe, atb_cost_dataframe, technology_dictionary, parameter_dictionary, columns_to_add_list)
+    output_df = update_cost_values(cost_dataframe, atb_cost_dataframe, pypsa_technology_dictionary, parameter_dictionary, columns_to_add_list)
     comparison_df = output_df.compare(reference_df)
     assert comparison_df.empty
 

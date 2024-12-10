@@ -288,12 +288,12 @@ if __name__ == "__main__":
         else:
             raise Exception("{} is not a considered year".format(year_val))
 
-        # get the discount rate file
+        # get the discount rate file for the given year
         discount_rate_year_df = discount_rate_df.loc[discount_rate_df["year"] == year_val]
         discount_rate_year_df = discount_rate_year_df.loc[:, ("technology", "parameter", "value", "unit", "source", "further description", "currency_year", "financial_case", "scenario")].reset_index(drop=True)
 
-        # get the fuel costs file
-        fuel_costs_year_df = fuel_costs_df.loc[discount_rate_df["year"] == year_val]
+        # get the fuel costs file for the given year
+        fuel_costs_year_df = fuel_costs_df.loc[fuel_costs_df["year"] == year_val]
         fuel_costs_year_df = fuel_costs_year_df.loc[:, ("technology", "parameter", "value", "unit", "source", "further description", "currency_year", "financial_case", "scenario")].reset_index(drop=True)
 
         # update the cost file

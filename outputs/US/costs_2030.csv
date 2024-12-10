@@ -4485,3 +4485,5 @@ solar-utility,discount rate,0.0438437157985803,per unit,"NREL, NREL ATB 2024",,-
 solar-utility,discount rate,0.0342774493840203,per unit,"NREL, NREL ATB 2024",,-,R&D,Advanced
 solar-utility,discount rate,0.0342774493840203,per unit,"NREL, NREL ATB 2024",,-,R&D,Moderate
 solar-utility,discount rate,0.0342774493840203,per unit,"NREL, NREL ATB 2024",,-,R&D,Conservative
+gas,fuel,14.05,EUR/MWh_th,World Bank https://www.worldbank.org/en/research/commodity-markets,,2010,,
+oil,fuel,44.22,EUR/MWh_th,World Bank https://www.worldbank.org/en/research/commodity-markets,,2010,,

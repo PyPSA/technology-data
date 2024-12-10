@@ -16,7 +16,7 @@ path_cwd = pathlib.Path.cwd()
 
 @pytest.mark.parametrize(
     "file_year, year, expected",
-    [(2019, 2020, "atb_e_2019 - the input file considered is not among the needed ones: atb_e_2022.parquet, atb_e_2024.parquet"), (2022, 2020, (3002, 10)), (2024, 2025, (3036, 10)), (2024, 2030, (3222, 10)), (2024, 2035, (3246, 10)), (2024, 2040, (3246, 10)), (2024, 2045, (3246, 10)), (2024, 2050, (3246, 10))],
+    [(2019, 2020, "atb_e_2019 - the input file considered is not among the needed ones: atb_e_2022.parquet, atb_e_2024.parquet"), (2022, 2020, (2960, 10)), (2024, 2025, (3036, 10)), (2024, 2030, (3222, 10)), (2024, 2035, (3246, 10)), (2024, 2040, (3246, 10)), (2024, 2045, (3246, 10)), (2024, 2050, (3246, 10))],
 )
 def test_filter_input_file(config, file_year, year, expected):
     """
@@ -24,16 +24,23 @@ def test_filter_input_file(config, file_year, year, expected):
     """
     list_columns_to_keep = config["nrel_atb"]["nrel_atb_columns_to_keep"]
     list_core_metric_parameter_to_keep = config["nrel_atb"]["nrel_atb_core_metric_parameter_to_keep"]
+    nrel_atb_technology_to_remove = config["nrel_atb"]["nrel_atb_technology_to_remove"]
     input_file_path = pathlib.Path(path_cwd, "inputs", "atb_e_{}.parquet".format(file_year))
     if file_year in [2022, 2024]:
-        input_file = filter_input_file(input_file_path, year, list_columns_to_keep, list_core_metric_parameter_to_keep)
+        input_file = filter_input_file(input_file_path, year, list_columns_to_keep, list_core_metric_parameter_to_keep, nrel_atb_technology_to_remove)
         assert input_file.shape == expected
         assert "aeo" not in input_file["technology"].astype(str).str.casefold().unique()
-
+        assert "coal-ccs-95% -> transformational tech" not in input_file["technology"].astype(str).str.casefold().unique()
+        assert "coal-max-ccs -> transformational tech" not in input_file["technology"].astype(str).str.casefold().unique()
+        assert "coal-new -> transformational tech" not in input_file["technology"].astype(str).str.casefold().unique()
+        assert "ng combined cycle 95% ccs (f-frame basis -> transformational tech)" not in input_file["technology"].astype(str).str.casefold().unique()
+        assert "ng combined cycle 95% ccs (h-frame basis -> transformational tech)" not in input_file["technology"].astype(str).str.casefold().unique()
+        assert "ng combined cycle max ccs (f-frame basis -> transformational tech)" not in input_file["technology"].astype(str).str.casefold().unique()
+        assert "ng combined cycle max ccs (h-frame basis -> transformational tech)" not in input_file["technology"].astype(str).str.casefold().unique()
     else:
         with pytest.raises(Exception) as excinfo:
             input_file = filter_input_file(input_file_path, year, list_columns_to_keep,
-                                           list_core_metric_parameter_to_keep)
+                                           list_core_metric_parameter_to_keep, nrel_atb_technology_to_remove)
         assert str(excinfo.value) == expected
 
 
@@ -64,7 +71,7 @@ def test_calculate_fom_percentage(config, display_name, expected):
 
 
 @pytest.mark.parametrize(
-    "input_file_year, year, expected", [(2022, 2020, (3002, 9)), (2024, 2050, (3246, 9))],
+    "input_file_year, year, expected", [(2022, 2020, (2960, 9)), (2024, 2050, (3246, 9))],
 )
 def test_pre_process_input_file(config, input_file_year, year, expected):
     """
@@ -73,8 +80,9 @@ def test_pre_process_input_file(config, input_file_year, year, expected):
     input_file_path = pathlib.Path(path_cwd, "inputs", "atb_e_{}.parquet".format(input_file_year))
     nrel_atb_columns_to_keep = config["nrel_atb"]["nrel_atb_columns_to_keep"]
     nrel_atb_core_metric_parameter_to_keep = config["nrel_atb"]["nrel_atb_core_metric_parameter_to_keep"]
+    nrel_atb_technology_to_remove = config["nrel_atb"]["nrel_atb_technology_to_remove"]
     nrel_atb_source_link = config["nrel_atb"]["nrel_atb_source_link"]
-    output_df = pre_process_input_file(input_file_path, year, nrel_atb_columns_to_keep, nrel_atb_core_metric_parameter_to_keep, nrel_atb_source_link)
+    output_df = pre_process_input_file(input_file_path, year, nrel_atb_columns_to_keep, nrel_atb_core_metric_parameter_to_keep, nrel_atb_source_link, nrel_atb_technology_to_remove)
     reference_parameter_list = sorted(["investment", "CF", "FOM", "VOM", "fuel"])
     output_parameter_list = sorted(list(output_df["parameter"].unique()))
     assert output_df.shape == expected
@@ -123,3 +131,12 @@ def test_get_query_string(config, parameter_value, columns_to_exclude, expected)
     else:
         output_string = get_query_string(columns_list, columns_to_exclude, parameter_value)
         assert output_string == expected
+
+
+# def test_test(config):
+#     list_columns_to_keep = config["nrel_atb"]["nrel_atb_columns_to_keep"]
+#     list_core_metric_parameter_to_keep = config["nrel_atb"]["nrel_atb_core_metric_parameter_to_keep"]
+#     nrel_atb_technology_to_remove = config["nrel_atb"]["nrel_atb_technology_to_remove"]
+#     input_file_path = pathlib.Path(path_cwd, "inputs", "atb_e_{}.parquet".format(2022))
+#     input_file = filter_input_file(input_file_path, 2022, list_columns_to_keep, list_core_metric_parameter_to_keep, nrel_atb_technology_to_remove)
+#     assert False

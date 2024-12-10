@@ -7,6 +7,9 @@ from _helpers import mock_snakemake
 
 
 def get_convertion_dictionary(flag):
+    """
+    add docstring
+    """
     if flag.casefold() == "parameter":
         return {
             "CAPEX": "investment",
@@ -71,10 +74,13 @@ def get_convertion_dictionary(flag):
         raise Exception("{} is not among the allowed choices: parameter, technology, output_column")
 
 
-def filter_input_file(input_file_path, year, list_columns_to_keep, list_core_metric_parameter_to_keep):
-
+def filter_input_file(input_file_path, year, list_columns_to_keep, list_core_metric_parameter_to_keep, list_tech_to_remove):
+    """
+    add docstring
+    """
     atb_file_df = pd.read_parquet(input_file_path)
     list_core_metric_parameter_to_keep = [str(x).casefold() for x in list_core_metric_parameter_to_keep]
+    list_tech_to_remove = [str(x).casefold() for x in list_tech_to_remove]
     year_string = str(year).casefold()
 
     # --> select columns
@@ -104,13 +110,16 @@ def filter_input_file(input_file_path, year, list_columns_to_keep, list_core_met
     # --> drop duplicated rows
     atb_file_df = atb_file_df.drop_duplicates(keep="first")
 
-    # --> remove technology AEO
-    atb_file_df = atb_file_df.query("technology.str.casefold() != 'aeo'")
+    # --> remove unnecessary technologies
+    atb_file_df = atb_file_df.loc[~atb_file_df["display_name"].str.casefold().isin(list_tech_to_remove)]
 
     return atb_file_df
 
 
 def get_query_string(column_list, column_to_exclude, parameter_value):
+    """
+    add docstring
+    """
     if set(column_to_exclude).issubset(set(column_list)):
         column_to_use_list = list(set(column_list)-set(column_to_exclude))
         query_list = sorted(["{}.str.casefold() == '{}'".format(column_name, parameter_value) if column_name == "core_metric_parameter" else "{} == @x.{}".format(
@@ -123,7 +132,9 @@ def get_query_string(column_list, column_to_exclude, parameter_value):
 
 
 def calculate_fom_percentage(x, dataframe, columns_list):
-
+    """
+    add docstring
+    """
     # Note: for technologies as Coal Retrofit or Natural Gas Retrofit,
     # the Fixed O&M is normalized by Additional OCC. Else, the Fixed O&M is
     # normalized by the CAPEX
@@ -140,14 +151,19 @@ def calculate_fom_percentage(x, dataframe, columns_list):
 
 
 def replace_value_name(dataframe, conversion_dict, column_name):
+    """
+    add docstring
+    """
     dataframe[column_name] = dataframe[column_name].replace(conversion_dict)
     return dataframe
 
 
-def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_core_metric_parameter_to_keep, nrel_source):
-
+def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_core_metric_parameter_to_keep, nrel_source, tech_to_remove):
+    """
+    add docstring
+    """
     # Read inputs and filter relevant columns and relevant core_metric_variables (i.e. the years to consider)
-    atb_input_df = filter_input_file(pathlib.Path(input_file_path), year, list_columns_to_keep, list_core_metric_parameter_to_keep)
+    atb_input_df = filter_input_file(pathlib.Path(input_file_path), year, list_columns_to_keep, list_core_metric_parameter_to_keep, tech_to_remove)
 
     # Normalize Fixed O&M by CAPEX (or Additional OCC for retrofit technologies)
     atb_input_df["value"] = atb_input_df.apply(lambda x: calculate_fom_percentage(x, atb_input_df, list_columns_to_keep), axis=1)
@@ -181,7 +197,7 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
     atb_input_df["further description"] = pd.Series(dtype="str")
 
     # Rename columns and consider just columns used in PyPSA
-    column_rename_dict = get_convertion_dictionary("output_column")
+    column_rename_dict = get_convertion_dictionary("output_column") #TODO: <--- till here we use the original names of the columns. Perhaps we could replace the names before "
     tuple_output_columns_to_keep = ("display_name", "core_metric_parameter", "value", "units", "source", "further description", "atb_year", "scenario", "core_metric_case")
     atb_input_df = atb_input_df.loc[:, tuple_output_columns_to_keep].rename(columns=column_rename_dict)
 
@@ -196,7 +212,9 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
 
 
 def update_cost_values(cost_dataframe, atb_dataframe, technology_dictionary, parameter_dictionary, columns_to_add_list):
-
+    """
+    add docstring
+    """
     # The data coming from NREL/ATB contain the columns "financial_case", "scenario".
     # Such columns are NOT present in the former cost csv. They are added here
     for column_name in columns_to_add_list:
@@ -224,6 +242,9 @@ def update_cost_values(cost_dataframe, atb_dataframe, technology_dictionary, par
 
 
 def add_discount_rate_value(cost_dataframe, discount_rate_dataframe):
+    """
+    add docstring
+    """
     discount_rate_dataframe["further description"] = pd.Series(dtype=str)
     return pd.concat([cost_dataframe, discount_rate_dataframe]).reset_index(drop=True)
 
@@ -239,6 +260,7 @@ if __name__ == "__main__":
     nrel_atb_columns_to_keep = snakemake.config["nrel_atb"]["nrel_atb_columns_to_keep"]
     nrel_atb_core_metric_parameter_to_keep = snakemake.config["nrel_atb"]["nrel_atb_core_metric_parameter_to_keep"]
     nrel_atb_source_link = snakemake.config["nrel_atb"]["nrel_atb_source_link"]
+    nrel_atb_technology_to_remove = snakemake.config["nrel_atb"]["nrel_atb_technology_to_remove"]
 
     if len(year_list) != len(cost_file_list):
         raise Exception("The cost files {} are more than the considered years {}".format(year_list, cost_file_list))
@@ -260,12 +282,12 @@ if __name__ == "__main__":
             # choose atb_e_2022
             input_file_atb = input_file_list_atb[0]
             atb_e_df = pre_process_input_file(input_file_atb, year_val, nrel_atb_columns_to_keep,
-                                   nrel_atb_core_metric_parameter_to_keep, nrel_atb_source_link)
+                                   nrel_atb_core_metric_parameter_to_keep, nrel_atb_source_link, nrel_atb_technology_to_remove)
         elif year_val in year_list[1:]:
             # choose atb_e_2024
             input_file_atb = input_file_list_atb[1]
             atb_e_df = pre_process_input_file(input_file_atb, year_val, nrel_atb_columns_to_keep,
-                                   nrel_atb_core_metric_parameter_to_keep, nrel_atb_source_link)
+                                   nrel_atb_core_metric_parameter_to_keep, nrel_atb_source_link, nrel_atb_technology_to_remove)
         else:
             raise Exception("{} is not a considered year".format(year_val))
 

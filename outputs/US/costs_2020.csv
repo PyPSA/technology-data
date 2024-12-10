@@ -1131,8 +1131,6 @@ water pit charger,efficiency,0.8367,per unit,"Danish Energy Agency, technology_d
 water pit discharger,efficiency,0.8367,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency),2015.0,,
 water tank charger,efficiency,0.9899,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency),2015.0,,
 water tank discharger,efficiency,0.9899,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency),2015.0,,
-NG combined cycle 95% CCS (F-frame basis -> Transformational Tech),investment,2288.311067447893,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-NG combined cycle 95% CCS (F-frame basis -> Transformational Tech),investment,2288.311067447893,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
 Commercial Battery Storage 1Hr,investment,1251.6137527579008,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
 Commercial Battery Storage 1Hr,CF,0.083,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
 Commercial Battery Storage 1Hr,FOM,2.5,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
@@ -2999,64 +2997,24 @@ PV+Storage - Class 8,FOM,1.9,%/year,NREL/ATB-https://data.openei.org/s3_viewer?b
 PV+Storage - Class 9,investment,2044.126542829689,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
 PV+Storage - Class 9,CF,0.2154960852893887,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
 PV+Storage - Class 9,FOM,1.9,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-Coal-CCS-95% -> Transformational Tech,investment,5130.889430683034,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-Coal-CCS-95% -> Transformational Tech,investment,5130.889430683034,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-Coal-CCS-95% -> Transformational Tech,FOM,2.24,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-Coal-CCS-95% -> Transformational Tech,FOM,2.24,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-Coal-CCS-95% -> Transformational Tech,VOM,14.03,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-Coal-CCS-95% -> Transformational Tech,VOM,14.03,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-Coal-Max-CCS -> Transformational Tech,investment,5250.630140850667,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-Coal-Max-CCS -> Transformational Tech,investment,5250.630140850667,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-Coal-Max-CCS -> Transformational Tech,FOM,2.23,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-Coal-Max-CCS -> Transformational Tech,FOM,2.23,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-Coal-Max-CCS -> Transformational Tech,VOM,14.37,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-Coal-Max-CCS -> Transformational Tech,VOM,14.37,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
 Coal - IGCC,investment,5327.264195357951,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
 Coal - IGCC,investment,5327.264195357951,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
 Coal - IGCC,FOM,2.64,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
 Coal - IGCC,FOM,2.64,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
 Coal - IGCC,VOM,13.86,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
 Coal - IGCC,VOM,13.86,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-Coal-new -> Transformational Tech,investment,3074.941437104792,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-Coal-new -> Transformational Tech,investment,3074.941437104792,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-Coal-new -> Transformational Tech,FOM,2.39,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-Coal-new -> Transformational Tech,FOM,2.39,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-Coal-new -> Transformational Tech,VOM,7.96,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-Coal-new -> Transformational Tech,VOM,7.96,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
 NG 2-on-1 Combined Cycle (F-Frame),investment,1038.0840374781828,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
 NG 2-on-1 Combined Cycle (F-Frame),investment,1038.0840374781828,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
 NG 2-on-1 Combined Cycle (F-Frame),FOM,2.69,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
 NG 2-on-1 Combined Cycle (F-Frame),FOM,2.69,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
 NG 2-on-1 Combined Cycle (F-Frame),VOM,1.78,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
 NG 2-on-1 Combined Cycle (F-Frame),VOM,1.78,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-NG combined cycle 95% CCS (F-frame basis -> Transformational Tech),FOM,2.52,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-NG combined cycle 95% CCS (F-frame basis -> Transformational Tech),FOM,2.52,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-NG combined cycle 95% CCS (F-frame basis -> Transformational Tech),VOM,4.3,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-NG combined cycle 95% CCS (F-frame basis -> Transformational Tech),VOM,4.3,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-NG combined cycle 95% CCS (H-frame basis -> Transformational Tech),investment,2158.928841305655,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-NG combined cycle 95% CCS (H-frame basis -> Transformational Tech),investment,2158.928841305655,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-NG combined cycle 95% CCS (H-frame basis -> Transformational Tech),FOM,2.47,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-NG combined cycle 95% CCS (H-frame basis -> Transformational Tech),FOM,2.47,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-NG combined cycle 95% CCS (H-frame basis -> Transformational Tech),VOM,4.09,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-NG combined cycle 95% CCS (H-frame basis -> Transformational Tech),VOM,4.09,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-NG combined cycle Max CCS (F-frame basis -> Transformational Tech),investment,2324.4942323859773,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-NG combined cycle Max CCS (F-frame basis -> Transformational Tech),investment,2324.4942323859773,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-NG combined cycle Max CCS (F-frame basis -> Transformational Tech),FOM,2.52,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-NG combined cycle Max CCS (F-frame basis -> Transformational Tech),FOM,2.52,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-NG combined cycle Max CCS (F-frame basis -> Transformational Tech),VOM,4.3,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-NG combined cycle Max CCS (F-frame basis -> Transformational Tech),VOM,4.3,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
 NG 2-on-1 Combined Cycle (H-Frame),investment,1058.083459553051,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
 NG 2-on-1 Combined Cycle (H-Frame),investment,1058.083459553051,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
 NG 2-on-1 Combined Cycle (H-Frame),FOM,2.54,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
 NG 2-on-1 Combined Cycle (H-Frame),FOM,2.54,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
 NG 2-on-1 Combined Cycle (H-Frame),VOM,1.76,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
 NG 2-on-1 Combined Cycle (H-Frame),VOM,1.76,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-NG combined cycle Max CCS (H-frame basis -> Transformational Tech),investment,2191.822627613004,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-NG combined cycle Max CCS (H-frame basis -> Transformational Tech),investment,2191.822627613004,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-NG combined cycle Max CCS (H-frame basis -> Transformational Tech),FOM,2.47,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-NG combined cycle Max CCS (H-frame basis -> Transformational Tech),FOM,2.47,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-NG combined cycle Max CCS (H-frame basis -> Transformational Tech),VOM,4.09,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-NG combined cycle Max CCS (H-frame basis -> Transformational Tech),VOM,4.09,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
 CCGT,investment,922.2101929128293,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
 CCGT,investment,922.2101929128293,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
 CCGT,FOM,2.32,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced

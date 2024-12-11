@@ -204,9 +204,7 @@ def query_cost_dataframe(cost_dataframe, technology_dictionary, parameter_dictio
     The selection is done by means of an OR operator. The two operands for this logical operation are returned
     by the following queries:
     - query_string_part_one: selects all the rows corresponding to the technologies NOT updated with NREL-ATB data
-    - query_string_part_two: some of the parameters of the technologies to be updated with NREL-ATB data are NOT present
-    in the NREL-ATB dataset. They are instead added to the former cost csv files by means of the
-    manual_input.csv. They should be kept in the final output. This query selects such rows
+    - query_string_part_two: some of the techno-economic parameters (e.g., efficiency, capture rate) to be updated with NREL-ATB data are NOT present in the NREL-ATB dataset. They are instead added to the former cost csv files by means of the manual_input.csv. They should be kept in the final output. This query selects such rows
 
     Input arguments
     - cost_dataframe : DataFrame, existing cost dataframe

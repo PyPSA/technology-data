@@ -163,14 +163,14 @@ def get_query_string(column_list, column_to_exclude, fom_normalization_parameter
     return query_string.strip()
 
 
-def calculate_fom_percentage(row, dataframe, columns_list):
+def calculate_fom_percentage(x, dataframe, columns_list):
     """
     The Fixed O&M values from the NREL/ATB database ought to be normalized by Additional OCC
     (for retrofits technologies) or CAPEX (for any other technology). The function returns the
     query strings that links Fixed O&M values to the corresponding Additional OCC and CAPEX values
 
     Input arguments
-    - row : row, row of the cost DataFrame
+    - x : row, row of the cost DataFrame
     - dataframe: DataFrame, the cost DataFrame
     - column_list: list, list of the columns to consider in the query
 
@@ -178,15 +178,15 @@ def calculate_fom_percentage(row, dataframe, columns_list):
     - float, normalized value of Fixed O&M
     """
 
-    if row["core_metric_parameter"].casefold() == "fixed o&m":
-        if "retrofit" in row["technology"].casefold():
+    if x["core_metric_parameter"].casefold() == "fixed o&m":
+        if "retrofit" in x["technology"].casefold():
             query_string = get_query_string(columns_list, ["units", "value"], "additional occ")
         else:
             query_string = get_query_string(columns_list, ["units", "value"], "capex")
-        fom_perc_value = row.value / dataframe.query(query_string)["value"]*100.0
+        fom_perc_value = x.value / dataframe.query(query_string)["value"]*100.0
         return round(fom_perc_value.values[0], 2)
     else:
-        return row.value
+        return x.value
 
 
 def replace_value_name(dataframe, conversion_dict, column_name):
@@ -202,25 +202,25 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
     atb_input_df = filter_input_file(pathlib.Path(input_file_path), year, list_columns_to_keep, list_core_metric_parameter_to_keep, tech_to_remove)
 
     # Normalize Fixed O&M by CAPEX (or Additional OCC for retrofit technologies)
-    atb_input_df["value"] = atb_input_df.apply(lambda row: calculate_fom_percentage(row, atb_input_df, list_columns_to_keep), axis=1)
+    atb_input_df["value"] = atb_input_df.apply(lambda x: calculate_fom_percentage(x, atb_input_df, list_columns_to_keep), axis=1)
 
     # Modify the unit of the normalized Fixed O&M to %/yr
-    atb_input_df["units"] = atb_input_df.apply(lambda row: "%/year" if row["core_metric_parameter"].casefold() == "fixed o&m" else row["units"], axis=1)
+    atb_input_df["units"] = atb_input_df.apply(lambda x: "%/year" if x["core_metric_parameter"].casefold() == "fixed o&m" else x["units"], axis=1)
 
     # Modify the unit of CF to per unit
-    atb_input_df["units"] = atb_input_df.apply(lambda row: "per unit" if row["core_metric_parameter"].casefold() == "cf" else row["units"], axis=1)
+    atb_input_df["units"] = atb_input_df.apply(lambda x: "per unit" if x["core_metric_parameter"].casefold() == "cf" else x["units"], axis=1)
 
     # Modify the unit of Additional OCC to USD/kW instead of $/kW
-    atb_input_df["units"] = atb_input_df.apply(lambda row: "USD/kW" if row["core_metric_parameter"].casefold() == "additional occ" else row["units"], axis=1)
+    atb_input_df["units"] = atb_input_df.apply(lambda x: "USD/kW" if x["core_metric_parameter"].casefold() == "additional occ" else x["units"], axis=1)
 
     # Modify the unit of CAPEX to USD/kW instead of $/kW
-    atb_input_df["units"] = atb_input_df.apply(lambda row: "USD/kW" if row["core_metric_parameter"].casefold() == "capex" else row["units"], axis=1)
+    atb_input_df["units"] = atb_input_df.apply(lambda x: "USD/kW" if x["core_metric_parameter"].casefold() == "capex" else x["units"], axis=1)
 
     # Modify the unit of Variable O&M to USD/MWh instead of $/MWh
-    atb_input_df["units"] = atb_input_df.apply(lambda row: "USD/MWh" if row["core_metric_parameter"].casefold() == "variable o&m" else row["units"], axis=1)
+    atb_input_df["units"] = atb_input_df.apply(lambda x: "USD/MWh" if x["core_metric_parameter"].casefold() == "variable o&m" else x["units"], axis=1)
 
     # Modify the unit of Fuel cost O&M to USD/MWh instead of $/MWh
-    atb_input_df["units"] = atb_input_df.apply(lambda row: "USD/MWh" if row["core_metric_parameter"].casefold() == "fuel" else row["units"], axis=1)
+    atb_input_df["units"] = atb_input_df.apply(lambda x: "USD/MWh" if x["core_metric_parameter"].casefold() == "fuel" else x["units"], axis=1)
 
     # Replace the display_name column values with PyPSA technology names
     technology_conversion_dict_pypsa = get_convertion_dictionary("pypsa_technology_name")

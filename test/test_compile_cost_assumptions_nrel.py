@@ -12,6 +12,8 @@ sys.path.append("./scripts")
 from compile_cost_assumptions_nrel import calculate_fom_percentage, filter_input_file, get_convertion_dictionary, get_query_string, pre_process_input_file, replace_value_name, update_cost_values
 
 path_cwd = pathlib.Path.cwd()
+additional_occ_query_string = "atb_year == @x.atb_year & core_metric_case == @x.core_metric_case & core_metric_parameter.str.casefold() == 'additional occ' & core_metric_variable == @x.core_metric_variable & display_name == @x.display_name & scenario == @x.scenario & technology == @x.technology & technology_alias == @x.technology_alias"
+capex_query_string = "atb_year == @x.atb_year & core_metric_case == @x.core_metric_case & core_metric_parameter.str.casefold() == 'capex' & core_metric_variable == @x.core_metric_variable & display_name == @x.display_name & scenario == @x.scenario & technology == @x.technology & technology_alias == @x.technology_alias"
 
 
 @pytest.mark.parametrize(
@@ -116,7 +118,7 @@ def test_update_cost_values(cost_dataframe, atb_cost_dataframe):
 
 
 @pytest.mark.parametrize(
-        "parameter_value, columns_to_exclude, expected", [("additional occ", ["units", "value"], "atb_year == @x.atb_year & core_metric_case == @x.core_metric_case & core_metric_parameter.str.casefold() == 'additional occ' & core_metric_variable == @x.core_metric_variable & display_name == @x.display_name & scenario == @x.scenario & technology == @x.technology & technology_alias == @x.technology_alias"), ("capex", ["units", "value"], "atb_year == @x.atb_year & core_metric_case == @x.core_metric_case & core_metric_parameter.str.casefold() == 'capex' & core_metric_variable == @x.core_metric_variable & display_name == @x.display_name & scenario == @x.scenario & technology == @x.technology & technology_alias == @x.technology_alias"), ("fail_test", ["random_column", "value"], "The following columns ['random_column'] are not included in the original list")],
+        "parameter_value, columns_to_exclude, expected", [("additional occ", ["units", "value"], additional_occ_query_string), ("capex", ["units", "value"], capex_query_string), ("fail_test", ["random_column", "value"], "The following columns ['random_column'] are not included in the original list")],
     )
 def test_get_query_string(config, parameter_value, columns_to_exclude, expected):
     """
@@ -131,12 +133,3 @@ def test_get_query_string(config, parameter_value, columns_to_exclude, expected)
     else:
         output_string = get_query_string(columns_list, columns_to_exclude, parameter_value)
         assert output_string == expected
-
-
-# def test_test(config):
-#     list_columns_to_keep = config["nrel_atb"]["nrel_atb_columns_to_keep"]
-#     list_core_metric_parameter_to_keep = config["nrel_atb"]["nrel_atb_core_metric_parameter_to_keep"]
-#     nrel_atb_technology_to_remove = config["nrel_atb"]["nrel_atb_technology_to_remove"]
-#     input_file_path = pathlib.Path(path_cwd, "inputs", "atb_e_{}.parquet".format(2022))
-#     input_file = filter_input_file(input_file_path, 2022, list_columns_to_keep, list_core_metric_parameter_to_keep, nrel_atb_technology_to_remove)
-#     assert False

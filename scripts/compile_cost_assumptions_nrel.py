@@ -88,7 +88,12 @@ def get_convertion_dictionary(flag):
 
 def filter_input_file(input_file_path, year, list_columns_to_keep, list_core_metric_parameter_to_keep, list_tech_to_remove):
     """
-    The function filters the input cost dataframe from NREL/ATB.
+    The function filters the input cost dataframe from NREL/ATB. Namely it:
+    - selects the necessary columns (the atb_e_2022 and atb_e_2024 have in fact a slightly different schema)
+    - selects the rows corresponding to the necessary core_metric_parameter(s)
+    - selects the rows corresponding to the year for the cost assumption (2020, 2025, 2030 etc)
+    - drops duplicated rows
+    - drops rows corresponding to unnecessary technologies
 
     Input arguments
     - input_file_path : str, NREL/ATB file path
@@ -177,7 +182,6 @@ def calculate_fom_percentage(x, dataframe, columns_list):
     Output
     - float, normalized value of Fixed O&M
     """
-
     if x["core_metric_parameter"].casefold() == "fixed o&m":
         if "retrofit" in x["technology"].casefold():
             query_string = get_query_string(columns_list, ["units", "value"], "additional occ")
@@ -196,7 +200,23 @@ def replace_value_name(dataframe, conversion_dict, column_name):
 
 def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_core_metric_parameter_to_keep, nrel_source, tech_to_remove):
     """
-    add docstring
+    The function filters and cleans the input NREL/ATB cost file. Namely it:
+    - reads the input file
+    - normalizes the Fixec O&M by Additional OCC (for retrofits technologies) or CAPEX (for any other technology)
+    - changes the units
+    - renames the technology names to the PyPSA nomenclature
+    - aligns the atb_e_2022 nomenclature to the atb_e 2024 nomenclature
+
+    Input arguments
+    - input_file_path : str, NREL/ATB file path
+    - year: int, year for the cost assumption
+    - list_columns_to_keep: list, columns from NREL/ATB dataset that are relevant
+    - list_core_metric_parameter_to_keep: list, values of the core_metric_paramater that are relevant
+    - nrel_source: str, link to the NREL/ATB source files. This information shall be used to populate the source column
+    - tech_to_remove: list, technologies names that are should be excluded from NREL/ATB
+
+    Output
+    - DataFrame, updated NREL/ATB cost dataframe
     """
     # Read inputs and filter relevant columns and relevant core_metric_variables (i.e. the years to consider)
     atb_input_df = filter_input_file(pathlib.Path(input_file_path), year, list_columns_to_keep, list_core_metric_parameter_to_keep, tech_to_remove)
@@ -237,7 +257,7 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
     atb_input_df["further description"] = pd.Series(dtype="str")
 
     # Rename columns and consider just columns used in PyPSA
-    column_rename_dict = get_convertion_dictionary("output_column") #TODO: <--- till here we use the original names of the columns. Perhaps we could replace the names before "
+    column_rename_dict = get_convertion_dictionary("output_column")
     tuple_output_columns_to_keep = ("display_name", "core_metric_parameter", "value", "units", "source", "further description", "atb_year", "scenario", "core_metric_case")
     atb_input_df = atb_input_df.loc[:, tuple_output_columns_to_keep].rename(columns=column_rename_dict)
 
@@ -253,7 +273,23 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
 
 def update_cost_values(cost_dataframe, atb_dataframe, technology_dictionary, parameter_dictionary, columns_to_add_list):
     """
-    add docstring
+    The function queries the rows of the existing cost dataframe and concatenates it with the NREL/ATB one.
+    The selection is done by means of an OR operator. The two operands for this logical operation are returned
+    by the following queries:
+    - query_string_part_one: selects all the rows corresponding to the technologies NOT updated with NREL-ATB data
+    - query_string_part_two: some of the parameters of the technologies to be updated with NREL-ATB data are NOT present
+    in the NREL-ATB dataset. They are instead added to the former cost csv files by means of the
+    manual_input.csv. They should be kept in the final output. This query selects such rows
+
+    Input arguments
+    - cost_dataframe : DataFrame, existing cost dataframe
+    - atb_dataframe : DataFrame, NREL/ATB cost dataframe
+    - technology_dictionary: dict, a dictionary of the technologies updated with NREL/ATB data
+    - parameter_dictionary: dict, a dictionary of the parameters for which NREL/ATB estimates are available
+    - columns_to_add_list: list, list of column names to be added to the existing cost dataframe
+
+    Output
+    - DataFrame, updated cost dataframe
     """
     # The data coming from NREL/ATB contain the columns "financial_case", "scenario".
     # Such columns are NOT present in the former cost csv. They are added here

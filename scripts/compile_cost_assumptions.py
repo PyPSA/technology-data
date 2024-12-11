@@ -1521,9 +1521,7 @@ def order_data(tech_data):
 
     # add central water tank charger/ discharger
     charger_tank = tech_data.loc[("central water tank storage", " - Charge efficiency")].copy()
-#    charger_tank = tech_data.loc[("central water tank storage", "Round trip efficiency")].copy()
     charger_tank["further description"] = "Charger efficiency"
-#    charger_tank[years] = charger_tank[years]**0.5*10
     charger_tank.rename(index={" - Charge efficiency": "efficiency"},
                    level=1, inplace=True)
     charger_tank.rename(index={'central water tank storage': "water tank charger"},
@@ -1537,9 +1535,7 @@ def order_data(tech_data):
 
     # add decentral water tank charger/ discharger
     charger_tank = tech_data.loc[("decentral water tank storage", " - Charge efficiency")].copy()
-    #    charger_tank = tech_data.loc[("central water tank storage", "Round trip efficiency")].copy()
     charger_tank["further description"] = "Charger efficiency"
-    #    charger_tank[years] = charger_tank[years]**0.5*10
     charger_tank.rename(index={" - Charge efficiency": "efficiency"},
                         level=1, inplace=True)
     charger_tank.rename(index={'decentral water tank storage': "decentral water tank charger"},

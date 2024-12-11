@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import numpy as np
 import pandas as pd
 import pathlib
 from _helpers import mock_snakemake
@@ -16,8 +17,8 @@ def get_convertion_dictionary(flag):
     Output
     Conversion dictionary:
     - flag == parameter: it returns a conversion dictionary that renames the parameter values to the PyPSA standard
-    - flag == pypsa_technology_name: it returns a conversion dictionary that renames the technology names to the PyPSA nomenclature
-    - flag == atb_technology_name: it returns a conversion dictionary that is necessary to align the atb_e_2022 nomenclature to the atb_e 2024 one
+    - flag == pypsa_technology_name: it returns a conversion dictionary to rename the technology names to the PyPSA nomenclature
+    - flag == atb_technology_name: it returns a conversion dictionary to align the atb_e_2022 and atb_e_2024 nomenclatures
     - flag == output_column: it returns a conversion dictionary that renames the column names of the cost dataframe
     """
     if flag.casefold() == "parameter":
@@ -88,10 +89,10 @@ def get_convertion_dictionary(flag):
 
 def filter_atb_input_file(input_file_path, year, list_columns_to_keep, list_core_metric_parameter_to_keep, list_tech_to_remove):
     """
-    The function filters the input cost dataframe from NREL/ATB. Namely it:
+    The function filters the input cost dataframe from NREL/ATB. Namely, it:
     - selects the necessary columns (the atb_e_2022 and atb_e_2024 have in fact a slightly different schema)
     - selects the rows corresponding to the necessary core_metric_parameter(s)
-    - selects the rows corresponding to the year for the cost assumption (2020, 2025, 2030 etc)
+    - selects the rows corresponding to the year for the cost assumption (2020, 2025, 2030 etc.)
     - drops duplicated rows
     - drops rows corresponding to unnecessary technologies
 
@@ -336,11 +337,60 @@ def pre_process_atb_input_file(input_file_path, year, list_columns_to_keep, list
     return atb_input_df.reset_index(drop=True)
 
 
+def duplicate_fuel_cost(input_file_path, year_list):
+    """
+    The function reads-in the fuel cost file to a Pandas DataFrame and
+    replicates the last available row for each technology. Namely, it
+    - reads the fuel cost input file to a Pandas DataFrame
+    - determines the list of the technologies
+    - loops through the technology list and determines for each technology the last available year
+    - creates a list with the missing years
+    - replicates the estimation for the last available year for all the missing years
+
+    Input arguments
+    - input_file_path : str, fuel cost file path
+    - year_list: list, list of the years for which a cost assumption is provided
+
+    Output
+    - DataFrame, updated fuel cost dataframe
+    """
+
+    # Read-in the fuel cost file for the US
+    input_fuel_cost_df = pd.read_csv(input_file_path)
+
+    # Determine a list of the technologies
+    technology_list = list(input_fuel_cost_df["technology"].unique())
+
+    # Create an empty dataframe
+    replicated_fuel_cost_df = pd.DataFrame()
+
+    # Loop through the available technologies
+    for tech_value in technology_list:
+
+        # For each technology, determine the last available year and extract the list of missing years
+        max_year = np.max(input_fuel_cost_df[input_fuel_cost_df["technology"] == tech_value]["year"])
+        first_missing_year_index = year_list.index(max_year)+1
+        missing_year_list = year_list[first_missing_year_index:]
+
+        # For each technology, loop through the list of missing years
+        for i, year_val in enumerate(missing_year_list):
+
+            # Extract the row corresponding to the last available year and replace the year with the missing year
+            df_to_replicate = input_fuel_cost_df.loc[(input_fuel_cost_df["technology"] == tech_value) & (input_fuel_cost_df["year"] == max_year)].copy(deep=True).replace(max_year, year_val)
+
+            # Append the extracted and modified row to the (originally empty) dataframe
+            replicated_fuel_cost_df = pd.concat([replicated_fuel_cost_df, df_to_replicate]).reset_index(drop=True)
+
+    # Append the dataframe with the replicated rows to the original dataframe. Sort by technology and year
+    input_fuel_cost_df = pd.concat([replicated_fuel_cost_df, input_fuel_cost_df]).sort_values(by=["technology", "year"]).reset_index(drop=True)
+    return input_fuel_cost_df
+
+
 if __name__ == "__main__":
     if 'snakemake' not in globals():
         snakemake = mock_snakemake("compile_cost_assumptions_nrel")
 
-    year_list = snakemake.config['years']
+    year_list = sorted(snakemake.config['years'])
     input_file_list_atb = snakemake.input.nrel_atb_input_files
     input_file_discount_rate = snakemake.input.nrel_atb_input_discount_rate
     input_file_fuel_costs = snakemake.input.nrel_atb_input_fuel_costs
@@ -357,7 +407,7 @@ if __name__ == "__main__":
     discount_rate_df = pd.read_csv(input_file_discount_rate)
 
     # get the fuel costs values for the US
-    fuel_costs_df = pd.read_csv(input_file_fuel_costs)
+    fuel_costs_df = duplicate_fuel_cost(input_file_fuel_costs, year_list)
 
     for year_val in year_list:
 

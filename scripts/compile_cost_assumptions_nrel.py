@@ -202,7 +202,7 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
     """
     The function filters and cleans the input NREL/ATB cost file. Namely it:
     - reads the input file
-    - normalizes the Fixec O&M by Additional OCC (for retrofits technologies) or CAPEX (for any other technology)
+    - normalizes the Fixed O&M by Additional OCC (for retrofits technologies) or CAPEX (for any other technology)
     - changes the units
     - renames the technology names to the PyPSA nomenclature
     - aligns the atb_e_2022 nomenclature to the atb_e 2024 nomenclature
@@ -277,7 +277,7 @@ def update_cost_values(cost_dataframe, atb_dataframe, technology_dictionary, par
     The selection is done by means of an OR operator. The two operands for this logical operation are returned
     by the following queries:
     - query_string_part_one: selects all the rows corresponding to the technologies NOT updated with NREL-ATB data
-    - query_string_part_two: some of the parameters of the technologies to be updated with NREL-ATB data are NOT present
+    - query_string_part_two: some of the techno-economic parameters (e.g., efficiency, capture rate) to be updated with NREL-ATB data are NOT present
     in the NREL-ATB dataset. They are instead added to the former cost csv files by means of the
     manual_input.csv. They should be kept in the final output. This query selects such rows
 

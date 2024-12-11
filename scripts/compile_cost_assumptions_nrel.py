@@ -331,6 +331,8 @@ def pre_process_atb_input_file(input_file_path, year, list_columns_to_keep, list
     parameter_conversion_dict = get_convertion_dictionary("parameter")
     atb_input_df = replace_value_name(atb_input_df, parameter_conversion_dict, "parameter")
 
+    # ATB currency year dates back to 2018 for ATB2020 and to 2022 for ATB2024
+    atb_input_df["currency_year"] = atb_input_df["currency_year"] - 2
     # Cast currency_year from int to float
     atb_input_df["currency_year"] = atb_input_df["currency_year"].astype(float)
 

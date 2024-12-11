@@ -725,6 +725,8 @@ central solid biomass CHP powerboost CC,efficiency,0.2694,per unit,"Danish Energ
 central solid biomass CHP powerboost CC,efficiency-heat,0.825,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Heat efficiency, net, annual average",2015.0
 central solid biomass CHP powerboost CC,investment,3642.4702,EUR/kW_e,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Nominal investment ",2015.0
 central solid biomass CHP powerboost CC,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Technical lifetime",2015.0
+central water pit charger,efficiency,1.0,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Charger efficiency,2015.0
+central water pit discharger,efficiency,1.0,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Discharger efficiency,2015.0
 central water pit storage,FOM,0.5338,%/year,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Fixed O&M,2015.0
 central water pit storage,energy to power ratio,150.0,h,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Ratio between energy storage and input capacity,2015.0
 central water pit storage,investment,0.5947,EUR/kWhCapacity,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Specific investment,2015.0
@@ -791,10 +793,14 @@ decentral solar thermal,FOM,1.3,%/year,HP, from old pypsa cost assumptions,2015.
 decentral solar thermal,discount rate,0.04,per unit,Palzer thesis, from old pypsa cost assumptions,2015.0
 decentral solar thermal,investment,285719.8393,EUR/1000m2,HP, from old pypsa cost assumptions,2015.0
 decentral solar thermal,lifetime,20.0,years,HP, from old pypsa cost assumptions,2015.0
+decentral water tank charger,efficiency,1.0,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Charger efficiency,2015.0
+decentral water tank discharger,efficiency,1.0,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Discharger efficiency,2015.0
 decentral water tank storage,FOM,1.0,%/year,HP, from old pypsa cost assumptions,2015.0
+decentral water tank storage,VOM,0.8995,EUR/MWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",142 Small scale hot water tank:  Variable O&M,2015.0
 decentral water tank storage,discount rate,0.04,per unit,Palzer thesis, from old pypsa cost assumptions,2015.0
-decentral water tank storage,investment,19.446,EUR/kWh,IWES Interaktion, from old pypsa cost assumptions,2015.0
-decentral water tank storage,lifetime,20.0,years,HP, from old pypsa cost assumptions,2015.0
+decentral water tank storage,energy to power ratio,0.15,h,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",142 Small scale hot water tank:  Ratio between energy storage and input capacity,2015.0
+decentral water tank storage,investment,433.8709,EUR/kWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",142 Small scale hot water tank:  Specific investment,2015.0
+decentral water tank storage,lifetime,30.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",142 Small scale hot water tank:  Technical lifetime,2015.0
 digestible biomass,fuel,17.0611,EUR/MWh_th,"JRC ENSPRESO ca avg for MINBIOAGRW1, ENS_Ref for 2040",,2010.0
 digestible biomass to hydrogen,FOM,4.25,%/year,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",,
 digestible biomass to hydrogen,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,
@@ -1091,7 +1097,5 @@ waste CHP CC,efficiency,0.2051,per unit,"Danish Energy Agency, technology_data_f
 waste CHP CC,efficiency-heat,0.7627,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","08 WtE CHP, Large, 50 degree:  Heat efficiency, net, annual average",2015.0
 waste CHP CC,investment,8829.8509,EUR/kW_e,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","08 WtE CHP, Large, 50 degree:  Nominal investment ",2015.0
 waste CHP CC,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","08 WtE CHP, Large, 50 degree:  Technical lifetime",2015.0
-water pit charger,efficiency,0.8367,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency),2015.0
-water pit discharger,efficiency,0.8367,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency),2015.0
-water tank charger,efficiency,0.9899,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency),2015.0
-water tank discharger,efficiency,0.9899,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  efficiency from sqr(Round trip efficiency),2015.0
+water tank charger,efficiency,1.0,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Charger efficiency,2015.0
+water tank discharger,efficiency,1.0,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Discharger efficiency,2015.0

@@ -41,15 +41,15 @@ def config():
 def cost_dataframe():
     return pd.DataFrame(
         {
-            "technology": ["coal", "coal", "coal", "coal", "coal", "coal", "coal", "coal"],
-            "parameter": ["investment", "FOM", "VOM", "fuel", "investment", "discount rate", "co2 intensity", "lifetime"],
-            "value": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-            "unit": ["unit", "unit", "unit", "unit", "unit", "unit", "unit", "unit"],
-            "source": ["source", "source", "source", "source", "source", "source", "source", "source"],
-            "further description": ["a", "b", "c", "d", "e", "f", "g", "h"],
-            "currency_year": [2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020],
+            "technology": ["coal", "coal", "coal", "coal", "coal", "coal", "coal", "coal", "another_tech"],
+            "parameter": ["investment", "FOM", "VOM", "fuel", "investment", "discount rate", "co2 intensity", "lifetime", "investment"],
+            "value": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 3.0],
+            "unit": ["unit", "unit", "unit", "unit", "unit", "unit", "unit", "unit", "unit"],
+            "source": ["source", "source", "source", "source", "source", "source", "source", "source", "source"],
+            "further description": ["a", "b", "c", "d", "e", "f", "g", "h", "i"],
+            "currency_year": [2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020],
         },
-        index=[0, 1, 2, 3, 4, 5, 6, 7],
+        index=[0, 1, 2, 3, 4, 5, 6, 7, 8],
     )
 
 

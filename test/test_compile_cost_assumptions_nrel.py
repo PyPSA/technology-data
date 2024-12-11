@@ -9,7 +9,7 @@ import numpy as np
 
 sys.path.append("./scripts")
 
-from compile_cost_assumptions_nrel import calculate_fom_percentage, filter_input_file, get_convertion_dictionary, get_query_string, pre_process_input_file, replace_value_name, update_cost_values
+from compile_cost_assumptions_nrel import calculate_fom_percentage, filter_atb_input_file, get_convertion_dictionary, get_query_string, pre_process_atb_input_file, pre_process_cost_input_file, replace_value_name, query_cost_dataframe
 
 path_cwd = pathlib.Path.cwd()
 additional_occ_query_string = "atb_year == @x.atb_year & core_metric_case == @x.core_metric_case & core_metric_parameter.str.casefold() == 'additional occ' & core_metric_variable == @x.core_metric_variable & display_name == @x.display_name & scenario == @x.scenario & technology == @x.technology & technology_alias == @x.technology_alias"
@@ -20,16 +20,16 @@ capex_query_string = "atb_year == @x.atb_year & core_metric_case == @x.core_metr
     "file_year, year, expected",
     [(2019, 2020, "atb_e_2019 - the input file considered is not among the needed ones: atb_e_2022.parquet, atb_e_2024.parquet"), (2022, 2020, (2960, 10)), (2024, 2025, (3036, 10)), (2024, 2030, (3222, 10)), (2024, 2035, (3246, 10)), (2024, 2040, (3246, 10)), (2024, 2045, (3246, 10)), (2024, 2050, (3246, 10))],
 )
-def test_filter_input_file(config, file_year, year, expected):
+def test_filter_atb_input_file(config, file_year, year, expected):
     """
-    The test verifies what is returned by filter_input_file.
+    The test verifies what is returned by filter_atb_input_file.
     """
     list_columns_to_keep = config["nrel_atb"]["nrel_atb_columns_to_keep"]
     list_core_metric_parameter_to_keep = config["nrel_atb"]["nrel_atb_core_metric_parameter_to_keep"]
     nrel_atb_technology_to_remove = config["nrel_atb"]["nrel_atb_technology_to_remove"]
     input_file_path = pathlib.Path(path_cwd, "inputs", "atb_e_{}.parquet".format(file_year))
     if file_year in [2022, 2024]:
-        input_file = filter_input_file(input_file_path, year, list_columns_to_keep, list_core_metric_parameter_to_keep, nrel_atb_technology_to_remove)
+        input_file = filter_atb_input_file(input_file_path, year, list_columns_to_keep, list_core_metric_parameter_to_keep, nrel_atb_technology_to_remove)
         assert input_file.shape == expected
         assert "aeo" not in input_file["technology"].astype(str).str.casefold().unique()
         assert "coal-ccs-95% -> transformational tech" not in input_file["technology"].astype(str).str.casefold().unique()
@@ -41,7 +41,7 @@ def test_filter_input_file(config, file_year, year, expected):
         assert "ng combined cycle max ccs (h-frame basis -> transformational tech)" not in input_file["technology"].astype(str).str.casefold().unique()
     else:
         with pytest.raises(Exception) as excinfo:
-            input_file = filter_input_file(input_file_path, year, list_columns_to_keep,
+            input_file = filter_atb_input_file(input_file_path, year, list_columns_to_keep,
                                            list_core_metric_parameter_to_keep, nrel_atb_technology_to_remove)
         assert str(excinfo.value) == expected
 
@@ -72,47 +72,74 @@ def test_calculate_fom_percentage(config, display_name, expected):
     assert test_df.loc[(test_df["display_name"] == display_name) & (test_df["core_metric_parameter"] == "Fixed O&M")]["value"].item() == expected
 
 
+def test_pre_process_cost_input_file(tmpdir, cost_dataframe):
+    """
+    The test verifies what is returned by pre_process_cost_input_file.
+    """
+    reference_df = pd.DataFrame(
+        {
+            "technology": ["coal", "coal", "another_tech"],
+            "parameter": ["co2 intensity", "lifetime", "investment"],
+            "value": [1.0, 1.0, 3.0],
+            "unit": ["unit", "unit", "unit"],
+            "source": ["source", "source", "source"],
+            "further description": ["g", "h", "i"],
+            "currency_year": [2020, 2020, 2020],
+            "financial_case": [np.nan, np.nan, np.nan],
+            "scenario": [np.nan, np.nan, np.nan],
+        }
+    )
+    input_file_path = pathlib.Path(tmpdir, "tmp_costs.csv")
+    cost_dataframe.to_csv(input_file_path, index=False)
+    output_df = pre_process_cost_input_file(input_file_path, ["financial_case", "scenario"])
+    comparison_df = output_df.compare(reference_df)
+    assert comparison_df.empty
+
+
 @pytest.mark.parametrize(
     "input_file_year, year, expected", [(2022, 2020, (2960, 9)), (2024, 2050, (3246, 9))],
 )
-def test_pre_process_input_file(config, input_file_year, year, expected):
+def test_pre_process_atb_input_file(config, input_file_year, year, expected):
     """
-    The test verifies what is returned by pre_process_input_file.
+    The test verifies what is returned by pre_process_atb_input_file.
     """
     input_file_path = pathlib.Path(path_cwd, "inputs", "atb_e_{}.parquet".format(input_file_year))
     nrel_atb_columns_to_keep = config["nrel_atb"]["nrel_atb_columns_to_keep"]
     nrel_atb_core_metric_parameter_to_keep = config["nrel_atb"]["nrel_atb_core_metric_parameter_to_keep"]
     nrel_atb_technology_to_remove = config["nrel_atb"]["nrel_atb_technology_to_remove"]
     nrel_atb_source_link = config["nrel_atb"]["nrel_atb_source_link"]
-    output_df = pre_process_input_file(input_file_path, year, nrel_atb_columns_to_keep, nrel_atb_core_metric_parameter_to_keep, nrel_atb_source_link, nrel_atb_technology_to_remove)
+    output_df = pre_process_atb_input_file(input_file_path, year, nrel_atb_columns_to_keep, nrel_atb_core_metric_parameter_to_keep, nrel_atb_source_link, nrel_atb_technology_to_remove)
     reference_parameter_list = sorted(["investment", "CF", "FOM", "VOM", "fuel"])
     output_parameter_list = sorted(list(output_df["parameter"].unique()))
     assert output_df.shape == expected
     assert len(output_parameter_list) == len(reference_parameter_list)
     assert all([x == y for x, y in zip(reference_parameter_list, output_parameter_list)])
+    units_df = output_df[["parameter", "unit"]].drop_duplicates(keep="first")
+    assert units_df.loc[units_df["parameter"].astype(str).str.casefold() == "investment"]["unit"].item() == "USD/kW"
+    assert units_df.loc[units_df["parameter"].astype(str).str.casefold() == "cf"]["unit"].item() == "per unit"
+    assert units_df.loc[units_df["parameter"].astype(str).str.casefold() == "fom"]["unit"].item() == "%/year"
+    assert units_df.loc[units_df["parameter"].astype(str).str.casefold() == "vom"]["unit"].item() == "USD/MWh"
+    assert units_df.loc[units_df["parameter"].astype(str).str.casefold() == "fuel"]["unit"].item() == "USD/MWh"
 
 
-def test_update_cost_values(cost_dataframe, atb_cost_dataframe):
+def test_query_cost_dataframe(cost_dataframe):
     """
-    The test verifies what is returned by update_cost_values.
+    The test verifies what is returned by query_cost_dataframe.
     """
     reference_df = pd.DataFrame(
         {
-            "technology": ["coal", "coal", "coal", "coal", "coal", "coal", "coal", "coal"],
-            "parameter": ["co2 intensity", "lifetime", "investment", "FOM", "VOM", "fuel", "investment", "discount rate"],
-            "value": [1.0, 1.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0],
-            "unit": ["unit", "unit", "unit_atb", "unit_atb", "unit_atb", "unit_atb", "unit_atb", "unit_atb"],
-            "source": ["source", "source", "source_atb", "source_atb", "source_atb", "source_atb", "source_atb", "source_atb"],
-            "further description": ["g", "h", "a", "b", "c", "d", "e", "f"],
-            "currency_year": [2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020],
-            "financial_case": [np.nan, np.nan, "R&D", "R&D", "R&D", "R&D", "R&D", "R&D"],
-            "scenario": [np.nan, np.nan, "Moderate", "Moderate", "Moderate", "Moderate", "Moderate", "Moderate"]
+            "technology": ["coal", "coal", "another_tech"],
+            "parameter": ["co2 intensity", "lifetime", "investment"],
+            "value": [1.0, 1.0, 3.0],
+            "unit": ["unit", "unit", "unit"],
+            "source": ["source", "source", "source"],
+            "further description": ["g", "h", "i"],
+            "currency_year": [2020, 2020, 2020]
         }
     )
     pypsa_technology_dictionary = get_convertion_dictionary("pypsa_technology_name")
     parameter_dictionary = get_convertion_dictionary("parameter")
-    columns_to_add_list = ["financial_case", "scenario"]
-    output_df = update_cost_values(cost_dataframe, atb_cost_dataframe, pypsa_technology_dictionary, parameter_dictionary, columns_to_add_list)
+    output_df = query_cost_dataframe(cost_dataframe, pypsa_technology_dictionary, parameter_dictionary)
     comparison_df = output_df.compare(reference_df)
     assert comparison_df.empty
 
@@ -133,3 +160,28 @@ def test_get_query_string(config, parameter_value, columns_to_exclude, expected)
     else:
         output_string = get_query_string(columns_list, columns_to_exclude, parameter_value)
         assert output_string == expected
+
+
+# def test_final_output(cost_dataframe):
+#     """
+#     The test verifies what is returned by query_cost_dataframe.
+#     """
+#     reference_df = pd.DataFrame(
+#         {
+#             "technology": ["coal", "coal", "coal", "coal", "coal", "coal", "coal", "coal"],
+#             "parameter": ["co2 intensity", "lifetime", "investment", "FOM", "VOM", "fuel", "investment", "discount rate"],
+#             "value": [1.0, 1.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0],
+#             "unit": ["unit", "unit", "unit_atb", "unit_atb", "unit_atb", "unit_atb", "unit_atb", "unit_atb"],
+#             "source": ["source", "source", "source_atb", "source_atb", "source_atb", "source_atb", "source_atb", "source_atb"],
+#             "further description": ["g", "h", "a", "b", "c", "d", "e", "f"],
+#             "currency_year": [2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020],
+#             "financial_case": [np.nan, np.nan, "R&D", "R&D", "R&D", "R&D", "R&D", "R&D"],
+#             "scenario": [np.nan, np.nan, "Moderate", "Moderate", "Moderate", "Moderate", "Moderate", "Moderate"]
+#         }
+#     )
+#     pypsa_technology_dictionary = get_convertion_dictionary("pypsa_technology_name")
+#     parameter_dictionary = get_convertion_dictionary("parameter")
+#     output_df = query_cost_dataframe(cost_dataframe, pypsa_technology_dictionary, parameter_dictionary)
+#     comparison_df = output_df.compare(reference_df)
+#     assert comparison_df.empty
+

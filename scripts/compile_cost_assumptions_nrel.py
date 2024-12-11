@@ -86,7 +86,7 @@ def get_convertion_dictionary(flag):
         raise Exception("{} is not among the allowed choices: parameter, technology, output_column")
 
 
-def filter_input_file(input_file_path, year, list_columns_to_keep, list_core_metric_parameter_to_keep, list_tech_to_remove):
+def filter_atb_input_file(input_file_path, year, list_columns_to_keep, list_core_metric_parameter_to_keep, list_tech_to_remove):
     """
     The function filters the input cost dataframe from NREL/ATB. Namely it:
     - selects the necessary columns (the atb_e_2022 and atb_e_2024 have in fact a slightly different schema)
@@ -198,11 +198,78 @@ def replace_value_name(dataframe, conversion_dict, column_name):
     return dataframe
 
 
-def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_core_metric_parameter_to_keep, nrel_source, tech_to_remove):
+def query_cost_dataframe(cost_dataframe, technology_dictionary, parameter_dictionary):
+    """
+    The function queries the rows of the existing cost dataframe.
+    The selection is done by means of an OR operator. The two operands for this logical operation are returned
+    by the following queries:
+    - query_string_part_one: selects all the rows corresponding to the technologies NOT updated with NREL-ATB data
+    - query_string_part_two: some of the parameters of the technologies to be updated with NREL-ATB data are NOT present
+    in the NREL-ATB dataset. They are instead added to the former cost csv files by means of the
+    manual_input.csv. They should be kept in the final output. This query selects such rows
+
+    Input arguments
+    - cost_dataframe : DataFrame, existing cost dataframe
+    - technology_dictionary: dict, a dictionary of the technologies updated with NREL/ATB data
+    - parameter_dictionary: dict, a dictionary of the parameters for which NREL/ATB estimates are available
+
+    Output
+    - DataFrame, updated version of the existing cost dataframe
+    """
+    technologies_from_nrel = [str(x).casefold() for x in set(technology_dictionary.values())]
+    parameters_from_nrel = [str(x).casefold() for x in set(parameter_dictionary.values())]
+
+    # Query the rows from the former cost csv file.
+    # --> The selection is done by means of an OR operator.
+    # --> The two operands for this logical operation are returned by the queries below
+
+    # --> QUERY 1: this query selects all the rows corresponding to the technologies NOT updated with NREL-ATB data
+    query_string_part_one = "~technology.str.casefold().isin(@technologies_from_nrel)"
+
+    # --> QUERY 2: some of the parameters of the technologies to be updated with NREL-ATB data are NOT present
+    # --> in the NREL-ATB dataset. They are instead added to the former cost csv files by means of the
+    # --> manual_input.csv. They should be kept in the final output. This query selects such rows
+    query_string_part_two = "technology.str.casefold().isin(@technologies_from_nrel) & ~parameter.str.casefold().isin(@parameters_from_nrel)"
+
+    query_string = ("{} | {}").format(query_string_part_one, query_string_part_two)
+
+    queried_cost_dataframe = cost_dataframe.query(query_string).reset_index(drop=True)
+
+    return queried_cost_dataframe
+
+
+def pre_process_cost_input_file(input_file_path, columns_to_add_list):
+    """
+    The function filters and cleans the existing cost file. Namely it:
+    - reads the input file
+    - adds the columns from NREL/ATB not present in the existing cost dataframe
+    - queries the necessary rows of the existing cost dataframe
+
+    Input arguments
+    - input_file_path : str, existing cost file path
+    - columns_to_add_list: list, list of column names from NREL/ATB to be added to the existing cost dataframe
+
+    Output
+    - DataFrame, updated NREL/ATB cost dataframe
+    """
+
+    cost_input_df = pd.read_csv(input_file_path)
+
+    # The data coming from NREL/ATB contain the columns "financial_case", "scenario".
+    # Such columns are NOT present in the former cost csv. They are added here
+    for column_name in columns_to_add_list:
+        cost_input_df[column_name] = pd.Series(dtype="str")
+
+    cost_input_df = query_cost_dataframe(cost_input_df, get_convertion_dictionary("pypsa_technology_name"), get_convertion_dictionary("parameter"))
+
+    return cost_input_df.reset_index(drop=True)
+
+
+def pre_process_atb_input_file(input_file_path, year, list_columns_to_keep, list_core_metric_parameter_to_keep, nrel_source, tech_to_remove):
     """
     The function filters and cleans the input NREL/ATB cost file. Namely it:
     - reads the input file
-    - normalizes the Fixec O&M by Additional OCC (for retrofits technologies) or CAPEX (for any other technology)
+    - normalizes the Fixed O&M by Additional OCC (for retrofits technologies) or CAPEX (for any other technology)
     - changes the units
     - renames the technology names to the PyPSA nomenclature
     - aligns the atb_e_2022 nomenclature to the atb_e 2024 nomenclature
@@ -219,7 +286,7 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
     - DataFrame, updated NREL/ATB cost dataframe
     """
     # Read inputs and filter relevant columns and relevant core_metric_variables (i.e. the years to consider)
-    atb_input_df = filter_input_file(pathlib.Path(input_file_path), year, list_columns_to_keep, list_core_metric_parameter_to_keep, tech_to_remove)
+    atb_input_df = filter_atb_input_file(pathlib.Path(input_file_path), year, list_columns_to_keep, list_core_metric_parameter_to_keep, tech_to_remove)
 
     # Normalize Fixed O&M by CAPEX (or Additional OCC for retrofit technologies)
     atb_input_df["value"] = atb_input_df.apply(lambda x: calculate_fom_percentage(x, atb_input_df, list_columns_to_keep), axis=1)
@@ -256,7 +323,7 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
     # Add further description column
     atb_input_df["further description"] = pd.Series(dtype="str")
 
-    # Rename columns and consider just columns used in PyPSA
+    # Rename columns and select just columns used in PyPSA
     column_rename_dict = get_convertion_dictionary("output_column")
     tuple_output_columns_to_keep = ("display_name", "core_metric_parameter", "value", "units", "source", "further description", "atb_year", "scenario", "core_metric_case")
     atb_input_df = atb_input_df.loc[:, tuple_output_columns_to_keep].rename(columns=column_rename_dict)
@@ -269,52 +336,6 @@ def pre_process_input_file(input_file_path, year, list_columns_to_keep, list_cor
     atb_input_df["currency_year"] = atb_input_df["currency_year"].astype(float)
 
     return atb_input_df.reset_index(drop=True)
-
-
-def update_cost_values(cost_dataframe, atb_dataframe, technology_dictionary, parameter_dictionary, columns_to_add_list):
-    """
-    The function queries the rows of the existing cost dataframe and concatenates it with the NREL/ATB one.
-    The selection is done by means of an OR operator. The two operands for this logical operation are returned
-    by the following queries:
-    - query_string_part_one: selects all the rows corresponding to the technologies NOT updated with NREL-ATB data
-    - query_string_part_two: some of the parameters of the technologies to be updated with NREL-ATB data are NOT present
-    in the NREL-ATB dataset. They are instead added to the former cost csv files by means of the
-    manual_input.csv. They should be kept in the final output. This query selects such rows
-
-    Input arguments
-    - cost_dataframe : DataFrame, existing cost dataframe
-    - atb_dataframe : DataFrame, NREL/ATB cost dataframe
-    - technology_dictionary: dict, a dictionary of the technologies updated with NREL/ATB data
-    - parameter_dictionary: dict, a dictionary of the parameters for which NREL/ATB estimates are available
-    - columns_to_add_list: list, list of column names to be added to the existing cost dataframe
-
-    Output
-    - DataFrame, updated cost dataframe
-    """
-    # The data coming from NREL/ATB contain the columns "financial_case", "scenario".
-    # Such columns are NOT present in the former cost csv. They are added here
-    for column_name in columns_to_add_list:
-        cost_dataframe[column_name] = pd.Series(dtype="str")
-    technologies_from_nrel = [str(x).casefold() for x in set(technology_dictionary.values())]
-    parameters_from_nrel = [str(x).casefold() for x in set(parameter_dictionary.values())]
-
-    # Query the rows from the former cost csv file.
-    # --> The selection is done by means of an OR operator.
-    # --> The two operands for this logical operation are returned by the queries below
-
-    # --> QUERY 1: this query selects all the rows corresponding to the technologies NOT updated with NREL-ATB data
-    query_string_part_one = "~technology.str.casefold().isin(@technologies_from_nrel)"
-
-    # --> QUERY 2: some of the parameters of the technologies to be updated with NREL-ATB data are NOT present
-    # --> in the NREL-ATB dataset. They are instead added to the former cost csv files by means of the
-    # --> manual_input.csv. They should be kept in the final output. This query selects such rows
-    query_string_part_two = "technology.str.casefold().isin(@technologies_from_nrel) & ~parameter.str.casefold().isin(@parameters_from_nrel)"
-
-    query_string = ("{} | {}").format(query_string_part_one, query_string_part_two)
-
-    updated_cost_dataframe = pd.concat([cost_dataframe.query(query_string), atb_dataframe]).reset_index(drop=True)
-
-    return updated_cost_dataframe
 
 
 if __name__ == "__main__":
@@ -346,23 +367,24 @@ if __name__ == "__main__":
         input_cost_path_list = [path for path in snakemake.input.cost_files_to_modify if str(year_val) in path]
         if len(input_cost_path_list) == 1:
             input_cost_path = input_cost_path_list[0]
-            cost_df = pd.read_csv(input_cost_path).reset_index(drop=True)
         else:
             raise Exception("Please verify the list of cost files. It may contain duplicates.")
 
         # get the atb values for a given year
         if year_val == 2020:
             # choose atb_e_2022
-            input_file_atb = input_file_list_atb[0]
-            atb_e_df = pre_process_input_file(input_file_atb, year_val, nrel_atb_columns_to_keep,
-                                   nrel_atb_core_metric_parameter_to_keep, nrel_atb_source_link, nrel_atb_technology_to_remove)
+            input_atb_path = input_file_list_atb[0]
         elif year_val in year_list[1:]:
             # choose atb_e_2024
-            input_file_atb = input_file_list_atb[1]
-            atb_e_df = pre_process_input_file(input_file_atb, year_val, nrel_atb_columns_to_keep,
-                                   nrel_atb_core_metric_parameter_to_keep, nrel_atb_source_link, nrel_atb_technology_to_remove)
+            input_atb_path = input_file_list_atb[1]
         else:
             raise Exception("{} is not a considered year".format(year_val))
+
+        cost_df = pre_process_cost_input_file(input_cost_path, ["financial_case", "scenario"])
+
+        atb_e_df = pre_process_atb_input_file(input_atb_path, year_val, nrel_atb_columns_to_keep,
+                                              nrel_atb_core_metric_parameter_to_keep, nrel_atb_source_link,
+                                              nrel_atb_technology_to_remove)
 
         # get the discount rate file for the given year
         discount_rate_year_df = discount_rate_df.loc[discount_rate_df["year"] == year_val]
@@ -372,8 +394,8 @@ if __name__ == "__main__":
         fuel_costs_year_df = fuel_costs_df.loc[fuel_costs_df["year"] == year_val]
         fuel_costs_year_df = fuel_costs_year_df.loc[:, ("technology", "parameter", "value", "unit", "source", "further description", "currency_year", "financial_case", "scenario")].reset_index(drop=True)
 
-        # update the cost file
-        updated_cost_df = update_cost_values(cost_df, atb_e_df, get_convertion_dictionary("pypsa_technology_name"), get_convertion_dictionary("parameter"), ["financial_case", "scenario"])
+        # concatenate the existing and NREL/ATB cost dataframes
+        updated_cost_df = pd.concat([cost_df, atb_e_df]).reset_index(drop=True)
 
         # add discount rate
         updated_cost_df = pd.concat([updated_cost_df, discount_rate_year_df]).reset_index(drop=True)

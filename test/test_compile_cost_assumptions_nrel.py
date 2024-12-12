@@ -165,9 +165,6 @@ def test_query_cost_dataframe(cost_dataframe):
     assert comparison_df.empty
 
 
-
-
-
 def test_duplicate_fuel_cost(config):
     """
     The test verifies what is returned by duplicate_fuel_cost.

@@ -7,7 +7,7 @@ import pytest
 import yaml
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="session")
 def config():
     path_config = pathlib.Path(pathlib.Path.cwd(), "config.yaml")
     with open(path_config, "r") as file:

@@ -731,6 +731,8 @@ central water pit storage,FOM,0.6171,%/year,"Danish Energy Agency, technology_da
 central water pit storage,energy to power ratio,150.0,h,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Ratio between energy storage and input capacity,2015.0
 central water pit storage,investment,0.5144,EUR/kWhCapacity,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Specific investment,2015.0
 central water pit storage,lifetime,25.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Technical lifetime,2015.0
+central water tank charger,efficiency,1.0,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Charger efficiency,2015.0
+central water tank discharger,efficiency,1.0,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Discharger efficiency,2015.0
 central water tank storage,FOM,0.2901,%/year,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Fixed O&M,2015.0
 central water tank storage,energy to power ratio,60.3448,h,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Ratio between energy storage and input capacity,2015.0
 central water tank storage,investment,3.1374,EUR/kWhCapacity,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Specific investment,2015.0
@@ -1097,5 +1099,5 @@ waste CHP CC,efficiency,0.2144,per unit,"Danish Energy Agency, technology_data_f
 waste CHP CC,efficiency-heat,0.7624,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","08 WtE CHP, Large, 50 degree:  Heat efficiency, net, annual average",2015.0
 waste CHP CC,investment,7755.9852,EUR/kW_e,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","08 WtE CHP, Large, 50 degree:  Nominal investment ",2015.0
 waste CHP CC,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","08 WtE CHP, Large, 50 degree:  Technical lifetime",2015.0
-water tank charger,efficiency,1.0,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Charger efficiency,2015.0
-water tank discharger,efficiency,1.0,per unit,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Discharger efficiency,2015.0
+water tank charger,efficiency,0.9,per unit,HP, from old pypsa cost assumptions,2015.0
+water tank discharger,efficiency,0.9,per unit,HP, from old pypsa cost assumptions,2015.0

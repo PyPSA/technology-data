@@ -1524,10 +1524,10 @@ def order_data(tech_data):
     charger_tank["further description"] = "Charger efficiency"
     charger_tank.rename(index={" - Charge efficiency": "efficiency"},
                    level=1, inplace=True)
-    charger_tank.rename(index={'central water tank storage': "water tank charger"},
+    charger_tank.rename(index={'central water tank storage': "central water tank charger"},
                    level=0, inplace=True)
     data = pd.concat([data, charger_tank], sort=True)
-    charger_tank.rename(index={"water tank charger": "water tank discharger"},
+    charger_tank.rename(index={"central water tank charger": "central water tank discharger"},
                    level=0, inplace=True)
     charger_tank["further description"] = "Discharger efficiency"
 

@@ -142,7 +142,7 @@ name={'onwind' : 'Onshore Wind',
       'electric boiler steam': 'electric boiler steam',
       'gas boiler steam': 'gas boiler steam',
       'solid biomass boiler steam': 'solid biomass boiler steam',
-      'methanolisation': 'methanolisation'
+      'methanolisation': 'methanolisation',
       'Compressed-Air-Adiabatic-bicharger': 'Compressed-Air-Adiabatic-bicharger',
       'Compressed-Air-Adiabatic-store': 'Compressed-Air-Adiabatic-store',
       'Concrete-charger': 'Concrete-charger',

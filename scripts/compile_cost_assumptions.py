@@ -103,7 +103,7 @@ sheet_names = {'onwind': '20 Onshore turbines',
                # 'decentral resistive heater': '216 Electric heating',
                'central water pit storage': '140 PTES seasonal',
                'central water tank storage': '141 Large hot water tank',
-               # 'decentral water tank storage': '142 Small scale hot water tank',
+               'decentral water tank storage': '142 Small scale hot water tank',
                'fuel cell': '12 LT-PEMFC CHP',
                'hydrogen storage underground': '151c Hydrogen Storage - Caverns',
                'hydrogen storage tank type 1 including compressor': '151a Hydrogen Storage - Tanks',
@@ -188,6 +188,7 @@ uncrtnty_lookup = {'onwind': 'J:K',
                    'decentral air-sourced heat pump': 'I:J',
                    'central water pit storage': 'J:K',
                    'central water tank storage': 'J:K',
+                   'decentral water tank storage': 'J:K',
                    'fuel cell': 'I:J',
                    'hydrogen storage underground': 'J:K',
                    'hydrogen storage tank type 1 including compressor': 'J:K',
@@ -1518,31 +1519,72 @@ def order_data(tech_data):
                                                           "level_1": "further description"})
         .set_index(["technology", "parameter"]))
 
-    # add water tank charger/ discharger
-    charger_tank = tech_data.loc[("central water tank storage", "Round trip efficiency")].copy()
-    charger_tank["further description"] = "efficiency from sqr(Round trip efficiency)"
-    charger_tank[years] = charger_tank[years]**0.5*10
-    charger_tank.rename(index={"Round trip efficiency": "efficiency"},
+    # add central water tank charger/ discharger
+    charger_tank = tech_data.loc[("central water tank storage", " - Charge efficiency")].copy()
+    charger_tank["further description"] = "Charger efficiency"
+    charger_tank.rename(index={" - Charge efficiency": "efficiency"},
                    level=1, inplace=True)
-    charger_tank.rename(index={'central water tank storage':"water tank charger"},
+    charger_tank.rename(index={'central water tank storage': "central water tank charger"},
                    level=0, inplace=True)
     data = pd.concat([data, charger_tank], sort=True)
-    charger_tank.rename(index={"water tank charger": "water tank discharger"},
+    charger_tank.rename(index={"central water tank charger": "central water tank discharger"},
                    level=0, inplace=True)
+    charger_tank["further description"] = "Discharger efficiency"
+
+    data = pd.concat([data, charger_tank], sort=True)
+
+    # add decentral water tank charger/ discharger
+    charger_tank = tech_data.loc[("decentral water tank storage", " - Charge efficiency")].copy()
+    charger_tank["further description"] = "Charger efficiency"
+    charger_tank.rename(index={" - Charge efficiency": "efficiency"},
+                        level=1, inplace=True)
+    charger_tank.rename(index={'decentral water tank storage': "decentral water tank charger"},
+                        level=0, inplace=True)
+    data = pd.concat([data, charger_tank], sort=True)
+    charger_tank.rename(index={"decentral water tank charger": "decentral water tank discharger"},
+                        level=0, inplace=True)
+    charger_tank["further description"] = "Discharger efficiency"
+
     data = pd.concat([data, charger_tank], sort=True)
 
     # add water pit charger/ discharger
-    charger_pit = tech_data.loc[("central water pit storage", "Round trip efficiency")].copy()
-    charger_pit["further description"] = "efficiency from sqr(Round trip efficiency)"
-    charger_pit[years] = charger_pit[years]**0.5*10
-    charger_pit.rename(index={"Round trip efficiency": "efficiency"},
+    charger_pit = tech_data.loc[("central water pit storage", " - Charge efficiency")].copy()
+    charger_pit["further description"] = "Charger efficiency"
+
+    charger_pit.rename(index={" - Charge efficiency": "efficiency"},
                    level=1, inplace=True)
-    charger_pit.rename(index={'central water pit storage':"water pit charger"},
+    charger_pit.rename(index={'central water pit storage': "central water pit charger"},
                    level=0, inplace=True)
     data = pd.concat([data, charger_pit], sort=True)
-    charger_pit.rename(index={"water pit charger": "water pit discharger"},
+    charger_pit.rename(index={"central water pit charger": "central water pit discharger"},
                    level=0, inplace=True)
+    charger_pit["further description"] = "Discharger efficiency"
     data = pd.concat([data, charger_pit], sort=True)
+
+
+    # add energy to power ratio for central water tank storage
+    power_ratio_tank = tech_data.loc[("central water tank storage", "Input capacity for one unit")].copy().squeeze()
+    storage_capacity_tank = tech_data.loc[("central water tank storage", "Energy storage capacity for one unit")].copy().squeeze()
+
+    power_ratio_tank[years] = storage_capacity_tank[years].div(power_ratio_tank[years])
+    power_ratio_tank["further description"] = "Ratio between energy storage and input capacity"
+    power_ratio_tank["unit"] = "h"
+    power_ratio_tank = power_ratio_tank.to_frame().T
+    power_ratio_tank.rename(index={"Input capacity for one unit": "energy to power ratio"},
+                            level=1, inplace=True)
+    data = pd.concat([data, power_ratio_tank], sort=True)
+
+    # add energy to power ratio for decentral water tank storage
+    power_ratio_tank = tech_data.loc[("decentral water tank storage", "Input capacity for one unit")].copy().squeeze()
+    storage_capacity_tank = tech_data.loc[("decentral water tank storage", "Energy storage capacity for one unit")].copy().squeeze()
+
+    power_ratio_tank[years] = storage_capacity_tank[years].div(power_ratio_tank[years])
+    power_ratio_tank["further description"] = "Ratio between energy storage and input capacity"
+    power_ratio_tank["unit"] = "h"
+    power_ratio_tank = power_ratio_tank.to_frame().T
+    power_ratio_tank.rename(index={"Input capacity for one unit": "energy to power ratio"},
+                            level=1, inplace=True)
+    data = pd.concat([data, power_ratio_tank], sort=True)
 
     # add energy to power ratio for water pit storage
     power_ratio_pit = tech_data.loc[("central water pit storage", "Input capacity for one unit")].copy().squeeze()
@@ -1555,18 +1597,6 @@ def order_data(tech_data):
     power_ratio_pit.rename(index={"Input capacity for one unit": "energy to power ratio"},
                             level=1, inplace=True)
     data = pd.concat([data, power_ratio_pit], sort=True)
-
-    # add energy to power ratio for water tank storage
-    power_ratio_tank = tech_data.loc[("central water tank storage", "Input capacity for one unit")].copy().squeeze()
-    storage_capacity_tank = tech_data.loc[("central water tank storage", "Energy storage capacity for one unit")].copy().squeeze()
-
-    power_ratio_tank[years] = storage_capacity_tank[years].div(power_ratio_tank[years])
-    power_ratio_tank["further description"] = "Ratio between energy storage and input capacity"
-    power_ratio_tank["unit"] = "h"
-    power_ratio_tank = power_ratio_tank.to_frame().T
-    power_ratio_tank.rename(index={"Input capacity for one unit": "energy to power ratio"},
-                            level=1, inplace=True)
-    data = pd.concat([data, power_ratio_tank], sort=True)
 
     return data
 

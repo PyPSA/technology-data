@@ -1,0 +1,15 @@
+atb_year,core_metric_parameter,core_metric_case,tax_credit_case,technology,technology_alias,techdetail,display_name,scenario,core_metric_variable,units,value
+2024,Fixed O&M,Market,,Coal_FE,Coal,Coal-new,Coal-new,Moderate,2025,$/kW-yr,85.3
+2024,Fixed O&M,Market,,Coal_FE,Coal,Coal-95%-CCS,Coal-95%-CCS,Moderate,2025,$/kW-yr,132.9
+2024,Fixed O&M,Market,,Coal_FE,Coal,Coal-99%-CCS,Coal-99%-CCS,Moderate,2025,$/kW-yr,135.5
+2024,Fixed O&M,Market,,Coal_FE,Coal,Coal-IGCC,Coal-IGCC,Moderate,2025,$/kW-yr,165.7
+2024,Fixed O&M,Market,,Coal_FE,Coal,Coal-IGCC-90%-CCS,Coal-IGCC-90%-CCS,Moderate,2025,$/kW-yr,234.5
+2024,CAPEX,Market,,Coal_FE,Coal,Coal-new,Coal-new,Moderate,2025,$/kW,4013.70022807391
+2024,CAPEX,Market,,Coal_FE,Coal,Coal-95%-CCS,Coal-95%-CCS,Moderate,2025,$/kW,6455.13003713504
+2024,CAPEX,Market,,Coal_FE,Coal,Coal-99%-CCS,Coal-99%-CCS,Moderate,2025,$/kW,6596.46882067665
+2024,CAPEX,Market,,Coal_FE,Coal,Coal-IGCC,Coal-IGCC,Moderate,2025,$/kW,6967.73022324883
+2024,CAPEX,Market,,Coal_FE,Coal,Coal-IGCC-90%-CCS,Coal-IGCC-90%-CCS,Moderate,2025,$/kW,9907.55221133695
+2024,Additional OCC,Market,,Coal_Retrofits,Coal Retrofits,,Coal integrated retrofit 90%-CCS,Moderate,2025,$/kW,2119.2
+2024,Additional OCC,Market,,Coal_Retrofits,Coal Retrofits,,Coal integrated retrofit 95%-CCS,Moderate,2025,$/kW,2213.9
+2024,Fixed O&M,Market,,Coal_Retrofits,Coal Retrofits,,Coal integrated retrofit 90%-CCS,Moderate,2025,$/kW-yr,156.1
+2024,Fixed O&M,Market,,Coal_Retrofits,Coal Retrofits,,Coal integrated retrofit 95%-CCS,Moderate,2025,$/kW-yr,159.8

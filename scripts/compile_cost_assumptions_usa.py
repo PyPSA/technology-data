@@ -390,7 +390,7 @@ def duplicate_fuel_cost(input_file_path, year_list):
 
 if __name__ == "__main__":
     if 'snakemake' not in globals():
-        snakemake = mock_snakemake("compile_cost_assumptions_nrel")
+        snakemake = mock_snakemake("compile_cost_assumptions_usa")
 
     year_list = sorted(snakemake.config['years'])
     input_file_list_atb = snakemake.input.nrel_atb_input_files
@@ -448,10 +448,22 @@ if __name__ == "__main__":
         updated_cost_df = pd.concat([cost_df, atb_e_df]).reset_index(drop=True)
 
         # add discount rate
-        updated_cost_df = pd.concat([updated_cost_df, discount_rate_year_df]).reset_index(drop=True)
+
+        # --> remove possible entries which are going to be replaced with the data from discount_rates_usa.csv
+        technology_discount_rate_list = list(discount_rate_year_df["technology"].unique())
+        query_string_discount_rate = "~(technology.str.casefold().isin(@technology_discount_rate_list) & parameter.str.casefold() == 'discount rate')"
+
+        # --> concatenate the discount_rates_usa.csv data
+        updated_cost_df = pd.concat([updated_cost_df.query(query_string_discount_rate), discount_rate_year_df]).reset_index(drop=True)
 
         # add fuel costs
-        updated_cost_df = pd.concat([updated_cost_df, fuel_costs_year_df]).reset_index(drop=True)
+
+        # --> remove possible entries which are going to be replaced with the data from fuel_costs_usa.csv
+        technology_fuel_cost_list = list(fuel_costs_year_df["technology"].unique())
+        query_string_fuel_cost = "~(technology.str.casefold().isin(@technology_fuel_cost_list) & parameter.str.casefold() == 'fuel')"
+
+        # --> concatenate the fuel_costs_usa.csv data
+        updated_cost_df = pd.concat([updated_cost_df.query(query_string_fuel_cost), fuel_costs_year_df]).reset_index(drop=True)
 
         # output the modified cost file
         output_cost_path_list = [path for path in snakemake.output if str(year_val) in path]

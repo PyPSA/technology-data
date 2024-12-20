@@ -9,7 +9,7 @@ import numpy as np
 
 sys.path.append("./scripts")
 
-from compile_cost_assumptions_nrel import calculate_fom_percentage, filter_atb_input_file, get_convertion_dictionary, duplicate_fuel_cost, get_query_string, pre_process_atb_input_file, pre_process_cost_input_file, replace_value_name, query_cost_dataframe
+from compile_cost_assumptions_usa import calculate_fom_percentage, filter_atb_input_file, get_convertion_dictionary, duplicate_fuel_cost, get_query_string, pre_process_atb_input_file, pre_process_cost_input_file, replace_value_name, query_cost_dataframe
 
 path_cwd = pathlib.Path.cwd()
 additional_occ_query_string = "atb_year == @x.atb_year & core_metric_case == @x.core_metric_case & core_metric_parameter.str.casefold() == 'additional occ' & core_metric_variable == @x.core_metric_variable & display_name == @x.display_name & scenario == @x.scenario & technology == @x.technology & technology_alias == @x.technology_alias"

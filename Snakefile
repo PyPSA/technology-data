@@ -28,7 +28,7 @@ rule compile_cost_assumptions:
     conda: "environment.yaml"
     script: "scripts/compile_cost_assumptions.py"
 
-rule compile_cost_assumptions_nrel:
+rule compile_cost_assumptions_usa:
     input:
         cost_files_to_modify=expand("outputs/costs_{year}.csv", year = config["years"]),
         nrel_atb_input_files=expand("inputs/atb_e_{year}.parquet", year = config["nrel_atb"]["nrel_atb_input_years"]),
@@ -39,7 +39,7 @@ rule compile_cost_assumptions_nrel:
     threads: 1
     resources: mem=500
     conda: "environment.yaml"
-    script: "scripts/compile_cost_assumptions_nrel.py"
+    script: "scripts/compile_cost_assumptions_usa.py"
 
 
 # rule convert_fraunhofer:

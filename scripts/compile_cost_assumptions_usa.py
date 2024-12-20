@@ -465,6 +465,9 @@ if __name__ == "__main__":
         # --> concatenate the fuel_costs_usa.csv data
         updated_cost_df = pd.concat([updated_cost_df.query(query_string_fuel_cost), fuel_costs_year_df]).reset_index(drop=True)
 
+        # Cast "value" from float
+        updated_cost_df["value"] = updated_cost_df["value"].astype(float)
+
         # output the modified cost file
         output_cost_path_list = [path for path in snakemake.output if str(year_val) in path]
         if len(output_cost_path_list) == 1:

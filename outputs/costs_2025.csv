@@ -41,18 +41,18 @@ Battery electric (passenger cars),lifetime,15.0,years,PATHS TO A CLIMATE-NEUTRAL
 Battery electric (trucks),FOM,14.0,%,PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html,Battery electric (trucks),2020.0
 Battery electric (trucks),investment,165765.0,EUR/LKW,PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html,Battery electric (trucks),2020.0
 Battery electric (trucks),lifetime,15.0,years,PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html,Battery electric (trucks),2020.0
-BioSNG,C in fuel,0.3321,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
-BioSNG,C stored,0.6679,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
-BioSNG,CO2 stored,0.2449,tCO2/MWh_th,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
+BioSNG,C in fuel,0.3242,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
+BioSNG,C stored,0.6758,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
+BioSNG,CO2 stored,0.2539,tCO2/MWh_th,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
 BioSNG,FOM,1.6195,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Fixed O&M",2020.0
 BioSNG,VOM,2.3395,EUR/MWh_th,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Variable O&M",2020.0
 BioSNG,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,
 BioSNG,efficiency,0.615,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Bio SNG Output",2020.0
 BioSNG,investment,2179.97,EUR/kW_th,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Specific investment",2020.0
 BioSNG,lifetime,25.0,years,TODO,"84 Gasif. CFB, Bio-SNG:  Technical lifetime",2020.0
-BtL,C in fuel,0.2571,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
-BtL,C stored,0.7429,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
-BtL,CO2 stored,0.2724,tCO2/MWh_th,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
+BtL,C in fuel,0.251,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
+BtL,C stored,0.749,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
+BtL,CO2 stored,0.2814,tCO2/MWh_th,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
 BtL,FOM,2.5263,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Fixed O&M",2020.0
 BtL,VOM,1.1299,EUR/MWh_FT,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","85 Gasif. Ent. Flow FT, liq fu :  Variable O&M",2020.0
 BtL,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,
@@ -548,12 +548,14 @@ battery inverter,lifetime,10.0,years,"Danish Energy Agency, technology_data_cata
 battery storage,investment,197.8874,EUR/kWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Energy storage expansion cost investment,2015.0
 battery storage,lifetime,22.5,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",:  Technical lifetime,2015.0
 biochar pyrolysis,FOM,3.4615,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","105 Slow pyrolysis, Straw:  Fixed O&M",2020.0
-biochar pyrolysis,VOM,823.497,EUR/MWh_biochar,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","105 Slow pyrolysis, Straw:  Variable O&M",2020.0
-biochar pyrolysis,efficiency-biochar,0.404,MWh_biochar/MWh_feedstock,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","105 Slow pyrolysis, Straw:  efficiency biochar",2020.0
-biochar pyrolysis,efficiency-heat,0.4848,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","105 Slow pyrolysis, Straw:  efficiency heat",2020.0
-biochar pyrolysis,investment,167272.82,EUR/kW_biochar,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","105 Slow pyrolysis, Straw:  Specific investment",2020.0
+biochar pyrolysis,VOM,57.2239,EUR/t_CO2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","105 Slow pyrolysis, Straw:  Variable O&M",2020.0
+biochar pyrolysis,biomass input,7.6748,MWh_biomass/t_CO2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","105 Slow pyrolysis, Straw:  Biomass Input",2020.0
+biochar pyrolysis,efficiency-biochar,0.4149,MWh_biochar/MWh_biomass,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","105 Slow pyrolysis, Straw:  efficiency biochar",2020.0
+biochar pyrolysis,electricity input,0.3184,MWh_e/t_CO2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","105 Slow pyrolysis, Straw:  El-Input",2020.0
+biochar pyrolysis,heat output,3.7859,MWh_th/t_CO2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","105 Slow pyrolysis, Straw:  H-Output",2020.0
+biochar pyrolysis,investment,11623598.2359,EUR/t_CO2/h,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","105 Slow pyrolysis, Straw:  Specific investment",2020.0
 biochar pyrolysis,lifetime,25.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","105 Slow pyrolysis, Straw:  Technical lifetime",2020.0
-biochar pyrolysis,yield-biochar,0.0582,ton biochar/MWh_feedstock,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","105 Slow pyrolysis, Straw:  yield biochar",2020.0
+biochar pyrolysis,yield-biochar,0.0597,t_biochar/MWh_biomass,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","105 Slow pyrolysis, Straw:  yield biochar",2020.0
 biodiesel crops,fuel,116.9293,EUR/MWhth,"JRC ENSPRESO ca avg for MINBIORPS1 (rape seed), ENS_BaU_GFTM",,2010.0
 bioethanol crops,fuel,72.2943,EUR/MWhth,"JRC ENSPRESO ca avg for MINBIOCRP11 (Bioethanol barley, wheat, grain maize, oats, other cereals and rye), ENS_BaU_GFTM",,2010.0
 biogas,CO2 stored,0.0868,tCO2/MWh_th,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
@@ -618,9 +620,9 @@ biomass boiler,efficiency,0.84,per unit,"Danish Energy Agency, technologydatafor
 biomass boiler,investment,704.761,EUR/kW_th,"Danish Energy Agency, technologydatafor_heating_installations_marts_2018.xlsx","204 Biomass boiler, automatic:  Specific investment",2015.0
 biomass boiler,lifetime,20.0,years,"Danish Energy Agency, technologydatafor_heating_installations_marts_2018.xlsx","204 Biomass boiler, automatic:  Technical lifetime",2015.0
 biomass boiler,pelletizing cost,9.0,EUR/MWh_pellets,Assumption based on doi:10.1016/j.rser.2019.109506,,2019.0
-biomass-to-methanol,C in fuel,0.4028,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
-biomass-to-methanol,C stored,0.5972,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
-biomass-to-methanol,CO2 stored,0.219,tCO2/MWh_th,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
+biomass-to-methanol,C in fuel,0.3931,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
+biomass-to-methanol,C stored,0.6069,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
+biomass-to-methanol,CO2 stored,0.228,tCO2/MWh_th,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
 biomass-to-methanol,FOM,1.1905,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",97 Methanol from biomass gasif.:  Fixed O&M,2020.0
 biomass-to-methanol,VOM,18.0816,EUR/MWh_MeOH,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",97 Methanol from biomass gasif.:  Variable O&M,2020.0
 biomass-to-methanol,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,
@@ -715,7 +717,7 @@ central solid biomass CHP CC,c_b,0.3498,50°C/100°C,"Danish Energy Agency, tech
 central solid biomass CHP CC,c_v,1.0,50°C/100°C,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Cv coefficient",2015.0
 central solid biomass CHP CC,efficiency,0.2694,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Electricity efficiency, net, annual average",2015.0
 central solid biomass CHP CC,efficiency-heat,0.825,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Heat efficiency, net, annual average",2015.0
-central solid biomass CHP CC,investment,5617.7823,EUR/kW_e,Combination of central solid biomass CHP CC and solid biomass boiler steam,,2015.0
+central solid biomass CHP CC,investment,5666.1929,EUR/kW_e,Combination of central solid biomass CHP CC and solid biomass boiler steam,,2015.0
 central solid biomass CHP CC,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Technical lifetime",2015.0
 central solid biomass CHP powerboost CC,FOM,2.8762,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Fixed O&M",2015.0
 central solid biomass CHP powerboost CC,VOM,4.8603,EUR/MWh_e,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Variable O&M ",2015.0
@@ -869,14 +871,14 @@ electricity distribution grid,lifetime,40.0,years,TODO, from old pypsa cost assu
 electricity grid connection,FOM,2.0,%/year,TODO, from old pypsa cost assumptions,2015.0
 electricity grid connection,investment,148.151,EUR/kW,DEA, from old pypsa cost assumptions,2015.0
 electricity grid connection,lifetime,40.0,years,TODO, from old pypsa cost assumptions,2015.0
-electrobiofuels,C in fuel,0.9257,per unit,Stoichiometric calculation,,
+electrobiofuels,C in fuel,0.9251,per unit,Stoichiometric calculation,,
 electrobiofuels,FOM,2.5263,%/year,combination of BtL and electrofuels,,
-electrobiofuels,VOM,4.6849,EUR/MWh_th,combination of BtL and electrofuels,,2017.0
+electrobiofuels,VOM,4.714,EUR/MWh_th,combination of BtL and electrofuels,,2017.0
 electrobiofuels,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,
-electrobiofuels,efficiency-biomass,1.32,per unit,Stoichiometric calculation,,
-electrobiofuels,efficiency-hydrogen,1.1951,per unit,Stoichiometric calculation,,
-electrobiofuels,efficiency-tot,0.6272,per unit,Stoichiometric calculation,,
-electrobiofuels,investment,512440.2631,EUR/kW_th,combination of BtL and electrofuels,,2017.0
+electrobiofuels,efficiency-biomass,1.3515,per unit,Stoichiometric calculation,,
+electrobiofuels,efficiency-hydrogen,1.1853,per unit,Stoichiometric calculation,,
+electrobiofuels,efficiency-tot,0.6315,per unit,Stoichiometric calculation,,
+electrobiofuels,investment,516655.5726,EUR/kW_th,combination of BtL and electrofuels,,2017.0
 electrolysis,FOM,4.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Fixed O&M ,2020.0
 electrolysis,efficiency,0.5874,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Hydrogen Output,2020.0
 electrolysis,efficiency-heat,0.264,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:   - hereof recoverable for district heating,2020.0
@@ -950,11 +952,6 @@ industrial heat pump medium temperature,efficiency,2.625,per unit,"Danish Energy
 industrial heat pump medium temperature,investment,830.775,EUR/kW,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",302.a High temp. hp Up to 125 C:  Nominal investment,2019.0
 industrial heat pump medium temperature,lifetime,20.0,years,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",302.a High temp. hp Up to 125 C:  Technical lifetime,2019.0
 iron ore DRI-ready,commodity,97.73,EUR/t,"Model assumptions from MPP Steel Transition Tool: https://missionpossiblepartnership.org/action-sectors/steel/, accessed: 2022-12-03.","DRI ready assumes 65% iron content, requiring no additional benefication.",2020.0
-iron-air battery,FOM,1.0219,%/year,"Form Energy, FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",,2020.0
-iron-air battery,investment,23.45,EUR/kWh,"Form Energy, FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",,2020.0
-iron-air battery,lifetime,17.5,years,"Form Energy, FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",,2020.0
-iron-air battery charge,efficiency,0.7,per unit,"Form Energy, FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",,2020.0
-iron-air battery discharge,efficiency,0.59,per unit,"Form Energy, FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",,2020.0
 lignite,CO2 intensity,0.4069,tCO2/MWh_th,Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018,,
 lignite,FOM,1.31,%/year,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.","Calculated based on average of listed range, i.e. (39.5+91.25) USD/kW_e/a /2 / (1.09 USD/EUR) / investment cost * 100. Note: Assume same costs as for hard coal, as cost structure is apparently comparable, see https://diglib.tugraz.at/download.php?id=6093e88b63f93&location=browse and https://iea.blob.core.windows.net/assets/ae17da3d-e8a5-4163-a3ec-2e6fb0b5677d/Projected-Costs-of-Generating-Electricity-2020.pdf . ",2023.0
 lignite,VOM,3.2612,EUR/MWh_e,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.","Calculated based on average of listed range, i.e. (3+5.5)USD/MWh_e/2 / (1.09 USD/EUR). Note: Assume same costs as for hard coal, as cost structure is apparently comparable, see https://diglib.tugraz.at/download.php?id=6093e88b63f93&location=browse and https://iea.blob.core.windows.net/assets/ae17da3d-e8a5-4163-a3ec-2e6fb0b5677d/Projected-Costs-of-Generating-Electricity-2020.pdf . ",2023.0
@@ -1066,7 +1063,7 @@ solar-utility,lifetime,37.5,years,"Danish Energy Agency, technology_data_for_el_
 solar-utility single-axis tracking,FOM,2.0365,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",22 Utility-scale PV tracker:  Fixed O&M [2020-EUR/MW_e/y],2020.0
 solar-utility single-axis tracking,investment,552.4113,EUR/kW_e,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",22 Utility-scale PV tracker:  Nominal investment [2020-MEUR/MW_e],2020.0
 solar-utility single-axis tracking,lifetime,37.5,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",22 Utility-scale PV tracker:  Technical lifetime [years],2020.0
-solid biomass,CO2 intensity,0.3667,tCO2/MWh_th,Stoichiometric calculation with 18 GJ/t_DM LHV and 50% C-content for solid biomass,,
+solid biomass,CO2 intensity,0.3757,tCO2/MWh_th,Stoichiometric calculation with 18 GJ/t_DM LHV and 50% C-content for solid biomass,,
 solid biomass,fuel,13.6489,EUR/MWh_th,"JRC ENSPRESO ca avg for MINBIOWOOW1 (secondary forest residue wood chips), ENS_Ref for 2040",,2010.0
 solid biomass boiler steam,FOM,5.7564,%/year,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",311.1e Steam boiler Wood:  Fixed O&M,2019.0
 solid biomass boiler steam,VOM,2.8216,EUR/MWh,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",311.1e Steam boiler Wood:  Variable O&M,2019.0

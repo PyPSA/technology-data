@@ -87,6 +87,9 @@ sheet_names = {'onwind': '20 Onshore turbines',
                # 'solid biomass power CC': '09a Wood Chips extract. plant',
                'central air-sourced heat pump': '40 Comp. hp, airsource 3 MW',
                'central geothermal-sourced heat pump': '45.1.a Geothermal DH, 1200m, E',
+               'central geothermal heat source': '45.1.a Geothermal DH, 1200m, E',
+               'central excess-heat-sourced heat pump': '40 Comp. hp, excess heat 10 MW',
+               'central water-sourced heat pump': '40 Comp. hp, seawater 20 MW',
                'central ground-sourced heat pump': '40 Absorption heat pump, DH',
                'central resistive heater': '41 Electric Boilers',
                'central gas boiler': '44 Natural Gas DH Only',
@@ -98,8 +101,9 @@ sheet_names = {'onwind': '20 Onshore turbines',
                'decentral ground-sourced heat pump': '207.7 Ground source existing',
                'decentral air-sourced heat pump': '207.3 Air to water existing',
                # 'decentral resistive heater': '216 Electric heating',
+               'central water pit storage': '140 PTES seasonal',
                'central water tank storage': '141 Large hot water tank',
-               # 'decentral water tank storage': '142 Small scale hot water tank',
+               'decentral water tank storage': '142 Small scale hot water tank',
                'fuel cell': '12 LT-PEMFC CHP',
                'hydrogen storage underground': '151c Hydrogen Storage - Caverns',
                'hydrogen storage tank type 1 including compressor': '151a Hydrogen Storage - Tanks',
@@ -169,6 +173,9 @@ uncrtnty_lookup = {'onwind': 'J:K',
                    'solar': '',
                    'central air-sourced heat pump': 'J:K',
                    'central geothermal-sourced heat pump': 'H:K',
+                   'central geothermal heat source': 'H:K',
+                   'central excess-heat-sourced heat pump': 'H:K',
+                   'central water-sourced heat pump': 'H:K',
                    'central ground-sourced heat pump': 'I:J',
                    'central resistive heater': 'I:J',
                    'central gas boiler': 'I:J',
@@ -179,7 +186,9 @@ uncrtnty_lookup = {'onwind': 'J:K',
                    'direct firing solid fuels CC': 'H:I',
                    'decentral ground-sourced heat pump': 'I:J',
                    'decentral air-sourced heat pump': 'I:J',
+                   'central water pit storage': 'J:K',
                    'central water tank storage': 'J:K',
+                   'decentral water tank storage': 'J:K',
                    'fuel cell': 'I:J',
                    'hydrogen storage underground': 'J:K',
                    'hydrogen storage tank type 1 including compressor': 'J:K',
@@ -251,8 +260,6 @@ cost_year_2019 = ['direct firing gas',
                 'solid biomass boiler steam',
                 'solid biomass boiler steam CC',
                 ]
-
-
 
 
 # -------- FUNCTIONS ---------------------------------------------------
@@ -497,6 +504,8 @@ def get_data_DEA(tech, data_in, expectation=None):
         usecols = "A:E"
     elif tech in ['Fischer-Tropsch', 'Haber-Bosch', 'air separation unit']:
         usecols = "B:F"
+    elif tech in ["central water-sourced heat pump"]:
+        usecols = "B,I,K"
     else:
         usecols = "B:G"
 
@@ -523,6 +532,33 @@ def get_data_DEA(tech, data_in, expectation=None):
     excel.index = excel.index.astype(str)
     excel.dropna(axis=0, how="all", inplace=True)
     # print(excel)
+
+    if tech in ["central water-sourced heat pump"]:
+        # use only upper uncertainty range for systems without existing water intake
+        # convert "Uncertainty (2025)"" to "2025", "Uncertainty (2050)"" to "2050" (and so on if more years are added)
+        this_years = excel.loc[:,excel.iloc[1,:]=="Lower"].iloc[0,:].str.slice(-5,-1).astype(int)
+        # get values in upper uncertainty range
+        excel = excel.loc[:,excel.iloc[1,:]=="Upper"]
+        # rename columns to years constructed above
+        excel.columns = this_years
+        # add missing years
+        for y in years:
+            if y not in excel.columns:
+                excel[y] = np.nan
+
+        # Sort columns by year
+        excel = excel.reindex(sorted(excel.columns), axis=1)
+
+        # drop row Energy/technical data (not needed, contains strings which break interpolation)
+        excel = excel[~excel.index.str.contains("Energy/technical data")]
+
+        # Interpolate to fill in NaN values
+        excel = excel.astype(float).interpolate(axis=1, method="linear")
+        # Extrapolation for missing values (not native in pandas)
+        # Currently, this is only first column (2020), since DEA data is available for 2025 and 2050
+        if excel.iloc[:, 0].isnull().all():
+            excel.iloc[:, 0] = excel.iloc[:, 1] + (excel.iloc[:, 1] - excel.iloc[:, 2]) / (excel.columns[2] - excel.columns[1]) * (excel.columns[1] - excel.columns[0])
+
 
     if 2020 not in excel.columns:
         selection = excel[excel.isin([2020])].dropna(how="all").index
@@ -591,7 +627,12 @@ def get_data_DEA(tech, data_in, expectation=None):
                   'Feedstock Consumption',  # biochar pyrolysis
                   'Methane Output',
                   'CO2 Consumption',
-                  'Hydrogen Consumption']
+                  'Hydrogen Consumption',
+                  ' - of which is equipment excluding heat pump',
+                  ' - of which is heat pump including its installation',
+                  'Input capacity',
+                  'Output capacity',
+                  'Energy storage capacity']
 
     df = pd.DataFrame()
     for para in parameters:
@@ -686,6 +727,12 @@ def get_data_DEA(tech, data_in, expectation=None):
 
     if "biochar pyrolysis" in tech:
         df = biochar_pyrolysis_dea(df)
+
+    elif tech == "central geothermal-sourced heat pump":
+        df.loc["Nominal investment (MEUR per MW)"] = df.loc[" - of which is heat pump including its installation"]
+
+    elif tech == "central geothermal heat source":
+        df.loc["Nominal investment (MEUR per MW)"] = df.loc[" - of which is equipment excluding heat pump"]
 
     df_final = pd.DataFrame(index=df.index, columns=years)
 
@@ -821,6 +868,7 @@ def add_co2_intensity(costs):
     costs.loc[('coal', 'CO2 intensity'), 'source'] = source_dict["co2"]
     costs.loc[('lignite', 'CO2 intensity'), 'source'] = source_dict["co2"]
 
+
     costs.loc[pd.IndexSlice[:, "CO2 intensity"], "unit"] = "tCO2/MWh_th"
 
     return costs
@@ -941,7 +989,6 @@ def biochar_pyrolysis_dea (df):
     # data for 2020 not available
     if 2020 in df.columns:
         df.drop(columns=2020, inplace=True)
-
     # normalize biochar and total heat output to feedstock input
     idx = df.index.str.contains("Total Input")
     idx2 = df.index.str.contains("Feedstock Consumption")
@@ -997,7 +1044,7 @@ def biochar_pyrolysis_dea (df):
                df.loc[df.index.str.contains("Electricity Consumption")].index.values[
                    0]: 'El-Input [MWh_e/t_CO2]'}, inplace=True)
 
-    # adjust cost basis to tCo2 sequestred
+    # adjust cost basis to tCO2 sequestred
     idx3 = df.index.str.contains("EUR")
     df.loc[idx3] = df.loc[idx3].values.astype(float) / df_divid.values.astype(float) # converto to €/MWhbiom
     df.loc[idx3] = df.loc[idx3] * df.loc['Biomass Input [MWh_biomass/t_CO2]'].astype(float) # converto to € /t_CO2/h
@@ -1493,13 +1540,14 @@ def order_data(tech_data):
         if tech == 'Fischer-Tropsch':
             efficiency[years] *= 100
 
+
         # take annual average instead of name plate efficiency, unless central air-sourced heat pump
         if any(efficiency.index.str.contains("annual average")) and tech != "central air-sourced heat pump":
             efficiency = efficiency[efficiency.index.str.contains("annual average")]
         elif any(efficiency.index.str.contains("name plate")):
             efficiency = efficiency[efficiency.index.str.contains("name plate")]
 
-        # hydrogen electrolysis with recoverable heat
+        # hydrogen electrolysiswith recoverable heat
         heat_recovery_label = "hereof recoverable for district heating"
         with_heat_recovery = efficiency.index.str.contains(heat_recovery_label)
         if with_heat_recovery.any():
@@ -1576,21 +1624,87 @@ def order_data(tech_data):
 
     # concat data
     data = (pd.concat(clean_df).reset_index().rename(columns={"level_0":"technology",
-                                                          "level_1": "further description"}).set_index(["technology", "parameter"]))
+                                                          "level_1": "further description"})
+        .set_index(["technology", "parameter"]))
 
-    # add water tank charger/ discharger
-    charger = tech_data.loc[("central water tank storage", "Round trip efficiency")].copy()
-    charger["further description"] = "efficiency from sqr(Round trip efficiency)"
-    charger[years] = charger[years]**0.5*10
-    charger.rename(index={"Round trip efficiency": "efficiency"},
+    # add central water tank charger/ discharger
+    charger_tank = tech_data.loc[("central water tank storage", " - Charge efficiency")].copy()
+    charger_tank["further description"] = "Charger efficiency"
+    charger_tank.rename(index={" - Charge efficiency": "efficiency"},
                    level=1, inplace=True)
-    charger.rename(index={'central water tank storage':"water tank charger"},
+    charger_tank.rename(index={'central water tank storage': "central water tank charger"},
                    level=0, inplace=True)
-    data = pd.concat([data, charger], sort=True)
-    charger.rename(index={"water tank charger": "water tank discharger"},
+    data = pd.concat([data, charger_tank], sort=True)
+    charger_tank.rename(index={"central water tank charger": "central water tank discharger"},
                    level=0, inplace=True)
-    data = pd.concat([data, charger], sort=True)
+    charger_tank["further description"] = "Discharger efficiency"
 
+    data = pd.concat([data, charger_tank], sort=True)
+
+    # add decentral water tank charger/ discharger
+    charger_tank = tech_data.loc[("decentral water tank storage", " - Charge efficiency")].copy()
+    charger_tank["further description"] = "Charger efficiency"
+    charger_tank.rename(index={" - Charge efficiency": "efficiency"},
+                        level=1, inplace=True)
+    charger_tank.rename(index={'decentral water tank storage': "decentral water tank charger"},
+                        level=0, inplace=True)
+    data = pd.concat([data, charger_tank], sort=True)
+    charger_tank.rename(index={"decentral water tank charger": "decentral water tank discharger"},
+                        level=0, inplace=True)
+    charger_tank["further description"] = "Discharger efficiency"
+
+    data = pd.concat([data, charger_tank], sort=True)
+
+    # add water pit charger/ discharger
+    charger_pit = tech_data.loc[("central water pit storage", " - Charge efficiency")].copy()
+    charger_pit["further description"] = "Charger efficiency"
+
+    charger_pit.rename(index={" - Charge efficiency": "efficiency"},
+                   level=1, inplace=True)
+    charger_pit.rename(index={'central water pit storage': "central water pit charger"},
+                   level=0, inplace=True)
+    data = pd.concat([data, charger_pit], sort=True)
+    charger_pit.rename(index={"central water pit charger": "central water pit discharger"},
+                   level=0, inplace=True)
+    charger_pit["further description"] = "Discharger efficiency"
+    data = pd.concat([data, charger_pit], sort=True)
+
+
+    # add energy to power ratio for central water tank storage
+    power_ratio_tank = tech_data.loc[("central water tank storage", "Input capacity for one unit")].copy().squeeze()
+    storage_capacity_tank = tech_data.loc[("central water tank storage", "Energy storage capacity for one unit")].copy().squeeze()
+
+    power_ratio_tank[years] = storage_capacity_tank[years].div(power_ratio_tank[years])
+    power_ratio_tank["further description"] = "Ratio between energy storage and input capacity"
+    power_ratio_tank["unit"] = "h"
+    power_ratio_tank = power_ratio_tank.to_frame().T
+    power_ratio_tank.rename(index={"Input capacity for one unit": "energy to power ratio"},
+                            level=1, inplace=True)
+    data = pd.concat([data, power_ratio_tank], sort=True)
+
+    # add energy to power ratio for decentral water tank storage
+    power_ratio_tank = tech_data.loc[("decentral water tank storage", "Input capacity for one unit")].copy().squeeze()
+    storage_capacity_tank = tech_data.loc[("decentral water tank storage", "Energy storage capacity for one unit")].copy().squeeze()
+
+    power_ratio_tank[years] = storage_capacity_tank[years].div(power_ratio_tank[years])
+    power_ratio_tank["further description"] = "Ratio between energy storage and input capacity"
+    power_ratio_tank["unit"] = "h"
+    power_ratio_tank = power_ratio_tank.to_frame().T
+    power_ratio_tank.rename(index={"Input capacity for one unit": "energy to power ratio"},
+                            level=1, inplace=True)
+    data = pd.concat([data, power_ratio_tank], sort=True)
+
+    # add energy to power ratio for water pit storage
+    power_ratio_pit = tech_data.loc[("central water pit storage", "Input capacity for one unit")].copy().squeeze()
+    storage_capacity_pit = tech_data.loc[("central water pit storage", "Energy storage capacity for one unit")].copy().squeeze()
+
+    power_ratio_pit[years] = storage_capacity_pit[years].div(power_ratio_pit[years])
+    power_ratio_pit["further description"] = "Ratio between energy storage and input capacity"
+    power_ratio_pit["unit"] = "h"
+    power_ratio_pit = power_ratio_pit.to_frame().T
+    power_ratio_pit.rename(index={"Input capacity for one unit": "energy to power ratio"},
+                            level=1, inplace=True)
+    data = pd.concat([data, power_ratio_pit], sort=True)
 
     return data
 

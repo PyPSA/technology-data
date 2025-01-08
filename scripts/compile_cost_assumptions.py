@@ -253,6 +253,8 @@ cost_year_2019 = ['direct firing gas',
                 ]
 
 
+
+
 # -------- FUNCTIONS ---------------------------------------------------
 
 def get_excel_sheets(excel_files):
@@ -683,7 +685,7 @@ def get_data_DEA(tech, data_in, expectation=None):
         df.index = df.index.str.replace("EUR/MWeh", "EUR/MWh")
 
     if "biochar pyrolysis" in tech:
-        df = biochar_pyrolysis_harmonise_dea(df)
+        df = biochar_pyrolysis_dea(df)
 
     df_final = pd.DataFrame(index=df.index, columns=years)
 
@@ -760,6 +762,32 @@ def add_desalinsation_data(costs):
 
     return costs
 
+def biomass_properties():
+    """ function that harmonises the properties of solid biomass properties with biomass potentials (JRC ENSPRESO)
+    NOTE: all energy contents are on Lower Heating Value (LHV)"""
+
+    idx_biomass = ['biomass_specific_energy_DM', 'biomass_carbon_content', 'biomass_moisture_content',
+                   'water_evap_heat', 'biomass_specific_energy', 'pyrolysis_feedstock_moisture_content',
+                   'pyrolysis_feedstock_specific_energy']
+    cols_biomass = ['value', 'unit']
+    units = ['GJ/t_DM', 'tC/t_biom_DM', 't_h2o/t_biom', 'GJ/t_h2o', 'GJ/t_biom', 't_h2o/t_pyrofeed', 'GJ/t_pyrofeed']
+    solid_biomass_df = pd.DataFrame(index=idx_biomass, data=0, columns=cols_biomass)
+    solid_biomass_df = solid_biomass_df.astype({'value': 'float', 'unit': 'object'})
+    solid_biomass_df.loc[:, 'unit'] = units
+
+    solid_biomass_df.at['biomass_specific_energy_DM', 'value'] = 18
+    solid_biomass_df.at['biomass_carbon_content', 'value'] = 0.5
+    solid_biomass_df.at['biomass_moisture_content', 'value'] = 0.15
+    solid_biomass_df.at['water_evap_heat', 'value'] = 2.44
+    solid_biomass_df.at['pyrolysis_feedstock_moisture_content', 'value'] = 0.1
+
+    LHV_solid_biomass = solid_biomass_df.at['biomass_specific_energy_DM','value'] * (1-solid_biomass_df.at['biomass_moisture_content','value']) - solid_biomass_df.at['biomass_moisture_content','value'] * solid_biomass_df.at['water_evap_heat','value']
+    LHV_pyrolysis_feedstock = solid_biomass_df.at['biomass_specific_energy_DM','value'] * (1-solid_biomass_df.at['pyrolysis_feedstock_moisture_content','value']) - solid_biomass_df.at['pyrolysis_feedstock_moisture_content','value'] * solid_biomass_df.at['water_evap_heat','value']
+
+    solid_biomass_df.at['biomass_specific_energy', 'value'] = LHV_solid_biomass
+    solid_biomass_df.at['pyrolysis_feedstock_specific_energy', 'value'] = LHV_pyrolysis_feedstock
+
+    return solid_biomass_df
 
 def add_co2_intensity(costs):
     """"
@@ -778,11 +806,14 @@ def add_co2_intensity(costs):
     CO2_C_mass_ratio = 44/12 #kg/kg
     methane_specific_energy = 50 #GJ/t
     CO2_CH4_mass_ratio = 44/16 #kg/kg (1 mol per mol)
-    biomass_specific_energy = 18 #GJ/t LHV
-    biomass_carbon_content = 0.5
+    solid_biomass_df = biomass_properties()
+    biomass_specific_energy = solid_biomass_df.at['biomass_specific_energy','value'] # GJ/t_biom LHV
+    biomass_carbon_content = solid_biomass_df.at['biomass_carbon_content','value']  # tC/tbiomass_DM
+    biomass_moisture_content = solid_biomass_df.at['biomass_moisture_content','value'] # th2o/tbiom
     costs.loc[('oil', 'CO2 intensity'), 'value'] = (1/oil_specific_energy) * 3.6 * CO2_CH2_mass_ratio #tCO2/MWh
     costs.loc[('gas', 'CO2 intensity'), 'value'] = (1/methane_specific_energy) * 3.6 * CO2_CH4_mass_ratio #tCO2/MWh
-    costs.loc[('solid biomass', 'CO2 intensity'), 'value'] = biomass_carbon_content * (1/biomass_specific_energy) * 3.6 * CO2_C_mass_ratio #tCO2/MWh
+    costs.loc[('solid biomass', 'CO2 intensity'), 'value'] = biomass_carbon_content * (1 - biomass_moisture_content) * (
+                1 / biomass_specific_energy) * 3.6 * CO2_C_mass_ratio  # tCO2/MWh
 
     costs.loc[('oil', 'CO2 intensity'), 'source'] = "Stoichiometric calculation with 44 GJ/t diesel and -CH2- approximation of diesel"
     costs.loc[('gas', 'CO2 intensity'), 'source'] = "Stoichiometric calculation with 50 GJ/t CH4"
@@ -873,41 +904,39 @@ def unify_diw(costs):
 
     return costs
 
-def biochar_pyrolysis_harmonise_dea (df):
+def biochar_pyrolysis_dea (df):
     """This function does:
     1) defined the properties of solid biomass in pypsa-eur: moisture, LHV dry and LHV moist
     2) defines the properties of the feedstock for pyrolysis (dried biomass)
     3) calcualtes the energy required for drying the biomass to feedstock
     4) imports the DEA data for biochar pyrolysis
-    5) recalcualte the parameters from DEA per MWh of biomass in pypsa-eur."""
+    5) recalcualte the parameters from DEA per MWh of biomass in pypsa-eur.
+    6) if not specified all values refer to DEA renewable fuels"""
 
     # definition of solid biomass in pypsa
-    biomass_specific_energy_DM = 18/3.6 # MWh/t_DM (LHV)
-    biomass_carbon_content = 0.5 # tC/t biom_dry
-    biomass_moisture_content = 0.15 # t H2O/ t biomass
-    water_evap_heat = 2.44 / 3.6  # heat of evaporation of water (MWh/t_h2o)
-
-    # Calculation of biomass LHV corresponding to solid biomass potentials in PyPSA-eur
-    biomass_specific_energy_AR = biomass_specific_energy_DM * (1-biomass_moisture_content) - biomass_moisture_content * water_evap_heat # LHV moist biomass (MWh/t biom)
+    solid_biomass_df = biomass_properties()
+    biomass_specific_energy = solid_biomass_df.at['biomass_specific_energy','value'] / 3.6  # MWh/t_biom LHV
+    biomass_carbon_content = solid_biomass_df.at['biomass_carbon_content','value']  # tC/tbiomass_DM
+    biomass_moisture_content = solid_biomass_df.at['biomass_moisture_content','value']  # th2o/tbiom
 
     # definition of  feedstock for pyrolysis
-    feedstock_moisture_content = 0.10  # t H2O/ t feedstock
+    pyrolysis_feedstock_moisture_content = solid_biomass_df.at['pyrolysis_feedstock_moisture_content','value']  # t H2O/ t feedstock
+    pyrolysis_feedstock_specific_energy =solid_biomass_df.at['pyrolysis_feedstock_specific_energy','value'] / 3.6  # LHV feedstock (MWh /t feedstock)
+
     # mass ratio between feedstock and solid biomass
-    feedstock_specific_energy = biomass_specific_energy_DM * (
-                1 - feedstock_moisture_content) - feedstock_moisture_content * water_evap_heat  # LHV feedstock (MWh /t feedstock)
-    feedstock_biomass_mass_ratio = (feedstock_moisture_content / (1 - feedstock_moisture_content) + (1 - biomass_moisture_content))  # (t_feedstock / t_biomass) after drying
-    feedstock_biomass_energy_ratio = feedstock_biomass_mass_ratio * feedstock_specific_energy / biomass_specific_energy_AR  # MWh feedstock / MWh biomass input to the process
+    pyrolysis_feedstock_biomass_mass_ratio = (pyrolysis_feedstock_moisture_content / (1 - pyrolysis_feedstock_moisture_content) + (1 - biomass_moisture_content))  # (t_feedstock / t_biomass) after drying
+    pyrolysis_feedstock_biomass_energy_ratio = pyrolysis_feedstock_biomass_mass_ratio * pyrolysis_feedstock_specific_energy / biomass_specific_energy  # MWh feedstock / MWh biomass input to the process
 
     # Updated pre-treatment heat demand. DEA includes drying (13% - 10%)
-    heat_drying = 3 / 3.6 # MWh/tH2O removed
+    heat_drying = 0.83 # MWh/tH2O removed
     Delta_heat_drying = heat_drying * (biomass_moisture_content / (1 - biomass_moisture_content) - 0.13 / (1 - 0.13)) * (
-                1 - biomass_moisture_content) / biomass_specific_energy_AR  # (MWh heat/MWh LHV biomass)
+                1 - biomass_moisture_content) / biomass_specific_energy  # (MWh heat/MWh LHV biomass)
 
     # DEA pyrolysis carbon balance
-    C_biochar_feedstock_ratio = 0.5  # (%) of carbon from original biomass contained in biochar
+    C_biochar_feedstock_ratio = 0.5  # (%) of carbon from original biomass contained in biochar - from DEA (for straw)
 
     # Assumption on biochar stability in soil beyond 100 years
-    biochar_100years = 0.7  # tC >100 years /tC application
+    biochar_100years = 0.7  # tC >100 years /tC application https://www.nature.com/articles/s41558-023-01604-9
 
     # data for 2020 not available
     if 2020 in df.columns:
@@ -916,7 +945,7 @@ def biochar_pyrolysis_harmonise_dea (df):
     # normalize biochar and total heat output to feedstock input
     idx = df.index.str.contains("Total Input")
     idx2 = df.index.str.contains("Feedstock Consumption")
-    df.loc[idx] = df.loc[idx].astype(float) / df.loc[idx2].values.astype(float) * feedstock_biomass_energy_ratio
+    df.loc[idx] = df.loc[idx].astype(float) / df.loc[idx2].values.astype(float) * pyrolysis_feedstock_biomass_energy_ratio
     df.index = df.index.str.replace("Total Input", "biomass")
 
     # all pyrolysis product except char are combusted for heat
@@ -934,6 +963,7 @@ def biochar_pyrolysis_harmonise_dea (df):
     # normalizing costs to biomass input
     df_divid = pd.concat((df.iloc[df.index.str.contains("Biochar Output")],
                           df.iloc[df.index.str.contains("Heat Output")]), axis=0).sum(axis=0, skipna=False)
+
     # remove additional heat for drying
     df.iloc[df.index.str.contains(
         "Heat Output")] = df_sum - Delta_heat_drying  # adjust for difference in drying heat demand
@@ -950,12 +980,11 @@ def biochar_pyrolysis_harmonise_dea (df):
 
     # Calculated biochar Carbon content from: PyPSA-Eur solid biomass and DEA pyrolysis inputs
     # Cw_biochar (tC_biochar/tbiochar) = (tC_feedstock/t_feedstock) * (tfeedstcok/GJfeedstock) * (GJ feedstock / t biochar) * (tCbiochar / tC feedstock)
-    biochar_carbon_content = biomass_carbon_content * (1 - feedstock_moisture_content) / feedstock_specific_energy / df.loc['yield biochar [t_biochar/MWh_biomass]',:] * C_biochar_feedstock_ratio  # tC/tbiochar
+    biochar_carbon_content = biomass_carbon_content * (1 - pyrolysis_feedstock_moisture_content) / pyrolysis_feedstock_specific_energy / df.loc['yield biochar [t_biochar/MWh_biomass]',:] * C_biochar_feedstock_ratio  # tC/tbiochar
 
     # Calculated CO2 sequestration in biochar per unit of biomass
     # CO2seq_biomass =  (tC/tbiochar) * (tbiochar/GJbiomass) * (tbiochar>100y /tbiochar)
     df.loc['Biomass Input [MWh_biomass/t_CO2]',:] = 1 / (biochar_carbon_content * df.loc['yield biochar [t_biochar/MWh_biomass]', :] * biochar_100years * 44 / 12)  # MWh_biomass/tCO2seq
-    print(df.loc['Biomass Input [MWh_biomass/t_CO2]',:])
 
     # express all data per tonne of CO2 sequestred
     df.loc[df.index.str.contains("Heat Output")] = df.loc[df.index.str.contains("Heat Output")].astype(float) * df.loc['Biomass Input [MWh_biomass/t_CO2]'].astype(float)
@@ -985,7 +1014,7 @@ def biochar_pyrolysis_harmonise_dea (df):
                          df.loc[df.index.str.contains("Variable O&M")].index.str.replace(
                              "MWh", "t_CO2")[0]}, inplace=True)
 
-    # print intermediate results
+    # print intermediate results (for publications)
     print_flag = 0
     if print_flag == 1:
         print(df.loc[df.index.str.contains('Specific investment')])
@@ -1546,8 +1575,6 @@ def order_data(tech_data):
             print("---------------------------------------")
 
     # concat data
-    print(clean_df)
-
     data = (pd.concat(clean_df).reset_index().rename(columns={"level_0":"technology",
                                                           "level_1": "further description"}).set_index(["technology", "parameter"]))
 

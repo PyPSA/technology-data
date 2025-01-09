@@ -475,6 +475,3 @@ if __name__ == "__main__":
             updated_cost_df.to_csv(output_cost_path, index=False)
         else:
             raise Exception("Please verify the list of cost files. It may contain duplicates.")
-
-
-

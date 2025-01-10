@@ -1358,7 +1358,7 @@ def clean_up_units(tech_data, value_column="", source=""):
         "% -points of heat loss", "MWh_th/MWh_el"
     )
     tech_data.unit = tech_data.unit.str.replace(
-        "FT Liquids Output, MWh/MWh Total Inpu", "MWh_FT/MWh_H2"
+        "FT Liquids Output, MWh/MWh Total Input", "MWh_FT/MWh_H2"
     )
     # biomass-to-methanol-specific
     if isinstance(tech_data.index, pd.MultiIndex):
@@ -3350,7 +3350,7 @@ if __name__ == "__main__":
     # (c) -----  get tech data in pypsa syntax -----------------------------------
     # make categories: investment, FOM, VOM, efficiency, c_b, c_v
     data = order_data(tech_data)
-    # add excel sheet names and further description
+    # add Excel sheet names and further description
     data = add_description(data)
     # convert efficiency from %-> per unit and investment from MW->kW to compare
     data = convert_units(data)
@@ -3368,7 +3368,7 @@ if __name__ == "__main__":
         else:
             data.at[x, "currency_year"] = 2015
 
-    # add heavy duty assumptions, cost year is 2022
+    # add heavy-duty assumptions, cost year is 2022
     data = get_dea_vehicle_data(snakemake.input.dea_vehicles, data)
 
     # add shipping data

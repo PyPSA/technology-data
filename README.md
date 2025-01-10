@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: Contributors to technology-data <https://github.com/pypsa/technology-data>
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/pypsa/technology-data?include_prereleases)
 [![Documentation](https://readthedocs.org/projects/technology-data/badge/?version=latest)](https://technology-data.readthedocs.io/en/latest/?badge=latest)
 ![Licence](https://img.shields.io/github/license/pypsa/technology-data)

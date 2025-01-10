@@ -783,6 +783,7 @@ def add_desalinsation_data(costs):
     costs.loc[(tech, 'FOM'), 'value'] = 4.
     costs.loc[(tech, 'FOM'), 'unit'] = "%/year"
     costs.loc[(tech, 'FOM'), 'source'] = source_dict['Caldera2016'] + ", Table 1."
+    costs.loc[(tech, 'FOM'), 'currency_year'] = 2015
 
     costs.loc[(tech, 'lifetime'), 'value'] = 30
     costs.loc[(tech, 'lifetime'), 'unit'] = "years"
@@ -802,6 +803,7 @@ def add_desalinsation_data(costs):
     costs.loc[(tech, 'FOM'), 'value'] = 2
     costs.loc[(tech, 'FOM'), 'unit'] = "%/year"
     costs.loc[(tech, 'FOM'), 'source'] = source_dict['Caldera2016'] + ", Table 1."
+    costs.loc[(tech, 'FOM'), 'currency_year'] = 2013
 
     costs.loc[(tech, 'lifetime'), 'value'] = 30
     costs.loc[(tech, 'lifetime'), 'unit'] = "years"
@@ -1928,6 +1930,7 @@ def carbon_flow(costs,year):
             eta = 0.39
             FOM = 4.25
             currency_year = 2014
+            costs.loc[(tech, 'FOM'), 'currency_year'] = 2014
             source = 'Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014' #source_dict('HyNOW')
 
         elif tech == 'solid biomass to hydrogen':
@@ -1935,6 +1938,7 @@ def carbon_flow(costs,year):
             eta = 0.56
             FOM = 4.25
             currency_year = 2014
+            costs.loc[(tech, 'FOM'), 'currency_year'] = 2014
             source = 'Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014' #source_dict('HyNOW')
 
         if eta > 0:
@@ -1994,6 +1998,7 @@ def carbon_flow(costs,year):
             FOM = costs.loc[('BtL', 'FOM'), 'value']
             medium_out = 'oil'
             currency_year = costs.loc[('Fischer-Tropsch', 'investment'), "currency_year"]
+            costs.loc[(tech, 'FOM'), 'currency_year'] = 2015
             source = "combination of BtL and electrofuels"
 
         elif tech in ['biogas', 'biogas CC', 'biogas plus hydrogen']:
@@ -2285,6 +2290,7 @@ def add_SMR_data(data):
     SMR_df.loc[(techs, "FOM"), years] = 5
     SMR_df.loc[(techs, "FOM"), "source"] = source_dict["DEA"]
     SMR_df.loc[(techs, "FOM"), "unit"] = "%/year"
+    SMR_df.loc[(techs, "FOM"), "currency_year"] = 2015
     SMR_df.loc[(techs, "FOM"), "further description"] = "Technology data for renewable fuels, in pdf on table 3 p.311"
 
     # investment

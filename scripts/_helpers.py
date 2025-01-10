@@ -1,5 +1,5 @@
-from pathlib import Path
 import re
+from pathlib import Path
 
 
 class Dict(dict):
@@ -12,12 +12,10 @@ class Dict(dict):
 
     def __setattr__(self, name, value):
         """
-        setattr is called when the syntax a.b = 2 is used to set a value.
+        Setattr is called when the syntax a.b = 2 is used to set a value.
         """
         if hasattr(Dict, name):
-            raise AttributeError(
-                "'Dict' object attribute " "'{0}' is read-only".format(name)
-            )
+            raise AttributeError("'Dict' object attribute " f"'{name}' is read-only")
         self[name] = value
 
     def __getattr__(self, item):

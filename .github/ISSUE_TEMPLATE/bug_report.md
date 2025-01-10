@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Contributors to technology-data <https://github.com/pypsa/technology-data>
+#
+# SPDX-License-Identifier: MIT
+
 ---
 name: Bug report
 about: Create a report if something doesn't work quite right.

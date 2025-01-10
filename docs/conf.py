@@ -18,6 +18,7 @@
 
 import os
 import sys
+
 import sphinx
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -339,4 +340,4 @@ texinfo_documents = [
 if sphinx.version_info[0] < 8:
     intersphinx_mapping = {"http://docs.python.org/": None}
 else:
-    intersphinx_mapping = {'python': ('https://docs.python.org/', None)}
+    intersphinx_mapping = {"python": ("https://docs.python.org/", None)}

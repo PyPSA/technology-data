@@ -4,7 +4,7 @@
 
 # coding: utf-8
 """
-Script creates cost csv for choosen years from different source (source_dict).
+Script creates cost csv for chosen years from different source (source_dict).
 The data is standardized for uniform:
     - cost years (depending on the rate of inflation )
     - technology names
@@ -1507,7 +1507,7 @@ def set_specify_assumptions(tech_data):
     # in the DEA they do differ between heating the floor area or heating with
     # radiators, since most households heat with radiators and there
     # efficiencies are lower (conservative approach) those are assumed
-    # furthermore the total efficiency is assumed which includes auxilary electricity
+    # furthermore the total efficiency is assumed which includes auxiliary electricity
     # consumption
     name = "Heat efficiency, annual average, net, radiators"
     techs_radiator = tech_data.xs(name, level=1).index
@@ -2044,7 +2044,7 @@ def add_description(data):
     # add comment for offwind investment
     if snakemake.config["offwind_no_gridcosts"]:
         data.loc[("offwind", "investment"), "further description"] += (
-            " grid connection costs substracted from investment costs"
+            " grid connection costs subtracted from investment costs"
         )
 
     return data
@@ -2107,8 +2107,8 @@ def add_gas_storage(data):
     )
     data.loc[("gas storage", "lifetime"), "unit"] = "years"
 
-    # process equipment, injection (2200MW) withdrawl (6600MW)
-    # assuming half of investment costs for injection, half for withdrawl
+    # process equipment, injection (2200MW) withdrawal (6600MW)
+    # assuming half of investment costs for injection, half for withdrawal
     investment_charge = (
         gas_storage.loc["Total investment cost"].iloc[0, 0] / 2 / 2200 * 1e3
     )
@@ -2141,7 +2141,7 @@ def add_gas_storage(data):
     data.loc[("gas storage", "FOM"), years] = FOM
     data.loc[("gas storage", "FOM"), "source"] = source_dict["DEA"]
     data.loc[("gas storage", "FOM"), "further description"] = (
-        "150 Underground Storage of Gas, Operation and Maintenace, salt cavern (units converted)"
+        "150 Underground Storage of Gas, Operation and Maintenance, salt cavern (units converted)"
     )
     data.loc[("gas storage", "FOM"), "unit"] = "%"
 
@@ -2614,7 +2614,6 @@ def energy_penalty(costs):
         eta_steam = (1 - scalingFactor) * costs.loc[(boiler, "efficiency"), "value"]
         eta_old = costs.loc[(tech, "efficiency"), "value"]
 
-        temp = costs.loc[(tech, "efficiency"), "value"]
         eta_main = costs.loc[(tech, "efficiency"), "value"] * scalingFactor
 
         # Adapting investment share of tech due to steam boiler addition. Investment per MW_el.
@@ -2930,7 +2929,7 @@ def add_SMR_data(data):
     SMR_df.loc[("SMR CC", "capture_rate"), "source"] = source_dict["IEA"]
     SMR_df.loc[("SMR CC", "capture_rate"), "unit"] = "EUR/MW_CH4"
     SMR_df.loc[("SMR CC", "capture_rate"), "further description"] = (
-        "wide range: capture rates betwen 54%-90%"
+        "wide range: capture rates between 54%-90%"
     )
 
     SMR_df = SMR_df.dropna(axis=1, how="all")
@@ -3139,7 +3138,7 @@ def add_energy_storage_database(costs, data_year):
                 endp_first_segment = y.iloc[1]
 
                 # Below we create linear segments between 2021-2030
-                # While the first segment is known, the others are defined by the initial segments with a accumulating quadratic descreasing gradient
+                # While the first segment is known, the others are defined by the initial segments with a accumulating quadratic decreasing gradient
                 other_segments_points = [2034, 2039, 2044, 2049, 2054, 2059]
 
                 def geometric_series(
@@ -3265,7 +3264,7 @@ def add_energy_storage_database(costs, data_year):
                     }
                 ]
             )
-            # not concat if df year is 2021 or 2030 (otherwhise duplicate)
+            # not concat if df year is 2021 or 2030 (otherwise duplicate)
             if data_year == 2021 or data_year == 2030:
                 continue
             else:

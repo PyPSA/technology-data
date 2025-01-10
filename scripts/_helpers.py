@@ -5,12 +5,13 @@
 import re
 from pathlib import Path
 
+
 class Dict(dict):
     """
     Dict is a subclass of dict, which allows you to get AND SET items in the
     dict using the attribute syntax!
 
-    Stripped down from addict https://github.com/mewwts/addict/ used in from pypsa.decriptor import Dict.
+    Stripped down from addict https://github.com/mewwts/addict/ used in from pypsa.descriptor import Dict.
     """
 
     def __setattr__(self, name, value):

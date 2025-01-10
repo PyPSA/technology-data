@@ -100,7 +100,6 @@ name = {
     "decentral air-sourced heat pump": "Air-sourced heat pump decentral",
     "central air-sourced heat pump": "Air-sourced heat pump central",
     "central ground-sourced heat pump": "Ground-sourced heat pump central",
-    "decentral air-sourced heat pump": "Air-sourced heat pump decentral",
     "decentral ground-sourced heat pump": "Ground-sourced heat pump decentral",
     "Gasnetz": "Gas pipeline",
     "micro CHP": "Micro CHP",

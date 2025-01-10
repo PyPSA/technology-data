@@ -46,7 +46,7 @@ for table in range(len(clean_df)):
 
     counter = len(test) - 2
     for i in range(counter, -1, -1):
-        if (type(test.iloc[i]) == str) and (type(test.iloc[i - 1]) == str):
+        if (isinstance(test.iloc[i], str)) and (isinstance(test.iloc[i - 1], str)):
             test.iloc[i - 1] = test.iloc[i - 1] + " " + test.iloc[i]
             test.iloc[i] = np.nan
     test.fillna(method="ffill", inplace=True)

@@ -42,7 +42,7 @@ wished_columns = [
 # clean data frame
 split_units = df_list[0]["Units 2015"].fillna(" ").str.split(" ", expand=True)
 # check where split is too long
-to_be_merged = split_units[split_units[2].apply(lambda x: x != None)].index
+to_be_merged = split_units[split_units[2].apply(lambda x: x is not None)].index
 split_units.loc[to_be_merged, 0] = (
     split_units.loc[to_be_merged, 0] + " " + split_units.loc[to_be_merged, 1]
 )
@@ -70,7 +70,7 @@ df_list[4] = pd.concat(
 for sign in [" €", " kWh"]:
     split_units = df_list[4]["Type"].fillna(" ").str.split(sign, expand=True)
     # check where split is too long
-    to_be_merged = split_units[split_units[1].apply(lambda x: x != None)].index
+    to_be_merged = split_units[split_units[1].apply(lambda x: x is not None)].index
     df_list[4].loc[to_be_merged, "Type"] = split_units.loc[to_be_merged, 0]
     df_list[4].loc[to_be_merged, "Units"] = sign + split_units.loc[to_be_merged, 1]
 

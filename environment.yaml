@@ -17,6 +17,7 @@ dependencies:
   - scipy
   - openpyxl>=3.1.2
   - packaging
+  - pytest
 
   - pip:
     - tabula-py

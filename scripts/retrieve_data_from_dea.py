@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+# SPDX-FileCopyrightText: Contributors to technology-data <https://github.com/pypsa/technology-data>
+#
+# SPDX-License-Identifier: MIT
+
+# coding: utf-8
 """
 Created on Mon May  4 18:48:11 2020
 

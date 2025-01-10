@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+# SPDX-FileCopyrightText: Contributors to technology-data <https://github.com/pypsa/technology-data>
+#
+# SPDX-License-Identifier: MIT
+
+# coding: utf-8
 """
 script to convert the technology data assumptions of the Study
 "Global Energy System based on 100% Renewable Energy" of Energywatchgroup/LTU University

@@ -1,6 +1,9 @@
+# SPDX-FileCopyrightText: Contributors to technology-data <https://github.com/pypsa/technology-data>
+#
+# SPDX-License-Identifier: MIT
+
 import re
 from pathlib import Path
-
 
 class Dict(dict):
     """

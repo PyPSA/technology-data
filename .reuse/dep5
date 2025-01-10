@@ -11,6 +11,10 @@ Files: docu/*
 Copyright: 2019-2024 The technology-data Authors
 License: CC-BY-4.0
 
+Files: docs/*.csv
+Copyright: 2019-2024 The technology-data Authors
+License: CC-BY-4.0
+
 Files: inputs/*
 Copyright: 2017-2024 The technology-data Authors
 License: CC-BY-4.0

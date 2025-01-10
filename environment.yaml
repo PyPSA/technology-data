@@ -16,6 +16,10 @@ dependencies:
   - openpyxl>=3.1.2
   - packaging
 
+# Development dependencies
+  - pre-commit
+  - ruff
+
   - pip:
     - tabula-py
     - currencyconverter

@@ -2,9 +2,7 @@
 #
 # SPDX-License-Identifier: MIT
 
-
 configfile: "config.yaml"
-
 
 rule compile_cost_assumptions:
     input:

@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: Contributors to technology-data <https://github.com/pypsa/technology-data>
 #
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: CC0-1.0
 
 extend-include = ['*.ipynb']
 

@@ -539,7 +539,7 @@ SMR,efficiency,0.76,per unit (in LHV),"IEA Global average levelised cost of hydr
 SMR,investment,522201.0492,EUR/MW_CH4,Danish Energy Agency,"Technology data for renewable fuels, in pdf on table 3 p.311",2015.0
 SMR,lifetime,30.0,years,"IEA Global average levelised cost of hydrogen production by energy source and technology, 2019 and 2050 (2020), https://www.iea.org/data-and-statistics/charts/global-average-levelised-cost-of-hydrogen-production-by-energy-source-and-technology-2019-and-2050",,
 SMR CC,FOM,5.0,%/year,Danish Energy Agency,"Technology data for renewable fuels, in pdf on table 3 p.311",
-SMR CC,capture_rate,0.9,EUR/MW_CH4,"IEA Global average levelised cost of hydrogen production by energy source and technology, 2019 and 2050 (2020), https://www.iea.org/data-and-statistics/charts/global-average-levelised-cost-of-hydrogen-production-by-energy-source-and-technology-2019-and-2050",wide range: capture rates betwen 54%-90%,
+SMR CC,capture_rate,0.9,EUR/MW_CH4,"IEA Global average levelised cost of hydrogen production by energy source and technology, 2019 and 2050 (2020), https://www.iea.org/data-and-statistics/charts/global-average-levelised-cost-of-hydrogen-production-by-energy-source-and-technology-2019-and-2050",wide range: capture rates between 54%-90%,
 SMR CC,efficiency,0.69,per unit (in LHV),"IEA Global average levelised cost of hydrogen production by energy source and technology, 2019 and 2050 (2020), https://www.iea.org/data-and-statistics/charts/global-average-levelised-cost-of-hydrogen-production-by-energy-source-and-technology-2019-and-2050",,
 SMR CC,investment,605753.2171,EUR/MW_CH4,Danish Energy Agency,"Technology data for renewable fuels, in pdf on table 3 p.311",2015.0
 SMR CC,lifetime,30.0,years,"IEA Global average levelised cost of hydrogen production by energy source and technology, 2019 and 2050 (2020), https://www.iea.org/data-and-statistics/charts/global-average-levelised-cost-of-hydrogen-production-by-energy-source-and-technology-2019-and-2050",,
@@ -971,7 +971,7 @@ gas boiler steam,VOM,1.007,EUR/MWh,"Danish Energy Agency, technology_data_for_in
 gas boiler steam,efficiency,0.93,per unit,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx","311.1c Steam boiler Gas:  Total efficiency, net, annual average",2019.0
 gas boiler steam,investment,45.7727,EUR/kW,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",311.1c Steam boiler Gas:  Nominal investment,2019.0
 gas boiler steam,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",311.1c Steam boiler Gas:  Technical lifetime,2019.0
-gas storage,FOM,3.5919,%,Danish Energy Agency,"150 Underground Storage of Gas, Operation and Maintenace, salt cavern (units converted)",2015.0
+gas storage,FOM,3.5919,%,Danish Energy Agency,"150 Underground Storage of Gas, Operation and Maintenance, salt cavern (units converted)",2015.0
 gas storage,investment,0.0348,EUR/kWh,Danish Energy Agency,"150 Underground Storage of Gas, Establishment of one cavern (units converted)",2015.0
 gas storage,lifetime,100.0,years,TODO no source,"estimation: most underground storage are already build, they do have a long lifetime",2015.0
 gas storage charger,investment,15.1737,EUR/kW,Danish Energy Agency,"150 Underground Storage of Gas, Process equipment (units converted)",2015.0
@@ -1077,7 +1077,7 @@ nuclear,investment,8594.1354,EUR/kW_e,"Lazard's levelized cost of energy analysi
 nuclear,lifetime,40.0,years,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.",,2023.0
 offwind,FOM,2.1762,%/year,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","21 Offshore turbines:  Fixed O&M [EUR/MW_e/y, 2020]",2020.0
 offwind,VOM,0.0212,EUR/MWhel,RES costs made up to fix curtailment order, from old pypsa cost assumptions,2015.0
-offwind,investment,1562.3661,"EUR/kW_e, 2020","Danish Energy Agency, technology_data_for_el_and_dh.xlsx","21 Offshore turbines:  Nominal investment [MEUR/MW_e, 2020] grid connection costs substracted from investment costs",2020.0
+offwind,investment,1562.3661,"EUR/kW_e, 2020","Danish Energy Agency, technology_data_for_el_and_dh.xlsx","21 Offshore turbines:  Nominal investment [MEUR/MW_e, 2020] grid connection costs subtracted from investment costs",2020.0
 offwind,lifetime,30.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",21 Offshore turbines:  Technical lifetime [years],2020.0
 offwind-ac-connection-submarine,investment,2841.3251,EUR/MW/km,DEA https://ens.dk/en/our-services/projections-and-models/technology-data, from old pypsa cost assumptions,2015.0
 offwind-ac-connection-underground,investment,1420.1334,EUR/MW/km,DEA https://ens.dk/en/our-services/projections-and-models/technology-data, from old pypsa cost assumptions,2015.0

@@ -1,4 +1,11 @@
+# SPDX-FileCopyrightText: Contributors to technology-data <https://github.com/pypsa/technology-data>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
 version: 2
+
+sphinx:
+  configuration: docs/conf.py
 
 build:
   os: ubuntu-22.04

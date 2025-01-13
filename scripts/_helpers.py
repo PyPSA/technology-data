@@ -1,28 +1,29 @@
-from pathlib import Path
-import re
+# SPDX-FileCopyrightText: Contributors to technology-data <https://github.com/pypsa/technology-data>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
 import os
+import re
+from pathlib import Path
 
 import snakemake as sm
 from snakemake.script import Snakemake
 
-Dict = dict
 
 class Dict(dict):
     """
     Dict is a subclass of dict, which allows you to get AND SET items in the
     dict using the attribute syntax!
 
-    Stripped down from addict https://github.com/mewwts/addict/ used in from pypsa.decriptor import Dict.
+    Stripped down from addict https://github.com/mewwts/addict/ used in from pypsa.descriptor import Dict.
     """
 
     def __setattr__(self, name, value):
         """
-        setattr is called when the syntax a.b = 2 is used to set a value.
+        Setattr is called when the syntax a.b = 2 is used to set a value.
         """
         if hasattr(Dict, name):
-            raise AttributeError(
-                "'Dict' object attribute " "'{0}' is read-only".format(name)
-            )
+            raise AttributeError("'Dict' object attribute " f"'{name}' is read-only")
         self[name] = value
 
     def __getattr__(self, item):

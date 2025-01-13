@@ -1,5 +1,11 @@
+..
+  SPDX-FileCopyrightText: Contributors to technology-data <https://github.com/pypsa/technology-data>
+
+  SPDX-License-Identifier: GPL-3.0-only
+
+####################
 Technology-data base
-=====================================================================================
+####################
 
 .. image:: https://img.shields.io/github/v/release/pypsa/technology-data?include_prereleases
     :alt: GitHub release (latest by date including pre-releases)

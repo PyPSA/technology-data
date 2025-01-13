@@ -1,3 +1,9 @@
+
+..
+  SPDX-FileCopyrightText: Contributors to technology-data <https://github.com/pypsa/technology-data>
+
+  SPDX-License-Identifier: GPL-3.0-only
+
 ##########################################
 Release Notes
 ##########################################
@@ -26,6 +32,8 @@ Release Notes
 * update decentral water tank storage data from PyPSA to DEA sources
 
 * added energy to power ratio for central water pit storage and central/decentral water tank storage
+
+* add pre-commit
 
 Technology-Data 0.9.2 (30 August 2024)
 ======================================

@@ -1,4 +1,8 @@
-#!/usr/bin/env python3
+# SPDX-FileCopyrightText: Contributors to technology-data <https://github.com/pypsa/technology-data>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
+# coding: utf-8
 
 import pathlib
 import sys

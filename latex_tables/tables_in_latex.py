@@ -298,7 +298,7 @@ for technology in technologies:
         "biomass CHP",
         "battery storage",
         "home battery storage",
-        "central coal CHP" "hydrogen storage underground",
+        "central coal CHPhydrogen storage underground",
         "hydrogen storage tank type 1",
         "central water tank storage",
         "decentral water tank storage",

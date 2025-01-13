@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: Contributors to technology-data <https://github.com/pypsa/technology-data>
 #
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: GPL-3.0-only
 
 # coding: utf-8
 """

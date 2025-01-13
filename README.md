@@ -1,6 +1,6 @@
 <!--
 SPDX-FileCopyrightText: Contributors to technology-data <https://github.com/pypsa/technology-data>
-SPDX-License-Identifier: CC-BY-4.0
+SPDX-License-Identifier: GPL-3.0-only
 -->
 
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/pypsa/technology-data?include_prereleases)

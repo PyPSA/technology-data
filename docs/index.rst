@@ -1,7 +1,7 @@
 ..
   SPDX-FileCopyrightText: Contributors to technology-data <https://github.com/pypsa/technology-data>
 
-  SPDX-License-Identifier: CC-BY-4.0
+  SPDX-License-Identifier: GPL-3.0-only
 
 ####################
 Technology-data base

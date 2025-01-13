@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
-sphinx
-sphinx-book-theme
-sphinxcontrib-bibtex
-myst-parser
+sphinx==8.1.3
+sphinx-book-theme==1.1.3
+sphinxcontrib-bibtex==2.6.3
+myst-parser==4.0.0

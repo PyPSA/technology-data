@@ -17,7 +17,7 @@ from compile_cost_assumptions_usa import (
     calculate_fom_percentage,
     duplicate_fuel_cost,
     filter_atb_input_file,
-    get_convertion_dictionary,
+    get_conversion_dictionary,
     get_query_string,
     pre_process_atb_input_file,
     pre_process_cost_input_file,
@@ -313,8 +313,8 @@ def test_query_cost_dataframe(cost_dataframe):
             "currency_year": [2020, 2020, 2020],
         }
     )
-    pypsa_technology_dictionary = get_convertion_dictionary("pypsa_technology_name")
-    parameter_dictionary = get_convertion_dictionary("parameter")
+    pypsa_technology_dictionary = get_conversion_dictionary("pypsa_technology_name")
+    parameter_dictionary = get_conversion_dictionary("parameter")
     output_df = query_cost_dataframe(
         cost_dataframe, pypsa_technology_dictionary, parameter_dictionary
     )
@@ -338,7 +338,7 @@ def test_duplicate_fuel_cost(config):
         ]["value"]
         .unique()
         .item()
-        == 6.54
+        == 8.12
     )
     assert (
         output_df.loc[
@@ -347,7 +347,7 @@ def test_duplicate_fuel_cost(config):
         ]["further description"]
         .unique()
         .item()
-        == "46.97 USD/short ton of bituminous coal"
+        == "46.97 USD/short ton of bituminous coal with energy content = 19.73 million BTU/short ton"
     )
 
     # The row corresponding to the gas technology for 2030 is replicated for any later year

@@ -306,8 +306,8 @@ def pre_process_cost_input_file(input_file_path, columns_to_add_list):
 
     cost_input_df = query_cost_dataframe(
         cost_input_df,
-        get_convertion_dictionary("pypsa_technology_name"),
-        get_convertion_dictionary("parameter"),
+        get_conversion_dictionary("pypsa_technology_name"),
+        get_conversion_dictionary("parameter"),
     )
 
     return cost_input_df.reset_index(drop=True)
@@ -404,7 +404,7 @@ def pre_process_atb_input_file(
     )
 
     # Replace the display_name column values with PyPSA technology names
-    technology_conversion_dict_pypsa = get_convertion_dictionary(
+    technology_conversion_dict_pypsa = get_conversion_dictionary(
         "pypsa_technology_name"
     )
     atb_input_df = replace_value_name(
@@ -412,7 +412,7 @@ def pre_process_atb_input_file(
     )
 
     # Uniform the display_name nomenclature of atb_e_2022 to the one of atb_e_2024
-    technology_conversion_dict_atb = get_convertion_dictionary("atb_technology_name")
+    technology_conversion_dict_atb = get_conversion_dictionary("atb_technology_name")
     atb_input_df = replace_value_name(
         atb_input_df, technology_conversion_dict_atb, "display_name"
     )
@@ -424,7 +424,7 @@ def pre_process_atb_input_file(
     atb_input_df["further description"] = pd.Series(dtype="str")
 
     # Rename columns and select just columns used in PyPSA
-    column_rename_dict = get_convertion_dictionary("output_column")
+    column_rename_dict = get_conversion_dictionary("output_column")
     tuple_output_columns_to_keep = (
         "display_name",
         "core_metric_parameter",
@@ -441,7 +441,7 @@ def pre_process_atb_input_file(
     )
 
     # Replace parameter with PyPSA cost parameter names
-    parameter_conversion_dict = get_convertion_dictionary("parameter")
+    parameter_conversion_dict = get_conversion_dictionary("parameter")
     atb_input_df = replace_value_name(
         atb_input_df, parameter_conversion_dict, "parameter"
     )

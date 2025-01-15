@@ -11,7 +11,7 @@ import pandas as pd
 from _helpers import mock_snakemake
 
 
-def get_convertion_dictionary(flag):
+def get_conversion_dictionary(flag: str):
     """
     The function provides conversion dictionaries.
 

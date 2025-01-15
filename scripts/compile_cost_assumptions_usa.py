@@ -4,6 +4,11 @@
 
 # coding: utf-8
 
+"""
+Script creates cost csv for chosen years concatenating US-specific cost assumptions from NREL ATB.
+The input files are in parquet format and can be downloaded from https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fparquet%2F
+"""
+
 import pathlib
 
 import numpy as np

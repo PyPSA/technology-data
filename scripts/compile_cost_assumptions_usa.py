@@ -534,6 +534,11 @@ if __name__ == "__main__":
         "nrel_atb_technology_to_remove"
     ]
 
+    if len(set(snakemake.config["years"])) < len(snakemake.config["years"]):
+        raise Exception(
+            "Please verify the list of cost files. It may contain duplicates."
+        )
+
     if len(year_list) != len(cost_file_list):
         raise Exception(
             f"The cost files {year_list} are more than the considered years {cost_file_list}"
@@ -547,17 +552,11 @@ if __name__ == "__main__":
 
     for year_val in year_list:
         # get the cost file to modify
-        input_cost_path_list = [
+        input_cost_path = [
             path
             for path in snakemake.input.cost_files_to_modify
             if str(year_val) in path
-        ]
-        if len(input_cost_path_list) == 1:
-            input_cost_path = input_cost_path_list[0]
-        else:
-            raise Exception(
-                "Please verify the list of cost files. It may contain duplicates."
-            )
+        ][0]
 
         # get the atb values for a given year
         if year_val == 2020:

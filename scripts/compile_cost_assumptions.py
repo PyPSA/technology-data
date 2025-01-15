@@ -930,12 +930,18 @@ def add_desalinsation_data(costs):
     c /= 1.17  # in EUR/(m^3/h)
 
     tech = "seawater desalination"
+
     costs.loc[(tech, "investment"), "value"] = c
     costs.loc[(tech, "investment"), "unit"] = "EUR/(m^3-H2O/h)"
     costs.loc[(tech, "investment"), "source"] = (
         source_dict["Caldera2017"] + ", Table 4."
     )
     costs.loc[(tech, "investment"), "currency_year"] = 2015
+
+    costs.loc[(tech, "FOM"), "value"] = 4.0
+    costs.loc[(tech, "FOM"), "unit"] = "%/year"
+    costs.loc[(tech, "FOM"), "source"] = source_dict["Caldera2016"] + ", Table 1."
+    costs.loc[(tech, "FOM"), "currency_year"] = 2015
 
     costs.loc[(tech, "FOM"), "value"] = 4.0
     costs.loc[(tech, "FOM"), "unit"] = "%/year"
@@ -965,6 +971,7 @@ def add_desalinsation_data(costs):
     costs.loc[(tech, "FOM"), "value"] = 2
     costs.loc[(tech, "FOM"), "unit"] = "%/year"
     costs.loc[(tech, "FOM"), "source"] = source_dict["Caldera2016"] + ", Table 1."
+    costs.loc[(tech, "FOM"), "currency_year"] = 2013
 
     costs.loc[(tech, "lifetime"), "value"] = 30
     costs.loc[(tech, "lifetime"), "unit"] = "years"
@@ -2427,6 +2434,7 @@ def carbon_flow(costs, year):
             eta = 0.39
             FOM = 4.25
             currency_year = 2014
+            costs.loc[(tech, "FOM"), "currency_year"] = 2014
             source = "Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014"  # source_dict('HyNOW')
 
         elif tech == "solid biomass to hydrogen":
@@ -2434,6 +2442,7 @@ def carbon_flow(costs, year):
             eta = 0.56
             FOM = 4.25
             currency_year = 2014
+            costs.loc[(tech, "FOM"), "currency_year"] = 2014
             source = "Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014"  # source_dict('HyNOW')
 
         if eta > 0:
@@ -2517,6 +2526,24 @@ def carbon_flow(costs, year):
                 "Stoichiometric calculation"
             )
 
+            costs.loc[("electrobiofuels", "efficiency-hydrogen"), "value"] = (
+                costs.loc[("Fischer-Tropsch", "efficiency"), "value"]
+                / efuel_scale_factor
+            )
+            costs.loc[("electrobiofuels", "efficiency-hydrogen"), "unit"] = "per unit"
+            costs.loc[("electrobiofuels", "efficiency-hydrogen"), "source"] = (
+                "Stoichiometric calculation"
+            )
+
+            costs.loc[("electrobiofuels", "efficiency-tot"), "value"] = 1 / (
+                1 / costs.loc[("electrobiofuels", "efficiency-hydrogen"), "value"]
+                + 1 / costs.loc[("electrobiofuels", "efficiency-biomass"), "value"]
+            )
+            costs.loc[("electrobiofuels", "efficiency-tot"), "unit"] = "per unit"
+            costs.loc[("electrobiofuels", "efficiency-tot"), "source"] = (
+                "Stoichiometric calculation"
+            )
+
             inv_cost = (
                 btl_cost[year]
                 + costs.loc[("Fischer-Tropsch", "investment"), "value"]
@@ -2531,6 +2558,7 @@ def carbon_flow(costs, year):
             currency_year = costs.loc[
                 ("Fischer-Tropsch", "investment"), "currency_year"
             ]
+            costs.loc[(tech, "FOM"), "currency_year"] = 2015
             source = "combination of BtL and electrofuels"
 
         elif tech in ["biogas", "biogas CC", "biogas plus hydrogen"]:
@@ -2904,6 +2932,7 @@ def add_SMR_data(data):
     SMR_df.loc[(techs, "FOM"), years] = 5
     SMR_df.loc[(techs, "FOM"), "source"] = source_dict["DEA"]
     SMR_df.loc[(techs, "FOM"), "unit"] = "%/year"
+    SMR_df.loc[(techs, "FOM"), "currency_year"] = 2015
     SMR_df.loc[(techs, "FOM"), "further description"] = (
         "Technology data for renewable fuels, in pdf on table 3 p.311"
     )

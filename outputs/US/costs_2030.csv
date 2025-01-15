@@ -4477,6 +4477,6 @@ solar-utility,discount rate,0.0438437157985803,per unit,"NREL, NREL ATB 2024",,2
 solar-utility,discount rate,0.0342774493840203,per unit,"NREL, NREL ATB 2024",,2022.0,R&D,Advanced
 solar-utility,discount rate,0.0342774493840203,per unit,"NREL, NREL ATB 2024",,2022.0,R&D,Moderate
 solar-utility,discount rate,0.0342774493840203,per unit,"NREL, NREL ATB 2024",,2022.0,R&D,Conservative
-coal,fuel,6.54,EUR/MWh_th,"EIA, Annual Coal Report, https://www.eia.gov/coal/annual/#:~:text=The%20electric%20power%20sector%20accounted,a%206.1%25%20increase%20from%202022.",46.97 USD/short ton of bituminous coal,2023.0,,
-gas,fuel,14.05,EUR/MWh_th,World Bank https://www.worldbank.org/en/research/commodity-markets,,2010.0,,
-oil,fuel,44.22,EUR/MWh_th,World Bank https://www.worldbank.org/en/research/commodity-markets,,2010.0,,
+coal,fuel,8.12,USD/MWh_th,"EIA, https://www.eia.gov/coal/annual/",46.97 USD/short ton of bituminous coal with energy content = 19.73 million BTU/short ton,2023.0,,
+gas,fuel,14.05,USD/MWh_th,World Bank https://www.worldbank.org/en/research/commodity-markets,,2010.0,,
+oil,fuel,44.22,USD/MWh_th,World Bank https://www.worldbank.org/en/research/commodity-markets,,2010.0,,

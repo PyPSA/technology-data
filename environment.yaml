@@ -1,21 +1,29 @@
+# SPDX-FileCopyrightText: Contributors to technology-data <https://github.com/pypsa/technology-data>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
 name: technology-data
 channels:
-  - conda-forge
-  - bioconda
+- conda-forge
+- bioconda
 dependencies:
-  - python>=3.8
-  - pip
+- python>=3.8
+- pip
   # for running the package
-  - snakemake-minimal>=8.5
-  - pandas>=2.1
-  - pypsa
-  - numpy
-  - beautifulsoup4
-  - xlrd
-  - scipy
-  - openpyxl>=3.1.2
-  - packaging
+- snakemake-minimal>=8.5
+- pandas>=2.1
+- pypsa
+- numpy
+- beautifulsoup4
+- xlrd
+- scipy
+- openpyxl>=3.1.2
+- packaging
 
-  - pip:
-    - tabula-py
-    - currencyconverter
+# Development dependencies
+- pre-commit
+- ruff
+
+- pip:
+  - tabula-py
+  - currencyconverter

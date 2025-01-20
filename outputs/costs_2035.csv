@@ -534,11 +534,11 @@ Pumped-Storage-Hydro-bicharger,lifetime,60.0,years,"Viswanathan_2022, p.68 (p.90
 Pumped-Storage-Hydro-store,FOM,0.43,%/year,"Viswanathan_2022, 0.43 % of SB","{'carrier': ['phs'], 'technology_type': ['store'], 'type': ['mechanical'], 'note': ['derived']}",2020.0
 Pumped-Storage-Hydro-store,investment,57074.0625,EUR/MWh,"Viswanathan_2022, p.68 (p.90)","{'carrier': ['phs'], 'technology_type': ['store'], 'type': ['mechanical'], 'note': ['Reservoir Construction & Infrastructure']}",2020.0
 Pumped-Storage-Hydro-store,lifetime,60.0,years,"Viswanathan_2022, p.68 (p.90)","{'carrier': ['phs'], 'technology_type': ['store'], 'type': ['mechanical'], 'note': ['NULL']}",2020.0
-SMR,FOM,5.0,%/year,Danish Energy Agency,"Technology data for renewable fuels, in pdf on table 3 p.311",
+SMR,FOM,5.0,%/year,Danish Energy Agency,"Technology data for renewable fuels, in pdf on table 3 p.311",2015.0
 SMR,efficiency,0.76,per unit (in LHV),"IEA Global average levelised cost of hydrogen production by energy source and technology, 2019 and 2050 (2020), https://www.iea.org/data-and-statistics/charts/global-average-levelised-cost-of-hydrogen-production-by-energy-source-and-technology-2019-and-2050",,
 SMR,investment,522201.0492,EUR/MW_CH4,Danish Energy Agency,"Technology data for renewable fuels, in pdf on table 3 p.311",2015.0
 SMR,lifetime,30.0,years,"IEA Global average levelised cost of hydrogen production by energy source and technology, 2019 and 2050 (2020), https://www.iea.org/data-and-statistics/charts/global-average-levelised-cost-of-hydrogen-production-by-energy-source-and-technology-2019-and-2050",,
-SMR CC,FOM,5.0,%/year,Danish Energy Agency,"Technology data for renewable fuels, in pdf on table 3 p.311",
+SMR CC,FOM,5.0,%/year,Danish Energy Agency,"Technology data for renewable fuels, in pdf on table 3 p.311",2015.0
 SMR CC,capture_rate,0.9,EUR/MW_CH4,"IEA Global average levelised cost of hydrogen production by energy source and technology, 2019 and 2050 (2020), https://www.iea.org/data-and-statistics/charts/global-average-levelised-cost-of-hydrogen-production-by-energy-source-and-technology-2019-and-2050",wide range: capture rates between 54%-90%,
 SMR CC,efficiency,0.69,per unit (in LHV),"IEA Global average levelised cost of hydrogen production by energy source and technology, 2019 and 2050 (2020), https://www.iea.org/data-and-statistics/charts/global-average-levelised-cost-of-hydrogen-production-by-energy-source-and-technology-2019-and-2050",,
 SMR CC,investment,605753.2171,EUR/MW_CH4,Danish Energy Agency,"Technology data for renewable fuels, in pdf on table 3 p.311",2015.0
@@ -812,7 +812,7 @@ central water-sourced heat pump,VOM,1.5768,EUR/MWh,"Danish Energy Agency, techno
 central water-sourced heat pump,efficiency,3.84,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","40 Comp. hp, seawater 20 MW:  Total efficiency , net, annual average",2015.0
 central water-sourced heat pump,investment,1058.2216,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","40 Comp. hp, seawater 20 MW:  Specific investment",2015.0
 central water-sourced heat pump,lifetime,40.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","40 Comp. hp, seawater 20 MW:  Technical lifetime",2015.0
-clean water tank storage,FOM,2.0,%/year,"Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Table 1.",,
+clean water tank storage,FOM,2.0,%/year,"Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Table 1.",,2013.0
 clean water tank storage,investment,69.1286,EUR/m^3-H2O,"Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Table 1.",,2013.0
 clean water tank storage,lifetime,30.0,years,"Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Table 1.",,
 coal,CO2 intensity,0.3361,tCO2/MWh_th,Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018,,
@@ -822,13 +822,13 @@ coal,efficiency,0.356,p.u.,"Lazard's levelized cost of energy analysis - version
 coal,fuel,9.5542,EUR/MWh_th,"DIW (2013): Current and propsective costs of electricity generation until 2050, http://hdl.handle.net/10419/80348 , pg. 80 text below figure 10, accessed: 2023-12-14.","Based on IEA 2011 data, 99 USD/t.",2010.0
 coal,investment,3827.1629,EUR/kW_e,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.","Higher costs include coal plants with CCS, but since using here for calculating the average nevertheless. Calculated based on average of listed range, i.e. (3200+6775) USD/kW_e/2 / (1.09 USD/EUR).",2023.0
 coal,lifetime,40.0,years,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.",,2023.0
-csp-tower,FOM,1.2,%/year,ATB CSP data (https://atb.nrel.gov/electricity/2021/concentrating_solar_power),Ratio between CAPEX and FOM from ATB database for “moderate” scenario.,1.0
+csp-tower,FOM,1.2,%/year,ATB CSP data (https://atb.nrel.gov/electricity/2021/concentrating_solar_power),Ratio between CAPEX and FOM from ATB database for “moderate” scenario.,2020.0
 csp-tower,investment,104.17,"EUR/kW_th,dp",ATB CSP data (https://atb.nrel.gov/electricity/2021/concentrating_solar_power) and NREL SAM v2021.12.2 (https://sam.nrel.gov/).,"Based on NREL’s SAM (v2021.12.2) numbers for a CSP power plant, 2020 numbers. CAPEX degression (=learning) taken from ATB database (“moderate”) scenario. Costs include solar field and solar tower as well as EPC cost for the default installation size (104 MWe plant). Total costs (223,708,924 USD) are divided by active area (heliostat reflective area, 1,269,054 m2) and multiplied by design point DNI (0.95 kW/m2) to obtain EUR/kW_th. Exchange rate: 1.16 USD to 1 EUR.",2020.0
 csp-tower,lifetime,30.0,years,ATB CSP data (https://atb.nrel.gov/electricity/2021/concentrating_solar_power),-,2020.0
-csp-tower TES,FOM,1.2,%/year,see solar-tower.,-,1.0
+csp-tower TES,FOM,1.2,%/year,see solar-tower.,-,2020.0
 csp-tower TES,investment,13.955,EUR/kWh_th,ATB CSP data (https://atb.nrel.gov/electricity/2021/concentrating_solar_power) and NREL SAM v2021.12.2 (https://sam.nrel.gov/).,"Based on NREL’s SAM (v2021.12.2) numbers for a CSP power plant, 2020 numbers. CAPEX degression (=learning) taken from ATB database (“moderate”) scenario. Costs include the TES incl. EPC cost for the default installation size (104 MWe plant, 2.791 MW_th TES). Total costs (69390776.7 USD) are divided by TES size to obtain EUR/kW_th. Exchange rate: 1.16 USD to 1 EUR.",2020.0
 csp-tower TES,lifetime,30.0,years,see solar-tower.,-,2020.0
-csp-tower power block,FOM,1.2,%/year,see solar-tower.,-,1.0
+csp-tower power block,FOM,1.2,%/year,see solar-tower.,-,2020.0
 csp-tower power block,investment,729.755,EUR/kW_e,ATB CSP data (https://atb.nrel.gov/electricity/2021/concentrating_solar_power) and NREL SAM v2021.12.2 (https://sam.nrel.gov/).,"Based on NREL’s SAM (v2021.12.2) numbers for a CSP power plant, 2020 numbers. CAPEX degression (=learning) taken from ATB database (“moderate”) scenario. Costs include the power cycle incl. BOP and EPC cost for the default installation size (104 MWe plant). Total costs (135185685.5 USD) are divided by power block nameplate capacity size to obtain EUR/kW_e. Exchange rate: 1.16 USD to 1 EUR.",2020.0
 csp-tower power block,lifetime,30.0,years,see solar-tower.,-,2020.0
 decentral CHP,FOM,3.0,%/year,HP, from old pypsa cost assumptions,2015.0
@@ -874,7 +874,7 @@ decentral water tank storage,energy to power ratio,0.15,h,"Danish Energy Agency,
 decentral water tank storage,investment,433.8709,EUR/kWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",142 Small scale hot water tank:  Specific investment,2015.0
 decentral water tank storage,lifetime,30.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",142 Small scale hot water tank:  Technical lifetime,2015.0
 digestible biomass,fuel,17.0611,EUR/MWh_th,"JRC ENSPRESO ca avg for MINBIOAGRW1, ENS_Ref for 2040",,2010.0
-digestible biomass to hydrogen,FOM,4.25,%/year,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",,
+digestible biomass to hydrogen,FOM,4.25,%/year,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",,2014.0
 digestible biomass to hydrogen,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,
 digestible biomass to hydrogen,efficiency,0.39,per unit,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",,
 digestible biomass to hydrogen,investment,3442.6595,EUR/kW_th,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",,2014.0
@@ -927,7 +927,7 @@ electric boiler steam,VOM,0.8333,EUR/MWh,"Danish Energy Agency, technology_data_
 electric boiler steam,efficiency,0.99,per unit,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx","310.1 Electric boiler steam  :  Total efficiency, net, annual average",2019.0
 electric boiler steam,investment,70.49,EUR/kW,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",310.1 Electric boiler steam  :  Nominal investment,2019.0
 electric boiler steam,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",310.1 Electric boiler steam  :  Technical lifetime,2019.0
-electric steam cracker,FOM,3.0,%/year,Guesstimate,,
+electric steam cracker,FOM,3.0,%/year,Guesstimate,,2015.0
 electric steam cracker,VOM,190.4799,EUR/t_HVC,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), Table 35",,2015.0
 electric steam cracker,carbondioxide-output,0.55,t_CO2/t_HVC,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), ",The report also references another source with 0.76 t_CO2/t_HVC,
 electric steam cracker,electricity-input,2.7,MWh_el/t_HVC,"Lechtenböhmer et al. (2016): 10.1016/j.energy.2016.07.110, Section 4.3, page 6.",Assuming electrified processing.,
@@ -941,7 +941,7 @@ electricity grid connection,FOM,2.0,%/year,TODO, from old pypsa cost assumptions
 electricity grid connection,investment,148.151,EUR/kW,DEA, from old pypsa cost assumptions,2015.0
 electricity grid connection,lifetime,40.0,years,TODO, from old pypsa cost assumptions,2015.0
 electrobiofuels,C in fuel,0.9281,per unit,Stoichiometric calculation,,
-electrobiofuels,FOM,2.7484,%/year,combination of BtL and electrofuels,,
+electrobiofuels,FOM,2.7484,%/year,combination of BtL and electrofuels,,2015.0
 electrobiofuels,VOM,3.2735,EUR/MWh_th,combination of BtL and electrofuels,,2022.0
 electrobiofuels,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,
 electrobiofuels,efficiency-biomass,1.3233,per unit,Stoichiometric calculation,,
@@ -1049,7 +1049,7 @@ methanol-to-kerosene,hydrogen-input,0.0279,MWh_H2/MWh_kerosene,"Concawe (2022): 
 methanol-to-kerosene,investment,251750.0,EUR/MW_kerosene,"Concawe (2022): E-Fuels: A technoeconomic assessment of European domestic production and imports towards 2050 (https://www.concawe.eu/wp-content/uploads/Rpt_22-17.pdf), table 94.",,2020.0
 methanol-to-kerosene,lifetime,30.0,years,"Concawe (2022): E-Fuels: A technoeconomic assessment of European domestic production and imports towards 2050 (https://www.concawe.eu/wp-content/uploads/Rpt_22-17.pdf), table 94.",,
 methanol-to-kerosene,methanol-input,1.0764,MWh_MeOH/MWh_kerosene,"Concawe (2022): E-Fuels: A technoeconomic assessment of European domestic production and imports towards 2050 (https://www.concawe.eu/wp-content/uploads/Rpt_22-17.pdf), table 6.","Assuming LHV 11.94 kWh/kg for kerosene, 5.54 kWh/kg for methanol, 33.3 kWh/kg for hydrogen.",
-methanol-to-olefins/aromatics,FOM,3.0,%/year,Guesstimate,same as steam cracker,
+methanol-to-olefins/aromatics,FOM,3.0,%/year,Guesstimate,same as steam cracker,2015.0
 methanol-to-olefins/aromatics,VOM,31.7466,EUR/t_HVC,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), Table 35", ,2015.0
 methanol-to-olefins/aromatics,carbondioxide-output,0.6107,t_CO2/t_HVC,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), Sections 4.5 (for ethylene and propylene) and 4.6 (for BTX)","Weighted average: 0.4 t_MeOH/t_ethylene+propylene for 21.7 Mt of ethylene and 17 Mt of propylene, 1.13 t_CO2/t_BTX for 15.7 Mt of BTX. The report also references process emissions of 0.55 t_MeOH/t_ethylene+propylene elsewhere. ",
 methanol-to-olefins/aromatics,electricity-input,1.3889,MWh_el/t_HVC,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), page 69",5 GJ/t_HVC ,
@@ -1111,7 +1111,7 @@ ror,efficiency,0.9,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from 
 ror,investment,3412.2266,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions,2010.0
 ror,lifetime,80.0,years,IEA2010, from old pypsa cost assumptions,2015.0
 seawater RO desalination,electricity-input,0.003,MWHh_el/t_H2O,"Caldera et al. (2016): Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Fig. 4.",Desalination using SWRO. Assume medium salinity of 35 Practical Salinity Units (PSUs) = 35 kg/m^3.,
-seawater desalination,FOM,4.0,%/year,"Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Table 1.",,
+seawater desalination,FOM,4.0,%/year,"Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Table 1.",,2015.0
 seawater desalination,electricity-input,3.0348,kWh/m^3-H2O,"Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Fig. 4.",,
 seawater desalination,investment,31312.5066,EUR/(m^3-H2O/h),"Caldera et al 2017: Learning Curve for Seawater Reverse Osmosis Desalination Plants: Capital Cost Trend of the Past, Present, and Future (https://doi.org/10.1002/2017WR021402), Table 4.",,2015.0
 seawater desalination,lifetime,30.0,years,"Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Table 1.",,
@@ -1149,7 +1149,7 @@ solid biomass boiler steam CC,VOM,2.8564,EUR/MWh,"Danish Energy Agency, technolo
 solid biomass boiler steam CC,efficiency,0.89,per unit,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx","311.1e Steam boiler Wood:  Total efficiency, net, annual average",2019.0
 solid biomass boiler steam CC,investment,581.3136,EUR/kW,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",311.1e Steam boiler Wood:  Nominal investment,2019.0
 solid biomass boiler steam CC,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",311.1e Steam boiler Wood:  Technical lifetime,2019.0
-solid biomass to hydrogen,FOM,4.25,%/year,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",,
+solid biomass to hydrogen,FOM,4.25,%/year,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",,2014.0
 solid biomass to hydrogen,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,
 solid biomass to hydrogen,efficiency,0.56,per unit,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",,
 solid biomass to hydrogen,investment,3442.6595,EUR/kW_th,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",,2014.0

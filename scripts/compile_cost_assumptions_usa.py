@@ -459,7 +459,7 @@ def pre_process_atb_input_file(
     return atb_input_df.reset_index(drop=True)
 
 
-def duplicate_fuel_cost(input_file_path, year_list):
+def duplicate_fuel_cost(input_file_path, list_of_years):
     """
     The function reads-in the fuel cost file to a Pandas DataFrame and
     replicates the last available row for each technology. Namely, it
@@ -471,7 +471,7 @@ def duplicate_fuel_cost(input_file_path, year_list):
 
     Input arguments
     - input_file_path : str, fuel cost file path
-    - year_list: list, list of the years for which a cost assumption is provided
+    - list_of_years: list, list of the years for which a cost assumption is provided
 
     Output
     - DataFrame, updated fuel cost dataframe
@@ -492,11 +492,11 @@ def duplicate_fuel_cost(input_file_path, year_list):
         max_year = np.max(
             input_fuel_cost_df[input_fuel_cost_df["technology"] == tech_value]["year"]
         )
-        first_missing_year_index = year_list.index(max_year) + 1
-        missing_year_list = year_list[first_missing_year_index:]
+        first_missing_year_index = list_of_years.index(max_year) + 1
+        missing_year_list = list_of_years[first_missing_year_index:]
 
         # For each technology, loop through the list of missing years
-        for i, year_val in enumerate(missing_year_list):
+        for i, val_year in enumerate(missing_year_list):
             # Extract the row corresponding to the last available year and replace the year with the missing year
             df_to_replicate = (
                 input_fuel_cost_df.loc[
@@ -504,7 +504,7 @@ def duplicate_fuel_cost(input_file_path, year_list):
                     & (input_fuel_cost_df["year"] == max_year)
                 ]
                 .copy(deep=True)
-                .replace(max_year, year_val)
+                .replace(max_year, val_year)
             )
 
             # Append the extracted and modified row to the (originally empty) dataframe

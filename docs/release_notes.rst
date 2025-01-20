@@ -23,7 +23,7 @@ Release Notes
 
 * fixed DEA technology data sheet name for central water tank storage to point to actual PTES data
 
-* Fix minor issues in the code
+* added geothermal district heating as `central geothermal-sourced heat pump` based on DEA technology catalogue ("45.1.a Geothermal DH, 1200m, E")
 
 * fix minor issues in the code
 
@@ -34,6 +34,13 @@ Release Notes
 * added energy to power ratio for central water pit storage and central/decentral water tank storage
 
 * add pre-commit
+
+* include NREL/ATB costs for electricity generation technologies in a dedicated US cost outputs
+
+* include ICCT techno-economic parameters for electrolyzers, hydrogen storage, Fischer-Tropsch, Direct air capture
+
+* include JRC data for fossil- and biomass-based hydrogen production technologies (with and without CCS)
+
 
 Technology-Data 0.9.2 (30 August 2024)
 ======================================

@@ -2,8 +2,14 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
+# coding: utf-8
+
+import os
 import re
 from pathlib import Path
+
+import snakemake as sm
+from snakemake.script import Snakemake
 
 
 class Dict(dict):
@@ -86,20 +92,6 @@ def mock_snakemake(
         keyword arguments fixing the wildcards. Only necessary if wildcards are
         needed.
     """
-    import os
-
-    import snakemake as sm
-    from pypsa.descriptors import Dict
-    from snakemake.api import Workflow
-    from snakemake.common import SNAKEFILE_CHOICES
-    from snakemake.script import Snakemake
-    from snakemake.settings.types import (
-        ConfigSettings,
-        DAGSettings,
-        ResourceSettings,
-        StorageSettings,
-        WorkflowSettings,
-    )
 
     script_dir = Path(__file__).parent.resolve()
     if root_dir is None:
@@ -119,7 +111,7 @@ def mock_snakemake(
             f" {root_dir} or scripts directory {script_dir}"
         )
     try:
-        for p in SNAKEFILE_CHOICES:
+        for p in sm.SNAKEFILE_CHOICES:
             if os.path.exists(p):
                 snakefile = p
                 break
@@ -128,12 +120,12 @@ def mock_snakemake(
         elif isinstance(configfiles, str):
             configfiles = [configfiles]
 
-        resource_settings = ResourceSettings()
-        config_settings = ConfigSettings(configfiles=map(Path, configfiles))
-        workflow_settings = WorkflowSettings()
-        storage_settings = StorageSettings()
-        dag_settings = DAGSettings(rerun_triggers=[])
-        workflow = Workflow(
+        resource_settings = sm.ResourceSettings()
+        config_settings = sm.ConfigSettings(configfiles=map(Path, configfiles))
+        workflow_settings = sm.WorkflowSettings()
+        storage_settings = sm.StorageSettings()
+        dag_settings = sm.DAGSettings(rerun_triggers=[])
+        workflow = sm.Workflow(
             config_settings,
             resource_settings,
             workflow_settings,

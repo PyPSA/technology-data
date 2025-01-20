@@ -13,12 +13,14 @@ dependencies:
 - snakemake-minimal>=8.5
 - pandas>=2.1
 - pypsa
+- pyarrow
 - numpy
 - beautifulsoup4
 - xlrd
 - scipy
 - openpyxl>=3.1.2
 - packaging
+- pytest
 
 # Development dependencies
 - pre-commit

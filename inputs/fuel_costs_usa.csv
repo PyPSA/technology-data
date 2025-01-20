@@ -1,0 +1,9 @@
+technology,parameter,year,value,unit,currency_year,financial_case,scenario,source,further description
+coal,fuel,2020,6.25,USD/MWh_th,2023,,,"EIA, https://www.eia.gov/coal/annual/",36.14 USD/short ton of bituminous coal with energy content = 19.73 million BTU/short ton
+coal,fuel,2025,8.12,USD/MWh_th,2023,,,"EIA, https://www.eia.gov/coal/annual/",46.97 USD/short ton of bituminous coal with energy content = 19.73 million BTU/short ton
+gas,fuel,2020,7.65,USD/MWh_th,2010,,,World Bank https://www.worldbank.org/en/research/commodity-markets,
+gas,fuel,2025,12.91,USD/MWh_th,2010,,,World Bank https://www.worldbank.org/en/research/commodity-markets,
+gas,fuel,2030,14.05,USD/MWh_th,2010,,,World Bank https://www.worldbank.org/en/research/commodity-markets,
+oil,fuel,2020,25.98,USD/MWh_th,2010,,,World Bank https://www.worldbank.org/en/research/commodity-markets,
+oil,fuel,2025,44.83,USD/MWh_th,2010,,,World Bank https://www.worldbank.org/en/research/commodity-markets,
+oil,fuel,2030,44.22,USD/MWh_th,2010,,,World Bank https://www.worldbank.org/en/research/commodity-markets,

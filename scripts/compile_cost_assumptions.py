@@ -2956,7 +2956,7 @@ def add_SMR_data(data):
     # carbon capture rate
     SMR_df.loc[("SMR CC", "capture_rate"), years] = 0.9
     SMR_df.loc[("SMR CC", "capture_rate"), "source"] = source_dict["IEA"]
-    SMR_df.loc[("SMR CC", "capture_rate"), "unit"] = "EUR/MW_CH4"
+    SMR_df.loc[("SMR CC", "capture_rate"), "unit"] = "per unit"
     SMR_df.loc[("SMR CC", "capture_rate"), "further description"] = (
         "wide range: capture rates between 54%-90%"
     )

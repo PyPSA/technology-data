@@ -8,8 +8,25 @@
 Release Notes
 ##########################################
 
-.. Upcoming Release
-.. ================
+Upcoming Release
+================
+
+.. warning:: 
+  
+  The features listed below are not released yet, but will be part of the next release! 
+  To use the features already you have to use the ``master`` branch.
+
+* Country specific cost assumptions and added NREL/ATB data (https://github.com/PyPSA/technology-data/pull/160)
+
+* Add missing currency_year for FOM (https://github.com/PyPSA/technology-data/pull/163)
+
+`v0.10.1 <https://github.com/PyPSA/technology-data/releases/tag/v0.10.1>`__ (5th November 2024)
+=======================================================================================
+
+* Add Large Thermal Energy Storage (LTES) (https://github.com/PyPSA/technology-data/pull/159)
+
+`v0.10.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.10.0>`__ (5th November 2024)
+=======================================================================================
 
 * added water-sourced heat pumps based on upper uncertainty bounds from DEA technology catalogue ("40 Comp. hp, seawater 20 MW")
 
@@ -42,15 +59,15 @@ Release Notes
 * include JRC data for fossil- and biomass-based hydrogen production technologies (with and without CCS)
 
 
-Technology-Data 0.9.2 (30 August 2024)
-======================================
+`v0.9.2 <https://github.com/PyPSA/technology-data/releases/tag/v0.9.2>`__ (30th August 2024)
+=======================================================================================
 
 * for central air-sourced heat pump use name plate efficiency
 
 * added preliminary Allam cycle gas turbine costs
 
-Technology-Data 0.9.1 (7 August 2024)
-=====================================
+`v0.9.1 <https://github.com/PyPSA/technology-data/releases/tag/v0.9.1>`__ (7th August 2024)
+=======================================================================================
 
 * added fuel costs for bioethanol crops, rape seed, and manure from JRC ENSPRESO
 
@@ -60,8 +77,8 @@ Technology-Data 0.9.1 (7 August 2024)
 
 * added methanol-to-kerosene cost data from Concawe report
 
-Technology-Data 0.9.0 (12 May 2024)
-===================================
+`v0.9.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.9.0>`__ (12 May 2024)
+=======================================================================================
 * add methanol-to-kerosene cost data (https://github.com/PyPSA/technology-data/pull/136)
 
 * update electrolyser investment costs based on latest communications (https://github.com/PyPSA/technology-data/pull/129)
@@ -76,12 +93,12 @@ Technology-Data 0.9.0 (12 May 2024)
 
 * compatibility with newer pandas versions (https://github.com/PyPSA/technology-data/pull/126)
 
-Technology-Data 0.8.1 (28 February 2024)
+0.8.1 (28 February 2024)
 ========================================
 
 * adjust currency year in some DEA input data
 
-Technology-Data 0.8.0 (19 February 2024)
+0.8.0 (19 February 2024)
 =======================================
 
 * Update currency year from 2015 to 2020. Add a currency year for each data
@@ -89,7 +106,7 @@ Technology-Data 0.8.0 (19 February 2024)
   and rate of change)
   <https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/dataflow/ESTAT/prc_hicp_aind/1.0?references=descendants&detail=referencepartial&format=sdmx_2.1_generic&compressed=true>`_.
 
-Technology-Data 0.7.0 (7 February 2024)
+0.7.0 (7 February 2024)
 =======================================
 
 * Updated to latest release of DEA renewable fuels (released January 2024). With the following changes
@@ -124,7 +141,7 @@ Technology-Data 0.7.0 (7 February 2024)
 
 * Updated hydrogen pipeline costs based on most recent `EHB report <https://ehb.eu/files/downloads/EHB-2023-20-Nov-FINAL-design.pdf>`_.
 
-Technology-Data 0.6.2 (7 August 2023)
+0.6.2 (7 August 2023)
 =====================================
 
 * Use DEA electrolysis and fuel cell assumptions by default.
@@ -133,7 +150,7 @@ Technology-Data 0.6.2 (7 August 2023)
 
 * Use HVDC submarine cable cost from Härtel et al. (2017).
 
-Technology-Data 0.6.1 (4 August 2023)
+0.6.1 (4 August 2023)
 ===========================================
 
 * New technologies
@@ -143,7 +160,7 @@ Technology-Data 0.6.1 (4 August 2023)
   - shipping fuel methanol (cost assumptions, emission intensity)
   - iron ore DRI-ready (cost assumptions)
 
-Technology-Data 0.6.0 (24 May 2023)
+0.6.0 (24 May 2023)
 ===========================================
 
 * General:
@@ -184,7 +201,7 @@ pelletizing cost for pellets from solid biomass residues)
 * Bug fixes
   - Fixed a bug that ommited 'further description' from manually added data
 
-Technology-Data 0.5.0 (08 Februrary 2023)
+0.5.0 (08 Februrary 2023)
 ===========================================
 
 * Updated technologies
@@ -203,7 +220,7 @@ Technology-Data 0.5.0 (08 Februrary 2023)
   - Renamed "hydrogen storage tank incl. compressor" to "hydrogen storage tank type 1 including compressor" for more clarity on the technology and consistency
   - Removed "hydrogen storage tank" technology assumption from old PyPSA assumptions which is superceeded by the "hydrogen storage tank type 1" assumptions
 
-Technology-Data 0.4.0 (22 July 2022)
+0.4.0 (22 July 2022)
 ===========================================
 
 * **WARNING**: For some technologies the units used were changed. Check for correct usage in automatic workflows.
@@ -260,7 +277,7 @@ Technology-Data 0.4.0 (22 July 2022)
   - HVDC inverter pair:
     + Add correct source attribution
 
-Technology-Data 0.3.0 (1 October 2021)
+0.3.0 (1 October 2021)
 ===========================================
 
 This release includes several new technologies (see list below), the possibility
@@ -304,7 +321,7 @@ Features in more detail:
 * adjust battery inverter lifetime to DEA footnote
 * unit consistency, typos
 
-Technology-Data 0.2.0 (11th December 2020)
+0.2.0 (11th December 2020)
 ===========================================
 
 This release allows to include uncertainty bounds from the Danish Energy Agency (DEA), fixes inconsistencies with the handling of combined heat and power plants, and includes the latest data from the DEA on carbon capture technologies.
@@ -318,7 +335,7 @@ Features in more detail:
 * The updated assumptions from the DEA for carbon capture technologies have been incorporated, including direct air capture and post-combustion capture on CHPs, cement kilns and other industrial facilities. These are then used in PyPSA-Eur-Sec Version 0.4.0.
 
 
-Technology-Data 0.1.0 (21st August 2020)
+0.1.0 (21st August 2020)
 ========================================
 
 This is the first release to coincide with the release of `PyPSA-Eur-Sec <https://github.com/PyPSA/pypsa-eur-sec>`_ Version 0.2.0.

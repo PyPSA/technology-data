@@ -26,7 +26,7 @@ The outputs are used in
 
 ## Licence
 
-Copyright 2019-2025 Contributors to [technology-data](https://github.com/pypsa/technology-data)
+Copyright 2019-2025 [Contributors](https://github.com/PyPSA/technology-data/graphs/contributors) to technology-data
 
 The code in `scripts/` is released as free software under the
 [GPLv3](http://www.gnu.org/licenses/gpl-3.0.en.html), see LICENSE.txt.

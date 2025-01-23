@@ -11,6 +11,11 @@ Release Notes
 Upcoming Release
 ================
 
+.. warning:: 
+  
+  The features listed below are not released yet, but will be part of the next release! 
+  To use the features already you have to use the ``master`` branch.
+
 * Country specific cost assumptions and added NREL/ATB data (https://github.com/PyPSA/technology-data/pull/160)
 
 * Add missing currency_year for FOM (https://github.com/PyPSA/technology-data/pull/163)

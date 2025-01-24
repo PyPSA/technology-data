@@ -7,10 +7,6 @@
 import pathlib
 import sys
 
-import numpy as np
-import pandas as pd
-import pytest
-
 sys.path.append("./scripts")
 
 from compile_cost_assumptions import get_excel_sheets
@@ -36,7 +32,7 @@ def test_get_excel_sheets():
         "dea_ship": "inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx",
         "dea_ccts": "inputs/technology_data_for_carbon_capture_transport_storage.xlsx",
         "pnnl_energy_storage": "inputs/pnnl-energy-storage-database.xlsx",
-        "manual_input": "inputs/manual_input.csv"
+        "manual_input": "inputs/manual_input.csv",
     }
     reference_output_dictionary = {
         "inputs/energy_transport_data_sheet_dec_2017.xlsx": 16,
@@ -49,7 +45,9 @@ def test_get_excel_sheets():
         "inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx": 22,
         "inputs/technology_data_for_carbon_capture_transport_storage.xlsx": 31,
     }
-    excel_files = [v for k, v in snakemake_input_dictionary.items() if "dea" in k.casefold()]
+    excel_files = [
+        v for k, v in snakemake_input_dictionary.items() if "dea" in k.casefold()
+    ]
     output_dict = get_excel_sheets(excel_files)
     comparison_dictionary = {}
     for key, value in output_dict.items():

@@ -11,21 +11,24 @@ Release Notes
 Upcoming Release
 ================
 
-.. warning:: 
+.. .. warning:: 
   
-  The features listed below are not released yet, but will be part of the next release! 
-  To use the features already you have to use the ``master`` branch.
+..   The features listed below are not released yet, but will be part of the next release! 
+..   To use the features already you have to use the ``master`` branch.
+
+`v0.11.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.11.0>`__ (24th January 2025)
+=======================================================================================
 
 * Country specific cost assumptions and added NREL/ATB data (https://github.com/PyPSA/technology-data/pull/160)
 
 * Add missing currency_year for FOM (https://github.com/PyPSA/technology-data/pull/163)
 
-`v0.10.1 <https://github.com/PyPSA/technology-data/releases/tag/v0.10.1>`__ (5th November 2024)
+`v0.10.1 <https://github.com/PyPSA/technology-data/releases/tag/v0.10.1>`__ (13th December 2024)
 =======================================================================================
 
 * Add Large Thermal Energy Storage (LTES) (https://github.com/PyPSA/technology-data/pull/159)
 
-`v0.10.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.10.0>`__ (5th November 2024)
+`v0.10.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.10.0>`__ (29th November 2024)
 =======================================================================================
 
 * added water-sourced heat pumps based on upper uncertainty bounds from DEA technology catalogue ("40 Comp. hp, seawater 20 MW")

@@ -3355,7 +3355,7 @@ if __name__ == "__main__":
     # (1) DEA data
     # (a)-------- get data from DEA excel sheets ----------------------------------
     # read excel sheet names of all excel files
-    excel_files = [v for k, v in snakemake.input.items() if "dea" in k]
+    excel_files = [v for k, v in snakemake.input.items() if "dea" in k.casefold()]
     data_in = get_excel_sheets(excel_files)
     # create dictionary with raw data from DEA sheets
     d_by_tech = get_data_from_DEA(data_in, expectation=snakemake.config["expectation"])
@@ -3555,3 +3555,7 @@ if __name__ == "__main__":
             costs_tot.value.astype(float), snakemake.config.get("ndigits", 2)
         )
         costs_tot.to_csv([v for v in snakemake.output if str(year) in v][0])
+
+
+# ==== CHANGES TO DO =====
+# 1) make sure that clean_up_units is executed at the end of the script such that also the currencies in manual_input are converted # TODO

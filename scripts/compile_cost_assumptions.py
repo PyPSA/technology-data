@@ -30,6 +30,7 @@ The script is structured as follows:
 
 import numpy as np
 import pandas as pd
+from _helpers import dea_sheet_names
 
 try:
     pd.set_option("future.no_silent_downcasting", True)
@@ -68,91 +69,6 @@ source_dict = {
     "vehicles": "PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html",
 }
 
-# [DEA-sheet-names]
-sheet_names = {
-    "onwind": "20 Onshore turbines",
-    "offwind": "21 Offshore turbines",
-    "solar-utility": "22 Utility-scale PV",
-    "solar-utility single-axis tracking": "22 Utility-scale PV tracker",
-    "solar-rooftop residential": "22 Rooftop PV residential",
-    "solar-rooftop commercial": "22 Rooftop PV commercial",
-    "OCGT": "52 OCGT - Natural gas",
-    "CCGT": "05 Gas turb. CC, steam extract.",
-    "oil": "50 Diesel engine farm",
-    "biomass CHP": "09c Straw, Large, 40 degree",
-    "biomass EOP": "09c Straw, Large, 40 degree",
-    "biomass HOP": "09c Straw HOP",
-    "central coal CHP": "01 Coal CHP",
-    "central gas CHP": "04 Gas turb. simple cycle, L",
-    "central gas CHP CC": "04 Gas turb. simple cycle, L",
-    "central solid biomass CHP": "09a Wood Chips, Large 50 degree",
-    "central solid biomass CHP CC": "09a Wood Chips, Large 50 degree",
-    "central solid biomass CHP powerboost CC": "09a Wood Chips, Large 50 degree",
-    # 'solid biomass power': '09a Wood Chips extract. plant',
-    # 'solid biomass power CC': '09a Wood Chips extract. plant',
-    "central air-sourced heat pump": "40 Comp. hp, airsource 3 MW",
-    "central geothermal-sourced heat pump": "45.1.a Geothermal DH, 1200m, E",
-    "central geothermal heat source": "45.1.a Geothermal DH, 1200m, E",
-    "central excess-heat-sourced heat pump": "40 Comp. hp, excess heat 10 MW",
-    "central water-sourced heat pump": "40 Comp. hp, seawater 20 MW",
-    "central ground-sourced heat pump": "40 Absorption heat pump, DH",
-    "central resistive heater": "41 Electric Boilers",
-    "central gas boiler": "44 Natural Gas DH Only",
-    "decentral gas boiler": "202 Natural gas boiler",
-    "direct firing gas": "312.a Direct firing Natural Gas",
-    "direct firing gas CC": "312.a Direct firing Natural Gas",
-    "direct firing solid fuels": "312.b Direct firing Sold Fuels",
-    "direct firing solid fuels CC": "312.b Direct firing Sold Fuels",
-    "decentral ground-sourced heat pump": "207.7 Ground source existing",
-    "decentral air-sourced heat pump": "207.3 Air to water existing",
-    # 'decentral resistive heater': '216 Electric heating',
-    "central water pit storage": "140 PTES seasonal",
-    "central water tank storage": "141 Large hot water tank",
-    "decentral water tank storage": "142 Small scale hot water tank",
-    "fuel cell": "12 LT-PEMFC CHP",
-    "hydrogen storage underground": "151c Hydrogen Storage - Caverns",
-    "hydrogen storage tank type 1 including compressor": "151a Hydrogen Storage - Tanks",
-    "micro CHP": "219 LT-PEMFC mCHP - natural gas",
-    "biogas": "81 Biogas, Basic plant, small",
-    "biogas CC": "81 Biogas, Basic plant, small",
-    "biogas upgrading": "82 Upgrading 3,000 Nm3 per h",
-    "battery": "180 Lithium Ion Battery",
-    "industrial heat pump medium temperature": "302.a High temp. hp Up to 125 C",
-    "industrial heat pump high temperature": "302.b High temp. hp Up to 150",
-    "electric boiler steam": "310.1 Electric boiler steam  ",
-    "gas boiler steam": "311.1c Steam boiler Gas",
-    "solid biomass boiler steam": "311.1e Steam boiler Wood",
-    "solid biomass boiler steam CC": "311.1e Steam boiler Wood",
-    "biomass boiler": "204 Biomass boiler, automatic",
-    "electrolysis": "86 AEC 100 MW",
-    "direct air capture": "403.a Direct air capture",
-    "biomass CHP capture": "401.a Post comb - small CHP",
-    "cement capture": "401.c Post comb - Cement kiln",
-    "BioSNG": "84 Gasif. CFB, Bio-SNG",
-    "BtL": "85 Gasif. Ent. Flow FT, liq fu ",
-    "biomass-to-methanol": "97 Methanol from biomass gasif.",
-    "biogas plus hydrogen": "99 SNG from methan. of biogas",
-    "methanolisation": "98 Methanol from hydrogen",
-    "Fischer-Tropsch": "102 Hydrogen to Jet",
-    "central hydrogen CHP": "12 LT-PEMFC CHP",
-    "Haber-Bosch": "103 Hydrogen to Ammonia",
-    "air separation unit": "103 Hydrogen to Ammonia",
-    "waste CHP": "08 WtE CHP, Large, 50 degree",
-    "waste CHP CC": "08 WtE CHP, Large, 50 degree",
-    # 'electricity distribution rural': '101 2 el distri Rural',
-    # 'electricity distribution urban': '101 4 el distri  city',
-    # 'gas distribution rural': '102 7 gas  Rural',
-    # 'gas distribution urban': '102 9 gas City',
-    # 'DH distribution rural': '103_12 DH_Distribu Rural',
-    # 'DH distribution urban': '103_14 DH_Distribu City',
-    # 'DH distribution low T': '103_16 DH_Distr New area LTDH',
-    # 'gas pipeline': '102 6 gas Main distri line',
-    # "DH main transmission": "103_11 DH transmission",
-    "biochar pyrolysis": "105 Slow pyrolysis, Straw",
-    #'biomethanation': '106 Biomethanation of biogas',
-    "electrolysis small": "86 AEC 10 MW",
-}
-# [DEA-sheet-names]
 
 uncrtnty_lookup = {
     "onwind": "J:K",
@@ -289,19 +205,19 @@ def get_excel_sheets(excel_files):
     return data_in
 
 
-def get_sheet_location(tech, sheet_names, data_in):
+def get_sheet_location(tech, sheet_names_dict, data_in):
     """
     Looks up in which excel file technology is saved
     """
     for key in data_in:
-        if sheet_names[tech] in data_in[key]:
+        if sheet_names_dict[tech] in data_in[key]:
             return key
     print("******* warning *************")
     print(
         "tech ",
         tech,
         " with sheet name ",
-        sheet_names[tech],
+        sheet_names_dict[tech],
         "  not found in excel sheets.",
     )
     print("****************************")
@@ -315,7 +231,7 @@ def get_dea_maritime_data(fn, data):
     """
     Get technology data for shipping from DEA.
     """
-    sheet_names = [
+    dea_maritime_data_sheet_names = [
         "Container feeder, diesel",
         "Container feeder, methanol",
         "Container feeder, ammonia",
@@ -327,7 +243,7 @@ def get_dea_maritime_data(fn, data):
         "Tankbulk, ammonia",
     ]
     excel = pd.read_excel(
-        fn, sheet_name=sheet_names, index_col=[0, 1], usecols="A:F", na_values="N/A"
+        fn, sheet_name=dea_maritime_data_sheet_names, index_col=[0, 1], usecols="A:F", na_values="N/A"
     )
 
     wished_index = [
@@ -412,7 +328,7 @@ def get_dea_vehicle_data(fn, data):
     """
     Get heavy-duty vehicle data from DEA.
     """
-    sheet_names = [
+    dea_vehicle_data_sheet_names = [
         "Diesel L1",
         "Diesel L2",
         "Diesel L3",
@@ -430,7 +346,7 @@ def get_dea_vehicle_data(fn, data):
         "FCV B2",
     ]
     excel = pd.read_excel(
-        fn, sheet_name=sheet_names, index_col=0, usecols="A:F", na_values="no data"
+        fn, sheet_name=dea_vehicle_data_sheet_names, index_col=0, usecols="A:F", na_values="no data"
     )
 
     wished_index = [
@@ -520,7 +436,7 @@ def get_data_DEA(tech, data_in, expectation=None):
 
     uncertainty can be "optimist", "pessimist" or None|""
     """
-    excel_file = get_sheet_location(tech, sheet_names, data_in)
+    excel_file = get_sheet_location(tech, dea_sheet_names, data_in)
     if excel_file is None:
         print("excel file not found for tech ", tech)
         return None
@@ -562,13 +478,12 @@ def get_data_DEA(tech, data_in, expectation=None):
 
     excel = pd.read_excel(
         excel_file,
-        sheet_name=sheet_names[tech],
+        sheet_name=dea_sheet_names[tech],
         index_col=0,
         usecols=usecols,
         skiprows=skiprows,
         na_values="N.A",
     )
-    # print(excel)
 
     excel.dropna(axis=1, how="all", inplace=True)
 
@@ -1215,7 +1130,7 @@ def get_data_from_DEA(data_in, expectation=None):
     """
     d_by_tech = {}
 
-    for tech, dea_tech in sheet_names.items():
+    for tech, dea_tech in dea_sheet_names.items():
         print(f"{tech} in PyPSA corresponds to {dea_tech} in DEA database.")
         df = get_data_DEA(tech, data_in, expectation).fillna(0)
         d_by_tech[tech] = df
@@ -2044,7 +1959,7 @@ def add_description(data):
     wished_order = list(years) + ["unit", "source", "further description"]
     data = data.reindex(columns=wished_order)
     data.index.set_names(["technology", "parameter"], inplace=True)
-    sheets = data.reset_index()["technology"].map(sheet_names).fillna("")
+    sheets = data.reset_index()["technology"].map(dea_sheet_names).fillna("")
     sheets.index = data.index
     data["further description"] = sheets + ":  " + data["further description"]
 
@@ -2193,7 +2108,7 @@ def add_carbon_capture(data, tech_data):
             data.loc[(tech, our_name), "unit"] = "MWh/tCO2"
 
         data.loc[tech, "source"] = data.loc[(tech, "lifetime"), "source"]
-        data.loc[tech, "further description"] = sheet_names[tech]
+        data.loc[tech, "further description"] = dea_sheet_names[tech]
 
     return data
 

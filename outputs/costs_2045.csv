@@ -1,8 +1,4 @@
 technology,parameter,value,unit,source,further description,currency_year
-Alkaline electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,,2022.0
-Alkaline electrolyzer,efficiency,0.76,p.u.,ICCT IRA e-fuels assumptions ,,
-Alkaline electrolyzer,investment,618.5101,USD/kW,ICCT IRA e-fuels assumptions ,,2022.0
-Alkaline electrolyzer,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,
 Ammonia cracker,FOM,4.3,%/year,"Ishimoto et al. (2020): 10.1016/j.ijhydene.2020.09.017 , table 7.","Estimated based on Labour cost rate, Maintenance cost rate, Insurance rate, Admin. cost rate and Chemical & other consumables cost rate.",2015.0
 Ammonia cracker,ammonia-input,1.46,MWh_NH3/MWh_H2,"ENGIE et al (2020): Ammonia to Green Hydrogen Feasibility Study (https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/880826/HS420_-_Ecuity_-_Ammonia_to_Green_Hydrogen.pdf), Fig. 10.",Assuming a integrated 200t/d cracking and purification facility. Electricity demand (316 MWh per 2186 MWh_LHV H2 output) is assumed to also be ammonia LHV input which seems a fair assumption as the facility has options for a higher degree of integration according to the report).,
 Ammonia cracker,investment,699718.4683,EUR/MW_H2,"Ishimoto et al. (2020): 10.1016/j.ijhydene.2020.09.017 , table 6.","Calculated. For a small (200 t_NH3/d input) facility. Base cost for facility: 51 MEUR at capacity 20 000m^3_NH3/h = 339 t_NH3/d input. Cost scaling exponent 0.67. Ammonia density 0.7069 kg/m^3. Conversion efficiency of cracker: 0.685. Ammonia LHV: 5.167 MWh/t_NH3.; and
@@ -54,13 +50,6 @@ BioSNG,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015
 BioSNG,efficiency,0.6825,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Bio SNG Output",2020.0
 BioSNG,investment,1621.685,EUR/kW_th,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Specific investment",2020.0
 BioSNG,lifetime,25.0,years,TODO,"84 Gasif. CFB, Bio-SNG:  Technical lifetime",2020.0
-Biomass gasification,efficiency,0.4958,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
-Biomass gasification,investment,1467.7693,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
-Biomass gasification,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
-Biomass gasification CC,FOM,0.02,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
-Biomass gasification CC,efficiency,0.514,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
-Biomass gasification CC,investment,3015.5325,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
-Biomass gasification CC,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
 BtL,C in fuel,0.3039,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
 BtL,C stored,0.6961,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
 BtL,CO2 stored,0.2552,tCO2/MWh_th,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
@@ -126,29 +115,6 @@ Charging infrastructure fuel cell vehicles trucks,lifetime,30.0,years,PATHS TO A
 Charging infrastructure slow (purely) battery electric vehicles passenger cars,FOM,1.8,%,PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html,Charging infrastructure slow (purely) battery electric vehicles passenger cars,2020.0
 Charging infrastructure slow (purely) battery electric vehicles passenger cars,investment,1005.0,EUR/Ladesï¿½ule,PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html,Charging infrastructure slow (purely) battery electric vehicles passenger cars,2020.0
 Charging infrastructure slow (purely) battery electric vehicles passenger cars,lifetime,30.0,years,PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html,Charging infrastructure slow (purely) battery electric vehicles passenger cars,2020.0
-Coal gasification,FOM,0.06,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
-Coal gasification,efficiency,0.7492,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
-Coal gasification,investment,399.2305,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
-Coal gasification,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
-Coal gasification CC,FOM,0.07,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
-Coal gasification CC,efficiency,0.609,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
-Coal gasification CC,investment,649.5969,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
-Coal gasification CC,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
-Coal integrated retrofit 90%-CCS,capture_rate,0.9,per unit,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,
-Coal integrated retrofit 90%-CCS,efficiency,0.386,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,
-Coal integrated retrofit 95%-CCS,capture_rate,0.95,per unit,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,
-Coal integrated retrofit 95%-CCS,efficiency,0.386,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,
-Coal-95%-CCS,capture_rate,0.95,per unit,"NREL, NREL ATB 2024",,
-Coal-95%-CCS,efficiency,0.403,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
-Coal-95%-CCS,lifetime,40.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
-Coal-99%-CCS,capture_rate,0.99,per unit,"NREL, NREL ATB 2024",,
-Coal-99%-CCS,efficiency,0.403,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
-Coal-99%-CCS,lifetime,40.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
-Coal-IGCC,efficiency,0.5,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
-Coal-IGCC,lifetime,40.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
-Coal-IGCC-90%-CCS,capture_rate,0.9,per unit,"NREL, NREL ATB 2024",,
-Coal-IGCC-90%-CCS,efficiency,0.403,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
-Coal-IGCC-90%-CCS,lifetime,40.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
 Compressed-Air-Adiabatic-bicharger,FOM,0.9265,%/year,"Viswanathan_2022, p.64 (p.86) Figure 4.14","{'carrier': ['elec', 'pair', 'elec'], 'technology_type': ['bicharger'], 'type': ['mechanical'], 'note': ['NULL']}",2020.0
 Compressed-Air-Adiabatic-bicharger,efficiency,0.7211,per unit,"Viswanathan_2022, p.59 (p.81)","{'carrier': ['elec', 'pair', 'elec'], 'technology_type': ['bicharger'], 'type': ['mechanical'], 'note': ['AC-AC efficiency at transformer level 0.52^0.5']}",2020.0
 Compressed-Air-Adiabatic-bicharger,investment,946180.9426,EUR/MW,"Viswanathan_2022, p.59 (p.81)","{'carrier': ['elec', 'pair', 'elec'], 'technology_type': ['bicharger'], 'type': ['mechanical'], 'note': ['Turbine Compressor BOP EPC Management']}",2020.0
@@ -249,15 +215,15 @@ FT fuel transport ship,FOM,5.0,%/year,"Assume comparable tanker as for LOHC tran
 FT fuel transport ship,capacity,75000.0,t_FTfuel,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",,2020.0
 FT fuel transport ship,investment,35000000.0,EUR,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",,2020.0
 FT fuel transport ship,lifetime,15.0,years,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",,2020.0
-Fischer-Tropsch,FOM,4.0,%/year,ICCT IRA e-fuels assumptions ,,2022.0
+Fischer-Tropsch,FOM,3.0,%/year,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), section 6.3.2.1.",,2017.0
 Fischer-Tropsch,VOM,2.818,EUR/MWh_FT,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",102 Hydrogen to Jet:  Variable O&M,2020.0
 Fischer-Tropsch,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,
-Fischer-Tropsch,carbondioxide-input,0.32,t_CO2/MWh_FT,ICCT IRA e-fuels assumptions ,"Input per 1t FT liquid fuels output, carbon efficiency increases with years (4.3, 3.9, 3.6, 3.3 t_CO2/t_FT from 2020-2050 with LHV 11.95 MWh_th/t_FT).",
-Fischer-Tropsch,efficiency,0.7,per unit,ICCT IRA e-fuels assumptions ,,
-Fischer-Tropsch,electricity-input,0.04,MWh_el/MWh_FT,ICCT IRA e-fuels assumptions ,"0.005 MWh_el input per FT output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output).",
-Fischer-Tropsch,hydrogen-input,1.43,MWh_H2/MWh_FT,ICCT IRA e-fuels assumptions ,"0.995 MWh_H2 per output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output).",
-Fischer-Tropsch,investment,1509724.4026,USD/MW_FT,ICCT IRA e-fuels assumptions ,"Well developed technology, no significant learning expected.",2022.0
-Fischer-Tropsch,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,2020.0
+Fischer-Tropsch,carbondioxide-input,0.2885,t_CO2/MWh_FT,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","Input per 1t FT liquid fuels output, carbon efficiency increases with years (4.3, 3.9, 3.6, 3.3 t_CO2/t_FT from 2020-2050 with LHV 11.95 MWh_th/t_FT).",
+Fischer-Tropsch,efficiency,0.799,per unit,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), section 6.3.2.2.",,2017.0
+Fischer-Tropsch,electricity-input,0.007,MWh_el/MWh_FT,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","0.005 MWh_el input per FT output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output).",
+Fischer-Tropsch,hydrogen-input,1.345,MWh_H2/MWh_FT,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","0.995 MWh_H2 per output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output).",
+Fischer-Tropsch,investment,565735.7731,EUR/MW_FT,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), table 8: “Reference scenario”.","Well developed technology, no significant learning expected.",2017.0
+Fischer-Tropsch,lifetime,20.0,years,"Danish Energy Agency, Technology Data for Renewable Fuels (04/2022), Data sheet “Methanol to Power”.",,2017.0
 Gasnetz,FOM,2.5,%,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz,2020.0
 Gasnetz,investment,28.0,EUR/kWGas,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz,2020.0
 Gasnetz,lifetime,30.0,years,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz,2020.0
@@ -346,10 +312,6 @@ Haber-Bosch,hydrogen-input,1.1484,MWh_H2/MWh_NH3,"DECHEMA 2017: DECHEMA: Low car
 Haber-Bosch,investment,1054.8211,EUR/kW_NH3,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Specific investment,2015.0
 Haber-Bosch,lifetime,30.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Technical lifetime,2015.0
 Haber-Bosch,nitrogen-input,0.1597,t_N2/MWh_NH3,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), pg. 57.",".33 MWh electricity are required for ASU per t_NH3, considering 0.4 MWh are required per t_N2 and LHV of NH3 of 5.1666 Mwh.",
-Heavy oil partial oxidation,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
-Heavy oil partial oxidation,efficiency,0.734,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
-Heavy oil partial oxidation,investment,491.0535,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
-Heavy oil partial oxidation,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
 HighT-Molten-Salt-charger,FOM,1.075,%/year,"Viswanathan_2022, NULL","{'carrier': ['elec', 'salthight'], 'technology_type': ['charger'], 'type': ['thermal'], 'note': ['Guesstimate, 50% on charger']}",2020.0
 HighT-Molten-Salt-charger,efficiency,0.99,per unit,"Viswanathan_2022, p.107 (p.129)","{'carrier': ['elec', 'salthight'], 'technology_type': ['charger'], 'type': ['thermal'], 'note': ['RTE assume 99% for charge and other for discharge']}",2020.0
 HighT-Molten-Salt-charger,investment,144192.2682,EUR/MW,"Georgiou_2018, Guesstimate that charge is 20% of capital costs of power components for sensible thermal storage","{'carrier': ['elec', 'salthight'], 'technology_type': ['charger'], 'type': ['thermal'], 'note': ['Power Equipment Charge']}",2020.0
@@ -466,18 +428,6 @@ Methanol steam reforming,FOM,4.0,%/year,"Niermann et al. (2021): Liquid Organic 
 Methanol steam reforming,investment,18016.8665,EUR/MW_H2,"Niermann et al. (2021): Liquid Organic Hydrogen Carriers and alternatives for international transport of renewable hydrogen (https://doi.org/10.1016/j.rser.2020.110171), table 4.","For high temperature steam reforming plant with a capacity of 200 MW_H2 output (6t/h). Reference plant of 1 MW (30kg_H2/h) costs 150kEUR, scale factor of 0.6 assumed.",2020.0
 Methanol steam reforming,lifetime,20.0,years,"Niermann et al. (2021): Liquid Organic Hydrogen Carriers and alternatives for international transport of renewable hydrogen (https://doi.org/10.1016/j.rser.2020.110171), table 4.",,2020.0
 Methanol steam reforming,methanol-input,1.201,MWh_MeOH/MWh_H2,"Niermann et al. (2021): Liquid Organic Hydrogen Carriers and alternatives for international transport of renewable hydrogen (https://doi.org/10.1016/j.rser.2020.110171), table 4.",Assuming per 1 t_H2 (with LHV 33.3333 MWh/t): 4.5 MWh_th and 3.2 MWh_el are required. We assume electricity can be substituted / provided with 1:1 as heat energy.,
-NG 2-on-1 Combined Cycle (F-Frame),efficiency,0.573,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,
-NG 2-on-1 Combined Cycle (F-Frame),lifetime,30.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
-NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,capture_rate,0.95,per unit,"NREL, NREL ATB 2024",,
-NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,efficiency,0.527,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,
-NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,lifetime,30.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
-NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,capture_rate,0.97,per unit,"NREL, NREL ATB 2024",,
-NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,efficiency,0.525,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,
-NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,lifetime,30.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
-NG Combined Cycle F-Class integrated retrofit 90%-CCS,capture_rate,0.9,per unit,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,
-NG Combined Cycle F-Class integrated retrofit 90%-CCS,efficiency,0.536,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,
-NG Combined Cycle F-Class integrated retrofit 95%-CCS,capture_rate,0.95,per unit,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,
-NG Combined Cycle F-Class integrated retrofit 95%-CCS,efficiency,0.536,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,
 NH3 (l) storage tank incl. liquefaction,FOM,2.0,%/year,"Guesstimate, based on H2 (l) storage tank.",,2010.0
 NH3 (l) storage tank incl. liquefaction,investment,166.8201,EUR/MWh_NH3,"Calculated based on Morgan E. 2013: doi:10.7275/11KT-3F59 , Fig. 55, Fig 58.","Based on estimated for a double-wall liquid ammonia tank (~ambient pressure, -33°C), inner tank from stainless steel, outer tank from concrete including installations for liquefaction/condensation, boil-off gas recovery and safety installations; the necessary installations make only a small fraction of the total cost. The total cost are driven by material and working time on the tanks.
 While the costs do not scale strictly linearly, we here assume they do (good approximation c.f. ref. Fig 55.) and take the costs for a 9 kt NH3 (l) tank = 8 M$2010, which is smaller 4-5x smaller than the largest deployed tanks today.
@@ -488,14 +438,6 @@ NH3 (l) transport ship,FOM,4.0,%/year,"Cihlar et al 2020 based on IEA 2019, Tabl
 NH3 (l) transport ship,capacity,53000.0,t_NH3,"Cihlar et al 2020 based on IEA 2019, Table 3-B",,2019.0
 NH3 (l) transport ship,investment,81164200.0,EUR,"Cihlar et al 2020 based on IEA 2019, Table 3-B",,2019.0
 NH3 (l) transport ship,lifetime,20.0,years,"Guess estimated based on H2 (l) tanker, but more mature technology",,2019.0
-Natural gas steam reforming,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
-Natural gas steam reforming,efficiency,0.7808,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
-Natural gas steam reforming,investment,180.0632,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
-Natural gas steam reforming,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
-Natural gas steam reforming CC,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
-Natural gas steam reforming CC,efficiency,0.6805,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
-Natural gas steam reforming CC,investment,323.8999,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
-Natural gas steam reforming CC,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
 Ni-Zn-bicharger,FOM,2.1198,%/year,"Viswanathan_2022, p.51-52 in  section 4.4.2","{'carrier': ['elec', 'nizn', 'elec'], 'technology_type': ['bicharger'], 'type': ['electrochemical'], 'note': ['Guesstimate 30% assumed of power components every 10 years ']}",2020.0
 Ni-Zn-bicharger,efficiency,0.9,per unit,"Viswanathan_2022, p.59 (p.81)","{'carrier': ['elec', 'nizn', 'elec'], 'technology_type': ['bicharger'], 'type': ['electrochemical'], 'note': ['((0.75-0.87)/2)^0.5 mean value of range efficiency is not RTE but single way AC-store conversion']}",2020.0
 Ni-Zn-bicharger,investment,81553.4846,EUR/MW,"Viswanathan_2022, p.59 (p.81) same as Li-LFP","{'carrier': ['elec', 'nizn', 'elec'], 'technology_type': ['bicharger'], 'type': ['electrochemical'], 'note': ['Power Equipment']}",2020.0
@@ -508,10 +450,6 @@ OCGT,VOM,4.762,EUR/MWh,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx
 OCGT,efficiency,0.425,per unit,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx","52 OCGT - Natural gas:  Electricity efficiency, annual average",2015.0
 OCGT,investment,442.0086,EUR/kW,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",52 OCGT - Natural gas:  Specific investment,2015.0
 OCGT,lifetime,25.0,years,"Danish Energy Agency, technology_data_for_el_and_dh.xlsx",52 OCGT - Natural gas:  Technical lifetime,2015.0
-PEM electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,,2022.0
-PEM electrolyzer,efficiency,0.72,p.u.,ICCT IRA e-fuels assumptions ,,
-PEM electrolyzer,investment,739.9873,USD/kW,ICCT IRA e-fuels assumptions ,,2022.0
-PEM electrolyzer,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,
 PHS,FOM,1.0,%/year,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions,2015.0
 PHS,efficiency,0.75,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions,2015.0
 PHS,investment,2274.8177,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions,2010.0
@@ -543,10 +481,6 @@ SMR CC,capture_rate,0.9,per unit,"IEA Global average levelised cost of hydrogen 
 SMR CC,efficiency,0.69,per unit (in LHV),"IEA Global average levelised cost of hydrogen production by energy source and technology, 2019 and 2050 (2020), https://www.iea.org/data-and-statistics/charts/global-average-levelised-cost-of-hydrogen-production-by-energy-source-and-technology-2019-and-2050",,
 SMR CC,investment,605753.2171,EUR/MW_CH4,Danish Energy Agency,"Technology data for renewable fuels, in pdf on table 3 p.311",2015.0
 SMR CC,lifetime,30.0,years,"IEA Global average levelised cost of hydrogen production by energy source and technology, 2019 and 2050 (2020), https://www.iea.org/data-and-statistics/charts/global-average-levelised-cost-of-hydrogen-production-by-energy-source-and-technology-2019-and-2050",,
-SOEC,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,,2022.0
-SOEC,efficiency,0.885,p.u.,ICCT IRA e-fuels assumptions ,,
-SOEC,investment,842.7756,USD/kW,ICCT IRA e-fuels assumptions ,,2022.0
-SOEC,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,
 Sand-charger,FOM,1.075,%/year,"Viswanathan_2022, NULL","{'carrier': ['elec', 'sand'], 'technology_type': ['charger'], 'type': ['thermal'], 'note': ['Guesstimate, 50% on charger']}",2020.0
 Sand-charger,efficiency,0.99,per unit,"Viswanathan_2022, p.107 (p.129)","{'carrier': ['elec', 'sand'], 'technology_type': ['charger'], 'type': ['thermal'], 'note': ['RTE assume 99% for charge and other for discharge']}",2020.0
 Sand-charger,investment,144192.2682,EUR/MW,"Georgiou_2018, Guesstimate that charge is 20% of capital costs of power components for sensible thermal storage","{'carrier': ['elec', 'sand'], 'technology_type': ['charger'], 'type': ['thermal'], 'note': ['Power Equipment Charge']}",2020.0
@@ -558,10 +492,6 @@ Sand-discharger,lifetime,35.0,years,"Viswanathan_2022, p.107 (p.129)","{'carrier
 Sand-store,FOM,0.3308,%/year,"Viswanathan_2022, p 104 (p.126)","{'carrier': ['sand'], 'technology_type': ['store'], 'type': ['thermal'], 'note': ['not provided calculated as for hydrogen']}",2020.0
 Sand-store,investment,6700.8517,EUR/MWh,"Viswanathan_2022, p.100 (p.122)","{'carrier': ['sand'], 'technology_type': ['store'], 'type': ['thermal'], 'note': ['SB and BOS 0.85 of 2021 value']}",2020.0
 Sand-store,lifetime,35.0,years,"Viswanathan_2022, p.107 (p.129)","{'carrier': ['sand'], 'technology_type': ['store'], 'type': ['thermal'], 'note': ['NULL']}",2020.0
-Solid biomass steam reforming,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
-Solid biomass steam reforming,efficiency,0.712,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,
-Solid biomass steam reforming,investment,590.7702,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0
-Solid biomass steam reforming,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,
 Steam methane reforming,FOM,3.0,%/year,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",Large scale SMR facility (150-300 MW).,2015.0
 Steam methane reforming,investment,497454.611,EUR/MW_H2,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",Large scale SMR facility (150-300 MW). Currency conversion 1.17 USD = 1 EUR.,2015.0
 Steam methane reforming,lifetime,30.0,years,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",Large scale SMR facility (150-300 MW).,2015.0
@@ -818,7 +748,7 @@ clean water tank storage,lifetime,30.0,years,"Caldera et al 2016: Local cost of 
 coal,CO2 intensity,0.3361,tCO2/MWh_th,Entwicklung der spezifischen Kohlendioxid-Emissionen des deutschen Strommix in den Jahren 1990 - 2018,,
 coal,FOM,1.31,%/year,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.","Calculated based on average of listed range, i.e. (39.5+91.25) USD/kW_e/a /2 / (1.09 USD/EUR) / investment cost * 100.",2023.0
 coal,VOM,3.2612,EUR/MWh_e,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.","Calculated based on average of listed range, i.e. (3+5.5)USD/MWh_e/2 / (1.09 USD/EUR).",2023.0
-coal,efficiency,0.356,p.u.,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.","Calculated based on average of listed range, i.e. 1 / ((8.75+12) MMbtu/MWh_th /2 / (3.4095 MMbtu/MWh_th)), rounded up.",2023.0
+coal,efficiency,0.33,p.u.,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.","Calculated based on average of listed range, i.e. 1 / ((8.75+12) MMbtu/MWh_th /2 / (3.4095 MMbtu/MWh_th)), rounded up.",2023.0
 coal,fuel,9.5542,EUR/MWh_th,"DIW (2013): Current and propsective costs of electricity generation until 2050, http://hdl.handle.net/10419/80348 , pg. 80 text below figure 10, accessed: 2023-12-14.","Based on IEA 2011 data, 99 USD/t.",2010.0
 coal,investment,3827.1629,EUR/kW_e,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.","Higher costs include coal plants with CCS, but since using here for calculating the average nevertheless. Calculated based on average of listed range, i.e. (3200+6775) USD/kW_e/2 / (1.09 USD/EUR).",2023.0
 coal,lifetime,40.0,years,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.",,2023.0
@@ -878,15 +808,14 @@ digestible biomass to hydrogen,FOM,4.25,%/year,"Zech et.al. DBFZ Report Nr. 19. 
 digestible biomass to hydrogen,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,
 digestible biomass to hydrogen,efficiency,0.39,per unit,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",,
 digestible biomass to hydrogen,investment,2913.0196,EUR/kW_th,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",,2014.0
-direct air capture,FOM,1.3,%/year,ICCT IRA e-fuels assumptions ,,2022.0
+direct air capture,FOM,4.95,%/year,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture,2020.0
 direct air capture,compression-electricity-input,0.15,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture,2020.0
 direct air capture,compression-heat-output,0.2,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture,2020.0
-direct air capture,electricity-input,0.24,MWh_el/t_CO2,ICCT IRA e-fuels assumptions ,,2020.0
-direct air capture,heat-input,1.17,MWh_th/t_CO2,ICCT IRA e-fuels assumptions ,,2020.0
+direct air capture,electricity-input,0.4,MWh_el/t_CO2,"Beuttler et al (2019): The Role of Direct Air Capture in Mitigation of Antropogenic Greenhouse Gas emissions (https://doi.org/10.3389/fclim.2019.00010), alternative:  Breyer et al (2019).","0.4 MWh based on Beuttler et al (2019) for Climeworks LT DAC, alternative value: 0.182 MWh based on Breyer et al (2019). Should already include electricity for water scrubbing and compression (high quality CO2 output).",2020.0
+direct air capture,heat-input,1.6,MWh_th/t_CO2,"Beuttler et al (2019): The Role of Direct Air Capture in Mitigation of Antropogenic Greenhouse Gas emissions (https://doi.org/10.3389/fclim.2019.00010), alternative:  Breyer et al (2019).","Thermal energy demand. Provided via air-sourced heat pumps. 1.6 MWh based on Beuttler et al (2019) for Climeworks LT DAC, alternative value: 1.102 MWh based on Breyer et al (2019).",2020.0
 direct air capture,heat-output,0.75,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture,2020.0
-direct air capture,investment,11034260.0394,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,,2022.0
+direct air capture,investment,4500000.0,EUR/(tCO2/h),"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture,2020.0
 direct air capture,lifetime,20.0,years,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture,2020.0
-direct air capture,years,30.0,years,ICCT IRA e-fuels assumptions ,,
 direct firing gas,FOM,1.0909,%/year,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",312.a Direct firing Natural Gas:  Fixed O&M,2019.0
 direct firing gas,VOM,0.282,EUR/MWh,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",312.a Direct firing Natural Gas:  Variable O&M,2019.0
 direct firing gas,efficiency,1.0,per unit,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx","312.a Direct firing Natural Gas:  Total efficiency, net, annual average",2019.0
@@ -942,12 +871,12 @@ electricity grid connection,investment,148.151,EUR/kW,DEA, from old pypsa cost a
 electricity grid connection,lifetime,40.0,years,TODO, from old pypsa cost assumptions,2015.0
 electrobiofuels,C in fuel,0.9304,per unit,Stoichiometric calculation,,
 electrobiofuels,FOM,2.9164,%/year,combination of BtL and electrofuels,,2015.0
-electrobiofuels,VOM,2.5772,EUR/MWh_th,combination of BtL and electrofuels,,2022.0
+electrobiofuels,VOM,3.0103,EUR/MWh_th,combination of BtL and electrofuels,,2017.0
 electrobiofuels,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,
 electrobiofuels,efficiency-biomass,1.3267,per unit,Stoichiometric calculation,,
-electrobiofuels,efficiency-hydrogen,1.1173,per unit,Stoichiometric calculation,,
-electrobiofuels,efficiency-tot,0.6065,per unit,Stoichiometric calculation,,
-electrobiofuels,investment,947834.9056,EUR/kW_th,combination of BtL and electrofuels,,2022.0
+electrobiofuels,efficiency-hydrogen,1.2754,per unit,Stoichiometric calculation,,
+electrobiofuels,efficiency-tot,0.6503,per unit,Stoichiometric calculation,,
+electrobiofuels,investment,356768.6132,EUR/kW_th,combination of BtL and electrofuels,,2017.0
 electrolysis,FOM,4.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Fixed O&M ,2020.0
 electrolysis,efficiency,0.6763,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Hydrogen Output,2020.0
 electrolysis,efficiency-heat,0.1571,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:   - hereof recoverable for district heating,2020.0
@@ -995,14 +924,14 @@ hydro,FOM,1.0,%/year,DIW DataDoc http://hdl.handle.net/10419/80348, from old pyp
 hydro,efficiency,0.9,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions,2015.0
 hydro,investment,2274.8177,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions,2010.0
 hydro,lifetime,80.0,years,IEA2010, from old pypsa cost assumptions,2015.0
-hydrogen storage compressor,FOM,4.0,%/year,ICCT IRA e-fuels assumptions ,-,2022.0
-hydrogen storage compressor,compression-electricity-input,0.05,MWh_el/MWh_H2,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",1.707 kWh/kg.,
-hydrogen storage compressor,investment,2.0291,USD/kWh_H2,ICCT IRA e-fuels assumptions ,,2022.0
-hydrogen storage compressor,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,-,
-hydrogen storage tank type 1,FOM,4.0,%/year,ICCT IRA e-fuels assumptions ,-,2022.0
-hydrogen storage tank type 1,investment,15.0133,USD/kWh_H2,ICCT IRA e-fuels assumptions ,,2022.0
-hydrogen storage tank type 1,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,-,
-hydrogen storage tank type 1,min_fill_level,6.0,%,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.",-,
+hydrogen storage compressor,FOM,4.0,%/year,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",-,2020.0
+hydrogen storage compressor,compression-electricity-input,0.05,MWh_el/MWh_H2,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",1.707 kWh/kg.,2020.0
+hydrogen storage compressor,investment,87.69,EUR/kW_H2,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.","2923 EUR/kg_H2. For a 206 kg/h compressor. Base CAPEX 40 528 EUR/kW_el with scale factor 0.4603. kg_H2 converted to MWh using LHV. Pressure range: 30 bar in, 250 bar out.",2020.0
+hydrogen storage compressor,lifetime,15.0,years,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",-,2020.0
+hydrogen storage tank type 1,FOM,2.0,%/year,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.",-,2020.0
+hydrogen storage tank type 1,investment,13.5,EUR/kWh_H2,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.","450 EUR/kg_H2 converted with LHV to MWh. For a type 1 hydrogen storage tank (steel, 15-250 bar). Currency year assumed 2020 for initial publication of reference; observe note in SI.4.3 that no currency year is explicitly stated in the reference.",2020.0
+hydrogen storage tank type 1,lifetime,20.0,years,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.",-,2020.0
+hydrogen storage tank type 1,min_fill_level,6.0,%,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.",-,2020.0
 hydrogen storage tank type 1 including compressor,FOM,1.873,%/year,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Fixed O&M,2015.0
 hydrogen storage tank type 1 including compressor,investment,25.424,EUR/kWh,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Specific investment,2015.0
 hydrogen storage tank type 1 including compressor,lifetime,30.0,years,"Danish Energy Agency, technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Technical lifetime,2015.0

@@ -1,3 +1,4 @@
+technology,parameter,year,value,unit,currency_year,source,further_description
 Fischer-Tropsch,efficiency,2020,0.7,per unit,,ICCT IRA e-fuels assumptions ,
 Fischer-Tropsch,investment,2020,1696429,USD/MW_FT,2022,ICCT IRA e-fuels assumptions ,"Well developed technology, no significant learning expected."
 Fischer-Tropsch,lifetime,2020,20,years,,ICCT IRA e-fuels assumptions ,

@@ -56,7 +56,9 @@ def test_filter_atb_input_file(config, file_year, year, expected):
         "nrel_atb_core_metric_parameter_to_keep"
     ]
     nrel_atb_technology_to_remove = config["nrel_atb"]["nrel_atb_technology_to_remove"]
-    input_file_path = pathlib.Path(path_cwd, "inputs", f"atb_e_{file_year}.parquet")
+    input_file_path = pathlib.Path(
+        path_cwd, "inputs", "US", f"atb_e_{file_year}.parquet"
+    )
     if file_year in [2022, 2024]:
         input_file = filter_atb_input_file(
             input_file_path,
@@ -242,7 +244,7 @@ def test_pre_process_atb_input_file(config, input_file_year, year, expected):
     The test verifies what is returned by pre_process_atb_input_file.
     """
     input_file_path = pathlib.Path(
-        path_cwd, "inputs", f"atb_e_{input_file_year}.parquet"
+        path_cwd, "inputs", "US", f"atb_e_{input_file_year}.parquet"
     )
     nrel_atb_columns_to_keep = config["nrel_atb"]["nrel_atb_columns_to_keep"]
     nrel_atb_core_metric_parameter_to_keep = config["nrel_atb"][
@@ -326,7 +328,7 @@ def test_duplicate_fuel_cost(config):
     """
     The test verifies what is returned by duplicate_fuel_cost.
     """
-    input_file_path = pathlib.Path(path_cwd, "inputs", "fuel_costs_usa.csv")
+    input_file_path = pathlib.Path(path_cwd, "inputs", "US", "fuel_costs_usa.csv")
     output_df = duplicate_fuel_cost(input_file_path, config["years"])
     assert output_df.shape == (21, 10)
 
@@ -462,3 +464,12 @@ def test_final_output(tmpdir, cost_dataframe, atb_cost_dataframe):
     comparison_df = output_df.compare(reference_df)
     pathlib.Path(input_cost_path).unlink(missing_ok=True)
     assert comparison_df.empty
+
+
+# def test_pre_process_manual_input_usa(config):
+#    list_of_years = config["years"]
+#    manual_input_usa_file_path = pathlib.Path(path_cwd, "inputs", "US", "manual_input_usa.csv")
+#    inflation_rate_file_path = pathlib.Path(path_cwd, "inputs", "prc_hicp_aind__custom_9928419_spreadsheet.xlsx")
+#    year = 2020
+#    new_df = pre_process_manual_input_usa(manual_input_usa_file_path, inflation_rate_file_path, list_of_years, config["eur_year"], year)
+#    new_df.to_csv(f"modified_manual_input_usa_{year}.csv")

@@ -314,15 +314,12 @@ def modify_cost_input_file(cost_dataframe, manual_input_usa_dataframe, list_of_y
     btl_cost_data = np.interp(x=list_of_years, xp=[2020, 2050], fp=[3500, 2000])
     btl_cost = pd.Series(data=btl_cost_data, index=list_of_years)
 
-    efuel_scale_factor = (
-            updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "BtL") & (updated_cost_dataframe["parameter"] == "C stored"), "value"]
-            * updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "Fischer-Tropsch") & (updated_cost_dataframe["parameter"] == "capture rate"), "value"]
-    )
+    efuel_scaling_factor = updated_cost_dataframe.query("technology.str.casefold() == 'btl' & parameter.str.casefold() == 'c stored'")["value"].values[0]*updated_cost_dataframe.query("technology.str.casefold() == 'fischer-tropsch' & parameter.str.casefold() == 'capture rate'")["value"].values[0]
 
     investment_cost = (
             btl_cost[year]
-            + updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "Fischer-Tropsch") & (updated_cost_dataframe["parameter"] == "investment"), "value"]
-            * efuel_scale_factor
+            + updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "Fischer-Tropsch") & (updated_cost_dataframe["parameter"] == "investment"), "value"].values[0]
+            * efuel_scaling_factor
     )
 
     updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "electrobiofuels") & (updated_cost_dataframe["parameter"] == "efficiency-tot"), "value"] = 1 / (
@@ -332,11 +329,11 @@ def modify_cost_input_file(cost_dataframe, manual_input_usa_dataframe, list_of_y
 
     updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "electrobiofuels") & (updated_cost_dataframe["parameter"] == "efficiency-hydrogen"), "value"] = (
             updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "Fischer-Tropsch") & (updated_cost_dataframe["parameter"] == "efficiency"), "value"]
-            / efuel_scale_factor
+            / efuel_scaling_factor
     )
 
-    #if investment_cost > 0:
-    #    updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "electrobiofuels") & (updated_cost_dataframe["investment"] == "efficiency-hydrogen"), "value"] = updated_cost_dataframe
+    if investment_cost > 0:
+        updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "electrobiofuels") & (updated_cost_dataframe["parameter"] == "investment"), "value"] = investment_cost
 
     return updated_cost_dataframe
 

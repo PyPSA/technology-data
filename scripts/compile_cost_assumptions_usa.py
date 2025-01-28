@@ -271,20 +271,20 @@ def pre_process_manual_input_usa(
     - DataFrame, updated manual input usa
     """
 
-    # read the input file
+    # Read the input file
     manual_input_usa_file_df = pd.read_csv(
         manual_input_usa_file_path, quotechar='"', sep=",", keep_default_na=False
     )
 
-    # rename the column further_description
+    # Rename the column further_description
     manual_input_usa_file_df = manual_input_usa_file_df.rename(
         columns={"further_description": "further description"}
     )
 
-    # read the inflation rate
+    # Read the inflation rate
     inflation_rate_df = prepare_inflation_rate(inflation_rate_file_path)
 
-    # creates cost estimates for all years
+    # Create cost estimates for all years
     list_dataframe_row = []
     for tech in manual_input_usa_file_df["technology"].unique():
         c0 = manual_input_usa_file_df[manual_input_usa_file_df["technology"] == tech]
@@ -312,7 +312,7 @@ def pre_process_manual_input_usa(
             list_dataframe_row.append(s)
     manual_input_usa_file_df = pd.DataFrame(list_dataframe_row).reset_index(drop=True)
 
-    # filter the information for a given year
+    # Filter the information for a given year
     manual_input_usa_file_df = manual_input_usa_file_df[
         [
             "technology",
@@ -325,10 +325,10 @@ def pre_process_manual_input_usa(
         ]
     ].rename(columns={year: "value"})
 
-    # casts the value column to float
+    # Cast the value column to float
     manual_input_usa_file_df["value"] = manual_input_usa_file_df["value"].astype(float)
 
-    # corrects the cost assumptions to the inflation rate
+    # Correct the cost assumptions to the inflation rate
     inflation_adjusted_manual_input_usa_file_df = adjust_for_inflation(
         inflation_rate_df,
         manual_input_usa_file_df,
@@ -337,7 +337,7 @@ def pre_process_manual_input_usa(
         ["value"],
     )
 
-    # rounds the results
+    # Round the results
     inflation_adjusted_manual_input_usa_file_df.loc[:, "value"] = round(
         inflation_adjusted_manual_input_usa_file_df.value.astype(float), n_digits
     )
@@ -348,6 +348,31 @@ def pre_process_manual_input_usa(
 def modify_cost_input_file(
     cost_dataframe, manual_input_usa_dataframe, list_of_years, year, n_digits
 ):
+    """
+        The function filters out from the existing cost assumptions the rows corresponding
+        to the technology-parameter pairs from manual_input_usa.csv. It then concatenates manual_input_usa.csv and
+        adjourns the estimates for electrobiofuels. Namely, it:
+        - creates a list of tuples (technology, parameter) from manual_input_usa.csv
+        - renames the column "further_description" to "further description"
+        - prepares a dataframe with the inflation rate per year in European Union
+        - starting from manual_input_usa.csv, it estimates the parameters for each technology for all the requested years
+        - it selects the values for a given year
+        - it adjusts the cost estimates to the inflation rate
+        - queries the necessary rows of the existing cost dataframe
+
+        Input arguments
+        - manual_input_usa_file_path : str, manual_input_usa.csv file path
+        - inflation_rate_file_path : str, inflation rate file path
+        - list_of_years: list, list of the years for which a cost assumption is provided
+        - eur_year: int, year for european output
+        - year: int, year from list_of_years
+        - n_digits: int, number of significant digits
+
+        Output
+        - DataFrame, updated manual input usa
+    """
+
+    # cra
     list_technology_parameter_tuples_manual_input_usa = [
         (str(x), str(y))
         for (x, y) in zip(

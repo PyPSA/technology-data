@@ -13,7 +13,7 @@ import pathlib
 
 import numpy as np
 import pandas as pd
-from _helpers import mock_snakemake, adjust_for_inflation
+from _helpers import adjust_for_inflation, mock_snakemake
 from compile_cost_assumptions import prepare_inflation_rate
 
 
@@ -242,7 +242,12 @@ def replace_value_name(dataframe, conversion_dict, column_name):
 
 
 def pre_process_manual_input_usa(
-    manual_input_usa_file_path, inflation_rate_file_path, list_of_years, eur_year, year, n_digits
+    manual_input_usa_file_path,
+    inflation_rate_file_path,
+    list_of_years,
+    eur_year,
+    year,
+    n_digits,
 ):
     """
     The function reads and modifies the manual_input_usa.csv file. Namely, it:
@@ -333,54 +338,151 @@ def pre_process_manual_input_usa(
     )
 
     # rounds the results
-    inflation_adjusted_manual_input_usa_file_df.loc[:, "value"] = round(inflation_adjusted_manual_input_usa_file_df.value.astype(float), n_digits)
+    inflation_adjusted_manual_input_usa_file_df.loc[:, "value"] = round(
+        inflation_adjusted_manual_input_usa_file_df.value.astype(float), n_digits
+    )
 
     return inflation_adjusted_manual_input_usa_file_df
 
 
-def modify_cost_input_file(cost_dataframe, manual_input_usa_dataframe, list_of_years, year, n_digits):
-    list_technology_parameter_tuples_manual_input_usa = [(str(x), str(y)) for (x, y) in
-                                                         zip(manual_input_usa_dataframe.technology,
-                                                             manual_input_usa_dataframe.parameter)]
-    queried_cost_df = cost_dataframe[~(pd.Series(list(zip(cost_dataframe["technology"], cost_dataframe["parameter"]))).isin(
-        list_technology_parameter_tuples_manual_input_usa))]
+def modify_cost_input_file(
+    cost_dataframe, manual_input_usa_dataframe, list_of_years, year, n_digits
+):
+    list_technology_parameter_tuples_manual_input_usa = [
+        (str(x), str(y))
+        for (x, y) in zip(
+            manual_input_usa_dataframe.technology, manual_input_usa_dataframe.parameter
+        )
+    ]
+    queried_cost_df = cost_dataframe[
+        ~(
+            pd.Series(
+                list(zip(cost_dataframe["technology"], cost_dataframe["parameter"]))
+            ).isin(list_technology_parameter_tuples_manual_input_usa)
+        )
+    ]
 
-    updated_cost_dataframe = pd.concat([queried_cost_df, manual_input_usa_dataframe]).reset_index(drop=True)
+    updated_cost_dataframe = pd.concat(
+        [queried_cost_df, manual_input_usa_dataframe]
+    ).reset_index(drop=True)
 
     # update calculations involving newly updated technologies
     btl_cost_data = np.interp(x=list_of_years, xp=[2020, 2050], fp=[3500, 2000])
     btl_cost = pd.Series(data=btl_cost_data, index=list_of_years)
 
-    efuel_scaling_factor = updated_cost_dataframe.query("technology.str.casefold() == 'btl' & parameter.str.casefold() == 'c stored'")["value"].values[0]*updated_cost_dataframe.query("technology.str.casefold() == 'fischer-tropsch' & parameter.str.casefold() == 'capture rate'")["value"].values[0]
+    efuel_scaling_factor = (
+        updated_cost_dataframe.query(
+            "technology.str.casefold() == 'btl' & parameter.str.casefold() == 'c stored'"
+        )["value"].values[0]
+        * updated_cost_dataframe.query(
+            "technology.str.casefold() == 'fischer-tropsch' & parameter.str.casefold() == 'capture rate'"
+        )["value"].values[0]
+    )
 
-    investment_cost = np.round((
+    investment_cost = np.round(
+        (
             btl_cost[year]
-            + updated_cost_dataframe.loc[(updated_cost_dataframe["technology"].str.casefold() == "fischer-tropsch") & (updated_cost_dataframe["parameter"].str.casefold() == "investment"), "value"].values[0]
+            + updated_cost_dataframe.loc[
+                (
+                    updated_cost_dataframe["technology"].str.casefold()
+                    == "fischer-tropsch"
+                )
+                & (updated_cost_dataframe["parameter"].str.casefold() == "investment"),
+                "value",
+            ].values[0]
             * efuel_scaling_factor
-    ), n_digits)
+        ),
+        n_digits,
+    )
 
-    updated_cost_dataframe.loc[(updated_cost_dataframe["technology"].str.casefold() == "electrobiofuels") & (updated_cost_dataframe["parameter"].str.casefold() == "efficiency-tot"), "value"] = np.round(1.0 / (
-            1.0 / updated_cost_dataframe.loc[(updated_cost_dataframe["technology"].str.casefold() == "electrobiofuels") & (updated_cost_dataframe["parameter"].str.casefold() == "efficiency-hydrogen"), "value"].values[0]
-            + 1.0 / updated_cost_dataframe.loc[(updated_cost_dataframe["technology"].str.casefold() == "electrobiofuels") & (updated_cost_dataframe["parameter"] == "efficiency-biomass"), "value"].values[0]
-    ), n_digits)
+    updated_cost_dataframe.loc[
+        (updated_cost_dataframe["technology"].str.casefold() == "electrobiofuels")
+        & (updated_cost_dataframe["parameter"].str.casefold() == "efficiency-tot"),
+        "value",
+    ] = np.round(
+        1.0
+        / (
+            1.0
+            / updated_cost_dataframe.loc[
+                (
+                    updated_cost_dataframe["technology"].str.casefold()
+                    == "electrobiofuels"
+                )
+                & (
+                    updated_cost_dataframe["parameter"].str.casefold()
+                    == "efficiency-hydrogen"
+                ),
+                "value",
+            ].values[0]
+            + 1.0
+            / updated_cost_dataframe.loc[
+                (
+                    updated_cost_dataframe["technology"].str.casefold()
+                    == "electrobiofuels"
+                )
+                & (updated_cost_dataframe["parameter"] == "efficiency-biomass"),
+                "value",
+            ].values[0]
+        ),
+        n_digits,
+    )
 
-    updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "electrobiofuels") & (updated_cost_dataframe["parameter"] == "efficiency-hydrogen"), "value"] = np.round((
-            updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "Fischer-Tropsch") & (updated_cost_dataframe["parameter"] == "efficiency"), "value"].values[0]
+    updated_cost_dataframe.loc[
+        (updated_cost_dataframe["technology"] == "electrobiofuels")
+        & (updated_cost_dataframe["parameter"] == "efficiency-hydrogen"),
+        "value",
+    ] = np.round(
+        (
+            updated_cost_dataframe.loc[
+                (updated_cost_dataframe["technology"] == "Fischer-Tropsch")
+                & (updated_cost_dataframe["parameter"] == "efficiency"),
+                "value",
+            ].values[0]
             / efuel_scaling_factor
-    ), n_digits)
+        ),
+        n_digits,
+    )
 
-    vom_value = np.round((
-            updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "BtL") & (updated_cost_dataframe["parameter"] == "VOM"), "value"].values[0]
-            + updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "Fischer-Tropsch") & (updated_cost_dataframe["parameter"] == "VOM"), "value"].values[0] * efuel_scaling_factor
-    ), n_digits)
+    vom_value = np.round(
+        (
+            updated_cost_dataframe.loc[
+                (updated_cost_dataframe["technology"] == "BtL")
+                & (updated_cost_dataframe["parameter"] == "VOM"),
+                "value",
+            ].values[0]
+            + updated_cost_dataframe.loc[
+                (updated_cost_dataframe["technology"] == "Fischer-Tropsch")
+                & (updated_cost_dataframe["parameter"] == "VOM"),
+                "value",
+            ].values[0]
+            * efuel_scaling_factor
+        ),
+        n_digits,
+    )
 
     if investment_cost > 0.0:
-        updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "electrobiofuels") & (updated_cost_dataframe["parameter"] == "investment"), "value"] = investment_cost
-        updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "electrobiofuels") & (updated_cost_dataframe["parameter"] == "investment"), "currency_year"] = 2022.0
+        updated_cost_dataframe.loc[
+            (updated_cost_dataframe["technology"] == "electrobiofuels")
+            & (updated_cost_dataframe["parameter"] == "investment"),
+            "value",
+        ] = investment_cost
+        updated_cost_dataframe.loc[
+            (updated_cost_dataframe["technology"] == "electrobiofuels")
+            & (updated_cost_dataframe["parameter"] == "investment"),
+            "currency_year",
+        ] = 2022.0
 
     if vom_value > 0.0:
-        updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "electrobiofuels") & (updated_cost_dataframe["parameter"] == "VOM"), "value"] = vom_value
-        updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "electrobiofuels") & (updated_cost_dataframe["parameter"] == "VOM"), "currency_year"] = 2022.0
+        updated_cost_dataframe.loc[
+            (updated_cost_dataframe["technology"] == "electrobiofuels")
+            & (updated_cost_dataframe["parameter"] == "VOM"),
+            "value",
+        ] = vom_value
+        updated_cost_dataframe.loc[
+            (updated_cost_dataframe["technology"] == "electrobiofuels")
+            & (updated_cost_dataframe["parameter"] == "VOM"),
+            "currency_year",
+        ] = 2022.0
 
     return updated_cost_dataframe
 
@@ -735,7 +837,9 @@ if __name__ == "__main__":
             input_cost_path, ["financial_case", "scenario"]
         )
 
-        cost_df = modify_cost_input_file(cost_df, manual_input_usa_df, year_list, year_val, num_digits)
+        cost_df = modify_cost_input_file(
+            cost_df, manual_input_usa_df, year_list, year_val, num_digits
+        )
 
         atb_e_df = pre_process_atb_input_file(
             input_atb_path,

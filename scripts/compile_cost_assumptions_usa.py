@@ -14,7 +14,7 @@ import pathlib
 import numpy as np
 import pandas as pd
 from _helpers import mock_snakemake
-from compile_cost_assumptions import prepare_inflation_rate
+from compile_cost_assumptions import carbon_flow, prepare_inflation_rate
 
 
 def get_conversion_dictionary(flag: str):
@@ -249,8 +249,7 @@ def adjust_for_inflation(inflation_rate, costs, techs, eur_year, col):
         One or more techs in costs index for which the inflation adjustment is done.
     ref_year: int
         Reference year for which the costs are provided and based on which the inflation adjustment is done.
-    costs: pd.Dataframe
-        Dataframe containing the costs data with multiindex on technology and one index key 'investment'.
+    costs: Dataframe containing the costs data with multiindex on technology and one index key 'investment'.
     """
 
     def get_factor(inflation_rate, ref_year, eur_year):
@@ -282,7 +281,7 @@ def adjust_for_inflation(inflation_rate, costs, techs, eur_year, col):
 
 
 def pre_process_manual_input_usa(
-    manual_input_usa_file_path, inflation_rate_file_path, list_of_years, eur_year, year
+    manual_input_usa_file_path, inflation_rate_file_path, list_of_years, eur_year, year, n_digits
 ):
     manual_input_usa_file_df = pd.read_csv(
         manual_input_usa_file_path, quotechar='"', sep=",", keep_default_na=False
@@ -330,15 +329,55 @@ def pre_process_manual_input_usa(
         ]
     ].rename(columns={year: "value"})
     manual_input_usa_file_df["value"] = manual_input_usa_file_df["value"].astype(float)
-    new_df = adjust_for_inflation(
+    inflation_adjusted_manual_input_usa_file_df = adjust_for_inflation(
         inflation_rate_df,
         manual_input_usa_file_df,
         manual_input_usa_file_df.technology.unique(),
         eur_year,
         ["value"],
     )
-    new_df.loc[:, "value"] = round(new_df.value.astype(float), 4)
-    return new_df
+    inflation_adjusted_manual_input_usa_file_df.loc[:, "value"] = round(inflation_adjusted_manual_input_usa_file_df.value.astype(float), n_digits)
+    return inflation_adjusted_manual_input_usa_file_df
+
+
+def modify_cost_input_file(cost_dataframe, manual_input_usa_dataframe, list_of_years, year):
+    list_technology_parameter_tuples_manual_input_usa = [(str(x), str(y)) for (x, y) in
+                                                         zip(manual_input_usa_dataframe.technology,
+                                                             manual_input_usa_dataframe.parameter)]
+    queried_cost_df = cost_dataframe[~(pd.Series(list(zip(cost_dataframe["technology"], cost_dataframe["parameter"]))).isin(
+        list_technology_parameter_tuples_manual_input_usa))]
+
+    updated_cost_dataframe = pd.concat([queried_cost_df, manual_input_usa_dataframe]).reset_index(drop=True)
+
+    # update calculations involving newly updated technologies
+    btl_cost_data = np.interp(x=list_of_years, xp=[2020, 2050], fp=[3500, 2000])
+    btl_cost = pd.Series(data=btl_cost_data, index=list_of_years)
+
+    efuel_scale_factor = (
+            updated_cost_dataframe.loc[("BtL", "C stored"), "value"]
+            * updated_cost_dataframe.loc[("Fischer-Tropsch", "capture rate"), "value"]
+    )
+
+    investment_cost = (
+            btl_cost[year]
+            + updated_cost_dataframe.loc[("Fischer-Tropsch", "investment"), "value"]
+            * efuel_scale_factor
+    )
+
+    updated_cost_dataframe.loc[("electrobiofuels", "efficiency-tot"), "value"] = 1 / (
+            1 / updated_cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "value"]
+            + 1 / updated_cost_dataframe.loc[("electrobiofuels", "efficiency-biomass"), "value"]
+    )
+
+    updated_cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "value"] = (
+            updated_cost_dataframe.loc[("Fischer-Tropsch", "efficiency"), "value"]
+            / efuel_scale_factor
+    )
+
+    if investment_cost > 0:
+        updated_cost_dataframe.loc[("electrobiofuels", "investment"), "value"] = updated_cost_dataframe
+
+    return updated_cost_dataframe
 
 
 def query_cost_dataframe(cost_dataframe, technology_dictionary, parameter_dictionary):
@@ -627,6 +666,7 @@ if __name__ == "__main__":
         snakemake = mock_snakemake("compile_cost_assumptions_usa")
 
     year_list = sorted(snakemake.config["years"])
+    num_digits = snakemake.config["ndigits"]
     eur_reference_year = snakemake.config["eur_year"]
     input_file_list_atb = snakemake.input.nrel_atb_input_files
     input_file_discount_rate = snakemake.input.nrel_atb_input_discount_rate
@@ -683,11 +723,14 @@ if __name__ == "__main__":
             year_list,
             eur_reference_year,
             year_val,
+            num_digits,
         )
 
         cost_df = pre_process_cost_input_file(
             input_cost_path, ["financial_case", "scenario"]
         )
+
+        cost_df = modify_cost_input_file(cost_df, manual_input_usa_df, year_list, year_val)
 
         atb_e_df = pre_process_atb_input_file(
             input_atb_path,
@@ -734,23 +777,8 @@ if __name__ == "__main__":
             ),
         ].reset_index(drop=True)
 
-        # concatenate the existing and manual_input_usa dataframes
-        list_technologies_manual_input_usa = [
-            str(x).casefold() for x in set(manual_input_usa_df.technology)
-        ]
-        query_string_manual_input_usa = "~technology.str.casefold().isin(@t)"
-        updated_cost_df = pd.concat(
-            [
-                cost_df.query(
-                    query_string_manual_input_usa,
-                    local_dict={"t": list_technologies_manual_input_usa},
-                ),
-                manual_input_usa_df,
-            ]
-        ).reset_index(drop=True)
-
         # concatenate the existing and NREL/ATB cost dataframes
-        updated_cost_df = pd.concat([updated_cost_df, atb_e_df]).reset_index(drop=True)
+        updated_cost_df = pd.concat([cost_df, atb_e_df]).reset_index(drop=True)
 
         # add discount rate
 

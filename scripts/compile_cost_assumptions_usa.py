@@ -301,7 +301,7 @@ def pre_process_manual_input_usa(
     return inflation_adjusted_manual_input_usa_file_df
 
 
-def modify_cost_input_file(cost_dataframe, manual_input_usa_dataframe, list_of_years, year):
+def modify_cost_input_file(cost_dataframe, manual_input_usa_dataframe, list_of_years, year, n_digits):
     list_technology_parameter_tuples_manual_input_usa = [(str(x), str(y)) for (x, y) in
                                                          zip(manual_input_usa_dataframe.technology,
                                                              manual_input_usa_dataframe.parameter)]
@@ -316,24 +316,34 @@ def modify_cost_input_file(cost_dataframe, manual_input_usa_dataframe, list_of_y
 
     efuel_scaling_factor = updated_cost_dataframe.query("technology.str.casefold() == 'btl' & parameter.str.casefold() == 'c stored'")["value"].values[0]*updated_cost_dataframe.query("technology.str.casefold() == 'fischer-tropsch' & parameter.str.casefold() == 'capture rate'")["value"].values[0]
 
-    investment_cost = (
+    investment_cost = np.round((
             btl_cost[year]
             + updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "Fischer-Tropsch") & (updated_cost_dataframe["parameter"] == "investment"), "value"].values[0]
             * efuel_scaling_factor
-    )
+    ), n_digits)
 
-    updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "electrobiofuels") & (updated_cost_dataframe["parameter"] == "efficiency-tot"), "value"] = 1 / (
-            1 / updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "electrobiofuels") & (updated_cost_dataframe["parameter"] == "efficiency-hydrogen"), "value"]
-            + 1 / updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "electrobiofuels") & (updated_cost_dataframe["parameter"] == "efficiency-biomass"), "value"]
-    )
+    updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "electrobiofuels") & (updated_cost_dataframe["parameter"] == "efficiency-tot"), "value"] = np.round(1.0 / (
+            1.0 / updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "electrobiofuels") & (updated_cost_dataframe["parameter"] == "efficiency-hydrogen"), "value"].values[0]
+            + 1.0 / updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "electrobiofuels") & (updated_cost_dataframe["parameter"] == "efficiency-biomass"), "value"].values[0]
+    ), n_digits)
 
-    updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "electrobiofuels") & (updated_cost_dataframe["parameter"] == "efficiency-hydrogen"), "value"] = (
-            updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "Fischer-Tropsch") & (updated_cost_dataframe["parameter"] == "efficiency"), "value"]
+    updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "electrobiofuels") & (updated_cost_dataframe["parameter"] == "efficiency-hydrogen"), "value"] = np.round((
+            updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "Fischer-Tropsch") & (updated_cost_dataframe["parameter"] == "efficiency"), "value"].values[0]
             / efuel_scaling_factor
-    )
+    ), n_digits)
 
-    if investment_cost > 0:
+    vom_value = np.round((
+            updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "BtL") & (updated_cost_dataframe["parameter"] == "VOM"), "value"].values[0]
+            + updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "Fischer-Tropsch") & (updated_cost_dataframe["parameter"] == "VOM"), "value"].values[0] * efuel_scaling_factor
+    ), n_digits)
+
+    if investment_cost > 0.0:
         updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "electrobiofuels") & (updated_cost_dataframe["parameter"] == "investment"), "value"] = investment_cost
+        updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "electrobiofuels") & (updated_cost_dataframe["parameter"] == "investment"), "currency_year"] = 2022.0
+
+    if vom_value > 0.0:
+        updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "electrobiofuels") & (updated_cost_dataframe["parameter"] == "VOM"), "value"] = vom_value
+        updated_cost_dataframe.loc[(updated_cost_dataframe["technology"] == "electrobiofuels") & (updated_cost_dataframe["parameter"] == "VOM"), "currency_year"] = 2022.0
 
     return updated_cost_dataframe
 
@@ -688,7 +698,7 @@ if __name__ == "__main__":
             input_cost_path, ["financial_case", "scenario"]
         )
 
-        cost_df = modify_cost_input_file(cost_df, manual_input_usa_df, year_list, year_val)
+        cost_df = modify_cost_input_file(cost_df, manual_input_usa_df, year_list, year_val, num_digits)
 
         atb_e_df = pre_process_atb_input_file(
             input_atb_path,

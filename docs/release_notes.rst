@@ -16,6 +16,8 @@ Upcoming Release
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
 
+* US specific folder for NREL/ATB data (https://github.com/PyPSA/technology-data/pull/172)
+
 `v0.11.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.11.0>`__ (24th January 2025)
 =======================================================================================
 

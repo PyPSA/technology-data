@@ -1,13 +1,33 @@
 name: CI
 
-on: [push]
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  schedule:
+  - cron: "0 5 * * 0"
+
+
+# Cancel any in-progress runs when a new run is triggered
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
+    name: CI
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash -l {0}
+
     steps:
     - uses: actions/checkout@v4
-    - uses: mamba-org/setup-micromamba@v2
+
+    - name: Setup micromamba
+      uses: mamba-org/setup-micromamba@v2
       with:
         micromamba-version: latest
         environment-file: environment.yaml
@@ -15,10 +35,19 @@ jobs:
         init-shell: bash
         cache-environment: true
         cache-downloads: true
-    - name: Test snakemake workflow
-      shell: bash -l {0}
+
+    - name: Run unit tests
+      run: |
+        python -m pytest test
+
+    - name: Test snakemake workflow for compile_cost_assumptions
       run: |
         snakemake --cores all -f compile_cost_assumptions
+
+    - name: Test snakemake workflow for compile_cost_assumptions_usa
+      run: |
+        snakemake --cores all -f compile_cost_assumptions_usa
+
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:

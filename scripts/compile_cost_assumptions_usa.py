@@ -262,10 +262,10 @@ def pre_process_manual_input_usa(
     Input arguments
     - manual_input_usa_file_path : str, manual_input_usa.csv file path
     - inflation_rate_file_path : str, inflation rate file path
-    - list_of_years: list, list of the years for which a cost assumption is provided
-    - eur_year: int, year for european output
-    - year: int, year from list_of_years
-    - n_digits: int, number of significant digits
+    - list_of_years : list, list of the years for which a cost assumption is provided
+    - eur_year : int, year for european output
+    - year : int, year from list_of_years
+    - n_digits : int, number of significant digits
 
     Output
     - DataFrame, updated manual input usa
@@ -349,36 +349,35 @@ def modify_cost_input_file(
     cost_dataframe, manual_input_usa_dataframe, list_of_years, year, n_digits
 ):
     """
-        The function filters out from the existing cost assumptions the rows corresponding
-        to the technology-parameter pairs from manual_input_usa.csv. It then concatenates manual_input_usa.csv and
-        adjourns the estimates for electrobiofuels. Namely, it:
-        - creates a list of tuples (technology, parameter) from manual_input_usa.csv
-        - renames the column "further_description" to "further description"
-        - prepares a dataframe with the inflation rate per year in European Union
-        - starting from manual_input_usa.csv, it estimates the parameters for each technology for all the requested years
-        - it selects the values for a given year
-        - it adjusts the cost estimates to the inflation rate
-        - queries the necessary rows of the existing cost dataframe
+    The function filters out from the existing cost dataframe the rows corresponding
+    to the technology-parameter pairs from manual_input_usa.csv. It then concatenates manual_input_usa.csv and
+    adjourns the estimates for "electrobiofuels". Namely, it:
+    - creates a list of tuples (technology, parameter) from manual_input_usa.csv
+    - filters out from the existing cost dataframe all rows with (technology, parameter) in manual_input_usa.csv
+    - concatenates manual_input_usa.csv
+    - updates the parameters for electrobiofuels
 
-        Input arguments
-        - manual_input_usa_file_path : str, manual_input_usa.csv file path
-        - inflation_rate_file_path : str, inflation rate file path
-        - list_of_years: list, list of the years for which a cost assumption is provided
-        - eur_year: int, year for european output
-        - year: int, year from list_of_years
-        - n_digits: int, number of significant digits
+    Input arguments
+    - cost_dataframe : DataFrame, existing cost dataframe
+    - manual_input_usa_dataframe : DataFrame, manual_input_usa dataframe
+    - list_of_years : list, list of the years for which a cost assumption is provided
+    - year : int, year from list_of_years
+    - n_digits : int, number of significant digits
 
-        Output
-        - DataFrame, updated manual input usa
+    Output
+    - DataFrame, updated cost dataframe
     """
 
-    # cra
+    # Create a list of tuples (technology, parameter) from manual_input_usa.csv
     list_technology_parameter_tuples_manual_input_usa = [
         (str(x), str(y))
         for (x, y) in zip(
             manual_input_usa_dataframe.technology, manual_input_usa_dataframe.parameter
         )
     ]
+
+    # Filter out rows from the existing cost dataframe corresponding
+    # to the (technology, parameter) pairs from manual_input_usa.csv
     queried_cost_df = cost_dataframe[
         ~(
             pd.Series(
@@ -387,11 +386,12 @@ def modify_cost_input_file(
         )
     ]
 
+    # Concatenate manual_input_usa.csv to the filtered existing cost dataframe
     updated_cost_dataframe = pd.concat(
         [queried_cost_df, manual_input_usa_dataframe]
     ).reset_index(drop=True)
 
-    # update calculations involving newly updated technologies
+    # Update the parameters for the technology "electrobiofuels"
     btl_cost_data = np.interp(x=list_of_years, xp=[2020, 2050], fp=[3500, 2000])
     btl_cost = pd.Series(data=btl_cost_data, index=list_of_years)
 
@@ -521,7 +521,7 @@ def query_cost_dataframe(cost_dataframe, technology_dictionary, parameter_dictio
     - query_string_part_two: some of the techno-economic parameters (e.g., efficiency, capture rate) to be updated with NREL-ATB data are NOT present in the NREL-ATB dataset. They are instead added to the former cost csv files by means of the manual_input.csv. They should be kept in the final output. This query selects such rows
 
     Input arguments
-    - cost_dataframe : DataFrame, existing cost dataframe
+    - cost_dataframe: DataFrame, existing cost dataframe
     - technology_dictionary: dict, a dictionary of the technologies updated with NREL/ATB data
     - parameter_dictionary: dict, a dictionary of the parameters for which NREL/ATB estimates are available
 

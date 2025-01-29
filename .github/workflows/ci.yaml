@@ -15,6 +15,9 @@ jobs:
         init-shell: bash
         cache-environment: true
         cache-downloads: true
+    - name: Run unit tests
+      run: |
+        pytest test
     - name: Test snakemake workflow
       shell: bash -l {0}
       run: |

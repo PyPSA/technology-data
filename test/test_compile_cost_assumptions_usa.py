@@ -378,14 +378,33 @@ def test_duplicate_fuel_cost(config):
 
 @pytest.mark.parametrize(
     "year, expected",
-    [(2020, (90, 7)), (2025, (90, 7)), (2030, (90, 7)), (2035, (90, 7)), (2040, (90, 7)), (2045, (90, 7)), (2050, (90, 7))],
+    [
+        (2020, (90, 7)),
+        (2025, (90, 7)),
+        (2030, (90, 7)),
+        (2035, (90, 7)),
+        (2040, (90, 7)),
+        (2045, (90, 7)),
+        (2050, (90, 7)),
+    ],
 )
 def test_pre_process_manual_input_usa(config, year, expected):
     list_of_years = config["years"]
-    manual_input_usa_file_path = pathlib.Path(path_cwd, "inputs", "US", "manual_input_usa.csv")
-    inflation_rate_file_path = pathlib.Path(path_cwd, "inputs", "prc_hicp_aind__custom_9928419_spreadsheet.xlsx")
+    manual_input_usa_file_path = pathlib.Path(
+        path_cwd, "inputs", "US", "manual_input_usa.csv"
+    )
+    inflation_rate_file_path = pathlib.Path(
+        path_cwd, "inputs", "prc_hicp_aind__custom_9928419_spreadsheet.xlsx"
+    )
     year = 2020
-    output_dataframe = pre_process_manual_input_usa(manual_input_usa_file_path, inflation_rate_file_path, list_of_years, config["eur_year"], year, config["ndigits"])
+    output_dataframe = pre_process_manual_input_usa(
+        manual_input_usa_file_path,
+        inflation_rate_file_path,
+        list_of_years,
+        config["eur_year"],
+        year,
+        config["ndigits"],
+    )
     assert output_dataframe.shape == expected
 
 
@@ -478,5 +497,3 @@ def test_final_output(tmpdir, cost_dataframe, atb_cost_dataframe):
     comparison_df = output_df.compare(reference_df)
     pathlib.Path(input_cost_path).unlink(missing_ok=True)
     assert comparison_df.empty
-
-

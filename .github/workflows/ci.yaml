@@ -24,32 +24,32 @@ jobs:
         shell: bash -l {0}
 
     steps:
-      - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-      - name: Setup micromamba
-        uses: mamba-org/setup-micromamba@v2
-        with:
-          micromamba-version: latest
-          environment-file: environment.yaml
-          log-level: debug
-          init-shell: bash
-          cache-environment: true
-          cache-downloads: true
+    - name: Setup micromamba
+      uses: mamba-org/setup-micromamba@v2
+      with:
+        micromamba-version: latest
+        environment-file: environment.yaml
+        log-level: debug
+        init-shell: bash
+        cache-environment: true
+        cache-downloads: true
 
-      - name: Run unit tests
-        run: |
-          python -m pytest test
+    - name: Run unit tests
+      run: |
+        python -m pytest test
 
-      - name: Test snakemake workflow for compile_cost_assumptions
-        run: |
-          snakemake --cores all -f compile_cost_assumptions
+    - name: Test snakemake workflow for compile_cost_assumptions
+      run: |
+        snakemake --cores all -f compile_cost_assumptions
 
-      - name: Test snakemake workflow for compile_cost_assumptions_usa
-        run: |
-          snakemake --cores all -f compile_cost_assumptions_usa
+    - name: Test snakemake workflow for compile_cost_assumptions_usa
+      run: |
+        snakemake --cores all -f compile_cost_assumptions_usa
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: technology-data
-          path: outputs/
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: technology-data
+        path: outputs/

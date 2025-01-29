@@ -18,6 +18,8 @@ Upcoming Release
 
 * US specific folder for NREL/ATB data (https://github.com/PyPSA/technology-data/pull/172)
 
+* Include unit test execution and compile_cost_assumptions_usa.py in ci.yaml (https://github.com/PyPSA/technology-data/pull/174)
+
 `v0.11.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.11.0>`__ (24th January 2025)
 =======================================================================================
 

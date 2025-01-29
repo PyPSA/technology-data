@@ -243,7 +243,11 @@ def get_dea_maritime_data(fn, list_of_years, data):
         "Tankbulk, ammonia",
     ]
     excel = pd.read_excel(
-        fn, sheet_name=dea_maritime_data_sheet_names, index_col=[0, 1], usecols="A:F", na_values="N/A"
+        fn,
+        sheet_name=dea_maritime_data_sheet_names,
+        index_col=[0, 1],
+        usecols="A:F",
+        na_values="N/A",
     )
 
     wished_index = [
@@ -286,7 +290,9 @@ def get_dea_maritime_data(fn, list_of_years, data):
 
         # convert FOM in % of investment/year
         if "Fixed O&M" in df.index:
-            df.loc["Fixed O&M", list_of_years] /= df.loc["Upfront ship cost", list_of_years] * 100
+            df.loc["Fixed O&M", list_of_years] /= (
+                df.loc["Upfront ship cost", list_of_years] * 100
+            )
             df.loc["Fixed O&M", "unit"] = "%/year"
 
         # convert nm in km
@@ -346,7 +352,11 @@ def get_dea_vehicle_data(fn, list_of_years, data):
         "FCV B2",
     ]
     excel = pd.read_excel(
-        fn, sheet_name=dea_vehicle_data_sheet_names, index_col=0, usecols="A:F", na_values="no data"
+        fn,
+        sheet_name=dea_vehicle_data_sheet_names,
+        index_col=0,
+        usecols="A:F",
+        na_values="no data",
     )
 
     wished_index = [
@@ -958,7 +968,9 @@ def add_solar_from_other(list_of_years, costs):
     """
 
     # solar utility from Vartiaian 2019
-    data = np.interp(x=list_of_years, xp=[2020, 2030, 2040, 2050], fp=[431, 275, 204, 164])
+    data = np.interp(
+        x=list_of_years, xp=[2020, 2030, 2040, 2050], fp=[431, 275, 204, 164]
+    )
     # the paper says 'In this report, all results are given in real 2019
     # money.'
     data = data / (1 + snakemake.config["rate_inflation"]) ** (
@@ -1398,7 +1410,9 @@ def set_specify_assumptions(list_of_years, tech_data):
             ("decentral gas boiler", "Technical lifetime"),
         ]
     ]
-    boiler_connect.loc[("decentral gas boiler", "Technical lifetime"), list_of_years] = 50
+    boiler_connect.loc[
+        ("decentral gas boiler", "Technical lifetime"), list_of_years
+    ] = 50
     boiler_connect.rename(
         index={"decentral gas boiler": "decentral gas boiler connection"}, inplace=True
     )
@@ -1462,9 +1476,9 @@ def set_round_trip_efficiency(list_of_years, tech_data):
     )
     to_drop.append(("hydrogen storage underground", " - Charge efficiency"))
     to_drop.append(("hydrogen storage underground", " - Discharge efficiency"))
-    tech_data.loc[("hydrogen storage underground", "Round trip efficiency"), list_of_years] *= (
-        100
-    )
+    tech_data.loc[
+        ("hydrogen storage underground", "Round trip efficiency"), list_of_years
+    ] *= 100
     tech_data.loc[
         ("hydrogen storage tank type 1 including compressor", "Round trip efficiency"),
         list_of_years,
@@ -1603,7 +1617,9 @@ def order_data(list_of_years, tech_data):
                 if not any(fixed.unit.str.contains("% of specific investment/year")):
                     investment[investment == 0] = float("nan")
                     investment = investment.ffill(axis=1).fillna(0)
-                    fom[list_of_years] = fixed[list_of_years] / investment[list_of_years].values * 100
+                    fom[list_of_years] = (
+                        fixed[list_of_years] / investment[list_of_years].values * 100
+                    )
                 else:
                     fom[list_of_years] = fixed[list_of_years]
                 fom["parameter"] = "FOM"
@@ -1880,7 +1896,9 @@ def order_data(list_of_years, tech_data):
         .squeeze()
     )
 
-    power_ratio_tank[list_of_years] = storage_capacity_tank[list_of_years].div(power_ratio_tank[list_of_years])
+    power_ratio_tank[list_of_years] = storage_capacity_tank[list_of_years].div(
+        power_ratio_tank[list_of_years]
+    )
     power_ratio_tank["further description"] = (
         "Ratio between energy storage and input capacity"
     )
@@ -1907,7 +1925,9 @@ def order_data(list_of_years, tech_data):
         .squeeze()
     )
 
-    power_ratio_tank[list_of_years] = storage_capacity_tank[list_of_years].div(power_ratio_tank[list_of_years])
+    power_ratio_tank[list_of_years] = storage_capacity_tank[list_of_years].div(
+        power_ratio_tank[list_of_years]
+    )
     power_ratio_tank["further description"] = (
         "Ratio between energy storage and input capacity"
     )
@@ -1934,7 +1954,9 @@ def order_data(list_of_years, tech_data):
         .squeeze()
     )
 
-    power_ratio_pit[list_of_years] = storage_capacity_pit[list_of_years].div(power_ratio_pit[list_of_years])
+    power_ratio_pit[list_of_years] = storage_capacity_pit[list_of_years].div(
+        power_ratio_pit[list_of_years]
+    )
     power_ratio_pit["further description"] = (
         "Ratio between energy storage and input capacity"
     )
@@ -1979,7 +2001,8 @@ def convert_units(list_of_years, data):
     """
     # convert efficiency from % -> per unit
     data.loc[
-        data.index.get_level_values(1).isin(["efficiency", "efficiency-heat"]), list_of_years
+        data.index.get_level_values(1).isin(["efficiency", "efficiency-heat"]),
+        list_of_years,
     ] /= 100
     data.loc[
         data.index.get_level_values(1).isin(["efficiency", "efficiency-heat"]), "unit"
@@ -2038,7 +2061,9 @@ def add_gas_storage(list_of_years, data):
         gas_storage.loc["Total investment cost"].iloc[0, 0] / 2 / 6600 * 1e3
     )
     data.loc[("gas storage charger", "investment"), list_of_years] = investment_charge
-    data.loc[("gas storage discharger", "investment"), list_of_years] = investment_discharge
+    data.loc[("gas storage discharger", "investment"), list_of_years] = (
+        investment_discharge
+    )
 
     data.loc[("gas storage charger", "investment"), "source"] = source_dict["DEA"]
     data.loc[("gas storage charger", "investment"), "further description"] = (
@@ -2073,7 +2098,8 @@ def add_gas_storage(list_of_years, data):
 def add_carbon_capture(list_of_years, data, tech_data):
     for tech in ["cement capture", "biomass CHP capture"]:
         data.loc[(tech, "capture_rate"), list_of_years] = (
-            tech_data.loc[(tech, "Ax) CO2 capture rate, net"), list_of_years].values[0] / 100
+            tech_data.loc[(tech, "Ax) CO2 capture rate, net"), list_of_years].values[0]
+            / 100
         )
         data.loc[(tech, "capture_rate"), "unit"] = "per unit"
 
@@ -2790,7 +2816,8 @@ def add_home_battery_costs(list_of_years, costs):
     ]
     factor = get_factor(battery_inverter_ewg, home_cols, "Battery interface")
     home_cost = (
-        home_battery.loc[("home battery inverter", "investment"), list_of_years] * factor
+        home_battery.loc[("home battery inverter", "investment"), list_of_years]
+        * factor
     ).values
     home_battery.loc[("home battery inverter", "investment"), list_of_years] = home_cost
 
@@ -2857,7 +2884,9 @@ def add_SMR_data(list_of_years, data):
     # lower heating value (LHV) of H2
     LHV_H2 = 33.33  # unit kWh/kg
     SMR = 12500 / LHV_H2 * 1e3 * 1 / SMR_df.loc[("SMR", "efficiency"), list_of_years]
-    SMR_CCS = 14500 / LHV_H2 * 1e3 * 1 / SMR_df.loc[("SMR", "efficiency"), list_of_years]
+    SMR_CCS = (
+        14500 / LHV_H2 * 1e3 * 1 / SMR_df.loc[("SMR", "efficiency"), list_of_years]
+    )
 
     SMR_df.loc[("SMR", "investment"), list_of_years] = SMR
     SMR_df.loc[("SMR CC", "investment"), list_of_years] = SMR_CCS
@@ -2884,7 +2913,9 @@ def add_SMR_data(list_of_years, data):
 def add_mean_solar_rooftop(list_of_years, data):
     # take mean of rooftop commercial and residential
     rooftop = (
-        data.loc[data.index.get_level_values(0).str.contains("solar-rooftop")][list_of_years]
+        data.loc[data.index.get_level_values(0).str.contains("solar-rooftop")][
+            list_of_years
+        ]
         .astype(float)
         .groupby(level=1)
         .mean()

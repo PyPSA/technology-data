@@ -9,7 +9,7 @@ import sys
 
 sys.path.append("./scripts")
 
-from compile_cost_assumptions import get_excel_sheets, get_data_from_DEA
+from compile_cost_assumptions import get_data_from_DEA, get_excel_sheets
 
 path_cwd = pathlib.Path.cwd()
 
@@ -55,12 +55,15 @@ def test_get_excel_sheets():
         comparison_dictionary[key] = len(value)
     assert reference_output_dictionary == comparison_dictionary
 
+
 def test_get_data_from_DEA(config):
     excel_files = [
         v for k, v in snakemake_input_dictionary.items() if "dea" in k.casefold()
     ]
     input_dea_files_dict = get_excel_sheets(excel_files)
-    output_df = get_data_from_DEA(input_dea_files_dict, expectation=config["expectation"])
+    output_df = get_data_from_DEA(
+        input_dea_files_dict, expectation=config["expectation"]
+    )
     print(output_df.shape)
-    #print(output_df)
+    # print(output_df)
     assert False

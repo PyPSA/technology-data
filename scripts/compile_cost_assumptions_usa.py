@@ -941,7 +941,10 @@ if __name__ == "__main__":
         # Cast "value" from float
         updated_cost_df["value"] = updated_cost_df["value"].astype(float)
 
-        # output the modified cost file
+        # Sort the modified cost dataframe by technology and parameter
+        updated_cost_df = updated_cost_df.sort_values(by=["technology", "parameter"]).reset_index(drop=True)
+
+        # output the modified cost dataframe
         output_cost_path_list = [
             path for path in snakemake.output if str(year_val) in path
         ]

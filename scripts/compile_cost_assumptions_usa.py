@@ -942,7 +942,9 @@ if __name__ == "__main__":
         updated_cost_df["value"] = updated_cost_df["value"].astype(float)
 
         # Sort the modified cost dataframe by technology and parameter
-        updated_cost_df = updated_cost_df.sort_values(by=["technology", "parameter"]).reset_index(drop=True)
+        updated_cost_df = updated_cost_df.sort_values(
+            by=["technology", "parameter"]
+        ).reset_index(drop=True)
 
         # output the modified cost dataframe
         output_cost_path_list = [

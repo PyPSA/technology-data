@@ -183,7 +183,7 @@ def adjust_for_inflation(inflation_rate, costs, techs, eur_year, col):
 
     techs: str or list
         One or more techs in costs index for which the inflation adjustment is done.
-    ref_year: int
+    eur_year: int
         Reference year for which the costs are provided and based on which the inflation adjustment is done.
     costs: Dataframe containing the costs data with multiindex on technology and one index key 'investment'.
     """

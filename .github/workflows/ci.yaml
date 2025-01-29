@@ -31,6 +31,7 @@ jobs:
         cache-environment: true
         cache-downloads: true
     - name: Run unit tests
+      shell: bash -l {0}
       run: |
         pytest test
     - name: Test snakemake workflow for compile_cost_assumptions

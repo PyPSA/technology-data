@@ -21,6 +21,7 @@ from compile_cost_assumptions_usa import (
     get_query_string,
     pre_process_atb_input_file,
     pre_process_cost_input_file,
+    pre_process_manual_input_usa,
     query_cost_dataframe,
     replace_value_name,
 )
@@ -375,6 +376,19 @@ def test_duplicate_fuel_cost(config):
     )
 
 
+@pytest.mark.parametrize(
+    "year, expected",
+    [(2020, (90, 7)), (2025, (90, 7)), (2030, (90, 7)), (2035, (90, 7)), (2040, (90, 7)), (2045, (90, 7)), (2050, (90, 7))],
+)
+def test_pre_process_manual_input_usa(config, year, expected):
+    list_of_years = config["years"]
+    manual_input_usa_file_path = pathlib.Path(path_cwd, "inputs", "US", "manual_input_usa.csv")
+    inflation_rate_file_path = pathlib.Path(path_cwd, "inputs", "prc_hicp_aind__custom_9928419_spreadsheet.xlsx")
+    year = 2020
+    output_dataframe = pre_process_manual_input_usa(manual_input_usa_file_path, inflation_rate_file_path, list_of_years, config["eur_year"], year, config["ndigits"])
+    assert output_dataframe.shape == expected
+
+
 def test_final_output(tmpdir, cost_dataframe, atb_cost_dataframe):
     """
     The test verifies what is returned by the concatenation of the existing cost file and NREL/ATB.
@@ -466,10 +480,3 @@ def test_final_output(tmpdir, cost_dataframe, atb_cost_dataframe):
     assert comparison_df.empty
 
 
-# def test_pre_process_manual_input_usa(config):
-#    list_of_years = config["years"]
-#    manual_input_usa_file_path = pathlib.Path(path_cwd, "inputs", "US", "manual_input_usa.csv")
-#    inflation_rate_file_path = pathlib.Path(path_cwd, "inputs", "prc_hicp_aind__custom_9928419_spreadsheet.xlsx")
-#    year = 2020
-#    new_df = pre_process_manual_input_usa(manual_input_usa_file_path, inflation_rate_file_path, list_of_years, config["eur_year"], year)
-#    new_df.to_csv(f"modified_manual_input_usa_{year}.csv")

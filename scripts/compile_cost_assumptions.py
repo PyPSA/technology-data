@@ -30,7 +30,6 @@ The script is structured as follows:
 
 import numpy as np
 import pandas as pd
-from _helpers import dea_sheet_names
 
 try:
     pd.set_option("future.no_silent_downcasting", True)
@@ -69,6 +68,78 @@ source_dict = {
     "vehicles": "PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html",
 }
 
+# [DEA-sheet-names]
+dea_sheet_names = {
+    "onwind": "20 Onshore turbines",
+    "offwind": "21 Offshore turbines",
+    "solar-utility": "22 Utility-scale PV",
+    "solar-utility single-axis tracking": "22 Utility-scale PV tracker",
+    "solar-rooftop residential": "22 Rooftop PV residential",
+    "solar-rooftop commercial": "22 Rooftop PV commercial",
+    "OCGT": "52 OCGT - Natural gas",
+    "CCGT": "05 Gas turb. CC, steam extract.",
+    "oil": "50 Diesel engine farm",
+    "biomass CHP": "09c Straw, Large, 40 degree",
+    "biomass EOP": "09c Straw, Large, 40 degree",
+    "biomass HOP": "09c Straw HOP",
+    "central coal CHP": "01 Coal CHP",
+    "central gas CHP": "04 Gas turb. simple cycle, L",
+    "central gas CHP CC": "04 Gas turb. simple cycle, L",
+    "central solid biomass CHP": "09a Wood Chips, Large 50 degree",
+    "central solid biomass CHP CC": "09a Wood Chips, Large 50 degree",
+    "central solid biomass CHP powerboost CC": "09a Wood Chips, Large 50 degree",
+    "central air-sourced heat pump": "40 Comp. hp, airsource 3 MW",
+    "central geothermal-sourced heat pump": "45.1.a Geothermal DH, 1200m, E",
+    "central geothermal heat source": "45.1.a Geothermal DH, 1200m, E",
+    "central excess-heat-sourced heat pump": "40 Comp. hp, excess heat 10 MW",
+    "central water-sourced heat pump": "40 Comp. hp, seawater 20 MW",
+    "central ground-sourced heat pump": "40 Absorption heat pump, DH",
+    "central resistive heater": "41 Electric Boilers",
+    "central gas boiler": "44 Natural Gas DH Only",
+    "decentral gas boiler": "202 Natural gas boiler",
+    "direct firing gas": "312.a Direct firing Natural Gas",
+    "direct firing gas CC": "312.a Direct firing Natural Gas",
+    "direct firing solid fuels": "312.b Direct firing Sold Fuels",
+    "direct firing solid fuels CC": "312.b Direct firing Sold Fuels",
+    "decentral ground-sourced heat pump": "207.7 Ground source existing",
+    "decentral air-sourced heat pump": "207.3 Air to water existing",
+    "central water pit storage": "140 PTES seasonal",
+    "central water tank storage": "141 Large hot water tank",
+    "decentral water tank storage": "142 Small scale hot water tank",
+    "fuel cell": "12 LT-PEMFC CHP",
+    "hydrogen storage underground": "151c Hydrogen Storage - Caverns",
+    "hydrogen storage tank type 1 including compressor": "151a Hydrogen Storage - Tanks",
+    "micro CHP": "219 LT-PEMFC mCHP - natural gas",
+    "biogas": "81 Biogas, Basic plant, small",
+    "biogas CC": "81 Biogas, Basic plant, small",
+    "biogas upgrading": "82 Upgrading 3,000 Nm3 per h",
+    "battery": "180 Lithium Ion Battery",
+    "industrial heat pump medium temperature": "302.a High temp. hp Up to 125 C",
+    "industrial heat pump high temperature": "302.b High temp. hp Up to 150",
+    "electric boiler steam": "310.1 Electric boiler steam  ",
+    "gas boiler steam": "311.1c Steam boiler Gas",
+    "solid biomass boiler steam": "311.1e Steam boiler Wood",
+    "solid biomass boiler steam CC": "311.1e Steam boiler Wood",
+    "biomass boiler": "204 Biomass boiler, automatic",
+    "electrolysis": "86 AEC 100 MW",
+    "direct air capture": "403.a Direct air capture",
+    "biomass CHP capture": "401.a Post comb - small CHP",
+    "cement capture": "401.c Post comb - Cement kiln",
+    "BioSNG": "84 Gasif. CFB, Bio-SNG",
+    "BtL": "85 Gasif. Ent. Flow FT, liq fu ",
+    "biomass-to-methanol": "97 Methanol from biomass gasif.",
+    "biogas plus hydrogen": "99 SNG from methan. of biogas",
+    "methanolisation": "98 Methanol from hydrogen",
+    "Fischer-Tropsch": "102 Hydrogen to Jet",
+    "central hydrogen CHP": "12 LT-PEMFC CHP",
+    "Haber-Bosch": "103 Hydrogen to Ammonia",
+    "air separation unit": "103 Hydrogen to Ammonia",
+    "waste CHP": "08 WtE CHP, Large, 50 degree",
+    "waste CHP CC": "08 WtE CHP, Large, 50 degree",
+    "biochar pyrolysis": "105 Slow pyrolysis, Straw",
+    "electrolysis small": "86 AEC 10 MW",
+}
+# [DEA-sheet-names]
 
 uncrtnty_lookup = {
     "onwind": "J:K",
@@ -205,19 +276,19 @@ def get_excel_sheets(list_of_excel_files):
     return data_in
 
 
-def get_sheet_location(tech, sheet_names_dict, data_in):
+def get_sheet_location(technology_name, sheet_names_dict, input_data_dict):
     """
-    Looks up in which excel file technology is saved
+    Looks up in which Excel file technology is saved
     """
     for key in data_in:
-        if sheet_names_dict[tech] in data_in[key]:
+        if sheet_names_dict[technology_name] in input_data_dict[key]:
             return key
     print("******* warning *************")
     print(
         "tech ",
-        tech,
+        technology_name,
         " with sheet name ",
-        sheet_names_dict[tech],
+        sheet_names_dict[technology_name],
         "  not found in excel sheets.",
     )
     print("****************************")
@@ -440,7 +511,9 @@ def get_dea_vehicle_data(fn, list_of_years, data):
     return data
 
 
-def get_data_DEA(list_of_years, tech, data_in, expectation=None):
+def get_data_DEA(
+    list_of_years, tech, data_in, offwind_no_grid_costs_flag=True, expectation=None
+):
     """
     Interpolate cost for a given technology from DEA database sheet
 
@@ -673,7 +746,7 @@ def get_data_DEA(list_of_years, tech, data_in, expectation=None):
     # print(df)
 
     ## Modify data loaded from DEA on a per-technology case
-    if (tech == "offwind") and snakemake.config["offwind_no_gridcosts"]:
+    if (tech == "offwind") and offwind_no_grid_costs_flag:
         df.loc["Nominal investment (*total) [MEUR/MW_e, 2020]"] -= excel.loc[
             "Nominal investment (installation: grid connection) [M€/MW_e, 2020]"
         ]
@@ -1136,7 +1209,9 @@ def biochar_pyrolysis_harmonise_dea(df):
     return df
 
 
-def get_data_from_DEA(data_in, expectation=None):
+def get_data_from_DEA(
+    list_of_years, data_in_df, offwind_no_grid_costs=True, expectation=None
+):
     """
     Saves technology data from DEA in dictionary d_by_tech
     """
@@ -1144,7 +1219,9 @@ def get_data_from_DEA(data_in, expectation=None):
 
     for tech, dea_tech in dea_sheet_names.items():
         print(f"{tech} in PyPSA corresponds to {dea_tech} in DEA database.")
-        df = get_data_DEA(tech, data_in, expectation).fillna(0)
+        df = get_data_DEA(
+            list_of_years, tech, data_in_df, offwind_no_grid_costs, expectation
+        ).fillna(0)
         d_by_tech[tech] = df
 
     return d_by_tech
@@ -3304,7 +3381,12 @@ if __name__ == "__main__":
     excel_files = [v for k, v in snakemake.input.items() if "dea" in k.casefold()]
     data_in = get_excel_sheets(excel_files)
     # create dictionary with raw data from DEA sheets
-    d_by_tech = get_data_from_DEA(data_in, expectation=snakemake.config["expectation"])
+    d_by_tech = get_data_from_DEA(
+        years_list,
+        data_in,
+        snakemake.config["offwind_no_gridcosts"],
+        expectation=snakemake.config["expectation"],
+    )
     # concat into pd.Dataframe
     tech_data = pd.concat(d_by_tech).sort_index()
     # clean up units
@@ -3314,25 +3396,25 @@ if __name__ == "__main__":
 
     # specify investment and efficiency assumptions for:
     # resistive heater, decentral gas boiler, biogas upgrading and heat pumps
-    tech_data = set_specify_assumptions(tech_data)
+    tech_data = set_specify_assumptions(years_list, tech_data)
 
     # round trip efficiency for hydrogen + battery storage
-    tech_data = set_round_trip_efficiency(tech_data)
+    tech_data = set_round_trip_efficiency(years_list, tech_data)
 
     # drop all rows which only contains zeros
     tech_data = tech_data.loc[(tech_data[years_list] != 0).sum(axis=1) != 0]
 
     # (c) -----  get tech data in pypsa syntax -----------------------------------
     # make categories: investment, FOM, VOM, efficiency, c_b, c_v
-    data = order_data(tech_data)
+    data = order_data(years_list, tech_data)
     # add Excel sheet names and further description
-    data = add_description(data)
+    data = add_description(years_list, data)
     # convert efficiency from %-> per unit and investment from MW->kW to compare
-    data = convert_units(data)
+    data = convert_units(years_list, data)
     # add gas storage (different methodology than other sheets)
-    data = add_gas_storage(data)
+    data = add_gas_storage(years_list, data)
     # add carbon capture
-    data = add_carbon_capture(data, tech_data)
+    data = add_carbon_capture(years_list, data, tech_data)
 
     # adjust for inflation
     for x in data.index.get_level_values("technology"):
@@ -3368,7 +3450,7 @@ if __name__ == "__main__":
     costs_vehicles = rename_ISE_vehicles(costs_vehicles)
     if "NT" in costs_vehicles.index:
         costs_vehicles.drop(["NT"], axis=0, inplace=True, level=0)
-    costs_vehicles = convert_units(costs_vehicles)
+    costs_vehicles = convert_units(years_list, costs_vehicles)
     # add costs for vehicles
     data = pd.concat([data, costs_vehicles], sort=True)
 
@@ -3388,11 +3470,11 @@ if __name__ == "__main__":
     # add costs for home batteries
 
     if snakemake.config["energy_storage_database"].get("ewg_home_battery", True):
-        data = add_home_battery_costs(data)
+        data = add_home_battery_costs(years_list, data)
     # add SMR assumptions
-    data = add_SMR_data(data)
+    data = add_SMR_data(years_list, data)
     # add solar rooftop costs by taking the mean of commercial and residential
-    data = add_mean_solar_rooftop(data)
+    data = add_mean_solar_rooftop(years_list, data)
 
     data.index.names = ["technology", "parameter"]
     # %% (3) ------ add additional sources and save cost as csv ------------------
@@ -3425,7 +3507,7 @@ if __name__ == "__main__":
                 snakemake.config["solar_rooftop_from_etip"],
             ]
         ):
-            costs = add_solar_from_other(costs)
+            costs = add_solar_from_other(years_list, costs)
 
         # add desalination and clean water tank storage
         costs = add_desalinsation_data(costs)
@@ -3444,7 +3526,7 @@ if __name__ == "__main__":
         costs = add_co2_intensity(costs)
 
         # carbon balances
-        costs = carbon_flow(costs, year)
+        costs = carbon_flow(years_list, costs, year)
 
         # energy penalty of carbon capture
         costs = energy_penalty(costs)

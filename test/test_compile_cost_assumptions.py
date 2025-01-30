@@ -9,7 +9,12 @@ import sys
 
 sys.path.append("./scripts")
 
-from compile_cost_assumptions import get_data_from_DEA, get_excel_sheets
+from compile_cost_assumptions import (
+    dea_sheet_names,
+    get_data_from_DEA,
+    get_excel_sheets,
+    get_sheet_location,
+)
 
 path_cwd = pathlib.Path.cwd()
 
@@ -35,6 +40,9 @@ snakemake_input_dictionary = {
 
 
 def test_get_excel_sheets():
+    """
+    The test verifies what is returned by get_excel_sheets.
+    """
     reference_output_dictionary = {
         "inputs/energy_transport_data_sheet_dec_2017.xlsx": 16,
         "inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx": 19,
@@ -56,14 +64,176 @@ def test_get_excel_sheets():
     assert reference_output_dictionary == comparison_dictionary
 
 
-def test_get_data_from_DEA(config):
+def test_get_sheet_location():
+    """
+    The test verifies what is returned by get_sheet_location.
+    """
+    reference_output_dictionary = {
+        "onwind": "inputs/technology_data_for_el_and_dh.xlsx",
+        "offwind": "inputs/technology_data_for_el_and_dh.xlsx",
+        "solar-utility": "inputs/technology_data_for_el_and_dh.xlsx",
+        "solar-utility single-axis tracking": "inputs/technology_data_for_el_and_dh.xlsx",
+        "solar-rooftop residential": "inputs/technology_data_for_el_and_dh.xlsx",
+        "solar-rooftop commercial": "inputs/technology_data_for_el_and_dh.xlsx",
+        "OCGT": "inputs/technology_data_for_el_and_dh.xlsx",
+        "CCGT": "inputs/technology_data_for_el_and_dh.xlsx",
+        "oil": "inputs/technology_data_for_el_and_dh.xlsx",
+        "biomass CHP": "inputs/technology_data_for_el_and_dh.xlsx",
+        "biomass EOP": "inputs/technology_data_for_el_and_dh.xlsx",
+        "biomass HOP": "inputs/technology_data_for_el_and_dh.xlsx",
+        "central coal CHP": "inputs/technology_data_for_el_and_dh.xlsx",
+        "central gas CHP": "inputs/technology_data_for_el_and_dh.xlsx",
+        "central gas CHP CC": "inputs/technology_data_for_el_and_dh.xlsx",
+        "central solid biomass CHP": "inputs/technology_data_for_el_and_dh.xlsx",
+        "central solid biomass CHP CC": "inputs/technology_data_for_el_and_dh.xlsx",
+        "central solid biomass CHP powerboost CC": "inputs/technology_data_for_el_and_dh.xlsx",
+        "central air-sourced heat pump": "inputs/technology_data_for_el_and_dh.xlsx",
+        "central geothermal-sourced heat pump": "inputs/technology_data_for_el_and_dh.xlsx",
+        "central geothermal heat source": "inputs/technology_data_for_el_and_dh.xlsx",
+        "central excess-heat-sourced heat pump": "inputs/technology_data_for_el_and_dh.xlsx",
+        "central water-sourced heat pump": "inputs/technology_data_for_el_and_dh.xlsx",
+        "central ground-sourced heat pump": "inputs/technology_data_for_el_and_dh.xlsx",
+        "central resistive heater": "inputs/technology_data_for_el_and_dh.xlsx",
+        "central gas boiler": "inputs/technology_data_for_el_and_dh.xlsx",
+        "decentral gas boiler": "inputs/technologydatafor_heating_installations_marts_2018.xlsx",
+        "direct firing gas": "inputs/technology_data_for_industrial_process_heat.xlsx",
+        "direct firing gas CC": "inputs/technology_data_for_industrial_process_heat.xlsx",
+        "direct firing solid fuels": "inputs/technology_data_for_industrial_process_heat.xlsx",
+        "direct firing solid fuels CC": "inputs/technology_data_for_industrial_process_heat.xlsx",
+        "decentral ground-sourced heat pump": "inputs/technologydatafor_heating_installations_marts_2018.xlsx",
+        "decentral air-sourced heat pump": "inputs/technologydatafor_heating_installations_marts_2018.xlsx",
+        "central water pit storage": "inputs/technology_data_catalogue_for_energy_storage.xlsx",
+        "central water tank storage": "inputs/technology_data_catalogue_for_energy_storage.xlsx",
+        "decentral water tank storage": "inputs/technology_data_catalogue_for_energy_storage.xlsx",
+        "fuel cell": "inputs/technology_data_for_el_and_dh.xlsx",
+        "hydrogen storage underground": "inputs/technology_data_catalogue_for_energy_storage.xlsx",
+        "hydrogen storage tank type 1 including compressor": "inputs/technology_data_catalogue_for_energy_storage.xlsx",
+        "micro CHP": "inputs/technologydatafor_heating_installations_marts_2018.xlsx",
+        "biogas": "inputs/data_sheets_for_renewable_fuels.xlsx",
+        "biogas CC": "inputs/data_sheets_for_renewable_fuels.xlsx",
+        "biogas upgrading": "inputs/data_sheets_for_renewable_fuels.xlsx",
+        "battery": "inputs/technology_data_catalogue_for_energy_storage.xlsx",
+        "industrial heat pump medium temperature": "inputs/technology_data_for_industrial_process_heat.xlsx",
+        "industrial heat pump high temperature": "inputs/technology_data_for_industrial_process_heat.xlsx",
+        "electric boiler steam": "inputs/technology_data_for_industrial_process_heat.xlsx",
+        "gas boiler steam": "inputs/technology_data_for_industrial_process_heat.xlsx",
+        "solid biomass boiler steam": "inputs/technology_data_for_industrial_process_heat.xlsx",
+        "solid biomass boiler steam CC": "inputs/technology_data_for_industrial_process_heat.xlsx",
+        "biomass boiler": "inputs/technologydatafor_heating_installations_marts_2018.xlsx",
+        "electrolysis": "inputs/data_sheets_for_renewable_fuels.xlsx",
+        "direct air capture": "inputs/technology_data_for_carbon_capture_transport_storage.xlsx",
+        "biomass CHP capture": "inputs/technology_data_for_carbon_capture_transport_storage.xlsx",
+        "cement capture": "inputs/technology_data_for_carbon_capture_transport_storage.xlsx",
+        "BioSNG": "inputs/data_sheets_for_renewable_fuels.xlsx",
+        "BtL": "inputs/data_sheets_for_renewable_fuels.xlsx",
+        "biomass-to-methanol": "inputs/data_sheets_for_renewable_fuels.xlsx",
+        "biogas plus hydrogen": "inputs/data_sheets_for_renewable_fuels.xlsx",
+        "methanolisation": "inputs/data_sheets_for_renewable_fuels.xlsx",
+        "Fischer-Tropsch": "inputs/data_sheets_for_renewable_fuels.xlsx",
+        "central hydrogen CHP": "inputs/technology_data_for_el_and_dh.xlsx",
+        "Haber-Bosch": "inputs/data_sheets_for_renewable_fuels.xlsx",
+        "air separation unit": "inputs/data_sheets_for_renewable_fuels.xlsx",
+        "waste CHP": "inputs/technology_data_for_el_and_dh.xlsx",
+        "waste CHP CC": "inputs/technology_data_for_el_and_dh.xlsx",
+        "biochar pyrolysis": "inputs/data_sheets_for_renewable_fuels.xlsx",
+        "electrolysis small": "inputs/data_sheets_for_renewable_fuels.xlsx",
+    }
+
+    excel_files = [
+        v for k, v in snakemake_input_dictionary.items() if "dea" in k.casefold()
+    ]
+    output_dict = get_excel_sheets(excel_files)
+
+    sheet_location_dictionary = {}
+    for tech, dea_tech in dea_sheet_names.items():
+        technology_location = get_sheet_location(tech, dea_sheet_names, output_dict)
+        sheet_location_dictionary[tech] = technology_location
+
+    assert sheet_location_dictionary == reference_output_dictionary
+
+
+def test_get_data_from_dea(config):
+    """
+    The test verifies what is returned by get_data_from_DEA.
+    """
+    reference_output_dictionary = {
+        "onwind": (4, 9),
+        "offwind": (4, 9),
+        "solar-utility": (4, 9),
+        "solar-utility single-axis tracking": (4, 9),
+        "solar-rooftop residential": (4, 9),
+        "solar-rooftop commercial": (4, 9),
+        "OCGT": (8, 9),
+        "CCGT": (8, 9),
+        "oil": (8, 9),
+        "biomass CHP": (13, 9),
+        "biomass EOP": (13, 9),
+        "biomass HOP": (9, 9),
+        "central coal CHP": (7, 9),
+        "central gas CHP": (8, 9),
+        "central gas CHP CC": (8, 9),
+        "central solid biomass CHP": (13, 9),
+        "central solid biomass CHP CC": (13, 9),
+        "central solid biomass CHP powerboost CC": (13, 9),
+        "central air-sourced heat pump": (6, 9),
+        "central geothermal-sourced heat pump": (8, 9),
+        "central geothermal heat source": (8, 9),
+        "central excess-heat-sourced heat pump": (6, 9),
+        "central water-sourced heat pump": (6, 9),
+        "central ground-sourced heat pump": (5, 9),
+        "central resistive heater": (7, 9),
+        "central gas boiler": (6, 9),
+        "decentral gas boiler": (8, 9),
+        "direct firing gas": (7, 9),
+        "direct firing gas CC": (7, 9),
+        "direct firing solid fuels": (7, 9),
+        "direct firing solid fuels CC": (7, 9),
+        "decentral ground-sourced heat pump": (9, 9),
+        "decentral air-sourced heat pump": (9, 9),
+        "central water pit storage": (10, 9),
+        "central water tank storage": (10, 9),
+        "decentral water tank storage": (9, 9),
+        "fuel cell": (8, 9),
+        "hydrogen storage underground": (10, 9),
+        "hydrogen storage tank type 1 including compressor": (10, 9),
+        "micro CHP": (8, 9),
+        "biogas": (4, 9),
+        "biogas CC": (4, 9),
+        "biogas upgrading": (4, 9),
+        "battery": (13, 9),
+        "industrial heat pump medium temperature": (6, 9),
+        "industrial heat pump high temperature": (6, 9),
+        "electric boiler steam": (7, 9),
+        "gas boiler steam": (7, 9),
+        "solid biomass boiler steam": (7, 9),
+        "solid biomass boiler steam CC": (7, 9),
+        "biomass boiler": (6, 9),
+        "electrolysis": (7, 9),
+        "direct air capture": (8, 9),
+        "biomass CHP capture": (10, 9),
+        "cement capture": (10, 9),
+        "BioSNG": (6, 9),
+        "BtL": (6, 9),
+        "biomass-to-methanol": (8, 9),
+        "biogas plus hydrogen": (6, 9),
+        "methanolisation": (7, 9),
+        "Fischer-Tropsch": (6, 9),
+        "central hydrogen CHP": (8, 9),
+        "Haber-Bosch": (10, 9),
+        "air separation unit": (7, 9),
+        "waste CHP": (16, 9),
+        "waste CHP CC": (16, 9),
+        "biochar pyrolysis": (7, 9),
+        "electrolysis small": (7, 9),
+    }
     excel_files = [
         v for k, v in snakemake_input_dictionary.items() if "dea" in k.casefold()
     ]
     input_dea_files_dict = get_excel_sheets(excel_files)
-    output_df = get_data_from_DEA(
-        input_dea_files_dict, expectation=config["expectation"]
+    output_dictionary = get_data_from_DEA(
+        config["years"], input_dea_files_dict, expectation=config["expectation"]
     )
-    print(output_df.shape)
-    # print(output_df)
-    assert False
+    comparison_dictionary = {}
+    for key, value in output_dictionary.items():
+        comparison_dictionary[key] = value.shape
+    assert comparison_dictionary == reference_output_dictionary

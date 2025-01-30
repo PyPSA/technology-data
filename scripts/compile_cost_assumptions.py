@@ -280,7 +280,7 @@ def get_sheet_location(technology_name, sheet_names_dict, input_data_dict):
     """
     Looks up in which Excel file technology is saved
     """
-    for key in data_in:
+    for key in input_data_dict:
         if sheet_names_dict[technology_name] in input_data_dict[key]:
             return key
     print("******* warning *************")

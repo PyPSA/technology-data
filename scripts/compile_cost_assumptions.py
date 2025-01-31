@@ -30,6 +30,9 @@ The script is structured as follows:
 
 import numpy as np
 import pandas as pd
+import logging
+
+logger = logging.getLogger(__name__)
 
 try:
     pd.set_option("future.no_silent_downcasting", True)
@@ -1210,21 +1213,31 @@ def biochar_pyrolysis_harmonise_dea(df):
 
 
 def get_data_from_DEA(
-    list_of_years, data_in_df, offwind_no_grid_costs=True, expectation=None
+    list_of_years, input_data_dictionary, offwind_no_grid_costs=True, expectation=None
 ):
     """
-    Saves technology data from DEA in dictionary d_by_tech
+    The function stores technology data from DEA in a dictionary.
+
+    Input arguments
+    - list_of_years: list, list of the years for which a cost assumption is provided
+    - input_data_dictionary: dict, dictionary where the keys are the path to the DEA inputs and the values are the sheet names
+    - offwind_no_grid_costs: bool, flag to remove grid connection costs from DEA for offwind. Such costs are calculated separately in pypsa-eur
+    - expectation: str, tech data uncertainty. The possible options are [None, "optimist", "pessimist"]
+
+    Output
+    - Dictionary, technology data from DEA
     """
-    d_by_tech = {}
 
-    for tech, dea_tech in dea_sheet_names.items():
-        print(f"{tech} in PyPSA corresponds to {dea_tech} in DEA database.")
+    data_by_tech_dict = {}
+
+    for tech_name, dea_tech in dea_sheet_names.items():
+        logger.info("{} in PyPSA corresponds to {} in DEA database.".format(tech_name, dea_tech))
         df = get_data_DEA(
-            list_of_years, tech, data_in_df, offwind_no_grid_costs, expectation
+            list_of_years, tech_name, input_data_dictionary, offwind_no_grid_costs, expectation
         ).fillna(0)
-        d_by_tech[tech] = df
+        data_by_tech_dict[tech_name] = df
 
-    return d_by_tech
+    return data_by_tech_dict
 
 
 def adjust_for_inflation(inflation_rate, costs, techs, ref_year, col):

@@ -532,23 +532,40 @@ def get_dea_vehicle_data(fn, list_of_years, data):
 
 
 def get_data_DEA(
-    list_of_years, tech, data_in, offwind_no_grid_costs_flag=True, expectation=None
+    list_of_years,
+    technology_name,
+    input_data_dict,
+    offwind_no_grid_costs_flag=True,
+    expectation=None,
 ):
     """
-    Interpolate cost for a given technology from DEA database sheet
+    The function interpolates costs for a given technology from DEA database sheetstores technology data from DEA in a dictionary.
 
-    uncertainty can be "optimist", "pessimist" or None|""
+    Input arguments
+    - list_of_years: list, list of the years for which a cost assumption is provided
+    - technology_name: str, technology name
+    - input_data_dict: dict, dictionary where the keys are the path to the DEA inputs and the values are the sheet names
+    - offwind_no_grid_costs_flag: bool, flag to remove grid connection costs from DEA for offwind. Such costs are calculated separately in pypsa-eur
+    - expectation: str, tech data uncertainty. The possible options are [None, "optimist", "pessimist"]
+
+    Output
+    - Dictionary, technology data from DEA
     """
-    excel_file = get_sheet_location(tech, dea_sheet_names, data_in)
+
+    excel_file = get_sheet_location(technology_name, dea_sheet_names, input_data_dict)
     if excel_file is None:
-        print("excel file not found for tech ", tech)
+        logger.warning(f"excel file not found for technology: {technology_name}")
         return None
 
-    if tech == "battery":
+    if technology_name == "battery":
         usecols = "B:J"
-    elif tech in ["direct air capture", "cement capture", "biomass CHP capture"]:
+    elif technology_name in [
+        "direct air capture",
+        "cement capture",
+        "biomass CHP capture",
+    ]:
         usecols = "A:F"
-    elif tech in [
+    elif technology_name in [
         "industrial heat pump medium temperature",
         "industrial heat pump high temperature",
         "electric boiler steam",
@@ -561,18 +578,18 @@ def get_data_DEA(
         "direct firing solid fuels CC",
     ]:
         usecols = "A:E"
-    elif tech in ["Fischer-Tropsch", "Haber-Bosch", "air separation unit"]:
+    elif technology_name in ["Fischer-Tropsch", "Haber-Bosch", "air separation unit"]:
         usecols = "B:F"
-    elif tech in ["central water-sourced heat pump"]:
+    elif technology_name in ["central water-sourced heat pump"]:
         usecols = "B,I,K"
     else:
         usecols = "B:G"
 
-    usecols += f",{uncrtnty_lookup[tech]}"
+    usecols += f",{uncrtnty_lookup[technology_name]}"
 
     if (
-        (tech in cost_year_2019)
-        or (tech in cost_year_2020)
+        (technology_name in cost_year_2019)
+        or (technology_name in cost_year_2020)
         or ("renewable_fuels" in excel_file)
     ):
         skiprows = [0]
@@ -581,7 +598,7 @@ def get_data_DEA(
 
     excel = pd.read_excel(
         excel_file,
-        sheet_name=dea_sheet_names[tech],
+        sheet_name=dea_sheet_names[technology_name],
         index_col=0,
         usecols=usecols,
         skiprows=skiprows,
@@ -593,9 +610,8 @@ def get_data_DEA(
     excel.index = excel.index.fillna(" ")
     excel.index = excel.index.astype(str)
     excel.dropna(axis=0, how="all", inplace=True)
-    # print(excel)
 
-    if tech in ["central water-sourced heat pump"]:
+    if technology_name in ["central water-sourced heat pump"]:
         # use only upper uncertainty range for systems without existing water intake
         # convert "Uncertainty (2025)"" to "2025", "Uncertainty (2050)"" to "2050" (and so on if more years are added)
         this_years = (
@@ -636,9 +652,9 @@ def get_data_DEA(
         excel.drop(selection, inplace=True)
 
     uncertainty_columns = ["2050-optimist", "2050-pessimist"]
-    if uncrtnty_lookup[tech]:
+    if uncrtnty_lookup[technology_name]:
         # hydrogen storage sheets have reverse order of lower/upper estimates
-        if tech in [
+        if technology_name in [
             "hydrogen storage tank type 1 including compressor",
             "hydrogen storage cavern",
         ]:
@@ -673,7 +689,7 @@ def get_data_DEA(
     excel.drop(columns=uncertainty_columns, inplace=True)
 
     # fix for battery with different excel sheet format
-    if tech == "battery":
+    if technology_name == "battery":
         excel.rename(columns={"Technology": 2040}, inplace=True)
 
     if expectation:
@@ -763,40 +779,39 @@ def get_data_DEA(
         df.apply(pd.to_numeric, errors="coerce").isnull(),
         df.astype(str).apply(lambda x: x.str.strip()),
     )
-    # print(df)
 
     ## Modify data loaded from DEA on a per-technology case
-    if (tech == "offwind") and offwind_no_grid_costs_flag:
+    if (technology_name == "offwind") and offwind_no_grid_costs_flag:
         df.loc["Nominal investment (*total) [MEUR/MW_e, 2020]"] -= excel.loc[
             "Nominal investment (installation: grid connection) [M€/MW_e, 2020]"
         ]
 
-    # Exlucde indirect costs for centralised system with additional piping.
-    if tech.startswith("industrial heat pump"):
+    # Exclude indirect costs for centralised system with additional piping.
+    if technology_name.startswith("industrial heat pump"):
         df = df.drop("Indirect investments cost (MEUR per MW)")
 
-    if tech == "biogas plus hydrogen":
+    if technology_name == "biogas plus hydrogen":
         df.drop(df.loc[df.index.str.contains("GJ SNG")].index, inplace=True)
 
-    if tech == "BtL":
+    if technology_name == "BtL":
         df.drop(df.loc[df.index.str.contains("1,000 t FT Liquids")].index, inplace=True)
 
-    if tech == "biomass-to-methanol":
+    if technology_name == "biomass-to-methanol":
         df.drop(df.loc[df.index.str.contains("1,000 t Methanol")].index, inplace=True)
 
-    if tech == "methanolisation":
+    if technology_name == "methanolisation":
         df.drop(df.loc[df.index.str.contains("1,000 t Methanol")].index, inplace=True)
 
-    if tech == "Fischer-Tropsch":
+    if technology_name == "Fischer-Tropsch":
         df.drop(df.loc[df.index.str.contains("l FT Liquids")].index, inplace=True)
 
-    if tech == "biomass boiler":
+    if technology_name == "biomass boiler":
         df.drop(
             df.loc[df.index.str.contains("Possible additional")].index, inplace=True
         )
         df.drop(df.loc[df.index.str.contains("Total efficiency")].index, inplace=True)
 
-    if tech == "Haber-Bosch":
+    if technology_name == "Haber-Bosch":
         df.drop(
             df.loc[
                 df.index.str.contains("Specific investment mark-up factor optional ASU")
@@ -824,7 +839,7 @@ def get_data_DEA(
             inplace=True,
         )
 
-    if tech == "air separation unit":
+    if technology_name == "air separation unit":
         divisor = (
             (df.loc["Specific investment mark-up factor optional ASU"] - 1.0)
             / excel.loc["N2 Consumption, [t/t] Ammonia"]
@@ -878,18 +893,18 @@ def get_data_DEA(
             inplace=True,
         )
 
-    if "solid biomass power" in tech:
+    if "solid biomass power" in technology_name:
         df.index = df.index.str.replace("EUR/MWeh", "EUR/MWh")
 
-    if "biochar pyrolysis" in tech:
+    if "biochar pyrolysis" in technology_name:
         df = biochar_pyrolysis_harmonise_dea(df)
 
-    elif tech == "central geothermal-sourced heat pump":
+    elif technology_name == "central geothermal-sourced heat pump":
         df.loc["Nominal investment (MEUR per MW)"] = df.loc[
             " - of which is heat pump including its installation"
         ]
 
-    elif tech == "central geothermal heat source":
+    elif technology_name == "central geothermal heat source":
         df.loc["Nominal investment (MEUR per MW)"] = df.loc[
             " - of which is equipment excluding heat pump"
         ]
@@ -910,7 +925,7 @@ def get_data_DEA(
 
     df_final["source"] = source_dict["DEA"] + ", " + excel_file.replace("inputs/", "")
     if (
-        tech in cost_year_2020
+        technology_name in cost_year_2020
         and ("for_carbon_capture_transport_storage" not in excel_file)
         and ("renewable_fuels" not in excel_file)
     ):

@@ -143,12 +143,10 @@ def test_get_sheet_location():
         v for k, v in snakemake_input_dictionary.items() if "dea" in k.casefold()
     ]
     output_dict = get_excel_sheets(excel_files)
-
     sheet_location_dictionary = {}
     for tech, dea_tech in dea_sheet_names.items():
         technology_location = get_sheet_location(tech, dea_sheet_names, output_dict)
         sheet_location_dictionary[tech] = technology_location
-
     assert sheet_location_dictionary == reference_output_dictionary
 
 

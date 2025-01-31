@@ -265,40 +265,47 @@ cost_year_2019 = [
 
 def get_excel_sheets(list_of_excel_files):
     """
-    "
-    read all Excel sheets and return
-    them as a dictionary (data_in)
+    The function reads Excel files and returns them in a dictionary.
+    The dictionary has the files names as keys and the lists of sheet names as values.
+
+    Input arguments
+    - list_of_excel_files: list, list of the Excel files to process
+
+    Output
+    - Dictionary, dictionary data from DEA
     """
-    data_in = {}
+
+    excel_sheets_dictionary = {}
     for entry in list_of_excel_files:
         if entry[-5:] == ".xlsx":
-            data_in[entry] = pd.ExcelFile(entry).sheet_names
-    print("found ", len(data_in), " excel sheets: ")
-    for key in data_in.keys():
-        print("* ", key)
-    return data_in
+            excel_sheets_dictionary[entry] = pd.ExcelFile(entry).sheet_names
+    logger.info("found {} excel sheets: ".format(len(excel_sheets_dictionary)))
+    for key in excel_sheets_dictionary.keys():
+        logger.info("* {}".format(key))
+    return excel_sheets_dictionary
 
 
 def get_sheet_location(technology_name, sheet_names_dict, input_data_dict):
     """
-    Looks up in which Excel file technology is saved
+    The function returns a dictionary. The dictionary has the technology names as keys and
+    the Excel file names where the technology is saved as values.
+
+    Input arguments
+    - technology_name: str, technology name
+    - sheet_names_dict: dict, dictionary having the technology name as keys and Excel sheet names as values
+    - input_data_dict: dict, dictionary having the files names as keys and the lists of sheet names as values
+
+    Output
+    - str, file name where the technology is present
     """
+
     for key in input_data_dict:
         if sheet_names_dict[technology_name] in input_data_dict[key]:
             return key
-    print("******* warning *************")
-    print(
-        "tech ",
-        technology_name,
-        " with sheet name ",
-        sheet_names_dict[technology_name],
-        "  not found in excel sheets.",
-    )
-    print("****************************")
+    logger.info("******* warning *******")
+    logger.info("tech {} with sheet name {} not found in excel sheets. ".format(technology_name, sheet_names_dict[technology_name]))
+    logger.info("***********************")
     return None
-
-
-#
 
 
 def get_dea_maritime_data(fn, list_of_years, data):

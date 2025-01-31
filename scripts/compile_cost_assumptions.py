@@ -28,9 +28,10 @@ The script is structured as follows:
 @author: Marta, Lisa
 """
 
+import logging
+
 import numpy as np
 import pandas as pd
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -279,9 +280,9 @@ def get_excel_sheets(list_of_excel_files):
     for entry in list_of_excel_files:
         if entry[-5:] == ".xlsx":
             excel_sheets_dictionary[entry] = pd.ExcelFile(entry).sheet_names
-    logger.info("found {} excel sheets: ".format(len(excel_sheets_dictionary)))
+    logger.info(f"found {len(excel_sheets_dictionary)} excel sheets: ")
     for key in excel_sheets_dictionary.keys():
-        logger.info("* {}".format(key))
+        logger.info(f"* {key}")
     return excel_sheets_dictionary
 
 
@@ -303,7 +304,9 @@ def get_sheet_location(technology_name, sheet_names_dict, input_data_dict):
         if sheet_names_dict[technology_name] in input_data_dict[key]:
             return key
     logger.info("******* warning *******")
-    logger.info("tech {} with sheet name {} not found in excel sheets. ".format(technology_name, sheet_names_dict[technology_name]))
+    logger.info(
+        f"tech {technology_name} with sheet name {sheet_names_dict[technology_name]} not found in excel sheets. "
+    )
     logger.info("***********************")
     return None
 
@@ -1238,9 +1241,13 @@ def get_data_from_DEA(
     data_by_tech_dict = {}
 
     for tech_name, dea_tech in dea_sheet_names.items():
-        logger.info("{} in PyPSA corresponds to {} in DEA database.".format(tech_name, dea_tech))
+        logger.info(f"{tech_name} in PyPSA corresponds to {dea_tech} in DEA database.")
         df = get_data_DEA(
-            list_of_years, tech_name, input_data_dictionary, offwind_no_grid_costs, expectation
+            list_of_years,
+            tech_name,
+            input_data_dictionary,
+            offwind_no_grid_costs,
+            expectation,
         ).fillna(0)
         data_by_tech_dict[tech_name] = df
 

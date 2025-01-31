@@ -29,9 +29,11 @@ The script is structured as follows:
 """
 
 import logging
+from datetime import date
 
 import numpy as np
 import pandas as pd
+from currency_converter import ECB_URL, CurrencyConverter
 
 logger = logging.getLogger(__name__)
 
@@ -1318,18 +1320,21 @@ def adjust_for_inflation(inflation_rate, costs, techs, ref_year, col):
     return costs
 
 
-def clean_up_units(tech_data, value_column="", source=""):
+def clean_up_units(technology_dataframe, value_column="", source=""):
     """
-    Converts units of a pd.Dataframe tech_data to match:
-    power: Mega Watt (MW)
-    energy: Mega-Watt-hour (MWh)
-    currency: Euro (EUR)
+    The function converts units of an input dataframe. Namely, it converts:
+        - power: Mega Watt (MW)
+        - energy: Mega-Watt-hour (MWh)
+        - currency: Euro (EUR)
 
-    clarifies if MW_th or MW_e
+    Input arguments
+    - technology_dataframe: list, list of the Excel files to process
+    - value_column: str, column to modify
+    - source: str, either empty string or 'dea'
+
+    Output
+    - Dataframe, technology data with converted units
     """
-    from datetime import date
-
-    from currency_converter import ECB_URL, CurrencyConverter
 
     # Currency conversion
     REPLACEMENTS = [
@@ -1337,123 +1342,181 @@ def clean_up_units(tech_data, value_column="", source=""):
         ("$", "USD"),
         ("₤", "GBP"),
     ]
-    # Download the full history, this will be up to date. Current value is:
+    # Download the full history, this will be up-to-date. Current value is:
     # https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist.zip
-    c = CurrencyConverter(ECB_URL)
-    c = CurrencyConverter(fallback_on_missing_rate=True)
+    c = CurrencyConverter(ECB_URL, fallback_on_missing_rate=True)
 
     for old, new in REPLACEMENTS:
-        tech_data.unit = tech_data.unit.str.replace(old, new, regex=False)
-        tech_data.loc[tech_data.unit.str.contains(new), value_column] *= c.convert(
-            1, new, "EUR", date=date(2020, 1, 1)
+        technology_dataframe.unit = technology_dataframe.unit.str.replace(
+            old, new, regex=False
         )
-        tech_data.unit = tech_data.unit.str.replace(new, "EUR")
+        technology_dataframe.loc[
+            technology_dataframe.unit.str.contains(new), value_column
+        ] *= c.convert(1, new, "EUR", date=date(2020, 1, 1))
+        technology_dataframe.unit = technology_dataframe.unit.str.replace(new, "EUR")
 
-    tech_data.unit = tech_data.unit.str.replace(" per ", "/")
-    tech_data.unit = tech_data.unit.str.replace(" / ", "/")
-    tech_data.unit = tech_data.unit.str.replace(" /", "/")
-    tech_data.unit = tech_data.unit.str.replace("J/s", "W")
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(" per ", "/")
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(" / ", "/")
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(" /", "/")
+    technology_dataframe.unit = technology_dataframe.unit.str.replace("J/s", "W")
 
     # units
-    tech_data.loc[tech_data.unit.str.contains("MEUR"), value_column] *= 1e6
-    tech_data.unit = tech_data.unit.str.replace("MEUR", "EUR")
+    technology_dataframe.loc[
+        technology_dataframe.unit.str.contains("MEUR"), value_column
+    ] *= 1e6
+    technology_dataframe.unit = technology_dataframe.unit.str.replace("MEUR", "EUR")
 
-    tech_data.loc[tech_data.unit.str.contains("mio EUR"), value_column] *= 1e6
-    tech_data.unit = tech_data.unit.str.replace("mio EUR", "EUR")
+    technology_dataframe.loc[
+        technology_dataframe.unit.str.contains("mio EUR"), value_column
+    ] *= 1e6
+    technology_dataframe.unit = technology_dataframe.unit.str.replace("mio EUR", "EUR")
 
-    tech_data.loc[tech_data.unit.str.contains("mill. EUR"), value_column] *= 1e6
-    tech_data.unit = tech_data.unit.str.replace("mill. EUR", "EUR")
+    technology_dataframe.loc[
+        technology_dataframe.unit.str.contains("mill. EUR"), value_column
+    ] *= 1e6
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
+        "mill. EUR", "EUR"
+    )
 
-    tech_data.loc[tech_data.unit.str.contains("1000EUR"), value_column] *= 1e3
-    tech_data.unit = tech_data.unit.str.replace("1000EUR", "EUR")
+    technology_dataframe.loc[
+        technology_dataframe.unit.str.contains("1000EUR"), value_column
+    ] *= 1e3
+    technology_dataframe.unit = technology_dataframe.unit.str.replace("1000EUR", "EUR")
 
-    tech_data.unit = tech_data.unit.str.replace("k EUR", "kEUR")
-    tech_data.loc[tech_data.unit.str.contains("kEUR"), value_column] *= 1e3
-    tech_data.unit = tech_data.unit.str.replace("kEUR", "EUR")
+    technology_dataframe.unit = technology_dataframe.unit.str.replace("k EUR", "kEUR")
+    technology_dataframe.loc[
+        technology_dataframe.unit.str.contains("kEUR"), value_column
+    ] *= 1e3
+    technology_dataframe.unit = technology_dataframe.unit.str.replace("kEUR", "EUR")
 
-    tech_data.loc[tech_data.unit.str.contains("/kW"), value_column] *= 1e3
+    technology_dataframe.loc[
+        technology_dataframe.unit.str.contains("/kW"), value_column
+    ] *= 1e3
 
-    tech_data.loc[
-        tech_data.unit.str.contains("kW") & ~tech_data.unit.str.contains("/kW"),
+    technology_dataframe.loc[
+        technology_dataframe.unit.str.contains("kW")
+        & ~technology_dataframe.unit.str.contains("/kW"),
         value_column,
     ] /= 1e3
-    tech_data.unit = tech_data.unit.str.replace("kW", "MW")
+    technology_dataframe.unit = technology_dataframe.unit.str.replace("kW", "MW")
 
-    tech_data.loc[tech_data.unit.str.contains("/GWh"), value_column] /= 1e3
-    tech_data.unit = tech_data.unit.str.replace("/GWh", "/MWh")
+    technology_dataframe.loc[
+        technology_dataframe.unit.str.contains("/GWh"), value_column
+    ] /= 1e3
+    technology_dataframe.unit = technology_dataframe.unit.str.replace("/GWh", "/MWh")
 
-    tech_data.loc[tech_data.unit.str.contains("/GJ"), value_column] *= 3.6
-    tech_data.unit = tech_data.unit.str.replace("/GJ", "/MWh")
+    technology_dataframe.loc[
+        technology_dataframe.unit.str.contains("/GJ"), value_column
+    ] *= 3.6
+    technology_dataframe.unit = technology_dataframe.unit.str.replace("/GJ", "/MWh")
 
     # Harmonise individual units so that they can be handled later
-    tech_data.unit = tech_data.unit.str.replace(" a year", "/year")
-    tech_data.unit = tech_data.unit.str.replace("2015EUR", "EUR")
-    tech_data.unit = tech_data.unit.str.replace("2015-EUR", "EUR")
-    tech_data.unit = tech_data.unit.str.replace("2020-EUR", "EUR")
-    tech_data.unit = tech_data.unit.str.replace("EUR2015", "EUR")
-    tech_data.unit = tech_data.unit.str.replace("EUR-2015", "EUR")
-    tech_data.unit = tech_data.unit.str.replace("MWe", "MW_e")
-    tech_data.unit = tech_data.unit.str.replace("EUR/MW of total input_e", "EUR/MW_e")
-    tech_data.unit = tech_data.unit.str.replace(
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
+        " a year", "/year"
+    )
+    technology_dataframe.unit = technology_dataframe.unit.str.replace("2015EUR", "EUR")
+    technology_dataframe.unit = technology_dataframe.unit.str.replace("2015-EUR", "EUR")
+    technology_dataframe.unit = technology_dataframe.unit.str.replace("2020-EUR", "EUR")
+    technology_dataframe.unit = technology_dataframe.unit.str.replace("EUR2015", "EUR")
+    technology_dataframe.unit = technology_dataframe.unit.str.replace("EUR-2015", "EUR")
+    technology_dataframe.unit = technology_dataframe.unit.str.replace("MWe", "MW_e")
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
+        "EUR/MW of total input_e", "EUR/MW_e"
+    )
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
         r"MWh/MWh\)", "MWh_H2/MWh_e", regex=True
     )
-    tech_data.unit = tech_data.unit.str.replace("MWth", "MW_th")
-    tech_data.unit = tech_data.unit.str.replace("MWheat", "MW_th")
-    tech_data.unit = tech_data.unit.str.replace("MWhth", "MWh_th")
-    tech_data.unit = tech_data.unit.str.replace("MWhheat", "MWh_th")
-    tech_data.unit = tech_data.unit.str.replace("MWH Liquids", "MWh_FT")
-    tech_data.unit = tech_data.unit.str.replace("MW Liquids", "MW_FT")
-    tech_data.unit = tech_data.unit.str.replace("MW Methanol", "MW_MeOH")
-    tech_data.unit = tech_data.unit.str.replace("MW output", "MW")
-    tech_data.unit = tech_data.unit.str.replace("MW/year FT Liquids/year", "MW_FT/year")
-    tech_data.unit = tech_data.unit.str.replace("MW/year Methanol", "MW_MeOH/year")
-    tech_data.unit = tech_data.unit.str.replace("MWh FT Liquids/year", "MWh_FT")
-    tech_data.unit = tech_data.unit.str.replace("MWh methanol", "MWh_MeOH")
-    tech_data.unit = tech_data.unit.str.replace("MW/year SNG", "MW_CH4/year")
-    tech_data.unit = tech_data.unit.str.replace("MWh SNG", "MWh_CH4")
-    tech_data.unit = tech_data.unit.str.replace("MW SNG", "MW_CH4")
-    tech_data.unit = tech_data.unit.str.replace("EUR/MWh of total input", "EUR/MWh_e")
-    tech_data.unit = tech_data.unit.str.replace("EUR/MWeh", "EUR/MWh_e")
-    tech_data.unit = tech_data.unit.str.replace(
+    technology_dataframe.unit = technology_dataframe.unit.str.replace("MWth", "MW_th")
+    technology_dataframe.unit = technology_dataframe.unit.str.replace("MWheat", "MW_th")
+    technology_dataframe.unit = technology_dataframe.unit.str.replace("MWhth", "MWh_th")
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
+        "MWhheat", "MWh_th"
+    )
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
+        "MWH Liquids", "MWh_FT"
+    )
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
+        "MW Liquids", "MW_FT"
+    )
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
+        "MW Methanol", "MW_MeOH"
+    )
+    technology_dataframe.unit = technology_dataframe.unit.str.replace("MW output", "MW")
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
+        "MW/year FT Liquids/year", "MW_FT/year"
+    )
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
+        "MW/year Methanol", "MW_MeOH/year"
+    )
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
+        "MWh FT Liquids/year", "MWh_FT"
+    )
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
+        "MWh methanol", "MWh_MeOH"
+    )
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
+        "MW/year SNG", "MW_CH4/year"
+    )
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
+        "MWh SNG", "MWh_CH4"
+    )
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
+        "MW SNG", "MW_CH4"
+    )
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
+        "EUR/MWh of total input", "EUR/MWh_e"
+    )
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
+        "EUR/MWeh", "EUR/MWh_e"
+    )
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
         "% -points of heat loss", "MWh_th/MWh_el"
     )
-    tech_data.unit = tech_data.unit.str.replace(
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
         "FT Liquids Output, MWh/MWh Total Input", "MWh_FT/MWh_H2"
     )
     # biomass-to-methanol-specific
-    if isinstance(tech_data.index, pd.MultiIndex):
-        tech_data.loc[
-            tech_data.index.get_level_values(1) == "Methanol Output,", "unit"
+    if isinstance(technology_dataframe.index, pd.MultiIndex):
+        technology_dataframe.loc[
+            technology_dataframe.index.get_level_values(1) == "Methanol Output,", "unit"
         ] = "MWh_MeOH/MWh_th"
-        tech_data.loc[
-            tech_data.index.get_level_values(1) == "District heat  Output,", "unit"
+        technology_dataframe.loc[
+            technology_dataframe.index.get_level_values(1) == "District heat  Output,",
+            "unit",
         ] = "MWh_th/MWh_th"
-        tech_data.loc[
-            tech_data.index.get_level_values(1) == "Electricity Output,", "unit"
+        technology_dataframe.loc[
+            technology_dataframe.index.get_level_values(1) == "Electricity Output,",
+            "unit",
         ] = "MWh_e/MWh_th"
 
     # Ammonia-specific
-    tech_data.unit = tech_data.unit.str.replace(
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
         "MW Ammonia output", "MW_NH3"
     )  # specific investment
-    tech_data.unit = tech_data.unit.str.replace("MW Ammonia", "MW_NH3")  # fom
-    tech_data.unit = tech_data.unit.str.replace("MWh Ammonia", "MWh_NH3")  # vom
-    tech_data.loc[tech_data.unit == "EUR/MW/y", "unit"] = "EUR/MW/year"
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
+        "MW Ammonia", "MW_NH3"
+    )  # fom
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
+        "MWh Ammonia", "MWh_NH3"
+    )  # vom
+    technology_dataframe.loc[technology_dataframe.unit == "EUR/MW/y", "unit"] = (
+        "EUR/MW/year"
+    )
 
     # convert per unit costs to MW
-    cost_per_unit = tech_data.unit.str.contains("/unit")
-    tech_data.loc[cost_per_unit, value_column] = tech_data.loc[
+    cost_per_unit = technology_dataframe.unit.str.contains("/unit")
+    technology_dataframe.loc[cost_per_unit, value_column] = technology_dataframe.loc[
         cost_per_unit, value_column
     ].apply(
         lambda x: (
             x
-            / tech_data.loc[(x.name[0], "Heat production capacity for one unit")][
-                value_column
-            ]
+            / technology_dataframe.loc[
+                (x.name[0], "Heat production capacity for one unit")
+            ][value_column]
         ).iloc[0, :],
         axis=1,
     )
-    tech_data.loc[cost_per_unit, "unit"] = tech_data.loc[
+    technology_dataframe.loc[cost_per_unit, "unit"] = technology_dataframe.loc[
         cost_per_unit, "unit"
     ].str.replace("/unit", "/MW_th")
 
@@ -1471,7 +1534,9 @@ def clean_up_units(tech_data, value_column="", source=""):
             "decentral gas boiler",
             "decentral ground-sourced heat pump",
         ]
-        tech_data.loc[techs_mwth, "unit"] = tech_data.loc[techs_mwth, "unit"].replace(
+        technology_dataframe.loc[techs_mwth, "unit"] = technology_dataframe.loc[
+            techs_mwth, "unit"
+        ].replace(
             {
                 "EUR/MW": "EUR/MW_th",
                 "EUR/MW/year": "EUR/MW_th/year",
@@ -1482,7 +1547,9 @@ def clean_up_units(tech_data, value_column="", source=""):
 
         # clarify MW -> MW_e
         techs_e = ["fuel cell"]
-        tech_data.loc[techs_e, "unit"] = tech_data.loc[techs_e, "unit"].replace(
+        technology_dataframe.loc[techs_e, "unit"] = technology_dataframe.loc[
+            techs_e, "unit"
+        ].replace(
             {
                 "EUR/MW": "EUR/MW_e",
                 "EUR/MW/year": "EUR/MW_e/year",
@@ -1491,12 +1558,14 @@ def clean_up_units(tech_data, value_column="", source=""):
             }
         )
 
-        if "methanolisation" in tech_data.index:
-            tech_data = tech_data.sort_index()
-            tech_data.loc[("methanolisation", "Variable O&M"), "unit"] = "EUR/MWh_MeOH"
+        if "methanolisation" in technology_dataframe.index:
+            technology_dataframe = technology_dataframe.sort_index()
+            technology_dataframe.loc[("methanolisation", "Variable O&M"), "unit"] = (
+                "EUR/MWh_MeOH"
+            )
 
-    tech_data.unit = tech_data.unit.str.replace(r"\)", "")
-    return tech_data
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(r"\)", "")
+    return technology_dataframe
 
 
 def set_specify_assumptions(list_of_years, tech_data):

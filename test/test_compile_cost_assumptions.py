@@ -8,9 +8,12 @@ import copy
 import pathlib
 import sys
 
+import pytest
+
 sys.path.append("./scripts")
 
 from compile_cost_assumptions import (
+    clean_up_units,
     dea_sheet_names,
     get_data_from_DEA,
     get_excel_sheets,
@@ -38,6 +41,19 @@ snakemake_input_dictionary = {
     "pnnl_energy_storage": "inputs/pnnl-energy-storage-database.xlsx",
     "manual_input": "inputs/manual_input.csv",
 }
+
+
+@pytest.mark.parametrize("source", ["", "dea"])
+def test_clean_up_units(mock_input_data, mock_output_data, source):
+    """
+    The test verifies what is returned by clean_up_units.
+    """
+    expected_df = mock_output_data(source)
+    output_df = clean_up_units(
+        mock_input_data.copy(deep=True), value_column="value", source=source
+    )
+    comparison_df = output_df.compare(expected_df)
+    assert comparison_df.empty
 
 
 def test_get_excel_sheets():

@@ -4,6 +4,7 @@
 
 # coding: utf-8
 
+import copy
 import pathlib
 import sys
 
@@ -137,15 +138,19 @@ def test_get_sheet_location():
         "waste CHP CC": "inputs/technology_data_for_el_and_dh.xlsx",
         "biochar pyrolysis": "inputs/data_sheets_for_renewable_fuels.xlsx",
         "electrolysis small": "inputs/data_sheets_for_renewable_fuels.xlsx",
+        "random tech": None,
     }
-
+    dea_sheet_names_dict = copy.deepcopy(dea_sheet_names)
+    dea_sheet_names_dict["random tech"] = "random sheet"
     excel_files = [
         v for k, v in snakemake_input_dictionary.items() if "dea" in k.casefold()
     ]
     output_dict = get_excel_sheets(excel_files)
     sheet_location_dictionary = {}
-    for tech, dea_tech in dea_sheet_names.items():
-        technology_location = get_sheet_location(tech, dea_sheet_names, output_dict)
+    for tech, dea_tech in dea_sheet_names_dict.items():
+        technology_location = get_sheet_location(
+            tech, dea_sheet_names_dict, output_dict
+        )
         sheet_location_dictionary[tech] = technology_location
     assert sheet_location_dictionary == reference_output_dictionary
 

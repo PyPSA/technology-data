@@ -297,18 +297,25 @@ def get_sheet_location(technology_name, sheet_names_dict, input_data_dict):
     - input_data_dict: dict, dictionary having the files names as keys and the lists of sheet names as values
 
     Output
-    - str, file name where the technology is present
+    - str, Excel file name where the technology is present
     """
 
-    for key in input_data_dict:
-        if sheet_names_dict[technology_name] in input_data_dict[key]:
-            return key
-    logger.info("******* warning *******")
-    logger.info(
-        f"tech {technology_name} with sheet name {sheet_names_dict[technology_name]} not found in excel sheets. "
-    )
-    logger.info("***********************")
-    return None
+    key_list = [
+        key
+        for key, value in input_data_dict.items()
+        if any(sheet_names_dict[technology_name] in s for s in value)
+    ]
+
+    if len(key_list) == 1:
+        return key_list[0]
+    elif len(key_list) > 1:
+        logger.warning(f"{technology_name} appears in more than one sheet name")
+        return None
+    else:
+        logger.warning(
+            f"tech {technology_name} with sheet name {sheet_names_dict[technology_name]} not found in excel sheets. "
+        )
+        return None
 
 
 def get_dea_maritime_data(fn, list_of_years, data):

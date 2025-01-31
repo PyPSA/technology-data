@@ -389,6 +389,9 @@ def test_duplicate_fuel_cost(config):
     ],
 )
 def test_pre_process_manual_input_usa(config, year, expected):
+    """
+    The test verifies what is returned by pre_process_manual_input_usa.
+    """
     list_of_years = config["years"]
     manual_input_usa_file_path = pathlib.Path(
         path_cwd, "inputs", "US", "manual_input_usa.csv"

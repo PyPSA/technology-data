@@ -268,8 +268,8 @@ cost_year_2019 = [
 
 def get_excel_sheets(list_of_excel_files):
     """
-    The function reads Excel files and returns them in a dictionary.
-    The dictionary has the files names as keys and the lists of sheet names as values.
+    The function reads Excel files and returns them in a dictionary
+    The dictionary has the files names as keys and the lists of sheet names as values
 
     Input arguments
     - list_of_excel_files: list, list of the Excel files to process
@@ -291,7 +291,7 @@ def get_excel_sheets(list_of_excel_files):
 def get_sheet_location(technology_name, sheet_names_dict, input_data_dict):
     """
     The function returns a dictionary. The dictionary has the technology names as keys and
-    the Excel file names where the technology is saved as values.
+    the Excel file names where the technology is saved as values
 
     Input arguments
     - technology_name: str, technology name
@@ -320,10 +320,19 @@ def get_sheet_location(technology_name, sheet_names_dict, input_data_dict):
         return None
 
 
-def get_dea_maritime_data(fn, list_of_years, data):
+def get_dea_maritime_data(fn, list_of_years, input_data_df):
     """
-    Get technology data for shipping from DEA.
+    The function returns a dataframe containing the technology data for shipping from the DEA database.
+
+    Input arguments
+    - fn: str, path to DEA input data file for shipping
+    - list_of_years: list, list of the years for which a cost assumption is provided
+    - input_data_df: DataFrame, dataframe with technology data cost assumptions
+
+    Output
+    - DataFrame, enriched with technology data cost assumptions for shipping from DEA
     """
+
     dea_maritime_data_sheet_names = [
         "Container feeder, diesel",
         "Container feeder, methanol",
@@ -335,6 +344,7 @@ def get_dea_maritime_data(fn, list_of_years, data):
         "Tank&bulk, methanol",
         "Tankbulk, ammonia",
     ]
+
     excel = pd.read_excel(
         fn,
         sheet_name=dea_maritime_data_sheet_names,
@@ -418,9 +428,9 @@ def get_dea_maritime_data(fn, list_of_years, data):
 
         df = pd.concat([df], keys=[sheet], names=["technology", "parameter"])
 
-        data = pd.concat([data, df])
+        input_data_df = pd.concat([input_data_df, df])
 
-    return data
+    return input_data_df
 
 
 def get_dea_vehicle_data(fn, list_of_years, data):
@@ -541,7 +551,7 @@ def get_data_DEA(
     expectation=None,
 ):
     """
-    The function interpolates costs for a given technology from DEA database sheetstores technology data from DEA in a dictionary.
+    The function interpolates costs for a given technology from DEA database sheet and stores technology data from DEA in a dictionary.
 
     Input arguments
     - list_of_years: list, list of the years for which a cost assumption is provided

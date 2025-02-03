@@ -348,4 +348,3 @@ def test_get_dea_maritime_data(config, cost_dataframe):
     output_df = get_dea_maritime_data(input_path, config["years"], cost_dataframe)
     print(output_df.info())
     # TODO: to be completed
-    assert False

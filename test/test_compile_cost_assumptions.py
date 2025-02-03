@@ -8,6 +8,7 @@ import copy
 import pathlib
 import sys
 
+import pandas as pd
 import pytest
 
 sys.path.append("./scripts")
@@ -16,8 +17,10 @@ from compile_cost_assumptions import (
     clean_up_units,
     dea_sheet_names,
     get_data_from_DEA,
+    get_dea_maritime_data,
     get_excel_sheets,
     get_sheet_location,
+    set_specify_assumptions,
 )
 
 path_cwd = pathlib.Path.cwd()
@@ -41,6 +44,46 @@ snakemake_input_dictionary = {
     "pnnl_energy_storage": "inputs/pnnl-energy-storage-database.xlsx",
     "manual_input": "inputs/manual_input.csv",
 }
+
+input_dataframe = pd.DataFrame(
+    {
+        "technology": [
+            "central resistive heater",
+            "decentral gas boiler",
+            "decentral gas boiler",
+            "decentral gas boiler",
+            "biogas upgrading",
+            "solar-rooftop",
+            "heat pump",
+        ],
+        "parameter": [
+            "Nominal investment, 400/690 V; 1-5 MW",
+            "Heat efficiency, annual average, net",
+            "Possible additional specific investment",
+            "Technical lifetime",
+            "investment",
+            "PV module conversion efficiency [p.u.]",
+            "Heat efficiency, annual average, net, radiators",
+        ],
+        "2020": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+        "2025": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+        "2030": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+        "2035": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+        "2040": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+        "2045": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+        "2050": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+        "source": [
+            "source",
+            "source",
+            "source",
+            "source",
+            "source",
+            "source",
+            "source",
+        ],
+        "unit": ["unit", "unit", "unit", "unit", "unit", "unit", "unit"],
+    }
+).set_index(["technology", "parameter"])
 
 
 @pytest.mark.parametrize("source", ["", "dea"])
@@ -256,3 +299,51 @@ def test_get_data_from_dea(config):
     for key, value in output_dictionary.items():
         comparison_dictionary[key] = value.shape
     assert comparison_dictionary == reference_output_dictionary
+
+
+def test_set_specify_assumptions(config):
+    reference_output_dataframe = pd.DataFrame(
+        {
+            "technology": [
+                "biogas upgrading",
+                "decentral gas boiler",
+                "decentral gas boiler connection",
+                "decentral gas boiler connection",
+                "heat pump",
+            ],
+            "parameter": [
+                "investment (upgrading, methane redution and grid injection)",
+                "Technical lifetime",
+                "Possible additional specific investment",
+                "Technical lifetime",
+                "Heat efficiency, annual average, net, radiators, existing one family house",
+            ],
+            "2020": [1.0, 1.0, 1.0, 50.0, 1.0],
+            "2025": [1.0, 1.0, 1.0, 50.0, 1.0],
+            "2030": [1.0, 1.0, 1.0, 50.0, 1.0],
+            "2035": [1.0, 1.0, 1.0, 50.0, 1.0],
+            "2040": [1.0, 1.0, 1.0, 50.0, 1.0],
+            "2045": [1.0, 1.0, 1.0, 50.0, 1.0],
+            "2050": [1.0, 1.0, 1.0, 50.0, 1.0],
+            "source": ["source", "source", "source", "source", "source"],
+            "unit": ["unit", "unit", "unit", "unit", "unit"],
+        }
+    )
+    list_of_years = [str(x) for x in config["years"]]
+    output_dataframe = set_specify_assumptions(list_of_years, input_dataframe)
+    output_dataframe = output_dataframe.reset_index(drop=False).rename(columns={"level_0": "technology", "level_1": "parameter"})
+    comparison_df = output_dataframe.compare(reference_output_dataframe)
+    assert comparison_df.empty
+
+
+def test_get_dea_maritime_data(config, cost_dataframe):
+    input_path = pathlib.Path(
+        path_cwd,
+        "inputs",
+        "data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx",
+    )
+    print(cost_dataframe.info())
+    output_df = get_dea_maritime_data(input_path, config["years"], cost_dataframe)
+    print(output_df.info())
+    # TODO: to be completed
+    assert False

@@ -1338,7 +1338,7 @@ def clean_up_units(technology_dataframe, value_column="", source=""):
         - currency: Euro (EUR)
 
     Input arguments
-    - technology_dataframe: list, list of the Excel files to process
+    - technology_dataframe: DataFrame, dataframe with technology data cost assumptions
     - value_column: str, column to modify
     - source: str, either empty string or 'dea'
 
@@ -1578,22 +1578,24 @@ def clean_up_units(technology_dataframe, value_column="", source=""):
     return technology_dataframe
 
 
-def set_specify_assumptions(list_of_years, tech_data):
+def set_specify_assumptions(list_of_years, technology_dataframe):
     """
-    For following technologies more specific investment and efficiency
-    assumptions are taken:
-
-        - central resistive heater (investment costs for large > 10 MW
-                                    generators are assumed)
+    The function implements more specific investment and efficiency assumptions for the following technologies:
+        - central resistive heater (investment costs for large > 10 MW generators are assumed)
         - decentral gas boiler (grid connection costs)
         - biogas upgrading (include grid connection costs)
         - heat pumps (efficiencies for radiators assumed)
 
-    to avoid duplicates some investment + efficiency data is dropped for:
-
+    Furthermore, to avoid duplicates some investment + efficiency, rows are dropped for:
         - decentral gas boilers (drop duplicated efficiency)
         - PV module (drop efficiency)
 
+    Input arguments
+    - list_of_years: list, list of the years for which a cost assumption is provided
+    - technology_dataframe: DataFrame, dataframe with technology data cost assumptions
+
+    Output
+    - Dataframe, updated technology dataframe
     """
 
     # for central resistive heater there are investment costs for small (1-5MW)
@@ -1609,7 +1611,7 @@ def set_specify_assumptions(list_of_years, tech_data):
     # not connected yet those costs are added as an extra row since the
     # lifetime of the branchpipe is assumed to be  50 years (see comment K in
     # excel sheet)
-    boiler_connect = tech_data.loc[
+    boiler_connect = technology_dataframe.loc[
         [
             ("decentral gas boiler", "Possible additional specific investment"),
             ("decentral gas boiler", "Technical lifetime"),
@@ -1621,28 +1623,32 @@ def set_specify_assumptions(list_of_years, tech_data):
     boiler_connect.rename(
         index={"decentral gas boiler": "decentral gas boiler connection"}, inplace=True
     )
-    tech_data = pd.concat([tech_data, boiler_connect])
+    technology_dataframe = pd.concat([technology_dataframe, boiler_connect])
     to_drop.append(("decentral gas boiler", "Possible additional specific investment"))
 
     # biogas upgrading investment costs should include grid injection costs
-    index = tech_data.loc["biogas upgrading"].index.str.contains("investment")
+    index = technology_dataframe.loc["biogas upgrading"].index.str.contains(
+        "investment"
+    )
     name = "investment (upgrading, methane redution and grid injection)"
     inv = (
-        tech_data.loc["biogas upgrading"]
+        technology_dataframe.loc["biogas upgrading"]
         .loc[index]
         .groupby(["unit", "source"])
         .sum()
         .reset_index()
     )
-    new = pd.concat([tech_data.loc["biogas upgrading"].loc[~index], inv]).rename(
-        {0: name}
-    )
+    new = pd.concat(
+        [technology_dataframe.loc["biogas upgrading"].loc[~index], inv]
+    ).rename({0: name})
     new.index = pd.MultiIndex.from_product([["biogas upgrading"], new.index.to_list()])
-    tech_data.drop("biogas upgrading", level=0, inplace=True)
-    tech_data = pd.concat([tech_data, new])
+    technology_dataframe.drop("biogas upgrading", level=0, inplace=True)
+    technology_dataframe = pd.concat([technology_dataframe, new])
 
     # drop PV module conversion efficiency
-    tech_data = tech_data.drop("PV module conversion efficiency [p.u.]", level=1)
+    technology_dataframe = technology_dataframe.drop(
+        "PV module conversion efficiency [p.u.]", level=1
+    )
 
     # heat pump efficiencies are assumed the one's for existing building,
     # in the DEA they do differ between heating the floor area or heating with
@@ -1651,18 +1657,18 @@ def set_specify_assumptions(list_of_years, tech_data):
     # furthermore the total efficiency is assumed which includes auxiliary electricity
     # consumption
     name = "Heat efficiency, annual average, net, radiators"
-    techs_radiator = tech_data.xs(name, level=1).index
+    techs_radiator = technology_dataframe.xs(name, level=1).index
     for tech in techs_radiator:
-        df = tech_data.loc[tech]
+        df = technology_dataframe.loc[tech]
         df = df[(~df.index.str.contains("efficiency")) | (df.index == name)]
         df.rename(index={name: name + ", existing one family house"}, inplace=True)
         df.index = pd.MultiIndex.from_product([[tech], df.index.to_list()])
-        tech_data.drop(tech, level=0, inplace=True)
-        tech_data = pd.concat([tech_data, df])
+        technology_dataframe.drop(tech, level=0, inplace=True)
+        technology_dataframe = pd.concat([technology_dataframe, df])
 
-    tech_data = tech_data.drop(to_drop)
+    technology_dataframe = technology_dataframe.drop(to_drop)
 
-    return tech_data.sort_index()
+    return technology_dataframe.sort_index()
 
 
 def set_round_trip_efficiency(list_of_years, tech_data):

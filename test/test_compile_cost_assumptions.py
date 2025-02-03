@@ -331,7 +331,9 @@ def test_set_specify_assumptions(config):
     )
     list_of_years = [str(x) for x in config["years"]]
     output_dataframe = set_specify_assumptions(list_of_years, input_dataframe)
-    output_dataframe = output_dataframe.reset_index(drop=False).rename(columns={"level_0": "technology", "level_1": "parameter"})
+    output_dataframe = output_dataframe.reset_index(drop=False).rename(
+        columns={"level_0": "technology", "level_1": "parameter"}
+    )
     comparison_df = output_dataframe.compare(reference_output_dataframe)
     assert comparison_df.empty
 

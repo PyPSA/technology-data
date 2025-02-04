@@ -509,9 +509,7 @@ def test_set_round_trip_efficiency(config):
         }
     )
     list_of_years = [str(x) for x in config["years"]]
-    output_df = set_round_trip_efficiency(
-        list_of_years, input_df
-    )
+    output_df = set_round_trip_efficiency(list_of_years, input_df)
     output_df = output_df.reset_index(drop=False).rename(
         columns={"level_0": "technology", "level_1": "parameter"}
     )

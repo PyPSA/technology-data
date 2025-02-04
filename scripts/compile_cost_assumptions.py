@@ -1600,17 +1600,19 @@ def set_specify_assumptions(list_of_years, technology_dataframe):
 
     # for central resistive heater there are investment costs for small (1-5MW)
     # and large (>10 MW) generators, assume the costs for large generators
-    to_drop = [("central resistive heater", "Nominal investment, 400/690 V; 1-5 MW")]
+    to_drop = [
+        ("central resistive heater", "Nominal investment, 400/690 V; 1-5 MW"),
+        ("decentral gas boiler", "Heat efficiency, annual average, net"),
+    ]
 
     # for decentral gas boilers total and heat efficiency given, the values are
     # the same, drop one of the rows to avoid duplicates
-    to_drop.append(("decentral gas boiler", "Heat efficiency, annual average, net"))
 
     # for decentral gas boilers there are investment costs and possible
     # additional investments which apply for grid connection if the house is
     # not connected yet those costs are added as an extra row since the
-    # lifetime of the branchpipe is assumed to be  50 years (see comment K in
-    # excel sheet)
+    # lifetime of the branch pipe is assumed to be  50 years (see comment K in
+    # Excel sheet)
     boiler_connect = technology_dataframe.loc[
         [
             ("decentral gas boiler", "Possible additional specific investment"),
@@ -1671,32 +1673,30 @@ def set_specify_assumptions(list_of_years, technology_dataframe):
     return technology_dataframe.sort_index()
 
 
-def set_round_trip_efficiency(list_of_years, tech_data):
+def set_round_trip_efficiency(list_of_years, technology_dataframe):
     """
-    Get round trip efficiency for hydrogen and battery storage
-    assume for battery sqrt(DC efficiency) and split into inverter + storage
-    rename investment rows for easier sorting
+    The function get round trip efficiency for hydrogen and battery storage.
+    It assumes for battery sqrt(DC efficiency) and it splits it into inverter + storage.
+    Finally, it renames investment rows for easier sorting.
+
+    Input arguments
+    - list_of_years: list, list of the years for which a cost assumption is provided
+    - technology_dataframe: DataFrame, dataframe with technology data cost assumptions
+
+    Output
+    - Dataframe, updated technology dataframe
     """
 
-    # hydrogen storage
-    to_drop = [
-        ("hydrogen storage tank type 1 including compressor", " - Charge efficiency")
-    ]
-    to_drop.append(
-        ("hydrogen storage tank type 1 including compressor", " - Discharge efficiency")
-    )
-    to_drop.append(("hydrogen storage underground", " - Charge efficiency"))
-    to_drop.append(("hydrogen storage underground", " - Discharge efficiency"))
-    tech_data.loc[
+    technology_dataframe.loc[
         ("hydrogen storage underground", "Round trip efficiency"), list_of_years
     ] *= 100
-    tech_data.loc[
+    technology_dataframe.loc[
         ("hydrogen storage tank type 1 including compressor", "Round trip efficiency"),
         list_of_years,
     ] *= 100
 
     # battery split into inverter and storage, assume for efficiency sqr(round trip DC)
-    df = tech_data.loc["battery"]
+    df = technology_dataframe.loc["battery"]
     inverter = df.loc[
         [
             "Round trip efficiency DC",
@@ -1731,10 +1731,10 @@ def set_round_trip_efficiency(list_of_years, tech_data):
     storage.index = pd.MultiIndex.from_product(
         [["battery storage"], storage.index.to_list()]
     )
-    tech_data.drop("battery", level=0, inplace=True)
-    tech_data = pd.concat([tech_data, inverter, storage])
+    technology_dataframe.drop("battery", level=0, inplace=True)
+    technology_dataframe = pd.concat([technology_dataframe, inverter, storage])
 
-    return tech_data.sort_index()
+    return technology_dataframe.sort_index()
 
 
 def order_data(list_of_years, tech_data):

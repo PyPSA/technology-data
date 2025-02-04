@@ -20,6 +20,7 @@ from compile_cost_assumptions import (
     get_dea_maritime_data,
     get_excel_sheets,
     get_sheet_location,
+    set_round_trip_efficiency,
     set_specify_assumptions,
 )
 
@@ -44,46 +45,6 @@ snakemake_input_dictionary = {
     "pnnl_energy_storage": "inputs/pnnl-energy-storage-database.xlsx",
     "manual_input": "inputs/manual_input.csv",
 }
-
-input_dataframe = pd.DataFrame(
-    {
-        "technology": [
-            "central resistive heater",
-            "decentral gas boiler",
-            "decentral gas boiler",
-            "decentral gas boiler",
-            "biogas upgrading",
-            "solar-rooftop",
-            "heat pump",
-        ],
-        "parameter": [
-            "Nominal investment, 400/690 V; 1-5 MW",
-            "Heat efficiency, annual average, net",
-            "Possible additional specific investment",
-            "Technical lifetime",
-            "investment",
-            "PV module conversion efficiency [p.u.]",
-            "Heat efficiency, annual average, net, radiators",
-        ],
-        "2020": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-        "2025": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-        "2030": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-        "2035": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-        "2040": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-        "2045": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-        "2050": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-        "source": [
-            "source",
-            "source",
-            "source",
-            "source",
-            "source",
-            "source",
-            "source",
-        ],
-        "unit": ["unit", "unit", "unit", "unit", "unit", "unit", "unit"],
-    }
-).set_index(["technology", "parameter"])
 
 
 @pytest.mark.parametrize("source", ["", "dea"])
@@ -302,7 +263,50 @@ def test_get_data_from_dea(config):
 
 
 def test_set_specify_assumptions(config):
-    reference_output_dataframe = pd.DataFrame(
+    """
+    The test verifies what is returned by set_specify_assumptions.
+    """
+    input_df = pd.DataFrame(
+        {
+            "technology": [
+                "central resistive heater",
+                "decentral gas boiler",
+                "decentral gas boiler",
+                "decentral gas boiler",
+                "biogas upgrading",
+                "solar-rooftop",
+                "heat pump",
+            ],
+            "parameter": [
+                "Nominal investment, 400/690 V; 1-5 MW",
+                "Heat efficiency, annual average, net",
+                "Possible additional specific investment",
+                "Technical lifetime",
+                "investment",
+                "PV module conversion efficiency [p.u.]",
+                "Heat efficiency, annual average, net, radiators",
+            ],
+            "2020": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+            "2025": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+            "2030": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+            "2035": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+            "2040": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+            "2045": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+            "2050": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+            "source": [
+                "source",
+                "source",
+                "source",
+                "source",
+                "source",
+                "source",
+                "source",
+            ],
+            "unit": ["unit", "unit", "unit", "unit", "unit", "unit", "unit"],
+        }
+    ).set_index(["technology", "parameter"])
+
+    reference_output_df = pd.DataFrame(
         {
             "technology": [
                 "biogas upgrading",
@@ -330,11 +334,188 @@ def test_set_specify_assumptions(config):
         }
     )
     list_of_years = [str(x) for x in config["years"]]
-    output_dataframe = set_specify_assumptions(list_of_years, input_dataframe)
-    output_dataframe = output_dataframe.reset_index(drop=False).rename(
+    output_df = set_specify_assumptions(list_of_years, input_df)
+    output_df = output_df.reset_index(drop=False).rename(
         columns={"level_0": "technology", "level_1": "parameter"}
     )
-    comparison_df = output_dataframe.compare(reference_output_dataframe)
+    comparison_df = output_df.compare(reference_output_df)
+    assert comparison_df.empty
+
+
+def test_set_round_trip_efficiency(config):
+    """
+    The test verifies what is returned by set_round_trip_efficiency.
+    """
+    input_df = pd.DataFrame(
+        {
+            "technology": [
+                "hydrogen storage underground",
+                "hydrogen storage tank type 1 including compressor",
+                "battery",
+                "battery",
+                "battery",
+                "battery",
+                "battery",
+            ],
+            "parameter": [
+                "Round trip efficiency",
+                "Round trip efficiency",
+                "Round trip efficiency DC",
+                "Output capacity expansion cost",
+                "Technical lifetime",
+                "Fixed O&M",
+                "Energy storage expansion cost",
+            ],
+            "2020": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+            "2025": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+            "2030": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+            "2035": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+            "2040": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+            "2045": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+            "2050": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+            "source": [
+                "source",
+                "source",
+                "source",
+                "source",
+                "source",
+                "source",
+                "source",
+            ],
+            "unit": [
+                "unit",
+                "unit",
+                "unit",
+                "unit",
+                "unit",
+                "unit",
+                "unit",
+            ],
+        }
+    ).set_index(["technology", "parameter"])
+
+    reference_output_df = pd.DataFrame(
+        {
+            "technology": [
+                "battery inverter",
+                "battery inverter",
+                "battery inverter",
+                "battery inverter",
+                "battery storage",
+                "battery storage",
+                "hydrogen storage tank type 1 including compressor",
+                "hydrogen storage underground",
+            ],
+            "parameter": [
+                "Fixed O&M",
+                "Output capacity expansion cost investment",
+                "Round trip efficiency DC",
+                "Technical lifetime",
+                "Energy storage expansion cost investment",
+                "Technical lifetime",
+                "Round trip efficiency",
+                "Round trip efficiency",
+            ],
+            "2020": [
+                1.0,
+                1.0,
+                1.0,
+                10.0,
+                1.0,
+                1.0,
+                100.0,
+                100.0,
+            ],
+            "2025": [
+                1.0,
+                1.0,
+                1.0,
+                10.0,
+                1.0,
+                1.0,
+                100.0,
+                100.0,
+            ],
+            "2030": [
+                1.0,
+                1.0,
+                1.0,
+                10.0,
+                1.0,
+                1.0,
+                100.0,
+                100.0,
+            ],
+            "2035": [
+                1.0,
+                1.0,
+                1.0,
+                10.0,
+                1.0,
+                1.0,
+                100.0,
+                100.0,
+            ],
+            "2040": [
+                1.0,
+                1.0,
+                1.0,
+                10.0,
+                1.0,
+                1.0,
+                100.0,
+                100.0,
+            ],
+            "2045": [
+                1.0,
+                1.0,
+                1.0,
+                10.0,
+                1.0,
+                1.0,
+                100.0,
+                100.0,
+            ],
+            "2050": [
+                1.0,
+                1.0,
+                1.0,
+                10.0,
+                1.0,
+                1.0,
+                100.0,
+                100.0,
+            ],
+            "source": [
+                "source",
+                "source",
+                "source",
+                "source, Note K.",
+                "source",
+                "source",
+                "source",
+                "source",
+            ],
+            "unit": [
+                "unit",
+                "unit",
+                "unit",
+                "unit",
+                "unit",
+                "unit",
+                "unit",
+                "unit",
+            ],
+        }
+    )
+    list_of_years = [str(x) for x in config["years"]]
+    output_df = set_round_trip_efficiency(
+        list_of_years, input_df
+    )
+    output_df = output_df.reset_index(drop=False).rename(
+        columns={"level_0": "technology", "level_1": "parameter"}
+    )
+    comparison_df = output_df.compare(reference_output_df)
     assert comparison_df.empty
 
 

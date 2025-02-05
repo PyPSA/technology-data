@@ -30,12 +30,13 @@ The script is structured as follows:
 
 import logging
 from datetime import date
-from scipy import interpolate
 
 import numpy as np
 import pandas as pd
 from currency_converter import ECB_URL, CurrencyConverter
+from scipy import interpolate
 
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 try:
@@ -1834,7 +1835,12 @@ def order_data(list_of_years: str, technology_dataframe: pd.DataFrame) -> pd.Dat
 
         if len(investment) != 1:
             switch = True
-            logger.info("check investment: ",tech_name," ", df[df.index.str.contains("investment")].unit)
+            logger.info(
+                "check investment: ",
+                tech_name,
+                " ",
+                df[df.index.str.contains("investment")].unit,
+            )
         else:
             investment["parameter"] = "investment"
             clean_df[tech_name] = investment
@@ -3739,7 +3745,7 @@ if __name__ == "__main__":
             logger.info("************************************************************")
             logger.info("warning, in new cost assumptions the following components: ")
             for i in range(len(missing)):
-                logger.info("    ", i + 1, missing[i])
+                logger.info(f"{i + 1} {missing[i]}")
             logger.info(" are missing and the old cost assumptions are assumed.")
             logger.info("************************************************************")
 

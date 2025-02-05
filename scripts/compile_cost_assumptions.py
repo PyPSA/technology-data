@@ -270,18 +270,18 @@ cost_year_2019 = [
 
 def get_excel_sheets(list_of_excel_files: list) -> dict:
     """
-    Summary
-    -------
-    The function reads Excel files and returns them in a dictionary
-    The dictionary has the files names as keys and the lists of sheet names as values
+    The function reads Excel files and returns them in a dictionary.
+    The dictionary has the files names as keys and the lists of sheet names as values.
 
     Parameters
     ----------
-    - list_of_excel_files: list, list of the Excel files to process
+    list_of_excel_files : list
+        Excel files to process
 
     Returns
     -------
-    - Dictionary, dictionary data from DEA
+    Dictionary
+        data from DEA
     """
 
     excel_sheets_dictionary = {}
@@ -298,20 +298,22 @@ def get_sheet_location(
     technology_name: str, sheet_names_dict: dict, input_data_dict: dict
 ) -> str:
     """
-    Summary
-    -------
     The function returns a dictionary. The dictionary has the technology names as keys and
     the Excel file names where the technology is saved as values
 
     Parameters
     ----------
-    - technology_name: str, technology name
-    - sheet_names_dict: dict, dictionary having the technology name as keys and Excel sheet names as values
-    - input_data_dict: dict, dictionary having the files names as keys and the lists of sheet names as values
+    technology_name : str
+        technology name
+    sheet_names_dict : dict
+        dictionary having the technology name as keys and Excel sheet names as values
+    input_data_dict : dict
+        dictionary having the files names as keys and the lists of sheet names as values
 
     Returns
     -------
-    - str, Excel file name where the technology is present
+    str
+        Excel file name where the technology is present
     """
 
     key_list = [
@@ -336,19 +338,21 @@ def get_dea_maritime_data(
     fn: str, list_of_years: list, input_data_df: pd.DataFrame
 ) -> pd.DataFrame:
     """
-    Summary
-    -------
     The function returns a dataframe containing the technology data for shipping from the DEA database.
 
     Parameters
     ----------
-    - fn: str, path to DEA input data file for shipping
-    - list_of_years: list, list of the years for which a cost assumption is provided
-    - input_data_df: DataFrame, dataframe with technology data cost assumptions
+    fn : str
+        path to DEA input data file for shipping
+    list_of_years : list
+        years for which a cost assumption is provided
+    input_data_df : pd.DataFrame
+        technology data cost assumptions
 
     Returns
     -------
-    - DataFrame, enriched with technology data cost assumptions for shipping from DEA
+    DataFrame
+        technology data cost assumptions enriched with shipping data from DEA
     """
 
     dea_maritime_data_sheet_names = [
@@ -569,21 +573,26 @@ def get_data_DEA(
     expectation: str = None,
 ) -> dict:
     """
-    Summary
-    -------
-    The function interpolates costs for a given technology from DEA database sheet and stores technology data from DEA in a dictionary.
+    The function interpolates costs for a given technology from DEA database sheet and
+    stores technology data from DEA in a dictionary.
 
     Parameters
     ----------
-    - list_of_years: list, list of the years for which a cost assumption is provided
-    - technology_name: str, technology name
-    - input_data_dict: dict, dictionary where the keys are the path to the DEA inputs and the values are the sheet names
-    - offwind_no_grid_costs_flag: bool, flag to remove grid connection costs from DEA for offwind. Such costs are calculated separately in pypsa-eur
-    - expectation: str, tech data uncertainty. The possible options are [None, "optimist", "pessimist"]
+    list_of_years : list
+        years for which a cost assumption is provided
+    technology_name : str
+        technology name
+    input_data_dict : dict
+        dictionary where the keys are the path to the DEA inputs and the values are the sheet names
+    offwind_no_grid_costs_flag : bool
+        flag to remove grid connection costs from DEA for offwind. Such costs are calculated separately in pypsa-eur
+    expectation : str
+        tech data uncertainty. The possible options are [None, "optimist", "pessimist"]
 
     Returns
     -------
-    - Dictionary, technology data from DEA
+    Dictionary
+        technology data from DEA
     """
 
     excel_file = get_sheet_location(technology_name, dea_sheet_names, input_data_dict)
@@ -1285,20 +1294,23 @@ def get_data_from_DEA(
     expectation: str = None,
 ) -> dict:
     """
-    Summary
-    -------
     The function stores technology data from DEA in a dictionary.
 
     Parameters
     ----------
-    - list_of_years: list, list of the years for which a cost assumption is provided
-    - input_data_dictionary: dict, dictionary where the keys are the path to the DEA inputs and the values are the sheet names
-    - offwind_no_grid_costs: bool, flag to remove grid connection costs from DEA for offwind. Such costs are calculated separately in pypsa-eur
-    - expectation: str, tech data uncertainty. The possible options are [None, "optimist", "pessimist"]
+    list_of_years : list
+        years for which a cost assumption is provided
+    input_data_dictionary : dict
+        dictionary where the keys are the path to the DEA inputs and the values are the sheet names
+    offwind_no_grid_costs : bool
+        flag to remove grid connection costs from DEA for offwind. Such costs are calculated separately in pypsa-eur
+    expectation : str
+        tech data uncertainty. The possible options are [None, "optimist", "pessimist"]
 
     Returns
     -------
-    - Dictionary, technology data from DEA
+    Dictionary
+        technology data from DEA
     """
 
     data_by_tech_dict = {}
@@ -1363,8 +1375,6 @@ def clean_up_units(
     technology_dataframe: pd.DataFrame, value_column: str = "", source: str = ""
 ) -> pd.DataFrame:
     """
-    Summary
-    -------
     The function converts units of an input dataframe. Namely, it converts:
         - power: Mega Watt (MW)
         - energy: Mega-Watt-hour (MWh)
@@ -1372,13 +1382,17 @@ def clean_up_units(
 
     Parameters
     ----------
-    - technology_dataframe: DataFrame, dataframe with technology data cost assumptions
-    - value_column: str, column to modify
-    - source: str, either empty string or 'dea'
+    technology_dataframe : pd.DataFrame
+        technology data cost assumptions
+    value_column : str
+        column to modify
+    source : str
+        either empty string or 'dea'
 
     Returns
     -------
-    - Dataframe, technology data with converted units
+    Dataframe
+        technology data with converted units
     """
 
     # Currency conversion
@@ -1617,8 +1631,6 @@ def set_specify_assumptions(
     list_of_years: list, technology_dataframe: pd.DataFrame
 ) -> pd.DataFrame:
     """
-    Summary
-    -------
     The function implements more specific investment and efficiency assumptions for the following technologies:
         - central resistive heater (investment costs for large > 10 MW generators are assumed)
         - decentral gas boiler (grid connection costs)
@@ -1631,12 +1643,15 @@ def set_specify_assumptions(
 
     Parameters
     ----------
-    - list_of_years: list, list of the years for which a cost assumption is provided
-    - technology_dataframe: DataFrame, dataframe with technology data cost assumptions
+    list_of_years : list
+        years for which a cost assumption is provided
+    technology_dataframe : pd.DataFrame
+        technology data cost assumptions
 
     Returns
     -------
-    - Dataframe, updated technology dataframe
+    Dataframe
+        updated technology dataframe
     """
 
     # for central resistive heater there are investment costs for small (1-5MW)
@@ -1718,20 +1733,21 @@ def set_round_trip_efficiency(
     list_of_years: list, technology_dataframe: pd.DataFrame
 ) -> pd.DataFrame:
     """
-    Summary
-    -------
     The function get round trip efficiency for hydrogen and battery storage.
     It assumes for battery sqrt(DC efficiency) and it splits it into inverter + storage.
     Finally, it renames investment rows for easier sorting.
 
     Parameters
     ----------
-    - list_of_years: list, list of the years for which a cost assumption is provided
-    - technology_dataframe: DataFrame, dataframe with technology data cost assumptions
+    list_of_years: list
+        years for which a cost assumption is provided
+    technology_dataframe: pd.DataFrame
+        technology data cost assumptions
 
     Returns
     -------
-    - Dataframe, updated technology dataframe
+    Dataframe
+        updated technology dataframe
     """
 
     technology_dataframe.loc[
@@ -1786,18 +1802,19 @@ def set_round_trip_efficiency(
 
 def order_data(list_of_years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
     """
-    Summary
-    -------
     The function check if the units of different variables are conform and logs warnings if not
 
     Parameters
     ----------
-    - list_of_years: list, list of the years for which a cost assumption is provided
-    - technology_dataframe: DataFrame, dataframe with technology data cost assumptions
+    list_of_years : list
+        years for which a cost assumption is provided
+    technology_dataframe : pd.DataFrame
+        technology data cost assumptions
 
     Returns
     -------
-    - Dataframe, in pypsa tech data syntax (investment, FOM,VOM, efficiency)
+    Dataframe
+        technology data in pypsa tech data syntax (investment, FOM,VOM, efficiency)
     """
 
     clean_df = {}

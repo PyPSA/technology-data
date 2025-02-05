@@ -1784,7 +1784,7 @@ def set_round_trip_efficiency(
     return technology_dataframe.sort_index()
 
 
-def order_data(list_of_years: str, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
+def order_data(list_of_years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
     """
     Summary
     -------

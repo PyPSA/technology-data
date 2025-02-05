@@ -1782,19 +1782,27 @@ def set_round_trip_efficiency(
     return technology_dataframe.sort_index()
 
 
-def order_data(list_of_years, tech_data):
+def order_data(list_of_years: str, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
     """
-    Check if the units of different variables are conform
-    -> print warning if not
-    return a pd.Dataframe 'data' in pypsa tech data syntax (investment, FOM,
-    VOM, efficiency)
+    Summary
+    -------
+    The function check if the units of different variables are conform and logs warnings if not
+
+    Parameters
+    ----------
+    - list_of_years: list, list of the years for which a cost assumption is provided
+    - technology_dataframe: DataFrame, dataframe with technology data cost assumptions
+
+    Returns
+    -------
+    - Dataframe, in pypsa tech data syntax (investment, FOM,VOM, efficiency)
     """
 
     clean_df = {}
-    for tech in tech_data.index.get_level_values(0).unique():
-        clean_df[tech] = pd.DataFrame()
+    for tech_name in technology_dataframe.index.get_level_values(0).unique():
+        clean_df[tech_name] = pd.DataFrame()
         switch = False
-        df = tech_data.loc[tech]
+        df = technology_dataframe.loc[tech_name]
 
         # --- investment ----
         investment = df[
@@ -1827,13 +1835,13 @@ def order_data(list_of_years, tech_data):
             switch = True
             print(
                 "check investment: ",
-                tech,
+                tech_name,
                 " ",
                 df[df.index.str.contains("investment")].unit,
             )
         else:
             investment["parameter"] = "investment"
-            clean_df[tech] = investment
+            clean_df[tech_name] = investment
 
         # ---- FOM ----------------
         if len(investment):
@@ -1862,13 +1870,13 @@ def order_data(list_of_years, tech_data):
                 switch = True
                 print(
                     "check FOM: ",
-                    tech,
+                    tech_name,
                     " ",
                     df[df.index.str.contains("Fixed O&M")].unit,
                 )
             if len(fixed) == 1:
                 fixed["parameter"] = "fixed"
-                clean_df[tech] = pd.concat([clean_df[tech], fixed])
+                clean_df[tech_name] = pd.concat([clean_df[tech_name], fixed])
                 fom = pd.DataFrame(columns=fixed.columns)
                 if not any(fixed.unit.str.contains("% of specific investment/year")):
                     investment[investment == 0] = float("nan")
@@ -1881,7 +1889,7 @@ def order_data(list_of_years, tech_data):
                 fom["parameter"] = "FOM"
                 fom["unit"] = "%/year"
                 fom["source"] = fixed["source"]
-                clean_df[tech] = pd.concat([clean_df[tech], fom])
+                clean_df[tech_name] = pd.concat([clean_df[tech_name], fom])
 
         # ---- VOM -----
         vom = df[
@@ -1899,17 +1907,20 @@ def order_data(list_of_years, tech_data):
                 | (df.unit == "EUR/MWhoutput")
                 | (df.unit == "EUR/MWh_CH4")
                 | (df.unit == "EUR/MWh_biochar")
-                | (tech == "biogas upgrading")
+                | (tech_name == "biogas upgrading")
             )
         ].copy()
         if len(vom) == 1:
             vom.loc[:, "parameter"] = "VOM"
-            clean_df[tech] = pd.concat([clean_df[tech], vom])
+            clean_df[tech_name] = pd.concat([clean_df[tech_name], vom])
 
         elif len(vom) != 1 and len(df[df.index.str.contains("Variable O&M")]) != 0:
             switch = True
             print(
-                "check VOM: ", tech, " ", df[df.index.str.contains("Variable O&M")].unit
+                "check VOM: ",
+                tech_name,
+                " ",
+                df[df.index.str.contains("Variable O&M")].unit,
             )
 
         # ----- lifetime --------
@@ -1920,13 +1931,13 @@ def order_data(list_of_years, tech_data):
             switch = True
             print(
                 "check lifetime: ",
-                tech,
+                tech_name,
                 " ",
                 df[df.index.str.contains("Technical life")].unit,
             )
         else:
             lifetime["parameter"] = "lifetime"
-            clean_df[tech] = pd.concat([clean_df[tech], lifetime])
+            clean_df[tech_name] = pd.concat([clean_df[tech_name], lifetime])
 
         # ----- efficiencies ------
         efficiency = df[
@@ -1961,13 +1972,13 @@ def order_data(list_of_years, tech_data):
             )
         ].copy()
 
-        if tech == "Fischer-Tropsch":
+        if tech_name == "Fischer-Tropsch":
             efficiency[list_of_years] *= 100
 
         # take annual average instead of name plate efficiency, unless central air-sourced heat pump
         if (
             any(efficiency.index.str.contains("annual average"))
-            and tech != "central air-sourced heat pump"
+            and tech_name != "central air-sourced heat pump"
         ):
             efficiency = efficiency[efficiency.index.str.contains("annual average")]
         elif any(efficiency.index.str.contains("name plate")):
@@ -1979,12 +1990,12 @@ def order_data(list_of_years, tech_data):
         if with_heat_recovery.any():
             efficiency_heat = efficiency[with_heat_recovery].copy()
             efficiency_heat["parameter"] = "efficiency-heat"
-            clean_df[tech] = pd.concat([clean_df[tech], efficiency_heat])
+            clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_heat])
             efficiency_h2 = efficiency[
                 efficiency.index.str.contains("Hydrogen Output")
             ].copy()
             efficiency_h2["parameter"] = "efficiency"
-            clean_df[tech] = pd.concat([clean_df[tech], efficiency_h2])
+            clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_h2])
 
         # check if electric and heat efficiencies are given
         if any(["Electric" in ind for ind in efficiency.index]) and any(
@@ -1992,77 +2003,79 @@ def order_data(list_of_years, tech_data):
         ):
             efficiency_heat = efficiency[efficiency.index.str.contains("Heat")].copy()
             efficiency_heat["parameter"] = "efficiency-heat"
-            clean_df[tech] = pd.concat([clean_df[tech], efficiency_heat])
+            clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_heat])
             efficiency = efficiency[efficiency.index.str.contains("Electric")].copy()
             efficiency["parameter"] = "efficiency"
-            clean_df[tech] = pd.concat([clean_df[tech], efficiency])
+            clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency])
 
-        elif tech == "biomass-to-methanol":
+        elif tech_name == "biomass-to-methanol":
             efficiency_heat = efficiency[
                 efficiency.index.str.contains("District heat")
             ].copy()
             efficiency_heat["parameter"] = "efficiency-heat"
             efficiency_heat.loc[:, list_of_years] *= 100  # in %
-            clean_df[tech] = pd.concat([clean_df[tech], efficiency_heat])
+            clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_heat])
             efficiency_elec = efficiency[
                 efficiency.index.str.contains("Electric")
             ].copy()
             efficiency_elec["parameter"] = "efficiency-electricity"
-            clean_df[tech] = pd.concat([clean_df[tech], efficiency_elec])
+            clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_elec])
             efficiency_meoh = efficiency[
                 efficiency.index.str.contains("Methanol")
             ].copy()
             efficiency_meoh["parameter"] = "efficiency"
             efficiency_meoh.loc[:, list_of_years] *= 100  # in %
-            clean_df[tech] = pd.concat([clean_df[tech], efficiency_meoh])
+            clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_meoh])
 
-        elif tech == "biochar pyrolysis":
+        elif tech_name == "biochar pyrolysis":
             efficiency_biochar = efficiency[
                 efficiency.index.str.contains("efficiency biochar")
             ].copy()
             efficiency_biochar["parameter"] = "efficiency-biochar"
-            clean_df[tech] = pd.concat([clean_df[tech], efficiency_biochar])
+            clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_biochar])
             efficiency_biochar_mass = efficiency[
                 efficiency.index.str.contains("yield biochar")
             ].copy()
             efficiency_biochar_mass["parameter"] = "yield-biochar"
-            clean_df[tech] = pd.concat([clean_df[tech], efficiency_biochar_mass])
+            clean_df[tech_name] = pd.concat(
+                [clean_df[tech_name], efficiency_biochar_mass]
+            )
             efficiency_heat = efficiency[
                 efficiency.index.str.contains("efficiency heat")
             ].copy()
             efficiency_heat["parameter"] = "efficiency-heat"
-            clean_df[tech] = pd.concat([clean_df[tech], efficiency_heat])
+            clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_heat])
 
         elif len(efficiency) != 1:
             switch = True
             if not any(efficiency.index.str.contains("Round trip")):
                 print(
                     "check efficiency: ",
-                    tech,
+                    tech_name,
                     " ",
                     df[df.index.str.contains("efficiency")].unit,
                 )
         else:
             efficiency["parameter"] = "efficiency"
-            clean_df[tech] = pd.concat([clean_df[tech], efficiency])
+            clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency])
 
         # add c_v and c_b coefficient
         if "Cb coefficient" in df.index:
             c_b = df.loc[df.index.str.contains("Cb coefficient")].dropna().copy()
             if len(c_b):
                 c_b["parameter"] = "c_b"
-                clean_df[tech] = pd.concat([clean_df[tech], c_b])
+                clean_df[tech_name] = pd.concat([clean_df[tech_name], c_b])
         if "Cv coefficient" in df.index:
             c_v = df.loc[df.index.str.contains("Cv coefficient")].dropna().copy()
             if len(c_v):
                 c_v["parameter"] = "c_v"
-                clean_df[tech] = pd.concat([clean_df[tech], c_v])
+                clean_df[tech_name] = pd.concat([clean_df[tech_name], c_v])
 
         if switch:
             print("---------------------------------------")
 
     # concat data
-    data = (
+    output_data_dataframe = (
         pd.concat(clean_df)
         .reset_index()
         .rename(columns={"level_0": "technology", "level_1": "further description"})
@@ -2070,7 +2083,7 @@ def order_data(list_of_years, tech_data):
     )
 
     # add central water tank charger/ discharger
-    charger_tank = tech_data.loc[
+    charger_tank = technology_dataframe.loc[
         ("central water tank storage", " - Charge efficiency")
     ].copy()
     charger_tank["further description"] = "Charger efficiency"
@@ -2082,7 +2095,7 @@ def order_data(list_of_years, tech_data):
         level=0,
         inplace=True,
     )
-    data = pd.concat([data, charger_tank], sort=True)
+    output_data_dataframe = pd.concat([output_data_dataframe, charger_tank], sort=True)
     charger_tank.rename(
         index={"central water tank charger": "central water tank discharger"},
         level=0,
@@ -2090,10 +2103,10 @@ def order_data(list_of_years, tech_data):
     )
     charger_tank["further description"] = "Discharger efficiency"
 
-    data = pd.concat([data, charger_tank], sort=True)
+    output_data_dataframe = pd.concat([output_data_dataframe, charger_tank], sort=True)
 
     # add decentral water tank charger/ discharger
-    charger_tank = tech_data.loc[
+    charger_tank = technology_dataframe.loc[
         ("decentral water tank storage", " - Charge efficiency")
     ].copy()
     charger_tank["further description"] = "Charger efficiency"
@@ -2105,7 +2118,7 @@ def order_data(list_of_years, tech_data):
         level=0,
         inplace=True,
     )
-    data = pd.concat([data, charger_tank], sort=True)
+    output_data_dataframe = pd.concat([output_data_dataframe, charger_tank], sort=True)
     charger_tank.rename(
         index={"decentral water tank charger": "decentral water tank discharger"},
         level=0,
@@ -2113,10 +2126,10 @@ def order_data(list_of_years, tech_data):
     )
     charger_tank["further description"] = "Discharger efficiency"
 
-    data = pd.concat([data, charger_tank], sort=True)
+    output_data_dataframe = pd.concat([output_data_dataframe, charger_tank], sort=True)
 
     # add water pit charger/ discharger
-    charger_pit = tech_data.loc[
+    charger_pit = technology_dataframe.loc[
         ("central water pit storage", " - Charge efficiency")
     ].copy()
     charger_pit["further description"] = "Charger efficiency"
@@ -2129,23 +2142,25 @@ def order_data(list_of_years, tech_data):
         level=0,
         inplace=True,
     )
-    data = pd.concat([data, charger_pit], sort=True)
+    output_data_dataframe = pd.concat([output_data_dataframe, charger_pit], sort=True)
     charger_pit.rename(
         index={"central water pit charger": "central water pit discharger"},
         level=0,
         inplace=True,
     )
     charger_pit["further description"] = "Discharger efficiency"
-    data = pd.concat([data, charger_pit], sort=True)
+    output_data_dataframe = pd.concat([output_data_dataframe, charger_pit], sort=True)
 
     # add energy to power ratio for central water tank storage
     power_ratio_tank = (
-        tech_data.loc[("central water tank storage", "Input capacity for one unit")]
+        technology_dataframe.loc[
+            ("central water tank storage", "Input capacity for one unit")
+        ]
         .copy()
         .squeeze()
     )
     storage_capacity_tank = (
-        tech_data.loc[
+        technology_dataframe.loc[
             ("central water tank storage", "Energy storage capacity for one unit")
         ]
         .copy()
@@ -2165,16 +2180,20 @@ def order_data(list_of_years, tech_data):
         level=1,
         inplace=True,
     )
-    data = pd.concat([data, power_ratio_tank], sort=True)
+    output_data_dataframe = pd.concat(
+        [output_data_dataframe, power_ratio_tank], sort=True
+    )
 
     # add energy to power ratio for decentral water tank storage
     power_ratio_tank = (
-        tech_data.loc[("decentral water tank storage", "Input capacity for one unit")]
+        technology_dataframe.loc[
+            ("decentral water tank storage", "Input capacity for one unit")
+        ]
         .copy()
         .squeeze()
     )
     storage_capacity_tank = (
-        tech_data.loc[
+        technology_dataframe.loc[
             ("decentral water tank storage", "Energy storage capacity for one unit")
         ]
         .copy()
@@ -2194,16 +2213,20 @@ def order_data(list_of_years, tech_data):
         level=1,
         inplace=True,
     )
-    data = pd.concat([data, power_ratio_tank], sort=True)
+    output_data_dataframe = pd.concat(
+        [output_data_dataframe, power_ratio_tank], sort=True
+    )
 
     # add energy to power ratio for water pit storage
     power_ratio_pit = (
-        tech_data.loc[("central water pit storage", "Input capacity for one unit")]
+        technology_dataframe.loc[
+            ("central water pit storage", "Input capacity for one unit")
+        ]
         .copy()
         .squeeze()
     )
     storage_capacity_pit = (
-        tech_data.loc[
+        technology_dataframe.loc[
             ("central water pit storage", "Energy storage capacity for one unit")
         ]
         .copy()
@@ -2223,9 +2246,11 @@ def order_data(list_of_years, tech_data):
         level=1,
         inplace=True,
     )
-    data = pd.concat([data, power_ratio_pit], sort=True)
+    output_data_dataframe = pd.concat(
+        [output_data_dataframe, power_ratio_pit], sort=True
+    )
 
-    return data
+    return output_data_dataframe
 
 
 def add_description(list_of_years, data):

@@ -30,6 +30,7 @@ The script is structured as follows:
 
 import logging
 from datetime import date
+from scipy import interpolate
 
 import numpy as np
 import pandas as pd
@@ -321,10 +322,10 @@ def get_sheet_location(
     if len(key_list) == 1:
         return key_list[0]
     elif len(key_list) > 1:
-        logger.warning(f"{technology_name} appears in more than one sheet name")
+        logger.info(f"{technology_name} appears in more than one sheet name")
         return None
     else:
-        logger.warning(
+        logger.info(
             f"tech {technology_name} with sheet name {sheet_names_dict[technology_name]} not found in excel sheets. "
         )
         return None
@@ -586,7 +587,7 @@ def get_data_DEA(
 
     excel_file = get_sheet_location(technology_name, dea_sheet_names, input_data_dict)
     if excel_file is None:
-        logger.warning(f"excel file not found for technology: {technology_name}")
+        logger.info(f"excel file not found for technology: {technology_name}")
         return None
 
     if technology_name == "battery":
@@ -1833,12 +1834,7 @@ def order_data(list_of_years: str, technology_dataframe: pd.DataFrame) -> pd.Dat
 
         if len(investment) != 1:
             switch = True
-            print(
-                "check investment: ",
-                tech_name,
-                " ",
-                df[df.index.str.contains("investment")].unit,
-            )
+            logger.info("check investment: ",tech_name," ", df[df.index.str.contains("investment")].unit)
         else:
             investment["parameter"] = "investment"
             clean_df[tech_name] = investment
@@ -1868,7 +1864,7 @@ def order_data(list_of_years: str, technology_dataframe: pd.DataFrame) -> pd.Dat
 
             if (len(fixed) != 1) and (len(df[df.index.str.contains("Fixed O&M")]) != 0):
                 switch = True
-                print(
+                logger.info(
                     "check FOM: ",
                     tech_name,
                     " ",
@@ -1916,7 +1912,7 @@ def order_data(list_of_years: str, technology_dataframe: pd.DataFrame) -> pd.Dat
 
         elif len(vom) != 1 and len(df[df.index.str.contains("Variable O&M")]) != 0:
             switch = True
-            print(
+            logger.info(
                 "check VOM: ",
                 tech_name,
                 " ",
@@ -1929,7 +1925,7 @@ def order_data(list_of_years: str, technology_dataframe: pd.DataFrame) -> pd.Dat
         ].copy()
         if len(lifetime) != 1:
             switch = True
-            print(
+            logger.info(
                 "check lifetime: ",
                 tech_name,
                 " ",
@@ -2049,7 +2045,7 @@ def order_data(list_of_years: str, technology_dataframe: pd.DataFrame) -> pd.Dat
         elif len(efficiency) != 1:
             switch = True
             if not any(efficiency.index.str.contains("Round trip")):
-                print(
+                logger.info(
                     "check efficiency: ",
                     tech_name,
                     " ",
@@ -2072,7 +2068,7 @@ def order_data(list_of_years: str, technology_dataframe: pd.DataFrame) -> pd.Dat
                 clean_df[tech_name] = pd.concat([clean_df[tech_name], c_v])
 
         if switch:
-            print("---------------------------------------")
+            logger.info("---------------------------------------")
 
     # concat data
     output_data_dataframe = (
@@ -3246,9 +3242,8 @@ def add_energy_storage_database(costs, data_year):
     while keeping the cost drops for power equipment in line with Li-ion BESS, while system integration,
     EPC, and project development costs are maintained at 90% of Li-ion BESS 2030 values.
     """
-    from scipy import interpolate
 
-    print(f"Add energy storage database compiled for year {data_year}")
+    logger.info(f"Add energy storage database compiled for year {data_year}")
     # a) Import csv file
     df = pd.read_excel(
         snakemake.input["pnnl_energy_storage"],
@@ -3741,12 +3736,12 @@ if __name__ == "__main__":
         # missing technologies
         missing = costs_pypsa.index.levels[0].difference(costs.index.levels[0])
         if len(missing) & (year == years_list[0]):
-            print("************************************************************")
-            print("warning, in new cost assumptions the following components: ")
+            logger.info("************************************************************")
+            logger.info("warning, in new cost assumptions the following components: ")
             for i in range(len(missing)):
-                print("    ", i + 1, missing[i])
-            print(" are missing and the old cost assumptions are assumed.")
-            print("************************************************************")
+                logger.info("    ", i + 1, missing[i])
+            logger.info(" are missing and the old cost assumptions are assumed.")
+            logger.info("************************************************************")
 
         to_add = costs_pypsa.loc[missing].drop("year", axis=1)
         to_add.loc[:, "further description"] = " from old pypsa cost assumptions"
@@ -3757,11 +3752,11 @@ if __name__ == "__main__":
         # single components missing
         comp_missing = costs_pypsa.index.difference(costs_tot.index)
         if year == years_list[0]:
-            print(
+            logger.info(
                 "single parameters of technologies are missing, using old PyPSA assumptions: "
             )
-            print(comp_missing)
-            print("old c_v and c_b values are assumed where given")
+            logger.info(comp_missing)
+            logger.info("old c_v and c_b values are assumed where given")
         to_add = costs_pypsa.loc[comp_missing].drop("year", axis=1)
         to_add.loc[:, "further description"] = " from old pypsa cost assumptions"
         # more data on geothermal is added downstream, so old assumptions are redundant

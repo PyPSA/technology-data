@@ -292,7 +292,9 @@ def get_excel_sheets(list_of_excel_files: list) -> dict:
     return excel_sheets_dictionary
 
 
-def get_sheet_location(technology_name: str, sheet_names_dict: dict, input_data_dict: dict) -> str:
+def get_sheet_location(
+    technology_name: str, sheet_names_dict: dict, input_data_dict: dict
+) -> str:
     """
     Summary
     -------
@@ -328,7 +330,9 @@ def get_sheet_location(technology_name: str, sheet_names_dict: dict, input_data_
         return None
 
 
-def get_dea_maritime_data(fn: str, list_of_years: list, input_data_df: pd.DataFrame) -> pd.DataFrame:
+def get_dea_maritime_data(
+    fn: str, list_of_years: list, input_data_df: pd.DataFrame
+) -> pd.DataFrame:
     """
     Summary
     -------
@@ -1273,7 +1277,10 @@ def biochar_pyrolysis_harmonise_dea(df):
 
 
 def get_data_from_DEA(
-    list_of_years: list, input_data_dictionary: dict, offwind_no_grid_costs: bool = True, expectation: str = None
+    list_of_years: list,
+    input_data_dictionary: dict,
+    offwind_no_grid_costs: bool = True,
+    expectation: str = None,
 ) -> dict:
     """
     Summary
@@ -1350,7 +1357,9 @@ def adjust_for_inflation(inflation_rate, costs, techs, ref_year, col):
     return costs
 
 
-def clean_up_units(technology_dataframe: pd.DataFrame, value_column:str = "", source:str = "") -> pd.DataFrame:
+def clean_up_units(
+    technology_dataframe: pd.DataFrame, value_column: str = "", source: str = ""
+) -> pd.DataFrame:
     """
     Summary
     -------
@@ -1602,7 +1611,9 @@ def clean_up_units(technology_dataframe: pd.DataFrame, value_column:str = "", so
     return technology_dataframe
 
 
-def set_specify_assumptions(list_of_years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
+def set_specify_assumptions(
+    list_of_years: list, technology_dataframe: pd.DataFrame
+) -> pd.DataFrame:
     """
     Summary
     -------
@@ -1701,7 +1712,9 @@ def set_specify_assumptions(list_of_years: list, technology_dataframe: pd.DataFr
     return technology_dataframe.sort_index()
 
 
-def set_round_trip_efficiency(list_of_years:list , technology_dataframe: pd.DataFrame) -> pd.DataFrame:
+def set_round_trip_efficiency(
+    list_of_years: list, technology_dataframe: pd.DataFrame
+) -> pd.DataFrame:
     """
     Summary
     -------

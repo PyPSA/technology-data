@@ -4,6 +4,7 @@
 
 # coding: utf-8
 
+import os
 import re
 from pathlib import Path
 
@@ -57,6 +58,12 @@ class Dict(dict):
         obj_attrs = list(dir(Dict))
 
         return dict_keys + obj_attrs
+
+
+def get_relative_fn(fn):
+    if isinstance(fn, str):
+        fn = Path(fn).resolve()
+    return fn.relative_to(os.path.commonpath([fn, os.getcwd()]))
 
 
 def mock_snakemake(

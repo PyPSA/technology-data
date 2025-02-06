@@ -10,7 +10,7 @@ dependencies:
 - python>=3.8
 - pip
   # for running the package
-- snakemake-minimal>=8.5
+- snakemake-minimal>=8.5,<8.25 # See https://github.com/snakemake/snakemake/issues/3202
 - pandas>=2.1
 - pypsa
 - pyarrow

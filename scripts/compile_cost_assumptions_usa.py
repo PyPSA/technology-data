@@ -13,7 +13,6 @@ import pathlib
 
 import numpy as np
 import pandas as pd
-
 from _helpers import mock_snakemake
 
 
@@ -100,11 +99,11 @@ def get_conversion_dictionary(flag: str):
 
 
 def filter_atb_input_file(
-        input_file_path,
-        year,
-        list_columns_to_keep,
-        list_core_metric_parameter_to_keep,
-        list_tech_to_remove,
+    input_file_path,
+    year,
+    list_columns_to_keep,
+    list_core_metric_parameter_to_keep,
+    list_tech_to_remove,
 ):
     """
     The function filters the input cost dataframe from NREL/ATB. Namely, it:
@@ -155,13 +154,13 @@ def filter_atb_input_file(
         atb_file_df = atb_file_df.loc[
             atb_file_df["core_metric_variable"].astype(str).str.casefold()
             == year_string
-            ]
+        ]
     elif input_file_path.name == "atb_e_2024.parquet":
         # Note: 2025, 2030, 2035, 2040, 2045, 2050 data are fetched from the input file atb_e_2024.*
         atb_file_df = atb_file_df.loc[
             atb_file_df["core_metric_variable"].astype(str).str.casefold()
             == year_string
-            ]
+        ]
     else:
         raise Exception(
             f"{input_file_path.stem} - the input file considered is not among the needed ones: atb_e_2022.parquet, atb_e_2024.parquet"
@@ -320,12 +319,12 @@ def pre_process_cost_input_file(input_file_path, columns_to_add_list):
 
 
 def pre_process_atb_input_file(
-        input_file_path,
-        year,
-        list_columns_to_keep,
-        list_core_metric_parameter_to_keep,
-        nrel_source,
-        tech_to_remove,
+    input_file_path,
+    year,
+    list_columns_to_keep,
+    list_core_metric_parameter_to_keep,
+    nrel_source,
+    tech_to_remove,
 ):
     """
     The function filters and cleans the input NREL/ATB cost file. Namely it:
@@ -503,7 +502,7 @@ def duplicate_fuel_cost(input_file_path, list_of_years):
                 input_fuel_cost_df.loc[
                     (input_fuel_cost_df["technology"] == tech_value)
                     & (input_fuel_cost_df["year"] == max_year)
-                    ]
+                ]
                 .copy(deep=True)
                 .replace(max_year, val_year)
             )
@@ -590,38 +589,38 @@ if __name__ == "__main__":
         # get the discount rate file for the given year
         discount_rate_year_df = discount_rate_df.loc[
             discount_rate_df["year"] == year_val
-            ]
+        ]
         discount_rate_year_df = discount_rate_year_df.loc[
-                                :,
-                                (
-                                    "technology",
-                                    "parameter",
-                                    "value",
-                                    "unit",
-                                    "source",
-                                    "further description",
-                                    "currency_year",
-                                    "financial_case",
-                                    "scenario",
-                                ),
-                                ].reset_index(drop=True)
+            :,
+            (
+                "technology",
+                "parameter",
+                "value",
+                "unit",
+                "source",
+                "further description",
+                "currency_year",
+                "financial_case",
+                "scenario",
+            ),
+        ].reset_index(drop=True)
 
         # get the fuel costs file for the given year
         fuel_costs_year_df = fuel_costs_df.loc[fuel_costs_df["year"] == year_val]
         fuel_costs_year_df = fuel_costs_year_df.loc[
-                             :,
-                             (
-                                 "technology",
-                                 "parameter",
-                                 "value",
-                                 "unit",
-                                 "source",
-                                 "further description",
-                                 "currency_year",
-                                 "financial_case",
-                                 "scenario",
-                             ),
-                             ].reset_index(drop=True)
+            :,
+            (
+                "technology",
+                "parameter",
+                "value",
+                "unit",
+                "source",
+                "further description",
+                "currency_year",
+                "financial_case",
+                "scenario",
+            ),
+        ].reset_index(drop=True)
 
         # concatenate the existing and NREL/ATB cost dataframes
         updated_cost_df = pd.concat([cost_df, atb_e_df]).reset_index(drop=True)

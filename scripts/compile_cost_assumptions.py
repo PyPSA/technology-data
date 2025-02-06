@@ -30,7 +30,6 @@ The script is structured as follows:
 
 import numpy as np
 import pandas as pd
-
 from _helpers import get_relative_fn
 
 try:
@@ -359,7 +358,7 @@ def get_dea_maritime_data(fn, data):
         df = df.dropna(how="all", axis=0)
         # add column for units
         df["unit"] = df.rename(
-            index=lambda x: x[x.rfind("(") + 1: x.rfind(")")]
+            index=lambda x: x[x.rfind("(") + 1 : x.rfind(")")]
         ).index.values
         df["unit"] = df.unit.str.replace("€", "EUR")
         # remove units from index
@@ -469,7 +468,7 @@ def get_dea_vehicle_data(fn, data):
 
         # add column for units
         df["unit"] = df.rename(
-            index=lambda x: x[x.rfind("(") + 1: x.rfind(")")]
+            index=lambda x: x[x.rfind("(") + 1 : x.rfind(")")]
         ).index.values
         df["unit"] = df.unit.str.replace("€", "EUR")
         # remove units from index
@@ -482,7 +481,7 @@ def get_dea_vehicle_data(fn, data):
 
         # convert FOM in % of investment/year
         df.loc["Fixed maintenance cost", years] /= (
-                df.loc["Upfront vehicle cost", years] * 100
+            df.loc["Upfront vehicle cost", years] * 100
         )
         df.loc["Fixed maintenance cost", "unit"] = "%/year"
 
@@ -554,9 +553,9 @@ def get_data_DEA(tech, data_in, expectation=None):
     usecols += f",{uncrtnty_lookup[tech]}"
 
     if (
-            (tech in cost_year_2019)
-            or (tech in cost_year_2020)
-            or ("renewable_fuels" in excel_file)
+        (tech in cost_year_2019)
+        or (tech in cost_year_2020)
+        or ("renewable_fuels" in excel_file)
     ):
         skiprows = [0]
     else:
@@ -609,10 +608,10 @@ def get_data_DEA(tech, data_in, expectation=None):
         # Currently, this is only first column (2020), since DEA data is available for 2025 and 2050
         if excel.iloc[:, 0].isnull().all():
             excel.iloc[:, 0] = excel.iloc[:, 1] + (
-                    excel.iloc[:, 1] - excel.iloc[:, 2]
+                excel.iloc[:, 1] - excel.iloc[:, 2]
             ) / (excel.columns[2] - excel.columns[1]) * (
-                                       excel.columns[1] - excel.columns[0]
-                               )
+                excel.columns[1] - excel.columns[0]
+            )
 
     if 2020 not in excel.columns:
         selection = excel[excel.isin([2020])].dropna(how="all").index
@@ -810,8 +809,8 @@ def get_data_DEA(tech, data_in, expectation=None):
 
     if tech == "air separation unit":
         divisor = (
-                (df.loc["Specific investment mark-up factor optional ASU"] - 1.0)
-                / excel.loc["N2 Consumption, [t/t] Ammonia"]
+            (df.loc["Specific investment mark-up factor optional ASU"] - 1.0)
+            / excel.loc["N2 Consumption, [t/t] Ammonia"]
         ).astype(float)
 
         # Calculate ASU cost separate to HB facility in terms of t N2 output
@@ -892,27 +891,27 @@ def get_data_DEA(tech, data_in, expectation=None):
     # if year-specific data is missing and not fixed by interpolation fill forward with same values
     df_final = df_final.ffill(axis=1)
 
-    df_final["source"] = f"{source_dict["DEA"]}, {get_relative_fn(excel_file)}"
+    df_final["source"] = f"{source_dict['DEA']}, {get_relative_fn(excel_file)}"
     if (
-            tech in cost_year_2020
-            and ("for_carbon_capture_transport_storage" not in excel_file)
-            and ("renewable_fuels" not in excel_file)
+        tech in cost_year_2020
+        and ("for_carbon_capture_transport_storage" not in excel_file)
+        and ("renewable_fuels" not in excel_file)
     ):
         for attr in ["investment", "Fixed O&M"]:
             to_drop = df[
                 df.index.str.contains(attr) & ~df.index.str.contains(r"\(\*total\)")
-                ].index
+            ].index
             df_final.drop(to_drop, inplace=True)
 
         df_final["unit"] = df_final.rename(
-            index=lambda x: x[x.rfind("[") + 1: x.rfind("]")]
+            index=lambda x: x[x.rfind("[") + 1 : x.rfind("]")]
         ).index.values
     else:
         df_final.index = df_final.index.str.replace(r"\[", "(", regex=True).str.replace(
             r"\]", ")", regex=True
         )
         df_final["unit"] = df_final.rename(
-            index=lambda x: x[x.rfind("(") + 1: x.rfind(")")]
+            index=lambda x: x[x.rfind("(") + 1 : x.rfind(")")]
         ).index.values
     df_final.index = df_final.index.str.replace(r" \(.*\)", "", regex=True)
 
@@ -936,7 +935,7 @@ def add_desalinsation_data(costs):
     costs.loc[(tech, "investment"), "value"] = c
     costs.loc[(tech, "investment"), "unit"] = "EUR/(m^3-H2O/h)"
     costs.loc[(tech, "investment"), "source"] = (
-            source_dict["Caldera2017"] + ", Table 4."
+        source_dict["Caldera2017"] + ", Table 4."
     )
     costs.loc[(tech, "investment"), "currency_year"] = 2015
 
@@ -955,18 +954,18 @@ def add_desalinsation_data(costs):
 
     salinity = snakemake.config["desalination"]["salinity"]
     costs.loc[(tech, "electricity-input"), "value"] = (
-            0.0003 * salinity ** 2 + 0.0018 * salinity + 2.6043
+        0.0003 * salinity**2 + 0.0018 * salinity + 2.6043
     )
     costs.loc[(tech, "electricity-input"), "unit"] = "kWh/m^3-H2O"
     costs.loc[(tech, "electricity-input"), "source"] = (
-            source_dict["Caldera2016"] + ", Fig. 4."
+        source_dict["Caldera2016"] + ", Fig. 4."
     )
 
     tech = "clean water tank storage"
     costs.loc[(tech, "investment"), "value"] = 65
     costs.loc[(tech, "investment"), "unit"] = "EUR/m^3-H2O"
     costs.loc[(tech, "investment"), "source"] = (
-            source_dict["Caldera2016"] + ", Table 1."
+        source_dict["Caldera2016"] + ", Table 1."
     )
     costs.loc[(tech, "investment"), "currency_year"] = 2013
 
@@ -990,13 +989,13 @@ def add_co2_intensity(costs):
     TJ_to_MWh = 277.78
     costs.loc[("gas", "CO2 intensity"), "value"] = 55827 / 1e3 / TJ_to_MWh  # Erdgas
     costs.loc[("coal", "CO2 intensity"), "value"] = (
-            93369 / 1e3 / TJ_to_MWh
+        93369 / 1e3 / TJ_to_MWh
     )  # Steinkohle
     costs.loc[("lignite", "CO2 intensity"), "value"] = (
-            113031 / 1e3 / TJ_to_MWh
+        113031 / 1e3 / TJ_to_MWh
     )  # Rohbraunkohle Rheinland
     costs.loc[("oil", "CO2 intensity"), "value"] = (
-            74020 / 1e3 / TJ_to_MWh
+        74020 / 1e3 / TJ_to_MWh
     )  # Heizöl, leicht
     costs.loc[("methanol", "CO2 intensity"), "value"] = (
         0.2482  # t_CO2/MWh_th, based on stochiometric composition.
@@ -1011,13 +1010,13 @@ def add_co2_intensity(costs):
     biomass_specific_energy = 18  # GJ/t LHV
     biomass_carbon_content = 0.5
     costs.loc[("oil", "CO2 intensity"), "value"] = (
-            (1 / oil_specific_energy) * 3.6 * CO2_CH2_mass_ratio
+        (1 / oil_specific_energy) * 3.6 * CO2_CH2_mass_ratio
     )  # tCO2/MWh
     costs.loc[("gas", "CO2 intensity"), "value"] = (
-            (1 / methane_specific_energy) * 3.6 * CO2_CH4_mass_ratio
+        (1 / methane_specific_energy) * 3.6 * CO2_CH4_mass_ratio
     )  # tCO2/MWh
     costs.loc[("solid biomass", "CO2 intensity"), "value"] = (
-            biomass_carbon_content * (1 / biomass_specific_energy) * 3.6 * CO2_C_mass_ratio
+        biomass_carbon_content * (1 / biomass_specific_energy) * 3.6 * CO2_C_mass_ratio
     )  # tCO2/MWh
 
     costs.loc[("oil", "CO2 intensity"), "source"] = (
@@ -1049,7 +1048,7 @@ def add_solar_from_other(costs):
     # the paper says 'In this report, all results are given in real 2019
     # money.'
     data = data / (1 + snakemake.config["rate_inflation"]) ** (
-            2019 - snakemake.config["eur_year"]
+        2019 - snakemake.config["eur_year"]
     )
     solar_uti = pd.Series(data=data, index=years)
 
@@ -1057,7 +1056,7 @@ def add_solar_from_other(costs):
     data = np.interp(x=years, xp=[2020, 2030, 2050], fp=[1150, 800, 550])
     # using 2016 money in page 10
     data = data / (1 + snakemake.config["rate_inflation"]) ** (
-            2016 - snakemake.config["eur_year"]
+        2016 - snakemake.config["eur_year"]
     )
     solar_roof = pd.Series(data=data, index=years)
 
@@ -1149,7 +1148,7 @@ def biochar_pyrolysis_harmonise_dea(df):
         | df.index.str.contains("Pyrolysis gas Output")
         | df.index.str.contains("Electricity Consumption")
         | df.index.str.contains("Feedstock Consumption")
-        ].index
+    ].index
     df.drop(to_drop, inplace=True)
 
     # normalizing costs to biochar output
@@ -1184,11 +1183,11 @@ def biochar_pyrolysis_harmonise_dea(df):
     )
 
     df_div = (
-            df.iloc[df.index.str.contains("Specific energy content")].astype(float) / 3.6
+        df.iloc[df.index.str.contains("Specific energy content")].astype(float) / 3.6
     )
     df.iloc[df.index.str.contains("Specific energy content")] = df.iloc[
-                                                                    df.index.str.contains("Biochar Output")
-                                                                ].astype(float) / df_div.values.astype(float)
+        df.index.str.contains("Biochar Output")
+    ].astype(float) / df_div.values.astype(float)
 
     df.rename(
         index={
@@ -1395,11 +1394,11 @@ def clean_up_units(tech_data, value_column="", source=""):
         cost_per_unit, value_column
     ].apply(
         lambda x: (
-                          x
-                          / tech_data.loc[(x.name[0], "Heat production capacity for one unit")][
-                              value_column
-                          ]
-                  ).iloc[0, :],
+            x
+            / tech_data.loc[(x.name[0], "Heat production capacity for one unit")][
+                value_column
+            ]
+        ).iloc[0, :],
         axis=1,
     )
     tech_data.loc[cost_per_unit, "unit"] = tech_data.loc[
@@ -1616,29 +1615,29 @@ def order_data(tech_data):
         # --- investment ----
         investment = df[
             (
-                    df.index.str.contains("investment")
-                    | df.index.str.contains("Distribution network costs")
+                df.index.str.contains("investment")
+                | df.index.str.contains("Distribution network costs")
             )
             & (
-                    (df.unit == "EUR/MW")
-                    | (df.unit == "EUR/MW_e")
-                    | (df.unit == "EUR/MW_th - heat output")
-                    | (df.unit == "EUR/MW_th excluding drive energy")
-                    | (df.unit == "EUR/MW_th")
-                    | (df.unit == "EUR/MW_MeOH")
-                    | (df.unit == "EUR/MW_FT/year")
-                    | (df.unit == "EUR/MW_NH3")
-                    | (df.unit == "EUR/MWhCapacity")
-                    | (df.unit == "EUR/MWh")
-                    | (df.unit == "EUR/MW_CH4")
-                    | (df.unit == "EUR/MWh/year")
-                    | (df.unit == "EUR/MW_e, 2020")
-                    | (df.unit == "EUR/MW input")
-                    | (df.unit == "EUR/MW-methanol")
-                    | (df.unit == "EUR/t_N2/h")  # air separation unit
-                    | (df.unit == "EUR/MW_biochar")
+                (df.unit == "EUR/MW")
+                | (df.unit == "EUR/MW_e")
+                | (df.unit == "EUR/MW_th - heat output")
+                | (df.unit == "EUR/MW_th excluding drive energy")
+                | (df.unit == "EUR/MW_th")
+                | (df.unit == "EUR/MW_MeOH")
+                | (df.unit == "EUR/MW_FT/year")
+                | (df.unit == "EUR/MW_NH3")
+                | (df.unit == "EUR/MWhCapacity")
+                | (df.unit == "EUR/MWh")
+                | (df.unit == "EUR/MW_CH4")
+                | (df.unit == "EUR/MWh/year")
+                | (df.unit == "EUR/MW_e, 2020")
+                | (df.unit == "EUR/MW input")
+                | (df.unit == "EUR/MW-methanol")
+                | (df.unit == "EUR/t_N2/h")  # air separation unit
+                | (df.unit == "EUR/MW_biochar")
             )
-            ].copy()
+        ].copy()
 
         if len(investment) != 1:
             switch = True
@@ -1656,24 +1655,24 @@ def order_data(tech_data):
         if len(investment):
             fixed = df[
                 (
-                        df.index.str.contains("Fixed O&M")
-                        | df.index.str.contains("Total O&M")
+                    df.index.str.contains("Fixed O&M")
+                    | df.index.str.contains("Total O&M")
                 )
                 & (
-                        (df.unit == investment.unit.iloc[0] + "/year")
-                        | (df.unit == "EUR/MW/km/year")
-                        | (df.unit == "EUR/MW/year")
-                        | (df.unit == "EUR/MW_e/y, 2020")
-                        | (df.unit == "EUR/MW_e/y")
-                        | (df.unit == "EUR/MW_FT/year")
-                        | (df.unit == "EUR/MWh_FT")
-                        | (df.unit == "EUR/MW_MeOH/year")
-                        | (df.unit == "EUR/MW_CH4/year")
-                        | (df.unit == "EUR/MW_biochar/year")
-                        | (df.unit == "% of specific investment/year")
-                        | (df.unit == investment.unit.str.split(" ").iloc[0][0] + "/year")
+                    (df.unit == investment.unit.iloc[0] + "/year")
+                    | (df.unit == "EUR/MW/km/year")
+                    | (df.unit == "EUR/MW/year")
+                    | (df.unit == "EUR/MW_e/y, 2020")
+                    | (df.unit == "EUR/MW_e/y")
+                    | (df.unit == "EUR/MW_FT/year")
+                    | (df.unit == "EUR/MWh_FT")
+                    | (df.unit == "EUR/MW_MeOH/year")
+                    | (df.unit == "EUR/MW_CH4/year")
+                    | (df.unit == "EUR/MW_biochar/year")
+                    | (df.unit == "% of specific investment/year")
+                    | (df.unit == investment.unit.str.split(" ").iloc[0][0] + "/year")
                 )
-                ].copy()
+            ].copy()
 
             if (len(fixed) != 1) and (len(df[df.index.str.contains("Fixed O&M")]) != 0):
                 switch = True
@@ -1702,21 +1701,21 @@ def order_data(tech_data):
         vom = df[
             df.index.str.contains("Variable O&M")
             & (
-                    (df.unit == "EUR/MWh")
-                    | (df.unit == "EUR/MWh_e")
-                    | (df.unit == "EUR/MWh_th")
-                    | (df.unit == "EUR/MWh_FT")
-                    | (df.unit == "EUR/MWh_NH3")
-                    | (df.unit == "EUR/MWh_MeOH")
-                    | (df.unit == "EUR/MWh/year")
-                    | (df.unit == "EUR/MWh/km")
-                    | (df.unit == "EUR/MWh")
-                    | (df.unit == "EUR/MWhoutput")
-                    | (df.unit == "EUR/MWh_CH4")
-                    | (df.unit == "EUR/MWh_biochar")
-                    | (tech == "biogas upgrading")
+                (df.unit == "EUR/MWh")
+                | (df.unit == "EUR/MWh_e")
+                | (df.unit == "EUR/MWh_th")
+                | (df.unit == "EUR/MWh_FT")
+                | (df.unit == "EUR/MWh_NH3")
+                | (df.unit == "EUR/MWh_MeOH")
+                | (df.unit == "EUR/MWh/year")
+                | (df.unit == "EUR/MWh/km")
+                | (df.unit == "EUR/MWh")
+                | (df.unit == "EUR/MWhoutput")
+                | (df.unit == "EUR/MWh_CH4")
+                | (df.unit == "EUR/MWh_biochar")
+                | (tech == "biogas upgrading")
             )
-            ].copy()
+        ].copy()
         if len(vom) == 1:
             vom.loc[:, "parameter"] = "VOM"
             clean_df[tech] = pd.concat([clean_df[tech], vom])
@@ -1730,7 +1729,7 @@ def order_data(tech_data):
         # ----- lifetime --------
         lifetime = df[
             df.index.str.contains("Technical life") & (df.unit == "years")
-            ].copy()
+        ].copy()
         if len(lifetime) != 1:
             switch = True
             print(
@@ -1746,43 +1745,43 @@ def order_data(tech_data):
         # ----- efficiencies ------
         efficiency = df[
             (
-                    (df.index.str.contains("efficiency"))
-                    | (df.index.str.contains("Hydrogen output, at LHV"))
-                    | (df.index.str.contains("Hydrogen Output"))
-                    | (df.index.str.contains("FT Liquids Output, MWh/MWh Total Input"))
-                    | (df.index.str.contains("Methanol Output"))
-                    | (df.index.str.contains("District heat  Output"))
-                    | (df.index.str.contains("Electricity Output"))
-                    | (df.index.str.contains("hereof recoverable for district heating"))
-                    | (df.index.str.contains("Bio SNG"))
-                    | (df.index.str.contains("biochar"))
-                    | (df.index == ("Hydrogen"))
+                (df.index.str.contains("efficiency"))
+                | (df.index.str.contains("Hydrogen output, at LHV"))
+                | (df.index.str.contains("Hydrogen Output"))
+                | (df.index.str.contains("FT Liquids Output, MWh/MWh Total Input"))
+                | (df.index.str.contains("Methanol Output"))
+                | (df.index.str.contains("District heat  Output"))
+                | (df.index.str.contains("Electricity Output"))
+                | (df.index.str.contains("hereof recoverable for district heating"))
+                | (df.index.str.contains("Bio SNG"))
+                | (df.index.str.contains("biochar"))
+                | (df.index == ("Hydrogen"))
             )
             & (
-                    (df.unit == "%")
-                    | (df.unit == "% total size")
-                    | (df.unit == "% of fuel input")
-                    | (df.unit == "MWh_H2/MWh_e")
-                    | (df.unit == "%-points of heat loss")
-                    | (df.unit == "MWh_MeOH/MWh_th")
-                    | (df.unit == "MWh_e/MWh_th")
-                    | (df.unit == "MWh_th/MWh_th")
-                    | (df.unit == "MWh/MWh Total Input")
-                    | df.unit.str.contains("MWh_FT/MWh_H2")
-                    | df.unit.str.contains("MWh_biochar/MWh_feedstock")
-                    | df.unit.str.contains("ton biochar/MWh_feedstock")
-                    | df.unit.str.contains("MWh_CH4/MWh_H2")
-                    | df.unit.str.contains("% MWh_feedstock")
+                (df.unit == "%")
+                | (df.unit == "% total size")
+                | (df.unit == "% of fuel input")
+                | (df.unit == "MWh_H2/MWh_e")
+                | (df.unit == "%-points of heat loss")
+                | (df.unit == "MWh_MeOH/MWh_th")
+                | (df.unit == "MWh_e/MWh_th")
+                | (df.unit == "MWh_th/MWh_th")
+                | (df.unit == "MWh/MWh Total Input")
+                | df.unit.str.contains("MWh_FT/MWh_H2")
+                | df.unit.str.contains("MWh_biochar/MWh_feedstock")
+                | df.unit.str.contains("ton biochar/MWh_feedstock")
+                | df.unit.str.contains("MWh_CH4/MWh_H2")
+                | df.unit.str.contains("% MWh_feedstock")
             )
-            ].copy()
+        ].copy()
 
         if tech == "Fischer-Tropsch":
             efficiency[years] *= 100
 
         # take annual average instead of name plate efficiency, unless central air-sourced heat pump
         if (
-                any(efficiency.index.str.contains("annual average"))
-                and tech != "central air-sourced heat pump"
+            any(efficiency.index.str.contains("annual average"))
+            and tech != "central air-sourced heat pump"
         ):
             efficiency = efficiency[efficiency.index.str.contains("annual average")]
         elif any(efficiency.index.str.contains("name plate")):
@@ -1803,7 +1802,7 @@ def order_data(tech_data):
 
         # check if electric and heat efficiencies are given
         if any(["Electric" in ind for ind in efficiency.index]) and any(
-                ["Heat" in ind for ind in efficiency.index]
+            ["Heat" in ind for ind in efficiency.index]
         ):
             efficiency_heat = efficiency[efficiency.index.str.contains("Heat")].copy()
             efficiency_heat["parameter"] = "efficiency-heat"
@@ -2119,10 +2118,10 @@ def add_gas_storage(data):
     # process equipment, injection (2200MW) withdrawal (6600MW)
     # assuming half of investment costs for injection, half for withdrawal
     investment_charge = (
-            gas_storage.loc["Total investment cost"].iloc[0, 0] / 2 / 2200 * 1e3
+        gas_storage.loc["Total investment cost"].iloc[0, 0] / 2 / 2200 * 1e3
     )
     investment_discharge = (
-            gas_storage.loc["Total investment cost"].iloc[0, 0] / 2 / 6600 * 1e3
+        gas_storage.loc["Total investment cost"].iloc[0, 0] / 2 / 6600 * 1e3
     )
     data.loc[("gas storage charger", "investment"), years] = investment_charge
     data.loc[("gas storage discharger", "investment"), years] = investment_discharge
@@ -2143,9 +2142,9 @@ def add_gas_storage(data):
 
     # operation + maintenance 400-500 million m³ = 4.4-5.5 TWh
     FOM = (
-            gas_storage.loc["Total, incl. administration"].iloc[0]
-            / (5.5 * investment * 1e3)
-            * 100
+        gas_storage.loc["Total, incl. administration"].iloc[0]
+        / (5.5 * investment * 1e3)
+        * 100
     )
     data.loc[("gas storage", "FOM"), years] = FOM
     data.loc[("gas storage", "FOM"), "source"] = source_dict["DEA"]
@@ -2160,20 +2159,20 @@ def add_gas_storage(data):
 def add_carbon_capture(data, tech_data):
     for tech in ["cement capture", "biomass CHP capture"]:
         data.loc[(tech, "capture_rate"), years] = (
-                tech_data.loc[(tech, "Ax) CO2 capture rate, net"), years].values[0] / 100
+            tech_data.loc[(tech, "Ax) CO2 capture rate, net"), years].values[0] / 100
         )
         data.loc[(tech, "capture_rate"), "unit"] = "per unit"
 
     for tech in ["direct air capture", "cement capture", "biomass CHP capture"]:
         data.loc[(tech, "investment"), years] = (
-                tech_data.loc[(tech, "Specific investment"), years].values[0] * 1e6
+            tech_data.loc[(tech, "Specific investment"), years].values[0] * 1e6
         )
         data.loc[(tech, "investment"), "unit"] = "EUR/(tCO2/h)"
 
         data.loc[(tech, "FOM"), years] = (
-                tech_data.loc[(tech, "Fixed O&M"), years].values[0]
-                / tech_data.loc[(tech, "Specific investment"), years].values[0]
-                * 100
+            tech_data.loc[(tech, "Fixed O&M"), years].values[0]
+            / tech_data.loc[(tech, "Specific investment"), years].values[0]
+            * 100
         )
         data.loc[(tech, "FOM"), "unit"] = "%/year"
 
@@ -2217,7 +2216,7 @@ def rename_pypsa_old(costs_pypsa):
 
     # convert EUR/m^3 to EUR/kWh for 40 K diff and 1.17 kWh/m^3/K
     costs_pypsa.loc[("decentral water tank storage", "investment"), "value"] /= (
-            1.17 * 40
+        1.17 * 40
     )
     costs_pypsa.loc[("decentral water tank storage", "investment"), "unit"] = "EUR/kWh"
 
@@ -2456,15 +2455,15 @@ def carbon_flow(costs, year):
             input_CO2_intensity = costs.loc[("solid biomass", "CO2 intensity"), "value"]
 
             costs.loc[(tech, "C in fuel"), "value"] = (
-                    costs.loc[(tech, "efficiency"), "value"]
-                    * costs.loc[(medium_out, "CO2 intensity"), "value"]
-                    / input_CO2_intensity
+                costs.loc[(tech, "efficiency"), "value"]
+                * costs.loc[(medium_out, "CO2 intensity"), "value"]
+                / input_CO2_intensity
             )
             costs.loc[(tech, "C stored"), "value"] = (
-                    1 - costs.loc[(tech, "C in fuel"), "value"] - c_in_char
+                1 - costs.loc[(tech, "C in fuel"), "value"] - c_in_char
             )
             costs.loc[(tech, "CO2 stored"), "value"] = (
-                    input_CO2_intensity * costs.loc[(tech, "C stored"), "value"]
+                input_CO2_intensity * costs.loc[(tech, "C stored"), "value"]
             )
 
             costs.loc[(tech, "C in fuel"), "unit"] = "per unit"
@@ -2486,9 +2485,9 @@ def carbon_flow(costs, year):
             oil_CO2_intensity = costs.loc[("oil", "CO2 intensity"), "value"]
 
             costs.loc[("electrobiofuels", "C in fuel"), "value"] = (
-                    costs.loc[("BtL", "C in fuel"), "value"]
-                    + costs.loc[("BtL", "C stored"), "value"]
-                    * costs.loc[("Fischer-Tropsch", "capture rate"), "value"]
+                costs.loc[("BtL", "C in fuel"), "value"]
+                + costs.loc[("BtL", "C stored"), "value"]
+                * costs.loc[("Fischer-Tropsch", "capture rate"), "value"]
             )
             costs.loc[("electrobiofuels", "C in fuel"), "unit"] = "per unit"
             costs.loc[("electrobiofuels", "C in fuel"), "source"] = (
@@ -2496,9 +2495,9 @@ def carbon_flow(costs, year):
             )
 
             costs.loc[("electrobiofuels", "efficiency-biomass"), "value"] = (
-                    costs.loc[("electrobiofuels", "C in fuel"), "value"]
-                    * input_CO2_intensity
-                    / oil_CO2_intensity
+                costs.loc[("electrobiofuels", "C in fuel"), "value"]
+                * input_CO2_intensity
+                / oil_CO2_intensity
             )
             costs.loc[("electrobiofuels", "efficiency-biomass"), "unit"] = "per unit"
             costs.loc[("electrobiofuels", "efficiency-biomass"), "source"] = (
@@ -2506,13 +2505,13 @@ def carbon_flow(costs, year):
             )
 
             efuel_scale_factor = (
-                    costs.loc[("BtL", "C stored"), "value"]
-                    * costs.loc[("Fischer-Tropsch", "capture rate"), "value"]
+                costs.loc[("BtL", "C stored"), "value"]
+                * costs.loc[("Fischer-Tropsch", "capture rate"), "value"]
             )
 
             costs.loc[("electrobiofuels", "efficiency-hydrogen"), "value"] = (
-                    costs.loc[("Fischer-Tropsch", "efficiency"), "value"]
-                    / efuel_scale_factor
+                costs.loc[("Fischer-Tropsch", "efficiency"), "value"]
+                / efuel_scale_factor
             )
             costs.loc[("electrobiofuels", "efficiency-hydrogen"), "unit"] = "per unit"
             costs.loc[("electrobiofuels", "efficiency-hydrogen"), "source"] = (
@@ -2520,8 +2519,8 @@ def carbon_flow(costs, year):
             )
 
             costs.loc[("electrobiofuels", "efficiency-tot"), "value"] = 1 / (
-                    1 / costs.loc[("electrobiofuels", "efficiency-hydrogen"), "value"]
-                    + 1 / costs.loc[("electrobiofuels", "efficiency-biomass"), "value"]
+                1 / costs.loc[("electrobiofuels", "efficiency-hydrogen"), "value"]
+                + 1 / costs.loc[("electrobiofuels", "efficiency-biomass"), "value"]
             )
             costs.loc[("electrobiofuels", "efficiency-tot"), "unit"] = "per unit"
             costs.loc[("electrobiofuels", "efficiency-tot"), "source"] = (
@@ -2529,8 +2528,8 @@ def carbon_flow(costs, year):
             )
 
             costs.loc[("electrobiofuels", "efficiency-hydrogen"), "value"] = (
-                    costs.loc[("Fischer-Tropsch", "efficiency"), "value"]
-                    / efuel_scale_factor
+                costs.loc[("Fischer-Tropsch", "efficiency"), "value"]
+                / efuel_scale_factor
             )
             costs.loc[("electrobiofuels", "efficiency-hydrogen"), "unit"] = "per unit"
             costs.loc[("electrobiofuels", "efficiency-hydrogen"), "source"] = (
@@ -2538,8 +2537,8 @@ def carbon_flow(costs, year):
             )
 
             costs.loc[("electrobiofuels", "efficiency-tot"), "value"] = 1 / (
-                    1 / costs.loc[("electrobiofuels", "efficiency-hydrogen"), "value"]
-                    + 1 / costs.loc[("electrobiofuels", "efficiency-biomass"), "value"]
+                1 / costs.loc[("electrobiofuels", "efficiency-hydrogen"), "value"]
+                + 1 / costs.loc[("electrobiofuels", "efficiency-biomass"), "value"]
             )
             costs.loc[("electrobiofuels", "efficiency-tot"), "unit"] = "per unit"
             costs.loc[("electrobiofuels", "efficiency-tot"), "source"] = (
@@ -2547,13 +2546,13 @@ def carbon_flow(costs, year):
             )
 
             inv_cost = (
-                    btl_cost[year]
-                    + costs.loc[("Fischer-Tropsch", "investment"), "value"]
-                    * efuel_scale_factor
+                btl_cost[year]
+                + costs.loc[("Fischer-Tropsch", "investment"), "value"]
+                * efuel_scale_factor
             )
             VOM = (
-                    costs.loc[("BtL", "VOM"), "value"]
-                    + costs.loc[("Fischer-Tropsch", "VOM"), "value"] * efuel_scale_factor
+                costs.loc[("BtL", "VOM"), "value"]
+                + costs.loc[("Fischer-Tropsch", "VOM"), "value"] * efuel_scale_factor
             )
             FOM = costs.loc[("BtL", "FOM"), "value"]
             medium_out = "oil"
@@ -2567,12 +2566,12 @@ def carbon_flow(costs, year):
             CH4_density = 0.657  # kg/Nm3
             CO2_density = 1.98  # kg/Nm3
             CH4_vol_energy_density = (
-                    CH4_specific_energy * CH4_density / (1000 * 3.6)
+                CH4_specific_energy * CH4_density / (1000 * 3.6)
             )  # MJ/Nm3 -> MWh/Nm3
             CO2_weight_share = AD_CO2_share * CO2_density
 
             costs.loc[(tech, "CO2 stored"), "value"] = (
-                    CO2_weight_share / CH4_vol_energy_density / 1000
+                CO2_weight_share / CH4_vol_energy_density / 1000
             )  # tCO2/MWh,in (NB: assuming the input is already given in the biogas potential and cost
             costs.loc[(tech, "CO2 stored"), "unit"] = "tCO2/MWh_th"
             costs.loc[(tech, "CO2 stored"), "source"] = (
@@ -2635,10 +2634,10 @@ def energy_penalty(costs):
 
         # Scaling biomass input to account for heat demand of carbon capture
         scalingFactor = 1 / (
-                1
-                + co2_capture
-                * costs.loc[("biomass CHP capture", "heat-input"), "value"]
-                / costs.loc[(boiler, "efficiency"), "value"]
+            1
+            + co2_capture
+            * costs.loc[("biomass CHP capture", "heat-input"), "value"]
+            / costs.loc[(boiler, "efficiency"), "value"]
         )
 
         eta_steam = (1 - scalingFactor) * costs.loc[(boiler, "efficiency"), "value"]
@@ -2648,11 +2647,11 @@ def energy_penalty(costs):
 
         # Adapting investment share of tech due to steam boiler addition. Investment per MW_el.
         costs.loc[(tech, "investment"), "value"] = (
-                costs.loc[(tech, "investment"), "value"] * eta_old / eta_main
-                + costs.loc[(boiler, "investment"), "value"] * eta_steam / eta_main
+            costs.loc[(tech, "investment"), "value"] * eta_old / eta_main
+            + costs.loc[(boiler, "investment"), "value"] * eta_steam / eta_main
         )
         costs.loc[(tech, "investment"), "source"] = (
-                "Combination of " + tech + " and " + boiler
+            "Combination of " + tech + " and " + boiler
         )
         costs.loc[(tech, "investment"), "further description"] = ""
 
@@ -2662,31 +2661,29 @@ def energy_penalty(costs):
             costs.loc[(tech, "VOM"), "value"] = 0.0
 
         costs.loc[(tech, "VOM"), "value"] = (
-                costs.loc[(tech, "VOM"), "value"] * eta_old / eta_main
-                + costs.loc[(boiler, "VOM"), "value"] * eta_steam / eta_main
+            costs.loc[(tech, "VOM"), "value"] * eta_old / eta_main
+            + costs.loc[(boiler, "VOM"), "value"] * eta_steam / eta_main
         )
         costs.loc[(tech, "VOM"), "source"] = "Combination of " + tech + " and " + boiler
         costs.loc[(tech, "VOM"), "further description"] = ""
 
         costs.loc[(tech, "efficiency"), "value"] = eta_main
         costs.loc[(tech, "efficiency"), "source"] = (
-                "Combination of " + tech + " and " + boiler
+            "Combination of " + tech + " and " + boiler
         )
         costs.loc[(tech, "efficiency"), "further description"] = ""
 
         if "CHP" in tech:
             costs.loc[(tech, "efficiency-heat"), "value"] = costs.loc[
-                                                                (tech, "efficiency-heat"), "value"
-                                                            ] * scalingFactor + costs.loc[
-                                                                ("solid biomass", "CO2 intensity"), "value"
-                                                            ] * (
-                                                                    costs.loc[
-                                                                        ("biomass CHP capture", "heat-output"), "value"]
-                                                                    + costs.loc[(
-                                                            "biomass CHP capture", "compression-heat-output"), "value"]
-                                                            )
+                (tech, "efficiency-heat"), "value"
+            ] * scalingFactor + costs.loc[
+                ("solid biomass", "CO2 intensity"), "value"
+            ] * (
+                costs.loc[("biomass CHP capture", "heat-output"), "value"]
+                + costs.loc[("biomass CHP capture", "compression-heat-output"), "value"]
+            )
             costs.loc[(tech, "efficiency-heat"), "source"] = (
-                    "Combination of " + tech + " and " + boiler
+                "Combination of " + tech + " and " + boiler
             )
             costs.loc[(tech, "efficiency-heat"), "further description"] = ""
 
@@ -2695,8 +2692,8 @@ def energy_penalty(costs):
             costs.loc[(tech, "VOM"), "unit"] = "EUR/MWh"
 
         costs.loc[(tech, "VOM"), "value"] = (
-                costs.loc[(tech, "VOM"), "value"] * eta_old / eta_main
-                + costs.loc[(boiler, "VOM"), "value"] * eta_steam / eta_main
+            costs.loc[(tech, "VOM"), "value"] * eta_old / eta_main
+            + costs.loc[(boiler, "VOM"), "value"] * eta_steam / eta_main
         )
         costs.loc[(tech, "VOM"), "source"] = "Combination of " + tech + " and " + boiler
         costs.loc[(tech, "VOM"), "further description"] = ""
@@ -2859,7 +2856,7 @@ def add_home_battery_costs(costs):
     factor = get_factor(battery_store_ewg, home_cols, "Battery storage")
 
     home_cost = (
-            home_battery.loc[("home battery storage", "investment"), years] * factor
+        home_battery.loc[("home battery storage", "investment"), years] * factor
     ).values
     home_battery.loc[("home battery storage", "investment"), years] = home_cost
 
@@ -2879,7 +2876,7 @@ def add_home_battery_costs(costs):
     ]
     factor = get_factor(battery_inverter_ewg, home_cols, "Battery interface")
     home_cost = (
-            home_battery.loc[("home battery inverter", "investment"), years] * factor
+        home_battery.loc[("home battery inverter", "investment"), years] * factor
     ).values
     home_battery.loc[("home battery inverter", "investment"), years] = home_cost
 
@@ -3064,7 +3061,7 @@ def add_energy_storage_database(costs, data_year):
     discharger_filter = (carrier_list_len == 2) & (carrier_last_item == "elec")
     store_filter = (carrier_list_len == 1) & (carrier_str_len > 0)
     reference_filter = (carrier_list_len == 1) & (
-            carrier_first_item == "reference_value"
+        carrier_first_item == "reference_value"
     )
     df = df[~reference_filter]  # remove reference values
     df.loc[bicharger_filter, "technology_type"] = "bicharger"
@@ -3075,9 +3072,9 @@ def add_energy_storage_database(costs, data_year):
     # Some investment inputs need to be distributed between charger and discharger
     for tech in df.technology.unique():
         nan_filter = (
-                (df.technology == tech)
-                & (carrier_str_len == 0)
-                & (df.parameter == "investment")
+            (df.technology == tech)
+            & (carrier_str_len == 0)
+            & (df.parameter == "investment")
         )
         store_filter = nan_filter & (df.unit == "EUR/MWh")
         if not df.loc[store_filter].empty:
@@ -3093,26 +3090,26 @@ def add_energy_storage_database(costs, data_year):
                 .sum(numeric_only=True)
             )
             charger_investment_filter = (
-                    charger_filter
-                    & (df.technology == tech)
-                    & (df.parameter == "investment")
+                charger_filter
+                & (df.technology == tech)
+                & (df.parameter == "investment")
             )
             discharger_investment_filter = (
-                    discharger_filter
-                    & (df.technology == tech)
-                    & (df.parameter == "investment")
+                discharger_filter
+                & (df.technology == tech)
+                & (df.parameter == "investment")
             )
             df.loc[charger_investment_filter & df.year == 2021, "value"] += (
-                    agg.loc[(tech, 2021)] / 2
+                agg.loc[(tech, 2021)] / 2
             )
             df.loc[charger_investment_filter & df.year == 2030, "value"] += (
-                    agg.loc[(tech, 2030)] / 2
+                agg.loc[(tech, 2030)] / 2
             )
             df.loc[discharger_investment_filter & df.year == 2021, "value"] += (
-                    agg.loc[(tech, 2021)] / 2
+                agg.loc[(tech, 2021)] / 2
             )
             df.loc[discharger_investment_filter & df.year == 2030, "value"] += (
-                    agg.loc[(tech, 2030)] / 2
+                agg.loc[(tech, 2030)] / 2
             )
     df.loc[:, "technology"] = df["technology"] + "-" + df["technology_type"]
 
@@ -3144,12 +3141,12 @@ def add_energy_storage_database(costs, data_year):
             a = df_tech.loc[df_tech.unit == "EUR/MW-year", "value"].values
             b = df_tech.loc[df_tech.unit == "EUR/MW", "value"].values
             df.loc[df_tech.loc[df_tech.unit == "EUR/MW-year"].index, "value"] = (
-                    a / b * 100
+                a / b * 100
             )  # EUR/MW-year / EUR/MW = %/year
             c = df_tech.loc[df_tech.unit == "EUR/MWh-year", "value"].values
             d = df_tech.loc[df_tech.unit == "EUR/MWh", "value"].values
             df.loc[df_tech.loc[df_tech.unit == "EUR/MWh-year"].index, "value"] = (
-                    c / d * 100
+                c / d * 100
             )  # EUR/MWh-year / EUR/MWh = %/year
 
     df.loc[:, "unit"] = df.unit.str.replace("EUR/MW-year", "%/year")
@@ -3175,7 +3172,7 @@ def add_energy_storage_database(costs, data_year):
                 other_segments_points = [2034, 2039, 2044, 2049, 2054, 2059]
 
                 def geometric_series(
-                        nominator, denominator=1, number_of_terms=1, start=1
+                    nominator, denominator=1, number_of_terms=1, start=1
                 ):
                     """
                     A geometric series is a series with a constant ratio between successive terms.
@@ -3194,7 +3191,7 @@ def add_energy_storage_database(costs, data_year):
                     """
                     return sum(
                         [
-                            nominator / denominator ** i
+                            nominator / denominator**i
                             for i in range(start, start + number_of_terms)
                         ]
                     )
@@ -3206,7 +3203,7 @@ def add_energy_storage_database(costs, data_year):
                     y1 = y
                     factor = 5
                     for i in range(
-                            len(other_segments_points)
+                        len(other_segments_points)
                     ):  # -1 because of segments
                         cost_at_year = endp_first_segment - geometric_series(
                             nominator=first_segment_diff,
@@ -3332,8 +3329,8 @@ def prepare_inflation_rate(fn):
     """
     inflation_rate = pd.read_excel(fn, sheet_name="Sheet 1", index_col=0, header=[8])
     inflation_rate = (
-                         inflation_rate.loc["European Union - 27 countries (from 2020)"].dropna()
-                     ).loc["2001"::]
+        inflation_rate.loc["European Union - 27 countries (from 2020)"].dropna()
+    ).loc["2001"::]
     inflation_rate.rename(index=lambda x: int(x), inplace=True)
     inflation_rate = inflation_rate.astype(float)
 
@@ -3478,10 +3475,10 @@ if __name__ == "__main__":
 
         # add solar data from other source than DEA
         if any(
-                [
-                    snakemake.config["solar_utility_from_vartiaien"],
-                    snakemake.config["solar_rooftop_from_etip"],
-                ]
+            [
+                snakemake.config["solar_utility_from_vartiaien"],
+                snakemake.config["solar_rooftop_from_etip"],
+            ]
         ):
             costs = add_solar_from_other(costs)
 
@@ -3489,7 +3486,7 @@ if __name__ == "__main__":
         costs = add_desalinsation_data(costs)
         # add energy storage database
         if snakemake.config["energy_storage_database"]["pnnl_energy_storage"].get(
-                "add_data", True
+            "add_data", True
         ):
             costs, tech = add_energy_storage_database(costs, year)
             costs.loc[tech, "currency_year"] = 2020

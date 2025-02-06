@@ -67,11 +67,11 @@ def get_relative_fn(fn):
 
 
 def mock_snakemake(
-    rulename,
-    root_dir=None,
-    configfiles=None,
-    submodule_dir="workflow/submodules/pypsa-eur",
-    **wildcards,
+        rulename,
+        root_dir=None,
+        configfiles=None,
+        submodule_dir="workflow/submodules/pypsa-eur",
+        **wildcards,
 ):
     """
     This function is expected to be executed from the 'scripts'-directory of '

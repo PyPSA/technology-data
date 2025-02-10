@@ -1853,9 +1853,11 @@ def order_data(list_of_years: list, technology_dataframe: pd.DataFrame) -> pd.Da
         if len(investment) != 1:
             switch = True
             if df[df.index.str.contains("investment")].unit.empty:
-                logger.info("check investment: ", str(tech_name), " is not available")
+                logger.info(f"check investment: {str(tech_name)} is not available")
             else:
-                logger.info("check investment: ", str(tech_name), " ", df[df.index.str.contains("investment")].unit,)
+                logger.info(
+                    f"check investment: {str(tech_name)} {str(df[df.index.str.contains('investment')].unit)}"
+                )
         else:
             investment["parameter"] = "investment"
             clean_df[tech_name] = investment
@@ -1888,7 +1890,9 @@ def order_data(list_of_years: list, technology_dataframe: pd.DataFrame) -> pd.Da
                 if df[df.index.str.contains("Fixed O&M")].unit.empty:
                     logger.info("check FOM: ", str(tech_name), " is not available")
                 else:
-                    logger.info("check FOM: ", str(tech_name), " ", df[df.index.str.contains("Fixed O&M")].unit,)
+                    logger.info(
+                        f"check FOM: {str(tech_name)} {str(df[df.index.str.contains('Fixed O&M')].unit)}",
+                    )
             if len(fixed) == 1:
                 fixed["parameter"] = "fixed"
                 clean_df[tech_name] = pd.concat([clean_df[tech_name], fixed])
@@ -1932,9 +1936,11 @@ def order_data(list_of_years: list, technology_dataframe: pd.DataFrame) -> pd.Da
         elif len(vom) != 1 and len(df[df.index.str.contains("Variable O&M")]) != 0:
             switch = True
             if df[df.index.str.contains("Variable O&M")].unit.empty:
-                logger.info("check VOM: ", str(tech_name), " is not available")
+                logger.info(f"check VOM: {str(tech_name)} is not available")
             else:
-                logger.info("check VOM: ", str(tech_name), " ", df[df.index.str.contains("Variable O&M")].unit,)
+                logger.info(
+                    f"check VOM: {str(tech_name)} {str(df[df.index.str.contains('Variable O&M')].unit)}"
+                )
 
         # ----- lifetime --------
         lifetime = df[
@@ -1945,7 +1951,9 @@ def order_data(list_of_years: list, technology_dataframe: pd.DataFrame) -> pd.Da
             if df[df.index.str.contains("Technical life")].unit.empty:
                 logger.info(f"check lifetime: {tech_name} is not available")
             else:
-                logger.info(f"check lifetime: {tech_name} {str(df[df.index.str.contains("Technical life")].unit)}")
+                logger.info(
+                    f"check lifetime: {tech_name} {str(df[df.index.str.contains('Technical life')].unit)}"
+                )
         else:
             lifetime["parameter"] = "lifetime"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], lifetime])
@@ -2063,7 +2071,9 @@ def order_data(list_of_years: list, technology_dataframe: pd.DataFrame) -> pd.Da
                 if df[df.index.str.contains("efficiency")].unit.empty:
                     logger.info(f"check efficiency: {str(tech_name)} is not available")
                 else:
-                    logger.info(f"check efficiency: {str(tech_name)} {df[df.index.str.contains("efficiency")].unit}")
+                    logger.info(
+                        f"check efficiency: {str(tech_name)} {df[df.index.str.contains('efficiency')].unit}"
+                    )
         else:
             efficiency["parameter"] = "efficiency"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency])
@@ -2325,11 +2335,16 @@ def convert_units(list_of_years: list, technology_dataframe: pd.DataFrame):
 
     # convert efficiency from % -> per unit
     technology_dataframe.loc[
-        technology_dataframe.index.get_level_values(1).isin(["efficiency", "efficiency-heat"]),
+        technology_dataframe.index.get_level_values(1).isin(
+            ["efficiency", "efficiency-heat"]
+        ),
         list_of_years,
     ] /= 100
     technology_dataframe.loc[
-        technology_dataframe.index.get_level_values(1).isin(["efficiency", "efficiency-heat"]), "unit"
+        technology_dataframe.index.get_level_values(1).isin(
+            ["efficiency", "efficiency-heat"]
+        ),
+        "unit",
     ] = "per unit"
 
     # convert MW -> kW
@@ -2337,9 +2352,9 @@ def convert_units(list_of_years: list, technology_dataframe: pd.DataFrame):
         ["fixed", "investment"]
     ) & technology_dataframe.unit.str.contains("/MW")
     technology_dataframe.loc[to_convert, list_of_years] /= 1e3
-    technology_dataframe.loc[to_convert, "unit"] = technology_dataframe.loc[to_convert, "unit"].str.replace(
-        "/MW", "/kW"
-    )
+    technology_dataframe.loc[to_convert, "unit"] = technology_dataframe.loc[
+        to_convert, "unit"
+    ].str.replace("/MW", "/kW")
 
     return technology_dataframe
 

@@ -2272,26 +2272,48 @@ def order_data(list_of_years: list, technology_dataframe: pd.DataFrame) -> pd.Da
     return output_data_dataframe
 
 
-def add_description(list_of_years, data):
+def add_description(
+    list_of_years: list,
+    technology_dataframe: pd.DataFrame,
+    offwind_no_grid_costs_flag: bool = True,
+) -> pd.DataFrame:
     """
-    Add as a column to the tech data the excel sheet name,
-    add comment for offwind connection costs
+    The function adds as a column to the tech data the Excel sheet name and
+    adds comments for offwind connection costs.
+
+    Parameters
+    ----------
+    list_of_years : list
+        years for which a cost assumption is provided
+    technology_dataframe : pd.DataFrame
+        technology data cost assumptions
+    offwind_no_grid_costs_flag : bool
+        flag to remove grid connection costs from DEA for offwind. Such costs are calculated separately in pypsa-eur
+
+    Returns
+    -------
+    Dataframe
+        updated technology data
     """
-    # add excel sheet names to data frame
-    wished_order = list(list_of_years) + ["unit", "source", "further description"]
-    data = data.reindex(columns=wished_order)
-    data.index.set_names(["technology", "parameter"], inplace=True)
-    sheets = data.reset_index()["technology"].map(dea_sheet_names).fillna("")
-    sheets.index = data.index
-    data["further description"] = sheets + ":  " + data["further description"]
+    # add Excel sheet names to technology_dataframe frame
+    wished_order = list_of_years + ["unit", "source", "further description"]
+    technology_dataframe = technology_dataframe.reindex(columns=wished_order)
+    technology_dataframe.index.set_names(["technology", "parameter"], inplace=True)
+    sheets = (
+        technology_dataframe.reset_index()["technology"].map(dea_sheet_names).fillna("")
+    )
+    sheets.index = technology_dataframe.index
+    technology_dataframe["further description"] = (
+        sheets + ":  " + technology_dataframe["further description"]
+    )
 
     # add comment for offwind investment
-    if snakemake.config["offwind_no_gridcosts"]:
-        data.loc[("offwind", "investment"), "further description"] += (
+    if offwind_no_grid_costs_flag:
+        technology_dataframe.loc[("offwind", "investment"), "further description"] += (
             " grid connection costs subtracted from investment costs"
         )
 
-    return data
+    return technology_dataframe
 
 
 def convert_units(list_of_years, data):
@@ -3630,7 +3652,7 @@ if __name__ == "__main__":
     # make categories: investment, FOM, VOM, efficiency, c_b, c_v
     data = order_data(years_list, tech_data)
     # add Excel sheet names and further description
-    data = add_description(years_list, data)
+    data = add_description(years_list, data, snakemake.config["offwind_no_gridcosts"])
     # convert efficiency from %-> per unit and investment from MW->kW to compare
     data = convert_units(years_list, data)
     # add gas storage (different methodology than other sheets)

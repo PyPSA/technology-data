@@ -14,6 +14,7 @@ import pytest
 sys.path.append("./scripts")
 
 from compile_cost_assumptions import (
+    add_description,
     clean_up_units,
     dea_sheet_names,
     get_data_from_DEA,
@@ -513,6 +514,78 @@ def test_set_round_trip_efficiency(config):
     output_df = output_df.reset_index(drop=False).rename(
         columns={"level_0": "technology", "level_1": "parameter"}
     )
+    comparison_df = output_df.compare(reference_output_df)
+    assert comparison_df.empty
+
+
+def test_add_description(config):
+    """
+    The test verifies what is returned by add_description.
+    """
+    technology_series = pd.Series(
+        [
+            "offwind",
+            "technology_name_2",
+        ]
+    )
+
+    parameter_series = pd.Series(
+        [
+            "investment",
+            "parameter_name_2",
+        ]
+    )
+    input_df = pd.DataFrame(
+        {
+            "2020": [1.0, 1.0],
+            "2025": [1.0, 1.0],
+            "2030": [1.0, 1.0],
+            "2035": [1.0, 1.0],
+            "2040": [1.0, 1.0],
+            "2045": [1.0, 1.0],
+            "2050": [1.0, 1.0],
+            "source": [
+                "source",
+                "source",
+            ],
+            "unit": [
+                "unit",
+                "unit",
+            ],
+            "further description": [
+                "text",
+                "text",
+            ],
+        }
+    ).set_index([technology_series, parameter_series])
+
+    reference_output_df = pd.DataFrame(
+        {
+            "technology": ["offwind", "technology_name_2"],
+            "parameter": ["investment", "parameter_name_2"],
+            "2020": [1.0, 1.0],
+            "2025": [1.0, 1.0],
+            "2030": [1.0, 1.0],
+            "2035": [1.0, 1.0],
+            "2040": [1.0, 1.0],
+            "2045": [1.0, 1.0],
+            "2050": [1.0, 1.0],
+            "unit": [
+                "unit",
+                "unit",
+            ],
+            "source": [
+                "source",
+                "source",
+            ],
+            "further description": [
+                "21 Offshore turbines:  text grid connection costs subtracted from investment costs",
+                ":  text",
+            ],
+        }
+    )
+    list_of_years = [str(x) for x in config["years"]]
+    output_df = add_description(list_of_years, input_df).reset_index()
     comparison_df = output_df.compare(reference_output_df)
     assert comparison_df.empty
 

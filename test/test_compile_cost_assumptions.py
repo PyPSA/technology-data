@@ -16,6 +16,7 @@ sys.path.append("./scripts")
 from compile_cost_assumptions import (
     add_description,
     clean_up_units,
+    convert_units,
     dea_sheet_names,
     get_data_from_DEA,
     get_dea_maritime_data,
@@ -586,6 +587,82 @@ def test_add_description(config):
     )
     list_of_years = [str(x) for x in config["years"]]
     output_df = add_description(list_of_years, input_df).reset_index()
+    comparison_df = output_df.compare(reference_output_df)
+    assert comparison_df.empty
+
+
+def test_convert_units(config):
+    """
+    The test verifies what is returned by convert_units.
+    """
+    technology_series = pd.Series(
+        [
+            "technology_name_1",
+            "technology_name_2",
+        ]
+    )
+
+    parameter_series = pd.Series(
+        [
+            "efficiency",
+            "efficiency-heat",
+        ]
+    )
+    input_df = pd.DataFrame(
+        {
+            "2020": [100.0, 100.0],
+            "2025": [100.0, 100.0],
+            "2030": [100.0, 100.0],
+            "2035": [100.0, 100.0],
+            "2040": [100.0, 100.0],
+            "2045": [100.0, 100.0],
+            "2050": [100.0, 100.0],
+            "source": [
+                "source",
+                "source",
+            ],
+            "unit": [
+                "unit",
+                "unit",
+            ],
+            "further description": [
+                "text",
+                "text",
+            ],
+        }
+    ).set_index([technology_series, parameter_series])
+
+    reference_output_df = pd.DataFrame(
+        {
+            "technology": ["technology_name_1", "technology_name_2"],
+            "parameter": ["efficiency", "efficiency-heat"],
+            "2020": [1.0, 1.0],
+            "2025": [1.0, 1.0],
+            "2030": [1.0, 1.0],
+            "2035": [1.0, 1.0],
+            "2040": [1.0, 1.0],
+            "2045": [1.0, 1.0],
+            "2050": [1.0, 1.0],
+            "source": [
+                "source",
+                "source",
+            ],
+            "unit": [
+                "per unit",
+                "per unit",
+            ],
+            "further description": [
+                "text",
+                "text",
+            ],
+        }
+    )
+    list_of_years = [str(x) for x in config["years"]]
+    output_df = (
+        convert_units(list_of_years, input_df)
+        .reset_index()
+        .rename(columns={"level_0": "technology", "level_1": "parameter"})
+    )
     comparison_df = output_df.compare(reference_output_df)
     assert comparison_df.empty
 

@@ -2316,7 +2316,9 @@ def add_description(
     return technology_dataframe
 
 
-def convert_units(list_of_years: list, technology_dataframe: pd.DataFrame):
+def convert_units(
+    list_of_years: list, technology_dataframe: pd.DataFrame
+) -> pd.DataFrame:
     """
     The function converts investment and efficiency units to be aligned with old pypsa assumptions.
 
@@ -3844,7 +3846,3 @@ if __name__ == "__main__":
             costs_tot.value.astype(float), snakemake.config.get("ndigits", 2)
         )
         costs_tot.to_csv([v for v in snakemake.output if str(year) in v][0])
-
-
-# ==== CHANGES TO DO =====
-# 1) make sure that clean_up_units is executed at the end of the script such that also the currencies in manual_input are converted # TODO

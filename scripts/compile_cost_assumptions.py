@@ -2361,14 +2361,29 @@ def convert_units(
     return technology_dataframe
 
 
-def add_gas_storage(list_of_years, data):
+def add_gas_storage(
+    gas_storage_file_name: str, list_of_years: list, technology_dataframe: pd.DataFrame
+) -> pd.DataFrame:
     """
-    Add gas storage tech data, different methodolgy than other sheets and
-    therefore added later
+    The function adds gas storage technology data, different methodology from other sheets.
+
+    Parameters
+    ----------
+    gas_storage_file_name: str
+        name of the dea input file containing the gas storage data
+    list_of_years : list
+        years for which a cost assumption is provided
+    technology_dataframe : pd.DataFrame
+        technology data cost assumptions
+
+    Returns
+    -------
+    Dataframe
+        updated technology data
     """
 
     gas_storage = pd.read_excel(
-        snakemake.input.dea_storage,
+        gas_storage_file_name,
         sheet_name="150 Underground Storage of Gas",
         index_col=1,
     )
@@ -2378,20 +2393,22 @@ def add_gas_storage(list_of_years, data):
     investment = gas_storage.loc["Total cost, 100 mio Nm3 active volume"].iloc[0]
     # convert million EUR/1.1 TWh -> EUR/kWh
     investment /= 1.1 * 1e3
-    data.loc[("gas storage", "investment"), list_of_years] = investment
-    data.loc[("gas storage", "investment"), "source"] = source_dict["DEA"]
-    data.loc[("gas storage", "investment"), "further description"] = (
+    technology_dataframe.loc[("gas storage", "investment"), list_of_years] = investment
+    technology_dataframe.loc[("gas storage", "investment"), "source"] = source_dict[
+        "DEA"
+    ]
+    technology_dataframe.loc[("gas storage", "investment"), "further description"] = (
         "150 Underground Storage of Gas, Establishment of one cavern (units converted)"
     )
-    data.loc[("gas storage", "investment"), "unit"] = "EUR/kWh"
-    data.loc[("gas storage", "investment"), "currency_year"] = 2015
+    technology_dataframe.loc[("gas storage", "investment"), "unit"] = "EUR/kWh"
+    technology_dataframe.loc[("gas storage", "investment"), "currency_year"] = 2015
 
-    data.loc[("gas storage", "lifetime"), list_of_years] = 100
-    data.loc[("gas storage", "lifetime"), "source"] = "TODO no source"
-    data.loc[("gas storage", "lifetime"), "further description"] = (
+    technology_dataframe.loc[("gas storage", "lifetime"), list_of_years] = 100
+    technology_dataframe.loc[("gas storage", "lifetime"), "source"] = "TODO no source"
+    technology_dataframe.loc[("gas storage", "lifetime"), "further description"] = (
         "estimation: most underground storage are already build, they do have a long lifetime"
     )
-    data.loc[("gas storage", "lifetime"), "unit"] = "years"
+    technology_dataframe.loc[("gas storage", "lifetime"), "unit"] = "years"
 
     # process equipment, injection (2200MW) withdrawal (6600MW)
     # assuming half of investment costs for injection, half for withdrawal
@@ -2401,24 +2418,36 @@ def add_gas_storage(list_of_years, data):
     investment_discharge = (
         gas_storage.loc["Total investment cost"].iloc[0, 0] / 2 / 6600 * 1e3
     )
-    data.loc[("gas storage charger", "investment"), list_of_years] = investment_charge
-    data.loc[("gas storage discharger", "investment"), list_of_years] = (
-        investment_discharge
+    technology_dataframe.loc[("gas storage charger", "investment"), list_of_years] = (
+        investment_charge
+    )
+    technology_dataframe.loc[
+        ("gas storage discharger", "investment"), list_of_years
+    ] = investment_discharge
+
+    technology_dataframe.loc[("gas storage charger", "investment"), "source"] = (
+        source_dict["DEA"]
+    )
+    technology_dataframe.loc[
+        ("gas storage charger", "investment"), "further description"
+    ] = "150 Underground Storage of Gas, Process equipment (units converted)"
+    technology_dataframe.loc[("gas storage charger", "investment"), "unit"] = "EUR/kW"
+    technology_dataframe.loc[("gas storage charger", "investment"), "currency_year"] = (
+        2015
     )
 
-    data.loc[("gas storage charger", "investment"), "source"] = source_dict["DEA"]
-    data.loc[("gas storage charger", "investment"), "further description"] = (
-        "150 Underground Storage of Gas, Process equipment (units converted)"
+    technology_dataframe.loc[("gas storage discharger", "investment"), "source"] = (
+        source_dict["DEA"]
     )
-    data.loc[("gas storage charger", "investment"), "unit"] = "EUR/kW"
-    data.loc[("gas storage charger", "investment"), "currency_year"] = 2015
-
-    data.loc[("gas storage discharger", "investment"), "source"] = source_dict["DEA"]
-    data.loc[("gas storage discharger", "investment"), "further description"] = (
-        "150 Underground Storage of Gas, Process equipment (units converted)"
+    technology_dataframe.loc[
+        ("gas storage discharger", "investment"), "further description"
+    ] = "150 Underground Storage of Gas, Process equipment (units converted)"
+    technology_dataframe.loc[("gas storage discharger", "investment"), "unit"] = (
+        "EUR/kW"
     )
-    data.loc[("gas storage discharger", "investment"), "unit"] = "EUR/kW"
-    data.loc[("gas storage charger", "investment"), "currency_year"] = 2015
+    technology_dataframe.loc[("gas storage charger", "investment"), "currency_year"] = (
+        2015
+    )
 
     # operation + maintenance 400-500 million m³ = 4.4-5.5 TWh
     FOM = (
@@ -2426,14 +2455,14 @@ def add_gas_storage(list_of_years, data):
         / (5.5 * investment * 1e3)
         * 100
     )
-    data.loc[("gas storage", "FOM"), list_of_years] = FOM
-    data.loc[("gas storage", "FOM"), "source"] = source_dict["DEA"]
-    data.loc[("gas storage", "FOM"), "further description"] = (
+    technology_dataframe.loc[("gas storage", "FOM"), list_of_years] = FOM
+    technology_dataframe.loc[("gas storage", "FOM"), "source"] = source_dict["DEA"]
+    technology_dataframe.loc[("gas storage", "FOM"), "further description"] = (
         "150 Underground Storage of Gas, Operation and Maintenance, salt cavern (units converted)"
     )
-    data.loc[("gas storage", "FOM"), "unit"] = "%"
+    technology_dataframe.loc[("gas storage", "FOM"), "unit"] = "%"
 
-    return data
+    return technology_dataframe
 
 
 def add_carbon_capture(list_of_years, data, tech_data):
@@ -3675,7 +3704,7 @@ if __name__ == "__main__":
     # convert efficiency from %-> per unit and investment from MW->kW to compare
     data = convert_units(years_list, data)
     # add gas storage (different methodology than other sheets)
-    data = add_gas_storage(years_list, data)
+    data = add_gas_storage(snakemake.input.dea_storage, years_list, data)
     # add carbon capture
     data = add_carbon_capture(years_list, data, tech_data)
 

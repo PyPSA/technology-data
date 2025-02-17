@@ -3011,7 +3011,9 @@ def carbon_flow(
             )
 
         elif tech_name in ["electrobiofuels"]:
-            input_CO2_intensity = cost_dataframe.loc[("solid biomass", "CO2 intensity"), "value"]
+            input_CO2_intensity = cost_dataframe.loc[
+                ("solid biomass", "CO2 intensity"), "value"
+            ]
             oil_CO2_intensity = cost_dataframe.loc[("oil", "CO2 intensity"), "value"]
 
             cost_dataframe.loc[("electrobiofuels", "C in fuel"), "value"] = (
@@ -3117,7 +3119,9 @@ def carbon_flow(
             CH4_vol_energy_density = (
                 CH4_specific_energy * CH4_density / (1000 * 3.6)
             )  # MJ/Nm3 -> MWh/Nm3
-            CO2_weight_share = AD_CO2_share * CO2_density # TODO: what value is used for AD_CO2_share in this if branch?
+            CO2_weight_share = (
+                AD_CO2_share * CO2_density
+            )  # TODO: what value is used for AD_CO2_share in this if branch?
 
             cost_dataframe.loc[(tech_name, "CO2 stored"), "value"] = (
                 CO2_weight_share / CH4_vol_energy_density / 1000
@@ -3204,10 +3208,14 @@ def energy_penalty(cost_dataframe):
             / cost_dataframe.loc[(boiler, "efficiency"), "value"]
         )
 
-        eta_steam = (1 - scalingFactor) * cost_dataframe.loc[(boiler, "efficiency"), "value"]
+        eta_steam = (1 - scalingFactor) * cost_dataframe.loc[
+            (boiler, "efficiency"), "value"
+        ]
         eta_old = cost_dataframe.loc[(tech_name, "efficiency"), "value"]
 
-        eta_main = cost_dataframe.loc[(tech_name, "efficiency"), "value"] * scalingFactor
+        eta_main = (
+            cost_dataframe.loc[(tech_name, "efficiency"), "value"] * scalingFactor
+        )
 
         # Adapting investment share of tech due to steam boiler addition. Investment per MW_el.
         cost_dataframe.loc[(tech_name, "investment"), "value"] = (
@@ -3228,7 +3236,9 @@ def energy_penalty(cost_dataframe):
             cost_dataframe.loc[(tech_name, "VOM"), "value"] * eta_old / eta_main
             + cost_dataframe.loc[(boiler, "VOM"), "value"] * eta_steam / eta_main
         )
-        cost_dataframe.loc[(tech_name, "VOM"), "source"] = "Combination of " + tech_name + " and " + boiler
+        cost_dataframe.loc[(tech_name, "VOM"), "source"] = (
+            "Combination of " + tech_name + " and " + boiler
+        )
         cost_dataframe.loc[(tech_name, "VOM"), "further description"] = ""
 
         cost_dataframe.loc[(tech_name, "efficiency"), "value"] = eta_main
@@ -3238,18 +3248,23 @@ def energy_penalty(cost_dataframe):
         cost_dataframe.loc[(tech_name, "efficiency"), "further description"] = ""
 
         if "CHP" in tech_name:
-            cost_dataframe.loc[(tech_name, "efficiency-heat"), "value"] = cost_dataframe.loc[
-                (tech_name, "efficiency-heat"), "value"
-            ] * scalingFactor + cost_dataframe.loc[
-                ("solid biomass", "CO2 intensity"), "value"
-            ] * (
-                cost_dataframe.loc[("biomass CHP capture", "heat-output"), "value"]
-                + cost_dataframe.loc[("biomass CHP capture", "compression-heat-output"), "value"]
+            cost_dataframe.loc[(tech_name, "efficiency-heat"), "value"] = (
+                cost_dataframe.loc[(tech_name, "efficiency-heat"), "value"]
+                * scalingFactor
+                + cost_dataframe.loc[("solid biomass", "CO2 intensity"), "value"]
+                * (
+                    cost_dataframe.loc[("biomass CHP capture", "heat-output"), "value"]
+                    + cost_dataframe.loc[
+                        ("biomass CHP capture", "compression-heat-output"), "value"
+                    ]
+                )
             )
             cost_dataframe.loc[(tech_name, "efficiency-heat"), "source"] = (
                 "Combination of " + tech_name + " and " + boiler
             )
-            cost_dataframe.loc[(tech_name, "efficiency-heat"), "further description"] = ""
+            cost_dataframe.loc[
+                (tech_name, "efficiency-heat"), "further description"
+            ] = ""
 
         if "biogas CC" in tech_name:
             cost_dataframe.loc[(tech_name, "VOM"), "value"] = 0
@@ -3259,7 +3274,9 @@ def energy_penalty(cost_dataframe):
             cost_dataframe.loc[(tech_name, "VOM"), "value"] * eta_old / eta_main
             + cost_dataframe.loc[(boiler, "VOM"), "value"] * eta_steam / eta_main
         )
-        cost_dataframe.loc[(tech_name, "VOM"), "source"] = "Combination of " + tech_name + " and " + boiler
+        cost_dataframe.loc[(tech_name, "VOM"), "source"] = (
+            "Combination of " + tech_name + " and " + boiler
+        )
         cost_dataframe.loc[(tech_name, "VOM"), "further description"] = ""
 
     return cost_dataframe
@@ -3355,14 +3372,22 @@ def add_egs_data(technology_dataframe: pd.DataFrame) -> pd.DataFrame:
 
 def annuity(n, r=0.07):
     """
-    Calculate the annuity factor for an asset with lifetime n years and
-    discount rate of r
+    The function calculates the annuity factor for an asset with lifetime n years and discount rate of r
+
+    Parameters
+    ----------
+    n: float:
+        lifetime
+    r: float
+        discount rate
+
+    Returns
+    -------
+    pd.Series, float
+        annuity
     """
-    if isinstance(r, pd.Series):
-        return pd.Series(1 / n, index=r.index).where(
-            r == 0, r / (1.0 - 1.0 / (1.0 + r) ** n)
-        )
-    elif r > 0:
+
+    if r > 0:
         return r / (1.0 - 1.0 / (1.0 + r) ** n)
     else:
         return 1 / n
@@ -3384,20 +3409,6 @@ def add_home_battery_costs(list_of_years, costs):
         snakemake.input.EWG_costs, index_col=list(range(2))
     ).sort_index()
     v = costs_ewg.unstack()[[str(year) for year in list_of_years]].swaplevel(axis=1)
-
-    def annuity(n, r=0.07):
-        """
-        Calculate the annuity factor for an asset with lifetime n years and
-        discount rate of r
-        """
-        if isinstance(r, pd.Series):
-            return pd.Series(1 / n, index=r.index).where(
-                r == 0, r / (1.0 - 1.0 / (1.0 + r) ** n)
-            )
-        elif r > 0:
-            return r / (1.0 - 1.0 / (1.0 + r) ** n)
-        else:
-            return 1 / n
 
     # annualise EWG cost assumptions
     fixed = (annuity(v["lifetime"]) + v["FOM"] / 100.0) * v["investment"]

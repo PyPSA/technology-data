@@ -15,6 +15,7 @@ sys.path.append("./scripts")
 
 from compile_cost_assumptions import (
     add_description,
+    annuity,
     clean_up_units,
     convert_units,
     dea_sheet_names,
@@ -664,3 +665,13 @@ def test_convert_units(config):
     )
     comparison_df = output_df.compare(reference_output_df)
     assert comparison_df.empty
+
+
+@pytest.mark.parametrize(
+    "discount_rate_value, expected_annuity", [(0.07, 1.07), (-0.1, 1.0)]
+)
+def test_annuity(discount_rate_value, expected_annuity):
+    """
+    The test verifies what is returned by annuity.
+    """
+    assert annuity(n=1.0, r=discount_rate_value) == expected_annuity

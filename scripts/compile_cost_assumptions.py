@@ -2843,7 +2843,9 @@ def rename_ISE_vehicles(costs_vehicles_dataframe: pd.DataFrame) -> pd.DataFrame:
     return costs_vehicles_dataframe
 
 
-def carbon_flow(list_of_years: list, cost_dataframe: pd.DataFrame, year_to_use: int) -> pd.DataFrame:
+def carbon_flow(
+    list_of_years: list, cost_dataframe: pd.DataFrame, year_to_use: int
+) -> pd.DataFrame:
     """
     The function renames ISE vehicles costs to fit to tech data.
 
@@ -2878,7 +2880,9 @@ def carbon_flow(list_of_years: list, cost_dataframe: pd.DataFrame, year_to_use: 
 
     # Adding pelletizing cost to biomass boiler
     cost_dataframe.loc[("biomass boiler", "pelletizing cost"), "value"] = 9
-    cost_dataframe.loc[("biomass boiler", "pelletizing cost"), "unit"] = "EUR/MWh_pellets"
+    cost_dataframe.loc[("biomass boiler", "pelletizing cost"), "unit"] = (
+        "EUR/MWh_pellets"
+    )
     cost_dataframe.loc[("biomass boiler", "pelletizing cost"), "currency_year"] = 2019
     cost_dataframe.loc[("biomass boiler", "pelletizing cost"), "source"] = (
         "Assumption based on doi:10.1016/j.rser.2019.109506"
@@ -2946,7 +2950,9 @@ def carbon_flow(list_of_years: list, cost_dataframe: pd.DataFrame, year_to_use: 
             cost_dataframe.loc[(tech_name, "heat output"), "value"] = heat_out
             cost_dataframe.loc[(tech_name, "heat output"), "unit"] = "MWh_th/MWh_CH4"
             cost_dataframe.loc[(tech_name, "heat output"), "source"] = source
-            currency_year = cost_dataframe.loc[("biogas plus hydrogen", "VOM"), "currency_year"]
+            currency_year = cost_dataframe.loc[
+                ("biogas plus hydrogen", "VOM"), "currency_year"
+            ]
 
             # TODO: this needs to be refined based on e.g. stoichiometry:
             AD_CO2_share = 0.1  # volumetric share in biogas (rest is CH4).
@@ -2973,7 +2979,9 @@ def carbon_flow(list_of_years: list, cost_dataframe: pd.DataFrame, year_to_use: 
             cost_dataframe.loc[(tech_name, "efficiency"), "source"] = source
 
         if tech_name in ["BioSNG", "BtL", "biomass-to-methanol"]:
-            input_CO2_intensity = cost_dataframe.loc[("solid biomass", "CO2 intensity"), "value"]
+            input_CO2_intensity = cost_dataframe.loc[
+                ("solid biomass", "CO2 intensity"), "value"
+            ]
 
             cost_dataframe.loc[(tech_name, "C in fuel"), "value"] = (
                 cost_dataframe.loc[(tech_name, "efficiency"), "value"]
@@ -2984,7 +2992,8 @@ def carbon_flow(list_of_years: list, cost_dataframe: pd.DataFrame, year_to_use: 
                 1 - cost_dataframe.loc[(tech_name, "C in fuel"), "value"] - c_in_char
             )
             cost_dataframe.loc[(tech_name, "CO2 stored"), "value"] = (
-                input_CO2_intensity * cost_dataframe.loc[(tech_name, "C stored"), "value"]
+                input_CO2_intensity
+                * cost_dataframe.loc[(tech_name, "C stored"), "value"]
             )
 
             cost_dataframe.loc[(tech_name, "C in fuel"), "unit"] = "per unit"
@@ -3020,7 +3029,9 @@ def carbon_flow(list_of_years: list, cost_dataframe: pd.DataFrame, year_to_use: 
                 * input_CO2_intensity
                 / oil_CO2_intensity
             )
-            cost_dataframe.loc[("electrobiofuels", "efficiency-biomass"), "unit"] = "per unit"
+            cost_dataframe.loc[("electrobiofuels", "efficiency-biomass"), "unit"] = (
+                "per unit"
+            )
             cost_dataframe.loc[("electrobiofuels", "efficiency-biomass"), "source"] = (
                 "Stoichiometric calculation"
             )
@@ -3034,16 +3045,24 @@ def carbon_flow(list_of_years: list, cost_dataframe: pd.DataFrame, year_to_use: 
                 cost_dataframe.loc[("Fischer-Tropsch", "efficiency"), "value"]
                 / efuel_scale_factor
             )
-            cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "unit"] = "per unit"
+            cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "unit"] = (
+                "per unit"
+            )
             cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "source"] = (
                 "Stoichiometric calculation"
             )
 
             cost_dataframe.loc[("electrobiofuels", "efficiency-tot"), "value"] = 1 / (
-                1 / cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "value"]
-                + 1 / cost_dataframe.loc[("electrobiofuels", "efficiency-biomass"), "value"]
+                1
+                / cost_dataframe.loc[
+                    ("electrobiofuels", "efficiency-hydrogen"), "value"
+                ]
+                + 1
+                / cost_dataframe.loc[("electrobiofuels", "efficiency-biomass"), "value"]
             )
-            cost_dataframe.loc[("electrobiofuels", "efficiency-tot"), "unit"] = "per unit"
+            cost_dataframe.loc[("electrobiofuels", "efficiency-tot"), "unit"] = (
+                "per unit"
+            )
             cost_dataframe.loc[("electrobiofuels", "efficiency-tot"), "source"] = (
                 "Stoichiometric calculation"
             )
@@ -3052,16 +3071,24 @@ def carbon_flow(list_of_years: list, cost_dataframe: pd.DataFrame, year_to_use: 
                 cost_dataframe.loc[("Fischer-Tropsch", "efficiency"), "value"]
                 / efuel_scale_factor
             )
-            cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "unit"] = "per unit"
+            cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "unit"] = (
+                "per unit"
+            )
             cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "source"] = (
                 "Stoichiometric calculation"
             )
 
             cost_dataframe.loc[("electrobiofuels", "efficiency-tot"), "value"] = 1 / (
-                1 / cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "value"]
-                + 1 / cost_dataframe.loc[("electrobiofuels", "efficiency-biomass"), "value"]
+                1
+                / cost_dataframe.loc[
+                    ("electrobiofuels", "efficiency-hydrogen"), "value"
+                ]
+                + 1
+                / cost_dataframe.loc[("electrobiofuels", "efficiency-biomass"), "value"]
             )
-            cost_dataframe.loc[("electrobiofuels", "efficiency-tot"), "unit"] = "per unit"
+            cost_dataframe.loc[("electrobiofuels", "efficiency-tot"), "unit"] = (
+                "per unit"
+            )
             cost_dataframe.loc[("electrobiofuels", "efficiency-tot"), "source"] = (
                 "Stoichiometric calculation"
             )
@@ -3073,7 +3100,8 @@ def carbon_flow(list_of_years: list, cost_dataframe: pd.DataFrame, year_to_use: 
             )
             VOM = (
                 cost_dataframe.loc[("BtL", "VOM"), "value"]
-                + cost_dataframe.loc[("Fischer-Tropsch", "VOM"), "value"] * efuel_scale_factor
+                + cost_dataframe.loc[("Fischer-Tropsch", "VOM"), "value"]
+                * efuel_scale_factor
             )
             FOM = cost_dataframe.loc[("BtL", "FOM"), "value"]
             medium_out = "oil"
@@ -3103,7 +3131,9 @@ def carbon_flow(list_of_years: list, cost_dataframe: pd.DataFrame, year_to_use: 
             cost_dataframe.loc[(tech_name, "investment"), "value"] = inv_cost
             cost_dataframe.loc[(tech_name, "investment"), "unit"] = "EUR/kW_th"
             cost_dataframe.loc[(tech_name, "investment"), "source"] = source
-            cost_dataframe.loc[(tech_name, "investment"), "currency_year"] = currency_year
+            cost_dataframe.loc[(tech_name, "investment"), "currency_year"] = (
+                currency_year
+            )
 
         if lifetime > 0:
             cost_dataframe.loc[(tech_name, "lifetime"), "value"] = lifetime

@@ -2672,10 +2672,12 @@ def rename_pypsa_old(cost_dataframe_pypsa: pd.DataFrame) -> pd.DataFrame:
     )
 
     # convert EUR/m^3 to EUR/kWh for 40 K diff and 1.17 kWh/m^3/K
-    cost_dataframe_pypsa.loc[("decentral water tank storage", "investment"), "value"] /= (
-        1.17 * 40
+    cost_dataframe_pypsa.loc[
+        ("decentral water tank storage", "investment"), "value"
+    ] /= 1.17 * 40
+    cost_dataframe_pypsa.loc[("decentral water tank storage", "investment"), "unit"] = (
+        "EUR/kWh"
     )
-    cost_dataframe_pypsa.loc[("decentral water tank storage", "investment"), "unit"] = "EUR/kWh"
 
     return cost_dataframe_pypsa
 
@@ -2704,11 +2706,13 @@ def add_manual_input(technology_dataframe: pd.DataFrame) -> pd.DataFrame:
     for tech_name in df["technology"].unique():
         c0 = df[df["technology"] == tech_name]
         for param in c0["parameter"].unique():
-            queried_df = df.query("technology == @tech and parameter == @param")
+            queried_df = df.query("technology == @tech_name and parameter == @param")
 
             row_series = pd.Series(
                 index=snakemake.config["years"],
-                data=np.interp(snakemake.config["years"], queried_df["year"], queried_df["value"]),
+                data=np.interp(
+                    snakemake.config["years"], queried_df["year"], queried_df["value"]
+                ),
                 name=param,
             )
             row_series["parameter"] = param
@@ -2732,11 +2736,25 @@ def add_manual_input(technology_dataframe: pd.DataFrame) -> pd.DataFrame:
     return technology_dataframe
 
 
-def rename_ISE(costs_ISE):
+def rename_ISE(cost_dataframe_ise: pd.DataFrame) -> pd.DataFrame:
+    """
+    The function renames ISE costs to fit to tech data.
+
+    Parameters
+    ----------
+    cost_dataframe_ise:
+        ISE cost assumptions
+
+    Returns
+    -------
+    Dataframe
+        updated technology data
+    """
+
     """
     Rename ISE costs to fit to tech data
     """
-    costs_ISE.rename(
+    cost_dataframe_ise.rename(
         index={
             "Investition": "investment",
             "Lebensdauer": "lifetime",
@@ -2754,22 +2772,36 @@ def rename_ISE(costs_ISE):
         },
         inplace=True,
     )
-    costs_ISE.index.names = ["technology", "parameter"]
-    costs_ISE["unit"] = costs_ISE.unit.replace({"a": "years", "% Invest": "%"})
-    costs_ISE["source"] = source_dict["ISE"]
-    costs_ISE["further description"] = costs_ISE.reset_index()["technology"].values
+    cost_dataframe_ise.index.names = ["technology", "parameter"]
+    cost_dataframe_ise["unit"] = cost_dataframe_ise.unit.replace(
+        {"a": "years", "% Invest": "%"}
+    )
+    cost_dataframe_ise["source"] = source_dict["ISE"]
+    cost_dataframe_ise["further description"] = cost_dataframe_ise.reset_index()[
+        "technology"
+    ].values
     # could not find specific currency year in report, assume year of publication
-    costs_ISE["currency_year"] = 2020
+    cost_dataframe_ise["currency_year"] = 2020
 
-    return costs_ISE
+    return cost_dataframe_ise
 
 
-def rename_ISE_vehicles(costs_vehicles):
+def rename_ISE_vehicles(costs_vehicles_dataframe: pd.DataFrame) -> pd.DataFrame:
     """
-    Rename ISE_vehicles costs to fit to tech data
+    The function renames ISE vehicles costs to fit to tech data.
+
+    Parameters
+    ----------
+    costs_vehicles_dataframe:
+        vehicles ISE cost assumptions
+
+    Returns
+    -------
+    Dataframe
+        updated technology data
     """
 
-    costs_vehicles.rename(
+    costs_vehicles_dataframe.rename(
         index={
             "Investition": "investment",
             "Lebensdauer": "lifetime",
@@ -2798,17 +2830,17 @@ def rename_ISE_vehicles(costs_vehicles):
         },
         inplace=True,
     )
-    costs_vehicles.index.names = ["technology", "parameter"]
-    costs_vehicles["unit"] = costs_vehicles.unit.replace(
+    costs_vehicles_dataframe.index.names = ["technology", "parameter"]
+    costs_vehicles_dataframe["unit"] = costs_vehicles_dataframe.unit.replace(
         {"a": "years", "% Invest": "%"}
     )
-    costs_vehicles["source"] = source_dict["vehicles"]
+    costs_vehicles_dataframe["source"] = source_dict["vehicles"]
     # could not find specific currency year in report, assume year of publication
-    costs_vehicles["currency_year"] = 2020
-    costs_vehicles["further description"] = costs_vehicles.reset_index()[
-        "technology"
-    ].values
-    return costs_vehicles
+    costs_vehicles_dataframe["currency_year"] = 2020
+    costs_vehicles_dataframe["further description"] = (
+        costs_vehicles_dataframe.reset_index()["technology"].values
+    )
+    return costs_vehicles_dataframe
 
 
 def carbon_flow(list_of_years, costs, year_to_use):

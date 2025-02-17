@@ -2399,6 +2399,7 @@ def add_description(
     Dataframe
         updated technology data
     """
+
     # add Excel sheet names to technology_dataframe frame
     wished_order = list_of_years + ["unit", "source", "further description"]
     technology_dataframe = technology_dataframe.reindex(columns=wished_order)
@@ -2646,66 +2647,89 @@ def add_carbon_capture(
     return new_technology_dataframe
 
 
-def rename_pypsa_old(costs_pypsa):
+def rename_pypsa_old(cost_dataframe_pypsa: pd.DataFrame) -> pd.DataFrame:
     """
-    Renames old technology names to new ones to compare
-    converts units from water tanks to compare
+    The function renames old technology names to new ones to compare converts units from water tanks to compare.
+
+    Parameters
+    ----------
+    cost_dataframe_pypsa:
+        technology data cost assumptions
+
+    Returns
+    -------
+    Dataframe
+        updated technology data
     """
 
     to_drop = ["retrofitting I", "retrofitting II"]
-    costs_pypsa.drop(to_drop, level=0, inplace=True)
+    cost_dataframe_pypsa.drop(to_drop, level=0, inplace=True)
 
     # rename to new names
-    costs_pypsa.rename({"central CHP": "central gas CHP"}, inplace=True)
-    costs_pypsa.rename(
+    cost_dataframe_pypsa.rename({"central CHP": "central gas CHP"}, inplace=True)
+    cost_dataframe_pypsa.rename(
         {"hydrogen underground storage": "hydrogen storage underground"}, inplace=True
     )
 
     # convert EUR/m^3 to EUR/kWh for 40 K diff and 1.17 kWh/m^3/K
-    costs_pypsa.loc[("decentral water tank storage", "investment"), "value"] /= (
+    cost_dataframe_pypsa.loc[("decentral water tank storage", "investment"), "value"] /= (
         1.17 * 40
     )
-    costs_pypsa.loc[("decentral water tank storage", "investment"), "unit"] = "EUR/kWh"
+    cost_dataframe_pypsa.loc[("decentral water tank storage", "investment"), "unit"] = "EUR/kWh"
 
-    return costs_pypsa
+    return cost_dataframe_pypsa
 
 
-def add_manual_input(data):
+def add_manual_input(technology_dataframe: pd.DataFrame) -> pd.DataFrame:
+    """
+    The function adds input from manual_input.csv.
+
+    Parameters
+    ----------
+    technology_dataframe:
+        technology data cost assumptions
+
+    Returns
+    -------
+    Dataframe
+        updated technology data
+    """
+
     df = pd.read_csv(
         snakemake.input["manual_input"], quotechar='"', sep=",", keep_default_na=False
     )
     df = df.rename(columns={"further_description": "further description"})
 
-    l = []
-    for tech in df["technology"].unique():
-        c0 = df[df["technology"] == tech]
+    content_list = []
+    for tech_name in df["technology"].unique():
+        c0 = df[df["technology"] == tech_name]
         for param in c0["parameter"].unique():
-            c = df.query("technology == @tech and parameter == @param")
+            queried_df = df.query("technology == @tech and parameter == @param")
 
-            s = pd.Series(
+            row_series = pd.Series(
                 index=snakemake.config["years"],
-                data=np.interp(snakemake.config["years"], c["year"], c["value"]),
+                data=np.interp(snakemake.config["years"], queried_df["year"], queried_df["value"]),
                 name=param,
             )
-            s["parameter"] = param
-            s["technology"] = tech
+            row_series["parameter"] = param
+            row_series["technology"] = tech_name
             try:
-                s["currency_year"] = int(c["currency_year"].values[0])
+                row_series["currency_year"] = int(queried_df["currency_year"].values[0])
             except ValueError:
-                s["currency_year"] = np.nan
+                row_series["currency_year"] = np.nan
             for col in ["unit", "source", "further description"]:
-                s[col] = "; and\n".join(c[col].unique().astype(str))
-            s = s.rename(
+                row_series[col] = "; and\n".join(queried_df[col].unique().astype(str))
+            row_series = row_series.rename(
                 {"further_description": "further description"}
             )  # match column name between manual_input and original TD workflow
-            l.append(s)
+            content_list.append(row_series)
 
-    new_df = pd.DataFrame(l).set_index(["technology", "parameter"])
-    data.index.set_names(["technology", "parameter"], inplace=True)
+    new_df = pd.DataFrame(content_list).set_index(["technology", "parameter"])
+    technology_dataframe.index.set_names(["technology", "parameter"], inplace=True)
     # overwrite DEA data with manual input
-    data = new_df.combine_first(data)
+    technology_dataframe = new_df.combine_first(technology_dataframe)
 
-    return data
+    return technology_dataframe
 
 
 def rename_ISE(costs_ISE):

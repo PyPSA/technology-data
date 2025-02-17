@@ -19,7 +19,6 @@ from compile_cost_assumptions import (
     convert_units,
     dea_sheet_names,
     get_data_from_DEA,
-    get_dea_maritime_data,
     get_excel_sheets,
     get_sheet_location,
     set_round_trip_efficiency,
@@ -665,15 +664,3 @@ def test_convert_units(config):
     )
     comparison_df = output_df.compare(reference_output_df)
     assert comparison_df.empty
-
-
-def test_get_dea_maritime_data(config, cost_dataframe):
-    input_path = pathlib.Path(
-        path_cwd,
-        "inputs",
-        "data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx",
-    )
-    print(cost_dataframe.info())
-    output_df = get_dea_maritime_data(input_path, config["years"], cost_dataframe)
-    print(output_df.info())
-    # TODO: to be completed

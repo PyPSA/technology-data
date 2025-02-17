@@ -453,7 +453,7 @@ def get_dea_maritime_data(
     return input_data_df
 
 
-def get_dea_vehicle_data(fn: str, list_of_years: list, data: pd.DataFrame) -> pd.DataFrame:
+def get_dea_vehicle_data(fn: str, list_of_years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
     """
     The function gets heavy-duty vehicle data from DEA.
 
@@ -463,7 +463,7 @@ def get_dea_vehicle_data(fn: str, list_of_years: list, data: pd.DataFrame) -> pd
         path to DEA input data file for shipping
     list_of_years : list
         years for which a cost assumption is provided
-    data : pd.DataFrame
+    technology_dataframe : pd.DataFrame
         technology data cost assumptions
 
     Returns
@@ -573,9 +573,9 @@ def get_dea_vehicle_data(fn: str, list_of_years: list, data: pd.DataFrame) -> pd
 
         df = pd.concat([df], keys=[tech], names=["technology", "parameter"])
 
-        data = pd.concat([data, df])
+        technology_dataframe = pd.concat([technology_dataframe, df])
 
-    return data
+    return technology_dataframe
 
 
 def get_data_DEA(
@@ -584,7 +584,7 @@ def get_data_DEA(
     input_data_dict: dict,
     offwind_no_grid_costs_flag: bool = True,
     expectation: str = None,
-) -> dict:
+) -> pd.DataFrame:
     """
     The function interpolates costs for a given technology from DEA database sheet and
     stores technology data from DEA in a dictionary.
@@ -604,7 +604,7 @@ def get_data_DEA(
 
     Returns
     -------
-    Dictionary
+    DataFrame
         technology data from DEA
     """
 
@@ -1006,10 +1006,19 @@ def get_data_DEA(
     return df_final
 
 
-def add_desalinsation_data(costs):
-
+def add_desalination_data(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
     """
-    Add technology data for sea water desalination (SWRO) and water storage.
+    The function adds technology data for seawater desalination (SWRO) and water storage.
+
+    Parameters
+    ----------
+    cost_dataframe : pd.DataFrame
+        cost dataframe
+
+    Returns
+    -------
+    DataFrame
+        updated cost dataframe
     """
 
     # Interpolate cost based on historic costs/cost projection to fitting year
@@ -1019,77 +1028,87 @@ def add_desalinsation_data(costs):
     c *= 24  # in USD/(m^3/h)
     c /= 1.17  # in EUR/(m^3/h)
 
-    tech = "seawater desalination"
+    tech_name = "seawater desalination"
 
-    costs.loc[(tech, "investment"), "value"] = c
-    costs.loc[(tech, "investment"), "unit"] = "EUR/(m^3-H2O/h)"
-    costs.loc[(tech, "investment"), "source"] = (
+    cost_dataframe.loc[(tech_name, "investment"), "value"] = c
+    cost_dataframe.loc[(tech_name, "investment"), "unit"] = "EUR/(m^3-H2O/h)"
+    cost_dataframe.loc[(tech_name, "investment"), "source"] = (
         source_dict["Caldera2017"] + ", Table 4."
     )
-    costs.loc[(tech, "investment"), "currency_year"] = 2015
+    cost_dataframe.loc[(tech_name, "investment"), "currency_year"] = 2015
 
-    costs.loc[(tech, "FOM"), "value"] = 4.0
-    costs.loc[(tech, "FOM"), "unit"] = "%/year"
-    costs.loc[(tech, "FOM"), "source"] = source_dict["Caldera2016"] + ", Table 1."
-    costs.loc[(tech, "FOM"), "currency_year"] = 2015
+    cost_dataframe.loc[(tech_name, "FOM"), "value"] = 4.0
+    cost_dataframe.loc[(tech_name, "FOM"), "unit"] = "%/year"
+    cost_dataframe.loc[(tech_name, "FOM"), "source"] = source_dict["Caldera2016"] + ", Table 1."
+    cost_dataframe.loc[(tech_name, "FOM"), "currency_year"] = 2015
 
-    costs.loc[(tech, "FOM"), "value"] = 4.0
-    costs.loc[(tech, "FOM"), "unit"] = "%/year"
-    costs.loc[(tech, "FOM"), "source"] = source_dict["Caldera2016"] + ", Table 1."
+    cost_dataframe.loc[(tech_name, "FOM"), "value"] = 4.0
+    cost_dataframe.loc[(tech_name, "FOM"), "unit"] = "%/year"
+    cost_dataframe.loc[(tech_name, "FOM"), "source"] = source_dict["Caldera2016"] + ", Table 1."
 
-    costs.loc[(tech, "lifetime"), "value"] = 30
-    costs.loc[(tech, "lifetime"), "unit"] = "years"
-    costs.loc[(tech, "lifetime"), "source"] = source_dict["Caldera2016"] + ", Table 1."
+    cost_dataframe.loc[(tech_name, "lifetime"), "value"] = 30
+    cost_dataframe.loc[(tech_name, "lifetime"), "unit"] = "years"
+    cost_dataframe.loc[(tech_name, "lifetime"), "source"] = source_dict["Caldera2016"] + ", Table 1."
 
     salinity = snakemake.config["desalination"]["salinity"]
-    costs.loc[(tech, "electricity-input"), "value"] = (
+    cost_dataframe.loc[(tech_name, "electricity-input"), "value"] = (
         0.0003 * salinity**2 + 0.0018 * salinity + 2.6043
     )
-    costs.loc[(tech, "electricity-input"), "unit"] = "kWh/m^3-H2O"
-    costs.loc[(tech, "electricity-input"), "source"] = (
+    cost_dataframe.loc[(tech_name, "electricity-input"), "unit"] = "kWh/m^3-H2O"
+    cost_dataframe.loc[(tech_name, "electricity-input"), "source"] = (
         source_dict["Caldera2016"] + ", Fig. 4."
     )
 
-    tech = "clean water tank storage"
-    costs.loc[(tech, "investment"), "value"] = 65
-    costs.loc[(tech, "investment"), "unit"] = "EUR/m^3-H2O"
-    costs.loc[(tech, "investment"), "source"] = (
+    tech_name = "clean water tank storage"
+    cost_dataframe.loc[(tech_name, "investment"), "value"] = 65
+    cost_dataframe.loc[(tech_name, "investment"), "unit"] = "EUR/m^3-H2O"
+    cost_dataframe.loc[(tech_name, "investment"), "source"] = (
         source_dict["Caldera2016"] + ", Table 1."
     )
-    costs.loc[(tech, "investment"), "currency_year"] = 2013
+    cost_dataframe.loc[(tech_name, "investment"), "currency_year"] = 2013
 
-    costs.loc[(tech, "FOM"), "value"] = 2
-    costs.loc[(tech, "FOM"), "unit"] = "%/year"
-    costs.loc[(tech, "FOM"), "source"] = source_dict["Caldera2016"] + ", Table 1."
-    costs.loc[(tech, "FOM"), "currency_year"] = 2013
+    cost_dataframe.loc[(tech_name, "FOM"), "value"] = 2
+    cost_dataframe.loc[(tech_name, "FOM"), "unit"] = "%/year"
+    cost_dataframe.loc[(tech_name, "FOM"), "source"] = source_dict["Caldera2016"] + ", Table 1."
+    cost_dataframe.loc[(tech_name, "FOM"), "currency_year"] = 2013
 
-    costs.loc[(tech, "lifetime"), "value"] = 30
-    costs.loc[(tech, "lifetime"), "unit"] = "years"
-    costs.loc[(tech, "lifetime"), "source"] = source_dict["Caldera2016"] + ", Table 1."
+    cost_dataframe.loc[(tech_name, "lifetime"), "value"] = 30
+    cost_dataframe.loc[(tech_name, "lifetime"), "unit"] = "years"
+    cost_dataframe.loc[(tech_name, "lifetime"), "source"] = source_dict["Caldera2016"] + ", Table 1."
 
-    return costs
+    return cost_dataframe
 
 
-def add_co2_intensity(costs):
+def add_co2_intensity(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
     """
-    "
-    add CO2 intensity for the carriers
+    The function adds CO2 intensity for the carriers.
+
+    Parameters
+    ----------
+    cost_dataframe : pd.DataFrame
+        cost dataframe
+
+    Returns
+    -------
+    DataFrame
+        updated cost dataframe
     """
+
     TJ_to_MWh = 277.78
-    costs.loc[("gas", "CO2 intensity"), "value"] = 55827 / 1e3 / TJ_to_MWh  # Erdgas
-    costs.loc[("coal", "CO2 intensity"), "value"] = (
+    cost_dataframe.loc[("gas", "CO2 intensity"), "value"] = 55827 / 1e3 / TJ_to_MWh  # Erdgas
+    cost_dataframe.loc[("coal", "CO2 intensity"), "value"] = (
         93369 / 1e3 / TJ_to_MWh
     )  # Steinkohle
-    costs.loc[("lignite", "CO2 intensity"), "value"] = (
+    cost_dataframe.loc[("lignite", "CO2 intensity"), "value"] = (
         113031 / 1e3 / TJ_to_MWh
     )  # Rohbraunkohle Rheinland
-    costs.loc[("oil", "CO2 intensity"), "value"] = (
+    cost_dataframe.loc[("oil", "CO2 intensity"), "value"] = (
         74020 / 1e3 / TJ_to_MWh
     )  # Heizöl, leicht
-    costs.loc[("methanol", "CO2 intensity"), "value"] = (
+    cost_dataframe.loc[("methanol", "CO2 intensity"), "value"] = (
         0.2482  # t_CO2/MWh_th, based on stochiometric composition.
     )
-    costs.loc[("solid biomass", "CO2 intensity"), "value"] = 0.3
+    cost_dataframe.loc[("solid biomass", "CO2 intensity"), "value"] = 0.3
 
     oil_specific_energy = 44  # GJ/t
     CO2_CH2_mass_ratio = 44 / 14  # kg/kg (1 mol per mol)
@@ -1098,38 +1117,49 @@ def add_co2_intensity(costs):
     CO2_CH4_mass_ratio = 44 / 16  # kg/kg (1 mol per mol)
     biomass_specific_energy = 18  # GJ/t LHV
     biomass_carbon_content = 0.5
-    costs.loc[("oil", "CO2 intensity"), "value"] = (
+    cost_dataframe.loc[("oil", "CO2 intensity"), "value"] = (
         (1 / oil_specific_energy) * 3.6 * CO2_CH2_mass_ratio
     )  # tCO2/MWh
-    costs.loc[("gas", "CO2 intensity"), "value"] = (
+    cost_dataframe.loc[("gas", "CO2 intensity"), "value"] = (
         (1 / methane_specific_energy) * 3.6 * CO2_CH4_mass_ratio
     )  # tCO2/MWh
-    costs.loc[("solid biomass", "CO2 intensity"), "value"] = (
+    cost_dataframe.loc[("solid biomass", "CO2 intensity"), "value"] = (
         biomass_carbon_content * (1 / biomass_specific_energy) * 3.6 * CO2_C_mass_ratio
     )  # tCO2/MWh
 
-    costs.loc[("oil", "CO2 intensity"), "source"] = (
+    cost_dataframe.loc[("oil", "CO2 intensity"), "source"] = (
         "Stoichiometric calculation with 44 GJ/t diesel and -CH2- approximation of diesel"
     )
-    costs.loc[("gas", "CO2 intensity"), "source"] = (
+    cost_dataframe.loc[("gas", "CO2 intensity"), "source"] = (
         "Stoichiometric calculation with 50 GJ/t CH4"
     )
-    costs.loc[("solid biomass", "CO2 intensity"), "source"] = (
+    cost_dataframe.loc[("solid biomass", "CO2 intensity"), "source"] = (
         "Stoichiometric calculation with 18 GJ/t_DM LHV and 50% C-content for solid biomass"
     )
-    costs.loc[("coal", "CO2 intensity"), "source"] = source_dict["co2"]
-    costs.loc[("lignite", "CO2 intensity"), "source"] = source_dict["co2"]
+    cost_dataframe.loc[("coal", "CO2 intensity"), "source"] = source_dict["co2"]
+    cost_dataframe.loc[("lignite", "CO2 intensity"), "source"] = source_dict["co2"]
 
-    costs.loc[pd.IndexSlice[:, "CO2 intensity"], "unit"] = "tCO2/MWh_th"
+    cost_dataframe.loc[pd.IndexSlice[:, "CO2 intensity"], "unit"] = "tCO2/MWh_th"
 
-    return costs
+    return cost_dataframe
 
 
-def add_solar_from_other(list_of_years, costs):
+def add_solar_from_other(list_of_years: list, costs: pd.DataFrame) -> pd.DataFrame:
     """
-    "
-    add solar from other sources than DEA (since the lifetime assumed in
-    DEA is very optimistic)
+    The function adds solar from other sources than DEA (since the lifetime assumed in
+    DEA is very optimistic).
+
+    Parameters
+    ----------
+    list_of_years : list
+        years for which a cost assumption is provided
+    costs : pd.DataFrame
+        costs
+
+    Returns
+    -------
+    DataFrame
+        updated cost dataframe
     """
 
     # solar utility from Vartiaian 2019
@@ -3816,7 +3846,7 @@ if __name__ == "__main__":
             costs = add_solar_from_other(years_list, costs)
 
         # add desalination and clean water tank storage
-        costs = add_desalinsation_data(costs)
+        costs = add_desalination_data(costs)
         # add energy storage database
         if snakemake.config["energy_storage_database"]["pnnl_energy_storage"].get(
             "add_data", True

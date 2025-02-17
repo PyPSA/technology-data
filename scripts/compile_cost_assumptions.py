@@ -1820,12 +1820,12 @@ def set_specify_assumptions(
     # consumption
     name = "Heat efficiency, annual average, net, radiators"
     techs_radiator = technology_dataframe.xs(name, level=1).index
-    for tech in techs_radiator:
-        df = technology_dataframe.loc[tech]
+    for tech_name in techs_radiator:
+        df = technology_dataframe.loc[tech_name]
         df = df[(~df.index.str.contains("efficiency")) | (df.index == name)]
         df.rename(index={name: name + ", existing one family house"}, inplace=True)
-        df.index = pd.MultiIndex.from_product([[tech], df.index.to_list()])
-        technology_dataframe.drop(tech, level=0, inplace=True)
+        df.index = pd.MultiIndex.from_product([[tech_name], df.index.to_list()])
+        technology_dataframe.drop(tech_name, level=0, inplace=True)
         technology_dataframe = pd.concat([technology_dataframe, df])
 
     technology_dataframe = technology_dataframe.drop(to_drop)
@@ -2843,7 +2843,25 @@ def rename_ISE_vehicles(costs_vehicles_dataframe: pd.DataFrame) -> pd.DataFrame:
     return costs_vehicles_dataframe
 
 
-def carbon_flow(list_of_years, costs, year_to_use):
+def carbon_flow(list_of_years: list, cost_dataframe: pd.DataFrame, year_to_use: int) -> pd.DataFrame:
+    """
+    The function renames ISE vehicles costs to fit to tech data.
+
+    Parameters
+    ----------
+    list_of_years : list
+        years for which a cost assumption is provided
+    cost_dataframe:
+        cost dataframe
+    year_to_use: int
+        year to use
+
+    Returns
+    -------
+    Dataframe
+        updated technology data
+    """
+
     # NB: This requires some digits of accuracy; rounding to two digits creates carbon inbalances when scaling up
     c_in_char = 0  # Carbon ending up in char: zero avoids inbalace -> assumed to be circulated back and eventually end up in one of the other output streams
     medium_out = ""
@@ -2859,14 +2877,14 @@ def carbon_flow(list_of_years, costs, year_to_use):
     btl_eta = pd.Series(data=btleta_data, index=list_of_years)
 
     # Adding pelletizing cost to biomass boiler
-    costs.loc[("biomass boiler", "pelletizing cost"), "value"] = 9
-    costs.loc[("biomass boiler", "pelletizing cost"), "unit"] = "EUR/MWh_pellets"
-    costs.loc[("biomass boiler", "pelletizing cost"), "currency_year"] = 2019
-    costs.loc[("biomass boiler", "pelletizing cost"), "source"] = (
+    cost_dataframe.loc[("biomass boiler", "pelletizing cost"), "value"] = 9
+    cost_dataframe.loc[("biomass boiler", "pelletizing cost"), "unit"] = "EUR/MWh_pellets"
+    cost_dataframe.loc[("biomass boiler", "pelletizing cost"), "currency_year"] = 2019
+    cost_dataframe.loc[("biomass boiler", "pelletizing cost"), "source"] = (
         "Assumption based on doi:10.1016/j.rser.2019.109506"
     )
 
-    for tech in [
+    for tech_name in [
         "Fischer-Tropsch",
         "methanolisation",
         "BtL",
@@ -2887,33 +2905,33 @@ def carbon_flow(list_of_years, costs, year_to_use):
         source = "TODO"
         co2_capture_rate = 0.90
 
-        if (tech, "capture rate") not in costs.index:
-            costs.loc[(tech, "capture rate"), "value"] = co2_capture_rate
-            costs.loc[(tech, "capture rate"), "unit"] = "per unit"
-            costs.loc[(tech, "capture rate"), "source"] = (
+        if (tech_name, "capture rate") not in cost_dataframe.index:
+            cost_dataframe.loc[(tech_name, "capture rate"), "value"] = co2_capture_rate
+            cost_dataframe.loc[(tech_name, "capture rate"), "unit"] = "per unit"
+            cost_dataframe.loc[(tech_name, "capture rate"), "source"] = (
                 "Assumption based on doi:10.1016/j.biombioe.2015.01.006"
             )
 
-        if tech == "BtL":
+        if tech_name == "BtL":
             inv_cost = btl_cost[year_to_use]
             medium_out = "oil"
             eta = btl_eta[year_to_use]
             source = "doi:10.1016/j.enpol.2017.05.013"
             currency_year = 2017
 
-        if tech == "biomass-to-methanol":
+        if tech_name == "biomass-to-methanol":
             medium_out = "methanol"
 
-        elif tech == "BioSNG":
+        elif tech_name == "BioSNG":
             medium_out = "gas"
             lifetime = 25
 
-        elif tech in ["biogas", "biogas CC"]:
+        elif tech_name in ["biogas", "biogas CC"]:
             eta = 1
             source = "Assuming input biomass is already given in biogas output"
             AD_CO2_share = 0.4  # volumetric share in biogas (rest is CH4)
 
-        elif tech == "biogas plus hydrogen":
+        elif tech_name == "biogas plus hydrogen":
             # NB: this falls between power to gas and biogas and should be used with care, due to possible minor
             # differences in resource use etc. which may tweak results in favour of one tech or another
             eta = 1.6
@@ -2921,151 +2939,151 @@ def carbon_flow(list_of_years, costs, year_to_use):
 
             heat_out = 0.19
             source = "Calculated from data in Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx"
-            costs.loc[(tech, "hydrogen input"), "value"] = H2_in
-            costs.loc[(tech, "hydrogen input"), "unit"] = "MWh_H2/MWh_CH4"
-            costs.loc[(tech, "hydrogen input"), "source"] = source
+            cost_dataframe.loc[(tech_name, "hydrogen input"), "value"] = H2_in
+            cost_dataframe.loc[(tech_name, "hydrogen input"), "unit"] = "MWh_H2/MWh_CH4"
+            cost_dataframe.loc[(tech_name, "hydrogen input"), "source"] = source
 
-            costs.loc[(tech, "heat output"), "value"] = heat_out
-            costs.loc[(tech, "heat output"), "unit"] = "MWh_th/MWh_CH4"
-            costs.loc[(tech, "heat output"), "source"] = source
-            currency_year = costs.loc[("biogas plus hydrogen", "VOM"), "currency_year"]
+            cost_dataframe.loc[(tech_name, "heat output"), "value"] = heat_out
+            cost_dataframe.loc[(tech_name, "heat output"), "unit"] = "MWh_th/MWh_CH4"
+            cost_dataframe.loc[(tech_name, "heat output"), "source"] = source
+            currency_year = cost_dataframe.loc[("biogas plus hydrogen", "VOM"), "currency_year"]
 
             # TODO: this needs to be refined based on e.g. stoichiometry:
             AD_CO2_share = 0.1  # volumetric share in biogas (rest is CH4).
 
-        elif tech == "digestible biomass to hydrogen":
+        elif tech_name == "digestible biomass to hydrogen":
             inv_cost = bmH2_cost[year_to_use]
             eta = 0.39
             FOM = 4.25
             currency_year = 2014
-            costs.loc[(tech, "FOM"), "currency_year"] = 2014
+            costs.loc[(tech_name, "FOM"), "currency_year"] = 2014
             source = "Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014"  # source_dict('HyNOW')
 
-        elif tech == "solid biomass to hydrogen":
+        elif tech_name == "solid biomass to hydrogen":
             inv_cost = bmH2_cost[year_to_use]
             eta = 0.56
             FOM = 4.25
             currency_year = 2014
-            costs.loc[(tech, "FOM"), "currency_year"] = 2014
+            cost_dataframe.loc[(tech_name, "FOM"), "currency_year"] = 2014
             source = "Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014"  # source_dict('HyNOW')
 
         if eta > 0:
-            costs.loc[(tech, "efficiency"), "value"] = eta
-            costs.loc[(tech, "efficiency"), "unit"] = "per unit"
-            costs.loc[(tech, "efficiency"), "source"] = source
+            cost_dataframe.loc[(tech_name, "efficiency"), "value"] = eta
+            cost_dataframe.loc[(tech_name, "efficiency"), "unit"] = "per unit"
+            cost_dataframe.loc[(tech_name, "efficiency"), "source"] = source
 
-        if tech in ["BioSNG", "BtL", "biomass-to-methanol"]:
-            input_CO2_intensity = costs.loc[("solid biomass", "CO2 intensity"), "value"]
+        if tech_name in ["BioSNG", "BtL", "biomass-to-methanol"]:
+            input_CO2_intensity = cost_dataframe.loc[("solid biomass", "CO2 intensity"), "value"]
 
-            costs.loc[(tech, "C in fuel"), "value"] = (
-                costs.loc[(tech, "efficiency"), "value"]
-                * costs.loc[(medium_out, "CO2 intensity"), "value"]
+            cost_dataframe.loc[(tech_name, "C in fuel"), "value"] = (
+                cost_dataframe.loc[(tech_name, "efficiency"), "value"]
+                * cost_dataframe.loc[(medium_out, "CO2 intensity"), "value"]
                 / input_CO2_intensity
             )
-            costs.loc[(tech, "C stored"), "value"] = (
-                1 - costs.loc[(tech, "C in fuel"), "value"] - c_in_char
+            cost_dataframe.loc[(tech_name, "C stored"), "value"] = (
+                1 - cost_dataframe.loc[(tech_name, "C in fuel"), "value"] - c_in_char
             )
-            costs.loc[(tech, "CO2 stored"), "value"] = (
-                input_CO2_intensity * costs.loc[(tech, "C stored"), "value"]
-            )
-
-            costs.loc[(tech, "C in fuel"), "unit"] = "per unit"
-            costs.loc[(tech, "C stored"), "unit"] = "per unit"
-            costs.loc[(tech, "CO2 stored"), "unit"] = "tCO2/MWh_th"
-
-            costs.loc[(tech, "C in fuel"), "source"] = (
-                "Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016"
-            )
-            costs.loc[(tech, "C stored"), "source"] = (
-                "Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016"
-            )
-            costs.loc[(tech, "CO2 stored"), "source"] = (
-                "Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016"
+            cost_dataframe.loc[(tech_name, "CO2 stored"), "value"] = (
+                input_CO2_intensity * cost_dataframe.loc[(tech_name, "C stored"), "value"]
             )
 
-        elif tech in ["electrobiofuels"]:
+            cost_dataframe.loc[(tech_name, "C in fuel"), "unit"] = "per unit"
+            cost_dataframe.loc[(tech_name, "C stored"), "unit"] = "per unit"
+            cost_dataframe.loc[(tech_name, "CO2 stored"), "unit"] = "tCO2/MWh_th"
+
+            cost_dataframe.loc[(tech_name, "C in fuel"), "source"] = (
+                "Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016"
+            )
+            cost_dataframe.loc[(tech_name, "C stored"), "source"] = (
+                "Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016"
+            )
+            cost_dataframe.loc[(tech_name, "CO2 stored"), "source"] = (
+                "Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016"
+            )
+
+        elif tech_name in ["electrobiofuels"]:
             input_CO2_intensity = costs.loc[("solid biomass", "CO2 intensity"), "value"]
             oil_CO2_intensity = costs.loc[("oil", "CO2 intensity"), "value"]
 
-            costs.loc[("electrobiofuels", "C in fuel"), "value"] = (
-                costs.loc[("BtL", "C in fuel"), "value"]
-                + costs.loc[("BtL", "C stored"), "value"]
-                * costs.loc[("Fischer-Tropsch", "capture rate"), "value"]
+            cost_dataframe.loc[("electrobiofuels", "C in fuel"), "value"] = (
+                cost_dataframe.loc[("BtL", "C in fuel"), "value"]
+                + cost_dataframe.loc[("BtL", "C stored"), "value"]
+                * cost_dataframe.loc[("Fischer-Tropsch", "capture rate"), "value"]
             )
-            costs.loc[("electrobiofuels", "C in fuel"), "unit"] = "per unit"
-            costs.loc[("electrobiofuels", "C in fuel"), "source"] = (
+            cost_dataframe.loc[("electrobiofuels", "C in fuel"), "unit"] = "per unit"
+            cost_dataframe.loc[("electrobiofuels", "C in fuel"), "source"] = (
                 "Stoichiometric calculation"
             )
 
-            costs.loc[("electrobiofuels", "efficiency-biomass"), "value"] = (
-                costs.loc[("electrobiofuels", "C in fuel"), "value"]
+            cost_dataframe.loc[("electrobiofuels", "efficiency-biomass"), "value"] = (
+                cost_dataframe.loc[("electrobiofuels", "C in fuel"), "value"]
                 * input_CO2_intensity
                 / oil_CO2_intensity
             )
-            costs.loc[("electrobiofuels", "efficiency-biomass"), "unit"] = "per unit"
-            costs.loc[("electrobiofuels", "efficiency-biomass"), "source"] = (
+            cost_dataframe.loc[("electrobiofuels", "efficiency-biomass"), "unit"] = "per unit"
+            cost_dataframe.loc[("electrobiofuels", "efficiency-biomass"), "source"] = (
                 "Stoichiometric calculation"
             )
 
             efuel_scale_factor = (
-                costs.loc[("BtL", "C stored"), "value"]
-                * costs.loc[("Fischer-Tropsch", "capture rate"), "value"]
+                cost_dataframe.loc[("BtL", "C stored"), "value"]
+                * cost_dataframe.loc[("Fischer-Tropsch", "capture rate"), "value"]
             )
 
-            costs.loc[("electrobiofuels", "efficiency-hydrogen"), "value"] = (
-                costs.loc[("Fischer-Tropsch", "efficiency"), "value"]
+            cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "value"] = (
+                cost_dataframe.loc[("Fischer-Tropsch", "efficiency"), "value"]
                 / efuel_scale_factor
             )
-            costs.loc[("electrobiofuels", "efficiency-hydrogen"), "unit"] = "per unit"
-            costs.loc[("electrobiofuels", "efficiency-hydrogen"), "source"] = (
+            cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "unit"] = "per unit"
+            cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "source"] = (
                 "Stoichiometric calculation"
             )
 
-            costs.loc[("electrobiofuels", "efficiency-tot"), "value"] = 1 / (
-                1 / costs.loc[("electrobiofuels", "efficiency-hydrogen"), "value"]
-                + 1 / costs.loc[("electrobiofuels", "efficiency-biomass"), "value"]
+            cost_dataframe.loc[("electrobiofuels", "efficiency-tot"), "value"] = 1 / (
+                1 / cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "value"]
+                + 1 / cost_dataframe.loc[("electrobiofuels", "efficiency-biomass"), "value"]
             )
-            costs.loc[("electrobiofuels", "efficiency-tot"), "unit"] = "per unit"
-            costs.loc[("electrobiofuels", "efficiency-tot"), "source"] = (
+            cost_dataframe.loc[("electrobiofuels", "efficiency-tot"), "unit"] = "per unit"
+            cost_dataframe.loc[("electrobiofuels", "efficiency-tot"), "source"] = (
                 "Stoichiometric calculation"
             )
 
-            costs.loc[("electrobiofuels", "efficiency-hydrogen"), "value"] = (
-                costs.loc[("Fischer-Tropsch", "efficiency"), "value"]
+            cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "value"] = (
+                cost_dataframe.loc[("Fischer-Tropsch", "efficiency"), "value"]
                 / efuel_scale_factor
             )
-            costs.loc[("electrobiofuels", "efficiency-hydrogen"), "unit"] = "per unit"
-            costs.loc[("electrobiofuels", "efficiency-hydrogen"), "source"] = (
+            cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "unit"] = "per unit"
+            cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "source"] = (
                 "Stoichiometric calculation"
             )
 
-            costs.loc[("electrobiofuels", "efficiency-tot"), "value"] = 1 / (
-                1 / costs.loc[("electrobiofuels", "efficiency-hydrogen"), "value"]
-                + 1 / costs.loc[("electrobiofuels", "efficiency-biomass"), "value"]
+            cost_dataframe.loc[("electrobiofuels", "efficiency-tot"), "value"] = 1 / (
+                1 / cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "value"]
+                + 1 / cost_dataframe.loc[("electrobiofuels", "efficiency-biomass"), "value"]
             )
-            costs.loc[("electrobiofuels", "efficiency-tot"), "unit"] = "per unit"
-            costs.loc[("electrobiofuels", "efficiency-tot"), "source"] = (
+            cost_dataframe.loc[("electrobiofuels", "efficiency-tot"), "unit"] = "per unit"
+            cost_dataframe.loc[("electrobiofuels", "efficiency-tot"), "source"] = (
                 "Stoichiometric calculation"
             )
 
             inv_cost = (
                 btl_cost[year_to_use]
-                + costs.loc[("Fischer-Tropsch", "investment"), "value"]
+                + cost_dataframe.loc[("Fischer-Tropsch", "investment"), "value"]
                 * efuel_scale_factor
             )
             VOM = (
-                costs.loc[("BtL", "VOM"), "value"]
-                + costs.loc[("Fischer-Tropsch", "VOM"), "value"] * efuel_scale_factor
+                cost_dataframe.loc[("BtL", "VOM"), "value"]
+                + cost_dataframe.loc[("Fischer-Tropsch", "VOM"), "value"] * efuel_scale_factor
             )
-            FOM = costs.loc[("BtL", "FOM"), "value"]
+            FOM = cost_dataframe.loc[("BtL", "FOM"), "value"]
             medium_out = "oil"
-            currency_year = costs.loc[
+            currency_year = cost_dataframe.loc[
                 ("Fischer-Tropsch", "investment"), "currency_year"
             ]
-            costs.loc[(tech, "FOM"), "currency_year"] = 2015
+            cost_dataframe.loc[(tech_name, "FOM"), "currency_year"] = 2015
             source = "combination of BtL and electrofuels"
 
-        elif tech in ["biogas", "biogas CC", "biogas plus hydrogen"]:
+        elif tech_name in ["biogas", "biogas CC", "biogas plus hydrogen"]:
             CH4_density = 0.657  # kg/Nm3
             CO2_density = 1.98  # kg/Nm3
             CH4_vol_energy_density = (
@@ -3073,37 +3091,37 @@ def carbon_flow(list_of_years, costs, year_to_use):
             )  # MJ/Nm3 -> MWh/Nm3
             CO2_weight_share = AD_CO2_share * CO2_density
 
-            costs.loc[(tech, "CO2 stored"), "value"] = (
+            cost_dataframe.loc[(tech_name, "CO2 stored"), "value"] = (
                 CO2_weight_share / CH4_vol_energy_density / 1000
             )  # tCO2/MWh,in (NB: assuming the input is already given in the biogas potential and cost
-            costs.loc[(tech, "CO2 stored"), "unit"] = "tCO2/MWh_th"
-            costs.loc[(tech, "CO2 stored"), "source"] = (
+            cost_dataframe.loc[(tech_name, "CO2 stored"), "unit"] = "tCO2/MWh_th"
+            cost_dataframe.loc[(tech_name, "CO2 stored"), "source"] = (
                 "Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016"
             )
 
         if inv_cost > 0:
-            costs.loc[(tech, "investment"), "value"] = inv_cost
-            costs.loc[(tech, "investment"), "unit"] = "EUR/kW_th"
-            costs.loc[(tech, "investment"), "source"] = source
-            costs.loc[(tech, "investment"), "currency_year"] = currency_year
+            cost_dataframe.loc[(tech_name, "investment"), "value"] = inv_cost
+            cost_dataframe.loc[(tech_name, "investment"), "unit"] = "EUR/kW_th"
+            cost_dataframe.loc[(tech_name, "investment"), "source"] = source
+            cost_dataframe.loc[(tech_name, "investment"), "currency_year"] = currency_year
 
         if lifetime > 0:
-            costs.loc[(tech, "lifetime"), "value"] = lifetime
-            costs.loc[(tech, "lifetime"), "unit"] = "years"
-            costs.loc[(tech, "lifetime"), "source"] = source
+            cost_dataframe.loc[(tech_name, "lifetime"), "value"] = lifetime
+            cost_dataframe.loc[(tech_name, "lifetime"), "unit"] = "years"
+            cost_dataframe.loc[(tech_name, "lifetime"), "source"] = source
 
         if FOM > 0:
-            costs.loc[(tech, "FOM"), "value"] = FOM
-            costs.loc[(tech, "FOM"), "unit"] = "%/year"
-            costs.loc[(tech, "FOM"), "source"] = source
+            cost_dataframe.loc[(tech_name, "FOM"), "value"] = FOM
+            cost_dataframe.loc[(tech_name, "FOM"), "unit"] = "%/year"
+            cost_dataframe.loc[(tech_name, "FOM"), "source"] = source
 
         if VOM > 0:
-            costs.loc[(tech, "VOM"), "value"] = VOM
-            costs.loc[(tech, "VOM"), "unit"] = "EUR/MWh_th"
-            costs.loc[(tech, "VOM"), "source"] = source
-            costs.loc[(tech, "VOM"), "currency_year"] = currency_year
+            cost_dataframe.loc[(tech_name, "VOM"), "value"] = VOM
+            cost_dataframe.loc[(tech_name, "VOM"), "unit"] = "EUR/MWh_th"
+            cost_dataframe.loc[(tech_name, "VOM"), "source"] = source
+            cost_dataframe.loc[(tech_name, "VOM"), "currency_year"] = currency_year
 
-    return costs
+    return cost_dataframe
 
 
 def energy_penalty(costs):

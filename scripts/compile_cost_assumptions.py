@@ -3011,8 +3011,8 @@ def carbon_flow(
             )
 
         elif tech_name in ["electrobiofuels"]:
-            input_CO2_intensity = costs.loc[("solid biomass", "CO2 intensity"), "value"]
-            oil_CO2_intensity = costs.loc[("oil", "CO2 intensity"), "value"]
+            input_CO2_intensity = cost_dataframe.loc[("solid biomass", "CO2 intensity"), "value"]
+            oil_CO2_intensity = cost_dataframe.loc[("oil", "CO2 intensity"), "value"]
 
             cost_dataframe.loc[("electrobiofuels", "C in fuel"), "value"] = (
                 cost_dataframe.loc[("BtL", "C in fuel"), "value"]
@@ -3117,7 +3117,7 @@ def carbon_flow(
             CH4_vol_energy_density = (
                 CH4_specific_energy * CH4_density / (1000 * 3.6)
             )  # MJ/Nm3 -> MWh/Nm3
-            CO2_weight_share = AD_CO2_share * CO2_density
+            CO2_weight_share = AD_CO2_share * CO2_density # TODO: what value is used for AD_CO2_share in this if branch?
 
             cost_dataframe.loc[(tech_name, "CO2 stored"), "value"] = (
                 CO2_weight_share / CH4_vol_energy_density / 1000
@@ -3154,12 +3154,25 @@ def carbon_flow(
     return cost_dataframe
 
 
-def energy_penalty(costs):
-    # Energy penalty for biomass carbon capture
+def energy_penalty(cost_dataframe):
+    """
+    The function adds energy penalty for biomass carbon capture.
+
+    Parameters
+    ----------
+    cost_dataframe:
+        cost dataframe
+
+    Returns
+    -------
+    Dataframe
+        updated technology data
+    """
+
     # Need to take steam production for CC into account, assumed with the main feedstock,
     # e.g. the input biomass is used also for steam, and the efficiency for el and heat is scaled down accordingly
 
-    for tech in [
+    for tech_name in [
         "central solid biomass CHP CC",
         "waste CHP CC",
         "solid biomass boiler steam CC",
@@ -3167,98 +3180,107 @@ def energy_penalty(costs):
         "direct firing gas CC",
         "biogas CC",
     ]:
-        if "powerboost" in tech:
+        if "powerboost" in tech_name:
             boiler = "electric boiler steam"
             feedstock = "solid biomass"
-            co2_capture = costs.loc[(feedstock, "CO2 intensity"), "value"]
-        elif "gas" in tech:
+            co2_capture = cost_dataframe.loc[(feedstock, "CO2 intensity"), "value"]
+        elif "gas" in tech_name:
             boiler = "gas boiler steam"
             feedstock = "gas"
-            co2_capture = costs.loc[(feedstock, "CO2 intensity"), "value"]
-        elif "biogas" in tech:
+            co2_capture = cost_dataframe.loc[(feedstock, "CO2 intensity"), "value"]
+        elif "biogas" in tech_name:
             boiler = "gas boiler steam"
-            co2_capture = costs.loc[(tech, "CO2 stored"), "value"]
+            co2_capture = cost_dataframe.loc[(tech_name, "CO2 stored"), "value"]
         else:
             boiler = "solid biomass boiler steam"
             feedstock = "solid biomass"
-            co2_capture = costs.loc[(feedstock, "CO2 intensity"), "value"]
+            co2_capture = cost_dataframe.loc[(feedstock, "CO2 intensity"), "value"]
 
         # Scaling biomass input to account for heat demand of carbon capture
         scalingFactor = 1 / (
             1
             + co2_capture
-            * costs.loc[("biomass CHP capture", "heat-input"), "value"]
-            / costs.loc[(boiler, "efficiency"), "value"]
+            * cost_dataframe.loc[("biomass CHP capture", "heat-input"), "value"]
+            / cost_dataframe.loc[(boiler, "efficiency"), "value"]
         )
 
-        eta_steam = (1 - scalingFactor) * costs.loc[(boiler, "efficiency"), "value"]
-        eta_old = costs.loc[(tech, "efficiency"), "value"]
+        eta_steam = (1 - scalingFactor) * cost_dataframe.loc[(boiler, "efficiency"), "value"]
+        eta_old = cost_dataframe.loc[(tech_name, "efficiency"), "value"]
 
-        eta_main = costs.loc[(tech, "efficiency"), "value"] * scalingFactor
+        eta_main = cost_dataframe.loc[(tech_name, "efficiency"), "value"] * scalingFactor
 
         # Adapting investment share of tech due to steam boiler addition. Investment per MW_el.
-        costs.loc[(tech, "investment"), "value"] = (
-            costs.loc[(tech, "investment"), "value"] * eta_old / eta_main
-            + costs.loc[(boiler, "investment"), "value"] * eta_steam / eta_main
+        cost_dataframe.loc[(tech_name, "investment"), "value"] = (
+            cost_dataframe.loc[(tech_name, "investment"), "value"] * eta_old / eta_main
+            + cost_dataframe.loc[(boiler, "investment"), "value"] * eta_steam / eta_main
         )
-        costs.loc[(tech, "investment"), "source"] = (
-            "Combination of " + tech + " and " + boiler
+        cost_dataframe.loc[(tech_name, "investment"), "source"] = (
+            "Combination of " + tech_name + " and " + boiler
         )
-        costs.loc[(tech, "investment"), "further description"] = ""
+        cost_dataframe.loc[(tech_name, "investment"), "further description"] = ""
 
-        if costs.loc[(tech, "VOM"), "value"]:
+        if cost_dataframe.loc[(tech_name, "VOM"), "value"]:
             break
         else:
-            costs.loc[(tech, "VOM"), "value"] = 0.0
+            cost_dataframe.loc[(tech_name, "VOM"), "value"] = 0.0
 
-        costs.loc[(tech, "VOM"), "value"] = (
-            costs.loc[(tech, "VOM"), "value"] * eta_old / eta_main
-            + costs.loc[(boiler, "VOM"), "value"] * eta_steam / eta_main
+        cost_dataframe.loc[(tech_name, "VOM"), "value"] = (
+            cost_dataframe.loc[(tech_name, "VOM"), "value"] * eta_old / eta_main
+            + cost_dataframe.loc[(boiler, "VOM"), "value"] * eta_steam / eta_main
         )
-        costs.loc[(tech, "VOM"), "source"] = "Combination of " + tech + " and " + boiler
-        costs.loc[(tech, "VOM"), "further description"] = ""
+        cost_dataframe.loc[(tech_name, "VOM"), "source"] = "Combination of " + tech_name + " and " + boiler
+        cost_dataframe.loc[(tech_name, "VOM"), "further description"] = ""
 
-        costs.loc[(tech, "efficiency"), "value"] = eta_main
-        costs.loc[(tech, "efficiency"), "source"] = (
-            "Combination of " + tech + " and " + boiler
+        cost_dataframe.loc[(tech_name, "efficiency"), "value"] = eta_main
+        cost_dataframe.loc[(tech_name, "efficiency"), "source"] = (
+            "Combination of " + tech_name + " and " + boiler
         )
-        costs.loc[(tech, "efficiency"), "further description"] = ""
+        cost_dataframe.loc[(tech_name, "efficiency"), "further description"] = ""
 
-        if "CHP" in tech:
-            costs.loc[(tech, "efficiency-heat"), "value"] = costs.loc[
-                (tech, "efficiency-heat"), "value"
-            ] * scalingFactor + costs.loc[
+        if "CHP" in tech_name:
+            cost_dataframe.loc[(tech_name, "efficiency-heat"), "value"] = cost_dataframe.loc[
+                (tech_name, "efficiency-heat"), "value"
+            ] * scalingFactor + cost_dataframe.loc[
                 ("solid biomass", "CO2 intensity"), "value"
             ] * (
-                costs.loc[("biomass CHP capture", "heat-output"), "value"]
-                + costs.loc[("biomass CHP capture", "compression-heat-output"), "value"]
+                cost_dataframe.loc[("biomass CHP capture", "heat-output"), "value"]
+                + cost_dataframe.loc[("biomass CHP capture", "compression-heat-output"), "value"]
             )
-            costs.loc[(tech, "efficiency-heat"), "source"] = (
-                "Combination of " + tech + " and " + boiler
+            cost_dataframe.loc[(tech_name, "efficiency-heat"), "source"] = (
+                "Combination of " + tech_name + " and " + boiler
             )
-            costs.loc[(tech, "efficiency-heat"), "further description"] = ""
+            cost_dataframe.loc[(tech_name, "efficiency-heat"), "further description"] = ""
 
-        if "biogas CC" in tech:
-            costs.loc[(tech, "VOM"), "value"] = 0
-            costs.loc[(tech, "VOM"), "unit"] = "EUR/MWh"
+        if "biogas CC" in tech_name:
+            cost_dataframe.loc[(tech_name, "VOM"), "value"] = 0
+            cost_dataframe.loc[(tech_name, "VOM"), "unit"] = "EUR/MWh"
 
-        costs.loc[(tech, "VOM"), "value"] = (
-            costs.loc[(tech, "VOM"), "value"] * eta_old / eta_main
-            + costs.loc[(boiler, "VOM"), "value"] * eta_steam / eta_main
+        cost_dataframe.loc[(tech_name, "VOM"), "value"] = (
+            cost_dataframe.loc[(tech_name, "VOM"), "value"] * eta_old / eta_main
+            + cost_dataframe.loc[(boiler, "VOM"), "value"] * eta_steam / eta_main
         )
-        costs.loc[(tech, "VOM"), "source"] = "Combination of " + tech + " and " + boiler
-        costs.loc[(tech, "VOM"), "further description"] = ""
+        cost_dataframe.loc[(tech_name, "VOM"), "source"] = "Combination of " + tech_name + " and " + boiler
+        cost_dataframe.loc[(tech_name, "VOM"), "further description"] = ""
 
-    return costs
+    return cost_dataframe
 
 
-def add_egs_data(data):
+def add_egs_data(technology_dataframe: pd.DataFrame) -> pd.DataFrame:
     """
-    Adds data of enhanced geothermal systems.
-
+    The function adds enhanced geothermal systems cost assumptions.
     Data taken from Aghahosseini, Breyer 2020: From hot rock to useful energy...
 
+    Parameters
+    ----------
+    technology_dataframe:
+        technology data
+
+    Returns
+    -------
+    Dataframe
+        updated technology data
     """
+
     parameters = [
         "CO2 intensity",
         "lifetime",
@@ -3266,9 +3288,9 @@ def add_egs_data(data):
         "efficiency electricity",
         "FOM",
     ]
-    techs = ["geothermal"]
+    tech_name_list = ["geothermal"]
     multi_i = pd.MultiIndex.from_product(
-        [techs, parameters], names=["technology", "parameter"]
+        [tech_name_list, parameters], names=["technology", "parameter"]
     )
     geoth_df = pd.DataFrame(index=multi_i, columns=data.columns)
     years = [col for col in data.columns if isinstance(col, int)]
@@ -3328,7 +3350,7 @@ def add_egs_data(data):
 
     geoth_df = geoth_df.dropna(axis=1, how="all")
 
-    return pd.concat([data, geoth_df])
+    return pd.concat([technology_dataframe, geoth_df])
 
 
 def annuity(n, r=0.07):

@@ -169,8 +169,6 @@ uncrtnty_lookup = {
     "central solid biomass CHP": "I:J",
     "central solid biomass CHP CC": "I:J",
     "central solid biomass CHP powerboost CC": "I:J",
-    # 'solid biomass power': 'J:K',
-    # 'solid biomass power CC': 'J:K',
     "solar": "",
     "central air-sourced heat pump": "J:K",
     "central geothermal-sourced heat pump": "H:K",
@@ -455,10 +453,25 @@ def get_dea_maritime_data(
     return input_data_df
 
 
-def get_dea_vehicle_data(fn, list_of_years, data):
+def get_dea_vehicle_data(fn: str, list_of_years: list, data: pd.DataFrame) -> pd.DataFrame:
     """
-    Get heavy-duty vehicle data from DEA.
+    The function gets heavy-duty vehicle data from DEA.
+
+    Parameters
+    ----------
+    fn : str
+        path to DEA input data file for shipping
+    list_of_years : list
+        years for which a cost assumption is provided
+    data : pd.DataFrame
+        technology data cost assumptions
+
+    Returns
+    -------
+    DataFrame
+        technology data cost assumptions enriched with shipping data from DEA
     """
+
     dea_vehicle_data_sheet_names = [
         "Diesel L1",
         "Diesel L2",
@@ -994,6 +1007,7 @@ def get_data_DEA(
 
 
 def add_desalinsation_data(costs):
+
     """
     Add technology data for sea water desalination (SWRO) and water storage.
     """

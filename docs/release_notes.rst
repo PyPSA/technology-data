@@ -16,6 +16,8 @@ Upcoming Release
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
 
+* US specific folder for NREL/ATB data (https://github.com/PyPSA/technology-data/pull/172)
+
 * Include unit test execution and compile_cost_assumptions_usa.py in ci.yaml (https://github.com/PyPSA/technology-data/pull/174)
 * Align `snakemake` version and the related `mock_snakemake` to PyPSA-Eur (https://github.com/PyPSA/technology-data/pull/177)
 

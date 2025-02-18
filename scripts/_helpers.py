@@ -7,6 +7,9 @@
 import re
 from pathlib import Path
 
+import numpy as np
+import pandas as pd
+
 
 class Dict(dict):
     """
@@ -182,3 +185,42 @@ def mock_snakemake(
         if user_in_script_dir:
             os.chdir(script_dir)
     return snakemake
+
+
+def adjust_for_inflation(inflation_rate, costs, techs, eur_year, col):
+    """
+    Adjust the investment costs for the specified techs for inflation.
+
+    techs: str or list
+        One or more techs in costs index for which the inflation adjustment is done.
+    eur_year: int
+        Reference year for which the costs are provided and based on which the inflation adjustment is done.
+    costs: Dataframe containing the costs data with multiindex on technology and one index key 'investment'.
+    """
+
+    def get_factor(inflation_rate, ref_year, eur_year):
+        if (pd.isna(ref_year)) or (ref_year < 1900):
+            return np.nan
+        if ref_year == eur_year:
+            return 1
+        mean = inflation_rate.mean()
+        if ref_year < eur_year:
+            new_index = np.arange(ref_year + 1, eur_year + 1)
+            df = 1 + inflation_rate.reindex(new_index).fillna(mean)
+            return df.cumprod().loc[eur_year]
+        else:
+            new_index = np.arange(eur_year + 1, ref_year + 1)
+            df = 1 + inflation_rate.reindex(new_index).fillna(mean)
+            return 1 / df.cumprod().loc[ref_year]
+
+    inflation = costs.currency_year.apply(
+        lambda x: get_factor(inflation_rate, x, eur_year)
+    )
+
+    paras = ["investment", "VOM", "fuel"]
+    filter_i = costs.technology.isin(techs) & costs.parameter.isin(paras)
+    costs.loc[filter_i, col] = costs.loc[filter_i, col].mul(
+        inflation.loc[filter_i], axis=0
+    )
+
+    return costs

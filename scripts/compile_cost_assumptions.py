@@ -3546,7 +3546,7 @@ if __name__ == "__main__":
         techs = costs_tot.index.get_level_values(0).unique()
         costs_tot["currency_year"] = costs_tot.currency_year.astype(float)
         costs_tot = adjust_for_inflation(
-            inflation_rate, costs_tot, techs, costs_tot.currency_year, ["value"]
+            inflation_rate, costs_tot, techs, snakemake.config["eur_year"], ["value"]
         )
 
         # format and sort

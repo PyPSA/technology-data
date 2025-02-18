@@ -1366,18 +1366,6 @@ def biochar_pyrolysis_dea(df):
         inplace=True,
     )
 
-    # print intermediate results (for publications)
-    print_flag = 0
-    if print_flag == 1:
-        print(df.loc[df.index.str.contains("Specific investment")])
-        print(df.loc[df.index.str.contains("Variable O&M")])
-        print(df.loc[df.index.str.contains("Fixed O&M")])
-        print("Cw biochar = " + str(biochar_carbon_content))
-        print(df.loc["Biomass Input [MWh_biomass/t_CO2]", :])
-        print(str(df.loc["yield biochar [t_biochar/MWh_biomass]", :]))
-        print(df.loc[df.index.str.contains("H-Output")])
-        print(df.loc[df.index.str.contains("El-Input")])
-
     return df
 
 

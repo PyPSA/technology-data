@@ -293,23 +293,66 @@ def pre_process_manual_input_usa(
                 "technology == @tech and parameter == @param"
             )
 
-            s = pd.Series(
-                index=list_of_years,
-                data=np.interp(list_of_years, c["year"], c["value"]),
-                name=param,
-            )
-            s["parameter"] = param
-            s["technology"] = tech
-            try:
-                s["currency_year"] = int(c["currency_year"].values[0])
-            except ValueError:
-                s["currency_year"] = np.nan
-            for col in ["unit", "source", "further description"]:
-                s[col] = "; and\n".join(c[col].unique().astype(str))
-            s = s.rename(
-                {"further_description": "further description"}
-            )  # match column name between manual_input and original TD workflow
-            list_dataframe_row.append(s)
+            # Consider differences among scenarios
+            scenarios = c["scenario"].dropna().unique()
+
+            for scenario in scenarios:
+                scenario_value = c[c["scenario"] == scenario][
+                    "value"
+                ].values  # Extract values for each scenario
+
+                if scenario_value.size > 0:
+                    scenario_years = c[c["scenario"] == scenario]["year"].values
+                    scenario_values = c[c["scenario"] == scenario]["value"].values
+
+                    interpolated_values = np.interp(
+                        list_of_years, scenario_years, scenario_values
+                    )
+
+                    # Create a row for each scenario
+                    s_copy = pd.Series(
+                        index=list_of_years,
+                        data=interpolated_values,  # Ora i valori sono interpolati
+                        name=param,
+                    )
+
+                    s_copy["parameter"] = param
+                    s_copy["technology"] = tech
+                    s_copy["scenario"] = scenario
+                    try:
+                        s_copy["currency_year"] = int(c["currency_year"].values[0])
+                    except ValueError:
+                        s_copy["currency_year"] = np.nan
+
+                    # Add the other columns in the data file
+                    for col in [
+                        "unit",
+                        "source",
+                        "further description",
+                        "financial_case",
+                    ]:
+                        s_copy[col] = "; and\n".join(c[col].unique().astype(str))
+
+                    list_dataframe_row.append(s_copy)
+            if len(scenarios) == 0:
+                s = pd.Series(
+                    index=list_of_years,
+                    data=[scenario_value] * len(list_of_years),
+                    name=param,
+                )
+                s["parameter"] = param
+                s["technology"] = tech
+                s["scenario"] = ""
+                try:
+                    s["currency_year"] = int(c["currency_year"].values[0])
+                except ValueError:
+                    s["currency_year"] = np.nan
+                for col in ["unit", "source", "further description", "financial_case"]:
+                    s[col] = "; and\n".join(c[col].unique().astype(str))
+                s = s.rename(
+                    {"further_description": "further description"}
+                )  # match column name between manual_input and original TD workflow
+                list_dataframe_row.append(s)
     manual_input_usa_file_df = pd.DataFrame(list_dataframe_row).reset_index(drop=True)
 
     # Filter the information for a given year
@@ -322,24 +365,54 @@ def pre_process_manual_input_usa(
             "source",
             "further description",
             "currency_year",
+            "financial_case",
+            "scenario",
         ]
     ].rename(columns={year: "value"})
+
+    # Filter data to get technologies with scenario differentiation
+    with_scenario_df = manual_input_usa_file_df[
+        manual_input_usa_file_df["scenario"].notna()
+    ]
+    without_scenario_df = manual_input_usa_file_df[
+        manual_input_usa_file_df["scenario"].isna()
+    ]
+
+    final_rows = []
+
+    for tech in manual_input_usa_file_df["technology"].unique():
+        tech_with_scenario = with_scenario_df[with_scenario_df["technology"] == tech]
+        if len(tech_with_scenario) > 0:
+            # Keep rows where a scenario exists
+            final_rows.append(tech_with_scenario)
+        else:
+            # If a scenario is not defined, keep the row without scenario
+            tech_without_scenario = without_scenario_df[
+                without_scenario_df["technology"] == tech
+            ]
+            final_rows.append(tech_without_scenario)
+
+    manual_input_usa_file_df = pd.concat(final_rows, ignore_index=True)
 
     # Cast the value column to float
     manual_input_usa_file_df["value"] = manual_input_usa_file_df["value"].astype(float)
 
-    # Correct the cost assumptions to the inflation rate
-    inflation_adjusted_manual_input_usa_file_df = adjust_for_inflation(
-        inflation_rate_df,
-        manual_input_usa_file_df,
-        manual_input_usa_file_df.technology.unique(),
-        eur_year,
-        ["value"],
+    mask = manual_input_usa_file_df["unit"].str.startswith("EUR", na=False)
+
+    inflation_adjusted_manual_input_usa_file_df = manual_input_usa_file_df.copy()
+    inflation_adjusted_manual_input_usa_file_df.loc[mask, "value"] = (
+        adjust_for_inflation(
+            inflation_rate_df,
+            manual_input_usa_file_df.loc[mask],
+            manual_input_usa_file_df.loc[mask, "technology"].unique(),
+            eur_year,
+            ["value"],
+        )["value"]
     )
 
     # Round the results
     inflation_adjusted_manual_input_usa_file_df.loc[:, "value"] = round(
-        inflation_adjusted_manual_input_usa_file_df.value.astype(float), n_digits
+        inflation_adjusted_manual_input_usa_file_df["value"].astype(float), n_digits
     )
 
     return inflation_adjusted_manual_input_usa_file_df

@@ -13,7 +13,8 @@ import pathlib
 
 import numpy as np
 import pandas as pd
-from _helpers import mock_snakemake
+from _helpers import adjust_for_inflation, mock_snakemake
+from compile_cost_assumptions import prepare_inflation_rate
 
 
 def get_conversion_dictionary(flag: str):
@@ -240,6 +241,277 @@ def replace_value_name(dataframe, conversion_dict, column_name):
     return dataframe
 
 
+def pre_process_manual_input_usa(
+    manual_input_usa_file_path,
+    inflation_rate_file_path,
+    list_of_years,
+    eur_year,
+    year,
+    n_digits,
+):
+    """
+    The function reads and modifies the manual_input_usa.csv file. Namely, it:
+    - reads the input file
+    - renames the column "further_description" to "further description"
+    - prepares a dataframe with the inflation rate per year in European Union
+    - starting from manual_input_usa.csv, it estimates the parameters for each technology for all the requested years
+    - it selects the values for a given year
+    - it adjusts the cost estimates to the inflation rate
+    - queries the necessary rows of the existing cost dataframe
+
+    Input arguments
+    - manual_input_usa_file_path : str, manual_input_usa.csv file path
+    - inflation_rate_file_path : str, inflation rate file path
+    - list_of_years : list, list of the years for which a cost assumption is provided
+    - eur_year : int, year for european output
+    - year : int, year from list_of_years
+    - n_digits : int, number of significant digits
+
+    Output
+    - DataFrame, updated manual input usa
+    """
+
+    # Read the input file
+    manual_input_usa_file_df = pd.read_csv(
+        manual_input_usa_file_path, quotechar='"', sep=",", keep_default_na=False
+    )
+
+    # Rename the column further_description
+    manual_input_usa_file_df = manual_input_usa_file_df.rename(
+        columns={"further_description": "further description"}
+    )
+
+    # Read the inflation rate
+    inflation_rate_df = prepare_inflation_rate(inflation_rate_file_path)
+
+    # Create cost estimates for all years
+    list_dataframe_row = []
+    for tech in manual_input_usa_file_df["technology"].unique():
+        c0 = manual_input_usa_file_df[manual_input_usa_file_df["technology"] == tech]
+        for param in c0["parameter"].unique():
+            c = manual_input_usa_file_df.query(
+                "technology == @tech and parameter == @param"
+            )
+
+            s = pd.Series(
+                index=list_of_years,
+                data=np.interp(list_of_years, c["year"], c["value"]),
+                name=param,
+            )
+            s["parameter"] = param
+            s["technology"] = tech
+            try:
+                s["currency_year"] = int(c["currency_year"].values[0])
+            except ValueError:
+                s["currency_year"] = np.nan
+            for col in ["unit", "source", "further description"]:
+                s[col] = "; and\n".join(c[col].unique().astype(str))
+            s = s.rename(
+                {"further_description": "further description"}
+            )  # match column name between manual_input and original TD workflow
+            list_dataframe_row.append(s)
+    manual_input_usa_file_df = pd.DataFrame(list_dataframe_row).reset_index(drop=True)
+
+    # Filter the information for a given year
+    manual_input_usa_file_df = manual_input_usa_file_df[
+        [
+            "technology",
+            "parameter",
+            year,
+            "unit",
+            "source",
+            "further description",
+            "currency_year",
+        ]
+    ].rename(columns={year: "value"})
+
+    # Cast the value column to float
+    manual_input_usa_file_df["value"] = manual_input_usa_file_df["value"].astype(float)
+
+    # Correct the cost assumptions to the inflation rate
+    inflation_adjusted_manual_input_usa_file_df = adjust_for_inflation(
+        inflation_rate_df,
+        manual_input_usa_file_df,
+        manual_input_usa_file_df.technology.unique(),
+        eur_year,
+        ["value"],
+    )
+
+    # Round the results
+    inflation_adjusted_manual_input_usa_file_df.loc[:, "value"] = round(
+        inflation_adjusted_manual_input_usa_file_df.value.astype(float), n_digits
+    )
+
+    return inflation_adjusted_manual_input_usa_file_df
+
+
+def modify_cost_input_file(
+    cost_dataframe, manual_input_usa_dataframe, list_of_years, year, n_digits
+):
+    """
+    The function filters out from the existing cost dataframe the rows corresponding
+    to the technology-parameter pairs from manual_input_usa.csv. It then concatenates manual_input_usa.csv and
+    adjourns the estimates for "electrobiofuels". Namely, it:
+    - creates a list of tuples (technology, parameter) from manual_input_usa.csv
+    - filters out from the existing cost dataframe all rows with (technology, parameter) in manual_input_usa.csv
+    - concatenates manual_input_usa.csv
+    - updates the parameters for electrobiofuels
+
+    Input arguments
+    - cost_dataframe : DataFrame, existing cost dataframe
+    - manual_input_usa_dataframe : DataFrame, manual_input_usa dataframe
+    - list_of_years : list, list of the years for which a cost assumption is provided
+    - year : int, year from list_of_years
+    - n_digits : int, number of significant digits
+
+    Output
+    - DataFrame, updated cost dataframe
+    """
+
+    # Create a list of tuples (technology, parameter) from manual_input_usa.csv
+    list_technology_parameter_tuples_manual_input_usa = [
+        (str(x), str(y))
+        for (x, y) in zip(
+            manual_input_usa_dataframe.technology, manual_input_usa_dataframe.parameter
+        )
+    ]
+
+    # Filter out rows from the existing cost dataframe corresponding
+    # to the (technology, parameter) pairs from manual_input_usa.csv
+    queried_cost_df = cost_dataframe[
+        ~(
+            pd.Series(
+                list(zip(cost_dataframe["technology"], cost_dataframe["parameter"]))
+            ).isin(list_technology_parameter_tuples_manual_input_usa)
+        )
+    ]
+
+    # Concatenate manual_input_usa.csv to the filtered existing cost dataframe
+    updated_cost_dataframe = pd.concat(
+        [queried_cost_df, manual_input_usa_dataframe]
+    ).reset_index(drop=True)
+
+    # Update the parameters for the technology "electrobiofuels"
+    btl_cost_data = np.interp(x=list_of_years, xp=[2020, 2050], fp=[3500, 2000])
+    btl_cost = pd.Series(data=btl_cost_data, index=list_of_years)
+
+    efuel_scaling_factor = (
+        updated_cost_dataframe.query(
+            "technology.str.casefold() == 'btl' & parameter.str.casefold() == 'c stored'"
+        )["value"].values[0]
+        * updated_cost_dataframe.query(
+            "technology.str.casefold() == 'fischer-tropsch' & parameter.str.casefold() == 'capture rate'"
+        )["value"].values[0]
+    )
+
+    investment_cost = np.round(
+        (
+            btl_cost[year]
+            + updated_cost_dataframe.loc[
+                (
+                    updated_cost_dataframe["technology"].str.casefold()
+                    == "fischer-tropsch"
+                )
+                & (updated_cost_dataframe["parameter"].str.casefold() == "investment"),
+                "value",
+            ].values[0]
+            * efuel_scaling_factor
+        ),
+        n_digits,
+    )
+
+    updated_cost_dataframe.loc[
+        (updated_cost_dataframe["technology"].str.casefold() == "electrobiofuels")
+        & (updated_cost_dataframe["parameter"].str.casefold() == "efficiency-tot"),
+        "value",
+    ] = np.round(
+        1.0
+        / (
+            1.0
+            / updated_cost_dataframe.loc[
+                (
+                    updated_cost_dataframe["technology"].str.casefold()
+                    == "electrobiofuels"
+                )
+                & (
+                    updated_cost_dataframe["parameter"].str.casefold()
+                    == "efficiency-hydrogen"
+                ),
+                "value",
+            ].values[0]
+            + 1.0
+            / updated_cost_dataframe.loc[
+                (
+                    updated_cost_dataframe["technology"].str.casefold()
+                    == "electrobiofuels"
+                )
+                & (updated_cost_dataframe["parameter"] == "efficiency-biomass"),
+                "value",
+            ].values[0]
+        ),
+        n_digits,
+    )
+
+    updated_cost_dataframe.loc[
+        (updated_cost_dataframe["technology"] == "electrobiofuels")
+        & (updated_cost_dataframe["parameter"] == "efficiency-hydrogen"),
+        "value",
+    ] = np.round(
+        (
+            updated_cost_dataframe.loc[
+                (updated_cost_dataframe["technology"] == "Fischer-Tropsch")
+                & (updated_cost_dataframe["parameter"] == "efficiency"),
+                "value",
+            ].values[0]
+            / efuel_scaling_factor
+        ),
+        n_digits,
+    )
+
+    vom_value = np.round(
+        (
+            updated_cost_dataframe.loc[
+                (updated_cost_dataframe["technology"] == "BtL")
+                & (updated_cost_dataframe["parameter"] == "VOM"),
+                "value",
+            ].values[0]
+            + updated_cost_dataframe.loc[
+                (updated_cost_dataframe["technology"] == "Fischer-Tropsch")
+                & (updated_cost_dataframe["parameter"] == "VOM"),
+                "value",
+            ].values[0]
+            * efuel_scaling_factor
+        ),
+        n_digits,
+    )
+
+    if investment_cost > 0.0:
+        updated_cost_dataframe.loc[
+            (updated_cost_dataframe["technology"] == "electrobiofuels")
+            & (updated_cost_dataframe["parameter"] == "investment"),
+            "value",
+        ] = investment_cost
+        updated_cost_dataframe.loc[
+            (updated_cost_dataframe["technology"] == "electrobiofuels")
+            & (updated_cost_dataframe["parameter"] == "investment"),
+            "currency_year",
+        ] = 2022.0
+
+    if vom_value > 0.0:
+        updated_cost_dataframe.loc[
+            (updated_cost_dataframe["technology"] == "electrobiofuels")
+            & (updated_cost_dataframe["parameter"] == "VOM"),
+            "value",
+        ] = vom_value
+        updated_cost_dataframe.loc[
+            (updated_cost_dataframe["technology"] == "electrobiofuels")
+            & (updated_cost_dataframe["parameter"] == "VOM"),
+            "currency_year",
+        ] = 2022.0
+
+    return updated_cost_dataframe
+
+
 def query_cost_dataframe(cost_dataframe, technology_dictionary, parameter_dictionary):
     """
     The function queries the rows of the existing cost dataframe.
@@ -249,7 +521,7 @@ def query_cost_dataframe(cost_dataframe, technology_dictionary, parameter_dictio
     - query_string_part_two: some of the techno-economic parameters (e.g., efficiency, capture rate) to be updated with NREL-ATB data are NOT present in the NREL-ATB dataset. They are instead added to the former cost csv files by means of the manual_input.csv. They should be kept in the final output. This query selects such rows
 
     Input arguments
-    - cost_dataframe : DataFrame, existing cost dataframe
+    - cost_dataframe: DataFrame, existing cost dataframe
     - technology_dictionary: dict, a dictionary of the technologies updated with NREL/ATB data
     - parameter_dictionary: dict, a dictionary of the parameters for which NREL/ATB estimates are available
 
@@ -289,7 +561,7 @@ def query_cost_dataframe(cost_dataframe, technology_dictionary, parameter_dictio
 
 def pre_process_cost_input_file(input_file_path, columns_to_add_list):
     """
-    The function filters and cleans the existing cost file. Namely it:
+    The function filters and cleans the existing cost file. Namely, it:
     - reads the input file
     - adds the columns from NREL/ATB not present in the existing cost dataframe
     - queries the necessary rows of the existing cost dataframe
@@ -327,7 +599,7 @@ def pre_process_atb_input_file(
     tech_to_remove,
 ):
     """
-    The function filters and cleans the input NREL/ATB cost file. Namely it:
+    The function filters and cleans the input NREL/ATB cost file. Namely, it:
     - reads the input file
     - normalizes the Fixed O&M by Additional OCC (for retrofits technologies) or CAPEX (for any other technology)
     - changes the units
@@ -526,9 +798,13 @@ if __name__ == "__main__":
         snakemake = mock_snakemake("compile_cost_assumptions_usa")
 
     year_list = sorted(snakemake.config["years"])
+    num_digits = snakemake.config["ndigits"]
+    eur_reference_year = snakemake.config["eur_year"]
     input_file_list_atb = snakemake.input.nrel_atb_input_files
     input_file_discount_rate = snakemake.input.nrel_atb_input_discount_rate
     input_file_fuel_costs = snakemake.input.nrel_atb_input_fuel_costs
+    input_file_manual_input_usa = snakemake.input.nrel_atb_manual_input_usa
+    input_file_eur_inflation_rate = snakemake.input.eur_inflation_rate
     cost_file_list = snakemake.input.cost_files_to_modify
     nrel_atb_columns_to_keep = snakemake.config["nrel_atb"]["nrel_atb_columns_to_keep"]
     nrel_atb_core_metric_parameter_to_keep = snakemake.config["nrel_atb"][
@@ -573,8 +849,21 @@ if __name__ == "__main__":
         else:
             raise Exception(f"{year_val} is not a considered year")
 
+        manual_input_usa_df = pre_process_manual_input_usa(
+            input_file_manual_input_usa,
+            input_file_eur_inflation_rate,
+            year_list,
+            eur_reference_year,
+            year_val,
+            num_digits,
+        )
+
         cost_df = pre_process_cost_input_file(
             input_cost_path, ["financial_case", "scenario"]
+        )
+
+        cost_df = modify_cost_input_file(
+            cost_df, manual_input_usa_df, year_list, year_val, num_digits
         )
 
         atb_e_df = pre_process_atb_input_file(
@@ -652,7 +941,12 @@ if __name__ == "__main__":
         # Cast "value" from float
         updated_cost_df["value"] = updated_cost_df["value"].astype(float)
 
-        # output the modified cost file
+        # Sort the modified cost dataframe by technology and parameter
+        updated_cost_df = updated_cost_df.sort_values(
+            by=["technology", "parameter"]
+        ).reset_index(drop=True)
+
+        # output the modified cost dataframe
         output_cost_path_list = [
             path for path in snakemake.output if str(year_val) in path
         ]

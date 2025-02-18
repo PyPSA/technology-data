@@ -33,6 +33,7 @@ from datetime import date
 
 import numpy as np
 import pandas as pd
+from _helpers import adjust_for_inflation
 from currency_converter import ECB_URL, CurrencyConverter
 from scipy import interpolate
 
@@ -1433,48 +1434,6 @@ def get_data_from_DEA(
     return data_by_tech_dict
 
 
-def adjust_for_inflation(inflation_rate, costs, techs, ref_year, col):
-    """
-    Adjust the investment costs for the specified techs for inflation.
-
-    techs: str or list
-        One or more techs in costs index for which the inflation adjustment is done.
-    ref_year: int
-        Reference year for which the costs are provided and based on which the inflation adjustment is done.
-    costs: pd.Dataframe
-        Dataframe containing the costs data with multiindex on technology and one index key 'investment'.
-    """
-
-    def get_factor(inflation_rate, ref_year, eur_year):
-        if (pd.isna(ref_year)) or (ref_year < 1900):
-            return np.nan
-        if ref_year == eur_year:
-            return 1
-        mean = inflation_rate.mean()
-        if ref_year < eur_year:
-            new_index = np.arange(ref_year + 1, eur_year + 1)
-            df = 1 + inflation_rate.reindex(new_index).fillna(mean)
-            return df.cumprod().loc[eur_year]
-        else:
-            new_index = np.arange(eur_year + 1, ref_year + 1)
-            df = 1 + inflation_rate.reindex(new_index).fillna(mean)
-            return 1 / df.cumprod().loc[ref_year]
-
-    inflation = costs.currency_year.apply(
-        lambda x: get_factor(inflation_rate, x, snakemake.config["eur_year"])
-    )
-
-    paras = ["investment", "VOM", "fuel"]
-    filter_i = costs.index.get_level_values(0).isin(
-        techs
-    ) & costs.index.get_level_values(1).isin(paras)
-    costs.loc[filter_i, col] = costs.loc[filter_i, col].mul(
-        inflation.loc[filter_i], axis=0
-    )
-
-    return costs
-
-
 def clean_up_units(
     technology_dataframe: pd.DataFrame, value_column: str = "", source: str = ""
 ) -> pd.DataFrame:
@@ -1906,7 +1865,7 @@ def set_round_trip_efficiency(
 
 def order_data(list_of_years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
     """
-    The function check if the units of different variables are conform and logs warnings if not
+    The function check if the units of different variables are conform and logs warnings if not.
 
     Parameters
     ----------
@@ -2382,8 +2341,7 @@ def add_description(
     offwind_no_grid_costs_flag: bool = True,
 ) -> pd.DataFrame:
     """
-    The function adds the Excel sheet name as a column to the tech data and
-    adds comments for offwind connection costs.
+    The function adds the Excel sheet name as a column to the tech data and adds comments for offwind connection costs.
 
     Parameters
     ----------
@@ -3372,7 +3330,7 @@ def add_egs_data(technology_dataframe: pd.DataFrame) -> pd.DataFrame:
 
 def annuity(n, r=0.07):
     """
-    The function calculates the annuity factor for an asset with lifetime n years and discount rate of r
+    The function calculates the annuity factor for an asset with lifetime n years and discount rate of r.
 
     Parameters
     ----------
@@ -3383,7 +3341,7 @@ def annuity(n, r=0.07):
 
     Returns
     -------
-    pd.Series, float
+    float
         annuity
     """
 
@@ -3393,21 +3351,36 @@ def annuity(n, r=0.07):
         return 1 / n
 
 
-def add_home_battery_costs(list_of_years, costs):
+def add_home_battery_costs(
+    ewg_cost_file_name: str, list_of_years: list, cost_dataframe: pd.DataFrame
+) -> pd.DataFrame:
     """
-    Adds investment costs for home battery storage and inverter.
-    Since home battery costs are not part of the DEA cataloque, utility-scale
-    costs are multiplied by a factor determined by data from the EWG study
+    The function adds investment costs for home battery storage and inverter.
+    Since home battery costs are not part of the DEA catalogue, utility-scale
+    costs are multiplied by a factor determined by data from the EWG study.
+
+    Parameters
+    ----------
+    ewg_cost_file_name: str
+        file name for the cost assumptions from the EWG study
+    list_of_years : list
+        years for which a cost assumption is provided
+    r: float
+        discount rate
+
+    Returns
+    -------
+    Dataframe
+        updated technology data
     """
+
     # get DEA assumptions for utility scale
     home_battery = data.loc[["battery storage", "battery inverter"]].rename(
         index=lambda x: "home " + x, level=0
     )
 
     # get EWG cost assumptions
-    costs_ewg = pd.read_csv(
-        snakemake.input.EWG_costs, index_col=list(range(2))
-    ).sort_index()
+    costs_ewg = pd.read_csv(ewg_cost_file_name, index_col=list(range(2))).sort_index()
     v = costs_ewg.unstack()[[str(year) for year in list_of_years]].swaplevel(axis=1)
 
     # annualise EWG cost assumptions
@@ -3470,7 +3443,7 @@ def add_home_battery_costs(list_of_years, costs):
         lambda x: source_dict["EWG"] + ", " + x
     )
 
-    return pd.concat([costs, home_battery])
+    return pd.concat([cost_dataframe, home_battery])
 
 
 def add_SMR_data(list_of_years, data):
@@ -4036,7 +4009,7 @@ if __name__ == "__main__":
     # add costs for home batteries
 
     if snakemake.config["energy_storage_database"].get("ewg_home_battery", True):
-        data = add_home_battery_costs(years_list, data)
+        data = add_home_battery_costs(snakemake.input.EWG_costs, years_list, data)
     # add SMR assumptions
     data = add_SMR_data(years_list, data)
     # add solar rooftop costs by taking the mean of commercial and residential

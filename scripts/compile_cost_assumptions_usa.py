@@ -335,6 +335,7 @@ def pre_process_manual_input_usa(
         manual_input_usa_file_df.technology.unique(),
         eur_year,
         ["value"],
+        usa_costs_flag=True,
     )
 
     # Round the results

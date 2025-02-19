@@ -3572,6 +3572,29 @@ def add_mean_solar_rooftop(
     return pd.concat([technology_dataframe, solar])
 
 
+def geometric_series(
+    nominator: float, denominator: float = 1.0, number_of_terms: int = 1, start: int = 1
+):
+    """
+    A geometric series is a series with a constant ratio between successive terms.
+    When moving to infinity the geometric series converges to a limit.
+    https://en.wikipedia.org/wiki/Series_(mathematics)
+
+    Example:
+    -------
+    nominator = 1
+    denominator = 2
+    number_of_terms = 3
+    start = 0  # 0 means it starts at the first term
+    result = 1/1**0 + 1/2**1 + 1/2**2 = 1 + 1/2 + 1/4 = 1.75
+
+    If moving to infinity the result converges to 2
+    """
+    return sum(
+        [nominator / denominator**i for i in range(start, start + number_of_terms)]
+    )
+
+
 def add_energy_storage_database(
     pnnl_storage_file_name: str,
     pnnl_energy_storage_dict: dict,
@@ -3757,31 +3780,6 @@ def add_energy_storage_database(
                 # Below we create linear segments between 2021-2030
                 # While the first segment is known, the others are defined by the initial segments with a accumulating quadratic decreasing gradient
                 other_segments_points = [2034, 2039, 2044, 2049, 2054, 2059]
-
-                def geometric_series(
-                    nominator, denominator=1, number_of_terms=1, start=1
-                ):
-                    """
-                    A geometric series is a series with a constant ratio between successive terms.
-                    When moving to infinity the geometric series converges to a limit.
-                    https://en.wikipedia.org/wiki/Series_(mathematics)
-
-                    Example:
-                    -------
-                    nominator = 1
-                    denominator = 2
-                    number_of_terms = 3
-                    start = 0  # 0 means it starts at the first term
-                    result = 1/1**0 + 1/2**1 + 1/2**2 = 1 + 1/2 + 1/4 = 1.75
-
-                    If moving to infinity the result converges to 2
-                    """
-                    return sum(
-                        [
-                            nominator / denominator**i
-                            for i in range(start, start + number_of_terms)
-                        ]
-                    )
 
                 if (
                     tech_name == "Hydrogen-discharger"

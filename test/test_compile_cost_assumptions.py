@@ -8,6 +8,7 @@ import copy
 import pathlib
 import sys
 
+import numpy as np
 import pandas as pd
 import pytest
 
@@ -19,6 +20,7 @@ from compile_cost_assumptions import (
     clean_up_units,
     convert_units,
     dea_sheet_names,
+    geometric_series,
     get_data_from_DEA,
     get_excel_sheets,
     get_sheet_location,
@@ -681,3 +683,17 @@ def test_annuity(discount_rate_value, expected_annuity):
     The test verifies what is returned by annuity.
     """
     assert annuity(n=1.0, r=discount_rate_value) == expected_annuity
+
+
+@pytest.mark.parametrize(
+    "nom_val, den_val, n_terms, start_val, expected_val",
+    [(1.0, 6.5, 3, 0, 1.18), (1.0, 2.0, 3, 0, 1.75)],
+)
+def test_geometric_series(nom_val, den_val, n_terms, start_val, expected_val):
+    """
+    The test verifies what is returned by annuity.
+    """
+    assert (
+        np.round(geometric_series(nom_val, den_val, n_terms, start_val), 2)
+        == expected_val
+    )

@@ -3348,8 +3348,8 @@ def add_home_battery_costs(
         file name for the cost assumptions from the EWG study
     years : list
         years for which a cost assumption is provided
-    r: float
-        discount rate
+    cost_dataframe: pd.DataFrame
+        existing cost dataframe
 
     Returns
     -------
@@ -4158,7 +4158,7 @@ if __name__ == "__main__":
         techs = costs_tot.index.get_level_values(0).unique()
         costs_tot["currency_year"] = costs_tot.currency_year.astype(float)
         costs_tot = adjust_for_inflation(
-            inflation_rate, costs_tot, techs, snakemake.config["eur_year"], ["value"]
+            inflation_rate, costs_tot, techs, snakemake.config["eur_year"], "value"
         )
 
         # format and sort

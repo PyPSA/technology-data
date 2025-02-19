@@ -105,7 +105,7 @@ def get_conversion_dictionary(flag: str) -> dict:
 
 
 def filter_atb_input_file(
-    input_file_path: str,
+    input_file_path: pathlib.Path,
     year: int,
     list_columns_to_keep: list,
     list_core_metric_parameter_to_keep: list,
@@ -121,7 +121,7 @@ def filter_atb_input_file(
 
     Parameters
     ----------
-    input_file_path : str
+    input_file_path : pathlib.Path
         NREL/ATB file path
     year: int
         year for the cost assumption
@@ -395,7 +395,7 @@ def pre_process_manual_input_usa(
         manual_input_usa_file_df,
         manual_input_usa_file_df.technology.unique(),
         eur_year,
-        ["value"],
+        "value",
         usa_costs_flag=True,
     )
 

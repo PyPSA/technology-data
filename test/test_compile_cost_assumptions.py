@@ -160,7 +160,7 @@ def test_get_sheet_location():
         "waste CHP CC": "inputs/technology_data_for_el_and_dh.xlsx",
         "biochar pyrolysis": "inputs/data_sheets_for_renewable_fuels.xlsx",
         "electrolysis small": "inputs/data_sheets_for_renewable_fuels.xlsx",
-        "random tech": None,
+        "random tech": "Sheet not found",
     }
     dea_sheet_names_dict = copy.deepcopy(dea_sheet_names)
     dea_sheet_names_dict["random tech"] = "random sheet"
@@ -250,13 +250,16 @@ def test_get_data_from_dea(config):
         "waste CHP CC": (16, 9),
         "biochar pyrolysis": (7, 9),
         "electrolysis small": (7, 9),
+        "random tech": (0, 0),
     }
     excel_files = [
         v for k, v in snakemake_input_dictionary.items() if "dea" in k.casefold()
     ]
     input_dea_files_dict = get_excel_sheets(excel_files)
+    dea_sheet_names_dict = copy.deepcopy(dea_sheet_names)
+    dea_sheet_names_dict["random tech"] = "random sheet"
     output_dictionary = get_data_from_DEA(
-        config["years"], input_dea_files_dict, expectation=config["expectation"]
+        config["years"], dea_sheet_names_dict, input_dea_files_dict, expectation=config["expectation"]
     )
     comparison_dictionary = {}
     for key, value in output_dictionary.items():

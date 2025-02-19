@@ -325,12 +325,12 @@ def get_sheet_location(
         return key_list[0]
     elif len(key_list) > 1:
         logger.info(f"{tech_name} appears in more than one sheet name")
-        return None
+        return "Multiple sheets found"
     else:
         logger.info(
             f"tech {tech_name} with sheet name {sheet_names_dict[tech_name]} not found in excel sheets. "
         )
-        return None
+        return "Sheet not found"
 
 
 def get_dea_maritime_data(
@@ -582,6 +582,7 @@ def get_dea_vehicle_data(
 def get_data_DEA(
     years: list,
     tech_name: str,
+    sheet_names_dict: dict,
     input_data_dict: dict,
     offwind_no_grid_costs_flag: bool = True,
     expectation: str = None,
@@ -596,6 +597,8 @@ def get_data_DEA(
         years for which a cost assumption is provided
     tech_name : str
         technology name
+    sheet_names_dict : dict
+        dictionary having the technology name as keys and Excel sheet names as values
     input_data_dict : dict
         dictionary where the keys are the path to the DEA inputs and the values are the sheet names
     offwind_no_grid_costs_flag : bool
@@ -609,10 +612,10 @@ def get_data_DEA(
         technology data from DEA
     """
 
-    excel_file = get_sheet_location(tech_name, dea_sheet_names, input_data_dict)
-    if excel_file is None:
+    excel_file = get_sheet_location(tech_name, sheet_names_dict, input_data_dict)
+    if excel_file == "Sheet not found" or excel_file == "Multiple sheets found":
         logger.info(f"excel file not found for technology: {tech_name}")
-        return None
+        return pd.DataFrame()
 
     if tech_name == "battery":
         usecols = "B:J"
@@ -655,7 +658,7 @@ def get_data_DEA(
 
     excel = pd.read_excel(
         excel_file,
-        sheet_name=dea_sheet_names[tech_name],
+        sheet_name=sheet_names_dict[tech_name],
         index_col=0,
         usecols=usecols,
         skiprows=skiprows,
@@ -1380,14 +1383,12 @@ def biochar_pyrolysis_harmonise_dea(df: pd.DataFrame) -> pd.DataFrame:
         inplace=True,
     )
 
-    # df = df.astype(float)
-    # df = df.mask(df.apply(pd.to_numeric, errors='coerce').isna(), df.astype(str).apply(lambda x: x.str.strip()))
-
     return df
 
 
 def get_data_from_DEA(
     years: list,
+    sheet_names_dict: dict,
     input_data_dictionary: dict,
     offwind_no_grid_costs: bool = True,
     expectation: str = None,
@@ -1399,6 +1400,8 @@ def get_data_from_DEA(
     ----------
     years : list
         years for which a cost assumption is provided
+    sheet_names_dict : dict
+        dictionary having the technology name as keys and Excel sheet names as values
     input_data_dictionary : dict
         dictionary where the keys are the path to the DEA inputs and the values are the sheet names
     offwind_no_grid_costs : bool
@@ -1414,11 +1417,12 @@ def get_data_from_DEA(
 
     data_by_tech_dict = {}
 
-    for tech_name, dea_tech in dea_sheet_names.items():
+    for tech_name, dea_tech in sheet_names_dict.items():
         logger.info(f"{tech_name} in PyPSA corresponds to {dea_tech} in DEA database.")
         df = get_data_DEA(
             years,
             tech_name,
+            sheet_names_dict,
             input_data_dictionary,
             offwind_no_grid_costs,
             expectation,
@@ -3957,6 +3961,7 @@ if __name__ == "__main__":
     # create dictionary with raw data from DEA sheets
     d_by_tech = get_data_from_DEA(
         years_list,
+        dea_sheet_names,
         data_in,
         snakemake.config["offwind_no_gridcosts"],
         expectation=snakemake.config["expectation"],

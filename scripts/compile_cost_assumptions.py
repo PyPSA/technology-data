@@ -33,11 +33,10 @@ from datetime import date
 
 import numpy as np
 import pandas as pd
-from _helpers import adjust_for_inflation
+from _helpers import adjust_for_inflation, configure_logging, mock_snakemake
 from currency_converter import ECB_URL, CurrencyConverter
 from scipy import interpolate
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 try:
@@ -3573,6 +3572,36 @@ def add_mean_solar_rooftop(
     return pd.concat([technology_dataframe, solar])
 
 
+def geometric_series(
+    nominator: float, denominator: float = 1.0, number_of_terms: int = 1, start: int = 1
+) -> float:
+    """
+    The function computes a geometric series. The geometric series is given with a constant ratio between successive terms.
+    When moving to infinity the geometric series converges to a limit. https://en.wikipedia.org/wiki/Series_(mathematics)
+    For example, for nominator = 1.0, denominator = 2.0, number_of_terms = 3 and start = 0 results in
+    1/2**0 + 1/2**1 + 1/2**2 = 1 + 1/2 + 1/4 = 1.75. If number_of_terms grows, the sum converges to 2
+
+    Parameters
+    ----------
+    nominator : float
+        nominator of the ratio
+    denominator : float
+        denominator of the ratio
+    number_of_terms : int
+        number of terms in the sum
+    start : int
+        if the value is 0, it means it starts at the first term
+
+    Returns
+    -------
+    float
+        sum of the terms
+    """
+    return sum(
+        [nominator / denominator**i for i in range(start, start + number_of_terms)]
+    )
+
+
 def add_energy_storage_database(
     pnnl_storage_file_name: str,
     pnnl_energy_storage_dict: dict,
@@ -3759,31 +3788,6 @@ def add_energy_storage_database(
                 # While the first segment is known, the others are defined by the initial segments with a accumulating quadratic decreasing gradient
                 other_segments_points = [2034, 2039, 2044, 2049, 2054, 2059]
 
-                def geometric_series(
-                    nominator, denominator=1, number_of_terms=1, start=1
-                ):
-                    """
-                    A geometric series is a series with a constant ratio between successive terms.
-                    When moving to infinity the geometric series converges to a limit.
-                    https://en.wikipedia.org/wiki/Series_(mathematics)
-
-                    Example:
-                    -------
-                    nominator = 1
-                    denominator = 2
-                    number_of_terms = 3
-                    start = 0  # 0 means it starts at the first term
-                    result = 1/1**0 + 1/2**1 + 1/2**2 = 1 + 1/2 + 1/4 = 1.75
-
-                    If moving to infinity the result converges to 2
-                    """
-                    return sum(
-                        [
-                            nominator / denominator**i
-                            for i in range(start, start + number_of_terms)
-                        ]
-                    )
-
                 if (
                     tech_name == "Hydrogen-discharger"
                     or tech_name == "Pumped-Heat-store"
@@ -3943,10 +3947,9 @@ def prepare_inflation_rate(fn: str) -> pd.DataFrame:
 #  ---------- MAIN ------------------------------------------------------------
 if __name__ == "__main__":
     if "snakemake" not in globals():
-        from _helpers import mock_snakemake
-
-        # os.chdir(os.path.join(os.getcwd(), "scripts"))
         snakemake = mock_snakemake("compile_cost_assumptions")
+
+    configure_logging(snakemake)
 
     years_list = list(snakemake.config["years"])
     inflation_rate = prepare_inflation_rate(snakemake.input.inflation_rate)

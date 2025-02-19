@@ -17,20 +17,25 @@ from _helpers import adjust_for_inflation, mock_snakemake
 from compile_cost_assumptions import prepare_inflation_rate
 
 
-def get_conversion_dictionary(flag: str):
+def get_conversion_dictionary(flag: str) -> dict:
     """
     The function provides conversion dictionaries.
 
-    Input arguments
-    - flag : str
+    Parameters
+    ----------
+    flag : str
+        flag for setting the returned dictionary
 
-    Output
-    Conversion dictionary:
-    - flag == parameter: it returns a conversion dictionary that renames the parameter values to the PyPSA standard
-    - flag == pypsa_technology_name: it returns a conversion dictionary to rename the technology names to the PyPSA nomenclature
-    - flag == atb_technology_name: it returns a conversion dictionary to align the atb_e_2022 and atb_e_2024 nomenclatures
-    - flag == output_column: it returns a conversion dictionary that renames the column names of the cost dataframe
+    Returns
+    -------
+    Dictionary
+        conversion dictionary such that
+            flag == parameter: it returns a conversion dictionary that renames the parameter values to the PyPSA standard
+            flag == pypsa_technology_name: it returns a conversion dictionary to rename the technology names to the PyPSA nomenclature
+            flag == atb_technology_name: it returns a conversion dictionary to align the atb_e_2022 and atb_e_2024 nomenclatures
+            flag == output_column: it returns a conversion dictionary that renames the column names of the cost dataframe
     """
+
     if flag.casefold() == "parameter":
         return {
             "CAPEX": "investment",
@@ -100,12 +105,12 @@ def get_conversion_dictionary(flag: str):
 
 
 def filter_atb_input_file(
-    input_file_path,
-    year,
-    list_columns_to_keep,
-    list_core_metric_parameter_to_keep,
-    list_tech_to_remove,
-):
+    input_file_path: pathlib.Path,
+    year: int,
+    list_columns_to_keep: list,
+    list_core_metric_parameter_to_keep: list,
+    list_tech_to_remove: list,
+) -> pd.DataFrame:
     """
     The function filters the input cost dataframe from NREL/ATB. Namely, it:
     - selects the necessary columns (the atb_e_2022 and atb_e_2024 have in fact a slightly different schema)
@@ -114,16 +119,25 @@ def filter_atb_input_file(
     - drops duplicated rows
     - drops rows corresponding to unnecessary technologies
 
-    Input arguments
-    - input_file_path : str, NREL/ATB file path
-    - year: int, year for the cost assumption
-    - list_columns_to_keep: list, columns from NREL/ATB dataset that are relevant
-    - list_core_metric_parameter_to_keep: list, values of the core_metric_paramater that are relevant
-    - list_tech_to_remove: list, technologies names that are should be excluded
+    Parameters
+    ----------
+    input_file_path : pathlib.Path
+        NREL/ATB file path
+    year: int
+        year for the cost assumption
+    list_columns_to_keep: list
+        columns from NREL/ATB dataset that are relevant
+    list_core_metric_parameter_to_keep: list
+        values of the core_metric_paramater that are relevant
+    list_tech_to_remove: list
+        technologies names that are should be excluded
 
-    Output
-    - NREL/ATB DataFrame
+    Returns
+    -------
+    DataFrame
+        NREL/ATB cost dataframe
     """
+
     atb_file_df = pd.read_parquet(input_file_path)
     list_core_metric_parameter_to_keep = [
         str(x).casefold() for x in list_core_metric_parameter_to_keep
@@ -178,20 +192,29 @@ def filter_atb_input_file(
     return atb_file_df
 
 
-def get_query_string(column_list, column_to_exclude, fom_normalization_parameter):
+def get_query_string(
+    column_list: list, column_to_exclude: list, fom_normalization_parameter: str
+) -> str:
     """
     The Fixed O&M values from the NREL/ATB database ought to be normalized by Additional OCC
     (for retrofits technologies) or CAPEX (for any other technology). The function returns the
     query strings that links Fixed O&M values to the corresponding Additional OCC and CAPEX values
 
-    Input arguments
-    - column_list : list, list of the columns to consider in the query
-    - column_to_exclude: list, list of the columns that should not be considered in the query
-    - fom_normalization_parameter: str, this value is equal to either Additional OCC or CAPEX
+    Parameters
+    ----------
+    column_list : list
+        columns to consider in the query
+    column_to_exclude: list
+        columns that should not be considered in the query
+    fom_normalization_parameter: str
+        either Additional OCC or CAPEX
 
-    Output
-    - query_string: str, query string
+    Returns
+    -------
+    query_string: str
+        query string
     """
+
     if set(column_to_exclude).issubset(set(column_list)):
         column_to_use_list = list(set(column_list) - set(column_to_exclude))
         query_list = sorted(
@@ -209,20 +232,29 @@ def get_query_string(column_list, column_to_exclude, fom_normalization_parameter
     return query_string.strip()
 
 
-def calculate_fom_percentage(x, dataframe, columns_list):
+def calculate_fom_percentage(
+    x: pd.Series, dataframe: pd.DataFrame, columns_list: list
+) -> float:
     """
     The Fixed O&M values from the NREL/ATB database ought to be normalized by Additional OCC
     (for retrofits technologies) or CAPEX (for any other technology). The function returns the
     query strings that links Fixed O&M values to the corresponding Additional OCC and CAPEX values
 
-    Input arguments
-    - x : row, row of the cost DataFrame
-    - dataframe: DataFrame, the cost DataFrame
-    - column_list: list, list of the columns to consider in the query
+    Parameters
+    ----------
+    x : row
+        row of the cost dataframe
+    dataframe : pd.DataFrame
+        cost DataFrame
+    columns_list: list
+        columns to consider in the query
 
-    Output
-    - float, normalized value of Fixed O&M
+    Returns
+    -------
+    float
+        normalized value of Fixed O&M
     """
+
     if x["core_metric_parameter"].casefold() == "fixed o&m":
         if "retrofit" in x["technology"].casefold():
             query_string = get_query_string(
@@ -236,19 +268,39 @@ def calculate_fom_percentage(x, dataframe, columns_list):
         return x.value
 
 
-def replace_value_name(dataframe, conversion_dict, column_name):
+def replace_value_name(
+    dataframe: pd.DataFrame, conversion_dict: dict, column_name: str
+) -> pd.DataFrame:
+    """
+    The function replaces values in a given dataframe column, using values from a conversion dictionary.
+
+    Parameters
+    ----------
+    dataframe : pd.DataFrame
+        cost dataframe
+    conversion_dict : dict
+        cost DataFrame
+    column_name: str
+        column name where values shall be replaced
+
+    Returns
+    -------
+    DataFrame
+        updated cost dataframe
+    """
+
     dataframe[column_name] = dataframe[column_name].replace(conversion_dict)
     return dataframe
 
 
 def pre_process_manual_input_usa(
-    manual_input_usa_file_path,
-    inflation_rate_file_path,
-    list_of_years,
-    eur_year,
-    year,
-    n_digits,
-):
+    manual_input_usa_file_path: str,
+    inflation_rate_file_path: str,
+    list_of_years: list,
+    eur_year: int,
+    year: int,
+    n_digits: int,
+) -> pd.DataFrame:
     """
     The function reads and modifies the manual_input_usa.csv file. Namely, it:
     - reads the input file
@@ -259,16 +311,25 @@ def pre_process_manual_input_usa(
     - it adjusts the cost estimates to the inflation rate
     - queries the necessary rows of the existing cost dataframe
 
-    Input arguments
-    - manual_input_usa_file_path : str, manual_input_usa.csv file path
-    - inflation_rate_file_path : str, inflation rate file path
-    - list_of_years : list, list of the years for which a cost assumption is provided
-    - eur_year : int, year for european output
-    - year : int, year from list_of_years
-    - n_digits : int, number of significant digits
+    Parameters
+    ----------
+    manual_input_usa_file_path : str
+        manual_input_usa.csv file path
+    inflation_rate_file_path : str
+        inflation rate file path
+    list_of_years : list
+        years for which a cost assumption is provided
+    eur_year : int
+        year for european output
+    year : int
+        year from list_of_years
+    n_digits : int
+        number of significant digits
 
-    Output
-    - DataFrame, updated manual input usa
+    Returns
+    -------
+    DataFrame
+        updated manual input usa
     """
 
     # Read the input file
@@ -397,6 +458,7 @@ def pre_process_manual_input_usa(
     # Cast the value column to float
     manual_input_usa_file_df["value"] = manual_input_usa_file_df["value"].astype(float)
 
+    # Correct the cost assumptions to the inflation rate
     mask = manual_input_usa_file_df["unit"].str.startswith("EUR", na=False)
 
     inflation_adjusted_manual_input_usa_file_df = manual_input_usa_file_df.copy()
@@ -406,7 +468,8 @@ def pre_process_manual_input_usa(
             manual_input_usa_file_df.loc[mask],
             manual_input_usa_file_df.loc[mask, "technology"].unique(),
             eur_year,
-            ["value"],
+            "value",
+            usa_costs_flag=True,
         )["value"]
     )
 
@@ -419,8 +482,12 @@ def pre_process_manual_input_usa(
 
 
 def modify_cost_input_file(
-    cost_dataframe, manual_input_usa_dataframe, list_of_years, year, n_digits
-):
+    cost_dataframe: pd.DataFrame,
+    manual_input_usa_dataframe: pd.DataFrame,
+    list_of_years: list,
+    year: int,
+    n_digits: int,
+) -> pd.DataFrame:
     """
     The function filters out from the existing cost dataframe the rows corresponding
     to the technology-parameter pairs from manual_input_usa.csv. It then concatenates manual_input_usa.csv and
@@ -430,15 +497,23 @@ def modify_cost_input_file(
     - concatenates manual_input_usa.csv
     - updates the parameters for electrobiofuels
 
-    Input arguments
-    - cost_dataframe : DataFrame, existing cost dataframe
-    - manual_input_usa_dataframe : DataFrame, manual_input_usa dataframe
-    - list_of_years : list, list of the years for which a cost assumption is provided
-    - year : int, year from list_of_years
-    - n_digits : int, number of significant digits
+    Parameters
+    ----------
+    cost_dataframe : pd.DataFrame
+        existing cost dataframe
+    manual_input_usa_dataframe : pd.DataFrame
+        manual_input_usa dataframe
+    list_of_years : list
+        years for which a cost assumption is provided
+    year : int
+        year from list_of_years
+    n_digits : int
+        number of significant digits
 
-    Output
-    - DataFrame, updated cost dataframe
+    Returns
+    -------
+    DataFrame
+        updated cost dataframe
     """
 
     # Create a list of tuples (technology, parameter) from manual_input_usa.csv
@@ -585,7 +660,11 @@ def modify_cost_input_file(
     return updated_cost_dataframe
 
 
-def query_cost_dataframe(cost_dataframe, technology_dictionary, parameter_dictionary):
+def query_cost_dataframe(
+    cost_dataframe: pd.DataFrame,
+    technology_dictionary: dict,
+    parameter_dictionary: dict,
+) -> pd.DataFrame:
     """
     The function queries the rows of the existing cost dataframe.
     The selection is done by means of an OR operator. The two operands for this logical operation are returned
@@ -593,14 +672,21 @@ def query_cost_dataframe(cost_dataframe, technology_dictionary, parameter_dictio
     - query_string_part_one: selects all the rows corresponding to the technologies NOT updated with NREL-ATB data
     - query_string_part_two: some of the techno-economic parameters (e.g., efficiency, capture rate) to be updated with NREL-ATB data are NOT present in the NREL-ATB dataset. They are instead added to the former cost csv files by means of the manual_input.csv. They should be kept in the final output. This query selects such rows
 
-    Input arguments
-    - cost_dataframe: DataFrame, existing cost dataframe
-    - technology_dictionary: dict, a dictionary of the technologies updated with NREL/ATB data
-    - parameter_dictionary: dict, a dictionary of the parameters for which NREL/ATB estimates are available
+    Parameters
+    ----------
+    cost_dataframe: pd.DataFrame
+        existing cost dataframe
+    technology_dictionary: dict
+        dictionary of the technologies updated with NREL/ATB data
+    parameter_dictionary: dict
+        dictionary of the parameters for which NREL/ATB estimates are available
 
-    Output
-    - DataFrame, updated version of the existing cost dataframe
+    Returns
+    -------
+    DataFrame
+        queried cost dataframe
     """
+
     technologies_from_nrel = [
         str(x).casefold() for x in set(technology_dictionary.values())
     ]
@@ -632,19 +718,26 @@ def query_cost_dataframe(cost_dataframe, technology_dictionary, parameter_dictio
     return queried_cost_dataframe
 
 
-def pre_process_cost_input_file(input_file_path, columns_to_add_list):
+def pre_process_cost_input_file(
+    input_file_path: str, columns_to_add_list: list
+) -> pd.DataFrame:
     """
     The function filters and cleans the existing cost file. Namely, it:
     - reads the input file
     - adds the columns from NREL/ATB not present in the existing cost dataframe
     - queries the necessary rows of the existing cost dataframe
 
-    Input arguments
-    - input_file_path : str, existing cost file path
-    - columns_to_add_list: list, list of column names from NREL/ATB to be added to the existing cost dataframe
+    Parameters
+    ----------
+    input_file_path : str
+        existing cost file path
+    columns_to_add_list: list
+        column names from NREL/ATB to be added to the existing cost dataframe
 
-    Output
-    - DataFrame, updated NREL/ATB cost dataframe
+    Returns
+    -------
+    DataFrame
+        updated NREL/ATB cost dataframe
     """
 
     cost_input_df = pd.read_csv(input_file_path)
@@ -664,13 +757,13 @@ def pre_process_cost_input_file(input_file_path, columns_to_add_list):
 
 
 def pre_process_atb_input_file(
-    input_file_path,
-    year,
-    list_columns_to_keep,
-    list_core_metric_parameter_to_keep,
-    nrel_source,
-    tech_to_remove,
-):
+    input_file_path: str,
+    nrel_source: str,
+    year: int,
+    list_columns_to_keep: list,
+    list_core_metric_parameter_to_keep: list,
+    tech_to_remove: list,
+) -> pd.DataFrame:
     """
     The function filters and cleans the input NREL/ATB cost file. Namely, it:
     - reads the input file
@@ -679,17 +772,27 @@ def pre_process_atb_input_file(
     - renames the technology names to the PyPSA nomenclature
     - aligns the atb_e_2022 nomenclature to the atb_e 2024 nomenclature
 
-    Input arguments
-    - input_file_path : str, NREL/ATB file path
-    - year: int, year for the cost assumption
-    - list_columns_to_keep: list, columns from NREL/ATB dataset that are relevant
-    - list_core_metric_parameter_to_keep: list, values of the core_metric_paramater that are relevant
-    - nrel_source: str, link to the NREL/ATB source files. This information shall be used to populate the source column
-    - tech_to_remove: list, technologies names that are should be excluded from NREL/ATB
+    Parameters
+    ----------
+    input_file_path : str
+        NREL/ATB file path
+    nrel_source: str
+        link to the NREL/ATB source files. This information shall be used to populate the source column
+    year: int
+        year for the cost assumption
+    list_columns_to_keep: list
+        columns from NREL/ATB dataset that are relevant
+    list_core_metric_parameter_to_keep: list
+        values of the core_metric_paramater that are relevant
+    tech_to_remove: list
+        technologies names that are should be excluded from NREL/ATB
 
-    Output
-    - DataFrame, updated NREL/ATB cost dataframe
+    Returns
+    -------
+    DataFrame
+        updated NREL/ATB cost dataframe
     """
+
     # Read inputs and filter relevant columns and relevant core_metric_variables (i.e. the years to consider)
     atb_input_df = filter_atb_input_file(
         pathlib.Path(input_file_path),
@@ -804,7 +907,7 @@ def pre_process_atb_input_file(
     return atb_input_df.reset_index(drop=True)
 
 
-def duplicate_fuel_cost(input_file_path, list_of_years):
+def duplicate_fuel_cost(input_file_path: str, list_of_years: list) -> pd.DataFrame:
     """
     The function reads-in the fuel cost file to a Pandas DataFrame and
     replicates the last available row for each technology. Namely, it
@@ -814,12 +917,17 @@ def duplicate_fuel_cost(input_file_path, list_of_years):
     - creates a list with the missing years
     - replicates the estimation for the last available year for all the missing years
 
-    Input arguments
-    - input_file_path : str, fuel cost file path
-    - list_of_years: list, list of the years for which a cost assumption is provided
+    Parameters
+    ----------
+    input_file_path : str
+        fuel cost file path
+    list_of_years: list
+        years for which a cost assumption is provided
 
-    Output
-    - DataFrame, updated fuel cost dataframe
+    Returns
+    -------
+    DataFrame
+        updated fuel cost dataframe
     """
 
     # Read-in the fuel cost file for the US
@@ -941,10 +1049,10 @@ if __name__ == "__main__":
 
         atb_e_df = pre_process_atb_input_file(
             input_atb_path,
+            nrel_atb_source_link,
             year_val,
             nrel_atb_columns_to_keep,
             nrel_atb_core_metric_parameter_to_keep,
-            nrel_atb_source_link,
             nrel_atb_technology_to_remove,
         )
 

@@ -255,10 +255,10 @@ def test_pre_process_atb_input_file(config, input_file_year, year, expected):
     nrel_atb_source_link = config["nrel_atb"]["nrel_atb_source_link"]
     output_df = pre_process_atb_input_file(
         input_file_path,
+        nrel_atb_source_link,
         year,
         nrel_atb_columns_to_keep,
         nrel_atb_core_metric_parameter_to_keep,
-        nrel_atb_source_link,
         nrel_atb_technology_to_remove,
     )
     reference_parameter_list = sorted(["investment", "CF", "FOM", "VOM", "fuel"])

@@ -187,30 +187,51 @@ def mock_snakemake(
     return snakemake
 
 
-def adjust_for_inflation(inflation_rate, costs, techs, eur_year, col):
+def adjust_for_inflation(
+    inflation_rate: pd.DataFrame,
+    costs: pd.DataFrame,
+    techs: pd.Series,
+    eur_year: int,
+    col_name: str,
+    usa_costs_flag: bool = False,
+) -> pd.DataFrame:
     """
-    Adjust the investment costs for the specified techs for inflation.
+    The function adjust the investment costs for the specified techs for inflation.
 
-    techs: str or list
-        One or more techs in costs index for which the inflation adjustment is done.
-    eur_year: int
-        Reference year for which the costs are provided and based on which the inflation adjustment is done.
-    costs: Dataframe containing the costs data with multiindex on technology and one index key 'investment'.
+    Parameters
+    ----------
+    inflation_rate : pd.DataFrame
+        inflation rates for several years
+    costs : pd.DataFrame
+        existing cost dataframe
+    techs : pd.Series
+        technologies
+    eur_year : int,
+        reference year for which the costs are provided and based on which the inflation adjustment is done
+    col_name : str
+        column name to which to apply the inflation rate adjustment
+    usa_costs_flag: bool
+        flag for US specific costs
+
+    Returns
+    -------
+    Dataframe
+        inflation updated cost dataframe
     """
 
-    def get_factor(inflation_rate, ref_year, eur_year):
+    def get_factor(inflation_rate_df, ref_year, eur_year_val):
         if (pd.isna(ref_year)) or (ref_year < 1900):
             return np.nan
-        if ref_year == eur_year:
+        if ref_year == eur_year_val:
             return 1
-        mean = inflation_rate.mean()
-        if ref_year < eur_year:
-            new_index = np.arange(ref_year + 1, eur_year + 1)
-            df = 1 + inflation_rate.reindex(new_index).fillna(mean)
-            return df.cumprod().loc[eur_year]
+        mean = inflation_rate_df.mean()
+        if ref_year < eur_year_val:
+            new_index = np.arange(ref_year + 1, eur_year_val + 1)
+            df = 1 + inflation_rate_df.reindex(new_index).fillna(mean)
+            return df.cumprod().loc[eur_year_val]
         else:
-            new_index = np.arange(eur_year + 1, ref_year + 1)
-            df = 1 + inflation_rate.reindex(new_index).fillna(mean)
+            new_index = np.arange(eur_year_val + 1, ref_year + 1)
+            df = 1 + inflation_rate_df.reindex(new_index).fillna(mean)
             return 1 / df.cumprod().loc[ref_year]
 
     inflation = costs.currency_year.apply(
@@ -218,8 +239,14 @@ def adjust_for_inflation(inflation_rate, costs, techs, eur_year, col):
     )
 
     paras = ["investment", "VOM", "fuel"]
-    filter_i = costs.technology.isin(techs) & costs.parameter.isin(paras)
-    costs.loc[filter_i, col] = costs.loc[filter_i, col].mul(
+
+    if usa_costs_flag:
+        filter_i = costs.technology.isin(techs) & costs.parameter.isin(paras)
+    else:
+        filter_i = costs.index.get_level_values(0).isin(
+            techs
+        ) & costs.index.get_level_values(1).isin(paras)
+    costs.loc[filter_i, col_name] = costs.loc[filter_i, col_name].mul(
         inflation.loc[filter_i], axis=0
     )
 

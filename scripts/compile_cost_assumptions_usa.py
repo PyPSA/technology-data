@@ -9,8 +9,9 @@ Script creates cost csv for chosen years concatenating US-specific cost assumpti
 The input files are in parquet format and can be downloaded from https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fparquet%2F
 """
 
-import pathlib
 import logging
+import pathlib
+
 import numpy as np
 import pandas as pd
 from _helpers import adjust_for_inflation, configure_logging, mock_snakemake
@@ -966,7 +967,7 @@ if __name__ == "__main__":
         else:
             raise Exception(f"{year_val} is not a considered year")
 
-        logger.info("The file {} is used for year {}".format(input_atb_path, year_val))
+        logger.info(f"The file {input_atb_path} is used for year {year_val}")
 
         manual_input_usa_df = pre_process_manual_input_usa(
             input_file_manual_input_usa,
@@ -1072,7 +1073,9 @@ if __name__ == "__main__":
         if len(output_cost_path_list) == 1:
             output_cost_path = output_cost_path_list[0]
             updated_cost_df.to_csv(output_cost_path, index=False)
-            logger.info("The cost assumptions file for the US has been compiled for year {}".format(year_val))
+            logger.info(
+                f"The cost assumptions file for the US has been compiled for year {year_val}"
+            )
         else:
             raise Exception(
                 "Please verify the list of cost files. It may contain duplicates."

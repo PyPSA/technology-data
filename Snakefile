@@ -4,7 +4,9 @@
 
 import pathlib
 
+
 configfile: "config.yaml"
+
 
 rule compile_cost_assumptions:
     input:

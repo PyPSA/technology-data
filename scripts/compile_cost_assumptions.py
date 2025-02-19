@@ -33,11 +33,10 @@ from datetime import date
 
 import numpy as np
 import pandas as pd
-from _helpers import adjust_for_inflation
+from _helpers import adjust_for_inflation, configure_logging, mock_snakemake
 from currency_converter import ECB_URL, CurrencyConverter
 from scipy import interpolate
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 try:
@@ -3943,10 +3942,9 @@ def prepare_inflation_rate(fn: str) -> pd.DataFrame:
 #  ---------- MAIN ------------------------------------------------------------
 if __name__ == "__main__":
     if "snakemake" not in globals():
-        from _helpers import mock_snakemake
-
-        # os.chdir(os.path.join(os.getcwd(), "scripts"))
         snakemake = mock_snakemake("compile_cost_assumptions")
+
+    configure_logging(snakemake)
 
     years_list = list(snakemake.config["years"])
     inflation_rate = prepare_inflation_rate(snakemake.input.inflation_rate)

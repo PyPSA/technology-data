@@ -10,11 +10,13 @@ The input files are in parquet format and can be downloaded from https://data.op
 """
 
 import pathlib
-
+import logging
 import numpy as np
 import pandas as pd
-from _helpers import adjust_for_inflation, mock_snakemake
+from _helpers import adjust_for_inflation, configure_logging, mock_snakemake
 from compile_cost_assumptions import prepare_inflation_rate
+
+logger = logging.getLogger(__name__)
 
 
 def get_conversion_dictionary(flag: str) -> dict:
@@ -904,6 +906,8 @@ if __name__ == "__main__":
     if "snakemake" not in globals():
         snakemake = mock_snakemake("compile_cost_assumptions_usa")
 
+    configure_logging(snakemake)
+
     year_list = sorted(snakemake.config["years"])
     num_digits = snakemake.config["ndigits"]
     eur_reference_year = snakemake.config["eur_year"]
@@ -922,6 +926,8 @@ if __name__ == "__main__":
         "nrel_atb_technology_to_remove"
     ]
 
+    logger.info("Configuration variables are set")
+
     if len(set(snakemake.config["years"])) < len(snakemake.config["years"]):
         raise Exception(
             "Please verify the list of cost files. It may contain duplicates."
@@ -935,8 +941,12 @@ if __name__ == "__main__":
     # get the discount rate values for the US
     discount_rate_df = pd.read_csv(input_file_discount_rate)
 
+    logger.info("discount_rate file for the US has been read in")
+
     # get the fuel costs values for the US
     fuel_costs_df = duplicate_fuel_cost(input_file_fuel_costs, year_list)
+
+    logger.info("fuel_cost file for the US has been read in")
 
     for year_val in year_list:
         # get the cost file to modify
@@ -955,6 +965,8 @@ if __name__ == "__main__":
             input_atb_path = input_file_list_atb[1]
         else:
             raise Exception(f"{year_val} is not a considered year")
+
+        logger.info("The file {} is used for year {}".format(input_atb_path, year_val))
 
         manual_input_usa_df = pre_process_manual_input_usa(
             input_file_manual_input_usa,
@@ -1060,6 +1072,7 @@ if __name__ == "__main__":
         if len(output_cost_path_list) == 1:
             output_cost_path = output_cost_path_list[0]
             updated_cost_df.to_csv(output_cost_path, index=False)
+            logger.info("The cost assumptions file for the US has been compiled for year {}".format(year_val))
         else:
             raise Exception(
                 "Please verify the list of cost files. It may contain duplicates."

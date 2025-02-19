@@ -414,9 +414,7 @@ def get_dea_maritime_data(
 
         # convert FOM in % of investment/year
         if "Fixed O&M" in df.index:
-            df.loc["Fixed O&M", years] /= (
-                df.loc["Upfront ship cost", years] * 100
-            )
+            df.loc["Fixed O&M", years] /= df.loc["Upfront ship cost", years] * 100
             df.loc["Fixed O&M", "unit"] = "%/year"
 
         # convert nm in km
@@ -1159,9 +1157,7 @@ def add_co2_intensity(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
     return cost_dataframe
 
 
-def add_solar_from_other(
-    years: list, cost_dataframe: pd.DataFrame
-) -> pd.DataFrame:
+def add_solar_from_other(years: list, cost_dataframe: pd.DataFrame) -> pd.DataFrame:
     """
     The function adds solar from other sources than DEA (since the lifetime assumed in
     DEA is very optimistic).
@@ -1191,9 +1187,7 @@ def add_solar_from_other(
     solar_uti = pd.Series(data=interpolated_data, index=years)
 
     # solar rooftop from ETIP 2019
-    interpolated_data = np.interp(
-        x=years, xp=[2020, 2030, 2050], fp=[1150, 800, 550]
-    )
+    interpolated_data = np.interp(x=years, xp=[2020, 2030, 2050], fp=[1150, 800, 550])
     # using 2016 money in page 10
     interpolated_data = interpolated_data / (
         1 + snakemake.config["rate_inflation"]
@@ -1738,9 +1732,7 @@ def set_specify_assumptions(
             ("decentral gas boiler", "Technical lifetime"),
         ]
     ]
-    boiler_connect.loc[
-        ("decentral gas boiler", "Technical lifetime"), years
-    ] = 50.0
+    boiler_connect.loc[("decentral gas boiler", "Technical lifetime"), years] = 50.0
     boiler_connect.rename(
         index={"decentral gas boiler": "decentral gas boiler connection"}, inplace=True
     )
@@ -1963,9 +1955,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 if not any(fixed.unit.str.contains("% of specific investment/year")):
                     investment[investment == 0] = float("nan")
                     investment = investment.ffill(axis=1).fillna(0)
-                    fom[years] = (
-                        fixed[years] / investment[years].values * 100
-                    )
+                    fom[years] = fixed[years] / investment[years].values * 100
                 else:
                     fom[years] = fixed[years]
                 fom["parameter"] = "FOM"
@@ -2249,9 +2239,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
         .squeeze()
     )
 
-    power_ratio_tank[years] = storage_capacity_tank[years].div(
-        power_ratio_tank[years]
-    )
+    power_ratio_tank[years] = storage_capacity_tank[years].div(power_ratio_tank[years])
     power_ratio_tank["further description"] = (
         "Ratio between energy storage and input capacity"
     )
@@ -2282,9 +2270,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
         .squeeze()
     )
 
-    power_ratio_tank[years] = storage_capacity_tank[years].div(
-        power_ratio_tank[years]
-    )
+    power_ratio_tank[years] = storage_capacity_tank[years].div(power_ratio_tank[years])
     power_ratio_tank["further description"] = (
         "Ratio between energy storage and input capacity"
     )
@@ -2315,9 +2301,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
         .squeeze()
     )
 
-    power_ratio_pit[years] = storage_capacity_pit[years].div(
-        power_ratio_pit[years]
-    )
+    power_ratio_pit[years] = storage_capacity_pit[years].div(power_ratio_pit[years])
     power_ratio_pit["further description"] = (
         "Ratio between energy storage and input capacity"
     )
@@ -2379,9 +2363,7 @@ def add_description(
     return technology_dataframe
 
 
-def convert_units(
-    years: list, technology_dataframe: pd.DataFrame
-) -> pd.DataFrame:
+def convert_units(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
     """
     The function converts investment and efficiency units to be aligned with old pypsa assumptions.
 
@@ -2484,9 +2466,9 @@ def add_gas_storage(
     technology_dataframe.loc[("gas storage charger", "investment"), years] = (
         investment_charge
     )
-    technology_dataframe.loc[
-        ("gas storage discharger", "investment"), years
-    ] = investment_discharge
+    technology_dataframe.loc[("gas storage discharger", "investment"), years] = (
+        investment_discharge
+    )
 
     technology_dataframe.loc[("gas storage charger", "investment"), "source"] = (
         source_dict["DEA"]
@@ -2562,9 +2544,9 @@ def add_carbon_capture(
 
     for tech_name in ["direct air capture", "cement capture", "biomass CHP capture"]:
         new_technology_dataframe.loc[(tech_name, "investment"), years] = (
-            technology_dataframe.loc[
-                (tech_name, "Specific investment"), years
-            ].values[0]
+            technology_dataframe.loc[(tech_name, "Specific investment"), years].values[
+                0
+            ]
             * 1e6
         )
         new_technology_dataframe.loc[(tech_name, "investment"), "unit"] = "EUR/(tCO2/h)"
@@ -2709,9 +2691,6 @@ def rename_ISE(cost_dataframe_ise: pd.DataFrame) -> pd.DataFrame:
         updated technology data
     """
 
-    """
-    Rename ISE costs to fit to tech data
-    """
     cost_dataframe_ise.rename(
         index={
             "Investition": "investment",
@@ -3116,7 +3095,7 @@ def carbon_flow(
     return cost_dataframe
 
 
-def energy_penalty(cost_dataframe):
+def energy_penalty(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
     """
     The function adds energy penalty for biomass carbon capture.
 
@@ -3328,7 +3307,7 @@ def add_egs_data(technology_dataframe: pd.DataFrame) -> pd.DataFrame:
     return pd.concat([technology_dataframe, geoth_df])
 
 
-def annuity(n, r=0.07):
+def annuity(n: float, r: float = 0.07) -> float:
     """
     The function calculates the annuity factor for an asset with lifetime n years and discount rate of r.
 
@@ -3433,8 +3412,7 @@ def add_home_battery_costs(
     ]
     factor = get_factor(battery_inverter_ewg, home_cols, "Battery interface")
     home_cost = (
-        home_battery.loc[("home battery inverter", "investment"), years]
-        * factor
+        home_battery.loc[("home battery inverter", "investment"), years] * factor
     ).values
     home_battery.loc[("home battery inverter", "investment"), years] = home_cost
 
@@ -3446,35 +3424,43 @@ def add_home_battery_costs(
     return pd.concat([cost_dataframe, home_battery])
 
 
-def add_SMR_data(years, data):
+def add_SMR_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
     """
-    Add steam  methane reforming (SMR)  technology data.
-
-    investment cost :
-        Currently no cost reduction for investment costs of SMR CC assumed.
-
+    The function adds steam methane reforming (SMR) technology data. The data set used are:
+    - investment cost : currently no cost reduction for investment costs of SMR CC assumed.
         - IEA (2020) [1]: assumes cost reduction -19.2% from 2019-2050
         - Agora [2]: no cost reduction
-
-    carbon capture rate:
+    - carbon capture rate:
         - IEA (2020) [1]: 0.9
         - Agora [2]: 0.9
         - [3]: 0.9
         - Timmerberg et al.: 0.56-0.9
-
-    efficiency:
+    - efficiency:
         - Agora SMR + CC (LHV/LHV) 0.58
 
     [1] IEA (2020) https://www.iea.org/data-and-statistics/charts/global-average-levelised-cost-of-hydrogen-production-by-energy-source-and-technology-2019-and-2050
     [2] Agora (2021) p.52 https://static.agora-energiewende.de/fileadmin/Projekte/2021/2021_02_EU_H2Grid/A-EW_203_No-regret-hydrogen_WEB.pdf
     [3] p.12 https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1011506/Hydrogen_Production_Costs_2021.pdf
+
+    Parameters
+    ----------
+    years : list
+        years for which a cost assumption is provided
+    technology_dataframe: pd.DataFrame
+        technology cost dataframe
+
+    Returns
+    -------
+    Dataframe
+        updated technology data
     """
+
     parameters = ["FOM", "investment", "lifetime", "efficiency"]
     techs = ["SMR", "SMR CC"]
     multi_i = pd.MultiIndex.from_product(
         [techs, parameters], names=["technology", "parameter"]
     )
-    SMR_df = pd.DataFrame(index=multi_i, columns=data.columns)
+    SMR_df = pd.DataFrame(index=multi_i, columns=technology_dataframe.columns)
 
     # efficiencies per unit in LHV (stays constant 2019 to 2050)
     SMR_df.loc[("SMR", "efficiency"), years] = 0.76
@@ -3501,9 +3487,7 @@ def add_SMR_data(years, data):
     # lower heating value (LHV) of H2
     LHV_H2 = 33.33  # unit kWh/kg
     SMR = 12500 / LHV_H2 * 1e3 * 1 / SMR_df.loc[("SMR", "efficiency"), years]
-    SMR_CCS = (
-        14500 / LHV_H2 * 1e3 * 1 / SMR_df.loc[("SMR", "efficiency"), years]
-    )
+    SMR_CCS = 14500 / LHV_H2 * 1e3 * 1 / SMR_df.loc[("SMR", "efficiency"), years]
 
     SMR_df.loc[("SMR", "investment"), years] = SMR
     SMR_df.loc[("SMR CC", "investment"), years] = SMR_CCS
@@ -3524,52 +3508,75 @@ def add_SMR_data(years, data):
 
     SMR_df = SMR_df.dropna(axis=1, how="all")
 
-    return pd.concat([data, SMR_df])
+    return pd.concat([technology_dataframe, SMR_df])
 
 
-def add_mean_solar_rooftop(years, data):
+def add_mean_solar_rooftop(
+    years: list, technology_dataframe: pd.DataFrame
+) -> pd.DataFrame:
+    """
+    The function adds costs for solar rooftop.
+
+    Parameters
+    ----------
+    years : list
+        years for which a cost assumption is provided
+    technology_dataframe: pd.DataFrame
+        technology cost dataframe
+
+    Returns
+    -------
+    Dataframe
+        updated technology data
+    """
+
     # take mean of rooftop commercial and residential
     rooftop = (
-        data.loc[data.index.get_level_values(0).str.contains("solar-rooftop")][
-            years
-        ]
+        technology_dataframe.loc[
+            technology_dataframe.index.get_level_values(0).str.contains("solar-rooftop")
+        ][years]
         .astype(float)
         .groupby(level=1)
         .mean()
     )
-    for col in data.columns[~data.columns.isin(years)]:
-        rooftop[col] = data.loc["solar-rooftop residential"][col]
+    for col in technology_dataframe.columns[~technology_dataframe.columns.isin(years)]:
+        rooftop[col] = technology_dataframe.loc["solar-rooftop residential"][col]
     # set multi index
     rooftop = pd.concat([rooftop], keys=["solar-rooftop"])
     rooftop["source"] = "Calculated. See 'further description'."
     rooftop["further description"] = (
         "Mixed investment costs based on average of 50% 'solar-rooftop commercial' and 50% 'solar-rooftop residential'"
     )
-    # add to data
-    rooftop.index.names = data.index.names
-    data = pd.concat([data, rooftop])
+    # add to technology_dataframe
+    rooftop.index.names = technology_dataframe.index.names
+    technology_dataframe = pd.concat([technology_dataframe, rooftop])
     # add solar assuming 50% utility and 50% rooftop
     solar = (
-        (data.loc[["solar-rooftop", "solar-utility"]][years])
+        (technology_dataframe.loc[["solar-rooftop", "solar-utility"]][years])
         .astype(float)
         .groupby(level=1)
         .mean()
     )
-    for col in data.columns[~data.columns.isin(years)]:
-        solar[col] = data.loc["solar-rooftop residential"][col]
+    for col in technology_dataframe.columns[~technology_dataframe.columns.isin(years)]:
+        solar[col] = technology_dataframe.loc["solar-rooftop residential"][col]
     solar["source"] = "Calculated. See 'further description'."
     solar["further description"] = (
         "Mixed investment costs based on average of 50% 'solar-rooftop' and 50% 'solar-utility'"
     )
     # set multi index
     solar = pd.concat([solar], keys=["solar"])
-    solar.index.names = data.index.names
-    return pd.concat([data, solar])
+    solar.index.names = technology_dataframe.index.names
+    return pd.concat([technology_dataframe, solar])
 
 
-def add_energy_storage_database(costs, data_year):
+def add_energy_storage_database(
+    pnnl_storage_file_name: str,
+    pnnl_energy_storage_dict: dict,
+    cost_dataframe: pd.DataFrame,
+    data_year: int,
+) -> (pd.DataFrame, pd.Series):
     """
-    Add energy storage database compiled
+    The function adds energy storage database compiled.
 
     Learning rate drop. For example, the nominal DC SB learning rate for RFBs is set at
     4.5%, 1.5% for lead-acid batteries, compared to 10% for Li-ion batteries, corresponding to cost drops of
@@ -3581,12 +3588,28 @@ def add_energy_storage_database(costs, data_year):
     systems. For example, a 20% cost drop in DC SB and 10% drop in DCBOS was assumed for zinc batteries,
     while keeping the cost drops for power equipment in line with Li-ion BESS, while system integration,
     EPC, and project development costs are maintained at 90% of Li-ion BESS 2030 values.
+
+    Parameters
+    ----------
+    pnnl_storage_file_name: str
+        PNNL storage file name
+    pnnl_energy_storage_dict: dict
+        PNNL storage configuration dictionary
+    cost_dataframe: pd.DataFrame
+        existing cost dataframe
+    data_year: int
+        year to consider
+
+    Returns
+    -------
+    tuple with DataFrame and Series
+        updated cost dataframe and technologies
     """
 
     logger.info(f"Add energy storage database compiled for year {data_year}")
     # a) Import csv file
     df = pd.read_excel(
-        snakemake.input["pnnl_energy_storage"],
+        pnnl_storage_file_name,
         sheet_name="energy-storage-database",
         dtype={
             "technology": str,
@@ -3631,9 +3654,9 @@ def add_energy_storage_database(costs, data_year):
     df.loc[store_filter, "technology_type"] = "store"
     df.loc[df.unit == "EUR/MWh-year", "technology_type"] = "store"
     # Some investment inputs need to be distributed between charger and discharger
-    for tech in df.technology.unique():
+    for tech_name in df.technology.unique():
         nan_filter = (
-            (df.technology == tech)
+            (df.technology == tech_name)
             & (carrier_str_len == 0)
             & (df.parameter == "investment")
         )
@@ -3652,25 +3675,25 @@ def add_energy_storage_database(costs, data_year):
             )
             charger_investment_filter = (
                 charger_filter
-                & (df.technology == tech)
+                & (df.technology == tech_name)
                 & (df.parameter == "investment")
             )
             discharger_investment_filter = (
                 discharger_filter
-                & (df.technology == tech)
+                & (df.technology == tech_name)
                 & (df.parameter == "investment")
             )
             df.loc[charger_investment_filter & df.year == 2021, "value"] += (
-                agg.loc[(tech, 2021)] / 2
+                agg.loc[(tech_name, 2021)] / 2
             )
             df.loc[charger_investment_filter & df.year == 2030, "value"] += (
-                agg.loc[(tech, 2030)] / 2
+                agg.loc[(tech_name, 2030)] / 2
             )
             df.loc[discharger_investment_filter & df.year == 2021, "value"] += (
-                agg.loc[(tech, 2021)] / 2
+                agg.loc[(tech_name, 2021)] / 2
             )
             df.loc[discharger_investment_filter & df.year == 2030, "value"] += (
-                agg.loc[(tech, 2030)] / 2
+                agg.loc[(tech_name, 2030)] / 2
             )
     df.loc[:, "technology"] = df["technology"] + "-" + df["technology_type"]
 
@@ -3696,9 +3719,9 @@ def add_energy_storage_database(costs, data_year):
     )
 
     # calculate %/year FOM on aggregated values
-    for tech in df.technology.unique():
+    for tech_name in df.technology.unique():
         for year in df.year.unique():
-            df_tech = df.loc[(df.technology == tech) & (df.year == year)].copy()
+            df_tech = df.loc[(df.technology == tech_name) & (df.year == year)].copy()
             a = df_tech.loc[df_tech.unit == "EUR/MW-year", "value"].values
             b = df_tech.loc[df_tech.unit == "EUR/MW", "value"].values
             df.loc[df_tech.loc[df_tech.unit == "EUR/MW-year"].index, "value"] = (
@@ -3715,9 +3738,9 @@ def add_energy_storage_database(costs, data_year):
 
     # c) Linear Inter/Extrapolation
     # data available for 2021 and 2030, but value for given "year" passed by function needs to be calculated
-    for tech in df.technology.unique():
+    for tech_name in df.technology.unique():
         for param in df.parameter.unique():
-            filter = (df.technology == tech) & (df.parameter == param)
+            filter = (df.technology == tech_name) & (df.parameter == param)
             y = df.loc[filter, "value"]
             if y.empty:
                 continue  # nothing to interpolate
@@ -3757,7 +3780,10 @@ def add_energy_storage_database(costs, data_year):
                         ]
                     )
 
-                if tech == "Hydrogen-discharger" or tech == "Pumped-Heat-store":
+                if (
+                    tech_name == "Hydrogen-discharger"
+                    or tech_name == "Pumped-Heat-store"
+                ):
                     x1 = pd.concat(
                         [x, pd.DataFrame(other_segments_points)], ignore_index=True
                     )
@@ -3780,7 +3806,7 @@ def add_energy_storage_database(costs, data_year):
                         kind="linear",
                         fill_value="extrapolate",
                     )
-                elif tech == "Hydrogen-charger":
+                elif tech_name == "Hydrogen-charger":
                     x2 = pd.concat(
                         [x, pd.DataFrame(other_segments_points)], ignore_index=True
                     )
@@ -3823,9 +3849,7 @@ def add_energy_storage_database(costs, data_year):
                         fill_value="extrapolate",
                     )
 
-                option = snakemake.config["energy_storage_database"][
-                    "pnnl_energy_storage"
-                ]
+                option = pnnl_energy_storage_dict
                 if option.get("approx_beyond_2030") == ["geometric_series"]:
                     ynew = f(data_year)
                 if option.get("approx_beyond_2030") == ["same_as_2030"]:
@@ -3839,7 +3863,7 @@ def add_energy_storage_database(costs, data_year):
             df_new = pd.DataFrame(
                 [
                     {
-                        "technology": tech,
+                        "technology": tech_name,
                         "year": data_year,
                         "parameter": param,
                         "value": ynew,
@@ -3877,17 +3901,28 @@ def add_energy_storage_database(costs, data_year):
         df.year == data_year,
         ["technology", "parameter", "value", "unit", "source", "further description"],
     ]
-    tech = df.technology.unique()
+    tech_names = df.technology.unique()
     df = df.set_index(["technology", "parameter"])
 
-    return pd.concat([costs, df]), tech
+    return pd.concat([cost_dataframe, df]), tech_names
 
 
-def prepare_inflation_rate(fn):
+def prepare_inflation_rate(fn: str) -> pd.DataFrame:
     """
-    Read in annual inflation rate from Eurostat
+    The function reads-in annual the inflation rates from Eurostat
     https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/dataflow/ESTAT/prc_hicp_aind/1.0?references=descendants&detail=referencepartial&format=sdmx_2.1_generic&compressed=true
+
+    Parameters
+    ----------
+    fn
+        file name for the Eurostat inflation rates
+
+    Returns
+    -------
+    DataFrame
+        inflation rates dataframe
     """
+
     inflation_rate = pd.read_excel(fn, sheet_name="Sheet 1", index_col=0, header=[8])
     inflation_rate = (
         inflation_rate.loc["European Union - 27 countries (from 2020)"].dropna()
@@ -4054,7 +4089,12 @@ if __name__ == "__main__":
         if snakemake.config["energy_storage_database"]["pnnl_energy_storage"].get(
             "add_data", True
         ):
-            costs, tech = add_energy_storage_database(costs, year)
+            costs, tech = add_energy_storage_database(
+                snakemake.input["pnnl_energy_storage"],
+                snakemake.config["energy_storage_database"]["pnnl_energy_storage"],
+                costs,
+                year,
+            )
             costs.loc[tech, "currency_year"] = 2020
 
         # add electrolyzer and fuel cell efficiency from other source than DEA

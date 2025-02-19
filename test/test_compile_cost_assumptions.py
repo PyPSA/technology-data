@@ -259,7 +259,10 @@ def test_get_data_from_dea(config):
     dea_sheet_names_dict = copy.deepcopy(dea_sheet_names)
     dea_sheet_names_dict["random tech"] = "random sheet"
     output_dictionary = get_data_from_DEA(
-        config["years"], dea_sheet_names_dict, input_dea_files_dict, expectation=config["expectation"]
+        config["years"],
+        dea_sheet_names_dict,
+        input_dea_files_dict,
+        expectation=config["expectation"],
     )
     comparison_dictionary = {}
     for key, value in output_dictionary.items():

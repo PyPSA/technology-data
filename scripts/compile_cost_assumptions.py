@@ -3574,21 +3574,28 @@ def add_mean_solar_rooftop(
 
 def geometric_series(
     nominator: float, denominator: float = 1.0, number_of_terms: int = 1, start: int = 1
-):
+) -> float:
     """
-    A geometric series is a series with a constant ratio between successive terms.
-    When moving to infinity the geometric series converges to a limit.
-    https://en.wikipedia.org/wiki/Series_(mathematics)
+    The function computes a geometric series. The geometric series is given with a constant ratio between successive terms.
+    When moving to infinity the geometric series converges to a limit. https://en.wikipedia.org/wiki/Series_(mathematics)
+    For example, for nominator = 1.0, denominator = 2.0, number_of_terms = 3 and start = 0 results in
+    1/2**0 + 1/2**1 + 1/2**2 = 1 + 1/2 + 1/4 = 1.75. If number_of_terms grows, the sum converges to 2
 
-    Example:
+    Parameters
+    ----------
+    nominator : float
+        nominator of the ratio
+    denominator : float
+        denominator of the ratio
+    number_of_terms : int
+        number of terms in the sum
+    start : int
+        if the value is 0, it means it starts at the first term
+
+    Returns
     -------
-    nominator = 1
-    denominator = 2
-    number_of_terms = 3
-    start = 0  # 0 means it starts at the first term
-    result = 1/1**0 + 1/2**1 + 1/2**2 = 1 + 1/2 + 1/4 = 1.75
-
-    If moving to infinity the result converges to 2
+    float
+        sum of the terms
     """
     return sum(
         [nominator / denominator**i for i in range(start, start + number_of_terms)]

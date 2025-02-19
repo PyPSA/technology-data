@@ -1,11 +1,11 @@
 technology,parameter,value,unit,source,further description,currency_year,financial_case,scenario
-Alkaline electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,,2022.0,,Moderate
-Alkaline electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,,2022.0,,Conservative
-Alkaline electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,,2022.0,,Advanced
+Alkaline electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Moderate
+Alkaline electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Conservative
+Alkaline electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Advanced
 Alkaline electrolyzer,efficiency,0.78,p.u.,ICCT IRA e-fuels assumptions ,,,,
-Alkaline electrolyzer,investment,625.0,USD/kW,ICCT IRA e-fuels assumptions ,,2022.0,,Moderate
-Alkaline electrolyzer,investment,688.0,USD/kW,ICCT IRA e-fuels assumptions ,,2022.0,,Conservative
-Alkaline electrolyzer,investment,570.0,USD/kW,ICCT IRA e-fuels assumptions ,,2022.0,,Advanced
+Alkaline electrolyzer,investment,625.0,USD/kW,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Moderate
+Alkaline electrolyzer,investment,688.0,USD/kW,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Conservative
+Alkaline electrolyzer,investment,570.0,USD/kW,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Advanced
 Alkaline electrolyzer,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,,,
 Ammonia cracker,FOM,4.3,%/year,"Ishimoto et al. (2020): 10.1016/j.ijhydene.2020.09.017 , table 7.","Estimated based on Labour cost rate, Maintenance cost rate, Insurance rate, Admin. cost rate and Chemical & other consumables cost rate.",2015.0,,
 Ammonia cracker,ammonia-input,1.46,MWh_NH3/MWh_H2,"ENGIE et al (2020): Ammonia to Green Hydrogen Feasibility Study (https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/880826/HS420_-_Ecuity_-_Ammonia_to_Green_Hydrogen.pdf), Fig. 10.",Assuming a integrated 200t/d cracking and purification facility. Electricity demand (316 MWh per 2186 MWh_LHV H2 output) is assumed to also be ammonia LHV input which seems a fair assumption as the facility has options for a higher degree of integration according to the report).,,,
@@ -2447,13 +2447,13 @@ Offshore Wind - Class 9,investment,6128.000648762892,USD/kW,NREL/ATB-https://dat
 Offshore Wind - Class 9,investment,2561.2621942456512,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
 Offshore Wind - Class 9,investment,3925.8720108649786,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
 Offshore Wind - Class 9,investment,6128.000648762892,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
-PEM electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,,2022.0,,Moderate
-PEM electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,,2022.0,,Conservative
-PEM electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,,2022.0,,Advanced
+PEM electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Moderate
+PEM electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Conservative
+PEM electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Advanced
 PEM electrolyzer,efficiency,0.73,p.u.,ICCT IRA e-fuels assumptions ,,,,
-PEM electrolyzer,investment,748.0,USD/kW,ICCT IRA e-fuels assumptions ,,2022.0,,Moderate
-PEM electrolyzer,investment,1122.0,USD/kW,ICCT IRA e-fuels assumptions ,,2022.0,,Conservative
-PEM electrolyzer,investment,384.0,USD/kW,ICCT IRA e-fuels assumptions ,,2022.0,,Advanced
+PEM electrolyzer,investment,748.0,USD/kW,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Moderate
+PEM electrolyzer,investment,1122.0,USD/kW,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Conservative
+PEM electrolyzer,investment,384.0,USD/kW,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Advanced
 PEM electrolyzer,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,,,
 PHS,FOM,0.7,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
 PHS,FOM,0.62,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
@@ -3396,13 +3396,13 @@ SMR CC,capture_rate,0.9,per unit,"IEA Global average levelised cost of hydrogen 
 SMR CC,efficiency,0.69,per unit (in LHV),"IEA Global average levelised cost of hydrogen production by energy source and technology, 2019 and 2050 (2020), https://www.iea.org/data-and-statistics/charts/global-average-levelised-cost-of-hydrogen-production-by-energy-source-and-technology-2019-and-2050",,,,
 SMR CC,investment,605753.2171,EUR/MW_CH4,Danish Energy Agency,"Technology data for renewable fuels, in pdf on table 3 p.311",2015.0,,
 SMR CC,lifetime,30.0,years,"IEA Global average levelised cost of hydrogen production by energy source and technology, 2019 and 2050 (2020), https://www.iea.org/data-and-statistics/charts/global-average-levelised-cost-of-hydrogen-production-by-energy-source-and-technology-2019-and-2050",,,,
-SOEC,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,,2022.0,,Moderate
-SOEC,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,,2022.0,,Conservative
-SOEC,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,,2022.0,,Advanced
+SOEC,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Moderate
+SOEC,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Conservative
+SOEC,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Advanced
 SOEC,efficiency,0.9,p.u.,ICCT IRA e-fuels assumptions ,,,,
-SOEC,investment,852.0,USD/kW,ICCT IRA e-fuels assumptions ,,2022.0,,Moderate
-SOEC,investment,1240.0,USD/kW,ICCT IRA e-fuels assumptions ,,2022.0,,Conservative
-SOEC,investment,676.0,USD/kW,ICCT IRA e-fuels assumptions ,,2022.0,,Advanced
+SOEC,investment,852.0,USD/kW,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Moderate
+SOEC,investment,1240.0,USD/kW,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Conservative
+SOEC,investment,676.0,USD/kW,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Advanced
 SOEC,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,,,
 Sand-charger,FOM,1.075,%/year,"Viswanathan_2022, NULL","{'carrier': ['elec', 'sand'], 'technology_type': ['charger'], 'type': ['thermal'], 'note': ['Guesstimate, 50% on charger']}",2020.0,,
 Sand-charger,efficiency,0.99,per unit,"Viswanathan_2022, p.107 (p.129)","{'carrier': ['elec', 'sand'], 'technology_type': ['charger'], 'type': ['thermal'], 'note': ['RTE assume 99% for charge and other for discharge']}",2020.0,,
@@ -4038,17 +4038,17 @@ digestible biomass to hydrogen,FOM,4.25,%/year,"Zech et.al. DBFZ Report Nr. 19. 
 digestible biomass to hydrogen,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,,,
 digestible biomass to hydrogen,efficiency,0.39,per unit,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",,,,
 digestible biomass to hydrogen,investment,2648.1996,EUR/kW_th,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",,2014.0,,
-direct air capture,FOM,1.3,%/year,ICCT IRA e-fuels assumptions ,,2022.0,,Moderate
-direct air capture,FOM,1.3,%/year,ICCT IRA e-fuels assumptions ,,2022.0,,Conservative
-direct air capture,FOM,1.3,%/year,ICCT IRA e-fuels assumptions ,,2022.0,,Advanced
+direct air capture,FOM,1.3,%/year,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Moderate
+direct air capture,FOM,1.3,%/year,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Conservative
+direct air capture,FOM,1.3,%/year,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Advanced
 direct air capture,compression-electricity-input,0.15,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture,2020.0,,
 direct air capture,compression-heat-output,0.2,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture,2020.0,,
 direct air capture,electricity-input,0.24,MWh_el/t_CO2,ICCT IRA e-fuels assumptions ,,,,
 direct air capture,heat-input,1.17,MWh_th/t_CO2,ICCT IRA e-fuels assumptions ,,,,
 direct air capture,heat-output,0.75,MWh/tCO2,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture,2020.0,,
-direct air capture,investment,12398844.91,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,,2022.0,,Moderate
-direct air capture,investment,19180739.93,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,,2022.0,,Conservative
-direct air capture,investment,7103597.31,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,,2022.0,,Advanced
+direct air capture,investment,12398844.91,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Moderate
+direct air capture,investment,19180739.93,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Conservative
+direct air capture,investment,7103597.31,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,,2022.0,R&D,Advanced
 direct air capture,lifetime,20.0,years,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture,2020.0,,
 direct air capture,years,30.0,years,ICCT IRA e-fuels assumptions ,,,,
 direct firing gas,FOM,1.0303,%/year,"Danish Energy Agency, technology_data_for_industrial_process_heat.xlsx",312.a Direct firing Natural Gas:  Fixed O&M,2019.0,,

@@ -11,7 +11,7 @@ Structure of the repository
 
 This repository has the following structure:
 
--  **inputs**: input data in format .csv or .xlsx
+-  **inputs**: input data in format .csv, .xlsx or .parquet
 
 -  **outputs**: technology data saved as ``costs_{year}.csv`` format for defined years. In the output ``costs_{year}.csv`` are specified
 
@@ -21,6 +21,19 @@ This repository has the following structure:
 	* unit (e.g. %/year)
 	* source (e.g. DEA, excel_file_name.xlsx)
 	* further description (specific assumptions, sheet name if data from a multi-sheet Excel file)
+    * currency_year (year used for adjusting economic values to reflect current purchasing power)
+
+    The directory contains also the sub-directory ``US``, which contains US-specific outputs. In the ``US/costs_{year}.csv`` are specified
+
+	* technology (e.g. 'onwind')
+	* parameter (e.g. FOM)
+	* value (e.g. 1.18)
+	* unit (e.g. %/year)
+	* source (e.g. DEA, excel_file_name.xlsx)
+	* further description (specific assumptions, sheet name if data from a multi-sheet Excel file)
+    * currency_year (year used for adjusting economic values to reflect current purchasing power)
+    * financial_case (finance structure for the definition of the cost of capital)
+    * scenario (technology innovation scenario)
 
 -  **config**:
 
@@ -31,6 +44,7 @@ This repository has the following structure:
  the following parameters can be set in the ``config.yaml``
 
 	* years : numpy array of all the years of which an output costs csv should be created
+    * nrel_atb :
 	* rate_inflation : inflation rate (currently: rate_inflation=0.02)
 	* solar_utility_from_vartiaien : Bool (True/False) if solar utility data is taken from DEA or Vartiaien
 	* solar_rooftop_from_etip : Bool (True/False) if solar rooftop data is taken from DEA or ETIP

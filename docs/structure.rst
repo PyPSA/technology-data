@@ -26,7 +26,7 @@ This repository has the following structure:
 
 	.. literalinclude:: ../config.yaml
 	   :language: yaml
-	   :lines: 4-24
+	   :lines: 4-40
 
  the following parameters can be set in the ``config.yaml``
 

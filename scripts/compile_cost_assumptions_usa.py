@@ -137,7 +137,7 @@ def filter_atb_input_file(
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         NREL/ATB cost dataframe
     """
 
@@ -214,7 +214,7 @@ def get_query_string(
 
     Returns
     -------
-    query_string: str
+    str
         query string
     """
 
@@ -247,7 +247,7 @@ def calculate_fom_percentage(
     ----------
     x : row
         row of the cost dataframe
-    dataframe : pd.DataFrame
+    dataframe : pandas.DataFrame
         cost DataFrame
     columns_list: list
         columns to consider in the query
@@ -279,16 +279,16 @@ def replace_value_name(
 
     Parameters
     ----------
-    dataframe : pd.DataFrame
+    dataframe : pandas.DataFrame
         cost dataframe
     conversion_dict : dict
-        cost DataFrame
+        conversion dictionary
     column_name: str
         column name where values shall be replaced
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated cost dataframe
     """
 
@@ -331,7 +331,7 @@ def pre_process_manual_input_usa(
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated manual input usa
     """
 
@@ -428,9 +428,9 @@ def modify_cost_input_file(
 
     Parameters
     ----------
-    cost_dataframe : pd.DataFrame
+    cost_dataframe : pandas.DataFrame
         existing cost dataframe
-    manual_input_usa_dataframe : pd.DataFrame
+    manual_input_usa_dataframe : pandas.DataFrame
         manual_input_usa dataframe
     list_of_years : list
         years for which a cost assumption is provided
@@ -441,7 +441,7 @@ def modify_cost_input_file(
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated cost dataframe
     """
 
@@ -603,7 +603,7 @@ def query_cost_dataframe(
 
     Parameters
     ----------
-    cost_dataframe: pd.DataFrame
+    cost_dataframe: pandas.DataFrame
         existing cost dataframe
     technology_dictionary: dict
         dictionary of the technologies updated with NREL/ATB data
@@ -612,7 +612,7 @@ def query_cost_dataframe(
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         queried cost dataframe
     """
 
@@ -665,7 +665,7 @@ def pre_process_cost_input_file(
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated NREL/ATB cost dataframe
     """
 
@@ -718,7 +718,7 @@ def pre_process_atb_input_file(
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated NREL/ATB cost dataframe
     """
 
@@ -855,7 +855,7 @@ def duplicate_fuel_cost(input_file_path: str, list_of_years: list) -> pd.DataFra
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated fuel cost dataframe
     """
 

@@ -344,12 +344,12 @@ def get_dea_maritime_data(
         path to DEA input data file for shipping
     years : list
         years for which a cost assumption is provided
-    input_data_df : pd.DataFrame
+    input_data_df : pandas.DataFrame
         technology data cost assumptions
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         technology data cost assumptions enriched with shipping data from DEA
     """
 
@@ -463,12 +463,12 @@ def get_dea_vehicle_data(
         path to DEA input data file for shipping
     years : list
         years for which a cost assumption is provided
-    technology_dataframe : pd.DataFrame
+    technology_dataframe : pandas.DataFrame
         technology data cost assumptions
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         technology data cost assumptions enriched with shipping data from DEA
     """
 
@@ -607,7 +607,7 @@ def get_data_DEA(
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         technology data from DEA
     """
 
@@ -1015,12 +1015,12 @@ def add_desalination_data(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
 
     Parameters
     ----------
-    cost_dataframe : pd.DataFrame
+    cost_dataframe : pandas.DataFrame
         cost dataframe
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated cost dataframe
     """
 
@@ -1098,12 +1098,12 @@ def add_co2_intensity(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
 
     Parameters
     ----------
-    cost_dataframe : pd.DataFrame
+    cost_dataframe : pandas.DataFrame
         cost dataframe
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated cost dataframe
     """
 
@@ -1168,12 +1168,12 @@ def add_solar_from_other(years: list, cost_dataframe: pd.DataFrame) -> pd.DataFr
     ----------
     years : list
         years for which a cost assumption is provided
-    cost_dataframe : pd.DataFrame
+    cost_dataframe : pandas.DataFrame
         costs
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated cost dataframe
     """
 
@@ -1244,12 +1244,12 @@ def add_h2_from_other(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
 
     Parameters
     ----------
-    cost_dataframe : pd.DataFrame
+    cost_dataframe : pandas.DataFrame
         costs
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated cost dataframe
     """
 
@@ -1270,12 +1270,12 @@ def unify_diw(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
 
     Parameters
     ----------
-    cost_dataframe : pd.DataFrame
+    cost_dataframe : pandas.DataFrame
         costs
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated cost dataframe
     """
 
@@ -1292,12 +1292,12 @@ def biochar_pyrolysis_harmonise_dea(df: pd.DataFrame) -> pd.DataFrame:
 
     Parameters
     ----------
-    df : pd.DataFrame
+    df : pandas.DataFrame
         costs
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated cost dataframe
     """
 
@@ -1442,7 +1442,7 @@ def clean_up_units(
 
     Parameters
     ----------
-    technology_dataframe : pd.DataFrame
+    technology_dataframe : pandas.DataFrame
         technology data cost assumptions
     value_column : str
         column to modify
@@ -1451,7 +1451,7 @@ def clean_up_units(
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         technology data with converted units
     """
 
@@ -1705,12 +1705,12 @@ def set_specify_assumptions(
     ----------
     years : list
         years for which a cost assumption is provided
-    technology_dataframe : pd.DataFrame
+    technology_dataframe : pandas.DataFrame
         technology data cost assumptions
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology dataframe
     """
 
@@ -1799,12 +1799,12 @@ def set_round_trip_efficiency(
     ----------
     years: list
         years for which a cost assumption is provided
-    technology_dataframe: pd.DataFrame
+    technology_dataframe: pandas.DataFrame
         technology data cost assumptions
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology dataframe
     """
 
@@ -1866,12 +1866,12 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
     ----------
     years : list
         years for which a cost assumption is provided
-    technology_dataframe : pd.DataFrame
+    technology_dataframe : pandas.DataFrame
         technology data cost assumptions
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         technology data in pypsa tech data syntax (investment, FOM,VOM, efficiency)
     """
 
@@ -2334,14 +2334,14 @@ def add_description(
     ----------
     years : list
         years for which a cost assumption is provided
-    technology_dataframe : pd.DataFrame
+    technology_dataframe : pandas.DataFrame
         technology data cost assumptions
     offwind_no_grid_costs_flag : bool
         flag to remove grid connection costs from DEA for offwind. Such costs are calculated separately in pypsa-eur
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -2374,12 +2374,12 @@ def convert_units(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFra
     ----------
     years : list
         years for which a cost assumption is provided
-    technology_dataframe : pd.DataFrame
+    technology_dataframe : pandas.DataFrame
         technology data cost assumptions
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -2421,12 +2421,12 @@ def add_gas_storage(
         name of the dea input file containing the gas storage data
     years : list
         years for which a cost assumption is provided
-    technology_dataframe : pd.DataFrame
+    technology_dataframe : pandas.DataFrame
         technology data cost assumptions
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -2527,12 +2527,12 @@ def add_carbon_capture(
         years for which a cost assumption is provided
     new_technology_dataframe:
         updated technology data cost assumptions
-    technology_dataframe : pd.DataFrame
+    technology_dataframe : pandas.DataFrame
         existing technology data cost assumptions
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -2596,12 +2596,12 @@ def rename_pypsa_old(cost_dataframe_pypsa: pd.DataFrame) -> pd.DataFrame:
 
     Parameters
     ----------
-    cost_dataframe_pypsa:
+    cost_dataframe_pypsa: pandas.DataFrame
         technology data cost assumptions
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -2631,12 +2631,12 @@ def add_manual_input(technology_dataframe: pd.DataFrame) -> pd.DataFrame:
 
     Parameters
     ----------
-    technology_dataframe:
+    technology_dataframe: pandas.DataFrame
         technology data cost assumptions
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -2685,12 +2685,12 @@ def rename_ISE(cost_dataframe_ise: pd.DataFrame) -> pd.DataFrame:
 
     Parameters
     ----------
-    cost_dataframe_ise:
+    cost_dataframe_ise: pandas.DataFrame
         ISE cost assumptions
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -2732,12 +2732,12 @@ def rename_ISE_vehicles(costs_vehicles_dataframe: pd.DataFrame) -> pd.DataFrame:
 
     Parameters
     ----------
-    costs_vehicles_dataframe:
+    costs_vehicles_dataframe: pandas.DataFrame
         vehicles ISE cost assumptions
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -2793,14 +2793,14 @@ def carbon_flow(
     ----------
     years : list
         years for which a cost assumption is provided
-    cost_dataframe:
+    cost_dataframe: pandas.DataFrame
         cost dataframe
     year_to_use: int
         year to use
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -3104,12 +3104,12 @@ def energy_penalty(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
 
     Parameters
     ----------
-    cost_dataframe:
+    cost_dataframe: pandas.DataFrame
         cost dataframe
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -3229,12 +3229,12 @@ def add_egs_data(technology_dataframe: pd.DataFrame) -> pd.DataFrame:
 
     Parameters
     ----------
-    technology_dataframe:
+    technology_dataframe: pandas.DataFrame
         technology data
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -3347,12 +3347,12 @@ def add_home_battery_costs(
         file name for the cost assumptions from the EWG study
     years : list
         years for which a cost assumption is provided
-    cost_dataframe: pd.DataFrame
+    cost_dataframe: pandas.DataFrame
         existing cost dataframe
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -3449,12 +3449,12 @@ def add_SMR_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFram
     ----------
     years : list
         years for which a cost assumption is provided
-    technology_dataframe: pd.DataFrame
+    technology_dataframe: pandas.DataFrame
         technology cost dataframe
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -3524,12 +3524,12 @@ def add_mean_solar_rooftop(
     ----------
     years : list
         years for which a cost assumption is provided
-    technology_dataframe: pd.DataFrame
+    technology_dataframe: pandas.DataFrame
         technology cost dataframe
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -3628,7 +3628,7 @@ def add_energy_storage_database(
         PNNL storage file name
     pnnl_energy_storage_dict: dict
         PNNL storage configuration dictionary
-    cost_dataframe: pd.DataFrame
+    cost_dataframe: pandas.DataFrame
         existing cost dataframe
     data_year: int
         year to consider
@@ -3927,7 +3927,7 @@ def prepare_inflation_rate(fn: str) -> pd.DataFrame:
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         inflation rates dataframe
     """
 

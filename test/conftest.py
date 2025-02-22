@@ -13,27 +13,36 @@ import yaml
 
 @pytest.fixture(scope="session")
 def config():
+    """
+    Fixture to load configuration from config.yaml file.
+
+    Returns
+    -------
+    dict
+        configuration dictionary
+    """
     path_config = pathlib.Path(pathlib.Path.cwd(), "config.yaml")
-    with open(path_config) as file:
-        config_dict = yaml.safe_load(file)
+    try:
+        with open(path_config) as file:
+            config_dict = yaml.safe_load(file)
+    except FileNotFoundError:
+        pytest.fail(f"Configuration file {path_config} not found.")
     return config_dict
 
 
 @pytest.fixture(scope="function")
 def cost_dataframe():
+    """
+    Fixture to provide a sample cost dataframe.
+
+    Returns
+    -------
+    pandas.DataFrame
+        sample data for cost
+    """
     return pd.DataFrame(
         {
-            "technology": [
-                "coal",
-                "coal",
-                "coal",
-                "coal",
-                "coal",
-                "coal",
-                "coal",
-                "coal",
-                "another_tech",
-            ],
+            "technology": ["coal"] * 8 + ["another_tech"],
             "parameter": [
                 "investment",
                 "FOM",
@@ -45,41 +54,28 @@ def cost_dataframe():
                 "lifetime",
                 "investment",
             ],
-            "value": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 3.0],
-            "unit": [
-                "unit",
-                "unit",
-                "unit",
-                "unit",
-                "unit",
-                "unit",
-                "unit",
-                "unit",
-                "unit",
-            ],
-            "source": [
-                "source",
-                "source",
-                "source",
-                "source",
-                "source",
-                "source",
-                "source",
-                "source",
-                "source",
-            ],
-            "further description": ["a", "b", "c", "d", "e", "f", "g", "h", "i"],
-            "currency_year": [2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020],
-        },
-        index=[0, 1, 2, 3, 4, 5, 6, 7, 8],
+            "value": [1.0] * 8 + [3.0],
+            "unit": ["unit"] * 9,
+            "source": ["source"] * 9,
+            "further description": list("abcdefghi"),
+            "currency_year": [2020] * 9,
+        }
     )
 
 
 @pytest.fixture(scope="function")
 def atb_cost_dataframe():
+    """
+    Fixture to provide a sample ATB cost dataframe.
+
+    Returns
+    -------
+    pandas.DataFrame
+        sample data for ATB cost
+    """
     return pd.DataFrame(
         {
-            "technology": ["coal", "coal", "coal", "coal", "coal", "coal"],
+            "technology": ["coal"] * 6,
             "parameter": [
                 "investment",
                 "FOM",
@@ -88,41 +84,27 @@ def atb_cost_dataframe():
                 "investment",
                 "discount rate",
             ],
-            "value": [2.0, 2.0, 2.0, 2.0, 2.0, 2.0],
-            "unit": [
-                "unit_atb",
-                "unit_atb",
-                "unit_atb",
-                "unit_atb",
-                "unit_atb",
-                "unit_atb",
-            ],
-            "source": [
-                "source_atb",
-                "source_atb",
-                "source_atb",
-                "source_atb",
-                "source_atb",
-                "source_atb",
-            ],
-            "further description": ["a", "b", "c", "d", "e", "f"],
-            "currency_year": [2020, 2020, 2020, 2020, 2020, 2020],
-            "financial_case": ["R&D", "R&D", "R&D", "R&D", "R&D", "R&D"],
-            "scenario": [
-                "Moderate",
-                "Moderate",
-                "Moderate",
-                "Moderate",
-                "Moderate",
-                "Moderate",
-            ],
-        },
-        index=[0, 1, 2, 3, 4, 5],
+            "value": [2.0] * 6,
+            "unit": ["unit_atb"] * 6,
+            "source": ["source_atb"] * 6,
+            "further description": list("abcdef"),
+            "currency_year": [2020] * 6,
+            "financial_case": ["R&D"] * 6,
+            "scenario": ["Moderate"] * 6,
+        }
     )
 
 
 @pytest.fixture(scope="function")
 def mock_input_data():
+    """
+    Fixture to provide a sample mock input dataframe.
+
+    Returns
+    -------
+    pandas.DataFrame
+        sample mock input data
+    """
     return pd.DataFrame(
         {
             "technology": [
@@ -320,6 +302,15 @@ def mock_input_data():
 
 @pytest.fixture(scope="function")
 def mock_output_data():
+    """
+    Fixture to provide a sample mock output dataframe.
+
+    Returns
+    -------
+    Callable
+        a function to generate mock output data based on the source
+    """
+
     def mock_output(source):
         if source == "dea":
             return pd.DataFrame(

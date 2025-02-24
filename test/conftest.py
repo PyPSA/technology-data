@@ -303,6 +303,19 @@ def mock_output_data():
 
 @pytest.fixture(scope="function")
 def mock_inflation_data(tmpdir):
+    """
+    Fixture to provide a mock data for the inflation rate.
+
+    Parameters
+    ----------
+    tmpdir
+        pytest built-in fixture that provides a temporary directory unique to the test invocation
+
+    Returns
+    -------
+    pathlib.Path
+        temporary file containing the mock inflation rate data
+    """
     data = {
         2001: [2.0],
         2002: [1.5],

@@ -203,179 +203,99 @@ def mock_output_data():
     """
 
     def mock_output(source):
+        unit_list = (
+            ["MW", "EUR"]
+            + ["/"] * 3
+            + ["W"]
+            + ["EUR"] * 7
+            + ["r/MW"]
+            + ["r/MWh"] * 2
+            + ["/year"]
+            + ["EUR"] * 5
+            + [
+                "MW_e",
+                "EUR/MW_e",
+                "MW_th",
+                "MW_th",
+                "MWh_th",
+                "MWh_th",
+                "MWh_FT",
+                "MW_FT",
+                "MW_MeOH",
+                "MW_FT/year",
+                "MW_MeOH/year",
+                "MWh_FT",
+                "MWh_MeOH",
+                "MW_CH4/year",
+                "MWh_CH4",
+                "MW_CH4",
+                "EUR/MWh_e",
+                "EUR/MW_eh",
+                "MWh_th/MWh_el",
+                "MWh_FT/MWh_H2",
+                "MW_NH3",
+                "MW_NH3",
+                "MWh_NH3",
+                "EUR/MW/year",
+                "EUR/MW",
+                "EUR/MW/year",
+                "EUR/MWh",
+                "MW",
+            ]
+        )
+
         if source == "dea":
-            return pd.DataFrame(
-                {
-                    "technology": ["random_tech"] * 50
-                    + [
-                        "central air-sourced heat pump",
-                        "central geothermal-sourced heat pump",
-                        "central gas boiler",
-                        "central resistive heater",
-                        "decentral air-sourced heat pump",
-                        "decentral gas boiler",
-                        "decentral ground-sourced heat pump",
-                    ]
-                    + ["fuel cell"] * 4,
-                    "unit": [
-                        "MW",
-                        "EUR",
-                        "/",
-                        "/",
-                        "/",
-                        "W",
-                        "EUR",
-                        "EUR",
-                        "EUR",
-                        "EUR",
-                        "EUR",
-                        "EUR",
-                        "EUR",
-                        "r/MW",
-                        "r/MWh",
-                        "r/MWh",
-                        "/year",
-                        "EUR",
-                        "EUR",
-                        "EUR",
-                        "EUR",
-                        "EUR",
-                        "MW_e",
-                        "EUR/MW_e",
-                        "MW_th",
-                        "MW_th",
-                        "MWh_th",
-                        "MWh_th",
-                        "MWh_FT",
-                        "MW_FT",
-                        "MW_MeOH",
-                        "MW_FT/year",
-                        "MW_MeOH/year",
-                        "MWh_FT",
-                        "MWh_MeOH",
-                        "MW_CH4/year",
-                        "MWh_CH4",
-                        "MW_CH4",
-                        "EUR/MWh_e",
-                        "EUR/MW_eh",
-                        "MWh_th/MWh_el",
-                        "MWh_FT/MWh_H2",
-                        "MW_NH3",
-                        "MW_NH3",
-                        "MWh_NH3",
-                        "EUR/MW/year",
-                        "EUR/MW",
-                        "EUR/MW/year",
-                        "EUR/MWh",
-                        "MW",
-                        "EUR/MW_th",
-                        "EUR/MW_th/year",
-                        "EUR/MWh_th",
-                        "MW_th",
-                        "EUR/MW_th",
-                        "EUR/MW_th/year",
-                        "EUR/MWh_th",
-                        "EUR/MW_e",
-                        "EUR/MW_e/year",
-                        "EUR/MWh_e",
-                        "MW_e",
-                    ],
-                    "value": [1.0] * 6
-                    + [
-                        0.8917822267802202,
-                        1.177107611177814,
-                    ]
-                    + [1.0] * 7
-                    + [3.6]
-                    + [1.0] * 45,
-                },
-            ).set_index(["technology"])
+            unit_list += [
+                "EUR/MW_th",
+                "EUR/MW_th/year",
+                "EUR/MWh_th",
+                "MW_th",
+                "EUR/MW_th",
+                "EUR/MW_th/year",
+                "EUR/MWh_th",
+                "EUR/MW_e",
+                "EUR/MW_e/year",
+                "EUR/MWh_e",
+                "MW_e",
+            ]
         else:
-            return pd.DataFrame(
-                {
-                    "technology": ["random_tech"] * 50
-                    + [
-                        "central air-sourced heat pump",
-                        "central geothermal-sourced heat pump",
-                        "central gas boiler",
-                        "central resistive heater",
-                        "decentral air-sourced heat pump",
-                        "decentral gas boiler",
-                        "decentral ground-sourced heat pump",
-                    ]
-                    + ["fuel cell"] * 4,
-                    "unit": [
-                        "MW",
-                        "EUR",
-                        "/",
-                        "/",
-                        "/",
-                        "W",
-                        "EUR",
-                        "EUR",
-                        "EUR",
-                        "EUR",
-                        "EUR",
-                        "EUR",
-                        "EUR",
-                        "r/MW",
-                        "r/MWh",
-                        "r/MWh",
-                        "/year",
-                        "EUR",
-                        "EUR",
-                        "EUR",
-                        "EUR",
-                        "EUR",
-                        "MW_e",
-                        "EUR/MW_e",
-                        "MW_th",
-                        "MW_th",
-                        "MWh_th",
-                        "MWh_th",
-                        "MWh_FT",
-                        "MW_FT",
-                        "MW_MeOH",
-                        "MW_FT/year",
-                        "MW_MeOH/year",
-                        "MWh_FT",
-                        "MWh_MeOH",
-                        "MW_CH4/year",
-                        "MWh_CH4",
-                        "MW_CH4",
-                        "EUR/MWh_e",
-                        "EUR/MW_eh",
-                        "MWh_th/MWh_el",
-                        "MWh_FT/MWh_H2",
-                        "MW_NH3",
-                        "MW_NH3",
-                        "MWh_NH3",
-                        "EUR/MW/year",
-                        "EUR/MW",
-                        "EUR/MW/year",
-                        "EUR/MWh",
-                        "MW",
-                        "EUR/MW",
-                        "EUR/MW/year",
-                        "EUR/MWh",
-                        "MW",
-                        "EUR/MW",
-                        "EUR/MW/year",
-                        "EUR/MWh",
-                        "EUR/MW",
-                        "EUR/MW/year",
-                        "EUR/MWh",
-                        "MW",
-                    ],
-                    "value": [1.0] * 6
-                    + [
-                        0.8917822267802202,
-                        1.177107611177814,
-                    ]
-                    + [1.0] * 7
-                    + [3.6]
-                    + [1.0] * 45,
-                },
-            ).set_index(["technology"])
+            unit_list += [
+                "EUR/MW",
+                "EUR/MW/year",
+                "EUR/MWh",
+                "MW",
+                "EUR/MW",
+                "EUR/MW/year",
+                "EUR/MWh",
+                "EUR/MW",
+                "EUR/MW/year",
+                "EUR/MWh",
+                "MW",
+            ]
+
+        return pd.DataFrame(
+            {
+                "technology": ["random_tech"] * 50
+                + [
+                    "central air-sourced heat pump",
+                    "central geothermal-sourced heat pump",
+                    "central gas boiler",
+                    "central resistive heater",
+                    "decentral air-sourced heat pump",
+                    "decentral gas boiler",
+                    "decentral ground-sourced heat pump",
+                ]
+                + ["fuel cell"] * 4,
+                "unit": unit_list,
+                "value": [1.0] * 6
+                + [
+                    0.8917822267802202,
+                    1.177107611177814,
+                ]
+                + [1.0] * 7
+                + [3.6]
+                + [1.0] * 45,
+            },
+        ).set_index(["technology"])
 
     return mock_output

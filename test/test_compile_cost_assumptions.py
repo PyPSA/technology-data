@@ -60,8 +60,8 @@ def test_clean_up_units(mock_input_data, mock_output_data, source):
     output_df = clean_up_units(
         mock_input_data.copy(deep=True), value_column="value", source=source
     )
-    print(mock_input_data.shape, output_df.shape, expected_df.shape)
     comparison_df = output_df.compare(expected_df)
+    print(comparison_df)
     assert comparison_df.empty
 
 

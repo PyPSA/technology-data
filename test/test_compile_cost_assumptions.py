@@ -8,6 +8,7 @@ import copy
 import pathlib
 import sys
 
+import numpy as np
 import pandas as pd
 import pytest
 
@@ -19,9 +20,11 @@ from compile_cost_assumptions import (
     clean_up_units,
     convert_units,
     dea_sheet_names,
+    geometric_series,
     get_data_from_DEA,
     get_excel_sheets,
     get_sheet_location,
+    prepare_inflation_rate,
     set_round_trip_efficiency,
     set_specify_assumptions,
 )
@@ -59,6 +62,7 @@ def test_clean_up_units(mock_input_data, mock_output_data, source):
         mock_input_data.copy(deep=True), value_column="value", source=source
     )
     comparison_df = output_df.compare(expected_df)
+    print(comparison_df)
     assert comparison_df.empty
 
 
@@ -681,3 +685,31 @@ def test_annuity(discount_rate_value, expected_annuity):
     The test verifies what is returned by annuity.
     """
     assert annuity(n=1.0, r=discount_rate_value) == expected_annuity
+
+
+@pytest.mark.parametrize(
+    "nom_val, den_val, n_terms, start_val, expected_val",
+    [(1.0, 6.5, 3, 0, 1.18), (1.0, 2.0, 3, 0, 1.75)],
+)
+def test_geometric_series(nom_val, den_val, n_terms, start_val, expected_val):
+    """
+    The test verifies what is returned by annuity.
+    """
+    assert (
+        np.round(geometric_series(nom_val, den_val, n_terms, start_val), 2)
+        == expected_val
+    )
+
+
+def test_prepare_inflation_rate(mock_inflation_data):
+    """
+    The test verifies what is returned by prepare_inflation_rate.
+    """
+    output_series = prepare_inflation_rate(mock_inflation_data).round(decimals=3)
+    reference_output_series = pd.Series(
+        [0.02, 0.015, 0.025, 0.018],
+        index=[2001, 2002, 2003, 2004],
+        name="European Union - 27 countries (from 2020)",
+    )
+    comparison_series = output_series.compare(reference_output_series)
+    assert comparison_series.size == 0

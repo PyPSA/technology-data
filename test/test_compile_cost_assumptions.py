@@ -24,6 +24,7 @@ from compile_cost_assumptions import (
     get_data_from_DEA,
     get_excel_sheets,
     get_sheet_location,
+    prepare_inflation_rate,
     set_round_trip_efficiency,
     set_specify_assumptions,
 )
@@ -698,3 +699,13 @@ def test_geometric_series(nom_val, den_val, n_terms, start_val, expected_val):
         np.round(geometric_series(nom_val, den_val, n_terms, start_val), 2)
         == expected_val
     )
+
+
+def test_prepare_inflation_rate(mock_inflation_data):
+    """
+    The test verifies what is returned by prepare_inflation_rate.
+    """
+    output_series = prepare_inflation_rate(mock_inflation_data).round(decimals=3)
+    reference_output_series = pd.Series([0.02, 0.015, 0.025, 0.018], index=[2001, 2002, 2003, 2004], name="European Union - 27 countries (from 2020)")
+    comparison_series = output_series.compare(reference_output_series)
+    assert comparison_series.size == 0

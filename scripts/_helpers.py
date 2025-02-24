@@ -190,7 +190,7 @@ def mock_snakemake(
 
 
 def adjust_for_inflation(
-    inflation_rate: pd.DataFrame,
+    inflation_rate: pd.Series,
     costs: pd.DataFrame,
     techs: pd.Series,
     eur_year: int,
@@ -202,7 +202,7 @@ def adjust_for_inflation(
 
     Parameters
     ----------
-    inflation_rate : pd.DataFrame
+    inflation_rate : pandas.Series
         inflation rates for several years
     costs : pd.DataFrame
         existing cost dataframe
@@ -217,7 +217,7 @@ def adjust_for_inflation(
 
     Returns
     -------
-    Dataframe
+    pandas.Dataframe
         inflation updated cost dataframe
     """
 

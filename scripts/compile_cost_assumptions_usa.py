@@ -346,7 +346,7 @@ def pre_process_manual_input_usa(
     )
 
     # Read the inflation rate
-    inflation_rate_df = prepare_inflation_rate(inflation_rate_file_path)
+    inflation_rate_series = prepare_inflation_rate(inflation_rate_file_path)
 
     # Create cost estimates for all years
     list_dataframe_row = []
@@ -394,7 +394,7 @@ def pre_process_manual_input_usa(
 
     # Correct the cost assumptions to the inflation rate
     inflation_adjusted_manual_input_usa_file_df = adjust_for_inflation(
-        inflation_rate_df,
+        inflation_rate_series,
         manual_input_usa_file_df,
         manual_input_usa_file_df.technology.unique(),
         eur_year,

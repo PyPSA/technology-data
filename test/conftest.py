@@ -299,3 +299,19 @@ def mock_output_data():
         ).set_index(["technology"])
 
     return mock_output
+
+
+@pytest.fixture(scope="function")
+def mock_inflation_data(tmpdir):
+    data = {
+        2001: [2.0],
+        2002: [1.5],
+        2003: [2.5],
+        2004: [1.8],
+    }
+    index = ["European Union - 27 countries (from 2020)"]
+    inflation_rate_output_path = pathlib.Path(tmpdir, "inflation_rate.xlsx")
+    inflation_rate_dataframe = pd.DataFrame(data, index=index)
+    inflation_rate_dataframe.to_excel(inflation_rate_output_path, sheet_name="Sheet 1", startrow=8)
+    yield inflation_rate_output_path
+    pathlib.Path(inflation_rate_output_path).unlink(missing_ok=True)

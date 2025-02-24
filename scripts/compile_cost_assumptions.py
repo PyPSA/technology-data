@@ -3915,7 +3915,7 @@ def add_energy_storage_database(
     return pd.concat([cost_dataframe, df]), tech_names
 
 
-def prepare_inflation_rate(fn: str) -> pd.DataFrame:
+def prepare_inflation_rate(fn: str) -> pd.Series:
     """
     The function reads-in annual the inflation rates from Eurostat
     https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/dataflow/ESTAT/prc_hicp_aind/1.0?references=descendants&detail=referencepartial&format=sdmx_2.1_generic&compressed=true
@@ -3927,8 +3927,8 @@ def prepare_inflation_rate(fn: str) -> pd.DataFrame:
 
     Returns
     -------
-    pandas.DataFrame
-        inflation rates dataframe
+    pandas.Series
+        inflation rates series
     """
 
     inflation_rate = pd.read_excel(fn, sheet_name="Sheet 1", index_col=0, header=[8])

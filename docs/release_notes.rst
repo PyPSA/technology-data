@@ -24,6 +24,8 @@ Upcoming Release
 
 * Align `snakemake` version and the related `mock_snakemake` to PyPSA-Eur (https://github.com/PyPSA/technology-data/pull/177)
 
+* US-specific scenarios for electrolyzers and DAC + adjustment for inflation removed as already considered in input data (https://github.com/PyPSA/technology-data/pull/181)
+
 `v0.11.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.11.0>`__ (24th January 2025)
 =======================================================================================
 

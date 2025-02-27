@@ -314,7 +314,7 @@ def mock_inflation_data(tmpdir):
     Returns
     -------
     pathlib.Path
-        temporary file path containing the mock inflation rate data
+        temporary file path containing the mock data
     """
     data = {
         2001: [2.0],

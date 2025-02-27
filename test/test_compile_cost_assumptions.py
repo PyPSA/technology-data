@@ -16,6 +16,7 @@ sys.path.append("./scripts")
 
 from compile_cost_assumptions import (
     add_description,
+    add_gas_storage,
     annuity,
     clean_up_units,
     convert_units,
@@ -713,3 +714,50 @@ def test_prepare_inflation_rate(mock_inflation_data):
     )
     comparison_series = output_series.compare(reference_output_series)
     assert comparison_series.size == 0
+
+
+def test_add_gas_storage(config):
+    """
+    The test verifies what is returned by add_gas_storage.
+    """
+    input_file_path = pathlib.Path(path_cwd, "inputs", "technology_data_catalogue_for_energy_storage.xlsx")
+    list_of_years = ["2020"]
+    technology_series = pd.Series(
+        [
+            "gas_storage",
+            "gas_storage",
+            "gas storage charger",
+            "gas storage discharger",
+            "gas_storage",
+        ]
+    )
+    parameter_series = pd.Series(
+        [
+            "investment",
+            "lifetime",
+            "investment",
+            "investment",
+            "FOM",
+        ]
+    )
+    technology_dataframe = pd.DataFrame(
+        {
+            "2020": [np.nan] * 5,
+        }
+    ).set_index([technology_series, parameter_series])
+    output_df = add_gas_storage(input_file_path, list_of_years, technology_dataframe)
+    cleaned_df = output_df.dropna(how='all').reset_index(drop=False).rename(columns={"level_0": "technology", "level_1": "parameter"})
+
+    reference_output_df = pd.DataFrame(
+        {
+            "technology": ["gas storage charger", "gas storage discharger", "gas storage", "gas storage", "gas storage"],
+            "parameter": ["investment"] * 3 + ["lifetime", "FOM"],
+            "2020": [14.33885157711495, 4.77961719237165, 0.03290254335105841, 100.0, 3.5918748566291763],
+            "source": ["Danish Energy Agency"] * 3 + ["TODO no source"] + ["Danish Energy Agency"],
+            "further description": ["150 Underground Storage of Gas, Process equipment (units converted)"] * 2 + ["150 Underground Storage of Gas, Establishment of one cavern (units converted)"] + ["estimation: most underground storage are already build, they do have a long lifetime"] + ["150 Underground Storage of Gas, Operation and Maintenance, salt cavern (units converted)"],
+            "unit": ["EUR/kW"] * 2 + ["EUR/kWh"] + ["years", "%"],
+            "currency_year": [2015.0, np.nan, 2015.0, np.nan, np.nan]
+        }
+    )
+    comparison_df = cleaned_df.compare(reference_output_df)
+    assert comparison_df.empty

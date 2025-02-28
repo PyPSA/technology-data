@@ -364,13 +364,9 @@ def test_set_round_trip_efficiency():
 
     reference_output_df = pd.DataFrame(
         {
-            "technology": [
-                "battery inverter",
-                "battery inverter",
-                "battery inverter",
-                "battery inverter",
-                "battery storage",
-                "battery storage",
+            "technology": ["battery inverter"] * 4
+            + ["battery storage"] * 2
+            + [
                 "hydrogen storage tank type 1 including compressor",
                 "hydrogen storage underground",
             ],

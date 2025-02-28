@@ -276,7 +276,7 @@ def test_get_data_from_dea(config):
     assert comparison_dictionary == reference_output_dictionary
 
 
-def test_set_specify_assumptions(config):
+def test_set_specify_assumptions():
     """
     The test verifies what is returned by set_specify_assumptions.
     """
@@ -301,22 +301,8 @@ def test_set_specify_assumptions(config):
                 "Heat efficiency, annual average, net, radiators",
             ],
             "2020": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-            "2025": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-            "2030": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-            "2035": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-            "2040": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-            "2045": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-            "2050": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-            "source": [
-                "source",
-                "source",
-                "source",
-                "source",
-                "source",
-                "source",
-                "source",
-            ],
-            "unit": ["unit", "unit", "unit", "unit", "unit", "unit", "unit"],
+            "source": ["source"] * 7,
+            "unit": ["unit"] * 7,
         }
     ).set_index(["technology", "parameter"])
 
@@ -337,17 +323,11 @@ def test_set_specify_assumptions(config):
                 "Heat efficiency, annual average, net, radiators, existing one family house",
             ],
             "2020": [1.0, 1.0, 1.0, 50.0, 1.0],
-            "2025": [1.0, 1.0, 1.0, 50.0, 1.0],
-            "2030": [1.0, 1.0, 1.0, 50.0, 1.0],
-            "2035": [1.0, 1.0, 1.0, 50.0, 1.0],
-            "2040": [1.0, 1.0, 1.0, 50.0, 1.0],
-            "2045": [1.0, 1.0, 1.0, 50.0, 1.0],
-            "2050": [1.0, 1.0, 1.0, 50.0, 1.0],
-            "source": ["source", "source", "source", "source", "source"],
-            "unit": ["unit", "unit", "unit", "unit", "unit"],
+            "source": ["source"] * 5,
+            "unit": ["unit"] * 5,
         }
     )
-    list_of_years = [str(x) for x in config["years"]]
+    list_of_years = ["2020"]
     output_df = set_specify_assumptions(list_of_years, input_df)
     output_df = output_df.reset_index(drop=False).rename(
         columns={"level_0": "technology", "level_1": "parameter"}
@@ -356,7 +336,7 @@ def test_set_specify_assumptions(config):
     assert comparison_df.empty
 
 
-def test_set_round_trip_efficiency(config):
+def test_set_round_trip_efficiency():
     """
     The test verifies what is returned by set_round_trip_efficiency.
     """
@@ -381,12 +361,6 @@ def test_set_round_trip_efficiency(config):
                 "Energy storage expansion cost",
             ],
             "2020": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-            "2025": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-            "2030": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-            "2035": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-            "2040": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-            "2045": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-            "2050": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
             "source": [
                 "source",
                 "source",
@@ -440,66 +414,6 @@ def test_set_round_trip_efficiency(config):
                 100.0,
                 100.0,
             ],
-            "2025": [
-                1.0,
-                1.0,
-                1.0,
-                10.0,
-                1.0,
-                1.0,
-                100.0,
-                100.0,
-            ],
-            "2030": [
-                1.0,
-                1.0,
-                1.0,
-                10.0,
-                1.0,
-                1.0,
-                100.0,
-                100.0,
-            ],
-            "2035": [
-                1.0,
-                1.0,
-                1.0,
-                10.0,
-                1.0,
-                1.0,
-                100.0,
-                100.0,
-            ],
-            "2040": [
-                1.0,
-                1.0,
-                1.0,
-                10.0,
-                1.0,
-                1.0,
-                100.0,
-                100.0,
-            ],
-            "2045": [
-                1.0,
-                1.0,
-                1.0,
-                10.0,
-                1.0,
-                1.0,
-                100.0,
-                100.0,
-            ],
-            "2050": [
-                1.0,
-                1.0,
-                1.0,
-                10.0,
-                1.0,
-                1.0,
-                100.0,
-                100.0,
-            ],
             "source": [
                 "source",
                 "source",
@@ -522,7 +436,7 @@ def test_set_round_trip_efficiency(config):
             ],
         }
     )
-    list_of_years = [str(x) for x in config["years"]]
+    list_of_years = ["2020"]
     output_df = set_round_trip_efficiency(list_of_years, input_df)
     output_df = output_df.reset_index(drop=False).rename(
         columns={"level_0": "technology", "level_1": "parameter"}
@@ -531,7 +445,7 @@ def test_set_round_trip_efficiency(config):
     assert comparison_df.empty
 
 
-def test_add_description(config):
+def test_add_description():
     """
     The test verifies what is returned by add_description.
     """
@@ -551,12 +465,6 @@ def test_add_description(config):
     input_df = pd.DataFrame(
         {
             "2020": [1.0, 1.0],
-            "2025": [1.0, 1.0],
-            "2030": [1.0, 1.0],
-            "2035": [1.0, 1.0],
-            "2040": [1.0, 1.0],
-            "2045": [1.0, 1.0],
-            "2050": [1.0, 1.0],
             "source": [
                 "source",
                 "source",
@@ -577,12 +485,6 @@ def test_add_description(config):
             "technology": ["offwind", "technology_name_2"],
             "parameter": ["investment", "parameter_name_2"],
             "2020": [1.0, 1.0],
-            "2025": [1.0, 1.0],
-            "2030": [1.0, 1.0],
-            "2035": [1.0, 1.0],
-            "2040": [1.0, 1.0],
-            "2045": [1.0, 1.0],
-            "2050": [1.0, 1.0],
             "unit": [
                 "unit",
                 "unit",
@@ -597,7 +499,7 @@ def test_add_description(config):
             ],
         }
     )
-    list_of_years = [str(x) for x in config["years"]]
+    list_of_years = ["2020"]
     output_df = add_description(list_of_years, input_df).reset_index()
     comparison_df = output_df.compare(reference_output_df)
     assert comparison_df.empty
@@ -802,35 +704,9 @@ def test_add_carbon_capture(config):
     """
     list_of_years = ["2020"]
     technology_series = pd.Series(
-        [
-            "cement capture",
-            "cement capture",
-            "cement capture",
-            "cement capture",
-            "cement capture",
-            "cement capture",
-            "cement capture",
-            "cement capture",
-            "cement capture",
-            "biomass CHP capture",
-            "biomass CHP capture",
-            "biomass CHP capture",
-            "biomass CHP capture",
-            "biomass CHP capture",
-            "biomass CHP capture",
-            "biomass CHP capture",
-            "biomass CHP capture",
-            "biomass CHP capture",
-            "direct air capture",
-            "direct air capture",
-            "direct air capture",
-            "direct air capture",
-            "direct air capture",
-            "direct air capture",
-            "direct air capture",
-            "direct air capture",
-            "direct air capture",
-        ]
+        ["cement capture"] * 9
+        + ["biomass CHP capture"] * 9
+        + ["direct air capture"] * 9,
     )
     input_parameter_series = pd.Series(
         [
@@ -843,25 +719,8 @@ def test_add_carbon_capture(config):
             "CO₂ compression and dehydration - Electricity input",
             "CO₂ compression and dehydration - Heat out",
             "lifetime",
-            "Ax) CO2 capture rate, net",
-            "Specific investment",
-            "Fixed O&M",
-            "C2) Eletricity input ",
-            "C1) Heat  input ",
-            "C1) Heat out ",
-            "CO₂ compression and dehydration - Electricity input",
-            "CO₂ compression and dehydration - Heat out",
-            "lifetime",
-            "Ax) CO2 capture rate, net",
-            "Specific investment",
-            "Fixed O&M",
-            "C2) Eletricity input ",
-            "C1) Heat  input ",
-            "C1) Heat out ",
-            "CO₂ compression and dehydration - Electricity input",
-            "CO₂ compression and dehydration - Heat out",
-            "lifetime",
         ]
+        * 3,
     )
     technology_dataframe = pd.DataFrame(
         {
@@ -881,25 +740,8 @@ def test_add_carbon_capture(config):
             "compression-electricity-input",
             "compression-heat-output",
             "lifetime",
-            "capture_rate",
-            "investment",
-            "FOM",
-            "electricity-input",
-            "heat-input",
-            "heat-output",
-            "compression-electricity-input",
-            "compression-heat-output",
-            "lifetime",
-            "capture_rate",
-            "investment",
-            "FOM",
-            "electricity-input",
-            "heat-input",
-            "heat-output",
-            "compression-electricity-input",
-            "compression-heat-output",
-            "lifetime",
         ]
+        * 3,
     )
     new_technology_dataframe = pd.DataFrame(
         {

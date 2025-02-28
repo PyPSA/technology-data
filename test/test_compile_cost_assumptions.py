@@ -300,7 +300,7 @@ def test_set_specify_assumptions():
                 "PV module conversion efficiency [p.u.]",
                 "Heat efficiency, annual average, net, radiators",
             ],
-            "2020": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+            "2020": [1.0] * 7,
             "source": ["source"] * 7,
             "unit": ["unit"] * 7,
         }
@@ -345,12 +345,8 @@ def test_set_round_trip_efficiency():
             "technology": [
                 "hydrogen storage underground",
                 "hydrogen storage tank type 1 including compressor",
-                "battery",
-                "battery",
-                "battery",
-                "battery",
-                "battery",
-            ],
+            ]
+            + ["battery"] * 5,
             "parameter": [
                 "Round trip efficiency",
                 "Round trip efficiency",
@@ -360,25 +356,9 @@ def test_set_round_trip_efficiency():
                 "Fixed O&M",
                 "Energy storage expansion cost",
             ],
-            "2020": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
-            "source": [
-                "source",
-                "source",
-                "source",
-                "source",
-                "source",
-                "source",
-                "source",
-            ],
-            "unit": [
-                "unit",
-                "unit",
-                "unit",
-                "unit",
-                "unit",
-                "unit",
-                "unit",
-            ],
+            "2020": [1.0] * 7,
+            "source": ["source"] * 7,
+            "unit": ["unit"] * 7,
         }
     ).set_index(["technology", "parameter"])
 
@@ -414,26 +394,8 @@ def test_set_round_trip_efficiency():
                 100.0,
                 100.0,
             ],
-            "source": [
-                "source",
-                "source",
-                "source",
-                "source, Note K.",
-                "source",
-                "source",
-                "source",
-                "source",
-            ],
-            "unit": [
-                "unit",
-                "unit",
-                "unit",
-                "unit",
-                "unit",
-                "unit",
-                "unit",
-                "unit",
-            ],
+            "source": ["source"] * 3 + ["source, Note K."] + ["source"] * 4,
+            "unit": ["unit"] * 8,
         }
     )
     list_of_years = ["2020"]

@@ -15,6 +15,7 @@ import pytest
 sys.path.append("./scripts")
 
 from compile_cost_assumptions import (
+    add_carbon_capture,
     add_description,
     add_gas_storage,
     annuity,
@@ -793,3 +794,163 @@ def test_add_gas_storage(config):
     )
     comparison_df = cleaned_df.compare(reference_output_df)
     assert comparison_df.empty
+
+
+def test_add_carbon_capture(config):
+    """
+    The test verifies what is returned by add_carbon_capture.
+    """
+    list_of_years = ["2020"]
+    technology_series = pd.Series(
+        [
+            "cement capture",
+            "cement capture",
+            "cement capture",
+            "cement capture",
+            "cement capture",
+            "cement capture",
+            "cement capture",
+            "cement capture",
+            "cement capture",
+            "biomass CHP capture",
+            "biomass CHP capture",
+            "biomass CHP capture",
+            "biomass CHP capture",
+            "biomass CHP capture",
+            "biomass CHP capture",
+            "biomass CHP capture",
+            "biomass CHP capture",
+            "biomass CHP capture",
+            "direct air capture",
+            "direct air capture",
+            "direct air capture",
+            "direct air capture",
+            "direct air capture",
+            "direct air capture",
+            "direct air capture",
+            "direct air capture",
+            "direct air capture",
+        ]
+    )
+    input_parameter_series = pd.Series(
+        [
+            "Ax) CO2 capture rate, net",
+            "Specific investment",
+            "Fixed O&M",
+            "C2) Eletricity input ",
+            "C1) Heat  input ",
+            "C1) Heat out ",
+            "CO₂ compression and dehydration - Electricity input",
+            "CO₂ compression and dehydration - Heat out",
+            "lifetime",
+            "Ax) CO2 capture rate, net",
+            "Specific investment",
+            "Fixed O&M",
+            "C2) Eletricity input ",
+            "C1) Heat  input ",
+            "C1) Heat out ",
+            "CO₂ compression and dehydration - Electricity input",
+            "CO₂ compression and dehydration - Heat out",
+            "lifetime",
+            "Ax) CO2 capture rate, net",
+            "Specific investment",
+            "Fixed O&M",
+            "C2) Eletricity input ",
+            "C1) Heat  input ",
+            "C1) Heat out ",
+            "CO₂ compression and dehydration - Electricity input",
+            "CO₂ compression and dehydration - Heat out",
+            "lifetime",
+        ]
+    )
+    technology_dataframe = pd.DataFrame(
+        {
+            "2020": [50, 100, 10, 40, 90, 9, 30, 80, 10] * 3,
+            "source": ["source"] * 27,
+        }
+    ).set_index([technology_series, input_parameter_series])
+
+    output_parameter_series = pd.Series(
+        [
+            "capture_rate",
+            "investment",
+            "FOM",
+            "electricity-input",
+            "heat-input",
+            "heat-output",
+            "compression-electricity-input",
+            "compression-heat-output",
+            "lifetime",
+            "capture_rate",
+            "investment",
+            "FOM",
+            "electricity-input",
+            "heat-input",
+            "heat-output",
+            "compression-electricity-input",
+            "compression-heat-output",
+            "lifetime",
+            "capture_rate",
+            "investment",
+            "FOM",
+            "electricity-input",
+            "heat-input",
+            "heat-output",
+            "compression-electricity-input",
+            "compression-heat-output",
+            "lifetime",
+        ]
+    )
+    new_technology_dataframe = pd.DataFrame(
+        {
+            "2020": [np.nan] * 27,
+            "source": ["source"] * 27,
+        }
+    ).set_index([technology_series, output_parameter_series])
+
+    output_df = add_carbon_capture(
+        list_of_years, dea_sheet_names, new_technology_dataframe, technology_dataframe
+    )
+
+    assert output_df.loc["cement capture", "capture_rate"].equals(
+        pd.Series(
+            [0.5, "source", "per unit", "401.c Post comb - Cement kiln"],
+            name="(cement capture, capture_rate)",
+            index=["2020", "source", "unit", "further description"],
+        )
+    )
+    assert output_df.loc["cement capture", "FOM"].equals(
+        pd.Series(
+            [10.0, "source", "%/year", "401.c Post comb - Cement kiln"],
+            name="(cement capture, FOM)",
+            index=["2020", "source", "unit", "further description"],
+        )
+    )
+    assert output_df.loc["cement capture", "compression-heat-output"].equals(
+        pd.Series(
+            [80.0, "source", "MWh/tCO2", "401.c Post comb - Cement kiln"],
+            name="(cement capture, compression-heat-output)",
+            index=["2020", "source", "unit", "further description"],
+        )
+    )
+    assert output_df.loc["cement capture", "lifetime"].equals(
+        pd.Series(
+            [np.nan, "source", np.nan, "401.c Post comb - Cement kiln"],
+            name="(cement capture, lifetime)",
+            index=["2020", "source", "unit", "further description"],
+        )
+    )
+    assert output_df.loc["biomass CHP capture", "electricity-input"].equals(
+        pd.Series(
+            [40.0, "source", "MWh/tCO2", "401.a Post comb - small CHP"],
+            name="(cement capture, lifetime)",
+            index=["2020", "source", "unit", "further description"],
+        )
+    )
+    assert output_df.loc["direct air capture", "investment"].equals(
+        pd.Series(
+            [100000000.0, "source", "EUR/(tCO2/h)", "403.a Direct air capture"],
+            name="(cement capture, lifetime)",
+            index=["2020", "source", "unit", "further description"],
+        )
+    )

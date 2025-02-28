@@ -2515,6 +2515,7 @@ def add_gas_storage(
 
 def add_carbon_capture(
     years: list,
+    sheet_names_dict: dict,
     new_technology_dataframe: pd.DataFrame,
     technology_dataframe: pd.DataFrame,
 ) -> pd.DataFrame:
@@ -2525,6 +2526,8 @@ def add_carbon_capture(
     ----------
     years : list
         years for which a cost assumption is provided
+    sheet_names_dict : dict
+        dictionary having the technology name as keys and Excel sheet names as values
     new_technology_dataframe:
         updated technology data cost assumptions
     technology_dataframe : pandas.DataFrame
@@ -2584,7 +2587,7 @@ def add_carbon_capture(
             new_technology_dataframe.loc[(tech_name, "lifetime"), "source"]
         )
         new_technology_dataframe.loc[tech_name, "further description"] = (
-            dea_sheet_names[tech_name]
+            sheet_names_dict[tech_name]
         )
 
     return new_technology_dataframe
@@ -3996,7 +3999,7 @@ if __name__ == "__main__":
     # add gas storage (different methodology than other sheets)
     data = add_gas_storage(snakemake.input.dea_storage, years_list, data)
     # add carbon capture
-    data = add_carbon_capture(years_list, data, tech_data)
+    data = add_carbon_capture(years_list, dea_sheet_names, data, tech_data)
 
     # adjust for inflation
     for x in data.index.get_level_values("technology"):

@@ -4,7 +4,9 @@
 
 # coding: utf-8
 
+import logging
 import re
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -188,7 +190,7 @@ def mock_snakemake(
 
 
 def adjust_for_inflation(
-    inflation_rate: pd.DataFrame,
+    inflation_rate: pd.Series,
     costs: pd.DataFrame,
     techs: pd.Series,
     eur_year: int,
@@ -200,7 +202,7 @@ def adjust_for_inflation(
 
     Parameters
     ----------
-    inflation_rate : pd.DataFrame
+    inflation_rate : pandas.Series
         inflation rates for several years
     costs : pd.DataFrame
         existing cost dataframe
@@ -215,7 +217,7 @@ def adjust_for_inflation(
 
     Returns
     -------
-    Dataframe
+    pandas.Dataframe
         inflation updated cost dataframe
     """
 
@@ -251,3 +253,55 @@ def adjust_for_inflation(
     )
 
     return costs
+
+
+def configure_logging(snakemake, skip_handlers=False):
+    """
+    Configure the basic behaviour for the logging module.
+
+    Note: Must only be called once from the __main__ section of a script.
+
+    The setup includes printing log messages to STDERR and to a log file defined
+    by either (in priority order): snakemake.log.python, snakemake.log[0] or "logs/{rulename}.log".
+    Additional keywords from logging.basicConfig are accepted via the snakemake configuration
+    file under snakemake.config.logging.
+
+    Parameters
+    ----------
+    snakemake : snakemake object
+        Your snakemake object containing a snakemake.config and snakemake.log.
+    skip_handlers : True | False (default)
+        Do (not) skip the default handlers created for redirecting output to STDERR and file.
+    """
+
+    kwargs = snakemake.config.get("logging", dict()).copy()
+    kwargs.setdefault("level", "INFO")
+
+    if skip_handlers is False:
+        fallback_path = Path(__file__).parent.joinpath(
+            "..", "logs", f"{snakemake.rule}.log"
+        )
+        logfile = snakemake.log.get(
+            "python", snakemake.log[0] if snakemake.log else fallback_path
+        )
+        kwargs.update(
+            {
+                "handlers": [
+                    # Prefer the 'python' log, otherwise take the first log for each
+                    # Snakemake rule
+                    logging.FileHandler(logfile),
+                    logging.StreamHandler(),
+                ]
+            }
+        )
+    logging.basicConfig(**kwargs)
+
+    # Setup a function to handle uncaught exceptions and include them with their stacktrace into logfiles
+    def handle_exception(exc_type, exc_value, exc_traceback):
+        # Log the exception
+        logger = logging.getLogger()
+        logger.error(
+            "Uncaught exception", exc_info=(exc_type, exc_value, exc_traceback)
+        )
+
+    sys.excepthook = handle_exception

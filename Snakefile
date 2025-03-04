@@ -2,6 +2,8 @@
 #
 # SPDX-License-Identifier: GPL-3.0-only
 
+import pathlib
+
 
 configfile: "config.yaml"
 
@@ -32,6 +34,8 @@ rule compile_cost_assumptions:
         mem=500,
     conda:
         "environment.yaml"
+    log:
+        pathlib.Path("logs", "compile_cost_assumptions.log"),
     script:
         "scripts/compile_cost_assumptions.py"
 
@@ -54,6 +58,8 @@ rule compile_cost_assumptions_usa:
         mem=500,
     conda:
         "environment.yaml"
+    log:
+        pathlib.Path("logs", "compile_cost_assumptions_usa.log"),
     script:
         "scripts/compile_cost_assumptions_usa.py"
 

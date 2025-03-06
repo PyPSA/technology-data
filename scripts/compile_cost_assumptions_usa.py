@@ -9,12 +9,15 @@ Script creates cost csv for chosen years concatenating US-specific cost assumpti
 The input files are in parquet format and can be downloaded from https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fparquet%2F
 """
 
+import logging
 import pathlib
 
 import numpy as np
 import pandas as pd
-from _helpers import adjust_for_inflation, mock_snakemake
+from _helpers import adjust_for_inflation, configure_logging, mock_snakemake
 from compile_cost_assumptions import prepare_inflation_rate
+
+logger = logging.getLogger(__name__)
 
 
 def get_conversion_dictionary(flag: str) -> dict:
@@ -134,7 +137,7 @@ def filter_atb_input_file(
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         NREL/ATB cost dataframe
     """
 
@@ -211,7 +214,7 @@ def get_query_string(
 
     Returns
     -------
-    query_string: str
+    str
         query string
     """
 
@@ -244,7 +247,7 @@ def calculate_fom_percentage(
     ----------
     x : row
         row of the cost dataframe
-    dataframe : pd.DataFrame
+    dataframe : pandas.DataFrame
         cost DataFrame
     columns_list: list
         columns to consider in the query
@@ -276,16 +279,16 @@ def replace_value_name(
 
     Parameters
     ----------
-    dataframe : pd.DataFrame
+    dataframe : pandas.DataFrame
         cost dataframe
     conversion_dict : dict
-        cost DataFrame
+        conversion dictionary
     column_name: str
         column name where values shall be replaced
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated cost dataframe
     """
 
@@ -328,7 +331,7 @@ def pre_process_manual_input_usa(
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated manual input usa
     """
 
@@ -343,7 +346,7 @@ def pre_process_manual_input_usa(
     )
 
     # Read the inflation rate
-    inflation_rate_df = prepare_inflation_rate(inflation_rate_file_path)
+    inflation_rate_series = prepare_inflation_rate(inflation_rate_file_path)
 
     # Create cost estimates for all years
     list_dataframe_row = []
@@ -391,7 +394,7 @@ def pre_process_manual_input_usa(
 
     # Correct the cost assumptions to the inflation rate
     inflation_adjusted_manual_input_usa_file_df = adjust_for_inflation(
-        inflation_rate_df,
+        inflation_rate_series,
         manual_input_usa_file_df,
         manual_input_usa_file_df.technology.unique(),
         eur_year,
@@ -425,9 +428,9 @@ def modify_cost_input_file(
 
     Parameters
     ----------
-    cost_dataframe : pd.DataFrame
+    cost_dataframe : pandas.DataFrame
         existing cost dataframe
-    manual_input_usa_dataframe : pd.DataFrame
+    manual_input_usa_dataframe : pandas.DataFrame
         manual_input_usa dataframe
     list_of_years : list
         years for which a cost assumption is provided
@@ -438,7 +441,7 @@ def modify_cost_input_file(
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated cost dataframe
     """
 
@@ -600,7 +603,7 @@ def query_cost_dataframe(
 
     Parameters
     ----------
-    cost_dataframe: pd.DataFrame
+    cost_dataframe: pandas.DataFrame
         existing cost dataframe
     technology_dictionary: dict
         dictionary of the technologies updated with NREL/ATB data
@@ -609,7 +612,7 @@ def query_cost_dataframe(
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         queried cost dataframe
     """
 
@@ -662,7 +665,7 @@ def pre_process_cost_input_file(
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated NREL/ATB cost dataframe
     """
 
@@ -715,7 +718,7 @@ def pre_process_atb_input_file(
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated NREL/ATB cost dataframe
     """
 
@@ -852,7 +855,7 @@ def duplicate_fuel_cost(input_file_path: str, list_of_years: list) -> pd.DataFra
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated fuel cost dataframe
     """
 
@@ -904,6 +907,8 @@ if __name__ == "__main__":
     if "snakemake" not in globals():
         snakemake = mock_snakemake("compile_cost_assumptions_usa")
 
+    configure_logging(snakemake)
+
     year_list = sorted(snakemake.config["years"])
     num_digits = snakemake.config["ndigits"]
     eur_reference_year = snakemake.config["eur_year"]
@@ -922,6 +927,8 @@ if __name__ == "__main__":
         "nrel_atb_technology_to_remove"
     ]
 
+    logger.info("Configuration variables are set")
+
     if len(set(snakemake.config["years"])) < len(snakemake.config["years"]):
         raise Exception(
             "Please verify the list of cost files. It may contain duplicates."
@@ -935,8 +942,12 @@ if __name__ == "__main__":
     # get the discount rate values for the US
     discount_rate_df = pd.read_csv(input_file_discount_rate)
 
+    logger.info("discount_rate file for the US has been read in")
+
     # get the fuel costs values for the US
     fuel_costs_df = duplicate_fuel_cost(input_file_fuel_costs, year_list)
+
+    logger.info("fuel_cost file for the US has been read in")
 
     for year_val in year_list:
         # get the cost file to modify
@@ -955,6 +966,8 @@ if __name__ == "__main__":
             input_atb_path = input_file_list_atb[1]
         else:
             raise Exception(f"{year_val} is not a considered year")
+
+        logger.info(f"The file {input_atb_path} is used for year {year_val}")
 
         manual_input_usa_df = pre_process_manual_input_usa(
             input_file_manual_input_usa,
@@ -1060,6 +1073,9 @@ if __name__ == "__main__":
         if len(output_cost_path_list) == 1:
             output_cost_path = output_cost_path_list[0]
             updated_cost_df.to_csv(output_cost_path, index=False)
+            logger.info(
+                f"The cost assumptions file for the US has been compiled for year {year_val}"
+            )
         else:
             raise Exception(
                 "Please verify the list of cost files. It may contain duplicates."

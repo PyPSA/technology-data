@@ -33,11 +33,10 @@ from datetime import date
 
 import numpy as np
 import pandas as pd
-from _helpers import adjust_for_inflation
+from _helpers import adjust_for_inflation, configure_logging, mock_snakemake
 from currency_converter import ECB_URL, CurrencyConverter
 from scipy import interpolate
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 try:
@@ -345,12 +344,12 @@ def get_dea_maritime_data(
         path to DEA input data file for shipping
     years : list
         years for which a cost assumption is provided
-    input_data_df : pd.DataFrame
+    input_data_df : pandas.DataFrame
         technology data cost assumptions
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         technology data cost assumptions enriched with shipping data from DEA
     """
 
@@ -464,12 +463,12 @@ def get_dea_vehicle_data(
         path to DEA input data file for shipping
     years : list
         years for which a cost assumption is provided
-    technology_dataframe : pd.DataFrame
+    technology_dataframe : pandas.DataFrame
         technology data cost assumptions
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         technology data cost assumptions enriched with shipping data from DEA
     """
 
@@ -608,7 +607,7 @@ def get_data_DEA(
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         technology data from DEA
     """
 
@@ -1016,12 +1015,12 @@ def add_desalination_data(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
 
     Parameters
     ----------
-    cost_dataframe : pd.DataFrame
+    cost_dataframe : pandas.DataFrame
         cost dataframe
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated cost dataframe
     """
 
@@ -1099,12 +1098,12 @@ def add_co2_intensity(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
 
     Parameters
     ----------
-    cost_dataframe : pd.DataFrame
+    cost_dataframe : pandas.DataFrame
         cost dataframe
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated cost dataframe
     """
 
@@ -1169,12 +1168,12 @@ def add_solar_from_other(years: list, cost_dataframe: pd.DataFrame) -> pd.DataFr
     ----------
     years : list
         years for which a cost assumption is provided
-    cost_dataframe : pd.DataFrame
+    cost_dataframe : pandas.DataFrame
         costs
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated cost dataframe
     """
 
@@ -1245,12 +1244,12 @@ def add_h2_from_other(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
 
     Parameters
     ----------
-    cost_dataframe : pd.DataFrame
+    cost_dataframe : pandas.DataFrame
         costs
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated cost dataframe
     """
 
@@ -1271,12 +1270,12 @@ def unify_diw(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
 
     Parameters
     ----------
-    cost_dataframe : pd.DataFrame
+    cost_dataframe : pandas.DataFrame
         costs
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated cost dataframe
     """
 
@@ -1293,12 +1292,12 @@ def biochar_pyrolysis_harmonise_dea(df: pd.DataFrame) -> pd.DataFrame:
 
     Parameters
     ----------
-    df : pd.DataFrame
+    df : pandas.DataFrame
         costs
 
     Returns
     -------
-    DataFrame
+    pandas.DataFrame
         updated cost dataframe
     """
 
@@ -1443,7 +1442,7 @@ def clean_up_units(
 
     Parameters
     ----------
-    technology_dataframe : pd.DataFrame
+    technology_dataframe : pandas.DataFrame
         technology data cost assumptions
     value_column : str
         column to modify
@@ -1452,7 +1451,7 @@ def clean_up_units(
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         technology data with converted units
     """
 
@@ -1706,12 +1705,12 @@ def set_specify_assumptions(
     ----------
     years : list
         years for which a cost assumption is provided
-    technology_dataframe : pd.DataFrame
+    technology_dataframe : pandas.DataFrame
         technology data cost assumptions
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology dataframe
     """
 
@@ -1800,12 +1799,12 @@ def set_round_trip_efficiency(
     ----------
     years: list
         years for which a cost assumption is provided
-    technology_dataframe: pd.DataFrame
+    technology_dataframe: pandas.DataFrame
         technology data cost assumptions
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology dataframe
     """
 
@@ -1867,12 +1866,12 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
     ----------
     years : list
         years for which a cost assumption is provided
-    technology_dataframe : pd.DataFrame
+    technology_dataframe : pandas.DataFrame
         technology data cost assumptions
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         technology data in pypsa tech data syntax (investment, FOM,VOM, efficiency)
     """
 
@@ -2335,14 +2334,14 @@ def add_description(
     ----------
     years : list
         years for which a cost assumption is provided
-    technology_dataframe : pd.DataFrame
+    technology_dataframe : pandas.DataFrame
         technology data cost assumptions
     offwind_no_grid_costs_flag : bool
         flag to remove grid connection costs from DEA for offwind. Such costs are calculated separately in pypsa-eur
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -2375,12 +2374,12 @@ def convert_units(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFra
     ----------
     years : list
         years for which a cost assumption is provided
-    technology_dataframe : pd.DataFrame
+    technology_dataframe : pandas.DataFrame
         technology data cost assumptions
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -2422,12 +2421,12 @@ def add_gas_storage(
         name of the dea input file containing the gas storage data
     years : list
         years for which a cost assumption is provided
-    technology_dataframe : pd.DataFrame
+    technology_dataframe : pandas.DataFrame
         technology data cost assumptions
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -2516,6 +2515,7 @@ def add_gas_storage(
 
 def add_carbon_capture(
     years: list,
+    sheet_names_dict: dict,
     new_technology_dataframe: pd.DataFrame,
     technology_dataframe: pd.DataFrame,
 ) -> pd.DataFrame:
@@ -2526,14 +2526,16 @@ def add_carbon_capture(
     ----------
     years : list
         years for which a cost assumption is provided
+    sheet_names_dict : dict
+        dictionary having the technology name as keys and Excel sheet names as values
     new_technology_dataframe:
         updated technology data cost assumptions
-    technology_dataframe : pd.DataFrame
+    technology_dataframe : pandas.DataFrame
         existing technology data cost assumptions
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -2585,7 +2587,7 @@ def add_carbon_capture(
             new_technology_dataframe.loc[(tech_name, "lifetime"), "source"]
         )
         new_technology_dataframe.loc[tech_name, "further description"] = (
-            dea_sheet_names[tech_name]
+            sheet_names_dict[tech_name]
         )
 
     return new_technology_dataframe
@@ -2597,12 +2599,12 @@ def rename_pypsa_old(cost_dataframe_pypsa: pd.DataFrame) -> pd.DataFrame:
 
     Parameters
     ----------
-    cost_dataframe_pypsa:
+    cost_dataframe_pypsa: pandas.DataFrame
         technology data cost assumptions
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -2632,12 +2634,12 @@ def add_manual_input(technology_dataframe: pd.DataFrame) -> pd.DataFrame:
 
     Parameters
     ----------
-    technology_dataframe:
+    technology_dataframe: pandas.DataFrame
         technology data cost assumptions
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -2686,12 +2688,12 @@ def rename_ISE(cost_dataframe_ise: pd.DataFrame) -> pd.DataFrame:
 
     Parameters
     ----------
-    cost_dataframe_ise:
+    cost_dataframe_ise: pandas.DataFrame
         ISE cost assumptions
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -2733,12 +2735,12 @@ def rename_ISE_vehicles(costs_vehicles_dataframe: pd.DataFrame) -> pd.DataFrame:
 
     Parameters
     ----------
-    costs_vehicles_dataframe:
+    costs_vehicles_dataframe: pandas.DataFrame
         vehicles ISE cost assumptions
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -2794,14 +2796,14 @@ def carbon_flow(
     ----------
     years : list
         years for which a cost assumption is provided
-    cost_dataframe:
+    cost_dataframe: pandas.DataFrame
         cost dataframe
     year_to_use: int
         year to use
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -3105,12 +3107,12 @@ def energy_penalty(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
 
     Parameters
     ----------
-    cost_dataframe:
+    cost_dataframe: pandas.DataFrame
         cost dataframe
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -3230,12 +3232,12 @@ def add_egs_data(technology_dataframe: pd.DataFrame) -> pd.DataFrame:
 
     Parameters
     ----------
-    technology_dataframe:
+    technology_dataframe: pandas.DataFrame
         technology data
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -3348,12 +3350,12 @@ def add_home_battery_costs(
         file name for the cost assumptions from the EWG study
     years : list
         years for which a cost assumption is provided
-    cost_dataframe: pd.DataFrame
+    cost_dataframe: pandas.DataFrame
         existing cost dataframe
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -3450,12 +3452,12 @@ def add_SMR_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFram
     ----------
     years : list
         years for which a cost assumption is provided
-    technology_dataframe: pd.DataFrame
+    technology_dataframe: pandas.DataFrame
         technology cost dataframe
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -3525,12 +3527,12 @@ def add_mean_solar_rooftop(
     ----------
     years : list
         years for which a cost assumption is provided
-    technology_dataframe: pd.DataFrame
+    technology_dataframe: pandas.DataFrame
         technology cost dataframe
 
     Returns
     -------
-    Dataframe
+    pandas.DataFrame
         updated technology data
     """
 
@@ -3573,6 +3575,36 @@ def add_mean_solar_rooftop(
     return pd.concat([technology_dataframe, solar])
 
 
+def geometric_series(
+    nominator: float, denominator: float = 1.0, number_of_terms: int = 1, start: int = 1
+) -> float:
+    """
+    The function computes a geometric series. The geometric series is given with a constant ratio between successive terms.
+    When moving to infinity the geometric series converges to a limit. https://en.wikipedia.org/wiki/Series_(mathematics)
+    For example, for nominator = 1.0, denominator = 2.0, number_of_terms = 3 and start = 0 results in
+    1/2**0 + 1/2**1 + 1/2**2 = 1 + 1/2 + 1/4 = 1.75. If number_of_terms grows, the sum converges to 2
+
+    Parameters
+    ----------
+    nominator : float
+        nominator of the ratio
+    denominator : float
+        denominator of the ratio
+    number_of_terms : int
+        number of terms in the sum
+    start : int
+        if the value is 0, it means it starts at the first term
+
+    Returns
+    -------
+    float
+        sum of the terms
+    """
+    return sum(
+        [nominator / denominator**i for i in range(start, start + number_of_terms)]
+    )
+
+
 def add_energy_storage_database(
     pnnl_storage_file_name: str,
     pnnl_energy_storage_dict: dict,
@@ -3599,7 +3631,7 @@ def add_energy_storage_database(
         PNNL storage file name
     pnnl_energy_storage_dict: dict
         PNNL storage configuration dictionary
-    cost_dataframe: pd.DataFrame
+    cost_dataframe: pandas.DataFrame
         existing cost dataframe
     data_year: int
         year to consider
@@ -3759,31 +3791,6 @@ def add_energy_storage_database(
                 # While the first segment is known, the others are defined by the initial segments with a accumulating quadratic decreasing gradient
                 other_segments_points = [2034, 2039, 2044, 2049, 2054, 2059]
 
-                def geometric_series(
-                    nominator, denominator=1, number_of_terms=1, start=1
-                ):
-                    """
-                    A geometric series is a series with a constant ratio between successive terms.
-                    When moving to infinity the geometric series converges to a limit.
-                    https://en.wikipedia.org/wiki/Series_(mathematics)
-
-                    Example:
-                    -------
-                    nominator = 1
-                    denominator = 2
-                    number_of_terms = 3
-                    start = 0  # 0 means it starts at the first term
-                    result = 1/1**0 + 1/2**1 + 1/2**2 = 1 + 1/2 + 1/4 = 1.75
-
-                    If moving to infinity the result converges to 2
-                    """
-                    return sum(
-                        [
-                            nominator / denominator**i
-                            for i in range(start, start + number_of_terms)
-                        ]
-                    )
-
                 if (
                     tech_name == "Hydrogen-discharger"
                     or tech_name == "Pumped-Heat-store"
@@ -3911,7 +3918,7 @@ def add_energy_storage_database(
     return pd.concat([cost_dataframe, df]), tech_names
 
 
-def prepare_inflation_rate(fn: str) -> pd.DataFrame:
+def prepare_inflation_rate(fn: str) -> pd.Series:
     """
     The function reads-in annual the inflation rates from Eurostat
     https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/dataflow/ESTAT/prc_hicp_aind/1.0?references=descendants&detail=referencepartial&format=sdmx_2.1_generic&compressed=true
@@ -3923,8 +3930,8 @@ def prepare_inflation_rate(fn: str) -> pd.DataFrame:
 
     Returns
     -------
-    DataFrame
-        inflation rates dataframe
+    pandas.Series
+        inflation rates series
     """
 
     inflation_rate = pd.read_excel(fn, sheet_name="Sheet 1", index_col=0, header=[8])
@@ -3943,10 +3950,9 @@ def prepare_inflation_rate(fn: str) -> pd.DataFrame:
 #  ---------- MAIN ------------------------------------------------------------
 if __name__ == "__main__":
     if "snakemake" not in globals():
-        from _helpers import mock_snakemake
-
-        # os.chdir(os.path.join(os.getcwd(), "scripts"))
         snakemake = mock_snakemake("compile_cost_assumptions")
+
+    configure_logging(snakemake)
 
     years_list = list(snakemake.config["years"])
     inflation_rate = prepare_inflation_rate(snakemake.input.inflation_rate)
@@ -3993,7 +3999,7 @@ if __name__ == "__main__":
     # add gas storage (different methodology than other sheets)
     data = add_gas_storage(snakemake.input.dea_storage, years_list, data)
     # add carbon capture
-    data = add_carbon_capture(years_list, data, tech_data)
+    data = add_carbon_capture(years_list, dea_sheet_names, data, tech_data)
 
     # adjust for inflation
     for x in data.index.get_level_values("technology"):

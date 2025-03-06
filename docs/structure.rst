@@ -23,7 +23,7 @@ This repository has the following structure:
     * further description (specific assumptions, sheet name if data from a multi-sheet Excel file)
     * currency_year (year used for adjusting economic values to reflect current purchasing power)
 
-    The directory contains also the sub-directory ``US``, which hosts US-specific outputs. In the ``US/costs_{year}.csv`` are specified
+-  **outputs/US**: The directory contains also the sub-directory ``US``, which hosts US-specific outputs. In the ``US/costs_{year}.csv`` are specified
 
     * technology (e.g. 'onwind')
     * parameter (e.g. FOM)

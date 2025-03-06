@@ -41,7 +41,7 @@ This repository has the following structure:
 	   :language: yaml
 	   :lines: 4-40
 
- the following parameters can be set in the ``config.yaml``
+ The following parameters can be set in the ``config.yaml``
 
     * years : numpy array of all the years of which an output costs csv should be created
     * nrel_atb_input_years : list of years that define the source files
@@ -64,7 +64,7 @@ This repository has the following structure:
 -  **scripts** :
 
 	* :mod:`compile_cost_assumptions.py` converts input data from multiple sources to ``cost_{year}.csv`` for chosen year. Interpolates data for missing years or calculates the costs at a certain year based on the inflation rate. Technology data from the `Danish Energy Agency <https://github.com/PyPSA/technology-data>`_ are preferred. If data are missing from all sources, these are taken from the old PyPSA cost assumptions (with a printed warning).
-	* :mod:`compile_cost_assumptions_usa.py` converts input data from NREL/ATB to ``US/cost_{year}.csv`` for chosen year. It takes as input the cost assumptions files from `compile_cost_assumptions.py` and updates the technology also present in NREL/ATB.
+	* :mod:`compile_cost_assumptions_usa.py` converts input data from NREL/ATB to ``US/cost_{year}.csv`` for chosen year. It starts from the cost assumptions files produced by `compile_cost_assumptions.py`. All technology-parameter pairs present in the NREL/ATB input data are updated. Those not present in NREL/ATB are left untouched.
     * :mod:`convert_pdf_fraunhofer_to_dataframe.py` converts table from Fraunhofer ISE report in pdf to csv format for input data. Script can be modified to convert other .pdf sources to .csv format
 	* :mod:`retrieve_data_from_dea.py` downloads up-to-date technology data from DEA website and saves it in the **input** folder. Optional, also retrieves the documentation of the data into the folder **docu**
 

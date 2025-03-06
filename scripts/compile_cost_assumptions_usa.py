@@ -714,7 +714,7 @@ def pre_process_atb_input_file(
     list_core_metric_parameter_to_keep: list
         values of the core_metric_paramater that are relevant
     tech_to_remove: list
-        technologies names that are should be excluded from NREL/ATB
+        technologies names that should be excluded from NREL/ATB
 
     Returns
     -------

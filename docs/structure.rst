@@ -15,22 +15,22 @@ This repository has the following structure:
 
 -  **outputs**: technology data saved as ``costs_{year}.csv`` format for defined years. In the output ``costs_{year}.csv`` are specified
 
-	* technology (e.g. 'onwind')
-	* parameter (e.g. FOM)
-	* value (e.g. 1.18)
-	* unit (e.g. %/year)
-	* source (e.g. DEA, excel_file_name.xlsx)
-	* further description (specific assumptions, sheet name if data from a multi-sheet Excel file)
+    * technology (e.g. 'onwind')
+    * parameter (e.g. FOM)
+    * value (e.g. 1.18)
+    * unit (e.g. %/year)
+    * source (e.g. DEA, excel_file_name.xlsx)
+    * further description (specific assumptions, sheet name if data from a multi-sheet Excel file)
     * currency_year (year used for adjusting economic values to reflect current purchasing power)
 
     The directory contains also the sub-directory ``US``, which hosts US-specific outputs. In the ``US/costs_{year}.csv`` are specified
 
-	* technology (e.g. 'onwind')
-	* parameter (e.g. FOM)
-	* value (e.g. 1.18)
-	* unit (e.g. %/year)
-	* source (e.g. DEA, excel_file_name.xlsx)
-	* further description (specific assumptions, sheet name if data from a multi-sheet Excel file)
+    * technology (e.g. 'onwind')
+    * parameter (e.g. FOM)
+    * value (e.g. 1.18)
+    * unit (e.g. %/year)
+    * source (e.g. DEA, excel_file_name.xlsx)
+    * further description (specific assumptions, sheet name if data from a multi-sheet Excel file)
     * currency_year (year used for adjusting economic values to reflect current purchasing power)
     * financial_case (financial assumptions for the definition of the cost of capital)
     * scenario (technology innovation scenario)
@@ -62,11 +62,10 @@ This repository has the following structure:
     * ndigits : number of significant digits
 
 -  **scripts** :
-
-	* :mod:`compile_cost_assumptions.py` converts input data from multiple sources to ``cost_{year}.csv`` for chosen year. Interpolates data for missing years or calculates the costs at a certain year based on the inflation rate. Technology data from the `Danish Energy Agency <https://github.com/PyPSA/technology-data>`_ are preferred. If data are missing from all sources, these are taken from the old PyPSA cost assumptions (with a printed warning).
-	* :mod:`compile_cost_assumptions_usa.py` converts input data from NREL/ATB to ``US/cost_{year}.csv`` for chosen year. It starts from the cost assumptions files produced by `compile_cost_assumptions.py`. All technology-parameter pairs present in the NREL/ATB input data are updated. Those not present in NREL/ATB are left untouched.
+    * :mod:`compile_cost_assumptions.py` converts input data from multiple sources to ``cost_{year}.csv`` for chosen year. Interpolates data for missing years or calculates the costs at a certain year based on the inflation rate. Technology data from the `Danish Energy Agency <https://github.com/PyPSA/technology-data>`_ are preferred. If data are missing from all sources, these are taken from the old PyPSA cost assumptions (with a printed warning).
+    * :mod:`compile_cost_assumptions_usa.py` converts input data from NREL/ATB to ``US/cost_{year}.csv`` for chosen year. It starts from the cost assumptions files produced by `compile_cost_assumptions.py`. All technology-parameter pairs present in the NREL/ATB input data are updated. Those not present in NREL/ATB are left untouched.
     * :mod:`convert_pdf_fraunhofer_to_dataframe.py` converts table from Fraunhofer ISE report in pdf to csv format for input data. Script can be modified to convert other .pdf sources to .csv format
-	* :mod:`retrieve_data_from_dea.py` downloads up-to-date technology data from DEA website and saves it in the **input** folder. Optional, also retrieves the documentation of the data into the folder **docu**
+    * :mod:`retrieve_data_from_dea.py` downloads up-to-date technology data from DEA website and saves it in the **input** folder. Optional, also retrieves the documentation of the data into the folder **docu**
 
 -  **docu**: reports, paper, additional information about the input data, format .pdf
 

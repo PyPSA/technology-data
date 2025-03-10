@@ -33,7 +33,7 @@ from datetime import date
 
 import numpy as np
 import pandas as pd
-from _helpers import adjust_for_inflation, configure_logging, mock_snakemake
+from _helpers import adjust_for_inflation, configure_logging, get_relative_fn, mock_snakemake
 from currency_converter import ECB_URL, CurrencyConverter
 from scipy import interpolate
 
@@ -428,7 +428,7 @@ def get_dea_maritime_data(
         df.loc[df_i, "unit"] = df.loc[df_i, "unit"].str.replace("GJ", "MWh")
 
         # add source + cost year
-        df["source"] = f"Danish Energy Agency, {fn}"
+        df["source"] = f"Danish Energy Agency, {get_relative_fn(fn)}"
         # cost year is 2023 p.10
         df["currency_year"] = 2023
         # add sheet name
@@ -552,7 +552,7 @@ def get_dea_vehicle_data(
         df.loc["Upfront vehicle cost", "unit"] += "/vehicle"
 
         # add source + cost year
-        df["source"] = f"Danish Energy Agency, {fn}"
+        df["source"] = f"Danish Energy Agency, {get_relative_fn(fn)}"
         # cost year is 2022 p.12
         df["currency_year"] = 2022
         # add sheet name
@@ -982,7 +982,7 @@ def get_data_DEA(
     # if year-specific data is missing and not fixed by interpolation fill forward with same values
     df_final = df_final.ffill(axis=1)
 
-    df_final["source"] = source_dict["DEA"] + ", " + excel_file.replace("inputs/", "")
+    df_final["source"] = f"{source_dict['DEA']}, {get_relative_fn(excel_file)}"
     if (
         tech_name in cost_year_2020
         and ("for_carbon_capture_transport_storage" not in excel_file)

@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 import pathlib
+from shutil import rmtree
 
 
 configfile: "config.yaml"
@@ -88,3 +89,17 @@ rule convert_EWG:
         "environment.yaml"
     script:
         "scripts/convert_pdf_EWG_to_dataframe.py"
+
+
+rule purge:
+    run:
+        import builtins
+
+        do_purge = builtins.input(
+            "Do you really want to delete all generated outputs? [y/N] "
+        )
+        if do_purge == "y":
+            rmtree("outputs/", ignore_errors=True)
+            print("Purging generated outputs.")
+        else:
+            raise Exception(f"Input {do_purge}. Aborting purge.")

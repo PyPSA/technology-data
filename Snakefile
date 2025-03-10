@@ -91,6 +91,13 @@ rule convert_EWG:
         "scripts/convert_pdf_EWG_to_dataframe.py"
 
 
+rule all:
+    input:
+        rules.compile_cost_assumptions.output,
+        rules.compile_cost_assumptions_usa.output,
+    default_target:True
+
+
 rule purge:
     run:
         import builtins

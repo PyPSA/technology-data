@@ -128,3 +128,7 @@ Natural gas steam reforming CC,FOM,2030,0.05,%/year,2010,"JRC, 01_JRC-EU-TIMES F
 Natural gas steam reforming CC,FOM,2050,0.05,%/year,2010,"JRC, 01_JRC-EU-TIMES Full model ",
 Coal gasification CC,FOM,2030,0.07,%/year,2010,"JRC, 01_JRC-EU-TIMES Full model ",
 Biomass gasification CC,FOM,2030,0.02,%/year,2010,"JRC, 01_JRC-EU-TIMES Full model ",
+iron-air battery,investment,2025,28.62,EUR/kWh,2023,"Form Energy, docu/FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",
+iron-air battery,investment,2030,19.05,EUR/kWh,2023,"Form Energy, docu/FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",
+iron-air battery,investment,2035,14.40,EUR/kWh,2023,"Form Energy, docu/FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",
+iron-air battery,investment,2040,12.69,EUR/kWh,2023,"Form Energy, docu/FormEnergy_Europe_modeling_recommendations_2023.03.pdf, p4",

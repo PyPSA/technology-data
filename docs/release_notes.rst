@@ -31,6 +31,8 @@ Upcoming Release
 
 * Updates the documentation with compile_cost_assumptions_usa.py (https://github.com/PyPSA/technology-data/pull/186)
 
+* Add `purge` and `all` rules to clean all generated outputs and regenerate them (https://github.com/PyPSA/technology-data/pull/187)
+
 `v0.11.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.11.0>`__ (24th January 2025)
 =======================================================================================
 

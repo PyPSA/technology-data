@@ -4,8 +4,13 @@
 
 # coding: utf-8
 
+import logging
 import re
+import sys
 from pathlib import Path
+
+import numpy as np
+import pandas as pd
 
 
 class Dict(dict):
@@ -182,3 +187,121 @@ def mock_snakemake(
         if user_in_script_dir:
             os.chdir(script_dir)
     return snakemake
+
+
+def adjust_for_inflation(
+    inflation_rate: pd.Series,
+    costs: pd.DataFrame,
+    techs: pd.Series,
+    eur_year: int,
+    col_name: str,
+    usa_costs_flag: bool = False,
+) -> pd.DataFrame:
+    """
+    The function adjust the investment costs for the specified techs for inflation.
+
+    Parameters
+    ----------
+    inflation_rate : pandas.Series
+        inflation rates for several years
+    costs : pd.DataFrame
+        existing cost dataframe
+    techs : pd.Series
+        technologies
+    eur_year : int,
+        reference year for which the costs are provided and based on which the inflation adjustment is done
+    col_name : str
+        column name to which to apply the inflation rate adjustment
+    usa_costs_flag: bool
+        flag for US specific costs
+
+    Returns
+    -------
+    pandas.Dataframe
+        inflation updated cost dataframe
+    """
+
+    def get_factor(inflation_rate_df, ref_year, eur_year_val):
+        if (pd.isna(ref_year)) or (ref_year < 1900):
+            return np.nan
+        if ref_year == eur_year_val:
+            return 1
+        mean = inflation_rate_df.mean()
+        if ref_year < eur_year_val:
+            new_index = np.arange(ref_year + 1, eur_year_val + 1)
+            df = 1 + inflation_rate_df.reindex(new_index).fillna(mean)
+            return df.cumprod().loc[eur_year_val]
+        else:
+            new_index = np.arange(eur_year_val + 1, ref_year + 1)
+            df = 1 + inflation_rate_df.reindex(new_index).fillna(mean)
+            return 1 / df.cumprod().loc[ref_year]
+
+    inflation = costs.currency_year.apply(
+        lambda x: get_factor(inflation_rate, x, eur_year)
+    )
+
+    paras = ["investment", "VOM", "fuel"]
+
+    if usa_costs_flag:
+        filter_i = costs.technology.isin(techs) & costs.parameter.isin(paras)
+    else:
+        filter_i = costs.index.get_level_values(0).isin(
+            techs
+        ) & costs.index.get_level_values(1).isin(paras)
+    costs.loc[filter_i, col_name] = costs.loc[filter_i, col_name].mul(
+        inflation.loc[filter_i], axis=0
+    )
+
+    return costs
+
+
+def configure_logging(snakemake, skip_handlers=False):
+    """
+    Configure the basic behaviour for the logging module.
+
+    Note: Must only be called once from the __main__ section of a script.
+
+    The setup includes printing log messages to STDERR and to a log file defined
+    by either (in priority order): snakemake.log.python, snakemake.log[0] or "logs/{rulename}.log".
+    Additional keywords from logging.basicConfig are accepted via the snakemake configuration
+    file under snakemake.config.logging.
+
+    Parameters
+    ----------
+    snakemake : snakemake object
+        Your snakemake object containing a snakemake.config and snakemake.log.
+    skip_handlers : True | False (default)
+        Do (not) skip the default handlers created for redirecting output to STDERR and file.
+    """
+
+    kwargs = snakemake.config.get("logging", dict()).copy()
+    kwargs.setdefault("level", "INFO")
+
+    if skip_handlers is False:
+        fallback_path = Path(__file__).parent.joinpath(
+            "..", "logs", f"{snakemake.rule}.log"
+        )
+        logfile = snakemake.log.get(
+            "python", snakemake.log[0] if snakemake.log else fallback_path
+        )
+        kwargs.update(
+            {
+                "handlers": [
+                    # Prefer the 'python' log, otherwise take the first log for each
+                    # Snakemake rule
+                    logging.FileHandler(logfile),
+                    logging.StreamHandler(),
+                ]
+            }
+        )
+    logging.basicConfig(**kwargs)
+
+    # Setup a function to handle uncaught exceptions and include them with their stacktrace into logfiles
+    def handle_exception(exc_type, exc_value, exc_traceback):
+        # Log the exception
+        logger = logging.getLogger()
+        logger.error(
+            "Uncaught exception", exc_info=(exc_type, exc_value, exc_traceback)
+        )
+
+    sys.excepthook = handle_exception

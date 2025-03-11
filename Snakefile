@@ -95,7 +95,7 @@ rule all:
     input:
         rules.compile_cost_assumptions.output,
         rules.compile_cost_assumptions_usa.output,
-    default_target:True
+    default_target: True
 
 
 rule purge:

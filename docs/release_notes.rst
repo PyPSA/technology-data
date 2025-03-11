@@ -27,6 +27,8 @@ Upcoming Release
 
 * Improve filename consistency in the sources (https://github.com/PyPSA/technology-data/pull/178)
 
+* Improve filename consistency in the sources (https://github.com/PyPSA/technology-data/pull/178)
+
 * Include further unit tests for compile_cost_assumptions_usa.py (https://github.com/PyPSA/technology-data/pull/182)
 
 * Updates the documentation with compile_cost_assumptions_usa.py (https://github.com/PyPSA/technology-data/pull/186)

@@ -23,9 +23,8 @@ Upcoming Release
 * Include unit test execution and compile_cost_assumptions_usa.py in ci.yaml (https://github.com/PyPSA/technology-data/pull/174)
 
 * Align `snakemake` version and the related `mock_snakemake` to PyPSA-Eur (https://github.com/PyPSA/technology-data/pull/177)
-* Improve assumptions for iron-air batteries (https://github.com/PyPSA/technology-data/pull/179)
 
-* Improve filename consistency in the sources (https://github.com/PyPSA/technology-data/pull/178)
+* Improve assumptions for iron-air batteries (https://github.com/PyPSA/technology-data/pull/179)
 
 * Improve filename consistency in the sources (https://github.com/PyPSA/technology-data/pull/178)
 

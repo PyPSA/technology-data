@@ -33,7 +33,12 @@ from datetime import date
 
 import numpy as np
 import pandas as pd
-from _helpers import adjust_for_inflation, configure_logging, get_relative_fn, mock_snakemake
+from _helpers import (
+    adjust_for_inflation,
+    configure_logging,
+    get_relative_fn,
+    mock_snakemake,
+)
 from currency_converter import ECB_URL, CurrencyConverter
 from scipy import interpolate
 

@@ -376,7 +376,7 @@ def pre_process_manual_input_usa(
                     # Create a row for each scenario
                     s_copy = pd.Series(
                         index=list_of_years,
-                        data=interpolated_values,  # Ora i valori sono interpolati
+                        data=interpolated_values,  # values are now interpolated
                         name=param,
                     )
 

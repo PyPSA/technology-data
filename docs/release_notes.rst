@@ -24,6 +24,10 @@ Upcoming Release
 
 * Align `snakemake` version and the related `mock_snakemake` to PyPSA-Eur (https://github.com/PyPSA/technology-data/pull/177)
 
+* Improve filename consistency in the sources (https://github.com/PyPSA/technology-data/pull/178)
+
+* Improve assumptions for iron-air batteries (https://github.com/PyPSA/technology-data/pull/179)
+
 * US-specific scenarios for electrolyzers and DAC + adjustment for inflation removed as already considered in input data (https://github.com/PyPSA/technology-data/pull/181)
 
 * Include further unit tests for compile_cost_assumptions_usa.py (https://github.com/PyPSA/technology-data/pull/182)

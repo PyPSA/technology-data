@@ -410,7 +410,9 @@ def pre_process_manual_input_usa(
                 except ValueError:
                     s["currency_year"] = np.nan
                 for col in ["unit", "source", "further description"]:
-                    s_copy[col] = c[col].unique()[0]
+                    s[col] = c[col].unique()[0]
+
+                # Add a separate row for each `financial_case`
                 for financial_case in c["financial_case"].unique():
                     s["financial_case"] = financial_case
                     list_dataframe_row.append(s.copy())

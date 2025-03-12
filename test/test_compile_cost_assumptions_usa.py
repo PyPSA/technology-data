@@ -379,13 +379,13 @@ def test_duplicate_fuel_cost(config):
 @pytest.mark.parametrize(
     "year, expected",
     [
-        (2020, (90, 7)),
-        (2025, (90, 7)),
-        (2030, (90, 7)),
-        (2035, (90, 7)),
-        (2040, (90, 7)),
-        (2045, (90, 7)),
-        (2050, (90, 7)),
+        (2020, (91, 7)),
+        (2025, (91, 7)),
+        (2030, (91, 7)),
+        (2035, (91, 7)),
+        (2040, (91, 7)),
+        (2045, (91, 7)),
+        (2050, (91, 7)),
     ],
 )
 def test_pre_process_manual_input_usa(config, year, expected):

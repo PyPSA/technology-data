@@ -389,15 +389,13 @@ def pre_process_manual_input_usa(
                         s_copy["currency_year"] = np.nan
 
                     # Add the other columns in the data file
-                    for col in [
-                        "unit",
-                        "source",
-                        "further description",
-                        "financial_case",
-                    ]:
-                        s_copy[col] = "; and\n".join(c[col].unique().astype(str))
+                    for col in ["unit", "source", "further description"]:
+                        s_copy[col] = c[col].unique()[0]
 
-                    list_dataframe_row.append(s_copy)
+                    # Add a separate row for each `financial_case`
+                    for financial_case in c["financial_case"].unique():
+                        s_copy["financial_case"] = financial_case
+                        list_dataframe_row.append(s_copy.copy())
             if len(scenarios) == 0:
                 s = pd.Series(
                     index=list_of_years,
@@ -411,12 +409,11 @@ def pre_process_manual_input_usa(
                     s["currency_year"] = int(c["currency_year"].values[0])
                 except ValueError:
                     s["currency_year"] = np.nan
-                for col in ["unit", "source", "further description", "financial_case"]:
-                    s[col] = "; and\n".join(c[col].unique().astype(str))
-                s = s.rename(
-                    {"further_description": "further description"}
-                )  # match column name between manual_input and original TD workflow
-                list_dataframe_row.append(s)
+                for col in ["unit", "source", "further description"]:
+                    s_copy[col] = c[col].unique()[0]
+                for financial_case in c["financial_case"].unique():
+                    s["financial_case"] = financial_case
+                    list_dataframe_row.append(s.copy())
     manual_input_usa_file_df = pd.DataFrame(list_dataframe_row).reset_index(drop=True)
 
     # Filter the information for a given year

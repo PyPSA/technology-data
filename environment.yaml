@@ -19,12 +19,16 @@ dependencies:
 - xlrd
 - scipy
 - openpyxl>=3.1.2
+- python-calamine
 - packaging
 - pytest
 
 # Development dependencies
 - pre-commit
 - ruff
+
+# Interactive execution
+- ipykernel
 
 - pip:
   - tabula-py

@@ -1290,6 +1290,24 @@ LOHC transport ship,lifetime,15.0,years,"Runge et al 2020, Table 10, https://pap
 LOHC unloaded DBT storage,FOM,6.25,%/year,,"Based on storage “General liquid hydrocarbon storage (crude)”, as similar properties are shared.",2012.0,,
 LOHC unloaded DBT storage,investment,134.2745,EUR/t,"Density via Wissenschaftliche Dienste des Deutschen Bundestages 2020, https://www.bundestag.de/resource/blob/816048/454e182d5956d45a664da9eb85486f76/WD-8-058-20-pdf-data.pdf , pg. 11.","Based on storage “General liquid hydrocarbon storage (crude)”, as similar properties are shared. Density of loaded LOHC H18-DBT is 0.91 t/m^3, density of unloaded LOHC H0-DBT is 1.04 t/m^3 but unloading is only to 90% (depth-of-discharge), assume density via linearisation of 1.027 t/m^3.",2012.0,,
 LOHC unloaded DBT storage,lifetime,30.0,years,,"Based on storage “General liquid hydrocarbon storage (crude)”, as similar properties are shared.",2012.0,,
+Land-Based Wind - Class 1 - Technology 1,CF,0.574396557377049,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
+Land-Based Wind - Class 1 - Technology 1,CF,0.5390475,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
+Land-Based Wind - Class 1 - Technology 1,CF,0.513525,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
+Land-Based Wind - Class 1 - Technology 1,CF,0.574396557377049,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
+Land-Based Wind - Class 1 - Technology 1,CF,0.5390475,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
+Land-Based Wind - Class 1 - Technology 1,CF,0.513525,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
+Land-Based Wind - Class 1 - Technology 1,FOM,1.73,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
+Land-Based Wind - Class 1 - Technology 1,FOM,2.21,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
+Land-Based Wind - Class 1 - Technology 1,FOM,2.06,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
+Land-Based Wind - Class 1 - Technology 1,FOM,1.73,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
+Land-Based Wind - Class 1 - Technology 1,FOM,2.21,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
+Land-Based Wind - Class 1 - Technology 1,FOM,2.06,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
+Land-Based Wind - Class 1 - Technology 1,investment,1093.0531153812144,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
+Land-Based Wind - Class 1 - Technology 1,investment,1188.1694560853446,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
+Land-Based Wind - Class 1 - Technology 1,investment,1411.6709839852829,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
+Land-Based Wind - Class 1 - Technology 1,investment,1093.0531153812144,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
+Land-Based Wind - Class 1 - Technology 1,investment,1188.1694560853446,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
+Land-Based Wind - Class 1 - Technology 1,investment,1411.6709839852829,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
 Land-Based Wind - Class 10 - Technology 4,CF,0.305778,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
 Land-Based Wind - Class 10 - Technology 4,CF,0.2796035,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
 Land-Based Wind - Class 10 - Technology 4,CF,0.266365,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
@@ -1344,24 +1362,6 @@ Land-Based Wind - Class 3 - Technology 1,investment,1411.6709839852829,USD/kW,NR
 Land-Based Wind - Class 3 - Technology 1,investment,1093.0531153812144,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
 Land-Based Wind - Class 3 - Technology 1,investment,1188.1694560853446,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
 Land-Based Wind - Class 3 - Technology 1,investment,1411.6709839852829,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
-Land-Based Wind - Class 4 - Technology 1,CF,0.513238,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-Land-Based Wind - Class 4 - Technology 1,CF,0.4811985,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
-Land-Based Wind - Class 4 - Technology 1,CF,0.458415,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
-Land-Based Wind - Class 4 - Technology 1,CF,0.513238,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-Land-Based Wind - Class 4 - Technology 1,CF,0.4811985,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
-Land-Based Wind - Class 4 - Technology 1,CF,0.458415,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
-Land-Based Wind - Class 4 - Technology 1,FOM,1.73,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-Land-Based Wind - Class 4 - Technology 1,FOM,2.21,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
-Land-Based Wind - Class 4 - Technology 1,FOM,2.06,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
-Land-Based Wind - Class 4 - Technology 1,FOM,1.73,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-Land-Based Wind - Class 4 - Technology 1,FOM,2.21,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
-Land-Based Wind - Class 4 - Technology 1,FOM,2.06,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
-Land-Based Wind - Class 4 - Technology 1,investment,1093.0531153812144,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-Land-Based Wind - Class 4 - Technology 1,investment,1188.1694560853446,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
-Land-Based Wind - Class 4 - Technology 1,investment,1411.6709839852829,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
-Land-Based Wind - Class 4 - Technology 1,investment,1093.0531153812144,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-Land-Based Wind - Class 4 - Technology 1,investment,1188.1694560853446,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
-Land-Based Wind - Class 4 - Technology 1,investment,1411.6709839852829,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
 Land-Based Wind - Class 5 - Technology 1,CF,0.496558393442622,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
 Land-Based Wind - Class 5 - Technology 1,CF,0.4654215,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
 Land-Based Wind - Class 5 - Technology 1,CF,0.443384999999999,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
@@ -2219,6 +2219,24 @@ OCGT,VOM,4.762,EUR/MWh,"Danish Energy Agency, inputs/technology_data_for_el_and_
 OCGT,efficiency,0.425,per unit,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","52 OCGT - Natural gas:  Electricity efficiency, annual average",2015.0,,
 OCGT,investment,442.0086,EUR/kW,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",52 OCGT - Natural gas:  Specific investment,2015.0,,
 OCGT,lifetime,25.0,years,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",52 OCGT - Natural gas:  Technical lifetime,2015.0,,
+Offshore Wind - Class 1,CF,0.5327,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
+Offshore Wind - Class 1,CF,0.5032,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
+Offshore Wind - Class 1,CF,0.4817,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
+Offshore Wind - Class 1,CF,0.5327,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
+Offshore Wind - Class 1,CF,0.5032,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
+Offshore Wind - Class 1,CF,0.4817,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
+Offshore Wind - Class 1,FOM,2.45,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
+Offshore Wind - Class 1,FOM,2.24,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
+Offshore Wind - Class 1,FOM,2.15,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
+Offshore Wind - Class 1,FOM,2.45,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
+Offshore Wind - Class 1,FOM,2.24,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
+Offshore Wind - Class 1,FOM,2.15,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
+Offshore Wind - Class 1,investment,2641.4625083055157,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
+Offshore Wind - Class 1,investment,3163.568624971313,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
+Offshore Wind - Class 1,investment,3815.032908682297,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
+Offshore Wind - Class 1,investment,2641.4625083055157,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
+Offshore Wind - Class 1,investment,3163.568624971313,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
+Offshore Wind - Class 1,investment,3815.032908682297,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
 Offshore Wind - Class 10,CF,0.5224,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
 Offshore Wind - Class 10,CF,0.4935,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
 Offshore Wind - Class 10,CF,0.4723,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
@@ -2327,24 +2345,6 @@ Offshore Wind - Class 2,investment,3708.7827730321233,USD/kW,NREL/ATB-https://da
 Offshore Wind - Class 2,investment,2567.896577500592,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
 Offshore Wind - Class 2,investment,3075.461931014063,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
 Offshore Wind - Class 2,investment,3708.7827730321233,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
-Offshore Wind - Class 3,CF,0.5123,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-Offshore Wind - Class 3,CF,0.484,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
-Offshore Wind - Class 3,CF,0.4632,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
-Offshore Wind - Class 3,CF,0.5123,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-Offshore Wind - Class 3,CF,0.484,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
-Offshore Wind - Class 3,CF,0.4632,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
-Offshore Wind - Class 3,FOM,2.41,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-Offshore Wind - Class 3,FOM,2.21,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
-Offshore Wind - Class 3,FOM,2.11,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
-Offshore Wind - Class 3,FOM,2.41,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-Offshore Wind - Class 3,FOM,2.21,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
-Offshore Wind - Class 3,FOM,2.11,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
-Offshore Wind - Class 3,investment,2679.2730602921756,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-Offshore Wind - Class 3,investment,3208.852947171857,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
-Offshore Wind - Class 3,investment,3869.642508455641,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
-Offshore Wind - Class 3,investment,2679.2730602921756,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-Offshore Wind - Class 3,investment,3208.852947171857,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
-Offshore Wind - Class 3,investment,3869.642508455641,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
 Offshore Wind - Class 4,CF,0.5149,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
 Offshore Wind - Class 4,CF,0.4865,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
 Offshore Wind - Class 4,CF,0.4656,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
@@ -3450,6 +3450,24 @@ Steam methane reforming,methane-input,1.483,MWh_CH4/MWh_H2,"Keipi et al (2018): 
 "Tankbulk, ammonia",efficiency,0.471,MWh/km,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Tankbulk, ammonia",2023.0,,
 "Tankbulk, ammonia",investment,35129312.4041,EUR,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Tankbulk, ammonia",2023.0,,
 "Tankbulk, ammonia",lifetime,25.0,years,"Danish Energy Agency, inputs/data_sheets_for_maritime_commercial_freight_and_passenger_transport.xlsx","Tankbulk, ammonia",2023.0,,
+Utility PV - Class 1,CF,0.3695025469205262,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
+Utility PV - Class 1,CF,0.3505808243818462,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
+Utility PV - Class 1,CF,0.32972054725935973,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
+Utility PV - Class 1,CF,0.3695025469205262,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
+Utility PV - Class 1,CF,0.3505808243818462,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
+Utility PV - Class 1,CF,0.32972054725935973,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
+Utility PV - Class 1,FOM,1.96,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
+Utility PV - Class 1,FOM,1.79,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
+Utility PV - Class 1,FOM,1.61,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
+Utility PV - Class 1,FOM,1.96,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
+Utility PV - Class 1,FOM,1.79,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
+Utility PV - Class 1,FOM,1.61,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
+Utility PV - Class 1,investment,602.6779516748321,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
+Utility PV - Class 1,investment,753.7046183341562,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
+Utility PV - Class 1,investment,993.296459172623,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
+Utility PV - Class 1,investment,602.6779516748321,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
+Utility PV - Class 1,investment,753.7046183341562,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
+Utility PV - Class 1,investment,993.296459172623,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
 Utility PV - Class 10,CF,0.23414741488662136,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
 Utility PV - Class 10,CF,0.22534441419282605,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
 Utility PV - Class 10,CF,0.20972000398136145,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
@@ -3522,24 +3540,6 @@ Utility PV - Class 4,investment,993.296459172623,USD/kW,NREL/ATB-https://data.op
 Utility PV - Class 4,investment,602.6779516748321,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
 Utility PV - Class 4,investment,753.7046183341562,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
 Utility PV - Class 4,investment,993.296459172623,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
-Utility PV - Class 5,CF,0.30911302206283797,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-Utility PV - Class 5,CF,0.29540065874972954,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
-Utility PV - Class 5,CF,0.276337043898278,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
-Utility PV - Class 5,CF,0.30911302206283797,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-Utility PV - Class 5,CF,0.29540065874972954,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
-Utility PV - Class 5,CF,0.276337043898278,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
-Utility PV - Class 5,FOM,1.96,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-Utility PV - Class 5,FOM,1.79,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
-Utility PV - Class 5,FOM,1.61,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
-Utility PV - Class 5,FOM,1.96,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-Utility PV - Class 5,FOM,1.79,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
-Utility PV - Class 5,FOM,1.61,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
-Utility PV - Class 5,investment,602.6779516748321,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-Utility PV - Class 5,investment,753.7046183341562,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
-Utility PV - Class 5,investment,993.296459172623,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
-Utility PV - Class 5,investment,602.6779516748321,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-Utility PV - Class 5,investment,753.7046183341562,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
-Utility PV - Class 5,investment,993.296459172623,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
 Utility PV - Class 6,CF,0.2933711923897257,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
 Utility PV - Class 6,CF,0.28087927440853927,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
 Utility PV - Class 6,CF,0.2623530873821619,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
@@ -4340,30 +4340,30 @@ nuclear,investment,3144.948958799701,USD/kW,NREL/ATB-https://data.openei.org/s3_
 nuclear,investment,5663.446413555539,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
 nuclear,investment,10328.331997044465,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
 nuclear,lifetime,40.0,years,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.",,2023.0,,
-offwind,CF,0.5327,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-offwind,CF,0.5032,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
-offwind,CF,0.4817,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
-offwind,CF,0.5327,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-offwind,CF,0.5032,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
-offwind,CF,0.4817,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
-offwind,FOM,2.45,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-offwind,FOM,2.24,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
-offwind,FOM,2.15,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
-offwind,FOM,2.45,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-offwind,FOM,2.24,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
-offwind,FOM,2.15,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
+offwind,CF,0.5123,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
+offwind,CF,0.484,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
+offwind,CF,0.4632,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
+offwind,CF,0.5123,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
+offwind,CF,0.484,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
+offwind,CF,0.4632,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
+offwind,FOM,2.41,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
+offwind,FOM,2.21,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
+offwind,FOM,2.11,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
+offwind,FOM,2.41,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
+offwind,FOM,2.21,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
+offwind,FOM,2.11,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
 offwind,discount rate,0.0515169177112711,per unit,"NREL, NREL ATB 2024",,2022.0,Market,Advanced
 offwind,discount rate,0.0515169177112711,per unit,"NREL, NREL ATB 2024",,2022.0,Market,Moderate
 offwind,discount rate,0.0515169177112711,per unit,"NREL, NREL ATB 2024",,2022.0,Market,Conservative
 offwind,discount rate,0.0401070465062936,per unit,"NREL, NREL ATB 2024",,2022.0,R&D,Advanced
 offwind,discount rate,0.0401070465062936,per unit,"NREL, NREL ATB 2024",,2022.0,R&D,Moderate
 offwind,discount rate,0.0401070465062936,per unit,"NREL, NREL ATB 2024",,2022.0,R&D,Conservative
-offwind,investment,2641.4625083055157,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-offwind,investment,3163.568624971313,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
-offwind,investment,3815.032908682297,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
-offwind,investment,2641.4625083055157,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-offwind,investment,3163.568624971313,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
-offwind,investment,3815.032908682297,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
+offwind,investment,2679.2730602921756,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
+offwind,investment,3208.852947171857,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
+offwind,investment,3869.642508455641,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
+offwind,investment,2679.2730602921756,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
+offwind,investment,3208.852947171857,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
+offwind,investment,3869.642508455641,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
 offwind,lifetime,30.0,years,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",21 Offshore turbines:  Technical lifetime [years],2020.0,,
 offwind-ac-connection-submarine,investment,2841.3251,EUR/MW/km,DEA https://ens.dk/en/our-services/projections-and-models/technology-data, from old pypsa cost assumptions,2015.0,,
 offwind-ac-connection-underground,investment,1420.1334,EUR/MW/km,DEA https://ens.dk/en/our-services/projections-and-models/technology-data, from old pypsa cost assumptions,2015.0,,
@@ -4384,12 +4384,12 @@ oil,efficiency,0.35,per unit,"Danish Energy Agency, inputs/technology_data_for_e
 oil,fuel,44.22,USD/MWh_th,World Bank https://www.worldbank.org/en/research/commodity-markets,,2010.0,,
 oil,investment,357.4144,EUR/kW,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",50 Diesel engine farm:  Specific investment,2015.0,,
 oil,lifetime,25.0,years,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",50 Diesel engine farm:  Technical lifetime,2015.0,,
-onwind,CF,0.574396557377049,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-onwind,CF,0.5390475,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
-onwind,CF,0.513525,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
-onwind,CF,0.574396557377049,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-onwind,CF,0.5390475,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
-onwind,CF,0.513525,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
+onwind,CF,0.513238,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
+onwind,CF,0.4811985,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
+onwind,CF,0.458415,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
+onwind,CF,0.513238,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
+onwind,CF,0.4811985,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
+onwind,CF,0.458415,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
 onwind,FOM,1.73,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
 onwind,FOM,2.21,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
 onwind,FOM,2.06,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
@@ -4481,12 +4481,12 @@ solar-rooftop commercial,lifetime,40.0,years,"Danish Energy Agency, inputs/techn
 solar-rooftop residential,FOM,1.3858,%/year,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",22 Rooftop PV residential:  Fixed O&M [2020-EUR/MW_e/y],2020.0,,
 solar-rooftop residential,investment,667.4686,EUR/kW_e,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",22 Rooftop PV residential:  Nominal investment [2020-MEUR/MW_e],2020.0,,
 solar-rooftop residential,lifetime,40.0,years,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",22 Rooftop PV residential:  Technical lifetime [years],2020.0,,
-solar-utility,CF,0.3695025469205262,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
-solar-utility,CF,0.3505808243818462,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
-solar-utility,CF,0.32972054725935973,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
-solar-utility,CF,0.3695025469205262,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
-solar-utility,CF,0.3505808243818462,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
-solar-utility,CF,0.32972054725935973,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
+solar-utility,CF,0.30911302206283797,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
+solar-utility,CF,0.29540065874972954,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
+solar-utility,CF,0.276337043898278,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative
+solar-utility,CF,0.30911302206283797,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Advanced
+solar-utility,CF,0.29540065874972954,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Moderate
+solar-utility,CF,0.276337043898278,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,R&D,Conservative
 solar-utility,FOM,1.96,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Advanced
 solar-utility,FOM,1.79,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Moderate
 solar-utility,FOM,1.61,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,,2022.0,Market,Conservative

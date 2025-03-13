@@ -60,10 +60,10 @@ def get_conversion_dictionary(flag: str) -> dict:
             "Nuclear - Large": "nuclear",
             "Nuclear - AP1000": "nuclear",
             "Geothermal - Hydro / Flash": "geothermal",
-            "Land-Based Wind - Class 1": "onwind",
-            "Land-Based Wind - Class 1 - Technology 1": "onwind",
-            "Offshore Wind - Class 1": "offwind",
-            "Utility PV - Class 1": "solar-utility",
+            "Land-Based Wind - Class 4": "onwind",
+            "Land-Based Wind - Class 4 - Technology 1": "onwind",
+            "Offshore Wind - Class 3": "offwind",
+            "Utility PV - Class 5": "solar-utility",
             "Commercial PV - Class 1": "solar-rooftop",
             "Utility-Scale Battery Storage - 6Hr": "battery storage",
             "Biopower": "biomass",
@@ -72,9 +72,9 @@ def get_conversion_dictionary(flag: str) -> dict:
         }
     elif flag.casefold() == "atb_technology_name":
         return {
+            "Land-Based Wind - Class 1": "Land-Based Wind - Class 1 - Technology 1",
             "Land-Based Wind - Class 2": "Land-Based Wind - Class 2 - Technology 1",
             "Land-Based Wind - Class 3": "Land-Based Wind - Class 3 - Technology 1",
-            "Land-Based Wind - Class 4": "Land-Based Wind - Class 4 - Technology 1",
             "Land-Based Wind - Class 5": "Land-Based Wind - Class 5 - Technology 1",
             "Land-Based Wind - Class 6": "Land-Based Wind - Class 6 - Technology 1",
             "Land-Based Wind - Class 7": "Land-Based Wind - Class 7 - Technology 1",

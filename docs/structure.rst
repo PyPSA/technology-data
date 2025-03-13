@@ -49,6 +49,7 @@ This repository has the following structure:
     * nrel_atb_core_metric_parameter_to_keep : list of parameters to use from the NREL/ATB source files
     * nrel_atb_technology_to_remove : list of technologies that should be excluded from NREL/ATB
     * nrel_atb_source_link : source url for the NREL/ATB data used
+    * nrel_atb_further_description : Meaning of "scenario" and "financial case"
     * expectation : tech data uncertainty, possible options [None, "optimist", "pessimist"]
     * eur_year : year for EUR outputs
     * solar_utility_from_vartiaien : Bool (True/False) if solar utility data is taken from DEA or Vartiaien

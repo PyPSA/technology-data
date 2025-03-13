@@ -761,6 +761,7 @@ def pre_process_cost_input_file(
 def pre_process_atb_input_file(
     input_file_path: str,
     nrel_source: str,
+    nrel_further_description: str,
     year: int,
     list_columns_to_keep: list,
     list_core_metric_parameter_to_keep: list,
@@ -876,7 +877,7 @@ def pre_process_atb_input_file(
     atb_input_df["source"] = nrel_source
 
     # Add further description column
-    atb_input_df["further description"] = pd.Series(dtype="str")
+    atb_input_df["further description"] = nrel_further_description
 
     # Rename columns and select just columns used in PyPSA
     column_rename_dict = get_conversion_dictionary("output_column")
@@ -996,6 +997,9 @@ if __name__ == "__main__":
         "nrel_atb_core_metric_parameter_to_keep"
     ]
     nrel_atb_source_link = snakemake.config["nrel_atb"]["nrel_atb_source_link"]
+    nrel_atb_further_description = snakemake.config["nrel_atb"][
+        "nrel_atb_further_description"
+    ]
     nrel_atb_technology_to_remove = snakemake.config["nrel_atb"][
         "nrel_atb_technology_to_remove"
     ]
@@ -1062,6 +1066,7 @@ if __name__ == "__main__":
         atb_e_df = pre_process_atb_input_file(
             input_atb_path,
             nrel_atb_source_link,
+            nrel_atb_further_description,
             year_val,
             nrel_atb_columns_to_keep,
             nrel_atb_core_metric_parameter_to_keep,

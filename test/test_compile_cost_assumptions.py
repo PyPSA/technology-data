@@ -288,6 +288,7 @@ def test_set_specify_assumptions():
                 "decentral gas boiler",
                 "decentral gas boiler",
                 "biogas upgrading",
+                "biogas upgrading",
                 "solar-rooftop",
                 "heat pump",
             ],
@@ -297,12 +298,13 @@ def test_set_specify_assumptions():
                 "Possible additional specific investment",
                 "Technical lifetime",
                 "investment",
+                "Technical lifetime",
                 "PV module conversion efficiency [p.u.]",
                 "Heat efficiency, annual average, net, radiators",
             ],
-            "2020": [1.0] * 7,
-            "source": ["source"] * 7,
-            "unit": ["unit"] * 7,
+            "2020": [1.0] * 8,
+            "source": ["source"] * 8,
+            "unit": ["unit"] * 8,
         }
     ).set_index(["technology", "parameter"])
 
@@ -310,21 +312,23 @@ def test_set_specify_assumptions():
         {
             "technology": [
                 "biogas upgrading",
+                "biogas upgrading",
                 "decentral gas boiler",
                 "decentral gas boiler connection",
                 "decentral gas boiler connection",
                 "heat pump",
             ],
             "parameter": [
+                "Technical lifetime",
                 "investment (upgrading, methane redution and grid injection)",
                 "Technical lifetime",
                 "Possible additional specific investment",
                 "Technical lifetime",
                 "Heat efficiency, annual average, net, radiators, existing one family house",
             ],
-            "2020": [1.0, 1.0, 1.0, 50.0, 1.0],
-            "source": ["source"] * 5,
-            "unit": ["unit"] * 5,
+            "2020": [1.0, 1.0, 1.0, 1.0, 50.0, 1.0],
+            "source": ["source"] * 6,
+            "unit": ["unit"] * 6,
         }
     )
     list_of_years = ["2020"]

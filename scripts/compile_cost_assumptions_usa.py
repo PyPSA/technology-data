@@ -60,10 +60,10 @@ def get_conversion_dictionary(flag: str) -> dict:
             "Nuclear - Large": "nuclear",
             "Nuclear - AP1000": "nuclear",
             "Geothermal - Hydro / Flash": "geothermal",
-            "Land-Based Wind - Class 1": "onwind",
-            "Land-Based Wind - Class 1 - Technology 1": "onwind",
-            "Offshore Wind - Class 1": "offwind",
-            "Utility PV - Class 1": "solar-utility",
+            "Land-Based Wind - Class 4": "onwind",
+            "Land-Based Wind - Class 4 - Technology 1": "onwind",
+            "Offshore Wind - Class 3": "offwind",
+            "Utility PV - Class 5": "solar-utility",
             "Commercial PV - Class 1": "solar-rooftop",
             "Utility-Scale Battery Storage - 6Hr": "battery storage",
             "Biopower": "biomass",
@@ -72,9 +72,9 @@ def get_conversion_dictionary(flag: str) -> dict:
         }
     elif flag.casefold() == "atb_technology_name":
         return {
+            "Land-Based Wind - Class 1": "Land-Based Wind - Class 1 - Technology 1",
             "Land-Based Wind - Class 2": "Land-Based Wind - Class 2 - Technology 1",
             "Land-Based Wind - Class 3": "Land-Based Wind - Class 3 - Technology 1",
-            "Land-Based Wind - Class 4": "Land-Based Wind - Class 4 - Technology 1",
             "Land-Based Wind - Class 5": "Land-Based Wind - Class 5 - Technology 1",
             "Land-Based Wind - Class 6": "Land-Based Wind - Class 6 - Technology 1",
             "Land-Based Wind - Class 7": "Land-Based Wind - Class 7 - Technology 1",
@@ -357,23 +357,65 @@ def pre_process_manual_input_usa(
                 "technology == @tech and parameter == @param"
             )
 
-            s = pd.Series(
-                index=list_of_years,
-                data=np.interp(list_of_years, c["year"], c["value"]),
-                name=param,
-            )
-            s["parameter"] = param
-            s["technology"] = tech
-            try:
-                s["currency_year"] = int(c["currency_year"].values[0])
-            except ValueError:
-                s["currency_year"] = np.nan
-            for col in ["unit", "source", "further description"]:
-                s[col] = "; and\n".join(c[col].unique().astype(str))
-            s = s.rename(
-                {"further_description": "further description"}
-            )  # match column name between manual_input and original TD workflow
-            list_dataframe_row.append(s)
+            # Consider differences among scenarios
+            scenarios = c["scenario"].dropna().unique()
+
+            for scenario in scenarios:
+                scenario_value = c[c["scenario"] == scenario][
+                    "value"
+                ].values  # Extract values for each scenario
+
+                if scenario_value.size > 0:
+                    scenario_years = c[c["scenario"] == scenario]["year"].values
+                    scenario_values = c[c["scenario"] == scenario]["value"].values
+
+                    interpolated_values = np.interp(
+                        list_of_years, scenario_years, scenario_values
+                    )
+
+                    # Create a row for each scenario
+                    s_copy = pd.Series(
+                        index=list_of_years,
+                        data=interpolated_values,  # values are now interpolated
+                        name=param,
+                    )
+
+                    s_copy["parameter"] = param
+                    s_copy["technology"] = tech
+                    s_copy["scenario"] = scenario
+                    try:
+                        s_copy["currency_year"] = int(c["currency_year"].values[0])
+                    except ValueError:
+                        s_copy["currency_year"] = np.nan
+
+                    # Add the other columns in the data file
+                    for col in ["unit", "source", "further description"]:
+                        s_copy[col] = c[col].unique()[0]
+
+                    # Add a separate row for each `financial_case`
+                    for financial_case in c["financial_case"].unique():
+                        s_copy["financial_case"] = financial_case
+                        list_dataframe_row.append(s_copy.copy())
+            if len(scenarios) == 0:
+                s = pd.Series(
+                    index=list_of_years,
+                    data=[scenario_value] * len(list_of_years),
+                    name=param,
+                )
+                s["parameter"] = param
+                s["technology"] = tech
+                s["scenario"] = ""
+                try:
+                    s["currency_year"] = int(c["currency_year"].values[0])
+                except ValueError:
+                    s["currency_year"] = np.nan
+                for col in ["unit", "source", "further description"]:
+                    s[col] = c[col].unique()[0]
+
+                # Add a separate row for each `financial_case`
+                for financial_case in c["financial_case"].unique():
+                    s["financial_case"] = financial_case
+                    list_dataframe_row.append(s.copy())
     manual_input_usa_file_df = pd.DataFrame(list_dataframe_row).reset_index(drop=True)
 
     # Filter the information for a given year
@@ -386,25 +428,56 @@ def pre_process_manual_input_usa(
             "source",
             "further description",
             "currency_year",
+            "financial_case",
+            "scenario",
         ]
     ].rename(columns={year: "value"})
+
+    # Filter data to get technologies with scenario differentiation
+    with_scenario_df = manual_input_usa_file_df[
+        manual_input_usa_file_df["scenario"].notna()
+    ]
+    without_scenario_df = manual_input_usa_file_df[
+        manual_input_usa_file_df["scenario"].isna()
+    ]
+
+    final_rows = []
+
+    for tech in manual_input_usa_file_df["technology"].unique():
+        tech_with_scenario = with_scenario_df[with_scenario_df["technology"] == tech]
+        if len(tech_with_scenario) > 0:
+            # Keep rows where a scenario exists
+            final_rows.append(tech_with_scenario)
+        else:
+            # If a scenario is not defined, keep the row without scenario
+            tech_without_scenario = without_scenario_df[
+                without_scenario_df["technology"] == tech
+            ]
+            final_rows.append(tech_without_scenario)
+
+    manual_input_usa_file_df = pd.concat(final_rows, ignore_index=True)
 
     # Cast the value column to float
     manual_input_usa_file_df["value"] = manual_input_usa_file_df["value"].astype(float)
 
     # Correct the cost assumptions to the inflation rate
-    inflation_adjusted_manual_input_usa_file_df = adjust_for_inflation(
-        inflation_rate_series,
-        manual_input_usa_file_df,
-        manual_input_usa_file_df.technology.unique(),
-        eur_year,
-        "value",
-        usa_costs_flag=True,
+    mask = manual_input_usa_file_df["unit"].str.startswith("EUR", na=False)
+
+    inflation_adjusted_manual_input_usa_file_df = manual_input_usa_file_df.copy()
+    inflation_adjusted_manual_input_usa_file_df.loc[mask, "value"] = (
+        adjust_for_inflation(
+            inflation_rate_series,
+            manual_input_usa_file_df.loc[mask],
+            manual_input_usa_file_df.loc[mask, "technology"].unique(),
+            eur_year,
+            "value",
+            usa_costs_flag=True,
+        )["value"]
     )
 
     # Round the results
     inflation_adjusted_manual_input_usa_file_df.loc[:, "value"] = round(
-        inflation_adjusted_manual_input_usa_file_df.value.astype(float), n_digits
+        inflation_adjusted_manual_input_usa_file_df["value"].astype(float), n_digits
     )
 
     return inflation_adjusted_manual_input_usa_file_df
@@ -688,6 +761,7 @@ def pre_process_cost_input_file(
 def pre_process_atb_input_file(
     input_file_path: str,
     nrel_source: str,
+    nrel_further_description: str,
     year: int,
     list_columns_to_keep: list,
     list_core_metric_parameter_to_keep: list,
@@ -803,7 +877,7 @@ def pre_process_atb_input_file(
     atb_input_df["source"] = nrel_source
 
     # Add further description column
-    atb_input_df["further description"] = pd.Series(dtype="str")
+    atb_input_df["further description"] = nrel_further_description
 
     # Rename columns and select just columns used in PyPSA
     column_rename_dict = get_conversion_dictionary("output_column")
@@ -923,6 +997,9 @@ if __name__ == "__main__":
         "nrel_atb_core_metric_parameter_to_keep"
     ]
     nrel_atb_source_link = snakemake.config["nrel_atb"]["nrel_atb_source_link"]
+    nrel_atb_further_description = snakemake.config["nrel_atb"][
+        "nrel_atb_further_description"
+    ]
     nrel_atb_technology_to_remove = snakemake.config["nrel_atb"][
         "nrel_atb_technology_to_remove"
     ]
@@ -989,6 +1066,7 @@ if __name__ == "__main__":
         atb_e_df = pre_process_atb_input_file(
             input_atb_path,
             nrel_atb_source_link,
+            nrel_atb_further_description,
             year_val,
             nrel_atb_columns_to_keep,
             nrel_atb_core_metric_parameter_to_keep,

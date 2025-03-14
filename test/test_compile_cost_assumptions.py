@@ -34,7 +34,7 @@ from compile_cost_assumptions import (
 path_cwd = pathlib.Path.cwd()
 
 snakemake_input_dictionary = {
-    "inflation_rate": "inputs/prc_hicp_aind__custom_9928419_spreadsheet.xlsx",
+    "inflation_rate": "inputs/Eurostat_inflation_rate.xlsx",
     "pypsa_costs": "inputs/costs_PyPSA.csv",
     "fraunhofer_costs": "inputs/Fraunhofer_ISE_costs.csv",
     "fraunhofer_energy_prices": "inputs/Fraunhofer_ISE_energy_prices.csv",

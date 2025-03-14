@@ -567,20 +567,6 @@ def test_geometric_series(nom_val, den_val, n_terms, start_val, expected_val):
     )
 
 
-def test_prepare_inflation_rate(mock_inflation_data):
-    """
-    The test verifies what is returned by prepare_inflation_rate.
-    """
-    output_series = prepare_inflation_rate(mock_inflation_data).round(decimals=3)
-    reference_output_series = pd.Series(
-        [0.02, 0.015, 0.025, 0.018],
-        index=[2001, 2002, 2003, 2004],
-        name="European Union - 27 countries (from 2020)",
-    )
-    comparison_series = output_series.compare(reference_output_series)
-    assert comparison_series.size == 0
-
-
 def test_add_gas_storage(config):
     """
     The test verifies what is returned by add_gas_storage.

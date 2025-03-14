@@ -13,6 +13,7 @@ nrel_atb:
   nrel_atb_core_metric_parameter_to_keep: ["CAPEX", "CF", "Fixed O&M", "Variable O&M", "Fuel", "Additional OCC"]
   nrel_atb_technology_to_remove: ["Coal-CCS-95% -> Transformational Tech", "Coal-Max-CCS -> Transformational Tech", "Coal-new -> Transformational Tech", "NG combined cycle 95% CCS (F-frame basis -> Transformational Tech)", "NG combined cycle 95% CCS (H-frame basis -> Transformational Tech)", "NG combined cycle Max CCS (F-frame basis -> Transformational Tech)", "NG combined cycle Max CCS (H-frame basis -> Transformational Tech)", "AEO"]
   nrel_atb_source_link: "NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F"
+  nrel_atb_further_description: "Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios"
 
 expectation: ""  # tech data uncertainty, possible options [None, "optimist", "pessimist"]
 

@@ -253,9 +253,11 @@ def test_pre_process_atb_input_file(config, input_file_year, year, expected):
     ]
     nrel_atb_technology_to_remove = config["nrel_atb"]["nrel_atb_technology_to_remove"]
     nrel_atb_source_link = config["nrel_atb"]["nrel_atb_source_link"]
+    nrel_atb_further_description = config["nrel_atb"]["nrel_atb_further_description"]
     output_df = pre_process_atb_input_file(
         input_file_path,
         nrel_atb_source_link,
+        nrel_atb_further_description,
         year,
         nrel_atb_columns_to_keep,
         nrel_atb_core_metric_parameter_to_keep,
@@ -379,13 +381,13 @@ def test_duplicate_fuel_cost(config):
 @pytest.mark.parametrize(
     "year, expected",
     [
-        (2020, (91, 7)),
-        (2025, (91, 7)),
-        (2030, (91, 7)),
-        (2035, (91, 7)),
-        (2040, (91, 7)),
-        (2045, (91, 7)),
-        (2050, (91, 7)),
+        (2020, (130, 9)),
+        (2025, (130, 9)),
+        (2030, (130, 9)),
+        (2035, (130, 9)),
+        (2040, (130, 9)),
+        (2045, (130, 9)),
+        (2050, (130, 9)),
     ],
 )
 def test_pre_process_manual_input_usa(config, year, expected):

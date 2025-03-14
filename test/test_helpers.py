@@ -19,18 +19,15 @@ from _helpers import prepare_inflation_rate
 path_cwd = pathlib.Path.cwd()
 
 
-def test_prepare_inflation_rate():
+@pytest.mark.parametrize(
+    "currency_to_use, expected_series_name, expected_index, expected_values",
+    [("eur", "European Union - 27 countries (from 2020)", [2017, 2022, 2023], [0.016, 0.092, 0.064]), ("usd", "United States", [2017, 2022, 2023], [0.018, 0.087, 0.03])],
+)
+def test_prepare_inflation_rate(currency_to_use, expected_series_name, expected_index, expected_values):
     """
     The test verifies what is returned by prepare_inflation_rate.
     """
-
-    output_series = prepare_inflation_rate("/Users/fabriziofinozzi/Desktop/OpenEnergyTransition/repo/technology-data/inputs/Eurostat_inflation_rates.xlsx", "usd").round(decimals=3)
-    print(output_series)
-    assert False
-#    reference_output_series = pd.Series(
-#        [0.02, 0.015, 0.025, 0.018],
-#        index=[2001, 2002, 2003, 2004],
-#        name="European Union - 27 countries (from 2020)",
-#    )
-#    comparison_series = output_series.compare(reference_output_series)
-#    assert comparison_series.size == 0
+    inflation_rate_input_file_path = pathlib.Path(path_cwd, "inputs", "Eurostat_inflation_rates.xlsx")
+    output_series = prepare_inflation_rate(inflation_rate_input_file_path, currency_to_use).round(decimals=3)
+    assert np.array_equal(output_series.loc[expected_index].values, np.array(expected_values))
+    assert output_series.name == expected_series_name

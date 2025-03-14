@@ -399,7 +399,7 @@ def test_pre_process_manual_input_usa(config, year, expected):
         path_cwd, "inputs", "US", "manual_input_usa.csv"
     )
     inflation_rate_file_path = pathlib.Path(
-        path_cwd, "inputs", "Eurostat_inflation_rate.xlsx"
+        path_cwd, "inputs", "Eurostat_inflation_rates.xlsx"
     )
     year = 2020
     output_dataframe = pre_process_manual_input_usa(

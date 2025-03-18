@@ -484,7 +484,7 @@ def pre_process_manual_input_usa(
     )
 
     # apply inflation adjustments for USD
-    inflation_adjusted_manual_input_usa_file_df.loc[mask_eur, "value"] = (
+    inflation_adjusted_manual_input_usa_file_df.loc[mask_usd, "value"] = (
         adjust_for_inflation(
             inflation_rate_series_usd,
             manual_input_usa_file_df.loc[mask_usd],
@@ -801,6 +801,8 @@ def pre_process_atb_input_file(
         NREL/ATB file path
     nrel_source: str
         link to the NREL/ATB source files. This information shall be used to populate the source column
+    nrel_further_description: str
+        text that details the further description field for the NREL/ATB sources
     year: int
         year for the cost assumption
     list_columns_to_keep: list

@@ -27,6 +27,13 @@ path_cwd = pathlib.Path.cwd()
             [0.016, 0.092, 0.064],
         ),
         ("usd", "United States", [2017, 2022, 2023], [0.018, 0.087, 0.03]),
+        (
+                "EuR",
+                "European Union - 27 countries (from 2020)",
+                [2017, 2022, 2023],
+                [0.016, 0.092, 0.064],
+        ),
+        ("USD", "United States", [2017, 2022, 2023], [0.018, 0.087, 0.03]),
     ],
 )
 def test_prepare_inflation_rate(

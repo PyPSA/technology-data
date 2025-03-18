@@ -350,7 +350,8 @@ def pre_process_manual_input_usa(
     )
 
     # Read the inflation rate
-    inflation_rate_series = prepare_inflation_rate(inflation_rate_file_path)
+    inflation_rate_series_eur = prepare_inflation_rate(inflation_rate_file_path, "EUR")
+    inflation_rate_series_usd = prepare_inflation_rate(inflation_rate_file_path, "USD")
 
     # Create cost estimates for all years
     list_dataframe_row = []
@@ -465,14 +466,29 @@ def pre_process_manual_input_usa(
     manual_input_usa_file_df["value"] = manual_input_usa_file_df["value"].astype(float)
 
     # Correct the cost assumptions to the inflation rate
-    mask = manual_input_usa_file_df["unit"].str.startswith("EUR", na=False)
+    mask_eur = manual_input_usa_file_df["unit"].str.casefold().str.startswith("eur", na=False)
+    mask_usd = manual_input_usa_file_df["unit"].str.casefold().str.startswith("usd", na=False)
 
     inflation_adjusted_manual_input_usa_file_df = manual_input_usa_file_df.copy()
-    inflation_adjusted_manual_input_usa_file_df.loc[mask, "value"] = (
+
+    # apply inflation adjustments for EUR
+    inflation_adjusted_manual_input_usa_file_df.loc[mask_eur, "value"] = (
         adjust_for_inflation(
-            inflation_rate_series,
-            manual_input_usa_file_df.loc[mask],
-            manual_input_usa_file_df.loc[mask, "technology"].unique(),
+            inflation_rate_series_eur,
+            manual_input_usa_file_df.loc[mask_eur],
+            manual_input_usa_file_df.loc[mask_eur, "technology"].unique(),
+            eur_year,
+            "value",
+            usa_costs_flag=True,
+        )["value"]
+    )
+
+    # apply inflation adjustments for USD
+    inflation_adjusted_manual_input_usa_file_df.loc[mask_eur, "value"] = (
+        adjust_for_inflation(
+            inflation_rate_series_usd,
+            manual_input_usa_file_df.loc[mask_usd],
+            manual_input_usa_file_df.loc[mask_usd, "technology"].unique(),
             eur_year,
             "value",
             usa_costs_flag=True,

@@ -26,7 +26,6 @@ from compile_cost_assumptions import (
     get_data_from_DEA,
     get_excel_sheets,
     get_sheet_location,
-    prepare_inflation_rate,
     set_round_trip_efficiency,
     set_specify_assumptions,
 )

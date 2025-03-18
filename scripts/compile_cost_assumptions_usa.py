@@ -14,7 +14,12 @@ import pathlib
 
 import numpy as np
 import pandas as pd
-from _helpers import adjust_for_inflation, configure_logging, mock_snakemake, prepare_inflation_rate
+from _helpers import (
+    adjust_for_inflation,
+    configure_logging,
+    mock_snakemake,
+    prepare_inflation_rate,
+)
 
 logger = logging.getLogger(__name__)
 

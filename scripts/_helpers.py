@@ -222,10 +222,12 @@ def prepare_inflation_rate(fn: str, currency_to_use: str = "eur") -> pd.Series:
     inflation_rate_series = pd.read_excel(
         fn, sheet_name="Sheet 1", index_col=0, header=[8], engine="calamine"
     )
-    inflation_rate_series = (
-        inflation_rate_series.loc[row_to_use].dropna()
-    ).loc["2001"::]
-    inflation_rate_series.rename(index=lambda inflation_rate_val: int(inflation_rate_val), inplace=True)
+    inflation_rate_series = (inflation_rate_series.loc[row_to_use].dropna()).loc[
+        "2001"::
+    ]
+    inflation_rate_series.rename(
+        index=lambda inflation_rate_val: int(inflation_rate_val), inplace=True
+    )
     inflation_rate_series = inflation_rate_series.astype(float)
     inflation_rate_series /= 100.0
     return inflation_rate_series

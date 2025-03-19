@@ -327,7 +327,7 @@ def pre_process_manual_input_usa(
     list_of_years : list
         years for which a cost assumption is provided
     eur_year : int
-        year for european output
+        reference year for inflation rate adjustments
     year : int
         year from list_of_years
     n_digits : int
@@ -471,7 +471,7 @@ def pre_process_manual_input_usa(
 
     inflation_adjusted_manual_input_usa_file_df = manual_input_usa_file_df.copy()
 
-    # apply inflation adjustments for EUR
+    # Apply inflation adjustments for EUR
     inflation_adjusted_manual_input_usa_file_df.loc[mask_eur, "value"] = (
         adjust_for_inflation(
             inflation_rate_series_eur,
@@ -483,7 +483,7 @@ def pre_process_manual_input_usa(
         )["value"]
     )
 
-    # apply inflation adjustments for USD
+    # Apply inflation adjustments for USD
     inflation_adjusted_manual_input_usa_file_df.loc[mask_usd, "value"] = (
         adjust_for_inflation(
             inflation_rate_series_usd,
@@ -780,9 +780,12 @@ def pre_process_cost_input_file(
 
 def pre_process_atb_input_file(
     input_file_path: str,
+    inflation_rate_file_path: str,
     nrel_source: str,
     nrel_further_description: str,
+    eur_year: int,
     year: int,
+    n_digits: int,
     list_columns_to_keep: list,
     list_core_metric_parameter_to_keep: list,
     tech_to_remove: list,
@@ -793,18 +796,25 @@ def pre_process_atb_input_file(
     - normalizes the Fixed O&M by Additional OCC (for retrofits technologies) or CAPEX (for any other technology)
     - changes the units
     - renames the technology names to the PyPSA nomenclature
+    - it adjusts the cost estimates to the inflation rate
     - aligns the atb_e_2022 nomenclature to the atb_e 2024 nomenclature
 
     Parameters
     ----------
     input_file_path : str
         NREL/ATB file path
+    inflation_rate_file_path : str
+        inflation rate file path
     nrel_source: str
         link to the NREL/ATB source files. This information shall be used to populate the source column
     nrel_further_description: str
         text that details the further description field for the NREL/ATB sources
+    eur_year : int
+        reference year for inflation rate adjustments
     year: int
         year for the cost assumption
+    n_digits : int
+        number of significant digits
     list_columns_to_keep: list
         columns from NREL/ATB dataset that are relevant
     list_core_metric_parameter_to_keep: list
@@ -826,6 +836,9 @@ def pre_process_atb_input_file(
         list_core_metric_parameter_to_keep,
         tech_to_remove,
     )
+
+    # Read the inflation rate
+    inflation_rate_series_usd = prepare_inflation_rate(inflation_rate_file_path, "USD")
 
     # Normalize Fixed O&M by CAPEX (or Additional OCC for retrofit technologies)
     atb_input_df["value"] = atb_input_df.apply(
@@ -926,10 +939,32 @@ def pre_process_atb_input_file(
 
     # ATB currency year dates back to 2018 for ATB2020 and to 2022 for ATB2024
     atb_input_df["currency_year"] = atb_input_df["currency_year"] - 2
+
     # Cast currency_year from int to float
     atb_input_df["currency_year"] = atb_input_df["currency_year"].astype(float)
 
-    return atb_input_df.reset_index(drop=True)
+    # Correct the cost assumptions to the inflation rate
+    mask_usd = atb_input_df["unit"].str.casefold().str.startswith("usd", na=False)
+    inflation_adjusted_atb_input_df = atb_input_df.copy()
+
+    # Apply inflation adjustments for USD
+    inflation_adjusted_atb_input_df.loc[mask_usd, "value"] = (
+        adjust_for_inflation(
+            inflation_rate_series_usd,
+            inflation_adjusted_atb_input_df.loc[mask_usd],
+            inflation_adjusted_atb_input_df.loc[mask_usd, "technology"].unique(),
+            eur_year,
+            "value",
+            usa_costs_flag=True,
+        )["value"]
+    )
+
+    # Round the results
+    inflation_adjusted_atb_input_df.loc[:, "value"] = round(
+        inflation_adjusted_atb_input_df["value"].astype(float), n_digits
+    )
+
+    return inflation_adjusted_atb_input_df.reset_index(drop=True)
 
 
 def duplicate_fuel_cost(input_file_path: str, list_of_years: list) -> pd.DataFrame:
@@ -1087,9 +1122,12 @@ if __name__ == "__main__":
 
         atb_e_df = pre_process_atb_input_file(
             input_atb_path,
+            input_file_eur_inflation_rate,
             nrel_atb_source_link,
             nrel_atb_further_description,
+            eur_reference_year,
             year_val,
+            num_digits,
             nrel_atb_columns_to_keep,
             nrel_atb_core_metric_parameter_to_keep,
             nrel_atb_technology_to_remove,

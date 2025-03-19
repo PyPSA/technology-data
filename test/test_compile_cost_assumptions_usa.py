@@ -254,11 +254,19 @@ def test_pre_process_atb_input_file(config, input_file_year, year, expected):
     nrel_atb_technology_to_remove = config["nrel_atb"]["nrel_atb_technology_to_remove"]
     nrel_atb_source_link = config["nrel_atb"]["nrel_atb_source_link"]
     nrel_atb_further_description = config["nrel_atb"]["nrel_atb_further_description"]
+    inflation_rate_file_path = pathlib.Path(
+        path_cwd, "inputs", "Eurostat_inflation_rates.xlsx"
+    )
+    num_digits = config["ndigits"]
+    eur_reference_year = config["eur_year"]
     output_df = pre_process_atb_input_file(
         input_file_path,
+        inflation_rate_file_path,
         nrel_atb_source_link,
         nrel_atb_further_description,
+        eur_reference_year,
         year,
+        num_digits,
         nrel_atb_columns_to_keep,
         nrel_atb_core_metric_parameter_to_keep,
         nrel_atb_technology_to_remove,

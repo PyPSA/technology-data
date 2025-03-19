@@ -302,36 +302,25 @@ def replace_value_name(
 
 def pre_process_manual_input_usa(
     manual_input_usa_file_path: str,
-    inflation_rate_file_path: str,
     list_of_years: list,
-    eur_year: int,
     year: int,
-    n_digits: int,
 ) -> pd.DataFrame:
     """
     The function reads and modifies the manual_input_usa.csv file. Namely, it:
     - reads the input file
     - renames the column "further_description" to "further description"
-    - prepares a dataframe with the inflation rate per year in European Union
     - starting from manual_input_usa.csv, it estimates the parameters for each technology for all the requested years
     - it selects the values for a given year
-    - it adjusts the cost estimates to the inflation rate for unit containing the EURO as a currency
     - queries the necessary rows of the existing cost dataframe
 
     Parameters
     ----------
     manual_input_usa_file_path : str
         manual_input_usa.csv file path
-    inflation_rate_file_path : str
-        inflation rate file path
     list_of_years : list
         years for which a cost assumption is provided
-    eur_year : int
-        reference year for inflation rate adjustments
     year : int
         year from list_of_years
-    n_digits : int
-        number of significant digits
 
     Returns
     -------
@@ -348,9 +337,6 @@ def pre_process_manual_input_usa(
     manual_input_usa_file_df = manual_input_usa_file_df.rename(
         columns={"further_description": "further description"}
     )
-
-    # Read the inflation rate
-    inflation_rate_series_eur = prepare_inflation_rate(inflation_rate_file_path, "EUR")
 
     # Create cost estimates for all years
     list_dataframe_row = []
@@ -454,31 +440,7 @@ def pre_process_manual_input_usa(
     # Cast the value column to float
     manual_input_usa_file_df["value"] = manual_input_usa_file_df["value"].astype(float)
 
-    # Correct the cost assumptions to the inflation rate
-    mask_eur = (
-        manual_input_usa_file_df["unit"].str.casefold().str.startswith("eur", na=False)
-    )
-
-    inflation_adjusted_manual_input_usa_file_df = manual_input_usa_file_df.copy()
-
-    # Apply inflation adjustments for EUR
-    inflation_adjusted_manual_input_usa_file_df.loc[mask_eur, "value"] = (
-        adjust_for_inflation(
-            inflation_rate_series_eur,
-            manual_input_usa_file_df.loc[mask_eur],
-            manual_input_usa_file_df.loc[mask_eur, "technology"].unique(),
-            eur_year,
-            "value",
-            usa_costs_flag=True,
-        )["value"]
-    )
-
-    # Round the results
-    inflation_adjusted_manual_input_usa_file_df.loc[:, "value"] = round(
-        inflation_adjusted_manual_input_usa_file_df["value"].astype(float), n_digits
-    )
-
-    return inflation_adjusted_manual_input_usa_file_df
+    return manual_input_usa_file_df
 
 
 def modify_cost_input_file(
@@ -1049,11 +1011,8 @@ if __name__ == "__main__":
 
         manual_input_usa_df = pre_process_manual_input_usa(
             input_file_manual_input_usa,
-            input_file_inflation_rate,
             year_list,
-            eur_reference_year,
             year_val,
-            num_digits,
         )
 
         cost_df = pre_process_cost_input_file(

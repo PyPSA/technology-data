@@ -49,7 +49,7 @@ rule compile_cost_assumptions_usa:
             year=config["nrel_atb"]["nrel_atb_input_years"],
         ),
         nrel_atb_manual_input_usa="inputs/US/manual_input_usa.csv",
-        eur_inflation_rate="inputs/Eurostat_inflation_rates.xlsx",
+        inflation_rate="inputs/Eurostat_inflation_rates.xlsx",
         nrel_atb_input_discount_rate="inputs/US/discount_rates_usa.csv",
         nrel_atb_input_fuel_costs="inputs/US/fuel_costs_usa.csv",
     output:

@@ -65,11 +65,11 @@ BioSNG,efficiency,0.6,per unit,"Danish Energy Agency, inputs/data_sheets_for_ren
 BioSNG,investment,2658.5,EUR/kW_th,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Specific investment",2020.0,,
 BioSNG,lifetime,25.0,years,TODO,"84 Gasif. CFB, Bio-SNG:  Technical lifetime",2020.0,,
 Biomass gasification,efficiency,0.35,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Biomass gasification,investment,1467.7693,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
+Biomass gasification,investment,1978.8509,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Biomass gasification,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
 Biomass gasification CC,FOM,0.02,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Biomass gasification CC,efficiency,0.328,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Biomass gasification CC,investment,3015.5325,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
+Biomass gasification CC,investment,4065.551,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Biomass gasification CC,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
 BtL,C in fuel,0.2455,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,,,
 BtL,C stored,0.7545,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,,,
@@ -94,12 +94,12 @@ CCGT,VOM,5.1,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data
 CCGT,VOM,5.1,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
 CCGT,c_b,1.8,50oC/100oC,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","05 Gas turb. CC, steam extract.:  Cb coefficient",2015.0,,
 CCGT,c_v,0.15,50oC/100oC,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","05 Gas turb. CC, steam extract.:  Cv coefficient",2015.0,,
-CCGT,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
-CCGT,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
-CCGT,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
-CCGT,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
-CCGT,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
-CCGT,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
+CCGT,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
+CCGT,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
+CCGT,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
+CCGT,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
+CCGT,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
+CCGT,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
 CCGT,efficiency,0.56,per unit,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","05 Gas turb. CC, steam extract.:  Electricity efficiency, annual average",2015.0,,
 CCGT,investment,922.2102,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Advanced
 CCGT,investment,922.2102,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Advanced
@@ -225,11 +225,11 @@ Coal - IGCC,investment,5327.2642,USD/kW,NREL/ATB-https://data.openei.org/s3_view
 Coal - IGCC,investment,5327.2642,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
 Coal gasification,FOM,0.06,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Coal gasification,efficiency,0.56,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Coal gasification,investment,483.8765,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
+Coal gasification,investment,652.3647,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Coal gasification,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
 Coal gasification CC,FOM,0.07,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Coal gasification CC,efficiency,0.532,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Coal gasification CC,investment,649.5969,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
+Coal gasification CC,investment,875.7882,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Coal gasification CC,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
 Coal integrated retrofit 90%-CCS,capture_rate,0.9,per unit,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
 Coal integrated retrofit 90%-CCS,efficiency,0.386,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
@@ -240,12 +240,12 @@ Coal-95%-CCS,FOM,2.24,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=o
 Coal-95%-CCS,VOM,14.03,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Moderate
 Coal-95%-CCS,VOM,14.03,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
 Coal-95%-CCS,capture_rate,0.95,per unit,"NREL, NREL ATB 2024",,,,
-Coal-95%-CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
-Coal-95%-CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
-Coal-95%-CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
-Coal-95%-CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
-Coal-95%-CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
-Coal-95%-CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
+Coal-95%-CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
+Coal-95%-CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
+Coal-95%-CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
+Coal-95%-CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
+Coal-95%-CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
+Coal-95%-CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
 Coal-95%-CCS,efficiency,0.403,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
 Coal-95%-CCS,investment,5130.8894,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Moderate
 Coal-95%-CCS,investment,5130.8894,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
@@ -255,12 +255,12 @@ Coal-99%-CCS,FOM,2.23,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=o
 Coal-99%-CCS,VOM,14.37,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Moderate
 Coal-99%-CCS,VOM,14.37,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
 Coal-99%-CCS,capture_rate,0.99,per unit,"NREL, NREL ATB 2024",,,,
-Coal-99%-CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
-Coal-99%-CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
-Coal-99%-CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
-Coal-99%-CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
-Coal-99%-CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
-Coal-99%-CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
+Coal-99%-CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
+Coal-99%-CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
+Coal-99%-CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
+Coal-99%-CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
+Coal-99%-CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
+Coal-99%-CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
 Coal-99%-CCS,efficiency,0.403,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
 Coal-99%-CCS,investment,5250.6301,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Moderate
 Coal-99%-CCS,investment,5250.6301,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
@@ -271,21 +271,21 @@ Coal-CCS-95%,VOM,14.03,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket
 Coal-CCS-95%,VOM,14.03,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Conservative
 Coal-CCS-95%,investment,5130.8894,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Conservative
 Coal-CCS-95%,investment,5130.8894,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Conservative
-Coal-IGCC,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
-Coal-IGCC,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
-Coal-IGCC,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
-Coal-IGCC,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
-Coal-IGCC,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
-Coal-IGCC,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
+Coal-IGCC,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
+Coal-IGCC,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
+Coal-IGCC,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
+Coal-IGCC,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
+Coal-IGCC,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
+Coal-IGCC,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
 Coal-IGCC,efficiency,0.5,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
 Coal-IGCC,lifetime,40.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
 Coal-IGCC-90%-CCS,capture_rate,0.9,per unit,"NREL, NREL ATB 2024",,,,
-Coal-IGCC-90%-CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
-Coal-IGCC-90%-CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
-Coal-IGCC-90%-CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
-Coal-IGCC-90%-CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
-Coal-IGCC-90%-CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
-Coal-IGCC-90%-CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
+Coal-IGCC-90%-CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
+Coal-IGCC-90%-CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
+Coal-IGCC-90%-CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
+Coal-IGCC-90%-CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
+Coal-IGCC-90%-CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
+Coal-IGCC-90%-CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
 Coal-IGCC-90%-CCS,efficiency,0.403,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
 Coal-IGCC-90%-CCS,lifetime,40.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
 Coal-Max-CCS,FOM,2.23,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Conservative
@@ -1015,7 +1015,7 @@ Haber-Bosch,lifetime,30.0,years,"Danish Energy Agency, inputs/data_sheets_for_re
 Haber-Bosch,nitrogen-input,0.1597,t_N2/MWh_NH3,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), pg. 57.",".33 MWh electricity are required for ASU per t_NH3, considering 0.4 MWh are required per t_N2 and LHV of NH3 of 5.1666 Mwh.",,,
 Heavy oil partial oxidation,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Heavy oil partial oxidation,efficiency,0.734,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Heavy oil partial oxidation,investment,491.0535,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
+Heavy oil partial oxidation,investment,662.0382,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Heavy oil partial oxidation,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
 HighT-Molten-Salt-charger,FOM,1.075,%/year,"Viswanathan_2022, NULL","{'carrier': ['elec', 'salthight'], 'technology_type': ['charger'], 'type': ['thermal'], 'note': ['Guesstimate, 50% on charger']}",2020.0,,
 HighT-Molten-Salt-charger,efficiency,0.99,per unit,"Viswanathan_2022, p.107 (p.129)","{'carrier': ['elec', 'salthight'], 'technology_type': ['charger'], 'type': ['thermal'], 'note': ['RTE assume 99% for charge and other for discharge']}",2020.0,,
@@ -1847,12 +1847,12 @@ NG 2-on-1 Combined Cycle (F-Frame),VOM,1.78,USD/MWh,NREL/ATB-https://data.openei
 NG 2-on-1 Combined Cycle (F-Frame),VOM,1.78,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Conservative
 NG 2-on-1 Combined Cycle (F-Frame),VOM,1.78,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Moderate
 NG 2-on-1 Combined Cycle (F-Frame),VOM,1.78,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
-NG 2-on-1 Combined Cycle (F-Frame),discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
-NG 2-on-1 Combined Cycle (F-Frame),discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
-NG 2-on-1 Combined Cycle (F-Frame),discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
-NG 2-on-1 Combined Cycle (F-Frame),discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
-NG 2-on-1 Combined Cycle (F-Frame),discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
-NG 2-on-1 Combined Cycle (F-Frame),discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
+NG 2-on-1 Combined Cycle (F-Frame),discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
+NG 2-on-1 Combined Cycle (F-Frame),discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
+NG 2-on-1 Combined Cycle (F-Frame),discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
+NG 2-on-1 Combined Cycle (F-Frame),discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
+NG 2-on-1 Combined Cycle (F-Frame),discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
+NG 2-on-1 Combined Cycle (F-Frame),discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
 NG 2-on-1 Combined Cycle (F-Frame),efficiency,0.573,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
 NG 2-on-1 Combined Cycle (F-Frame),investment,1038.084,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Advanced
 NG 2-on-1 Combined Cycle (F-Frame),investment,1038.084,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Advanced
@@ -1866,12 +1866,12 @@ NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,FOM,2.52,%/year,NREL/ATB-https://data
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,VOM,4.3,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Moderate
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,VOM,4.3,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,capture_rate,0.95,per unit,"NREL, NREL ATB 2024",,,,
-NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
-NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
-NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
-NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
-NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
-NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
+NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
+NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
+NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
+NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
+NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
+NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,efficiency,0.527,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,investment,2288.3111,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Moderate
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,investment,2288.3111,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
@@ -1881,12 +1881,12 @@ NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,FOM,2.52,%/year,NREL/ATB-https://data
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,VOM,4.3,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Moderate
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,VOM,4.3,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,capture_rate,0.97,per unit,"NREL, NREL ATB 2024",,,,
-NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
-NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
-NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
-NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
-NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
-NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
+NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
+NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
+NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
+NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
+NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
+NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,efficiency,0.525,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,investment,2324.4942,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Moderate
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,investment,2324.4942,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
@@ -1961,11 +1961,11 @@ NH3 (l) transport ship,investment,81164200.0,EUR,"Cihlar et al 2020 based on IEA
 NH3 (l) transport ship,lifetime,20.0,years,"Guess estimated based on H2 (l) tanker, but more mature technology",,2019.0,,
 Natural gas steam reforming,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Natural gas steam reforming,efficiency,0.75,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Natural gas steam reforming,investment,212.5817,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
+Natural gas steam reforming,investment,286.6065,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Natural gas steam reforming,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
 Natural gas steam reforming CC,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Natural gas steam reforming CC,efficiency,0.637,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Natural gas steam reforming CC,investment,323.8999,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
+Natural gas steam reforming CC,investment,436.6777,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Natural gas steam reforming CC,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
 Ni-Zn-bicharger,FOM,2.0701,%/year,"Viswanathan_2022, p.51-52 in  section 4.4.2","{'carrier': ['elec', 'nizn', 'elec'], 'technology_type': ['bicharger'], 'type': ['electrochemical'], 'note': ['Guesstimate 30% assumed of power components every 10 years ']}",2020.0,,
 Ni-Zn-bicharger,efficiency,0.9,per unit,"Viswanathan_2022, p.59 (p.81)","{'carrier': ['elec', 'nizn', 'elec'], 'technology_type': ['bicharger'], 'type': ['electrochemical'], 'note': ['((0.75-0.87)/2)^0.5 mean value of range efficiency is not RTE but single way AC-store conversion']}",2020.0,,
@@ -2249,12 +2249,12 @@ PHS,VOM,0.5125,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-da
 PHS,VOM,0.5125,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Advanced
 PHS,VOM,0.5125,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Conservative
 PHS,VOM,0.5125,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
-PHS,discount rate,0.0285731417527728,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
-PHS,discount rate,0.0285731417527728,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
-PHS,discount rate,0.0285731417527728,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
-PHS,discount rate,0.0238606595121952,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
-PHS,discount rate,0.0238606595121952,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
-PHS,discount rate,0.0238606595121952,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
+PHS,discount rate,0.0286,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
+PHS,discount rate,0.0286,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
+PHS,discount rate,0.0286,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
+PHS,discount rate,0.0239,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
+PHS,discount rate,0.0239,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
+PHS,discount rate,0.0239,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
 PHS,efficiency,0.75,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions,2015.0,,
 PHS,investment,1998.5285,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Advanced
 PHS,investment,1998.5285,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Conservative
@@ -3145,7 +3145,7 @@ Sand-store,investment,8014.7441,EUR/MWh,"Viswanathan_2022, p.100 (p.122)","{'car
 Sand-store,lifetime,35.0,years,"Viswanathan_2022, p.107 (p.129)","{'carrier': ['sand'], 'technology_type': ['store'], 'type': ['thermal'], 'note': ['NULL']}",2020.0,,
 Solid biomass steam reforming,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Solid biomass steam reforming,efficiency,0.712,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Solid biomass steam reforming,investment,590.7702,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
+Solid biomass steam reforming,investment,796.4751,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Solid biomass steam reforming,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
 Steam methane reforming,FOM,3.0,%/year,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",Large scale SMR facility (150-300 MW).,2015.0,,
 Steam methane reforming,investment,497454.611,EUR/MW_H2,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",Large scale SMR facility (150-300 MW). Currency conversion 1.17 USD = 1 EUR.,2015.0,,
@@ -3502,12 +3502,12 @@ biomass,VOM,5.8,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-d
 biomass,VOM,5.8,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Advanced
 biomass,VOM,5.8,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Conservative
 biomass,VOM,5.8,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
-biomass,discount rate,0.0320752195121951,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
-biomass,discount rate,0.0320752195121951,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
-biomass,discount rate,0.0320752195121951,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
-biomass,discount rate,0.0320752195121951,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
-biomass,discount rate,0.0320752195121951,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
-biomass,discount rate,0.0320752195121951,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
+biomass,discount rate,0.0321,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
+biomass,discount rate,0.0321,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
+biomass,discount rate,0.0321,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
+biomass,discount rate,0.0321,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
+biomass,discount rate,0.0321,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
+biomass,discount rate,0.0321,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
 biomass,efficiency,0.468,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions,2015.0,,
 biomass,fuel,5.0,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Advanced
 biomass,fuel,5.0,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Conservative
@@ -3693,14 +3693,14 @@ coal,VOM,7.96,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-dat
 coal,VOM,7.96,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Conservative
 coal,VOM,7.96,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Moderate
 coal,VOM,7.96,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
-coal,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
-coal,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
-coal,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
-coal,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
-coal,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
-coal,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
+coal,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
+coal,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
+coal,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
+coal,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
+coal,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
+coal,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
 coal,efficiency,0.356,p.u.,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.","Calculated based on average of listed range, i.e. 1 / ((8.75+12) MMbtu/MWh_th /2 / (3.4095 MMbtu/MWh_th)), rounded up.",2023.0,,
-coal,fuel,6.25,USD/MWh_th,"EIA, https://www.eia.gov/coal/annual/",36.14 USD/short ton of bituminous coal with energy content = 19.73 million BTU/short ton,2023.0,,
+coal,fuel,5.3013,USD/MWh_th,"EIA, https://www.eia.gov/coal/annual/",36.14 USD/short ton of bituminous coal with energy content = 19.73 million BTU/short ton,2023.0,,
 coal,investment,3074.9414,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Conservative
 coal,investment,3074.9414,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Conservative
 coal,investment,3074.9414,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Moderate
@@ -3724,12 +3724,12 @@ csp-tower,VOM,3.5,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi
 csp-tower,VOM,3.5,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Advanced
 csp-tower,VOM,3.5,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Conservative
 csp-tower,VOM,3.5,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
-csp-tower,discount rate,0.0413177670333919,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
-csp-tower,discount rate,0.0413177670333919,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
-csp-tower,discount rate,0.0413177670333919,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
-csp-tower,discount rate,0.0276326399999999,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
-csp-tower,discount rate,0.0276326399999999,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
-csp-tower,discount rate,0.0276326399999999,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
+csp-tower,discount rate,0.0413,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
+csp-tower,discount rate,0.0413,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
+csp-tower,discount rate,0.0413,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
+csp-tower,discount rate,0.0276,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
+csp-tower,discount rate,0.0276,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
+csp-tower,discount rate,0.0276,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
 csp-tower,investment,6504.8487,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Advanced
 csp-tower,investment,6504.8487,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Conservative
 csp-tower,investment,6504.8487,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Moderate
@@ -3869,7 +3869,7 @@ electrobiofuels,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biom
 electrobiofuels,efficiency-biomass,1.3183,per unit,Stoichiometric calculation,,,,
 electrobiofuels,efficiency-hydrogen,1.0309,per unit,Stoichiometric calculation,,,,
 electrobiofuels,efficiency-tot,0.6217,per unit,Stoichiometric calculation,,,,
-electrobiofuels,investment,1009920.6202,EUR/kW_th,combination of BtL and electrofuels,,2022.0,,
+electrobiofuels,investment,1155460.1124,EUR/kW_th,combination of BtL and electrofuels,,2022.0,,
 electrolysis,FOM,4.0,%/year,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Fixed O&M ,2020.0,,
 electrolysis,efficiency,0.5773,per unit,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Hydrogen Output,2020.0,,
 electrolysis,efficiency-heat,0.2762,per unit,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:   - hereof recoverable for district heating,2020.0,,
@@ -3887,7 +3887,7 @@ fuel cell,investment,1375.6881,EUR/kW_e,"Danish Energy Agency, inputs/technology
 fuel cell,lifetime,10.0,years,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",12 LT-PEMFC CHP:  Technical lifetime,2015.0,,
 fuelwood,fuel,15.9997,EUR/MWhth,"JRC ENSPRESO ca avg for MINBIOWOO (FuelwoodRW), ENS_BaU_GFTM",,2010.0,,
 gas,CO2 intensity,0.198,tCO2/MWh_th,Stoichiometric calculation with 50 GJ/t CH4,,,,
-gas,fuel,7.65,USD/MWh_th,World Bank https://www.worldbank.org/en/research/commodity-markets,,2010.0,,
+gas,fuel,8.8203,USD/MWh_th,World Bank https://www.worldbank.org/en/research/commodity-markets,,2010.0,,
 gas boiler steam,FOM,3.6667,%/year,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx",311.1c Steam boiler Gas:  Fixed O&M,2019.0,,
 gas boiler steam,VOM,1.1077,EUR/MWh,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx",311.1c Steam boiler Gas:  Variable O&M,2019.0,,
 gas boiler steam,efficiency,0.92,per unit,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx","311.1c Steam boiler Gas:  Total efficiency, net, annual average",2019.0,,
@@ -3911,12 +3911,12 @@ geothermal,FOM,1.59,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oed
 geothermal,FOM,1.59,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Advanced
 geothermal,FOM,1.59,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Conservative
 geothermal,FOM,1.59,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
-geothermal,discount rate,0.0337858216596282,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
-geothermal,discount rate,0.0337858216596282,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
-geothermal,discount rate,0.0337858216596282,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
-geothermal,discount rate,0.0226261931707318,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
-geothermal,discount rate,0.0226261931707318,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
-geothermal,discount rate,0.0226261931707318,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
+geothermal,discount rate,0.0338,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
+geothermal,discount rate,0.0338,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
+geothermal,discount rate,0.0338,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
+geothermal,discount rate,0.0226,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
+geothermal,discount rate,0.0226,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
+geothermal,discount rate,0.0226,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
 geothermal,district heat surcharge,25.0,%,Frey et al. 2022: Techno-Economic Assessment of Geothermal Resources in the Variscan Basement of the Northern Upper Rhine Graben,"If capital cost of electric generation from EGS is 100%, district heating adds additional 25%. Costs incurred by piping.",2020.0,,
 geothermal,district heat-input,0.8,MWh_thdh/MWh_th,"Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551; Breede et al. 2015: Overcoming challenges in the classification of deep geothermal potential, https://eprints.gla.ac.uk/169585/","Heat-input, District Heat-output. This is an assessment of typical heat losses when heat is transmitted from the EGS plant to the DH network, This is a rough estimate, depends on local conditions",2020.0,,
 geothermal,investment,6753.3184,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Advanced
@@ -3948,12 +3948,12 @@ hydro,FOM,2.5,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data
 hydro,FOM,2.5,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Advanced
 hydro,FOM,2.5,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Conservative
 hydro,FOM,2.5,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
-hydro,discount rate,0.0285731417527728,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
-hydro,discount rate,0.0285731417527728,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
-hydro,discount rate,0.0285731417527728,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
-hydro,discount rate,0.0238606595121952,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
-hydro,discount rate,0.0238606595121952,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
-hydro,discount rate,0.0238606595121952,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
+hydro,discount rate,0.0286,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
+hydro,discount rate,0.0286,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
+hydro,discount rate,0.0286,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
+hydro,discount rate,0.0239,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
+hydro,discount rate,0.0239,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
+hydro,discount rate,0.0239,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
 hydro,efficiency,0.9,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions,2015.0,,
 hydro,investment,2574.0603,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Advanced
 hydro,investment,2574.0603,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Conservative
@@ -4042,12 +4042,12 @@ nuclear,FOM,1.96,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-d
 nuclear,FOM,1.96,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
 nuclear,VOM,2.84,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Moderate
 nuclear,VOM,2.84,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
-nuclear,discount rate,0.0320752195121951,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
-nuclear,discount rate,0.0320752195121951,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
-nuclear,discount rate,0.0320752195121951,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
-nuclear,discount rate,0.0320752195121951,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
-nuclear,discount rate,0.0320752195121951,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
-nuclear,discount rate,0.0320752195121951,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
+nuclear,discount rate,0.0321,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
+nuclear,discount rate,0.0321,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
+nuclear,discount rate,0.0321,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
+nuclear,discount rate,0.0321,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
+nuclear,discount rate,0.0321,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
+nuclear,discount rate,0.0321,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
 nuclear,efficiency,0.326,p.u.,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.","Based on heat rate of 10.45 MMBtu/MWh_e and 3.4095 MMBtu/MWh_th, i.e. 1/(10.45/3.4095) = 0.3260.",2023.0,,
 nuclear,fuel,7.1482,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Moderate
 nuclear,fuel,7.1482,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
@@ -4066,12 +4066,12 @@ offwind,FOM,3.07,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-d
 offwind,FOM,3.08,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Advanced
 offwind,FOM,3.06,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Conservative
 offwind,FOM,3.07,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
-offwind,discount rate,0.0402516292682928,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
-offwind,discount rate,0.0402516292682928,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
-offwind,discount rate,0.0402516292682928,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
-offwind,discount rate,0.0261924292682929,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
-offwind,discount rate,0.0261924292682929,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
-offwind,discount rate,0.0261924292682929,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
+offwind,discount rate,0.0403,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
+offwind,discount rate,0.0403,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
+offwind,discount rate,0.0403,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
+offwind,discount rate,0.0262,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
+offwind,discount rate,0.0262,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
+offwind,discount rate,0.0262,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
 offwind,investment,3456.1638,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Advanced
 offwind,investment,3944.0591,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Conservative
 offwind,investment,3628.1926,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Moderate
@@ -4095,7 +4095,7 @@ oil,CO2 intensity,0.2571,tCO2/MWh_th,Stoichiometric calculation with 44 GJ/t die
 oil,FOM,2.5656,%/year,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",50 Diesel engine farm:  Fixed O&M,2015.0,,
 oil,VOM,6.3493,EUR/MWh,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",50 Diesel engine farm:  Variable O&M,2015.0,,
 oil,efficiency,0.35,per unit,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","50 Diesel engine farm:  Electricity efficiency, annual average",2015.0,,
-oil,fuel,25.98,USD/MWh_th,World Bank https://www.worldbank.org/en/research/commodity-markets,,2010.0,,
+oil,fuel,29.9543,USD/MWh_th,World Bank https://www.worldbank.org/en/research/commodity-markets,,2010.0,,
 oil,investment,362.97,EUR/kW,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",50 Diesel engine farm:  Specific investment,2015.0,,
 oil,lifetime,25.0,years,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",50 Diesel engine farm:  Technical lifetime,2015.0,,
 onwind,CF,0.437,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Advanced
@@ -4110,12 +4110,12 @@ onwind,FOM,2.94,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-da
 onwind,FOM,2.94,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Advanced
 onwind,FOM,2.94,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Conservative
 onwind,FOM,2.94,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
-onwind,discount rate,0.0450951402114045,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
-onwind,discount rate,0.0450951402114045,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
-onwind,discount rate,0.0450951402114045,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
-onwind,discount rate,0.0239428136585366,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
-onwind,discount rate,0.0239428136585366,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
-onwind,discount rate,0.0239428136585366,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
+onwind,discount rate,0.0451,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
+onwind,discount rate,0.0451,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
+onwind,discount rate,0.0451,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
+onwind,discount rate,0.0239,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
+onwind,discount rate,0.0239,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
+onwind,discount rate,0.0239,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
 onwind,investment,1462.0,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Advanced
 onwind,investment,1462.0,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Conservative
 onwind,investment,1462.0,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Moderate
@@ -4139,12 +4139,12 @@ ror,FOM,1.72,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-
 ror,FOM,1.54,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Advanced
 ror,FOM,1.71,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Conservative
 ror,FOM,1.72,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
-ror,discount rate,0.0285731417527728,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
-ror,discount rate,0.0285731417527728,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
-ror,discount rate,0.0285731417527728,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
-ror,discount rate,0.0238606595121952,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
-ror,discount rate,0.0238606595121952,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
-ror,discount rate,0.0238606595121952,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
+ror,discount rate,0.0286,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
+ror,discount rate,0.0286,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
+ror,discount rate,0.0286,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
+ror,discount rate,0.0239,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
+ror,discount rate,0.0239,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
+ror,discount rate,0.0239,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
 ror,efficiency,0.9,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions,2015.0,,
 ror,investment,7766.2131,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Advanced
 ror,investment,8006.4052,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Conservative
@@ -4176,12 +4176,12 @@ solar-rooftop,FOM,1.05,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=
 solar-rooftop,FOM,1.05,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Advanced
 solar-rooftop,FOM,1.05,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Conservative
 solar-rooftop,FOM,1.05,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
-solar-rooftop,discount rate,0.0309251654427276,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
-solar-rooftop,discount rate,0.0309251654427276,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
-solar-rooftop,discount rate,0.0309251654427276,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
-solar-rooftop,discount rate,0.018352811707317,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
-solar-rooftop,discount rate,0.018352811707317,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
-solar-rooftop,discount rate,0.018352811707317,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
+solar-rooftop,discount rate,0.0309,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
+solar-rooftop,discount rate,0.0309,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
+solar-rooftop,discount rate,0.0309,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
+solar-rooftop,discount rate,0.0184,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
+solar-rooftop,discount rate,0.0184,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
+solar-rooftop,discount rate,0.0184,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
 solar-rooftop,investment,1783.5623,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Advanced
 solar-rooftop,investment,1783.5623,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Conservative
 solar-rooftop,investment,1783.5623,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Moderate
@@ -4207,12 +4207,12 @@ solar-utility,FOM,1.7,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=o
 solar-utility,FOM,1.7,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Advanced
 solar-utility,FOM,1.7,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Conservative
 solar-utility,FOM,1.7,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
-solar-utility,discount rate,0.0270381159329737,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
-solar-utility,discount rate,0.0270381159329737,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
-solar-utility,discount rate,0.0270381159329737,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
-solar-utility,discount rate,0.0170755512195122,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
-solar-utility,discount rate,0.0170755512195122,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
-solar-utility,discount rate,0.0170755512195122,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
+solar-utility,discount rate,0.027,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
+solar-utility,discount rate,0.027,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
+solar-utility,discount rate,0.027,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
+solar-utility,discount rate,0.0171,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
+solar-utility,discount rate,0.0171,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
+solar-utility,discount rate,0.0171,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
 solar-utility,investment,1333.2623,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Advanced
 solar-utility,investment,1333.2623,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Conservative
 solar-utility,investment,1333.2623,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Moderate

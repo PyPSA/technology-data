@@ -315,7 +315,7 @@ def pre_process_manual_input_usa(
     - prepares a dataframe with the inflation rate per year in European Union
     - starting from manual_input_usa.csv, it estimates the parameters for each technology for all the requested years
     - it selects the values for a given year
-    - it adjusts the cost estimates to the inflation rate
+    - it adjusts the cost estimates to the inflation rate for unit containing the EURO as a currency
     - queries the necessary rows of the existing cost dataframe
 
     Parameters
@@ -351,7 +351,6 @@ def pre_process_manual_input_usa(
 
     # Read the inflation rate
     inflation_rate_series_eur = prepare_inflation_rate(inflation_rate_file_path, "EUR")
-    inflation_rate_series_usd = prepare_inflation_rate(inflation_rate_file_path, "USD")
 
     # Create cost estimates for all years
     list_dataframe_row = []
@@ -469,9 +468,6 @@ def pre_process_manual_input_usa(
     mask_eur = (
         manual_input_usa_file_df["unit"].str.casefold().str.startswith("eur", na=False)
     )
-    mask_usd = (
-        manual_input_usa_file_df["unit"].str.casefold().str.startswith("usd", na=False)
-    )
 
     inflation_adjusted_manual_input_usa_file_df = manual_input_usa_file_df.copy()
 
@@ -481,18 +477,6 @@ def pre_process_manual_input_usa(
             inflation_rate_series_eur,
             manual_input_usa_file_df.loc[mask_eur],
             manual_input_usa_file_df.loc[mask_eur, "technology"].unique(),
-            eur_year,
-            "value",
-            usa_costs_flag=True,
-        )["value"]
-    )
-
-    # Apply inflation adjustments for USD
-    inflation_adjusted_manual_input_usa_file_df.loc[mask_usd, "value"] = (
-        adjust_for_inflation(
-            inflation_rate_series_usd,
-            manual_input_usa_file_df.loc[mask_usd],
-            manual_input_usa_file_df.loc[mask_usd, "technology"].unique(),
             eur_year,
             "value",
             usa_costs_flag=True,
@@ -784,12 +768,9 @@ def pre_process_cost_input_file(
 
 def pre_process_atb_input_file(
     input_file_path: str,
-    inflation_rate_file_path: str,
     nrel_source: str,
     nrel_further_description: str,
-    eur_year: int,
     year: int,
-    n_digits: int,
     list_columns_to_keep: list,
     list_core_metric_parameter_to_keep: list,
     tech_to_remove: list,
@@ -800,25 +781,18 @@ def pre_process_atb_input_file(
     - normalizes the Fixed O&M by Additional OCC (for retrofits technologies) or CAPEX (for any other technology)
     - changes the units
     - renames the technology names to the PyPSA nomenclature
-    - it adjusts the cost estimates to the inflation rate
     - aligns the atb_e_2022 nomenclature to the atb_e 2024 nomenclature
 
     Parameters
     ----------
     input_file_path : str
         NREL/ATB file path
-    inflation_rate_file_path : str
-        inflation rate file path
     nrel_source: str
         link to the NREL/ATB source files. This information shall be used to populate the source column
     nrel_further_description: str
         text that details the further description field for the NREL/ATB sources
-    eur_year : int
-        reference year for inflation rate adjustments
     year: int
         year for the cost assumption
-    n_digits : int
-        number of significant digits
     list_columns_to_keep: list
         columns from NREL/ATB dataset that are relevant
     list_core_metric_parameter_to_keep: list
@@ -840,9 +814,6 @@ def pre_process_atb_input_file(
         list_core_metric_parameter_to_keep,
         tech_to_remove,
     )
-
-    # Read the inflation rate
-    inflation_rate_series_usd = prepare_inflation_rate(inflation_rate_file_path, "USD")
 
     # Normalize Fixed O&M by CAPEX (or Additional OCC for retrofit technologies)
     atb_input_df["value"] = atb_input_df.apply(
@@ -947,26 +918,7 @@ def pre_process_atb_input_file(
     # Cast currency_year from int to float
     atb_input_df["currency_year"] = atb_input_df["currency_year"].astype(float)
 
-    # Correct the cost assumptions to the inflation rate
-    mask_usd = atb_input_df["unit"].str.casefold().str.startswith("usd", na=False)
-    inflation_adjusted_atb_input_df = atb_input_df.copy()
-
-    # Apply inflation adjustments for USD
-    inflation_adjusted_atb_input_df.loc[mask_usd, "value"] = adjust_for_inflation(
-        inflation_rate_series_usd,
-        inflation_adjusted_atb_input_df.loc[mask_usd],
-        inflation_adjusted_atb_input_df.loc[mask_usd, "technology"].unique(),
-        eur_year,
-        "value",
-        usa_costs_flag=True,
-    )["value"]
-
-    # Round the results
-    inflation_adjusted_atb_input_df.loc[:, "value"] = round(
-        inflation_adjusted_atb_input_df["value"].astype(float), n_digits
-    )
-
-    return inflation_adjusted_atb_input_df.reset_index(drop=True)
+    return atb_input_df.reset_index(drop=True)
 
 
 def duplicate_fuel_cost(input_file_path: str, list_of_years: list) -> pd.DataFrame:
@@ -1049,7 +1001,7 @@ if __name__ == "__main__":
     input_file_discount_rate = snakemake.input.nrel_atb_input_discount_rate
     input_file_fuel_costs = snakemake.input.nrel_atb_input_fuel_costs
     input_file_manual_input_usa = snakemake.input.nrel_atb_manual_input_usa
-    input_file_eur_inflation_rate = snakemake.input.eur_inflation_rate
+    input_file_inflation_rate = snakemake.input.inflation_rate
     cost_file_list = snakemake.input.cost_files_to_modify
     nrel_atb_columns_to_keep = snakemake.config["nrel_atb"]["nrel_atb_columns_to_keep"]
     nrel_atb_core_metric_parameter_to_keep = snakemake.config["nrel_atb"][
@@ -1107,7 +1059,7 @@ if __name__ == "__main__":
 
         manual_input_usa_df = pre_process_manual_input_usa(
             input_file_manual_input_usa,
-            input_file_eur_inflation_rate,
+            input_file_inflation_rate,
             year_list,
             eur_reference_year,
             year_val,
@@ -1124,12 +1076,9 @@ if __name__ == "__main__":
 
         atb_e_df = pre_process_atb_input_file(
             input_atb_path,
-            input_file_eur_inflation_rate,
             nrel_atb_source_link,
             nrel_atb_further_description,
-            eur_reference_year,
             year_val,
-            num_digits,
             nrel_atb_columns_to_keep,
             nrel_atb_core_metric_parameter_to_keep,
             nrel_atb_technology_to_remove,
@@ -1206,13 +1155,33 @@ if __name__ == "__main__":
             by=["technology", "parameter"]
         ).reset_index(drop=True)
 
+        # Correct for inflation for technology-parameter pairs having units that contain USD
+        inflation_rate_series_usd = prepare_inflation_rate(input_file_inflation_rate, "USD")
+        mask_usd = (
+            updated_cost_df["unit"].str.casefold().str.startswith("usd", na=False)
+        )
+        inflation_adjusted_updated_cost_df = updated_cost_df.copy()
+        inflation_adjusted_updated_cost_df.loc[mask_usd, "value"] = (
+            adjust_for_inflation(
+                inflation_rate_series_usd,
+                inflation_adjusted_updated_cost_df.loc[mask_usd],
+                inflation_adjusted_updated_cost_df.loc[mask_usd, "technology"].unique(),
+                eur_reference_year,
+                "value",
+                usa_costs_flag=True,
+            )["value"]
+        )
+        inflation_adjusted_updated_cost_df.loc[:, "value"] = round(
+            inflation_adjusted_updated_cost_df["value"].astype(float), num_digits
+        )
+
         # output the modified cost dataframe
         output_cost_path_list = [
             path for path in snakemake.output if str(year_val) in path
         ]
         if len(output_cost_path_list) == 1:
             output_cost_path = output_cost_path_list[0]
-            updated_cost_df.to_csv(output_cost_path, index=False)
+            inflation_adjusted_updated_cost_df.to_csv(output_cost_path, index=False)
             logger.info(
                 f"The cost assumptions file for the US has been compiled for year {year_val}"
             )

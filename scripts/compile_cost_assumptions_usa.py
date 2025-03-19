@@ -355,7 +355,9 @@ def pre_process_manual_input_usa(
     # Create cost estimates for all years
     list_dataframe_row = []
     for tech in manual_input_usa_file_df["technology"].unique():
-        technology_filtered_df = manual_input_usa_file_df[manual_input_usa_file_df["technology"] == tech]
+        technology_filtered_df = manual_input_usa_file_df[
+            manual_input_usa_file_df["technology"] == tech
+        ]
         for param in technology_filtered_df["parameter"].unique():
             technology_parameter_filtered_df = manual_input_usa_file_df.query(
                 "technology == @tech and parameter == @param"
@@ -365,13 +367,17 @@ def pre_process_manual_input_usa(
             scenarios = technology_parameter_filtered_df["scenario"].dropna().unique()
 
             for scenario in scenarios:
-                scenario_value = technology_parameter_filtered_df[technology_parameter_filtered_df["scenario"] == scenario][
-                    "value"
-                ].values  # Extract values for each scenario
+                scenario_value = technology_parameter_filtered_df[
+                    technology_parameter_filtered_df["scenario"] == scenario
+                ]["value"].values  # Extract values for each scenario
 
                 if scenario_value.size > 0:
-                    scenario_years = technology_parameter_filtered_df[technology_parameter_filtered_df["scenario"] == scenario]["year"].values
-                    scenario_values = technology_parameter_filtered_df[technology_parameter_filtered_df["scenario"] == scenario]["value"].values
+                    scenario_years = technology_parameter_filtered_df[
+                        technology_parameter_filtered_df["scenario"] == scenario
+                    ]["year"].values
+                    scenario_values = technology_parameter_filtered_df[
+                        technology_parameter_filtered_df["scenario"] == scenario
+                    ]["value"].values
 
                     interpolated_values = np.interp(
                         list_of_years, scenario_years, scenario_values
@@ -388,7 +394,9 @@ def pre_process_manual_input_usa(
                     s_copy["technology"] = tech
                     s_copy["scenario"] = scenario
                     try:
-                        s_copy["currency_year"] = int(technology_parameter_filtered_df["currency_year"].values[0])
+                        s_copy["currency_year"] = int(
+                            technology_parameter_filtered_df["currency_year"].values[0]
+                        )
                     except ValueError:
                         s_copy["currency_year"] = np.nan
 
@@ -397,7 +405,9 @@ def pre_process_manual_input_usa(
                         s_copy[col] = technology_parameter_filtered_df[col].unique()[0]
 
                     # Add a separate row for each `financial_case`
-                    for financial_case in technology_parameter_filtered_df["financial_case"].unique():
+                    for financial_case in technology_parameter_filtered_df[
+                        "financial_case"
+                    ].unique():
                         s_copy["financial_case"] = financial_case
                         list_dataframe_row.append(s_copy.copy())
     manual_input_usa_file_df = pd.DataFrame(list_dataframe_row).reset_index(drop=True)
@@ -1136,7 +1146,9 @@ if __name__ == "__main__":
         ).reset_index(drop=True)
 
         # Correct for inflation for technology-parameter pairs having units that contain USD
-        inflation_rate_series_usd = prepare_inflation_rate(input_file_inflation_rate, "USD")
+        inflation_rate_series_usd = prepare_inflation_rate(
+            input_file_inflation_rate, "USD"
+        )
         mask_usd = (
             updated_cost_df["unit"].str.casefold().str.startswith("usd", na=False)
         )

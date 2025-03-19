@@ -196,6 +196,43 @@ def mock_snakemake(
     return snakemake
 
 
+def prepare_inflation_rate(fn: str, currency_to_use: str = "eur") -> pd.Series:
+    """
+    The function reads-in annual the inflation rates from Eurostat
+    https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/dataflow/ESTAT/prc_hicp_aind/1.0?references=descendants&detail=referencepartial&format=sdmx_2.1_generic&compressed=true
+
+    Parameters
+    ----------
+    fn: str
+        file name for the Eurostat inflation rates
+    currency_to_use: str
+        currency to select for the inflation rate
+
+    Returns
+    -------
+    pandas.Series
+        inflation rates series
+    """
+
+    if currency_to_use.casefold() == "usd":
+        row_to_use = "United States"
+    else:
+        row_to_use = "European Union - 27 countries (from 2020)"
+
+    inflation_rate_series = pd.read_excel(
+        fn, sheet_name="Sheet 1", index_col=0, header=[8], engine="calamine"
+    )
+    inflation_rate_series = (inflation_rate_series.loc[row_to_use].dropna()).loc[
+        "2001"::
+    ]
+    inflation_rate_series.rename(
+        index=lambda inflation_rate_val: int(inflation_rate_val), inplace=True
+    )
+    inflation_rate_series = inflation_rate_series.astype(float)
+    inflation_rate_series /= 100.0
+    return inflation_rate_series
+
+
 def adjust_for_inflation(
     inflation_rate: pd.Series,
     costs: pd.DataFrame,

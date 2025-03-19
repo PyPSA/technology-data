@@ -398,17 +398,11 @@ def test_pre_process_manual_input_usa(config, year, expected):
     manual_input_usa_file_path = pathlib.Path(
         path_cwd, "inputs", "US", "manual_input_usa.csv"
     )
-    inflation_rate_file_path = pathlib.Path(
-        path_cwd, "inputs", "prc_hicp_aind__custom_9928419_spreadsheet.xlsx"
-    )
     year = 2020
     output_dataframe = pre_process_manual_input_usa(
         manual_input_usa_file_path,
-        inflation_rate_file_path,
         list_of_years,
-        config["eur_year"],
         year,
-        config["ndigits"],
     )
     assert output_dataframe.shape == expected
 

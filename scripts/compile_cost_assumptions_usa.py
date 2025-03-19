@@ -466,8 +466,12 @@ def pre_process_manual_input_usa(
     manual_input_usa_file_df["value"] = manual_input_usa_file_df["value"].astype(float)
 
     # Correct the cost assumptions to the inflation rate
-    mask_eur = manual_input_usa_file_df["unit"].str.casefold().str.startswith("eur", na=False)
-    mask_usd = manual_input_usa_file_df["unit"].str.casefold().str.startswith("usd", na=False)
+    mask_eur = (
+        manual_input_usa_file_df["unit"].str.casefold().str.startswith("eur", na=False)
+    )
+    mask_usd = (
+        manual_input_usa_file_df["unit"].str.casefold().str.startswith("usd", na=False)
+    )
 
     inflation_adjusted_manual_input_usa_file_df = manual_input_usa_file_df.copy()
 
@@ -948,16 +952,14 @@ def pre_process_atb_input_file(
     inflation_adjusted_atb_input_df = atb_input_df.copy()
 
     # Apply inflation adjustments for USD
-    inflation_adjusted_atb_input_df.loc[mask_usd, "value"] = (
-        adjust_for_inflation(
-            inflation_rate_series_usd,
-            inflation_adjusted_atb_input_df.loc[mask_usd],
-            inflation_adjusted_atb_input_df.loc[mask_usd, "technology"].unique(),
-            eur_year,
-            "value",
-            usa_costs_flag=True,
-        )["value"]
-    )
+    inflation_adjusted_atb_input_df.loc[mask_usd, "value"] = adjust_for_inflation(
+        inflation_rate_series_usd,
+        inflation_adjusted_atb_input_df.loc[mask_usd],
+        inflation_adjusted_atb_input_df.loc[mask_usd, "technology"].unique(),
+        eur_year,
+        "value",
+        usa_costs_flag=True,
+    )["value"]
 
     # Round the results
     inflation_adjusted_atb_input_df.loc[:, "value"] = round(

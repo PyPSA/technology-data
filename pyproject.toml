@@ -1,0 +1,81 @@
+[project]
+name = "technology-data"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "ipykernel>=6.29.5",
+    "matplotlib>=3.10.1",
+    "mypy>=1.15.0",
+    "pandas>=2.2.3",
+    "pint>=0.24.4",
+    "pre-commit>=4.2.0",
+    "pytest>=8.3.5",
+    "python-calamine>=0.3.1",
+    "requests>=2.32.3",
+    "ruff>=0.11.0",
+    "seaborn>=0.13.2",
+    "ucumvert>=0.2.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/PyPSA/technology-data"
+Source = "https://github.com/PyPSA/technology-data"
+
+# Pytest settings
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "error::DeprecationWarning", # Raise all DeprecationWarnings as errors
+    "error::FutureWarning",      # Raise all FutureWarnings as errors
+]
+
+# Static type checker settings
+
+[tool.mypy]
+exclude = ['dev/*', 'examples/*', 'doc/*']
+ignore_missing_imports = true
+no_implicit_optional = true
+warn_unused_ignores = true
+show_error_code_links = true
+disallow_any_generics = true 
+warn_return_any = true
+
+[[tool.mypy.overrides]]
+module = "technologydata"
+disallow_untyped_defs = true
+check_untyped_defs = true
+
+# Formatter and linter settings
+
+[tool.ruff]
+extend-include = ['*.ipynb']
+
+[tool.ruff.lint]
+select = [
+    'F',   # pyflakes
+    'E',   # pycodestyle: Error
+    'W',   # pycodestyle: Warning
+    'I',   # isort
+    'D',   # pydocstyle
+    'UP',  # pyupgrade
+    'ANN', # flake-8 annotations
+    'TID', # flake8-tidy-imports
+    'NPY', # numpy
+    'PD',  # pandas
+    'RUF013', # ruff
+]
+
+ignore = [
+    'ANN401', # Dynamically typed expressions are forbidden
+    'E501', # line too long
+    'E741', # ambiguous variable names
+    'D203', # 1 blank line required before class docstring
+    'D212', # Multi-line docstring summary should start at the second line
+    'D401', # First line should be in imperative mood
+    ]
+
+[tool.ruff.lint.flake8-tidy-imports]
+# Disallow all relative imports.
+ban-relative-imports = "all"

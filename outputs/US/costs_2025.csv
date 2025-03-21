@@ -6,8 +6,8 @@ Alkaline electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of s
 Alkaline electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 Alkaline electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 Alkaline electrolyzer,efficiency,0.67,p.u.,ICCT IRA e-fuels assumptions ,,,,
-Alkaline electrolyzer,investment,1041.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
-Alkaline electrolyzer,investment,1041.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
+Alkaline electrolyzer,investment,1336.5,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
+Alkaline electrolyzer,investment,1336.5,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 Alkaline electrolyzer,investment,1306.5,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
 Alkaline electrolyzer,investment,1306.5,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
 Alkaline electrolyzer,investment,646.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
@@ -2280,8 +2280,8 @@ PEM electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenar
 PEM electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 PEM electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 PEM electrolyzer,efficiency,0.655,p.u.,ICCT IRA e-fuels assumptions ,,,,
-PEM electrolyzer,investment,1245.5,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
-PEM electrolyzer,investment,1245.5,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
+PEM electrolyzer,investment,2179.5,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
+PEM electrolyzer,investment,2179.5,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 PEM electrolyzer,investment,2130.5,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
 PEM electrolyzer,investment,2130.5,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
 PEM electrolyzer,investment,436.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
@@ -3235,8 +3235,8 @@ SOEC,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and finan
 SOEC,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 SOEC,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 SOEC,efficiency,0.83,p.u.,ICCT IRA e-fuels assumptions ,,,,
-SOEC,investment,1418.5,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
-SOEC,investment,1418.5,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
+SOEC,investment,2408.5,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
+SOEC,investment,2408.5,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 SOEC,investment,2354.5,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
 SOEC,investment,2354.5,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
 SOEC,investment,766.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced

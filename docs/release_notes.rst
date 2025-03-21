@@ -38,6 +38,8 @@ Upcoming Release
 
 * Switch to `python-calamine` as engine for reading Excel files in `pandas`, greatly improving performance (https://github.com/PyPSA/technology-data/pull/188)
 
+* Update scenarios for US-specific eletrolyzer investment cost (https://github.com/PyPSA/technology-data/pull/194)
+
 `v0.11.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.11.0>`__ (24th January 2025)
 =======================================================================================
 

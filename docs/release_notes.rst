@@ -11,6 +11,8 @@ Release Notes
 Upcoming Release
 ================
 
+* Removed water-sourced heat pumps, as cost assumptions (based on higher uncertainty range in DEA tables) are a) likely overestimates and b) break pessimistic/optimistic scenarios. Reccomendation: Use excess-heat-sourced heat pump data or see DEA data on seawater-sourced heat pumps.
+
 .. .. warning:: 
   
 ..   The features listed below are not released yet, but will be part of the next release! 

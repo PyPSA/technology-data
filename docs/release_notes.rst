@@ -38,7 +38,7 @@ Upcoming Release
 
 * Switch to `python-calamine` as engine for reading Excel files in `pandas`, greatly improving performance (https://github.com/PyPSA/technology-data/pull/188)
 
-* Include inflation adjustments for USD (https://github.com/PyPSA/technology-data/pull/193)
+* Inflation rates input file `inputs/prc_hicp_aind__custom_9928419_spreadsheet.xlsx` reporting inflation rates for Europe and US and dating back to Jan 2024 substituted by 'Eurostat_inflation_rates.xlsx` dating back to Feb 2025 + Include inflation adjustments for USD +  (https://github.com/PyPSA/technology-data/pull/193)
 
 * Update scenarios for US-specific eletrolyzer investment cost (https://github.com/PyPSA/technology-data/pull/194)
 

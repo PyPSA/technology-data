@@ -1122,9 +1122,6 @@ if __name__ == "__main__":
                 usa_costs_flag=True,
             )["value"]
         )
-        inflation_adjusted_updated_cost_df.loc[:, "value"] = round(
-            inflation_adjusted_updated_cost_df["value"].astype(float), num_digits
-        )
 
         # output the modified cost dataframe
         output_cost_path_list = [

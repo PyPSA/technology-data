@@ -1,0 +1,3 @@
+source,technology,detailed_technology,case,region,parameter,year,value,unit,comment
+example02,Wind,,example-scenario,DEU,investment,2022,500,EUR_2022/kW_el,NaN
+example02,Wind,,example-project,DEU,investment,2022Q2,350,EUR_2022/kW_el,No

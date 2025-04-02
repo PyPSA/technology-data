@@ -1,0 +1,104 @@
+{
+    "fields": [
+        {
+            "name": "source",
+            "type": "string",
+            "description": "The short-name code of the source, as defined in the source table.",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "technology",
+            "type": "string",
+            "description": "The name of the technology, indicates the high-level technology type.",
+            "example": "Solar photovoltaic, Stationary battery storage, Water electrolysis.",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "detailed_technology",
+            "type": "string",
+            "description": "The detailed description of the technology, indicates the specific technology type.",
+            "example": "For solar photovoltaic: silicon monocrystalline, silicon polycrystalline; for stationary battery storage: lithium-ion, lead-acid; for water electrolysis: alkaline, polymer electrolyte membrane.",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "case",
+            "type": "string",
+            "description": "The name of the scenario used in the source to distinguish different cases for the same technology or reported case for observations.",
+            "example": "In the IEA World Energy Outlook 2024, the case would follow the scenario names, i.e. 'Stated Policies Scenario' or 'STEPS', 'Announced Pledges Scenario' or 'APS', and 'Net Zero Emissions by 2050 Scenario' or 'NZE'; in the NREL Annual Technology Baseline 2024, case would follow the scenario names 'Conservative', 'Moderate', and 'Advanced' and can include assumptions on technology readiness and market maturity, e.g. 'Conservative - Nascent - R&D', for real-world observations, the case would follow the name of the project or the name of the technology provider as used in the source, e.g. 'Tesla - Model 3', 'Three Gorges Dam', 'Hinkley Point C'.",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "region",
+            "type": "string",
+            "description": "The name of the region or country for which the data point is valid, i.e. the geographical area where the technology is located or deployed; use of ISO 3166-1 codes is highly recommended.",
+            "example": "DEU, DNK, USA, CHN, EU."
+        },
+        {
+            "name": "parameter",
+            "type": "string",
+            "description": "The name of the parameter, indicates the type of data for the technology.",
+            "example": "CAPEX, VOM, lifetime, construction time, input.",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "year",
+            "type": "year",
+            "description": "The year of the data point, indicates in which year the data point is valid. Observations are always in the past, projections can be past or upcoming years.",
+            "example": 2025,
+            "constraints": {
+                "required": true,
+                "minimum": 1000,
+                "maximum": 3000
+            }
+        },
+        {
+            "name": "value",
+            "type": "number",
+            "constraints": {
+                "required": true,
+                "minimum": 0
+            }
+        },
+        {
+            "name": "unit",
+            "type": "string",
+            "description": "The unit of the value, indicates the unit of the data point.Currency values must always indicate the currency following currency codes in ISO 4217 and the year of the currency value (nominal value).Use qualifiers for units to differentiate different types of energy or quantities.",
+            "example": "For currency related values: USD_2022/kW_electricity, EUR_2020/kWh_hydrogen, RMB_2015/t_methanol, %/year, years, hours. For efficiency related values: kWh_electricity/kWh_coal, kWh_hydrogen/kWh_electricity.",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "comment",
+            "type": "string",
+            "description": "Any comment or clarifying information about the data point that has not been captured in the other fields.",
+            "example": "'The value is an average of 10 projects without closer specification of the projects', or 'The projection assumes a learning rate of 10% per year and a capacity growth of 20% per year after 2025'.",
+            "constraints": {
+                "required": false
+            }
+        }
+    ],
+    "fieldsMatch": "subset",
+    "missingValues": [
+        ""
+    ],
+    "uniqueKey": [
+        "source",
+        "technology",
+        "detailed_technology",
+        "case",
+        "region",
+        "parameter",
+        "year"
+    ]
+}

@@ -6,12 +6,12 @@ Alkaline electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of s
 Alkaline electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 Alkaline electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 Alkaline electrolyzer,efficiency,0.65,p.u.,ICCT IRA e-fuels assumptions ,,,,
-Alkaline electrolyzer,investment,1471.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
-Alkaline electrolyzer,investment,1471.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
-Alkaline electrolyzer,investment,1471.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-Alkaline electrolyzer,investment,1471.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
-Alkaline electrolyzer,investment,662.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
-Alkaline electrolyzer,investment,662.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
+Alkaline electrolyzer,investment,1285.152772426615,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
+Alkaline electrolyzer,investment,1285.152772426615,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
+Alkaline electrolyzer,investment,1285.152772426615,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
+Alkaline electrolyzer,investment,1285.152772426615,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
+Alkaline electrolyzer,investment,578.3624305550096,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
+Alkaline electrolyzer,investment,578.3624305550096,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 Alkaline electrolyzer,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,,,
 Ammonia cracker,FOM,4.3,%/year,"Ishimoto et al. (2020): 10.1016/j.ijhydene.2020.09.017 , table 7.","Estimated based on Labour cost rate, Maintenance cost rate, Insurance rate, Admin. cost rate and Chemical & other consumables cost rate.",2015.0,,
 Ammonia cracker,ammonia-input,1.46,MWh_NH3/MWh_H2,"ENGIE et al (2020): Ammonia to Green Hydrogen Feasibility Study (https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/880826/HS420_-_Ecuity_-_Ammonia_to_Green_Hydrogen.pdf), Fig. 10.",Assuming a integrated 200t/d cracking and purification facility. Electricity demand (316 MWh per 2186 MWh_LHV H2 output) is assumed to also be ammonia LHV input which seems a fair assumption as the facility has options for a higher degree of integration according to the report).,,,
@@ -65,11 +65,11 @@ BioSNG,efficiency,0.6,per unit,"Danish Energy Agency, inputs/data_sheets_for_ren
 BioSNG,investment,2658.5,EUR/kW_th,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Specific investment",2020.0,,
 BioSNG,lifetime,25.0,years,TODO,"84 Gasif. CFB, Bio-SNG:  Technical lifetime",2020.0,,
 Biomass gasification,efficiency,0.35,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Biomass gasification,investment,1467.7693,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
+Biomass gasification,investment,1978.8508861995015,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Biomass gasification,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
 Biomass gasification CC,FOM,0.02,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Biomass gasification CC,efficiency,0.328,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Biomass gasification CC,investment,3015.5325,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
+Biomass gasification CC,investment,4065.5510481055235,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Biomass gasification CC,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
 BtL,C in fuel,0.2455,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,,,
 BtL,C stored,0.7545,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,,,
@@ -225,11 +225,11 @@ Coal - IGCC,investment,5327.264195357951,USD/kW,NREL/ATB-https://data.openei.org
 Coal - IGCC,investment,5327.264195357951,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
 Coal gasification,FOM,0.06,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Coal gasification,efficiency,0.56,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Coal gasification,investment,483.8765,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
+Coal gasification,investment,652.364749706077,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Coal gasification,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
 Coal gasification CC,FOM,0.07,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Coal gasification CC,efficiency,0.532,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Coal gasification CC,investment,649.5969,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
+Coal gasification CC,investment,875.7882332041481,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Coal gasification CC,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
 Coal integrated retrofit 90%-CCS,capture_rate,0.9,per unit,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
 Coal integrated retrofit 90%-CCS,efficiency,0.386,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
@@ -833,7 +833,7 @@ Fischer-Tropsch,carbondioxide-input,0.32,t_CO2/MWh_FT,ICCT IRA e-fuels assumptio
 Fischer-Tropsch,efficiency,0.7,per unit,ICCT IRA e-fuels assumptions ,,,,
 Fischer-Tropsch,electricity-input,0.04,MWh_el/MWh_FT,ICCT IRA e-fuels assumptions ,"0.005 MWh_el input per FT output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output).",,,
 Fischer-Tropsch,hydrogen-input,1.43,MWh_H2/MWh_FT,ICCT IRA e-fuels assumptions ,"0.995 MWh_H2 per output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output).",,,
-Fischer-Tropsch,investment,1696429.0,USD/MW_FT,ICCT IRA e-fuels assumptions ,,2022.0,,
+Fischer-Tropsch,investment,1482100.9058972877,USD/MW_FT,ICCT IRA e-fuels assumptions ,,2022.0,,
 Fischer-Tropsch,lifetime,20.0,years,ICCT IRA e-fuels assumptions ,,,,
 Gasnetz,FOM,2.5,%,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz,2020.0,,
 Gasnetz,investment,28.0,EUR/kWGas,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz,2020.0,,
@@ -1015,7 +1015,7 @@ Haber-Bosch,lifetime,30.0,years,"Danish Energy Agency, inputs/data_sheets_for_re
 Haber-Bosch,nitrogen-input,0.1597,t_N2/MWh_NH3,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), pg. 57.",".33 MWh electricity are required for ASU per t_NH3, considering 0.4 MWh are required per t_N2 and LHV of NH3 of 5.1666 Mwh.",,,
 Heavy oil partial oxidation,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Heavy oil partial oxidation,efficiency,0.734,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Heavy oil partial oxidation,investment,491.0535,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
+Heavy oil partial oxidation,investment,662.0382094364353,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Heavy oil partial oxidation,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
 HighT-Molten-Salt-charger,FOM,1.075,%/year,"Viswanathan_2022, NULL","{'carrier': ['elec', 'salthight'], 'technology_type': ['charger'], 'type': ['thermal'], 'note': ['Guesstimate, 50% on charger']}",2020.0,,
 HighT-Molten-Salt-charger,efficiency,0.99,per unit,"Viswanathan_2022, p.107 (p.129)","{'carrier': ['elec', 'salthight'], 'technology_type': ['charger'], 'type': ['thermal'], 'note': ['RTE assume 99% for charge and other for discharge']}",2020.0,,
@@ -1961,11 +1961,11 @@ NH3 (l) transport ship,investment,81164200.0,EUR,"Cihlar et al 2020 based on IEA
 NH3 (l) transport ship,lifetime,20.0,years,"Guess estimated based on H2 (l) tanker, but more mature technology",,2019.0,,
 Natural gas steam reforming,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Natural gas steam reforming,efficiency,0.75,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Natural gas steam reforming,investment,212.5817,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
+Natural gas steam reforming,investment,286.6065101039866,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Natural gas steam reforming,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
 Natural gas steam reforming CC,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Natural gas steam reforming CC,efficiency,0.637,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Natural gas steam reforming CC,investment,323.8999,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
+Natural gas steam reforming CC,investment,436.6777280424164,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Natural gas steam reforming CC,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
 Ni-Zn-bicharger,FOM,2.0701,%/year,"Viswanathan_2022, p.51-52 in  section 4.4.2","{'carrier': ['elec', 'nizn', 'elec'], 'technology_type': ['bicharger'], 'type': ['electrochemical'], 'note': ['Guesstimate 30% assumed of power components every 10 years ']}",2020.0,,
 Ni-Zn-bicharger,efficiency,0.9,per unit,"Viswanathan_2022, p.59 (p.81)","{'carrier': ['elec', 'nizn', 'elec'], 'technology_type': ['bicharger'], 'type': ['electrochemical'], 'note': ['((0.75-0.87)/2)^0.5 mean value of range efficiency is not RTE but single way AC-store conversion']}",2020.0,,
@@ -2230,12 +2230,12 @@ PEM electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenar
 PEM electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 PEM electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 PEM electrolyzer,efficiency,0.63,p.u.,ICCT IRA e-fuels assumptions ,,,,
-PEM electrolyzer,investment,2399.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
-PEM electrolyzer,investment,2399.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
-PEM electrolyzer,investment,2399.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-PEM electrolyzer,investment,2399.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
-PEM electrolyzer,investment,447.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
-PEM electrolyzer,investment,447.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
+PEM electrolyzer,investment,2095.908566316417,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
+PEM electrolyzer,investment,2095.908566316417,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
+PEM electrolyzer,investment,2095.908566316417,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
+PEM electrolyzer,investment,2095.908566316417,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
+PEM electrolyzer,investment,390.52568951373,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
+PEM electrolyzer,investment,390.52568951373,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 PEM electrolyzer,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,,,
 PHS,FOM,0.89,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Advanced
 PHS,FOM,0.89,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Conservative
@@ -3125,12 +3125,12 @@ SOEC,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and finan
 SOEC,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 SOEC,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 SOEC,efficiency,0.82,p.u.,ICCT IRA e-fuels assumptions ,,,,
-SOEC,investment,2651.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
-SOEC,investment,2651.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
-SOEC,investment,2651.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-SOEC,investment,2651.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
-SOEC,investment,785.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
-SOEC,investment,785.0,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
+SOEC,investment,2316.0707000020097,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
+SOEC,investment,2316.0707000020097,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
+SOEC,investment,2316.0707000020097,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
+SOEC,investment,2316.0707000020097,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
+SOEC,investment,685.8225196158346,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
+SOEC,investment,685.8225196158346,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 SOEC,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,,,
 Sand-charger,FOM,1.075,%/year,"Viswanathan_2022, NULL","{'carrier': ['elec', 'sand'], 'technology_type': ['charger'], 'type': ['thermal'], 'note': ['Guesstimate, 50% on charger']}",2020.0,,
 Sand-charger,efficiency,0.99,per unit,"Viswanathan_2022, p.107 (p.129)","{'carrier': ['elec', 'sand'], 'technology_type': ['charger'], 'type': ['thermal'], 'note': ['RTE assume 99% for charge and other for discharge']}",2020.0,,
@@ -3145,7 +3145,7 @@ Sand-store,investment,8014.7441,EUR/MWh,"Viswanathan_2022, p.100 (p.122)","{'car
 Sand-store,lifetime,35.0,years,"Viswanathan_2022, p.107 (p.129)","{'carrier': ['sand'], 'technology_type': ['store'], 'type': ['thermal'], 'note': ['NULL']}",2020.0,,
 Solid biomass steam reforming,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Solid biomass steam reforming,efficiency,0.712,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Solid biomass steam reforming,investment,590.7702,EUR/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
+Solid biomass steam reforming,investment,796.4750872147151,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
 Solid biomass steam reforming,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
 Steam methane reforming,FOM,3.0,%/year,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",Large scale SMR facility (150-300 MW).,2015.0,,
 Steam methane reforming,investment,497454.611,EUR/MW_H2,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",Large scale SMR facility (150-300 MW). Currency conversion 1.17 USD = 1 EUR.,2015.0,,
@@ -3695,7 +3695,7 @@ coal,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of 
 coal,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
 coal,discount rate,0.0394356097560977,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
 coal,efficiency,0.356,p.u.,"Lazard's levelized cost of energy analysis - version 16.0 (2023): https://www.lazard.com/media/typdgxmm/lazards-lcoeplus-april-2023.pdf , pg. 49 (Levelized Cost of Energy - Key Assumptions), accessed: 2023-12-14.","Calculated based on average of listed range, i.e. 1 / ((8.75+12) MMbtu/MWh_th /2 / (3.4095 MMbtu/MWh_th)), rounded up.",2023.0,,
-coal,fuel,6.25,USD/MWh_th,"EIA, https://www.eia.gov/coal/annual/",36.14 USD/short ton of bituminous coal with energy content = 19.73 million BTU/short ton,2023.0,,
+coal,fuel,5.301330465152392,USD/MWh_th,"EIA, https://www.eia.gov/coal/annual/",36.14 USD/short ton of bituminous coal with energy content = 19.73 million BTU/short ton,2023.0,,
 coal,investment,3074.941437104792,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Conservative
 coal,investment,3074.941437104792,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Conservative
 coal,investment,3074.941437104792,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Moderate
@@ -3796,12 +3796,12 @@ direct air capture,compression-heat-output,0.2,MWh/tCO2,"Danish Energy Agency, i
 direct air capture,electricity-input,0.24,MWh_el/t_CO2,ICCT IRA e-fuels assumptions ,,,,
 direct air capture,heat-input,1.17,MWh_th/t_CO2,ICCT IRA e-fuels assumptions ,,,,
 direct air capture,heat-output,1.25,MWh/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture,2020.0,,
-direct air capture,investment,12398844.91,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
-direct air capture,investment,12398844.91,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
-direct air capture,investment,19180739.93,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-direct air capture,investment,19180739.93,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
-direct air capture,investment,7103597.31,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
-direct air capture,investment,7103597.31,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
+direct air capture,investment,10832365.677072823,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
+direct air capture,investment,10832365.677072823,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
+direct air capture,investment,16757431.066100188,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
+direct air capture,investment,16757431.066100188,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
+direct air capture,investment,6206123.573860465,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
+direct air capture,investment,6206123.573860465,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 direct air capture,lifetime,20.0,years,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture,2020.0,,
 direct air capture,years,30.0,years,ICCT IRA e-fuels assumptions ,,,,
 direct firing gas,FOM,1.2121,%/year,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx",312.a Direct firing Natural Gas:  Fixed O&M,2019.0,,
@@ -3882,7 +3882,7 @@ fuel cell,investment,1375.6881,EUR/kW_e,"Danish Energy Agency, inputs/technology
 fuel cell,lifetime,10.0,years,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",12 LT-PEMFC CHP:  Technical lifetime,2015.0,,
 fuelwood,fuel,15.9997,EUR/MWhth,"JRC ENSPRESO ca avg for MINBIOWOO (FuelwoodRW), ENS_BaU_GFTM",,2010.0,,
 gas,CO2 intensity,0.198,tCO2/MWh_th,Stoichiometric calculation with 50 GJ/t CH4,,,,
-gas,fuel,7.65,USD/MWh_th,World Bank https://www.worldbank.org/en/research/commodity-markets,,2010.0,,
+gas,fuel,8.820258276190751,USD/MWh_th,World Bank https://www.worldbank.org/en/research/commodity-markets,,2010.0,,
 gas boiler steam,FOM,3.6667,%/year,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx",311.1c Steam boiler Gas:  Fixed O&M,2019.0,,
 gas boiler steam,VOM,1.1077,EUR/MWh,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx",311.1c Steam boiler Gas:  Variable O&M,2019.0,,
 gas boiler steam,efficiency,0.92,per unit,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx","311.1c Steam boiler Gas:  Total efficiency, net, annual average",2019.0,,
@@ -3959,10 +3959,10 @@ hydro,investment,2574.060290445133,USD/kW,NREL/ATB-https://data.openei.org/s3_vi
 hydro,lifetime,80.0,years,IEA2010, from old pypsa cost assumptions,2015.0,,
 hydrogen storage compressor,FOM,4.0,%/year,ICCT IRA e-fuels assumptions ,,2022.0,,
 hydrogen storage compressor,compression-electricity-input,0.05,MWh_el/MWh_H2,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",1.707 kWh/kg.,,,
-hydrogen storage compressor,investment,2.28,USD/kWh_H2,ICCT IRA e-fuels assumptions ,,2022.0,,
+hydrogen storage compressor,investment,1.9919431142982202,USD/kWh_H2,ICCT IRA e-fuels assumptions ,,2022.0,,
 hydrogen storage compressor,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,,,
 hydrogen storage tank type 1,FOM,4.0,%/year,ICCT IRA e-fuels assumptions ,,2022.0,,
-hydrogen storage tank type 1,investment,16.87,USD/kWh_H2,ICCT IRA e-fuels assumptions ,,2022.0,,
+hydrogen storage tank type 1,investment,14.738631727285517,USD/kWh_H2,ICCT IRA e-fuels assumptions ,,2022.0,,
 hydrogen storage tank type 1,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,,,
 hydrogen storage tank type 1,min_fill_level,6.0,%,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.",,,,
 hydrogen storage tank type 1 including compressor,FOM,1.0526,%/year,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Fixed O&M,2015.0,,
@@ -4090,7 +4090,7 @@ oil,CO2 intensity,0.2571,tCO2/MWh_th,Stoichiometric calculation with 44 GJ/t die
 oil,FOM,2.5656,%/year,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",50 Diesel engine farm:  Fixed O&M,2015.0,,
 oil,VOM,6.3493,EUR/MWh,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",50 Diesel engine farm:  Variable O&M,2015.0,,
 oil,efficiency,0.35,per unit,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","50 Diesel engine farm:  Electricity efficiency, annual average",2015.0,,
-oil,fuel,25.98,USD/MWh_th,World Bank https://www.worldbank.org/en/research/commodity-markets,,2010.0,,
+oil,fuel,29.954288890906632,USD/MWh_th,World Bank https://www.worldbank.org/en/research/commodity-markets,,2010.0,,
 oil,investment,362.97,EUR/kW,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",50 Diesel engine farm:  Specific investment,2015.0,,
 oil,lifetime,25.0,years,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",50 Diesel engine farm:  Technical lifetime,2015.0,,
 onwind,CF,0.437,per unit,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,Market,Advanced

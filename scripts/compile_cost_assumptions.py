@@ -38,6 +38,7 @@ from _helpers import (
     configure_logging,
     get_relative_fn,
     mock_snakemake,
+    prepare_inflation_rate,
 )
 from currency_converter import ECB_URL, CurrencyConverter
 from scipy import interpolate
@@ -3887,36 +3888,6 @@ def add_energy_storage_database(
     df = df.set_index(["technology", "parameter"])
 
     return pd.concat([cost_dataframe, df]), tech_names
-
-
-def prepare_inflation_rate(fn: str) -> pd.Series:
-    """
-    The function reads-in annual the inflation rates from Eurostat
-    https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/dataflow/ESTAT/prc_hicp_aind/1.0?references=descendants&detail=referencepartial&format=sdmx_2.1_generic&compressed=true
-
-    Parameters
-    ----------
-    fn
-        file name for the Eurostat inflation rates
-
-    Returns
-    -------
-    pandas.Series
-        inflation rates series
-    """
-
-    inflation_rate = pd.read_excel(
-        fn, sheet_name="Sheet 1", index_col=0, header=[8], engine="calamine"
-    )
-    inflation_rate = (
-        inflation_rate.loc["European Union - 27 countries (from 2020)"].dropna()
-    ).loc["2001"::]
-    inflation_rate.rename(index=lambda x: int(x), inplace=True)
-    inflation_rate = inflation_rate.astype(float)
-
-    inflation_rate /= 100
-
-    return inflation_rate
 
 
 # %% *************************************************************************

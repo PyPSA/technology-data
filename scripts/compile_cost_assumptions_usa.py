@@ -14,8 +14,12 @@ import pathlib
 
 import numpy as np
 import pandas as pd
-from _helpers import adjust_for_inflation, configure_logging, mock_snakemake
-from compile_cost_assumptions import prepare_inflation_rate
+from _helpers import (
+    adjust_for_inflation,
+    configure_logging,
+    mock_snakemake,
+    prepare_inflation_rate,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -298,36 +302,25 @@ def replace_value_name(
 
 def pre_process_manual_input_usa(
     manual_input_usa_file_path: str,
-    inflation_rate_file_path: str,
     list_of_years: list,
-    eur_year: int,
     year: int,
-    n_digits: int,
 ) -> pd.DataFrame:
     """
     The function reads and modifies the manual_input_usa.csv file. Namely, it:
     - reads the input file
     - renames the column "further_description" to "further description"
-    - prepares a dataframe with the inflation rate per year in European Union
     - starting from manual_input_usa.csv, it estimates the parameters for each technology for all the requested years
     - it selects the values for a given year
-    - it adjusts the cost estimates to the inflation rate
     - queries the necessary rows of the existing cost dataframe
 
     Parameters
     ----------
     manual_input_usa_file_path : str
         manual_input_usa.csv file path
-    inflation_rate_file_path : str
-        inflation rate file path
     list_of_years : list
         years for which a cost assumption is provided
-    eur_year : int
-        year for european output
     year : int
         year from list_of_years
-    n_digits : int
-        number of significant digits
 
     Returns
     -------
@@ -345,29 +338,32 @@ def pre_process_manual_input_usa(
         columns={"further_description": "further description"}
     )
 
-    # Read the inflation rate
-    inflation_rate_series = prepare_inflation_rate(inflation_rate_file_path)
-
     # Create cost estimates for all years
     list_dataframe_row = []
     for tech in manual_input_usa_file_df["technology"].unique():
-        c0 = manual_input_usa_file_df[manual_input_usa_file_df["technology"] == tech]
-        for param in c0["parameter"].unique():
-            c = manual_input_usa_file_df.query(
+        technology_filtered_df = manual_input_usa_file_df[
+            manual_input_usa_file_df["technology"] == tech
+        ]
+        for param in technology_filtered_df["parameter"].unique():
+            technology_parameter_filtered_df = manual_input_usa_file_df.query(
                 "technology == @tech and parameter == @param"
             )
 
             # Consider differences among scenarios
-            scenarios = c["scenario"].dropna().unique()
+            scenarios = technology_parameter_filtered_df["scenario"].dropna().unique()
 
             for scenario in scenarios:
-                scenario_value = c[c["scenario"] == scenario][
-                    "value"
-                ].values  # Extract values for each scenario
+                scenario_value = technology_parameter_filtered_df[
+                    technology_parameter_filtered_df["scenario"] == scenario
+                ]["value"].values  # Extract values for each scenario
 
                 if scenario_value.size > 0:
-                    scenario_years = c[c["scenario"] == scenario]["year"].values
-                    scenario_values = c[c["scenario"] == scenario]["value"].values
+                    scenario_years = technology_parameter_filtered_df[
+                        technology_parameter_filtered_df["scenario"] == scenario
+                    ]["year"].values
+                    scenario_values = technology_parameter_filtered_df[
+                        technology_parameter_filtered_df["scenario"] == scenario
+                    ]["value"].values
 
                     interpolated_values = np.interp(
                         list_of_years, scenario_years, scenario_values
@@ -384,38 +380,22 @@ def pre_process_manual_input_usa(
                     s_copy["technology"] = tech
                     s_copy["scenario"] = scenario
                     try:
-                        s_copy["currency_year"] = int(c["currency_year"].values[0])
+                        s_copy["currency_year"] = int(
+                            technology_parameter_filtered_df["currency_year"].values[0]
+                        )
                     except ValueError:
                         s_copy["currency_year"] = np.nan
 
                     # Add the other columns in the data file
                     for col in ["unit", "source", "further description"]:
-                        s_copy[col] = c[col].unique()[0]
+                        s_copy[col] = technology_parameter_filtered_df[col].unique()[0]
 
                     # Add a separate row for each `financial_case`
-                    for financial_case in c["financial_case"].unique():
+                    for financial_case in technology_parameter_filtered_df[
+                        "financial_case"
+                    ].unique():
                         s_copy["financial_case"] = financial_case
                         list_dataframe_row.append(s_copy.copy())
-            if len(scenarios) == 0:
-                s = pd.Series(
-                    index=list_of_years,
-                    data=[scenario_value] * len(list_of_years),
-                    name=param,
-                )
-                s["parameter"] = param
-                s["technology"] = tech
-                s["scenario"] = ""
-                try:
-                    s["currency_year"] = int(c["currency_year"].values[0])
-                except ValueError:
-                    s["currency_year"] = np.nan
-                for col in ["unit", "source", "further description"]:
-                    s[col] = c[col].unique()[0]
-
-                # Add a separate row for each `financial_case`
-                for financial_case in c["financial_case"].unique():
-                    s["financial_case"] = financial_case
-                    list_dataframe_row.append(s.copy())
     manual_input_usa_file_df = pd.DataFrame(list_dataframe_row).reset_index(drop=True)
 
     # Filter the information for a given year
@@ -460,27 +440,7 @@ def pre_process_manual_input_usa(
     # Cast the value column to float
     manual_input_usa_file_df["value"] = manual_input_usa_file_df["value"].astype(float)
 
-    # Correct the cost assumptions to the inflation rate
-    mask = manual_input_usa_file_df["unit"].str.startswith("EUR", na=False)
-
-    inflation_adjusted_manual_input_usa_file_df = manual_input_usa_file_df.copy()
-    inflation_adjusted_manual_input_usa_file_df.loc[mask, "value"] = (
-        adjust_for_inflation(
-            inflation_rate_series,
-            manual_input_usa_file_df.loc[mask],
-            manual_input_usa_file_df.loc[mask, "technology"].unique(),
-            eur_year,
-            "value",
-            usa_costs_flag=True,
-        )["value"]
-    )
-
-    # Round the results
-    inflation_adjusted_manual_input_usa_file_df.loc[:, "value"] = round(
-        inflation_adjusted_manual_input_usa_file_df["value"].astype(float), n_digits
-    )
-
-    return inflation_adjusted_manual_input_usa_file_df
+    return manual_input_usa_file_df
 
 
 def modify_cost_input_file(
@@ -781,6 +741,8 @@ def pre_process_atb_input_file(
         NREL/ATB file path
     nrel_source: str
         link to the NREL/ATB source files. This information shall be used to populate the source column
+    nrel_further_description: str
+        text that details the further description field for the NREL/ATB sources
     year: int
         year for the cost assumption
     list_columns_to_keep: list
@@ -904,6 +866,7 @@ def pre_process_atb_input_file(
 
     # ATB currency year dates back to 2018 for ATB2020 and to 2022 for ATB2024
     atb_input_df["currency_year"] = atb_input_df["currency_year"] - 2
+
     # Cast currency_year from int to float
     atb_input_df["currency_year"] = atb_input_df["currency_year"].astype(float)
 
@@ -990,7 +953,7 @@ if __name__ == "__main__":
     input_file_discount_rate = snakemake.input.nrel_atb_input_discount_rate
     input_file_fuel_costs = snakemake.input.nrel_atb_input_fuel_costs
     input_file_manual_input_usa = snakemake.input.nrel_atb_manual_input_usa
-    input_file_eur_inflation_rate = snakemake.input.eur_inflation_rate
+    input_file_inflation_rate = snakemake.input.inflation_rate
     cost_file_list = snakemake.input.cost_files_to_modify
     nrel_atb_columns_to_keep = snakemake.config["nrel_atb"]["nrel_atb_columns_to_keep"]
     nrel_atb_core_metric_parameter_to_keep = snakemake.config["nrel_atb"][
@@ -1048,11 +1011,8 @@ if __name__ == "__main__":
 
         manual_input_usa_df = pre_process_manual_input_usa(
             input_file_manual_input_usa,
-            input_file_eur_inflation_rate,
             year_list,
-            eur_reference_year,
             year_val,
-            num_digits,
         )
 
         cost_df = pre_process_cost_input_file(
@@ -1144,13 +1104,32 @@ if __name__ == "__main__":
             by=["technology", "parameter"]
         ).reset_index(drop=True)
 
+        # Correct for inflation for technology-parameter pairs having units that contain USD
+        inflation_rate_series_usd = prepare_inflation_rate(
+            input_file_inflation_rate, "USD"
+        )
+        mask_usd = (
+            updated_cost_df["unit"].str.casefold().str.startswith("usd", na=False)
+        )
+        inflation_adjusted_updated_cost_df = updated_cost_df.copy()
+        inflation_adjusted_updated_cost_df.loc[mask_usd, "value"] = (
+            adjust_for_inflation(
+                inflation_rate_series_usd,
+                inflation_adjusted_updated_cost_df.loc[mask_usd],
+                inflation_adjusted_updated_cost_df.loc[mask_usd, "technology"].unique(),
+                eur_reference_year,
+                "value",
+                usa_costs_flag=True,
+            )["value"]
+        )
+
         # output the modified cost dataframe
         output_cost_path_list = [
             path for path in snakemake.output if str(year_val) in path
         ]
         if len(output_cost_path_list) == 1:
             output_cost_path = output_cost_path_list[0]
-            updated_cost_df.to_csv(output_cost_path, index=False)
+            inflation_adjusted_updated_cost_df.to_csv(output_cost_path, index=False)
             logger.info(
                 f"The cost assumptions file for the US has been compiled for year {year_val}"
             )

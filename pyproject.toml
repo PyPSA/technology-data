@@ -1,8 +1,24 @@
+[build-system]
+requires = ["setuptools>=64", "setuptools_scm>=8"]
+build-backend = "setuptools.build_meta"
+
 [project]
-name = "technology-data"
-version = "0.1.0"
-description = "Add your description here"
+name = "technologydata"
+dynamic = ["version"]
+description = "Package for providing common data assumptions for energy system modelling on techno-economics and macro-economics."
 readme = "README.md"
+authors = [
+    { name = "Contributors to technologydata", email = "johannes.hampp@openenergytransition.org" }
+]
+classifiers=[
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Science/Research",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+]
 requires-python = ">=3.12"
 dependencies = [
     "frictionless[pandas]>=5.18.0",
@@ -18,12 +34,22 @@ dependencies = [
     "requests>=2.32.3",
     "ruff>=0.11.0",
     "seaborn>=0.13.2",
+    "tqdm>=4.67.1",
     "ucumvert>=0.2.1",
 ]
 
 [project.urls]
 Homepage = "https://github.com/PyPSA/technology-data"
 Source = "https://github.com/PyPSA/technology-data"
+
+
+# Setuptools_scm settings
+
+[tool.setuptools_scm]
+version_scheme = "no-guess-dev"
+
+[tool.setuptools.packages.find]
+include = ["technologydata"]
 
 # Pytest settings
 

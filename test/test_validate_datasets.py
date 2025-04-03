@@ -1,4 +1,5 @@
 from pathlib import Path
+from pprint import pprint
 
 import frictionless
 import pytest
@@ -28,6 +29,9 @@ def test_validate_datasets(folder: Path) -> None:
 
         if schema_path.exists():
             report = frictionless.validate(str(csv_path), schema=str(schema_path))
+
+            if not report.valid:
+                pprint(report.to_dict())
 
             assert report.valid, (
                 f"Validation failed for {Path(csv_path.parents[0].name) / csv_path.name}"

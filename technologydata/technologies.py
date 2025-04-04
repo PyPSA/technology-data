@@ -137,7 +137,7 @@ class Technologies:
         if load:
             self.load()
 
-    def add_source(self, name: str, path: Path) -> None:
+    def add_source(self, name: str, path: Path, overwrite: bool = True) -> None:
         """
         Add another source to the collection from a local folder.
 
@@ -149,9 +149,13 @@ class Technologies:
             The name of the source to add.
         path: Path
             The path to the source folder.
+        overwrite: bool
+            Sources with the same name will be replaced if `True`, otherwise an error is raised.
         """
-        if name in self.sources:
-            logger.debug(f"Source {name} already exists. Replacing with new source.")
+        if name in self.sources and not overwrite:
+            raise ValueError(
+                f"Source {name} already exists. Use `overwrite=True` to replace it."
+            )
 
         if not check_source_validity(path, self.SCHEMA):
             raise ValueError(

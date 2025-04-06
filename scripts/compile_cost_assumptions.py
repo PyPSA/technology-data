@@ -103,7 +103,7 @@ dea_sheet_names = {
     "central solid biomass CHP CC": "09a Wood Chips, Large 50 degree",
     "central solid biomass CHP powerboost CC": "09a Wood Chips, Large 50 degree",
     "central air-sourced heat pump": "40 Comp. hp, airsource 3 MW",
-    "central geothermal heat source": "45.1.a Geothermal DH, 2000m, E",
+    "central geothermal heat source": "45.1.b Geothermal DH, 2000m, E",
     "central excess-heat-sourced heat pump": "40 Comp. hp, excess heat 10 MW",
     "central ground-sourced heat pump": "40 Absorption heat pump, DH",
     "central resistive heater": "41 Electric Boilers",

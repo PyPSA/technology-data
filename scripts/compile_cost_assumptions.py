@@ -930,9 +930,14 @@ def get_data_DEA(
         # we need to convert from costs per MW of the entire system (including heat pump)
         # to costs per MW of the geothermal heat source only
         # heat_source_costs [MEUR/MW_heat_source] = heat_source_costs [MEUR/MW_entire_system] * MW_entire_system / MW_heat_source
-        df.loc["Nominal investment (MEUR per MW)"] = (df.loc[
-            " - of which is equipment excluding heat pump"
-        ] + df.loc[" - of which is installation"]) * df.loc["Heat generation capacity for one unit (MW)"] / df.loc["Heat generation from geothermal heat (MJ/s)"]
+        df.loc["Nominal investment (MEUR per MW)"] = (
+            (
+                df.loc[" - of which is equipment excluding heat pump"]
+                + df.loc[" - of which is installation"]
+            )
+            * df.loc["Heat generation capacity for one unit (MW)"]
+            / df.loc["Heat generation from geothermal heat (MJ/s)"]
+        )
 
     df_final = pd.DataFrame(index=df.index, columns=years)
 

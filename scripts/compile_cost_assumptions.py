@@ -103,8 +103,7 @@ dea_sheet_names = {
     "central solid biomass CHP CC": "09a Wood Chips, Large 50 degree",
     "central solid biomass CHP powerboost CC": "09a Wood Chips, Large 50 degree",
     "central air-sourced heat pump": "40 Comp. hp, airsource 3 MW",
-    "central geothermal-sourced heat pump": "45.1.a Geothermal DH, 1200m, E",
-    "central geothermal heat source": "45.1.a Geothermal DH, 1200m, E",
+    "central geothermal heat source": "45.1.a Geothermal DH, 2000m, E",
     "central excess-heat-sourced heat pump": "40 Comp. hp, excess heat 10 MW",
     "central ground-sourced heat pump": "40 Absorption heat pump, DH",
     "central resistive heater": "41 Electric Boilers",
@@ -176,7 +175,6 @@ uncrtnty_lookup = {
     "central solid biomass CHP powerboost CC": "I:J",
     "solar": "",
     "central air-sourced heat pump": "J:K",
-    "central geothermal-sourced heat pump": "H:K",
     "central geothermal heat source": "H:K",
     "central excess-heat-sourced heat pump": "H:K",
     "central ground-sourced heat pump": "I:J",
@@ -928,15 +926,10 @@ def get_data_DEA(
     if "biochar pyrolysis" in tech_name:
         df = biochar_pyrolysis_harmonise_dea(df)
 
-    elif tech_name == "central geothermal-sourced heat pump":
-        df.loc["Nominal investment (MEUR per MW)"] = df.loc[
-            " - of which is heat pump including its installation"
-        ]
-
     elif tech_name == "central geothermal heat source":
         df.loc["Nominal investment (MEUR per MW)"] = df.loc[
             " - of which is equipment excluding heat pump"
-        ]
+        ] + df.loc[" - of which is installation"]
 
     df_final = pd.DataFrame(index=df.index, columns=years)
 
@@ -1616,7 +1609,6 @@ def clean_up_units(
         # the heat output (also MJ/s) unless otherwise noted"
         techs_mwth = [
             "central air-sourced heat pump",
-            "central geothermal-sourced heat pump",
             "central gas boiler",
             "central resistive heater",
             "decentral air-sourced heat pump",

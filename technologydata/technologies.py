@@ -174,13 +174,13 @@ class Technologies:
         logger.debug(
             f"Loading {len(self.sources)} sources: {', '.join(self.sources.keys())}"
         )
-        resources = [
-            ftl.Resource(
+        resources = []
+        for source in self.sources.values():
+            with ftl.Resource(
                 path=str(source / (self.SCHEMA + ".csv")),
                 schema=str(SPECIFICATIONS_PATH / (self.SCHEMA + ".schema.json")),
-            ).to_pandas()
-            for source in self.sources.values()
-        ]
+            ) as resource:
+                resources.append(resource.to_pandas())
 
         self.data = pd.concat(resources, ignore_index=True, verify_integrity=True)
 

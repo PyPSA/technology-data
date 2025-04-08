@@ -666,8 +666,6 @@ def get_data_DEA(
         usecols = "A:E"
     elif tech_name in ["Fischer-Tropsch", "Haber-Bosch", "air separation unit", "gas storage"]:
         usecols = "B:F"
-#    elif tech_name in ["gas storage"]:
-#        usecols = "B:F"
     else:
         usecols = "B:G"
 
@@ -2376,35 +2374,37 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
 
     # process equipment, injection (2200MW) withdrawal (6600MW)
     # assuming half of investment costs for injection, half for withdrawal
-    investment_charge = technology_dataframe.loc[
+    investment_gas_storage_charger = technology_dataframe.loc[
         ("gas storage", "Total investment cost")
     ].copy()
-    investment_charge[years] = investment_charge[years] / 2 / 2200 * 1e3
+    investment_gas_storage_charger[years] = investment_gas_storage_charger[years] / 2 / 2200 / 1e3
+    investment_gas_storage_charger.loc[("gas storage", "Total investment cost"), "unit"] = "EUR/kW"
 
-    investment_charge.rename(
+    investment_gas_storage_charger.rename(
         index={"Total investment cost": "investment"}, level=1, inplace=True
     )
-    investment_charge.rename(
+    investment_gas_storage_charger.rename(
         index={"gas storage": "gas storage charger"},
         level=0,
         inplace=True,
     )
-    output_data_dataframe = pd.concat([output_data_dataframe, investment_charge], sort=True)
+    output_data_dataframe = pd.concat([output_data_dataframe, investment_gas_storage_charger], sort=True)
 
-    investment_discharge = technology_dataframe.loc[
+    investment_gas_storage_discharger = technology_dataframe.loc[
         ("gas storage", "Total investment cost")
     ].copy()
-    investment_discharge[years] = investment_discharge[years] / 2 / 6600 * 1e3
+    investment_gas_storage_discharger[years] = investment_gas_storage_discharger[years] / 2 / 6600 / 1e3
+    investment_gas_storage_discharger.loc[("gas storage", "Total investment cost"), "unit"] = "EUR/kW"
 
-    investment_discharge.rename(
+    investment_gas_storage_discharger.rename(
         index={"Total investment cost": "investment"}, level=1, inplace=True
     )
-    investment_discharge.rename(
+    investment_gas_storage_discharger.rename(
         index={"gas storage": "gas storage discharger"},
         level=0,
         inplace=True,
     )
-    output_data_dataframe = pd.concat([output_data_dataframe, investment_discharge], sort=True)
+    output_data_dataframe = pd.concat([output_data_dataframe, investment_gas_storage_discharger], sort=True)
 
     return output_data_dataframe
 

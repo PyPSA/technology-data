@@ -1,5 +1,7 @@
 """Base class for collection of technologies and a single technology."""
 
+from __future__ import annotations
+
 import logging
 from pathlib import Path
 
@@ -95,6 +97,7 @@ class Technologies:
         packaged_sources: list[str] | str = "all",
         additional_sources: dict[str, Path] = None,
         load: bool = True,
+        sort_data: bool = True,
     ) -> None:
         """
         Initialize the Technologies class.
@@ -110,6 +113,17 @@ class Technologies:
         """
         self.data = None
         self.sources = {}
+        self.default_sort_by = [
+            "source",
+            "technology",
+            "detailed_technology",
+            "case",
+            "region",
+            "parameter",
+            "unit",
+            "year",
+            "value",
+        ]
 
         packaged_sources = (
             [packaged_sources]
@@ -136,6 +150,9 @@ class Technologies:
         # Load the data automatically if requested
         if load:
             self.load()
+            # When requested, also sort the data
+            if sort_data:
+                self.sort_data()
 
     def add_source(self, name: str, path: Path, overwrite: bool = True) -> None:
         """
@@ -165,7 +182,15 @@ class Technologies:
         self.sources[name] = path
         logger.debug(f"Added source {name} to the collection.")
 
-    def load(self) -> None:
+    def sort_data(self) -> Technologies:
+        """Sort the data by the default sort order as defined in `self.default_sort_by`."""
+        self.data = self.data.sort_values(
+            self.default_sort_by,
+            ignore_index=True,
+        )
+        return self
+
+    def load(self) -> Technologies:
         """Load the declared sources."""
         if not self.sources:
             raise ValueError("No sources to load.")

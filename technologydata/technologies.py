@@ -110,6 +110,8 @@ class Technologies:
             A dictionary of additional sources to include. The keys are the source names and the values are the paths to the sources.
         load: bool
             If `True`, the sources are loaded immediately. Otherwise, they can be loaded later using the `load` method.
+        sort_data: bool
+            Automatically sort the data after loading following the sort order defined in `self.default_sort_by`.
         """
         self.data = None
         self.sources = {}

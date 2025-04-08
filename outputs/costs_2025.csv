@@ -899,6 +899,7 @@ gas boiler steam,investment,50.35,EUR/kW,"Danish Energy Agency, inputs/technolog
 gas boiler steam,lifetime,25.0,years,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx",311.1c Steam boiler Gas:  Technical lifetime,2019.0
 gas storage,FOM,0.5368,%/year,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",150 Underground Storage of Gas:  Fixed O&M,2020.0
 gas storage,investment,0.2366,EUR/kWh,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",150 Underground Storage of Gas:  Specific investment,2020.0
+gas storage,lifetime,100.0,years,TODO no source,"150 Underground Storage of Gas:  estimation: most underground storage are already built, they do have a long lifetime",2020.0
 gas storage charger,investment,15247934.7671,EUR,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",,2020.0
 gas storage discharger,investment,5082644.9224,EUR,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",,2020.0
 geothermal,CO2 intensity,0.12,tCO2/MWh_th,"Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551",Likely to be improved; Average of 85 percent of global egs power plant capacity; Result of fluid circulation through rock formations,2020.0

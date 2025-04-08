@@ -2003,8 +2003,11 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 logger.info(
                     f"check lifetime: {tech_name} {str(df[df.index.str.contains('Technical life')].unit)}"
                 )
+        else:
+            lifetime["parameter"] = "lifetime"
+            clean_df[tech_name] = pd.concat([clean_df[tech_name], lifetime])
 
-        elif tech_name == "gas storage":
+        if tech_name == "gas storage":
             lifetime_value = 100
             gas_storage_lifetime_index = \
                 "estimation: most underground storage are already built, they do have a long lifetime"
@@ -2019,10 +2022,6 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
 
             logger.info(f"Lifetime for {tech_name} manually set to {lifetime_value}")
             clean_df[tech_name] = pd.concat([clean_df[tech_name], gas_storage_lifetime_df])
-
-        else:
-            lifetime["parameter"] = "lifetime"
-            clean_df[tech_name] = pd.concat([clean_df[tech_name], lifetime])
 
         # ----- efficiencies ------
         efficiency = df[
@@ -2058,6 +2057,8 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
         ].copy()
 
         if tech_name == "Fischer-Tropsch":
+            efficiency[years] *= 100
+        if tech_name == "central water pit storage":
             efficiency[years] *= 100
 
         # take annual average instead of name plate efficiency, unless central air-sourced heat pump
@@ -2144,10 +2145,8 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             efficiency["parameter"] = "efficiency"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency])
 
+        # add storage temperature for TES
         if tech_name == "central water pit storage":
-            efficiency[years] *= 100  # in %
-
-            # add storage temperature for TES
             top_storage_temp_ptes = df.loc[
                 df.index.str.contains("Max. storage temperature, hot")
             ].copy()
@@ -3958,7 +3957,9 @@ if __name__ == "__main__":
 
     # adjust for inflation
     for x in data.index.get_level_values("technology"):
-        if x in cost_year_2020 or set_cost_year_2020:
+        if x in cost_year_2020 or x in set_cost_year_2020:
+            if x == "CCGT":
+                print('wait')
             data.at[x, "currency_year"] = 2020
         elif x in cost_year_2019:
             data.at[x, "currency_year"] = 2019

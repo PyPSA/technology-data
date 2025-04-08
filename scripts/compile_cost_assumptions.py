@@ -2372,6 +2372,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
         [output_data_dataframe, power_ratio_pit], sort=True
     )
 
+    # add gas storage charger/ discharger
     # process equipment, injection (2200MW) withdrawal (6600MW)
     # assuming half of investment costs for injection, half for withdrawal
     investment_gas_storage_charger = technology_dataframe.loc[

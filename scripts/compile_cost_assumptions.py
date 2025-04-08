@@ -664,7 +664,12 @@ def get_data_DEA(
         "direct firing solid fuels CC",
     ]:
         usecols = "A:E"
-    elif tech_name in ["Fischer-Tropsch", "Haber-Bosch", "air separation unit", "gas storage"]:
+    elif tech_name in [
+        "Fischer-Tropsch",
+        "Haber-Bosch",
+        "air separation unit",
+        "gas storage",
+    ]:
         usecols = "B:F"
     else:
         usecols = "B:G"
@@ -2008,8 +2013,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
 
         if tech_name == "gas storage":
             lifetime_value = 100
-            gas_storage_lifetime_index = \
-                "estimation: most underground storage are already built, they do have a long lifetime"
+            gas_storage_lifetime_index = "estimation: most underground storage are already built, they do have a long lifetime"
             gas_storage_lifetime_df = pd.DataFrame(index=[gas_storage_lifetime_index])
 
             for year in years:
@@ -2020,7 +2024,9 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             gas_storage_lifetime_df["unit"] = "years"
 
             logger.info(f"Lifetime for {tech_name} manually set to {lifetime_value}")
-            clean_df[tech_name] = pd.concat([clean_df[tech_name], gas_storage_lifetime_df])
+            clean_df[tech_name] = pd.concat(
+                [clean_df[tech_name], gas_storage_lifetime_df]
+            )
 
         # ----- efficiencies ------
         efficiency = df[
@@ -2149,20 +2155,28 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             ].copy()
             top_storage_temp_ptes["parameter"] = "Top storage temperature"
             top_storage_temp_ptes.rename(
-                index={"Max. storage temperature, hot": "Typical max. storage temperature"},
-                inplace=True
+                index={
+                    "Max. storage temperature, hot": "Typical max. storage temperature"
+                },
+                inplace=True,
             )
-            clean_df[tech_name] = pd.concat([clean_df[tech_name], top_storage_temp_ptes])
+            clean_df[tech_name] = pd.concat(
+                [clean_df[tech_name], top_storage_temp_ptes]
+            )
 
             bottom_storage_temp_ptes = df.loc[
                 df.index.str.contains("Storage temperature, discharged")
             ].copy()
             bottom_storage_temp_ptes["parameter"] = "Bottom storage temperature"
             bottom_storage_temp_ptes.rename(
-                index={"Storage temperature, discharged": "Typical bottom storage temperature"},
-                inplace=True
+                index={
+                    "Storage temperature, discharged": "Typical bottom storage temperature"
+                },
+                inplace=True,
             )
-            clean_df[tech_name] = pd.concat([clean_df[tech_name], bottom_storage_temp_ptes])
+            clean_df[tech_name] = pd.concat(
+                [clean_df[tech_name], bottom_storage_temp_ptes]
+            )
 
         if tech_name == "central water tank storage":
             temp_difference_central_ttes = df.loc[
@@ -2170,10 +2184,14 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             ].copy()
             temp_difference_central_ttes["parameter"] = "Temperature difference"
             temp_difference_central_ttes.rename(
-                index={"Typical temperature difference in storage": "Typical temperature difference"},
-                inplace=True
+                index={
+                    "Typical temperature difference in storage": "Typical temperature difference"
+                },
+                inplace=True,
             )
-            clean_df[tech_name] = pd.concat([clean_df[tech_name], temp_difference_central_ttes])
+            clean_df[tech_name] = pd.concat(
+                [clean_df[tech_name], temp_difference_central_ttes]
+            )
 
         if tech_name == "decentral water tank storage":
             temp_difference_decentral_ttes = df.loc[
@@ -2181,10 +2199,14 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             ].copy()
             temp_difference_decentral_ttes["parameter"] = "Temperature difference"
             temp_difference_decentral_ttes.rename(
-                index={"Typical temperature difference in storage": "Typical temperature difference"},
-                inplace=True
+                index={
+                    "Typical temperature difference in storage": "Typical temperature difference"
+                },
+                inplace=True,
             )
-            clean_df[tech_name] = pd.concat([clean_df[tech_name], temp_difference_decentral_ttes])
+            clean_df[tech_name] = pd.concat(
+                [clean_df[tech_name], temp_difference_decentral_ttes]
+            )
 
         # add c_v and c_b coefficient
         if "Cb coefficient" in df.index:
@@ -2378,8 +2400,12 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
     investment_gas_storage_charger = technology_dataframe.loc[
         ("gas storage", "Total investment cost")
     ].copy()
-    investment_gas_storage_charger[years] = investment_gas_storage_charger[years] / 2 / 2200 / 1e3
-    investment_gas_storage_charger.loc[("gas storage", "Total investment cost"), "unit"] = "EUR/kW"
+    investment_gas_storage_charger[years] = (
+        investment_gas_storage_charger[years] / 2 / 2200 / 1e3
+    )
+    investment_gas_storage_charger.loc[
+        ("gas storage", "Total investment cost"), "unit"
+    ] = "EUR/kW"
 
     investment_gas_storage_charger.rename(
         index={"Total investment cost": "investment"}, level=1, inplace=True
@@ -2389,13 +2415,19 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
         level=0,
         inplace=True,
     )
-    output_data_dataframe = pd.concat([output_data_dataframe, investment_gas_storage_charger], sort=True)
+    output_data_dataframe = pd.concat(
+        [output_data_dataframe, investment_gas_storage_charger], sort=True
+    )
 
     investment_gas_storage_discharger = technology_dataframe.loc[
         ("gas storage", "Total investment cost")
     ].copy()
-    investment_gas_storage_discharger[years] = investment_gas_storage_discharger[years] / 2 / 6600 / 1e3
-    investment_gas_storage_discharger.loc[("gas storage", "Total investment cost"), "unit"] = "EUR/kW"
+    investment_gas_storage_discharger[years] = (
+        investment_gas_storage_discharger[years] / 2 / 6600 / 1e3
+    )
+    investment_gas_storage_discharger.loc[
+        ("gas storage", "Total investment cost"), "unit"
+    ] = "EUR/kW"
 
     investment_gas_storage_discharger.rename(
         index={"Total investment cost": "investment"}, level=1, inplace=True
@@ -2405,7 +2437,9 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
         level=0,
         inplace=True,
     )
-    output_data_dataframe = pd.concat([output_data_dataframe, investment_gas_storage_discharger], sort=True)
+    output_data_dataframe = pd.concat(
+        [output_data_dataframe, investment_gas_storage_discharger], sort=True
+    )
 
     return output_data_dataframe
 

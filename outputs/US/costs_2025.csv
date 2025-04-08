@@ -8,10 +8,10 @@ Alkaline electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of s
 Alkaline electrolyzer,efficiency,0.6699999999999999,p.u.,ICCT IRA e-fuels assumptions ,,,,
 Alkaline electrolyzer,investment,1167.6456018682331,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 Alkaline electrolyzer,investment,1167.6456018682331,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
-Alkaline electrolyzer,investment,1141.4358240485196,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-Alkaline electrolyzer,investment,1141.4358240485196,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
-Alkaline electrolyzer,investment,564.3838823844958,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
-Alkaline electrolyzer,investment,564.3838823844958,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
+Alkaline electrolyzer,investment,1253.7010390429589,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
+Alkaline electrolyzer,investment,1253.7010390429589,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
+Alkaline electrolyzer,investment,1141.4358240485196,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
+Alkaline electrolyzer,investment,1141.4358240485196,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 Alkaline electrolyzer,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,,,
 Ammonia cracker,FOM,4.3,%/year,"Ishimoto et al. (2020): 10.1016/j.ijhydene.2020.09.017 , table 7.","Estimated based on Labour cost rate, Maintenance cost rate, Insurance rate, Admin. cost rate and Chemical & other consumables cost rate.",2015.0,,
 Ammonia cracker,ammonia-input,1.46,MWh_NH3/MWh_H2,"ENGIE et al (2020): Ammonia to Green Hydrogen Feasibility Study (https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/880826/HS420_-_Ecuity_-_Ammonia_to_Green_Hydrogen.pdf), Fig. 10.",Assuming a integrated 200t/d cracking and purification facility. Electricity demand (316 MWh per 2186 MWh_LHV H2 output) is assumed to also be ammonia LHV input which seems a fair assumption as the facility has options for a higher degree of integration according to the report).,,,
@@ -64,13 +64,13 @@ BioSNG,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015
 BioSNG,efficiency,0.615,per unit,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Bio SNG Output",2020.0,,
 BioSNG,investment,2179.97,EUR/kW_th,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx","84 Gasif. CFB, Bio-SNG:  Specific investment",2020.0,,
 BioSNG,lifetime,25.0,years,TODO,"84 Gasif. CFB, Bio-SNG:  Technical lifetime",2020.0,,
-Biomass gasification,efficiency,0.37916666666666665,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Biomass gasification,investment,1978.8508861995015,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
-Biomass gasification,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Biomass gasification CC,FOM,0.02,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
-Biomass gasification CC,efficiency,0.328,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Biomass gasification CC,investment,4065.5510481055235,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
-Biomass gasification CC,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
+Biomass gasification,efficiency,0.37916666666666665,p.u.,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
+Biomass gasification,investment,1978.8508861995015,USD/kW,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,2010.0,,
+Biomass gasification,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
+Biomass gasification CC,FOM,0.02,%/year,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,2010.0,,
+Biomass gasification CC,efficiency,0.328,p.u.,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
+Biomass gasification CC,investment,4065.5510481055235,USD/kW,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,2010.0,,
+Biomass gasification CC,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
 BtL,C in fuel,0.2571,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,,,
 BtL,C stored,0.7429,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,,,
 BtL,CO2 stored,0.2724,tCO2/MWh_th,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,,,
@@ -223,14 +223,14 @@ Coal - IGCC,investment,6120.34335595302,USD/kW,NREL/ATB-https://data.openei.org/
 Coal - IGCC,investment,6054.608653406807,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 Coal - IGCC,investment,6087.422035301797,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 Coal - IGCC,investment,6120.34335595302,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-Coal gasification,FOM,0.06,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
-Coal gasification,efficiency,0.5978333333333334,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Coal gasification,investment,595.3040200212821,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
-Coal gasification,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Coal gasification CC,FOM,0.07,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
-Coal gasification CC,efficiency,0.532,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Coal gasification CC,investment,875.7882332041481,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
-Coal gasification CC,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
+Coal gasification,FOM,0.06,%/year,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,2010.0,,
+Coal gasification,efficiency,0.5978333333333334,p.u.,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
+Coal gasification,investment,595.3040200212821,USD/kW,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,2010.0,,
+Coal gasification,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
+Coal gasification CC,FOM,0.07,%/year,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,2010.0,,
+Coal gasification CC,efficiency,0.532,p.u.,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
+Coal gasification CC,investment,875.7882332041481,USD/kW,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,2010.0,,
+Coal gasification CC,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
 Coal integrated retrofit 90%-CCS,FOM,7.51,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 Coal integrated retrofit 90%-CCS,FOM,7.37,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 Coal integrated retrofit 90%-CCS,FOM,7.23,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
@@ -290,14 +290,14 @@ Coal-95%-CCS,discount rate,0.0535847804878049,per unit,"NREL, NREL ATB 2024",Mea
 Coal-95%-CCS,discount rate,0.0535847804878049,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 Coal-95%-CCS,discount rate,0.0535847804878049,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 Coal-95%-CCS,discount rate,0.0535847804878049,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-Coal-95%-CCS,efficiency,0.403,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
+Coal-95%-CCS,efficiency,0.403,p.u.,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
 Coal-95%-CCS,investment,5595.86893941435,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 Coal-95%-CCS,investment,5639.584135688925,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 Coal-95%-CCS,investment,5683.299331963501,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
 Coal-95%-CCS,investment,5595.86893941435,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 Coal-95%-CCS,investment,5639.584135688925,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 Coal-95%-CCS,investment,5683.299331963501,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-Coal-95%-CCS,lifetime,40.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
+Coal-95%-CCS,lifetime,40.0,years,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
 Coal-99%-CCS,FOM,2.06,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 Coal-99%-CCS,FOM,2.05,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 Coal-99%-CCS,FOM,2.05,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
@@ -317,22 +317,22 @@ Coal-99%-CCS,discount rate,0.0535847804878049,per unit,"NREL, NREL ATB 2024",Mea
 Coal-99%-CCS,discount rate,0.0535847804878049,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 Coal-99%-CCS,discount rate,0.0535847804878049,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 Coal-99%-CCS,discount rate,0.0535847804878049,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-Coal-99%-CCS,efficiency,0.403,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
+Coal-99%-CCS,efficiency,0.403,p.u.,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
 Coal-99%-CCS,investment,5713.845999977587,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 Coal-99%-CCS,investment,5763.066072820071,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 Coal-99%-CCS,investment,5812.286145662556,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
 Coal-99%-CCS,investment,5713.845999977587,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 Coal-99%-CCS,investment,5763.066072820071,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 Coal-99%-CCS,investment,5812.286145662556,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-Coal-99%-CCS,lifetime,40.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
+Coal-99%-CCS,lifetime,40.0,years,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
 Coal-IGCC,discount rate,0.0535847804878049,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 Coal-IGCC,discount rate,0.0535847804878049,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 Coal-IGCC,discount rate,0.0535847804878049,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
 Coal-IGCC,discount rate,0.0535847804878049,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 Coal-IGCC,discount rate,0.0535847804878049,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 Coal-IGCC,discount rate,0.0535847804878049,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-Coal-IGCC,efficiency,0.5,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Coal-IGCC,lifetime,40.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
+Coal-IGCC,efficiency,0.5,p.u.,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
+Coal-IGCC,lifetime,40.0,years,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
 Coal-IGCC-90%-CCS,FOM,2.37,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 Coal-IGCC-90%-CCS,FOM,2.37,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 Coal-IGCC-90%-CCS,FOM,2.37,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
@@ -352,14 +352,14 @@ Coal-IGCC-90%-CCS,discount rate,0.0535847804878049,per unit,"NREL, NREL ATB 2024
 Coal-IGCC-90%-CCS,discount rate,0.0535847804878049,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 Coal-IGCC-90%-CCS,discount rate,0.0535847804878049,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 Coal-IGCC-90%-CCS,discount rate,0.0535847804878049,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-Coal-IGCC-90%-CCS,efficiency,0.403,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
+Coal-IGCC-90%-CCS,efficiency,0.403,p.u.,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
 Coal-IGCC-90%-CCS,investment,8609.41107469798,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 Coal-IGCC-90%-CCS,investment,8655.824739878393,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 Coal-IGCC-90%-CCS,investment,8702.238405058806,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
 Coal-IGCC-90%-CCS,investment,8609.41107469798,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 Coal-IGCC-90%-CCS,investment,8655.824739878393,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 Coal-IGCC-90%-CCS,investment,8702.238405058806,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-Coal-IGCC-90%-CCS,lifetime,40.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
+Coal-IGCC-90%-CCS,lifetime,40.0,years,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
 Commercial Battery Storage 1Hr,FOM,2.41,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 Commercial Battery Storage 1Hr,FOM,2.41,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 Commercial Battery Storage 1Hr,FOM,2.41,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
@@ -1049,10 +1049,10 @@ Haber-Bosch,hydrogen-input,1.1484,MWh_H2/MWh_NH3,"DECHEMA 2017: DECHEMA: Low car
 Haber-Bosch,investment,1622.5424,EUR/kW_NH3,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Specific investment,2015.0,,
 Haber-Bosch,lifetime,30.0,years,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Technical lifetime,2015.0,,
 Haber-Bosch,nitrogen-input,0.1597,t_N2/MWh_NH3,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), pg. 57.",".33 MWh electricity are required for ASU per t_NH3, considering 0.4 MWh are required per t_N2 and LHV of NH3 of 5.1666 Mwh.",,,
-Heavy oil partial oxidation,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
-Heavy oil partial oxidation,efficiency,0.734,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Heavy oil partial oxidation,investment,662.0382094364353,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
-Heavy oil partial oxidation,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
+Heavy oil partial oxidation,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,2010.0,,
+Heavy oil partial oxidation,efficiency,0.734,p.u.,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
+Heavy oil partial oxidation,investment,662.0382094364353,USD/kW,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,2010.0,,
+Heavy oil partial oxidation,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
 HighT-Molten-Salt-charger,FOM,1.075,%/year,"Viswanathan_2022, NULL","{'carrier': ['elec', 'salthight'], 'technology_type': ['charger'], 'type': ['thermal'], 'note': ['Guesstimate, 50% on charger']}",2020.0,,
 HighT-Molten-Salt-charger,efficiency,0.99,per unit,"Viswanathan_2022, p.107 (p.129)","{'carrier': ['elec', 'salthight'], 'technology_type': ['charger'], 'type': ['thermal'], 'note': ['RTE assume 99% for charge and other for discharge']}",2020.0,,
 HighT-Molten-Salt-charger,investment,166045.8871,EUR/MW,"Georgiou_2018, Guesstimate that charge is 20% of capital costs of power components for sensible thermal storage","{'carrier': ['elec', 'salthight'], 'technology_type': ['charger'], 'type': ['thermal'], 'note': ['Power Equipment Charge']}",2020.0,,
@@ -1950,7 +1950,7 @@ NG 2-on-1 Combined Cycle (F-Frame),investment,1285.691858022311,USD/kW,NREL/ATB-
 NG 2-on-1 Combined Cycle (F-Frame),investment,1271.1857178704618,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 NG 2-on-1 Combined Cycle (F-Frame),investment,1278.3901096237291,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 NG 2-on-1 Combined Cycle (F-Frame),investment,1285.691858022311,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-NG 2-on-1 Combined Cycle (F-Frame),lifetime,30.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
+NG 2-on-1 Combined Cycle (F-Frame),lifetime,30.0,years,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,FOM,2.28,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,FOM,2.29,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,FOM,2.3,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
@@ -1977,7 +1977,7 @@ NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,investment,2609.352807717248,USD/kW,N
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,investment,2461.8574900658928,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,investment,2535.653827214228,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,investment,2609.352807717248,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,lifetime,30.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
+NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,lifetime,30.0,years,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,FOM,2.28,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,FOM,2.29,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,FOM,2.3,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
@@ -2004,7 +2004,7 @@ NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,investment,2647.7113259711323,USD/kW,
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,investment,2495.6402459899987,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,investment,2571.6757859805657,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,investment,2647.7113259711323,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,lifetime,30.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
+NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,lifetime,30.0,years,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
 NG 2-on-1 Combined Cycle (H-Frame),FOM,2.21,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 NG 2-on-1 Combined Cycle (H-Frame),FOM,2.22,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 NG 2-on-1 Combined Cycle (H-Frame),FOM,2.22,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
@@ -2145,14 +2145,14 @@ NH3 (l) transport ship,FOM,4.0,%/year,"Cihlar et al 2020 based on IEA 2019, Tabl
 NH3 (l) transport ship,capacity,53000.0,t_NH3,"Cihlar et al 2020 based on IEA 2019, Table 3-B",,2019.0,,
 NH3 (l) transport ship,investment,81164200.0,EUR,"Cihlar et al 2020 based on IEA 2019, Table 3-B",,2019.0,,
 NH3 (l) transport ship,lifetime,20.0,years,"Guess estimated based on H2 (l) tanker, but more mature technology",,2019.0,,
-Natural gas steam reforming,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
-Natural gas steam reforming,efficiency,0.7561666666666667,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Natural gas steam reforming,investment,264.68269165669676,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
-Natural gas steam reforming,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Natural gas steam reforming CC,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
-Natural gas steam reforming CC,efficiency,0.637,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Natural gas steam reforming CC,investment,436.6777280424164,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
-Natural gas steam reforming CC,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
+Natural gas steam reforming,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,2010.0,,
+Natural gas steam reforming,efficiency,0.7561666666666667,p.u.,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
+Natural gas steam reforming,investment,264.6826916566967,USD/kW,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,2010.0,,
+Natural gas steam reforming,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
+Natural gas steam reforming CC,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,2010.0,,
+Natural gas steam reforming CC,efficiency,0.637,p.u.,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
+Natural gas steam reforming CC,investment,436.6777280424164,USD/kW,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,2010.0,,
+Natural gas steam reforming CC,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
 Ni-Zn-bicharger,FOM,2.095,%/year,"Viswanathan_2022, p.51-52 in  section 4.4.2","{'carrier': ['elec', 'nizn', 'elec'], 'technology_type': ['bicharger'], 'type': ['electrochemical'], 'note': ['Guesstimate 30% assumed of power components every 10 years ']}",2020.0,,
 Ni-Zn-bicharger,efficiency,0.9,per unit,"Viswanathan_2022, p.59 (p.81)","{'carrier': ['elec', 'nizn', 'elec'], 'technology_type': ['bicharger'], 'type': ['electrochemical'], 'note': ['((0.75-0.87)/2)^0.5 mean value of range efficiency is not RTE but single way AC-store conversion']}",2020.0,,
 Ni-Zn-bicharger,investment,88568.8382,EUR/MW,"Viswanathan_2022, p.59 (p.81) same as Li-LFP","{'carrier': ['elec', 'nizn', 'elec'], 'technology_type': ['bicharger'], 'type': ['electrochemical'], 'note': ['Power Equipment']}",2020.0,,
@@ -2282,10 +2282,10 @@ PEM electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenar
 PEM electrolyzer,efficiency,0.655,p.u.,ICCT IRA e-fuels assumptions ,,,,
 PEM electrolyzer,investment,1904.1403586021804,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 PEM electrolyzer,investment,1904.1403586021804,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
-PEM electrolyzer,investment,1861.3310548299817,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-PEM electrolyzer,investment,1861.3310548299817,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
-PEM electrolyzer,investment,380.9154376465018,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
-PEM electrolyzer,investment,380.9154376465018,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
+PEM electrolyzer,investment,1904.1403586021804,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
+PEM electrolyzer,investment,1904.1403586021804,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
+PEM electrolyzer,investment,1861.3310548299817,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
+PEM electrolyzer,investment,1861.3310548299817,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 PEM electrolyzer,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,,,
 PHS,FOM,0.64,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 PHS,FOM,0.62,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
@@ -3237,10 +3237,10 @@ SOEC,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and finan
 SOEC,efficiency,0.83,p.u.,ICCT IRA e-fuels assumptions ,,,,
 SOEC,investment,2104.2083292926595,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 SOEC,investment,2104.2083292926595,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
-SOEC,investment,2057.0307292171756,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-SOEC,investment,2057.0307292171756,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
-SOEC,investment,669.2229936633495,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
-SOEC,investment,669.2229936633495,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
+SOEC,investment,2259.2828480592975,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
+SOEC,investment,2259.2828480592975,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
+SOEC,investment,2057.0307292171756,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
+SOEC,investment,2057.0307292171756,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 SOEC,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,,,
 Sand-charger,FOM,1.075,%/year,"Viswanathan_2022, NULL","{'carrier': ['elec', 'sand'], 'technology_type': ['charger'], 'type': ['thermal'], 'note': ['Guesstimate, 50% on charger']}",2020.0,,
 Sand-charger,efficiency,0.99,per unit,"Viswanathan_2022, p.107 (p.129)","{'carrier': ['elec', 'sand'], 'technology_type': ['charger'], 'type': ['thermal'], 'note': ['RTE assume 99% for charge and other for discharge']}",2020.0,,
@@ -3253,10 +3253,10 @@ Sand-discharger,lifetime,35.0,years,"Viswanathan_2022, p.107 (p.129)","{'carrier
 Sand-store,FOM,0.3308,%/year,"Viswanathan_2022, p 104 (p.126)","{'carrier': ['sand'], 'technology_type': ['store'], 'type': ['thermal'], 'note': ['not provided calculated as for hydrogen']}",2020.0,,
 Sand-store,investment,7357.7979,EUR/MWh,"Viswanathan_2022, p.100 (p.122)","{'carrier': ['sand'], 'technology_type': ['store'], 'type': ['thermal'], 'note': ['SB and BOS 0.85 of 2021 value']}",2020.0,,
 Sand-store,lifetime,35.0,years,"Viswanathan_2022, p.107 (p.129)","{'carrier': ['sand'], 'technology_type': ['store'], 'type': ['thermal'], 'note': ['NULL']}",2020.0,,
-Solid biomass steam reforming,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
-Solid biomass steam reforming,efficiency,0.712,p.u.,"JRC, 01_JRC-EU-TIMES Full model ",,,,
-Solid biomass steam reforming,investment,796.4750872147151,USD/kW,"JRC, 01_JRC-EU-TIMES Full model ",,2010.0,,
-Solid biomass steam reforming,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model ",,,,
+Solid biomass steam reforming,FOM,0.05,%/year,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,2010.0,,
+Solid biomass steam reforming,efficiency,0.712,p.u.,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
+Solid biomass steam reforming,investment,796.4750872147151,USD/kW,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,2010.0,,
+Solid biomass steam reforming,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
 Steam methane reforming,FOM,3.0,%/year,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",Large scale SMR facility (150-300 MW).,2015.0,,
 Steam methane reforming,investment,497454.611,EUR/MW_H2,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",Large scale SMR facility (150-300 MW). Currency conversion 1.17 USD = 1 EUR.,2015.0,,
 Steam methane reforming,lifetime,30.0,years,"International Energy Agency (2015): Technology Roadmap Hydrogen and Fuel Cells , table 15.",Large scale SMR facility (150-300 MW).,2015.0,,

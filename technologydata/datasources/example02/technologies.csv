@@ -1,3 +1,3 @@
-source,technology,detailed_technology,case,region,parameter,year,value,unit,comment
-example02,Wind,,example-scenario,DEU,investment,2022,500,EUR_2022/kW_el,NaN
-example02,Wind,,example-project,DEU,investment,2022Q2,350,EUR_2022/kW_el,No
+source,technology,detailed_technology,case,region,parameter,year,value,unit,scale,scale_unit,comment
+example02,Onshore wind,Horizontal axis 3-bladed,example-scenario,DEU,investment,2022,500,EUR_2022/kW_el,"1","MW",NaN
+example02,Onshore wind,Horizontal axis 3-bladed,example-project,DEU,investment,2022,350,EUR_2022/kW_el,"1","MW",No

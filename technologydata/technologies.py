@@ -267,3 +267,90 @@ class Technologies:
         raise AttributeError(
             f"'{self.__class__.__name__}' object has no attribute '{name}'"
         )
+    def adjust_scale(
+        self,
+        new_scale: float,
+        unit: str,
+        scaling_exponent: float,
+        parameters: list[str] | None = None,
+    ) -> None:
+        """
+        Adjust the scale of the data to account for economies of scale, by applying a calculated scaling factor.
+
+        The scaling factor is calculated based on the provided scale and unit, and the scaling exponent.
+            scaling_factor = (new_scale / original scale of data) ** (scaling_exponent - 1)
+
+        where it is assumed that all values are specific values and are subject to the scaling factor accordingly.
+
+        Parameters
+        ----------
+        new_scale: float
+            The scale value to adjust to, used to calculate the scaling factor.
+        unit: str
+            The unit associated with the scale value, needed to correctly calculate the scaling factor.
+        scaling_exponent: float
+            The scaling exponent used to calculate the scaling factor, typical scaling exponents are 0.5 or 0.7.
+        parameters: list[str]
+            Parameters which are affected by the scaling, by default will affect rows of the indicators ['investment', 'capex', 'opex'].
+
+        Example
+        -------
+        >>> from technologydata import Technologies
+        >>> tech = Technologies()
+        >>> tech.adjust_scale(new_scale=1000, unit='MW', scaling_exponent=0.7)
+        >>> tech.data.head()
+
+        """
+        # Default parameters
+        parameters = (
+            parameters
+            if parameters
+            else [
+                "investment",
+                "capex",
+                "opex",
+            ]
+        )
+
+        changed_data = None
+        unchanged_data = None
+
+        changed_data = self.data.query(f"parameter in {parameters}")
+        unchanged_data = self.data.loc[~self.data.index.isin(changed_data.index)]
+
+        if changed_data["scale"].isna().any():
+            logger.warning(
+                "Some data entries have no associated `scale` and will yield NaN values after scaling. "
+                "Set their `scale` or remove them from the collection before using this function."
+            )
+
+        # TODO create a copy with converted units that align with the requested scale
+        # and use this data for calculating the scaling factors, but don't use the changed values for returning, rather the original units
+        if any(changed_data["scale_unit"] != unit):
+            raise NotImplementedError(
+                f"Unit conversion for different units to {unit} is not implemented yet."
+            )
+
+        # Calculate the scaling factor, where we assume that all entries are specific values
+        changed_data["scaling_factor"] = (new_scale / changed_data["scale"]) ** (
+            scaling_exponent - 1
+        )
+
+        # Apply the scaling factor
+        changed_data["value"] = changed_data["value"] * changed_data["scaling_factor"]
+
+        # Remove obsolete scaling_factor column
+        changed_data = changed_data.drop(columns=["scaling_factor"])
+
+        # Add information about new scale + unit
+        changed_data["scale"] = new_scale
+        changed_data["scale_unit"] = unit
+
+        # Recombine all data and restore the default order
+        self.data = pd.concat(
+            [unchanged_data, changed_data],
+            ignore_index=True,
+        )
+        self.sort_data()
+
+        return self

@@ -262,11 +262,11 @@ cost_year_2020 = [
     "gas storage",
 ]
 
-set_cost_year_2020 = [
-    "central water pit storage charger",
-    "central water pit storage discharger",
-    "central water tank storage charger",
-    "central water tank storage discharger",
+manual_cost_year_assignments_2020 = [
+    "central water pit charger",
+    "central water pit discharger",
+    "central water tank charger",
+    "central water tank discharger",
     "decentral water tank charger",
     "decentral water tank discharger",
     "battery storage",
@@ -1890,6 +1890,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 | (df.unit == "EUR/MW_FT/year")
                 | (df.unit == "EUR/MW_NH3")
                 | (df.unit == "EUR/MWhCapacity")
+                | (df.unit == "EUR/MWh Capacity")
                 | (df.unit == "EUR/MWh")
                 | (df.unit == "EUR/MW_CH4")
                 | (df.unit == "EUR/MWh/year")
@@ -2057,8 +2058,6 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
         ].copy()
 
         if tech_name == "Fischer-Tropsch":
-            efficiency[years] *= 100
-        if tech_name == "central water pit storage":
             efficiency[years] *= 100
 
         # take annual average instead of name plate efficiency, unless central air-sourced heat pump
@@ -2262,6 +2261,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
     charger_pit = technology_dataframe.loc[
         ("central water pit storage", " - Charge efficiency")
     ].copy()
+    charger_pit[years] *= 100
     charger_pit["further description"] = "Charger efficiency"
 
     charger_pit.rename(
@@ -3957,9 +3957,7 @@ if __name__ == "__main__":
 
     # adjust for inflation
     for x in data.index.get_level_values("technology"):
-        if x in cost_year_2020 or x in set_cost_year_2020:
-            if x == "CCGT":
-                print('wait')
+        if x in cost_year_2020 or x in manual_cost_year_assignments_2020:
             data.at[x, "currency_year"] = 2020
         elif x in cost_year_2019:
             data.at[x, "currency_year"] = 2019

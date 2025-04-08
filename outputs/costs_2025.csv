@@ -725,14 +725,16 @@ central solid biomass CHP powerboost CC,efficiency,0.2694,per unit,"Danish Energ
 central solid biomass CHP powerboost CC,efficiency-heat,0.825,per unit,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Heat efficiency, net, annual average",2015.0
 central solid biomass CHP powerboost CC,investment,3642.4702,EUR/kW_e,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Nominal investment ",2015.0
 central solid biomass CHP powerboost CC,lifetime,25.0,years,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Technical lifetime",2015.0
-central water pit charger,efficiency,0.01,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Charger efficiency,2015.0
-central water pit discharger,efficiency,0.01,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Discharger efficiency,2015.0
+central water pit charger,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Charger efficiency,2020.0
+central water pit discharger,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Discharger efficiency,2020.0
 central water pit storage,Bottom storage temperature,35.0,⁰C,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Typical bottom storage temperature,2020.0
+central water pit storage,FOM,235.3556,%/year,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Fixed O&M,2020.0
 central water pit storage,Top storage temperature,90.0,⁰C,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Typical max. storage temperature,2020.0
 central water pit storage,energy to power ratio,150.0,h,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Ratio between energy storage and input capacity,2020.0
+central water pit storage,investment,1.0622,EUR/kWh Capacity,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Specific investment,2020.0
 central water pit storage,lifetime,30.0,years,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Technical lifetime,2020.0
-central water tank charger,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Charger efficiency,2015.0
-central water tank discharger,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Discharger efficiency,2015.0
+central water tank charger,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Charger efficiency,2020.0
+central water tank discharger,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Discharger efficiency,2020.0
 central water tank storage,FOM,1.0,%/year,HP, from old pypsa cost assumptions,2015.0
 central water tank storage,Temperature difference,55.0,"hot/cold, K","Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Typical temperature difference,2020.0
 central water tank storage,energy to power ratio,60.3448,h,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Ratio between energy storage and input capacity,2020.0

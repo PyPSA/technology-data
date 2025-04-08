@@ -219,10 +219,51 @@ class Technologies:
 
         return self
 
-    def __getattr__(self, name):
+    def from_pandas(self, data: pd.DataFrame) -> Technologies:
+        """Load the data from a pandas DataFrame."""
+        if not isinstance(data, pd.DataFrame):
+            raise ValueError("Data must be a pandas DataFrame.")
+
+        # TODO add validation of the DataFrame against the schema
+        resource = ftl.Resource(
+            data=data,
+            schema=self.schema,
+        )
+
+        report = resource.validate()
+        if report.valid:
+            self.data = resource.to_pandas()
+            self.sort_data()
+            self.sources = {"from pandas.DataFrame": None}
+        else:
+            raise ValueError(
+                f"Data does not match the schema, see the report for details.{report}"
+            )
+
+        return self
+
+    def __repr__(self) -> pd.DataFrame:
+        """Return a string representation of the data."""
+        # TODO the __repr__ could be improved
+        if self.data is None:
+            return "No data loaded."
+        else:
+            # Return the pd.DataFrame representation
+            return self.data.__repr__()
+
+    def __getattr__(self, name) -> None:
         """Delegate attribute access to the `data` pandas.DataFrame if the attribute is not found in the class."""
         if self.data is not None and hasattr(self.data, name):
-            return getattr(self.data, name)
+            return_value = getattr(self.data, name)
+
+            # Evaluate the function and return the object with the modified data (pd.DataFrame) for operations like .query()
+            # or return the return value of the function if it is not a DataFrame, e.g. for operations like .plot()
+            # TODO fix: the forwarding to pandas works, but the return value is still a DataFrame, not the object
+            if isinstance(return_value, pd.DataFrame):
+                self.data = return_value
+                return self
+            else:
+                return return_value
         raise AttributeError(
             f"'{self.__class__.__name__}' object has no attribute '{name}'"
         )

@@ -114,6 +114,7 @@ class Technologies:
             Automatically sort the data after loading following the sort order defined in `self.default_sort_by`.
         """
         self.data = None
+        self.schema = None
         self.sources = {}
         self.default_sort_by = [
             "source",
@@ -126,6 +127,11 @@ class Technologies:
             "year",
             "value",
         ]
+
+        # Load the datapackage schema to be able to validate against it
+        self.schema = ftl.Schema(
+            str(SPECIFICATIONS_PATH / (self.SCHEMA + ".schema.json"))
+        )
 
         packaged_sources = (
             [packaged_sources]

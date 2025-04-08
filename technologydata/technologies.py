@@ -211,7 +211,7 @@ class Technologies:
         for source in self.sources.values():
             with ftl.Resource(
                 path=str(source / (self.SCHEMA + ".csv")),
-                schema=str(SPECIFICATIONS_PATH / (self.SCHEMA + ".schema.json")),
+                schema=self.schema,
             ) as resource:
                 resources.append(resource.to_pandas())
 

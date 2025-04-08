@@ -6,6 +6,7 @@ import logging
 from pathlib import Path
 
 import frictionless as ftl
+import numpy as np
 import pandas as pd
 
 logger = logging.getLogger(__name__)
@@ -345,6 +346,140 @@ class Technologies:
         # Add information about new scale + unit
         changed_data["scale"] = new_scale
         changed_data["scale_unit"] = unit
+
+        # Recombine all data and restore the default order
+        self.data = pd.concat(
+            [unchanged_data, changed_data],
+            ignore_index=True,
+        )
+        self.sort_data()
+
+        return self
+
+    def adjust_year(
+        self,
+        year: int,
+        model: dict,
+        parameters: list[str] | None = None,
+    ) -> Technologies:
+        """
+        Create a forecast of the data into the future using a forecasting model.
+
+        Forecasting models can be simple interpolation or extrapolation,
+        or more complex models such as learning curves or s-curves.
+
+        Parameters
+        ----------
+        year: int
+            The year to adjust to.
+        model: dict
+            The model and details to use for the adjustment. For example:
+            - 'learning curve': Includes details like the learning rate, starting and target capacities.
+            - 'linear': Specifies linear interpolation or extrapolation.
+        parameters: list[str]
+            Parameters which are affected by the scaling, by default the function will only rows related to the indicators
+            ['investment', 'capex', 'opex'].
+
+        Example
+        -------
+        >>> from technologydata import Technologies
+        >>> tech = Technologies()
+        >>> tech.adjust_year(year=2030, model={'learning curve': {'learning_rate': 0.1, 'annual_growth': 0.05}})
+        >>> tech.data.head()
+
+        >>> tech.adjust_year(year=2030, model={"method": "linear"})
+
+        """
+        # Default parameters
+        parameters = (
+            parameters
+            if parameters
+            else [
+                "investment",
+                "capex",
+                "opex",
+            ]
+        )
+
+        # Filling of NaN values within this group of data
+        grouping_columns = [
+            "source",
+            "technology",
+            "detailed_technology",
+            "case",
+            "region",
+            "parameter",
+            "unit",
+        ]
+        # i.e. these are x and f(x), where we fill missing values of f(x) at a requested x
+        x_col = "year"
+        y_col = "value"
+
+        # Each model uses the underlying data differently and must indicate
+        # the data that is affected and the data that is not affected by the model
+        unchanged_data = None
+        changed_data = None
+
+        # TODO models could be outsourced into separate classes, KISS for now for prototype
+        if model["method"] == "linear":
+            # TODO instead of the linear model, we can pass kwargs to pandas.interpolate
+            # to use different interpolation methods, but KISS for now
+            # also challenging to do extrapolation with default pandas because of bug here: https://github.com/pandas-dev/pandas/issues/31949
+            model["method"] = "index"  # different name in pandas
+
+            # Linear interpolation uses all data points for each parameter
+            unchanged_data = self.data.query(f"parameter not in {parameters}")
+            changed_data = self.data.query(f"parameter in {parameters}")
+
+            # Add a duplicate entry for the target year for each group with NaN value that will be filled
+            nan_data = changed_data.assign(
+                **{x_col: year, y_col: np.nan},
+            ).drop_duplicates(
+                subset=grouping_columns + [x_col],
+                keep="last",
+            )
+            changed_data = pd.concat(
+                [changed_data, nan_data],
+                ignore_index=True,
+            )
+
+            # Sorting by x_col required for interpolation to work properly
+            changed_data = changed_data.sort_values(
+                grouping_columns + [x_col],
+                ignore_index=True,
+            )
+
+            # Interpolate group-wise the missing values using the 'year' index and scipy interpolation
+            groups = []
+            for label, group in changed_data.groupby(
+                by=grouping_columns, observed=True
+            ):
+                group[y_col] = (
+                    group.set_index(x_col)[y_col].interpolate(**model).to_numpy()
+                )
+                groups.append(group)
+
+            # Recombine the individual groups
+            changed_data = pd.concat(groups, ignore_index=True)
+
+        elif model["method"] == "learning curve":
+            # Learning curve model uses for each parameter only the data point that is closest and earlier than the target year,
+            # we get this value by first restricting to the eligible parameters and years, then choosing the maximum year from
+            # the remaining data for each group
+            changed_data = self.data.loc[
+                self.data.query(f"parameter in {parameters} and year < {year}")
+                .groupby(grouping_columns, observed=True)[x_col]
+                .idxmax()
+            ]
+            unchanged_data = self.data.loc[~self.data.index.isin(changed_data.index)]
+
+            # TODO implement learning curve model
+            raise NotImplementedError("Learning curve model is not implemented yet.")
+        else:
+            # TODO implement other models
+            raise NotImplementedError(
+                f"Model {model['method']} not implemented yet. Supported models are 'linear' and 'learning curve'."
+            )
 
         # Recombine all data and restore the default order
         self.data = pd.concat(

@@ -33,6 +33,7 @@ dependencies = [
     "python-calamine>=0.3.1",
     "requests>=2.32.3",
     "ruff>=0.11.0",
+    "scipy>=1.15.2",
     "seaborn>=0.13.2",
     "tqdm>=4.67.1",
     "ucumvert>=0.2.1",

@@ -66,7 +66,7 @@ def check_source_validity(
 
 
 # Provide a list of all available sources currently available in the package's datasources folder.
-def _get_available_sources(schema: str) -> list:
+def _get_available_sources(schema: str) -> dict[str, Path]:
     """
     Determine all available sources based on the folders in datasources.
 

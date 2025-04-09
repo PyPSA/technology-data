@@ -268,6 +268,55 @@ class Technologies:
         raise AttributeError(
             f"'{self.__class__.__name__}' object has no attribute '{name}'"
         )
+
+    def adjust_currency(
+        self,
+        currency: str,
+        currency_year: int,
+        source: str = "World Bank",
+        parameters: list[str] | None = None,
+    ) -> Technologies:
+        """
+        Change the currency of the data and adjust for inflation based on the region the data is from.
+
+        Params
+        -------
+        currency: str
+            The currency to convert to.
+        currency_year: int
+            The year to adjust for inflation.
+        region: str
+            The region to adjust for inflation.
+        source: str
+            Source of the data to use for inflation adjustments, supports 'World Bank' and 'International Monetary Fund'.
+            'World Bank' is the default based on historic data, but is limited to the past (current year -2).
+            'International Monetary Fund' includes past values and projections into the future.
+        parameters: list[str]
+            Parameters which are affected by the currency conversion, by default the function will only rows related to the indicators
+            ['investment', 'capex', 'opex'].
+        """
+        import pydeflate
+
+        if source == "World Bank":
+            conversion_function = pydeflate.wb_exchange
+        elif source == "International Monetary Fund":
+            conversion_function = pydeflate.imf_exchange
+        else:
+            raise ValueError(
+                f"Unknown source '{source}'. Supported sources are 'World Bank' and 'International Monetary Fund'."
+            )
+
+        # Default parameters
+        if parameters is None:
+            parameters = [
+                "investment",
+                "capex",
+                "opex",
+            ]
+
+        # TODO implement
+        raise NotImplementedError("Currency conversion is not implemented yet.")
+
     def adjust_scale(
         self,
         new_scale: float,

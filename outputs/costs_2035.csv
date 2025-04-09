@@ -728,7 +728,7 @@ central solid biomass CHP powerboost CC,lifetime,25.0,years,"Danish Energy Agenc
 central water pit charger,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Charger efficiency,2020.0
 central water pit discharger,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Discharger efficiency,2020.0
 central water pit storage,Bottom storage temperature,35.0,⁰C,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Typical bottom storage temperature,2020.0
-central water pit storage,FOM,235.3556,%/year,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Fixed O&M,2020.0
+central water pit storage,FOM,0.2354,%/year,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Fixed O&M,2020.0
 central water pit storage,Top storage temperature,90.0,⁰C,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Typical max. storage temperature,2020.0
 central water pit storage,energy to power ratio,22.5,h,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Ratio between energy storage and input capacity,2020.0
 central water pit storage,investment,1.0622,EUR/kWh Capacity,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Specific investment,2020.0

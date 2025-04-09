@@ -1948,6 +1948,10 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                     logger.info(
                         f"check FOM: {str(tech_name)} {str(df[df.index.str.contains('Fixed O&M')].unit)}",
                     )
+            if tech_name == "central water pit storage":
+                # For current data, the FOM values for central water pit storage are too high by a factor of 1000.
+                # See issue: https://github.com/PyPSA/technology-data/issues/203
+                fixed[years] /= 1000  # in €/MWhCapacity/year
             if len(fixed) == 1:
                 fixed["parameter"] = "fixed"
                 clean_df[tech_name] = pd.concat([clean_df[tech_name], fixed])

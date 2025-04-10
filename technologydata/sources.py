@@ -1,0 +1,269 @@
+"""Classes for source management and processing, for pre-packaged and user-provided data sources."""
+
+import logging
+import subprocess
+from collections.abc import Iterable
+from pathlib import Path
+
+import frictionless as ftl
+import pandas as pd
+
+logger = logging.getLogger(__name__)
+
+DATASOURCES_PATH = Path(__file__).parent / "datasources"
+SPECIFICATIONS_PATH = DATASOURCES_PATH / "specification"
+
+
+# Generate a list of all available sources currently available in the package's datasources folder.
+def _get_available_sources() -> dict[str, Path]:
+    """
+    Determine all available sources based on the folders in datasources.
+
+    Returns
+    -------
+    dict[str, Path]
+        A dictionary with the source name as the key and the path to the source folder as the value.
+
+    """
+    # Valid sources are folders and that contain at least one file named sources.csv and
+    # one additional other file (a feature) ending in `.csv`
+    sources = [
+        folder
+        for folder in DATASOURCES_PATH.iterdir()
+        if folder.glob("sources.csv") and len(list(folder.glob("*.csv"))) > 1
+    ]
+
+    return {folder.stem: folder for folder in sources}
+
+
+# Dictionary of available sources packaged and available for the user
+AVAILABLE_SOURCES = _get_available_sources()
+
+
+class Source:
+    """
+    A source of data that can provide one or more data features.
+
+    Attributes
+    ----------
+    name : str
+        A unique name for distinguishing the source, either the name of a pre-packaged source or a user provided name.
+    path : Path
+        Path to the source's folder.
+    details : pd.DataFrame
+        Details on the source, containing author, title, URL and other information.
+    available_features : list[str]
+        List of features provided by the source (e.g., 'Technologies').
+
+    """
+
+    def __init__(self, name: str, path: Path | str | None = None) -> None:
+        """
+        Create a source of data that can provide one or more data features.
+
+        Some data sources are already pre-packaged. In addition, data sources can be loaded from local paths.
+        Possible data features are features that are understood by this package, e.g. 'Technologies'.
+        Data sources are usually included in the package pre-processed, in the case of automatically extractd data
+        they also come with a processing script that allows to re-process and thereby reproduce the data.
+
+        Parameters
+        ----------
+        name : str
+            A unique name for distinguishing the source, either indicating a pre-packaged source or a new source from a local path.
+        path : Path | str
+            Path to the source's folder. Not required for loading a pre-packaged source.
+
+        Examples
+        --------
+        >>> from technologydata import Source
+        >>> source = Source("example01")
+        >>> source = Source("example01", "./some/local/path/") # folder contains sources.csv and other data files
+
+        """
+        self.name = name
+
+        if name in AVAILABLE_SOURCES and path is None:
+            # Use prepackaged source
+            path = AVAILABLE_SOURCES[name]
+        elif name not in AVAILABLE_SOURCES and path is None:
+            raise ValueError(
+                f"No pre-packaged source with the name {name} found. "
+                f"Check the available sources in {DATASOURCES_PATH} or provide a path to a local source."
+            )
+
+        # Ensure path is a Path object
+        if isinstance(path, str):
+            path = Path(path)
+        self.path = path
+
+        # pd.DataFrame: Details on the source, containing author, title, URL and other information, loaded from the folder
+        self.details = self._load_details()
+        # list[str]: List of features provided by the source (e.g., 'Technologies')
+        self.available_features = self._detect_features()
+
+    def _load_details(self) -> pd.DataFrame:
+        """Load the source.csv file into a DataFrame."""
+        source_file = self.path / "sources.csv"
+        schema_file = SPECIFICATIONS_PATH / "sources.schema.json"
+
+        if not source_file.exists():
+            raise FileNotFoundError(f"Missing sources.csv in {self.path}")
+
+        resource = ftl.Resource(path=str(source_file), schema=str(schema_file))
+        report = resource.validate()
+
+        if not report.valid:
+            raise ValueError(f"source.csv in {self.path} is invalid: {report}")
+
+        details = resource.to_pandas()
+
+        # Add the source name as first column
+        details.insert(0, "source_name", self.name)
+
+        return details
+
+    def _detect_features(self) -> list[str]:
+        """Detect which features are available in the source folder."""
+        features = []
+        # Find all CSV files in the source folder
+        files = {file.stem for file in self.path.glob("*.csv")}
+        files = files - {"sources"}  # Exclude source.csv
+
+        # TODO can check for supported features
+        # TODO make more flexible instead of hardcoding
+        nicer_names = {
+            "technologies": "Technologies",
+        }
+        features = {nicer_names[f] for f in files}
+        features = sorted(features)
+
+        return features
+
+    def process(self, trusted_execution: bool = False) -> None:
+        """
+        Process the source data.
+
+        If a `process.py` script is present in the source folder, this method is available and run the script.
+        Otherwise, a message will be logged indicating that the process method is unavailable.
+
+        For security reasons, `process.py` is only enabled by default for `process.py` scripts inside the package,
+        for sources with a folder outside of the package, `trusted_execution` must be set to True.
+
+        Parameters
+        ----------
+        trusted_execution : bool
+            By default, only `process.py` scripts inside the package are trusted and executed,
+            outside data source processing scripts are not executed. To allow their execution,
+            set this parameter explicitly to True.
+
+        Returns
+        -------
+        bool
+            True if the process.py script was executed successfully, False otherwise.
+
+        """
+        raise NotImplementedError(
+            "This functionality is not implemented yet and should probably be redesigned. "
+            "For now enter new data manually. Automatic processing can still be used, but is"
+            "not yet stitched into the package."
+        )
+        process_script = self.path / "process.py"
+
+        # Check if the process.py script exists or raise an error that the source doesn't support automatic processing
+        if not process_script.exists():
+            logger.info(
+                f"No process.py script found for source: {self.path.stem} - Source does not support automatic processing."
+            )
+            return False
+
+        # Check if the source is part of the package, in which case the script is trusted and can be executed
+        if self.path.parent == DATASOURCES_PATH:
+            trusted_execution = True
+        elif not trusted_execution:
+            logger.warning(
+                f"Untrusted execution of process.py script for source: {self.path.stem}. Set trusted_execution=True to execute."
+            )
+            return False
+
+        logger.debug(f"Executing process.py for source: {self.path.stem}")
+        p = subprocess.popen(
+            ["python", str(process_script)],
+            cwd=self.path,  # Run the script in the source folder
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+
+        (stdoutdata, stderrdata) = p.communicate()
+
+        if p.returncode != 0:
+            logger.debug(
+                f"Process.py execution failed for source: {self.path.stem} with error code {p.returncode}.\n\n"
+                f"Error message: {stderrdata.decode()}\n"
+                f"{stdoutdata.decode()}"
+            )
+            return False
+        else:
+            logger.debug(
+                f"Process.py executed successfully for source: {self.path.stem}"
+            )
+            return True
+
+
+class Sources:
+    """
+    A collection of data sources that can be loaded and used.
+
+    Attributes
+    ----------
+    sources : list[Source]
+        A list of Source objects.
+    details : pd.DataFrame
+        A DataFrame containing the details of all the sources, like author, title, URL, etc. .
+    available_features : pd.DataFrame
+        A DataFrame containing all source names and their available features.
+
+    """
+
+    def __init__(self, sources: list[str | Source] | dict[str:Path]) -> None:
+        """
+        Create a collection of data sources.
+
+        Parameters
+        ----------
+        sources : list[Source | str] | dict[str:Path]
+            A list of Source objects representing the data sources, names of pre-packaged sources,
+            or a dictionary with source names as keys and paths as values.
+
+        """
+        self.sources = []
+
+        if isinstance(sources, dict):
+            # All sources need to be loaded when specified this way
+            self.sources = [Source(name, path) for name, path in sources.items()]
+        elif isinstance(sources, Iterable):
+            # Directly add already loaded sources to the object
+            loaded_sources = [
+                source for source in sources if isinstance(source, Source)
+            ]
+            # Sources specified by name need to be loaded first
+            unloaded_sources = [
+                Source(source) for source in sources if isinstance(source, str)
+            ]
+            # Contains all the loaded sources
+            self.sources = loaded_sources + unloaded_sources
+
+        # A pd.DataFrame, containing the details of all the sources
+        self.details = pd.concat(
+            [source.details for source in self.sources], ignore_index=True
+        ).sort_values(by="source_name", ascending=True)
+
+        # Ad pd.DataFrame, containing the sources and their available features
+        self.available_features = pd.DataFrame(
+            [
+                {
+                    "source_name": source.name,
+                    "available_features": source.available_features,
+                }
+                for source in self.sources
+            ]
+        )

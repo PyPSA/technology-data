@@ -1,12 +1,12 @@
 name: CI
 
 on:
-  push:
-    branches: [master]
+#  push:
+#    branches: [master]
   pull_request:
     branches: [master]
-  schedule:
-  - cron: "0 5 * * 0"
+#  schedule:
+#  - cron: "0 5 * * 0"
 
 
 # Cancel any in-progress runs when a new run is triggered
@@ -45,21 +45,8 @@ jobs:
       run: |
         make test
 
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v4
+    - name: Commit changes
+      uses: stefanzweifel/git-auto-commit-action@v5
       with:
-        name: technology-data
-        path: outputs/
-
-    - name: Check for differences in generated outputs
-      run: |-
-        git config --global --add safe.directory $GITHUB_WORKSPACE
-        git add outputs/
-        DIFF_FILES=$(git diff --cached --name-only)
-        if [ -n "$DIFF_FILES" ]; then
-          echo "The following files are different:"
-          echo "$DIFF_FILES"
-          exit 1
-        else
-          echo "No differences found in generated outputs."
-        fi
+        branch: ${{ env.BRANCH_NAME }}
+        commit_message: '${{ env.PREPARATION_COMMIT }}'

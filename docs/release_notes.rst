@@ -44,8 +44,6 @@ Upcoming Release
 
 * Update scenarios for US-specific eletrolyzer investment cost (https://github.com/PyPSA/technology-data/pull/194)
 
-* Adds a Makefile (https://github.com/PyPSA/technology-data/pull/204)
-
 * Updates ci.yaml such that it fails if the generated outputs are different than the ones committed (https://github.com/PyPSA/technology-data/pull/205)
 
 `v0.11.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.11.0>`__ (24th January 2025)

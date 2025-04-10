@@ -24,7 +24,10 @@ jobs:
         shell: bash -l {0}
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        persist-credentials: true # Ensures the GitHub token is available for pushing
 
     - name: Setup micromamba
       uses: mamba-org/setup-micromamba@v2
@@ -49,3 +52,11 @@ jobs:
       with:
         name: technology-data
         path: outputs/
+
+    - name: Commit and push changes
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add outputs/
+        git commit -m "Commit generated files from make test"
+        git push origin ${{ github.ref_name }}

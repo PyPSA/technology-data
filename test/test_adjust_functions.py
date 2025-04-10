@@ -15,7 +15,7 @@ def example_source():
 @pytest.fixture
 def forecast_source():
     """Fixture to provide an example dataset for time-related forecasting."""
-    return td.Technologies.from_pandas(
+    return td.Technologies().from_pandas(
         pd.DataFrame(
             {
                 "source": ["test", "test"],

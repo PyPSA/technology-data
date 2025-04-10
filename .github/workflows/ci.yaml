@@ -55,9 +55,10 @@ jobs:
       run: |
         git config --global --add safe.directory $GITHUB_WORKSPACE
         git add outputs/
-        if ! git diff --cached --quiet; then
-          echo "Generated outputs differ from the branch. Please commit the changes."
-          git diff --cached
+        DIFF_FILES=$(git diff --cached --name-only)
+        if [ -n "$DIFF_FILES" ]; then
+          echo "The following files are different:"
+          echo "$DIFF_FILES"
           exit 1
         else
           echo "No differences found in generated outputs."

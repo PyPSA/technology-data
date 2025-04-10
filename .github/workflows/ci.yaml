@@ -26,10 +26,6 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      with:
-        ref: ${{ github.head_ref }} # Checks out the branch from the fork
-        repository: ${{ github.event.pull_request.head.repo.full_name }} # The fork's repository
-        persist-credentials: true # Ensures the GitHub token is available for pushing
 
     - name: Setup micromamba
       uses: mamba-org/setup-micromamba@v2
@@ -55,10 +51,14 @@ jobs:
         name: technology-data
         path: outputs/
 
-    - name: Commit and push changes
+    - name: Check for differences in generated outputs
       run: |
-        git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global --add safe.directory $GITHUB_WORKSPACE
         git add outputs/
-        git commit -m "Commit generated files from make test"
-        git push origin ${{ github.head_ref }}
+        if ! git diff --cached --quiet; then
+          echo "Generated outputs differ from the branch. Please commit the changes."
+          git diff --cached
+          exit 1
+        else
+          echo "No differences found in generated outputs."
+        fi

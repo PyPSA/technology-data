@@ -15,26 +15,27 @@ def example_source():
 @pytest.fixture
 def forecast_source():
     """Fixture to provide an example dataset for time-related forecasting."""
-    df = pd.DataFrame(
-        {
-            "source": ["test", "test"],
-            "technology": ["example tech", "example tech"],
-            "detailed_technology": [
-                "example tech - detailed",
-                "example tech - detailed",
-            ],
-            "case": ["example case", "example case"],
-            "region": ["IE", "IE"],
-            "parameter": ["investment", "investment"],
-            "year": [2020, 2030],
-            "value": [100, 200],
-            "unit": ["EUR_2020/MW_electric", "EUR_2020/MW_electric"],
-            "scale": [1, 1],
-            "scale_unit": ["MW", "MW"],
-            "comment": ["", ""],
-        }
+    return td.Technologies.from_pandas(
+        pd.DataFrame(
+            {
+                "source": ["test", "test"],
+                "technology": ["example tech", "example tech"],
+                "detailed_technology": [
+                    "example tech - detailed",
+                    "example tech - detailed",
+                ],
+                "case": ["example case", "example case"],
+                "region": ["IE", "IE"],
+                "parameter": ["investment", "investment"],
+                "year": [2020, 2030],
+                "value": [100, 200],
+                "unit": ["EUR_2020/MW_electric", "EUR_2020/MW_electric"],
+                "scale": [1, 1],
+                "scale_unit": ["MW", "MW"],
+                "comment": ["", ""],
+            }
+        )
     )
-    return td.Technologies().from_pandas(df)
 
 
 def test_no_economies_of_scale(example_source) -> None:

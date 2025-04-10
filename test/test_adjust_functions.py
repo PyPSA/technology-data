@@ -1,3 +1,5 @@
+"""Test functionality related to adjust_X functions in the Technologies class."""
+
 import pandas as pd
 import pytest
 

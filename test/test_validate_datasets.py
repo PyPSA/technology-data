@@ -1,3 +1,5 @@
+"""Functions to automatically validate all packaged datasets."""
+
 from pathlib import Path
 from pprint import pprint
 

@@ -1,3 +1,5 @@
+"""technologydata: A package for managing and analyzing technology data used for energy system models."""
+
 from importlib.metadata import version
 
 from technologydata.technologies import (

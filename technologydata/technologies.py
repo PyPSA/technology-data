@@ -96,7 +96,7 @@ class Technologies:
     def __init__(
         self,
         packaged_sources: list[str] | str = "all",
-        additional_sources: dict[str, Path] = None,
+        additional_sources: dict[str, Path] | None = None,
         load: bool = True,
         sort_data: bool = True,
     ) -> None:
@@ -252,7 +252,7 @@ class Technologies:
             # Return the pd.DataFrame representation
             return self.data.__repr__()
 
-    def __getattr__(self, name) -> None:
+    def __getattr__(self, name: str) -> None:
         """Delegate attribute access to the `data` pandas.DataFrame if the attribute is not found in the class."""
         if self.data is not None and hasattr(self.data, name):
             return_value = getattr(self.data, name)
@@ -295,27 +295,27 @@ class Technologies:
             Parameters which are affected by the currency conversion, by default the function will only rows related to the indicators
             ['investment', 'capex', 'opex'].
         """
-        import pydeflate
-
-        if source == "World Bank":
-            conversion_function = pydeflate.wb_exchange
-        elif source == "International Monetary Fund":
-            conversion_function = pydeflate.imf_exchange
-        else:
-            raise ValueError(
-                f"Unknown source '{source}'. Supported sources are 'World Bank' and 'International Monetary Fund'."
-            )
-
-        # Default parameters
-        if parameters is None:
-            parameters = [
-                "investment",
-                "capex",
-                "opex",
-            ]
-
         # TODO implement
         raise NotImplementedError("Currency conversion is not implemented yet.")
+
+        # import pydeflate
+
+        # if source == "World Bank":
+        #     conversion_function = pydeflate.wb_exchange
+        # elif source == "International Monetary Fund":
+        #     conversion_function = pydeflate.imf_exchange
+        # else:
+        #     raise ValueError(
+        #         f"Unknown source '{source}'. Supported sources are 'World Bank' and 'International Monetary Fund'."
+        #     )
+
+        # # Default parameters
+        # if parameters is None:
+        #     parameters = [
+        #         "investment",
+        #         "capex",
+        #         "opex",
+        #     ]
 
     def adjust_scale(
         self,

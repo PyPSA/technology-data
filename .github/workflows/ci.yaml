@@ -27,6 +27,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
+        ref: ${{ github.head_ref }} # Checks out the branch from the fork
+        repository: ${{ github.event.pull_request.head.repo.full_name }} # The fork's repository
         persist-credentials: true # Ensures the GitHub token is available for pushing
 
     - name: Setup micromamba

@@ -38,15 +38,11 @@ jobs:
 
     - name: Run unit tests
       run: |
-        python -m pytest test
+        make unit-test
 
-    - name: Test snakemake workflow for compile_cost_assumptions
+    - name: Test snakemake workflows
       run: |
-        snakemake --cores all -f compile_cost_assumptions
-
-    - name: Test snakemake workflow for compile_cost_assumptions_usa
-      run: |
-        snakemake --cores all -f compile_cost_assumptions_usa
+        make test
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4

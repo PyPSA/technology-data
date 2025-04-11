@@ -501,3 +501,30 @@ class Technologies:
         self.sort_data()
 
         return self
+
+    def to_excel(self, path: str | Path) -> None:
+        """
+        Export the data and sources to an Excel file with sheet names based on the class names.
+
+        Params
+        -------
+        path : str|Path
+            The path to save the Excel file to.
+        """
+        with pd.ExcelWriter(path=path) as writer:
+            self.data.to_excel(writer, sheet_name=type(self).__name__)
+            self.sources.details.to_excel(
+                writer, sheet_name=type(self.sources).__name__
+            )
+
+    def to_csv(self, path: str | Path) -> None:
+        """
+        Export the data to a CSV file, does not include the sources; for source exports, use Sources.to_csv(...).
+
+        Params
+        -------
+        path : str|Path
+            The path to save the CSV file to.
+        """
+        self.data.to_csv(path=path, index=False)
+

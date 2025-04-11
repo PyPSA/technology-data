@@ -279,3 +279,15 @@ class Sources:
                 for source in self.sources
             ]
         )
+
+    def to_csv(self, path: str | Path) -> None:
+        """
+        Save the details of the sources to a CSV file.
+
+        Parameters
+        ----------
+        path : str | Path
+            The path to save the CSV file.
+
+        """
+        self.details.to_csv(path, index=False)

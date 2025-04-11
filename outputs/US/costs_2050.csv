@@ -8,10 +8,10 @@ Alkaline electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of s
 Alkaline electrolyzer,efficiency,0.78,p.u.,ICCT IRA e-fuels assumptions ,,,,
 Alkaline electrolyzer,investment,700.6747,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 Alkaline electrolyzer,investment,700.6747,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
-Alkaline electrolyzer,investment,601.0776,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-Alkaline electrolyzer,investment,601.0776,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
-Alkaline electrolyzer,investment,497.9858,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
-Alkaline electrolyzer,investment,497.9858,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
+Alkaline electrolyzer,investment,1106.0526,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
+Alkaline electrolyzer,investment,1106.0526,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
+Alkaline electrolyzer,investment,601.0776,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
+Alkaline electrolyzer,investment,601.0776,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 Alkaline electrolyzer,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,,,
 Ammonia cracker,FOM,4.3,%/year,"Ishimoto et al. (2020): 10.1016/j.ijhydene.2020.09.017 , table 7.","Estimated based on Labour cost rate, Maintenance cost rate, Insurance rate, Admin. cost rate and Chemical & other consumables cost rate.",2015.0,,
 Ammonia cracker,ammonia-input,1.46,MWh_NH3/MWh_H2,"ENGIE et al (2020): Ammonia to Green Hydrogen Feasibility Study (https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/880826/HS420_-_Ecuity_-_Ammonia_to_Green_Hydrogen.pdf), Fig. 10.",Assuming a integrated 200t/d cracking and purification facility. Electricity demand (316 MWh per 2186 MWh_LHV H2 output) is assumed to also be ammonia LHV input which seems a fair assumption as the facility has options for a higher degree of integration according to the report).,,,
@@ -2462,10 +2462,10 @@ PEM electrolyzer,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenar
 PEM electrolyzer,efficiency,0.73,p.u.,ICCT IRA e-fuels assumptions ,,,,
 PEM electrolyzer,investment,1143.62,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 PEM electrolyzer,investment,1143.62,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
-PEM electrolyzer,investment,980.2457,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-PEM electrolyzer,investment,980.2457,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
-PEM electrolyzer,investment,335.4852,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
-PEM electrolyzer,investment,335.4852,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
+PEM electrolyzer,investment,1143.62,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
+PEM electrolyzer,investment,1143.62,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
+PEM electrolyzer,investment,980.2457,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
+PEM electrolyzer,investment,980.2457,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 PEM electrolyzer,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,,,
 PHS,FOM,0.7,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 PHS,FOM,0.62,%/year,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
@@ -3417,10 +3417,10 @@ SOEC,FOM,0.04,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and finan
 SOEC,efficiency,0.9,p.u.,ICCT IRA e-fuels assumptions ,,,,
 SOEC,investment,1263.3113,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 SOEC,investment,1263.3113,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
-SOEC,investment,1083.3375,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-SOEC,investment,1083.3375,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
-SOEC,investment,590.5937,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
-SOEC,investment,590.5937,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
+SOEC,investment,1992.8168,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
+SOEC,investment,1992.8168,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
+SOEC,investment,1083.3375,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
+SOEC,investment,1083.3375,USD/kW,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 SOEC,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,,,
 Sand-charger,FOM,1.075,%/year,"Viswanathan_2022, NULL","{'carrier': ['elec', 'sand'], 'technology_type': ['charger'], 'type': ['thermal'], 'note': ['Guesstimate, 50% on charger']}",2020.0,,
 Sand-charger,efficiency,0.99,per unit,"Viswanathan_2022, p.107 (p.129)","{'carrier': ['elec', 'sand'], 'technology_type': ['charger'], 'type': ['thermal'], 'note': ['RTE assume 99% for charge and other for discharge']}",2020.0,,

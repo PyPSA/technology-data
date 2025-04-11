@@ -224,20 +224,32 @@ class Sources:
 
     """
 
-    def __init__(self, sources: list[str | Source] | dict[str:Path]) -> None:
+    def __init__(
+        self, sources: str | Source | list[str | Source] | dict[str:Path]
+    ) -> None:
         """
         Create a collection of data sources.
 
         Parameters
         ----------
-        sources : list[Source | str] | dict[str:Path]
+        sources : str | Source | list[Source | str] | dict[str:Path]
             A list of Source objects representing the data sources, names of pre-packaged sources,
             or a dictionary with source names as keys and paths as values.
 
         """
         self.sources = []
 
-        if isinstance(sources, dict):
+        if isinstance(sources, str):
+            # Single source name specified
+            if sources in AVAILABLE_SOURCES:
+                self.sources = [Source(sources)]
+            else:
+                raise ValueError(
+                    f"Source {sources} not found. Check the available sources in {DATASOURCES_PATH}"
+                )
+        elif isinstance(sources, Source):
+            self.sources = [sources]
+        elif isinstance(sources, dict):
             # All sources need to be loaded when specified this way
             self.sources = [Source(name, path) for name, path in sources.items()]
         elif isinstance(sources, Iterable):

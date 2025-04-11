@@ -9,6 +9,8 @@ import frictionless as ftl
 import numpy as np
 import pandas as pd
 
+from technologydata import Source, Sources
+
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG)
 
@@ -85,19 +87,15 @@ def _get_available_sources(schema: str) -> dict[str, Path]:
     return {folder.stem: folder for folder in sources}
 
 
-AVAILABLE_SOURCES = _get_available_sources("technologies")
-
-
 class Technologies:
     """Class to hold a collection of technologies."""
 
-    SCHEMA = "technologies"
+    feature = "Technologies"
+    schema_name = "technologies"
 
     def __init__(
         self,
-        packaged_sources: list[str] | str = "all",
-        additional_sources: dict[str, Path] | None = None,
-        load: bool = True,
+        sources: str | Source | Sources | list[str | Source] | dict[str | Path],
         sort_data: bool = True,
     ) -> None:
         """
@@ -105,18 +103,35 @@ class Technologies:
 
         Params
         -------
-        packaged_sources: list[str] | str
-            A list of sources to include. If 'all', all sources are included. Otherwise, a list of source names.
-        additional_sources: dict[str, Path]
-            A dictionary of additional sources to include. The keys are the source names and the values are the paths to the sources.
-        load: bool
-            If `True`, the sources are loaded immediately. Otherwise, they can be loaded later using the `load` method.
+        sources: list[str | Source] | dict[str | Path] | Sources
+            The sources to load, either as a list of source names or as a dictionary with source names and paths.
+            See technologydata.Source and technologydata.Sources for more detailed options.
         sort_data: bool
             Automatically sort the data after loading following the sort order defined in `self.default_sort_by`.
         """
+        # Make the sources available
+        self.sources = sources if isinstance(sources, Sources) else Sources(sources)
+
+        # Only keep sources that provide 'Technologies' as a feature
+        sources_without_feature = [
+            source
+            for source in self.sources.sources
+            if self.feature not in source.available_features
+        ]
+        if sources_without_feature:
+            logger.warning(
+                f"The following sources do not provide the feature '{self.feature}' and will not be used: {', '.join([source.name for source in sources_without_feature])}"
+            )
+        self.sources = Sources(
+            [
+                source
+                for source in self.sources.sources
+                if source not in sources_without_feature
+            ]
+        )
+
         self.data = None
         self.schema = None
-        self.sources = {}
         self.default_sort_by = [
             "source",
             "technology",
@@ -131,65 +146,13 @@ class Technologies:
 
         # Load the datapackage schema to be able to validate against it
         self.schema = ftl.Schema(
-            str(SPECIFICATIONS_PATH / (self.SCHEMA + ".schema.json"))
+            str(SPECIFICATIONS_PATH / (self.schema_name + ".schema.json"))
         )
 
-        packaged_sources = (
-            [packaged_sources]
-            if isinstance(packaged_sources, str)
-            else packaged_sources
-        )
-        for source in packaged_sources:
-            if source == "all":
-                add_source = AVAILABLE_SOURCES
-            elif source in AVAILABLE_SOURCES.keys():
-                add_source = {source: AVAILABLE_SOURCES[source]}
-            else:
-                raise ValueError(
-                    f"Unknown packaged source: {source}. Check `AVAILABLE_SOURCES` for valid sources."
-                )
-
-            self.sources.update(add_source)
-
-        # Add additional sources if provided
-        if additional_sources:
-            for source, path in additional_sources.items():
-                self.add_source(source, path)
-
-        # Load the data automatically if requested
-        if load:
-            self.load()
-            # When requested, also sort the data
-            if sort_data:
-                self.sort_data()
-
-    def add_source(self, name: str, path: Path, overwrite: bool = True) -> None:
-        """
-        Add another source to the collection from a local folder.
-
-        If another source with the same name already exists, it will be replaced.
-
-        Params
-        -------
-        name: str
-            The name of the source to add.
-        path: Path
-            The path to the source folder.
-        overwrite: bool
-            Sources with the same name will be replaced if `True`, otherwise an error is raised.
-        """
-        if name in self.sources and not overwrite:
-            raise ValueError(
-                f"Source {name} already exists. Use `overwrite=True` to replace it."
-            )
-
-        if not check_source_validity(path, self.SCHEMA):
-            raise ValueError(
-                f"Source {path} is invalid. For details on why the source is invalid, use `check_source_validity` with `report_invalid=True`."
-            )
-
-        self.sources[name] = path
-        logger.debug(f"Added source {name} to the collection.")
+        self.load()
+        # Optional automatic sorting of data after loading
+        if sort_data:
+            self.sort_data()
 
     def sort_data(self) -> Technologies:
         """Sort the data by the default sort order as defined in `self.default_sort_by`."""
@@ -206,12 +169,12 @@ class Technologies:
 
         # Load all sources using frictionless and then combine them to a single pandas DataFrame
         logger.debug(
-            f"Loading {len(self.sources)} sources: {', '.join(self.sources.keys())}"
+            f"Loading {len(self.sources.sources)} sources: {', '.join(source.name for source in self.sources.sources)}"
         )
         resources = []
-        for source in self.sources.values():
+        for source in self.sources.sources:
             with ftl.Resource(
-                path=str(source / (self.SCHEMA + ".csv")),
+                path=str(source.path / (self.schema_name + ".csv")),
                 schema=self.schema,
             ) as resource:
                 resources.append(resource.to_pandas())

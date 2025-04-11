@@ -19,33 +19,7 @@ def test_source_validity() -> None:
 
 def test_packaged_sources() -> None:
     """Check if by default the default constructors properly load all packaged sources."""
-    technologies = td.Technologies()
-    assert technologies.sources == td.AVAILABLE_SOURCES, (
+    technologies = td.Technologies(td.AVAILABLE_SOURCES)
+    assert len(technologies.sources.sources) == len(td.AVAILABLE_SOURCES.keys()), (
         "The default constructor should load all packaged sources"
-    )
-
-    technologies = td.Technologies(packaged_sources="all")
-    assert technologies.sources == td.AVAILABLE_SOURCES, (
-        "Using 'all' should load all packaged sources"
-    )
-
-
-def test_source_adding() -> None:
-    """Check if the example source can be added correctly."""
-    technologies = td.Technologies()
-    technologies.add_source("example01", td.AVAILABLE_SOURCES["example01"])
-    assert "example01" in technologies.sources, (
-        "example01 should be in the sources after adding it"
-    )
-
-
-def test_additional_source() -> None:
-    """Check if an additional source can be added correctly."""
-    additional_source = "example01"
-    technologies = td.Technologies(
-        packaged_sources=[],
-        additional_sources={additional_source: td.AVAILABLE_SOURCES[additional_source]},
-    )
-    assert additional_source in technologies.sources, (
-        f"additional source '{additional_source}' should be in the sources after adding it"
     )

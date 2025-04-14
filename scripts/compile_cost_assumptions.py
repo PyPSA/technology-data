@@ -965,13 +965,14 @@ def biomethanation_dea (df):
     idx2 = df.index.str.contains("Hydrogen Consumption")
     idx3 = df.index.str.contains('CO2 Consumption')
     idx4 = df.index.str.contains("Methane Output")
+
     # calculate H2/CH4 ratio (MW/MW)
     H2_CH4_ratio = df.loc[idx2].astype(float) / df.loc[idx4].values.astype(
         float)
     # normalize all inputs & outputs to MW of hydrogen
     df.loc[idx] = df.loc[idx].astype(float) / df.loc[idx2].values.astype(
         float)
-    df.index = df.index.str.replace(" Total Input", "_h2")
+    df.index = df.index.str.replace(" Total Input", "_H2")
 
     # convert CO2 from Nm3 to tons
     df.loc[idx3] = df.loc[idx3].astype(float) * CO2_density / 1000 # tCO2 / h / MW_H2
@@ -979,20 +980,43 @@ def biomethanation_dea (df):
     # adjust cost basis from €/MWh CH4 (check pdf) to €/MW H2
     idx5 = df.index.str.contains("EUR")
     df.loc[idx5] = df.loc[idx5].astype(float).div(H2_CH4_ratio.values.flatten(), axis=1)
-    df.loc[idx5].index.str.replace("MW", "MW_h2", regex=True)
-    df.loc[idx5].index.str.replace("MWh", "MWh_h2", regex=True)
+    df.index = [
+        idx.replace("MW", "MW_H2").replace("MWh", "MWh_H2") if i else idx
+        for idx, i in zip(df.index, idx5)
+    ]
 
     # rename units
     replacements = {
         "Hydrogen Consumption": "Hydrogen Input",
         "CO2 Consumption": "CO2 Input",
-        "Electricity Consumption": "Electricity Input",
+        "Electricity Consumption": "El-Input",
+        "Methane Output" : "Methane Output",
+        "Heat Output" : "H-Output",
+    }
+
+    old_units = {
+        "Hydrogen Consumption": "MWh/",
+        "CO2 Consumption": "Nm3",
+        "Electricity Consumption": "MWh/",
+        "Methane Output": "MWh/",
+        "Heat Output": "MWh/",
+    }
+
+    new_units = {
+        "Hydrogen Consumption": "MWh/",
+        "CO2 Consumption": "t_CO2",
+        "Electricity Consumption": "MWh_e/",
+        "Methane Output": "MWh_CH4/",
+        "Heat Output": "MWh_th/",
     }
 
     for old_label, new_label in replacements.items():
         matches = df.index[df.index.str.contains(old_label)]
         if not matches.empty:
-            df.rename(index={matches[0]: matches[0].replace(old_label, new_label)}, inplace=True)
+            old_index = matches[0]
+            updated_index = old_index.replace(old_label, new_label)
+            updated_index = updated_index.replace(old_units[old_label], new_units[old_label])
+            df.rename(index={old_index: updated_index}, inplace=True)
 
     return df
 
@@ -1000,9 +1024,9 @@ def biochar_pyrolysis_dea (df):
     """This function does:
     1) defined the properties of solid biomass in pypsa-eur: moisture, LHV dry and LHV moist
     2) defines the properties of the feedstock for pyrolysis (dried biomass)
-    3) calcualtes the energy required for drying the biomass to feedstock
+    3) calculates the energy required for drying the biomass to feedstock
     4) imports the DEA data for biochar pyrolysis
-    5) recalcualte the parameters from DEA per MWh of biomass in pypsa-eur.
+    5) re-calculate the parameters from DEA per MWh of biomass in pypsa-eur.
     6) if not specified all values refer to DEA renewable fuels"""
 
     # definition of solid biomass in pypsa
@@ -1466,6 +1490,7 @@ def order_data(tech_data):
                            (df.unit == 'EUR/MW-methanol') |
                            (df.unit == "EUR/t_N2/h") | # air separation unit
                            (df.unit == 'EUR/t_CO2/h') |
+                           (df.unit == 'EUR/MW_H2') |
                            (df.unit == 'EUR/MW_biomass'))
                         ].copy()
 
@@ -1492,6 +1517,7 @@ def order_data(tech_data):
                         (df.unit == "EUR/MW_CH4/year") |
                         (df.unit == 'EUR/MW_biomass/year') |
                         (df.unit == 'EUR/t_CO2/h/year') |
+                        (df.unit == 'EUR/MW_H2/year') |
                         (df.unit == '% of specific investment/year') |
                         (df.unit == investment.unit.str.split(" ").iloc[0][0] + "/year"))].copy()
 
@@ -1528,6 +1554,7 @@ def order_data(tech_data):
                                                           (df.unit == "EUR/MWh_CH4") |
                                                           (df.unit == 'EUR/MWh_biomass')|
                                                           (df.unit == 'EUR/t_CO2') |
+                                                          (df.unit == 'EUR/MWh_H2') |
                                                           (tech == "biogas upgrading"))].copy()
         if len(vom) == 1:
             vom.loc[:, "parameter"] = "VOM"
@@ -1557,9 +1584,11 @@ def order_data(tech_data):
                          (df.index.str.contains("Methanol Output")) |
                          (df.index.str.contains("District heat  Output")) |
                          (df.index.str.contains("Electricity Output")) |
+                         (df.index.str.contains("Electricity Intput")) |
                          (df.index.str.contains("hereof recoverable for district heating")) |
                          (df.index.str.contains("Bio SNG")) |
                          (df.index.str.contains("biochar")) |
+                         (df.index.str.contains("biomethanation")) |
                          (df.index.str.contains("H-Output")) |
                          (df.index.str.contains("Hydrogen Input")) |
                          (df.index.str.contains("CO2 Input")) |
@@ -1581,9 +1610,11 @@ def order_data(tech_data):
                            df.unit.str.contains("MWh_th/t_CO2") | # Heat Output
                            df.unit.str.contains("MWh_biomass/t_CO2") |  # Biomass Input
                            df.unit.str.contains("MWh_e/t_CO2") | # Electricity Input
-                           df.unit.str.contains("t_CO2/MWh_h2") |  # Electricity Input
-                           df.unit.str.contains("MWh_e/MWh_h2") |  # Electricity Input
+                           df.unit.str.contains("t_CO2/MWh_H2") |  # Electricity Input
+                           df.unit.str.contains("MWh_e/MWh_H2") |  # Electricity Input
                            df.unit.str.contains("MWh_CH4/MWh_H2") |
+                           df.unit.str.contains("MWh/MWh_H2") |
+                           df.unit.str.contains("MWh_th/MWh_H2") |
                            df.unit.str.contains("% MWh_biomass"))].copy()
 
         if tech == 'Fischer-Tropsch':
@@ -1642,6 +1673,23 @@ def order_data(tech_data):
             clean_df[tech] = pd.concat([clean_df[tech], efficiency_heat_out])
             biomass_input = efficiency[efficiency.index.str.contains("Biomass Input")].copy()
             biomass_input["parameter"] = "biomass input"
+            clean_df[tech] = pd.concat([clean_df[tech], biomass_input])
+            electricity_input = efficiency[efficiency.index.str.contains("El-Input")].copy()
+            electricity_input["parameter"] = "electricity input"
+            clean_df[tech] = pd.concat([clean_df[tech], electricity_input])
+
+        elif tech == "biomethanation":
+            efficiency_biomethanation = efficiency[efficiency.index.str.contains("Hydrogen Input")].copy()
+            efficiency_biomethanation["parameter"] = "Hydrogen Input"
+            clean_df[tech] = pd.concat([clean_df[tech], efficiency_biomethanation])
+            efficiency_biomethanation = efficiency[efficiency.index.str.contains("CO2 Input")].copy()
+            efficiency_biomethanation["parameter"] = "CO2 Input"
+            clean_df[tech] = pd.concat([clean_df[tech], efficiency_biomethanation])
+            efficiency_heat_out = efficiency[efficiency.index.str.contains("H-Output")].copy()
+            efficiency_heat_out["parameter"] = "heat output"
+            clean_df[tech] = pd.concat([clean_df[tech], efficiency_heat_out])
+            biomass_input = efficiency[efficiency.index.str.contains("Methane Output")].copy()
+            biomass_input["parameter"] = "Methane Output"
             clean_df[tech] = pd.concat([clean_df[tech], biomass_input])
             electricity_input = efficiency[efficiency.index.str.contains("El-Input")].copy()
             electricity_input["parameter"] = "electricity input"
@@ -2835,10 +2883,11 @@ if __name__ == "__main__":
     d_by_tech = get_data_from_DEA(data_in, expectation=snakemake.config["expectation"])
     # concat into pd.Dataframe
     tech_data = pd.concat(d_by_tech).sort_index()
-    tech_data.to_csv('tech_data_0')
+    tech_data.to_csv('tech_data_0.csv')
 
     # clean up units
     tech_data = clean_up_units(tech_data, years, source="dea")
+    tech_data.to_csv('tech_data_1.csv')
 
     # (b) ------ specific assumptions for some technologies -----------------------
 
@@ -2851,10 +2900,12 @@ if __name__ == "__main__":
 
     # drop all rows which only contains zeros
     tech_data = tech_data.loc[(tech_data[years]!=0).sum(axis=1)!=0]
+    tech_data.to_csv('tech_data_2.csv')
 
     # (c) -----  get tech data in pypsa syntax -----------------------------------
     # make categories: investment, FOM, VOM, efficiency, c_b, c_v
     data = order_data(tech_data)
+    data.to_csv('data_0.csv')
 
     # add excel sheet names and further description
     data = add_description(data)
@@ -2866,6 +2917,8 @@ if __name__ == "__main__":
     data = add_carbon_capture(data, tech_data)
     # add perennials and green biorefining
     data = add_perennials_gbr(data)
+    data.to_csv('data_1.csv')
+
 
     # adjust for inflation
     for x in data.index.get_level_values("technology"):

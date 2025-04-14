@@ -52,7 +52,7 @@ jobs:
         path: outputs/
 
     - name: Check for differences in generated outputs
-      run: |
+      run: |-
         git config --global --add safe.directory $GITHUB_WORKSPACE
         git add outputs/
         if ! git diff --cached --quiet; then

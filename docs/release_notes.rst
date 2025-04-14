@@ -44,6 +44,8 @@ Upcoming Release
 
 * Update scenarios for US-specific eletrolyzer investment cost (https://github.com/PyPSA/technology-data/pull/194; https://github.com/PyPSA/technology-data/pull/201)
 
+* Removed the `version` field from the `config.yaml` (https://github.com/PyPSA/technology-data/pull/197)
+
 * Adds a Makefile (https://github.com/PyPSA/technology-data/pull/204)
 
 * Adds rounding for the value column of the csv files produced by compile_cost_assumptions_usa (https://github.com/PyPSA/technology-data/pull/206)

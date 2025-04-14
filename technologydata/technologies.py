@@ -97,7 +97,7 @@ class Technologies:
 
     def __init__(
         self,
-        sources: str | Source | Sources | list[str | Source] | dict[str | Path],
+        sources: str | Source | Sources | list[str | Source] | dict[str, str | Path],
         sort_data: bool = True,
     ) -> None:
         """
@@ -132,8 +132,7 @@ class Technologies:
             ]
         )
 
-        self.data = None
-        self.schema = None
+        self.data = pd.DataFrame()
         self.default_sort_by = [
             "source",
             "technology",
@@ -146,12 +145,7 @@ class Technologies:
             "value",
         ]
 
-        # Load the datapackage schema to be able to validate against it
-        self.schema = ftl.Schema(
-            str(SPECIFICATIONS_PATH / (self.schema_name + ".schema.json"))
-        )
-
-        self.load()
+        self.data = self._load()
         # Optional automatic sorting of data after loading
         if sort_data:
             self.sort_data()
@@ -164,7 +158,7 @@ class Technologies:
         )
         return self
 
-    def load(self) -> Technologies:
+    def _load(self) -> pd.DataFrame:
         """Load the declared sources."""
         if not self.sources:
             raise ValueError("No sources to load.")
@@ -181,37 +175,14 @@ class Technologies:
             ) as resource:
                 resources.append(resource.to_pandas())
 
-        self.data = pd.concat(resources, ignore_index=True, verify_integrity=True)
+        loaded_data = pd.concat(resources, ignore_index=True, verify_integrity=True)
 
-        return self
-
-    def from_pandas(self, data: pd.DataFrame) -> Technologies:
-        """Load the data from a pandas DataFrame."""
-        if not isinstance(data, pd.DataFrame):
-            raise ValueError("Data must be a pandas DataFrame.")
-
-        # TODO add validation of the DataFrame against the schema
-        resource = ftl.Resource(
-            data=data,
-            schema=self.schema,
-        )
-
-        report = resource.validate()
-        if report.valid:
-            self.data = resource.to_pandas()
-            self.sort_data()
-            self.sources = {"from pandas.DataFrame": None}
-        else:
-            raise ValueError(
-                f"Data does not match the schema, see the report for details.{report}"
-            )
-
-        return self
+        return loaded_data
 
     def __repr__(self) -> pd.DataFrame:
         """Return a string representation of the data."""
         # TODO the __repr__ could be improved
-        if self.data is None:
+        if self.data.empty:
             return "No data loaded."
         else:
             # Return the pd.DataFrame representation
@@ -219,7 +190,7 @@ class Technologies:
 
     def __getattr__(self, name: str) -> None:
         """Delegate attribute access to the `data` pandas.DataFrame if the attribute is not found in the class."""
-        if self.data is not None and hasattr(self.data, name):
+        if not self.data.empty and hasattr(self.data, name):
             return_value = getattr(self.data, name)
 
             # Evaluate the function and return the object with the modified data (pd.DataFrame) for operations like .query()

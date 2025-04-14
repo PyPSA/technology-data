@@ -229,7 +229,7 @@ class Sources:
     schema = ftl.Schema(str(SPECIFICATIONS_PATH / (schema_name + ".schema.json")))
 
     def __init__(
-        self, sources: str | Source | list[str | Source] | dict[str:Path]
+        self, sources: str | Source | list[str | Source] | dict[str, Path]
     ) -> None:
         """
         Create a collection of data sources.

@@ -42,7 +42,7 @@ Upcoming Release
 
 * Inflation rates input file `inputs/prc_hicp_aind__custom_9928419_spreadsheet.xlsx` reporting inflation rates for Europe and US and dating back to Jan 2024 substituted by 'Eurostat_inflation_rates.xlsx` dating back to Feb 2025 + Convert EUR data in `manual_input_usa.csv` in USD + Include inflation adjustments for USD (https://github.com/PyPSA/technology-data/pull/193)
 
-* Update scenarios for US-specific eletrolyzer investment cost (https://github.com/PyPSA/technology-data/pull/194)
+* Update scenarios for US-specific eletrolyzer investment cost (https://github.com/PyPSA/technology-data/pull/194; https://github.com/PyPSA/technology-data/pull/201)
 
 * Adds a Makefile (https://github.com/PyPSA/technology-data/pull/204)
 

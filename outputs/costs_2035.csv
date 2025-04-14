@@ -630,8 +630,13 @@ biomass-to-methanol,efficiency-electricity,0.02,MWh_e/MWh_th,"Danish Energy Agen
 biomass-to-methanol,efficiency-heat,0.22,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","97 Methanol from biomass gasif.:  District heat  Output,",2020.0
 biomass-to-methanol,investment,2681.013,EUR/kW_MeOH,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",97 Methanol from biomass gasif.:  Specific investment,2020.0
 biomass-to-methanol,lifetime,20.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",97 Methanol from biomass gasif.:  Technical lifetime,2020.0
+biomethanation,CO2 Input,0.165,t_CO2/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  CO2 Input,",2020.0
 biomethanation,FOM,5.9259,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",106 Biomethanation of biogas:  Fixed O&M ,2020.0
-biomethanation,investment,1110.9375,EUR/kW,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",106 Biomethanation of biogas:  Specific investment ,2020.0
+biomethanation,Hydrogen Input,1.0,MWh/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  Hydrogen Input,",2020.0
+biomethanation,Methane Output,0.8229,MWh_CH4/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  Methane Output,",2020.0
+biomethanation,electricity input,0.0417,MWh_e/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  El-Input,",2020.0
+biomethanation,heat output,0.1667,MWh_th/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  H-Output,",2020.0
+biomethanation,investment,1110.9375,EUR/kW_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",106 Biomethanation of biogas:  Specific investment ,2020.0
 biomethanation,lifetime,30.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",106 Biomethanation of biogas:  Technical lifetime,2020.0
 cement capture,FOM,3.0,%/year,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.c Post comb - Cement kiln,2020.0
 cement capture,capture_rate,0.925,per unit,"Danish Energy Agency, technology_data_for_carbon_capture_transport_storage.xlsx",401.c Post comb - Cement kiln,2020.0

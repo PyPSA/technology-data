@@ -42,9 +42,9 @@ repos:
   - id: pretty-format-yaml
     args: [--autofix, --indent, '2', --preserve-quotes]
 
-# - repo: https://github.com/pre-commit/mirrors-mypy
-#   rev: 'v1.15.0'    # Use the sha / tag you want to point at
-#   hooks:
-#   - id: mypy
-#     args: [--strict, --ignore-missing-imports]
-#     additional_dependencies: [tokenize-rt==3.2.0]
+- repo: https://github.com/pre-commit/mirrors-mypy
+  rev: 'v1.15.0'    # Use the sha / tag you want to point at
+  hooks:
+  - id: mypy
+    args: [--strict, --ignore-missing-imports]
+    additional_dependencies: [tokenize-rt==3.2.0]

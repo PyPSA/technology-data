@@ -92,6 +92,8 @@ class Technologies:
 
     feature = "Technologies"
     schema_name = "technologies"
+    # Load the datapackage schema to be able to validate against it
+    schema = ftl.Schema(str(SPECIFICATIONS_PATH / (schema_name + ".schema.json")))
 
     def __init__(
         self,
@@ -528,3 +530,38 @@ class Technologies:
         """
         self.data.to_csv(path=path, index=False)
 
+    def to_datapackage(self, path: str | Path, overwrite: bool = False) -> None:
+        """
+        Export the data to a folder following the datapackage specification.
+
+        Params
+        -------
+        path : str|Path
+            The path to save the data including sources and schema to.
+            Must be a non-existing or empty folder.
+            To overwrite existing files in a folder, use the `overwrite` parameter.
+        overwrite : bool
+            Existing files with the same name in the target path will be overwritten, default is False.
+        """
+        path = Path(path)
+
+        # Check if the path exists and is empty
+        if path.exists():
+            if not path.is_dir():
+                raise ValueError(f"Path {path} is not a directory.")
+            if len(list(path.iterdir())) > 0 and not overwrite:
+                raise ValueError(
+                    f"Path {path} is not empty. To overwrite existing files, set `overwrite=True`."
+                )
+
+        # Safe to write beyond this point
+
+        # Write the object data and its schema
+        ftl.Resource(self.data).write(path=str(path / f"{self.schema_name}.csv"))
+        self.schema.to_json(path=str(path / f"{self.schema_name}.schema.json"))
+
+        # Write the sources and its schema
+        self.sources.to_datapackage(
+            path=str(path),
+            overwrite=overwrite,
+        )

@@ -24,8 +24,10 @@ from compile_cost_assumptions import (
     dea_sheet_names,
     geometric_series,
     get_data_from_DEA,
+    get_dea_vehicle_data,
     get_excel_sheets,
     get_sheet_location,
+    rename_pypsa_old,
     set_round_trip_efficiency,
     set_specify_assumptions,
 )
@@ -741,3 +743,44 @@ def test_add_carbon_capture(config):
             index=["2020", "source", "unit", "further description"],
         )
     )
+
+
+def test_get_dea_vehicle_data(config):
+    """
+    The test verifies what is returned by get_dea_vehicle_data.
+    """
+    df = get_dea_vehicle_data(
+        snakemake_input_dictionary["dea_vehicles"], ["2020"], pd.DataFrame()
+    )
+    assert df.shape == (90, 5)
+    assert sorted(list(df.columns)) == sorted(
+        ["2020", "unit", "source", "currency_year", "further description"]
+    )
+
+
+def test_rename_pypsa_old():
+    """
+    The test verifies what is returned by rename_pypsa_old.
+    """
+    data = {
+        ("decentral water tank storage", "investment"): [46.8],
+        ("central CHP", "investment"): [3000],
+        ("hydrogen underground storage", "investment"): [2000],
+        ("retrofitting I", "investment"): [1000],
+        ("retrofitting II", "investment"): [1500],
+    }
+    index = pd.MultiIndex.from_tuples(data.keys())
+    cost_dataframe_pypsa = pd.DataFrame(data.values(), index=index, columns=["value"])
+    expected_data = {
+        ("decentral water tank storage", "investment"): [1.0],
+        ("central gas CHP", "investment"): [3000],
+        ("hydrogen storage underground", "investment"): [2000],
+    }
+    expected_index = pd.MultiIndex.from_tuples(expected_data.keys())
+    expected_df = pd.DataFrame(
+        expected_data.values(), index=expected_index, columns=["value"]
+    )
+    expected_df.loc[("decentral water tank storage", "investment"), "unit"] = "EUR/kWh"
+    output_df = rename_pypsa_old(cost_dataframe_pypsa)
+    comparison_df = output_df.compare(expected_df)
+    assert comparison_df.empty

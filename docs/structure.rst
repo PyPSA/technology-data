@@ -39,7 +39,7 @@ This repository has the following structure:
 
 	.. literalinclude:: ../config.yaml
 	   :language: yaml
-	   :lines: 4-40
+	   :lines: 4-41
 
  The following parameters can be set in the ``config.yaml``
 

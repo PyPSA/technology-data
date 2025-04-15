@@ -24,7 +24,8 @@ jobs:
         shell: bash -l {0}
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
     - name: Setup micromamba
       uses: mamba-org/setup-micromamba@v2
@@ -38,18 +39,26 @@ jobs:
 
     - name: Run unit tests
       run: |
-        python -m pytest test
+        make unit-test
 
-    - name: Test snakemake workflow for compile_cost_assumptions
+    - name: Test snakemake workflows
       run: |
-        snakemake --cores all -f compile_cost_assumptions
-
-    - name: Test snakemake workflow for compile_cost_assumptions_usa
-      run: |
-        snakemake --cores all -f compile_cost_assumptions_usa
+        make test
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
         name: technology-data
         path: outputs/
+
+    - name: Check for differences in generated outputs
+      run: |-
+        git config --global --add safe.directory $GITHUB_WORKSPACE
+        git add outputs/
+        if ! git diff --cached --quiet; then
+          echo "Generated outputs differ from the branch. Please commit rerun `snakemake` and commit the changes to the `outputs/*.csv` files."
+          git diff --cached
+          exit 1
+        else
+          echo "No differences found in generated outputs."
+        fi

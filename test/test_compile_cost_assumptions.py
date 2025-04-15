@@ -26,7 +26,6 @@ from compile_cost_assumptions import (
     get_data_from_DEA,
     get_excel_sheets,
     get_sheet_location,
-    prepare_inflation_rate,
     set_round_trip_efficiency,
     set_specify_assumptions,
 )
@@ -34,7 +33,7 @@ from compile_cost_assumptions import (
 path_cwd = pathlib.Path.cwd()
 
 snakemake_input_dictionary = {
-    "inflation_rate": "inputs/prc_hicp_aind__custom_9928419_spreadsheet.xlsx",
+    "inflation_rate": "inputs/Eurostat_inflation_rate.xlsx",
     "pypsa_costs": "inputs/costs_PyPSA.csv",
     "fraunhofer_costs": "inputs/Fraunhofer_ISE_costs.csv",
     "fraunhofer_energy_prices": "inputs/Fraunhofer_ISE_energy_prices.csv",
@@ -120,7 +119,6 @@ def test_get_sheet_location():
         "central geothermal-sourced heat pump": "inputs/technology_data_for_el_and_dh.xlsx",
         "central geothermal heat source": "inputs/technology_data_for_el_and_dh.xlsx",
         "central excess-heat-sourced heat pump": "inputs/technology_data_for_el_and_dh.xlsx",
-        "central water-sourced heat pump": "inputs/technology_data_for_el_and_dh.xlsx",
         "central ground-sourced heat pump": "inputs/technology_data_for_el_and_dh.xlsx",
         "central resistive heater": "inputs/technology_data_for_el_and_dh.xlsx",
         "central gas boiler": "inputs/technology_data_for_el_and_dh.xlsx",
@@ -210,7 +208,6 @@ def test_get_data_from_dea(config):
         "central geothermal-sourced heat pump": (8, 9),
         "central geothermal heat source": (8, 9),
         "central excess-heat-sourced heat pump": (6, 9),
-        "central water-sourced heat pump": (6, 9),
         "central ground-sourced heat pump": (5, 9),
         "central resistive heater": (7, 9),
         "central gas boiler": (6, 9),
@@ -565,20 +562,6 @@ def test_geometric_series(nom_val, den_val, n_terms, start_val, expected_val):
         np.round(geometric_series(nom_val, den_val, n_terms, start_val), 2)
         == expected_val
     )
-
-
-def test_prepare_inflation_rate(mock_inflation_data):
-    """
-    The test verifies what is returned by prepare_inflation_rate.
-    """
-    output_series = prepare_inflation_rate(mock_inflation_data).round(decimals=3)
-    reference_output_series = pd.Series(
-        [0.02, 0.015, 0.025, 0.018],
-        index=[2001, 2002, 2003, 2004],
-        name="European Union - 27 countries (from 2020)",
-    )
-    comparison_series = output_series.compare(reference_output_series)
-    assert comparison_series.size == 0
 
 
 def test_add_gas_storage(config):

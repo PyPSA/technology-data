@@ -11,6 +11,8 @@ Release Notes
 Upcoming Release
 ================
 
+* Removed water-sourced heat pumps, as cost assumptions (based on higher uncertainty range in DEA tables) are a) likely overestimates and b) break pessimistic/optimistic scenarios. Reccomendation: Use excess-heat-sourced heat pump data or see DEA data on seawater-sourced heat pumps.
+
 .. .. warning:: 
   
 ..   The features listed below are not released yet, but will be part of the next release! 
@@ -37,6 +39,18 @@ Upcoming Release
 * Add `purge` and `all` rules to clean all generated outputs and regenerate them (https://github.com/PyPSA/technology-data/pull/187)
 
 * Switch to `python-calamine` as engine for reading Excel files in `pandas`, greatly improving performance (https://github.com/PyPSA/technology-data/pull/188)
+
+* Inflation rates input file `inputs/prc_hicp_aind__custom_9928419_spreadsheet.xlsx` reporting inflation rates for Europe and US and dating back to Jan 2024 substituted by 'Eurostat_inflation_rates.xlsx` dating back to Feb 2025 + Convert EUR data in `manual_input_usa.csv` in USD + Include inflation adjustments for USD (https://github.com/PyPSA/technology-data/pull/193)
+
+* Update scenarios for US-specific eletrolyzer investment cost (https://github.com/PyPSA/technology-data/pull/194; https://github.com/PyPSA/technology-data/pull/201)
+
+* Removed the `version` field from the `config.yaml` (https://github.com/PyPSA/technology-data/pull/197)
+
+* Adds a Makefile (https://github.com/PyPSA/technology-data/pull/204)
+
+* Adds rounding for the value column of the csv files produced by compile_cost_assumptions_usa (https://github.com/PyPSA/technology-data/pull/206)
+
+* Updates ci.yaml such that it fails if the generated outputs are different than the ones committed (https://github.com/PyPSA/technology-data/pull/205)
 
 `v0.11.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.11.0>`__ (24th January 2025)
 =======================================================================================

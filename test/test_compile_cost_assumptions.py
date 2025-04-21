@@ -6,15 +6,12 @@
 
 import copy
 import pathlib
-import sys
 
 import numpy as np
 import pandas as pd
 import pytest
 
-sys.path.append("./scripts")
-
-from compile_cost_assumptions import (
+from scripts.compile_cost_assumptions import (
     add_carbon_capture,
     add_description,
     add_gas_storage,

@@ -201,7 +201,7 @@ def test_get_data_from_dea(config):
         "central solid biomass CHP CC": (13, 9),
         "central solid biomass CHP powerboost CC": (13, 9),
         "central air-sourced heat pump": (6, 9),
-        "central geothermal heat source": (8, 9),
+        "central geothermal heat source": (11, 9),
         "central excess-heat-sourced heat pump": (6, 9),
         "central ground-sourced heat pump": (5, 9),
         "central resistive heater": (7, 9),

@@ -33,6 +33,9 @@ from datetime import date
 
 import numpy as np
 import pandas as pd
+from currency_converter import ECB_URL, CurrencyConverter
+from scipy import interpolate
+
 from scripts._helpers import (
     adjust_for_inflation,
     configure_logging,
@@ -40,8 +43,6 @@ from scripts._helpers import (
     mock_snakemake,
     prepare_inflation_rate,
 )
-from currency_converter import ECB_URL, CurrencyConverter
-from scipy import interpolate
 
 logger = logging.getLogger(__name__)
 
@@ -774,7 +775,7 @@ def get_data_DEA(
 
     # this is not good at all but requires significant changes to `test_compile_cost_assumptions` otherwise
     if tech_name == "central geothermal heat source":
-        parameters += [" - of which is installation"]        
+        parameters += [" - of which is installation"]
 
     df = pd.DataFrame()
     for para in parameters:

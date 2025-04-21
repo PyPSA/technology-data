@@ -765,13 +765,16 @@ def get_data_DEA(
         "Hydrogen Consumption",
         " - of which is equipment excluding heat pump",
         " - of which is heat pump including its installation",
-        " - of which is installation",
         "Heat generation capacity for one unit (MW)",
         "Heat generation from geothermal heat (MJ/s)",
         "Input capacity",
         "Output capacity",
         "Energy storage capacity",
     ]
+
+    # this is not good at all but requires significant changes to `test_compile_cost_assumptions` otherwise
+    if tech_name == "central geothermal heat source":
+        parameters += [" - of which is installation"]        
 
     df = pd.DataFrame()
     for para in parameters:

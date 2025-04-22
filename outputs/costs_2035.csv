@@ -674,14 +674,10 @@ central gas boiler,VOM,1.0582,EUR/MWh_th,"Danish Energy Agency, inputs/technolog
 central gas boiler,efficiency,1.04,per unit,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","44 Natural Gas DH Only:  Total efficiency , net, annual average",2015.0
 central gas boiler,investment,52.9111,EUR/kW_th,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",44 Natural Gas DH Only:  Nominal investment,2015.0
 central gas boiler,lifetime,25.0,years,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",44 Natural Gas DH Only:  Technical lifetime,2015.0
-central geothermal heat source,FOM,1.4723,%/year,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","45.1.a Geothermal DH, 1200m, E:  Fixed O&M",2015.0
-central geothermal heat source,VOM,6.5503,EUR/MWh,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","45.1.a Geothermal DH, 1200m, E:  Variable O&M",2015.0
-central geothermal heat source,investment,1505.7841,EUR/kW,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","45.1.a Geothermal DH, 1200m, E:  Nominal investment",2015.0
-central geothermal heat source,lifetime,30.0,years,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","45.1.a Geothermal DH, 1200m, E:  Technical lifetime",2015.0
-central geothermal-sourced heat pump,FOM,3.6701,%/year,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","45.1.a Geothermal DH, 1200m, E:  Fixed O&M",2015.0
-central geothermal-sourced heat pump,VOM,6.5503,EUR/MWh_th,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","45.1.a Geothermal DH, 1200m, E:  Variable O&M",2015.0
-central geothermal-sourced heat pump,investment,604.0659,EUR/kW_th,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","45.1.a Geothermal DH, 1200m, E:  Nominal investment",2015.0
-central geothermal-sourced heat pump,lifetime,30.0,years,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","45.1.a Geothermal DH, 1200m, E:  Technical lifetime",2015.0
+central geothermal heat source,FOM,0.845,%/year,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","45.1.b Geothermal DH, 2000m, E:  Fixed O&M",2015.0
+central geothermal heat source,VOM,4.8424,EUR/MWh,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","45.1.b Geothermal DH, 2000m, E:  Variable O&M",2015.0
+central geothermal heat source,investment,2773.9495,EUR/kW,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","45.1.b Geothermal DH, 2000m, E:  Nominal investment",2015.0
+central geothermal heat source,lifetime,30.0,years,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","45.1.b Geothermal DH, 2000m, E:  Technical lifetime",2015.0
 central ground-sourced heat pump,FOM,0.4041,%/year,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","40 Absorption heat pump, DH:  Fixed O&M",2015.0
 central ground-sourced heat pump,VOM,1.373,EUR/MWh_th,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","40 Absorption heat pump, DH:  Variable O&M",2015.0
 central ground-sourced heat pump,efficiency,1.735,per unit,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","40 Absorption heat pump, DH:  Total efficiency , net, annual average",2015.0

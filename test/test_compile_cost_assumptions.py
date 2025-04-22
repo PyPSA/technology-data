@@ -6,15 +6,12 @@
 
 import copy
 import pathlib
-import sys
 
 import numpy as np
 import pandas as pd
 import pytest
 
-sys.path.append("./scripts")
-
-from compile_cost_assumptions import (
+from scripts.compile_cost_assumptions import (
     add_carbon_capture,
     add_description,
     add_gas_storage,
@@ -118,7 +115,6 @@ def test_get_sheet_location():
         "central solid biomass CHP CC": "inputs/technology_data_for_el_and_dh.xlsx",
         "central solid biomass CHP powerboost CC": "inputs/technology_data_for_el_and_dh.xlsx",
         "central air-sourced heat pump": "inputs/technology_data_for_el_and_dh.xlsx",
-        "central geothermal-sourced heat pump": "inputs/technology_data_for_el_and_dh.xlsx",
         "central geothermal heat source": "inputs/technology_data_for_el_and_dh.xlsx",
         "central excess-heat-sourced heat pump": "inputs/technology_data_for_el_and_dh.xlsx",
         "central ground-sourced heat pump": "inputs/technology_data_for_el_and_dh.xlsx",
@@ -207,8 +203,7 @@ def test_get_data_from_dea(config):
         "central solid biomass CHP CC": (13, 9),
         "central solid biomass CHP powerboost CC": (13, 9),
         "central air-sourced heat pump": (6, 9),
-        "central geothermal-sourced heat pump": (8, 9),
-        "central geothermal heat source": (8, 9),
+        "central geothermal heat source": (11, 9),
         "central excess-heat-sourced heat pump": (6, 9),
         "central ground-sourced heat pump": (5, 9),
         "central resistive heater": (7, 9),

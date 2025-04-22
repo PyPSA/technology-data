@@ -110,7 +110,6 @@ def mock_input_data():
             "technology": ["random_tech"] * 50
             + [
                 "central air-sourced heat pump",
-                "central geothermal-sourced heat pump",
                 "central gas boiler",
                 "central resistive heater",
                 "decentral air-sourced heat pump",
@@ -170,7 +169,6 @@ def mock_input_data():
                 "EUR/MWh",
                 "MW",
                 "EUR/MW",
-                "EUR/MW/year",
                 "EUR/MWh",
                 "MW",
                 "EUR/MW",
@@ -186,7 +184,7 @@ def mock_input_data():
             + [0.000001] * 3
             + [0.001] * 3
             + [1000.0]
-            + [1.0] * 46,
+            + [1.0] * 45,
         },
     ).set_index(["technology"])
 
@@ -247,7 +245,6 @@ def mock_output_data():
         if source == "dea":
             unit_list += [
                 "EUR/MW_th",
-                "EUR/MW_th/year",
                 "EUR/MWh_th",
                 "MW_th",
                 "EUR/MW_th",
@@ -261,7 +258,6 @@ def mock_output_data():
         else:
             unit_list += [
                 "EUR/MW",
-                "EUR/MW/year",
                 "EUR/MWh",
                 "MW",
                 "EUR/MW",
@@ -278,7 +274,6 @@ def mock_output_data():
                 "technology": ["random_tech"] * 50
                 + [
                     "central air-sourced heat pump",
-                    "central geothermal-sourced heat pump",
                     "central gas boiler",
                     "central resistive heater",
                     "decentral air-sourced heat pump",
@@ -294,7 +289,7 @@ def mock_output_data():
                 ]
                 + [1.0] * 7
                 + [3.6]
-                + [1.0] * 45,
+                + [1.0] * 44,
             },
         ).set_index(["technology"])
 

@@ -307,6 +307,8 @@ HVDC underground,investment,1008.2934,EUR/MW/km,Härtel et al. (2017): https://d
 HVDC underground,lifetime,40.0,years,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,"Based on estimated costs for a NA-EU connector (bidirectional,4 GW, 3000km length and ca. 3000m depth). Costs in return based on existing/currently under construction undersea cables. (same as for HVDC submarine)",2018.0
 Haber-Bosch,FOM,3.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Fixed O&M,2015.0
 Haber-Bosch,VOM,0.0225,EUR/MWh_NH3,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Variable O&M,2015.0
+Haber-Bosch,efficiency,0.0005,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","103 Hydrogen to Ammonia:  Electricity Consumption,",2015.0
+Haber-Bosch,efficiency-heat,0.0004,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","103 Hydrogen to Ammonia:  District Heating Output,",2015.0
 Haber-Bosch,electricity-input,0.2473,MWh_el/MWh_NH3,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), table 11.",Assume 5 GJ/t_NH3 for compressors and NH3 LHV = 5.16666 MWh/t_NH3.,
 Haber-Bosch,hydrogen-input,1.1484,MWh_H2/MWh_NH3,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), pg. 57.","178 kg_H2 per t_NH3, LHV for both assumed.",
 Haber-Bosch,investment,1327.0808,EUR/kW_NH3,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Specific investment,2015.0
@@ -534,6 +536,8 @@ Zn-Br-Nonflow-store,FOM,0.2244,%/year,"Viswanathan_2022, 0.43 % of SB","{'carrie
 Zn-Br-Nonflow-store,investment,239220.5823,EUR/MWh,"Viswanathan_2022, p.59 (p.81) Table 4.14","{'carrier': ['znbr'], 'technology_type': ['store'], 'type': ['electrochemical'], 'note': ['DC storage block']}",2020.0
 Zn-Br-Nonflow-store,lifetime,15.0,years,"Viswanathan_2022, p.59 (p.81)","{'carrier': ['znbr'], 'technology_type': ['store'], 'type': ['electrochemical'], 'note': ['NULL']}",2020.0
 air separation unit,FOM,3.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Fixed O&M,2015.0
+air separation unit,efficiency,0.0005,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","103 Hydrogen to Ammonia:  Electricity Consumption,",2015.0
+air separation unit,efficiency-heat,0.0004,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","103 Hydrogen to Ammonia:  District Heating Output,",2015.0
 air separation unit,electricity-input,0.25,MWh_el/t_N2,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), p.288.","For consistency reasons use value from Danish Energy Agency. DEA also reports range of values (0.2-0.4 MWh/t_N2) on pg. 288. Other efficienices reported are even higher, e.g. 0.11 Mwh/t_N2 from Morgan (2013): Techno-Economic Feasibility Study of Ammonia Plants Powered by Offshore Wind .",
 air separation unit,investment,745954.8206,EUR/t_N2/h,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Specific investment,2015.0
 air separation unit,lifetime,30.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Technical lifetime,2015.0
@@ -571,8 +575,13 @@ biogas CC,efficiency,1.0,per unit,Assuming input biomass is already given in bio
 biogas CC,investment,938.7177,EUR/kW,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","81 Biogas, Basic plant, small:  Specific investment",2020.0
 biogas CC,lifetime,20.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","81 Biogas, Basic plant, small:  Technical lifetime",2020.0
 biogas manure,fuel,19.8729,EUR/MWhth,"JRC ENSPRESO ca avg for MINBIOGAS1 (manure), ENS_BaU_GFTM",,2010.0
+biogas plus hydrogen,Biogas Input,1.1522,MWh_th/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","99 SNG from methan. of biogas:  Biogas Consumption,",2020.0
 biogas plus hydrogen,FOM,4.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Fixed O&M,2020.0
+biogas plus hydrogen,Methane Output,1.9348,MWh_CH4/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","99 SNG from methan. of biogas:  Methane Output,",2020.0
 biogas plus hydrogen,VOM,3.4454,EUR/MWh_CH4,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Variable O&M,2020.0
+biogas plus hydrogen,electricity input,0.0217,MWh_e/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","99 SNG from methan. of biogas:  El-Input,",2020.0
+biogas plus hydrogen,heat output,0.2174,MWh_th/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","99 SNG from methan. of biogas:  H-Output,",2020.0
+biogas plus hydrogen,hydrogen input,1.0,MWh_H2/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","99 SNG from methan. of biogas:  Hydrogen Consumption,",2020.0
 biogas plus hydrogen,investment,723.5374,EUR/kW_CH4,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Specific investment,2020.0
 biogas plus hydrogen,lifetime,25.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Technical lifetime,2020.0
 biogas upgrading,FOM,17.3842,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","82 Upgrading 3,000 Nm3 per h:  Fixed O&M ",2020.0
@@ -632,7 +641,7 @@ biomass-to-methanol,investment,2681.013,EUR/kW_MeOH,"Danish Energy Agency, data_
 biomass-to-methanol,lifetime,20.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",97 Methanol from biomass gasif.:  Technical lifetime,2020.0
 biomethanation,CO2 Input,0.165,t_CO2/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  CO2 Input,",2020.0
 biomethanation,FOM,5.9259,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",106 Biomethanation of biogas:  Fixed O&M ,2020.0
-biomethanation,Hydrogen Input,1.0,MWh/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  Hydrogen Input,",2020.0
+biomethanation,Hydrogen Input,1.0,MWh_H2/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  Hydrogen Input,",2020.0
 biomethanation,Methane Output,0.8229,MWh_CH4/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  Methane Output,",2020.0
 biomethanation,electricity input,0.0417,MWh_e/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  El-Input,",2020.0
 biomethanation,heat output,0.1667,MWh_th/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  H-Output,",2020.0

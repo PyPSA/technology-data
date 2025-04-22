@@ -628,6 +628,9 @@ def get_data_DEA(tech, data_in, expectation=None):
                   'Methane Output',
                   'CO2 Consumption',
                   'Hydrogen Consumption',
+                  'Biogas Consumption',
+                  'SNG Output',
+                  'District Heating Output',
                   ' - of which is equipment excluding heat pump',
                   ' - of which is heat pump including its installation',
                   'Input capacity',
@@ -730,6 +733,9 @@ def get_data_DEA(tech, data_in, expectation=None):
 
     if "biomethanation" in tech:
         df = biomethanation_dea(df)
+
+    if "biogas plus hydrogen" in tech:
+        df = biogas_plus_hydrogen_dea(df)
 
     elif tech == "central geothermal-sourced heat pump":
         df.loc["Nominal investment (MEUR per MW)"] = df.loc[" - of which is heat pump including its installation"]
@@ -1003,11 +1009,72 @@ def biomethanation_dea (df):
     }
 
     new_units = {
-        "Hydrogen Consumption": "MWh/",
+        "Hydrogen Consumption": "MWh_H2/",
         "CO2 Consumption": "t_CO2",
         "Electricity Consumption": "MWh_e/",
         "Methane Output": "MWh_CH4/",
         "Heat Output": "MWh_th/",
+    }
+
+    for old_label, new_label in replacements.items():
+        matches = df.index[df.index.str.contains(old_label)]
+        if not matches.empty:
+            old_index = matches[0]
+            updated_index = old_index.replace(old_label, new_label)
+            updated_index = updated_index.replace(old_units[old_label], new_units[old_label])
+            df.rename(index={old_index: updated_index}, inplace=True)
+
+    return df
+
+def biogas_plus_hydrogen_dea(df):
+    # convert efficiencies from MW/MWTotal input to bigas input basis
+    # adjust names of efficiencies paramaters for further processing
+
+    idx = df.index.str.contains("Total Input")
+    idx2 = df.index.str.contains("Hydrogen Consumption")
+    idx4 = df.index.str.contains("SNG Output")
+
+    # calculate H2/CH4 ratio (MW/MW)
+    H2_CH4_ratio = df.loc[idx2].astype(float) / df.loc[idx4].values.astype(
+        float)
+
+    # normalize all inputs & outputs to MW of hydrogen
+    df.loc[idx] = df.loc[idx].astype(float) / df.loc[idx2].values.astype(
+        float)
+    df.index = df.index.str.replace(" Total Input", "_H2")
+
+
+    # adjust cost basis from €/MWh CH4 (check pdf) to €/MW H2
+    #idx5 = df.index.str.contains("EUR")
+    #df.loc[idx5] = df.loc[idx5].astype(float).div(H2_CH4_ratio.values.flatten(), axis=1)
+    #df.index = [
+    #    idx.replace("MW_SNG", "MW_H2").replace("MWh_SNG", "MWh_H2") if i else idx
+    #    for idx, i in zip(df.index, idx5)
+    #]
+
+
+    replacements = {
+        "Hydrogen Consumption": "Hydrogen Consumption",
+        "Biogas Consumption": "Biogas Consumption",
+        "Electricity Consumption": "El-Input",
+        "SNG Output" : "Methane Output",
+        "District Heating Output" : "H-Output",
+    }
+
+    old_units = {
+        "Hydrogen Consumption": "MWh/",
+        "Biogas Consumption": "MWh/",
+        "Electricity Consumption": "MWh/",
+        "SNG Output": "MWh/",
+        "District Heating Output": "MWh/",
+    }
+
+    new_units = {
+        "Hydrogen Consumption": "MWh_H2/",
+        "Biogas Consumption": "MWh_th/",
+        "Electricity Consumption": "MWh_e/",
+        "SNG Output": "MWh_CH4/",
+        "District Heating Output": "MWh_th/",
     }
 
     for old_label, new_label in replacements.items():
@@ -1580,10 +1647,13 @@ def order_data(tech_data):
         efficiency = df[((df.index.str.contains("efficiency")) |
                          (df.index.str.contains("Hydrogen output, at LHV")) |
                          (df.index.str.contains("Hydrogen Output")) |
+                         (df.index.str.contains("Hydrogen Consumption")) |
                          (df.index.str.contains("FT Liquids Output, MWh/MWh Total Input")) |
                          (df.index.str.contains("Methanol Output")) |
                          (df.index.str.contains("District heat  Output")) |
+                         (df.index.str.contains("District Heating Output")) |
                          (df.index.str.contains("Electricity Output")) |
+                         (df.index.str.contains("Electricity Consumption")) |
                          (df.index.str.contains("Electricity Intput")) |
                          (df.index.str.contains("hereof recoverable for district heating")) |
                          (df.index.str.contains("Bio SNG")) |
@@ -1592,6 +1662,8 @@ def order_data(tech_data):
                          (df.index.str.contains("H-Output")) |
                          (df.index.str.contains("Hydrogen Input")) |
                          (df.index.str.contains("CO2 Input")) |
+                         (df.index.str.contains("SNG Output")) |
+                         (df.index.str.contains("Biogas Consumption")) |
                          (df.index.str.contains("Methane Output")) |
                          (df.index.str.contains("Biomass Input")) |
                          (df.index.str.contains("El-Input")) |
@@ -1615,6 +1687,7 @@ def order_data(tech_data):
                            df.unit.str.contains("MWh_CH4/MWh_H2") |
                            df.unit.str.contains("MWh/MWh_H2") |
                            df.unit.str.contains("MWh_th/MWh_H2") |
+                           df.unit.str.contains("/MWh_H2") |
                            df.unit.str.contains("% MWh_biomass"))].copy()
 
         if tech == 'Fischer-Tropsch':
@@ -1694,6 +1767,32 @@ def order_data(tech_data):
             electricity_input = efficiency[efficiency.index.str.contains("El-Input")].copy()
             electricity_input["parameter"] = "electricity input"
             clean_df[tech] = pd.concat([clean_df[tech], electricity_input])
+
+        elif tech == "biogas plus hydrogen":
+            h2_input = efficiency[efficiency.index.str.contains("Hydrogen Consumption")].copy()
+            if not h2_input.empty:
+                h2_input["parameter"] = "hydrogen input"
+                clean_df[tech] = pd.concat([clean_df[tech], h2_input])
+
+            biogas_input = efficiency[efficiency.index.str.contains("Biogas Consumption")].copy()
+            if not biogas_input.empty:
+                biogas_input["parameter"] = "Biogas Input"
+                clean_df[tech] = pd.concat([clean_df[tech], biogas_input])
+
+            sng_output = efficiency[efficiency.index.str.contains("Methane Output")].copy()
+            if not sng_output.empty:
+                sng_output["parameter"] = "Methane Output"
+                clean_df[tech] = pd.concat([clean_df[tech], sng_output])
+
+            heat_output = efficiency[efficiency.index.str.contains("H-Output")].copy()
+            if not heat_output.empty:
+                heat_output["parameter"] = "heat output"
+                clean_df[tech] = pd.concat([clean_df[tech], heat_output])
+
+            elec_input = efficiency[efficiency.index.str.contains("El-Input")].copy()
+            if not elec_input.empty:
+                elec_input["parameter"] = "electricity input"
+                clean_df[tech] = pd.concat([clean_df[tech], elec_input])
 
         elif len(efficiency) != 1:
             switch = True
@@ -2190,25 +2289,25 @@ def carbon_flow(costs,year):
             AD_CO2_share = 0.4 #volumetric share in biogas (rest is CH4)
 
 
-        elif tech == 'biogas plus hydrogen':
-            #NB: this falls between power to gas and biogas and should be used with care, due to possible minor
-            # differences in resource use etc. which may tweak results in favour of one tech or another
-            eta = 1.6
-            H2_in = 0.46
+        #elif tech == 'biogas plus hydrogen':
+        #    #NB: this falls between power to gas and biogas and should be used with care, due to possible minor
+        #    # differences in resource use etc. which may tweak results in favour of one tech or another
+        #    eta = 1.6
+        #    H2_in = 0.46
 
-            heat_out = 0.19
-            source = "Calculated from data in Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx"
-            costs.loc[(tech, 'hydrogen input'), 'value'] = H2_in
-            costs.loc[(tech, 'hydrogen input'), 'unit'] = "MWh_H2/MWh_CH4"
-            costs.loc[(tech, 'hydrogen input'), 'source'] = source
+        #    heat_out = 0.19
+        #    source = "Calculated from data in Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx"
+        #    costs.loc[(tech, 'hydrogen input'), 'value'] = H2_in
+        #    costs.loc[(tech, 'hydrogen input'), 'unit'] = "MWh_H2/MWh_CH4"
+        #    costs.loc[(tech, 'hydrogen input'), 'source'] = source
 
-            costs.loc[(tech, 'heat output'), 'value'] = heat_out
-            costs.loc[(tech, 'heat output'), 'unit'] = "MWh_th/MWh_CH4"
-            costs.loc[(tech, 'heat output'), 'source'] = source
-            currency_year = costs.loc[('biogas plus hydrogen', 'VOM'), "currency_year"]
+        #    costs.loc[(tech, 'heat output'), 'value'] = heat_out
+        #    costs.loc[(tech, 'heat output'), 'unit'] = "MWh_th/MWh_CH4"
+        #    costs.loc[(tech, 'heat output'), 'source'] = source
+        #    currency_year = costs.loc[('biogas plus hydrogen', 'VOM'), "currency_year"]
 
-            #TODO: this needs to be refined based on e.g. stoichiometry:
-            AD_CO2_share = 0.1 #volumetric share in biogas (rest is CH4).
+        #    #TODO: this needs to be refined based on e.g. stoichiometry:
+        #    AD_CO2_share = 0.1 #volumetric share in biogas (rest is CH4).
 
         elif tech == 'digestible biomass to hydrogen':
             inv_cost = bmH2_cost[year]

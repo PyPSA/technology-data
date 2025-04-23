@@ -98,11 +98,17 @@ CO2 liquefaction,lifetime,25.0,years,"Guesstimate, based on CH4 liquefaction.",,
 CO2 pipeline,FOM,0.9,%/year,"Danish Energy Agency, Technology Data for Energy Transport (March 2021), Excel datasheet: 121 co2 pipeline.",,2015.0
 CO2 pipeline,investment,2116.4433,EUR/(tCO2/h)/km,"Danish Energy Agency, Technology Data for Energy Transport (March 2021), Excel datasheet: 121 co2 pipeline.",Assuming the 120-500 t CO2/h range that is based on cost of a 12 inch onshore pipeline.,2015.0
 CO2 pipeline,lifetime,50.0,years,"Danish Energy Agency, Technology Data for Energy Transport (March 2021), Excel datasheet: 121 co2 pipeline.",,2015.0
+CO2 storage cylinders, FOM,1.0,%/year,AU Foulum,,2020.0
+CO2 storage cylinders, investment,77000.0, EUR/t_CO2,AU Foulum,,2020.0
+CO2 storage cylinders, lifetime,25.0,years,AU Foulum,,2020.0
 CO2 storage tank,FOM,1.0,%/year,"Lauri et al. 2014: doi: 10.1016/j.egypro.2014.11.297, pg. 2746 .","Assuming a 3000m^3 pressurised steel cylinder tanks and a CO2 density of 1100 kg/m^3 (close to triple point at -56.6°C and 5.2 bar with max density of 1200kg/m^3 ). Lauri et al. report costs 3x higher per m^3 for steel tanks, which are consistent with other sources. The numbers reported are in rather difficult to pinpoint as systems can greatly vary.",2013.0
 CO2 storage tank,investment,2584.3462,EUR/t_CO2,"Lauri et al. 2014: doi: 10.1016/j.egypro.2014.11.297, Table 3.","Assuming a 3000m^3 pressurised steel cylinder tanks and a CO2 density of 1100 kg/m^3 (close to triple point at -56.6°C and 5.2 bar with max density of 1200kg/m^3 ). Lauri et al. report costs 3x higher per m^3 for steel tanks, which are consistent with other sources. The numbers reported are in rather difficult to pinpoint as systems can greatly vary.",2013.0
 CO2 storage tank,lifetime,25.0,years,"Lauri et al. 2014: doi: 10.1016/j.egypro.2014.11.297, pg. 2746 .","Assuming a 3000m^3 pressurised steel cylinder tanks and a CO2 density of 1100 kg/m^3 (close to triple point at -56.6°C and 5.2 bar with max density of 1200kg/m^3 ). Lauri et al. report costs 3x higher per m^3 for steel tanks, which are consistent with other sources. The numbers reported are in rather difficult to pinpoint as systems can greatly vary.",2013.0
 CO2 submarine pipeline,FOM,0.5,%/year,"Danish Energy Agency, Technology Data for Energy Transport (March 2021), Excel datasheet: 121 co2 pipeline.",,2015.0
 CO2 submarine pipeline,investment,4232.8865,EUR/(tCO2/h)/km,"Danish Energy Agency, Technology Data for Energy Transport (March 2021), Excel datasheet: 121 co2 pipeline.",Assuming the 120-500 t CO2/h range that is based on cost of a 12 inch offshore pipeline.,2015.0
+CO2_industrial_compressor, FOM,4.0,%/year,AU Foulum,,2020.0
+CO2_industrial_compressor, investment,1516000.0, EUR/t/h_CO2,AU Foulum,,2020.0
+CO2_industrial_compressor, lifetime,25.0,years,AU Foulum,,2020.0
 Charging infrastructure fast (purely) battery electric vehicles passenger cars,FOM,1.6,%,PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html,Charging infrastructure fast (purely) battery electric vehicles passenger cars,2020.0
 Charging infrastructure fast (purely) battery electric vehicles passenger cars,investment,448894.0,EUR/Ladesï¿½ule,PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html,Charging infrastructure fast (purely) battery electric vehicles passenger cars,2020.0
 Charging infrastructure fast (purely) battery electric vehicles passenger cars,lifetime,30.0,years,PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html,Charging infrastructure fast (purely) battery electric vehicles passenger cars,2020.0
@@ -584,6 +590,8 @@ biogas plus hydrogen,heat output,0.2174,MWh_th/MWh_H2,"Danish Energy Agency, dat
 biogas plus hydrogen,hydrogen input,1.0,MWh_H2/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","99 SNG from methan. of biogas:  Hydrogen Consumption,",2020.0
 biogas plus hydrogen,investment,482.3582,EUR/kW_CH4,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Specific investment,2020.0
 biogas plus hydrogen,lifetime,25.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Technical lifetime,2020.0
+biogas storage, investment,14.45, EUR/kWh,AU Foulum,,2020.0
+biogas storage, lifetime,25.0,years,AU Foulum,,2020.0
 biogas upgrading,FOM,17.0397,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","82 Upgrading 3,000 Nm3 per h:  Fixed O&M ",2020.0
 biogas upgrading,VOM,2.6993,EUR/MWh output,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","82 Upgrading 3,000 Nm3 per h:  Variable O&M",2020.0
 biogas upgrading,investment,125.1744,EUR/kW,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","82 Upgrading 3,000 Nm3 per h:  investment (upgrading, methane redution and grid injection)",2020.0

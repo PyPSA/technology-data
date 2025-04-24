@@ -582,13 +582,12 @@ biogas CC,investment,938.7177,EUR/kW,"Danish Energy Agency, data_sheets_for_rene
 biogas CC,lifetime,20.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","81 Biogas, Basic plant, small:  Technical lifetime",2020.0
 biogas manure,fuel,19.8729,EUR/MWhth,"JRC ENSPRESO ca avg for MINBIOGAS1 (manure), ENS_BaU_GFTM",,2010.0
 biogas plus hydrogen,Biogas Input,1.1522,MWh_th/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","99 SNG from methan. of biogas:  Biogas Consumption,",2020.0
-biogas plus hydrogen,FOM,4.0,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Fixed O&M,2020.0
 biogas plus hydrogen,Methane Output,1.9348,MWh_CH4/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","99 SNG from methan. of biogas:  Methane Output,",2020.0
-biogas plus hydrogen,VOM,3.4454,EUR/MWh_CH4,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Variable O&M,2020.0
+biogas plus hydrogen,VOM,6.6661,EUR/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Variable O&M,2020.0
 biogas plus hydrogen,electricity input,0.0217,MWh_e/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","99 SNG from methan. of biogas:  El-Input,",2020.0
 biogas plus hydrogen,heat output,0.2174,MWh_th/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","99 SNG from methan. of biogas:  H-Output,",2020.0
 biogas plus hydrogen,hydrogen input,1.0,MWh_H2/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","99 SNG from methan. of biogas:  Hydrogen Consumption,",2020.0
-biogas plus hydrogen,investment,723.5374,EUR/kW_CH4,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Specific investment,2020.0
+biogas plus hydrogen,investment,1399.8875,EUR/kW_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Specific investment,2020.0
 biogas plus hydrogen,lifetime,25.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Technical lifetime,2020.0
 biogas storage, investment,14.45, EUR/kWh,AU Foulum,,2020.0
 biogas storage, lifetime,25.0,years,AU Foulum,,2020.0
@@ -647,10 +646,11 @@ biomass-to-methanol,efficiency-electricity,0.02,MWh_e/MWh_th,"Danish Energy Agen
 biomass-to-methanol,efficiency-heat,0.22,per unit,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","97 Methanol from biomass gasif.:  District heat  Output,",2020.0
 biomass-to-methanol,investment,2681.013,EUR/kW_MeOH,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",97 Methanol from biomass gasif.:  Specific investment,2020.0
 biomass-to-methanol,lifetime,20.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",97 Methanol from biomass gasif.:  Technical lifetime,2020.0
+biomethanation,Biogas Input,1.1444,MWh_th/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  Biogas Consumption,",2020.0
 biomethanation,CO2 Input,0.165,t_CO2/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  CO2 Input,",2020.0
 biomethanation,FOM,5.9259,%/year,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",106 Biomethanation of biogas:  Fixed O&M ,2020.0
 biomethanation,Hydrogen Input,1.0,MWh_H2/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  Hydrogen Input,",2020.0
-biomethanation,Methane Output,0.8229,MWh_CH4/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  Methane Output,",2020.0
+biomethanation,Methane Output,1.9673,MWh_CH4/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  Methane Output,",2020.0
 biomethanation,electricity input,0.0417,MWh_e/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  El-Input,",2020.0
 biomethanation,heat output,0.1667,MWh_th/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  H-Output,",2020.0
 biomethanation,investment,1110.9375,EUR/kW_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",106 Biomethanation of biogas:  Specific investment ,2020.0

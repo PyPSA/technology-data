@@ -582,6 +582,7 @@ biogas CC,investment,894.8011,EUR/kW,"Danish Energy Agency, data_sheets_for_rene
 biogas CC,lifetime,20.0,years,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","81 Biogas, Basic plant, small:  Technical lifetime",2020.0
 biogas manure,fuel,19.9144,EUR/MWhth,"JRC ENSPRESO ca avg for MINBIOGAS1 (manure), ENS_BaU_GFTM",,2010.0
 biogas plus hydrogen,Biogas Input,1.1522,MWh_th/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","99 SNG from methan. of biogas:  Biogas Consumption,",2020.0
+biogas plus hydrogen,CO2 Input,0.1235,t_CO2/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","99 SNG from methan. of biogas:  CO2 Input,",2020.0
 biogas plus hydrogen,Methane Output,1.9348,MWh_CH4/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","99 SNG from methan. of biogas:  Methane Output,",2020.0
 biogas plus hydrogen,VOM,5.1848,EUR/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Variable O&M,2020.0
 biogas plus hydrogen,electricity input,0.0217,MWh_e/MWh_H2,"Danish Energy Agency, data_sheets_for_renewable_fuels.xlsx","99 SNG from methan. of biogas:  El-Input,",2020.0

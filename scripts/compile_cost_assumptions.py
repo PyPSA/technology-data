@@ -965,7 +965,12 @@ def biomethanation_dea (df):
     """This function deos:
     - iport dea data for biomethanation from DEA (4H2 + CO2 -> CH4 + 2H2O)
     - recalculated the cost and inputs per MW of H2 added (bus 0 is H2)"""
+
+
     CO2_density = 1.98  # kg/Nm3
+    CH4_vol = 0.58 # biogas vol%, from DEA source for biomethanation
+    CO2_vol = 0.42 # biogas vol%, from DEA source for biomethanation
+    CH4_lhv = 35.8 / 3600 # MWh/m3
 
     idx = df.index.str.contains("Total Input")
     idx2 = df.index.str.contains("Hydrogen Consumption")
@@ -973,23 +978,42 @@ def biomethanation_dea (df):
     idx4 = df.index.str.contains("Methane Output")
 
     # calculate H2/CH4 ratio (MW/MW)
-    H2_CH4_ratio = df.loc[idx2].astype(float) / df.loc[idx4].values.astype(
+    CH4_H2_ratio = df.loc[idx4].astype(float) / df.loc[idx2].values.astype(
         float)
+
+    # adjust cost basis from €/MWh CH4 (check pdf) to €/MW H2
+    # Note costs are give for the CH4 produced only (excluding the input CH4 in biogas)
+    idx5 = df.index.str.contains("EUR")
+    df.loc[idx5] = df.loc[idx5].astype(float).mul(CH4_H2_ratio.values.flatten(), axis=1)
+    df.index = [
+        idx.replace("MW", "MW_H2").replace("MWh", "MWh_H2") if i else idx
+        for idx, i in zip(df.index, idx5)
+    ]
+
     # normalize all inputs & outputs to MW of hydrogen
     df.loc[idx] = df.loc[idx].astype(float) / df.loc[idx2].values.astype(
         float)
     df.index = df.index.str.replace(" Total Input", "_H2")
 
-    # convert CO2 from Nm3 to tons
-    df.loc[idx3] = df.loc[idx3].astype(float) * CO2_density / 1000 # tCO2 / h / MW_H2
+    # Calculate biogas input in MWh/MWh_H2(consumption)
+    CH4_vol = 0.58
+    CO2_vol = 0.42
+    CH4_lhv = 35.8 / 3600  # ≈ 0.009944 MWh/Nm³
+    print(df)
+    df.loc['Biogas Consumption, [MWh_th/MWh_H2]'] = (
+            df.loc[idx3].astype(float).iloc[0] * CH4_vol / CO2_vol * CH4_lhv
+    ) # in MW_biogas/ MW_H2
+    print(df)
 
-    # adjust cost basis from €/MWh CH4 (check pdf) to €/MW H2
-    idx5 = df.index.str.contains("EUR")
-    df.loc[idx5] = df.loc[idx5].astype(float).div(H2_CH4_ratio.values.flatten(), axis=1)
-    df.index = [
-        idx.replace("MW", "MW_H2").replace("MWh", "MWh_H2") if i else idx
-        for idx, i in zip(df.index, idx5)
-    ]
+    # convert CO2 from Nm3 to tons
+    idx3 = df.index.str.contains('CO2 Consumption')
+    df.loc[idx3] = df.loc[idx3].astype(float) * CO2_density / 1000 # tCO2 / h / MW_H2
+    print(df)
+
+    # correct methane output to the total biomethane (biogas + production)
+    idx4 = df.index.str.contains("Methane Output")
+    df.loc[idx4] = df.loc[idx4] + df.loc['Biogas Consumption, [MWh_th/MWh_H2]']
+    print(df)
 
     # rename units
     replacements = {
@@ -1033,25 +1057,24 @@ def biogas_plus_hydrogen_dea(df):
     idx = df.index.str.contains("Total Input")
     idx2 = df.index.str.contains("Hydrogen Consumption")
     idx4 = df.index.str.contains("SNG Output")
+    idx5 = df.index.str.contains("EUR")
 
     # calculate H2/CH4 ratio (MW/MW)
-    H2_CH4_ratio = df.loc[idx2].astype(float) / df.loc[idx4].values.astype(
+    SNG_H2_ratio = df.loc[idx4].astype(float) / df.loc[idx2].values.astype(
         float)
+
+    # adjust cost basis from €/MWh CH4 (check pdf) to €/MW H2
+    # note cost are given for the total SNG (biogas + production)
+    df.loc[idx5] = df.loc[idx5].astype(float).mul(SNG_H2_ratio.values.flatten(), axis=1)
+    df.index = [
+        idx.replace(" SNG", "_H2") if i else idx
+        for idx, i in zip(df.index, idx5)
+    ]
 
     # normalize all inputs & outputs to MW of hydrogen
     df.loc[idx] = df.loc[idx].astype(float) / df.loc[idx2].values.astype(
         float)
     df.index = df.index.str.replace(" Total Input", "_H2")
-
-
-    # adjust cost basis from €/MWh CH4 (check pdf) to €/MW H2
-    #idx5 = df.index.str.contains("EUR")
-    #df.loc[idx5] = df.loc[idx5].astype(float).div(H2_CH4_ratio.values.flatten(), axis=1)
-    #df.index = [
-    #    idx.replace("MW_SNG", "MW_H2").replace("MWh_SNG", "MWh_H2") if i else idx
-    #    for idx, i in zip(df.index, idx5)
-    #]
-
 
     replacements = {
         "Hydrogen Consumption": "Hydrogen Consumption",
@@ -1767,6 +1790,9 @@ def order_data(tech_data):
             electricity_input = efficiency[efficiency.index.str.contains("El-Input")].copy()
             electricity_input["parameter"] = "electricity input"
             clean_df[tech] = pd.concat([clean_df[tech], electricity_input])
+            biogas_input = efficiency[efficiency.index.str.contains("Biogas Consumption")].copy()
+            biogas_input["parameter"] = "Biogas Input"
+            clean_df[tech] = pd.concat([clean_df[tech], biogas_input])
 
         elif tech == "biogas plus hydrogen":
             h2_input = efficiency[efficiency.index.str.contains("Hydrogen Consumption")].copy()
@@ -2982,11 +3008,9 @@ if __name__ == "__main__":
     d_by_tech = get_data_from_DEA(data_in, expectation=snakemake.config["expectation"])
     # concat into pd.Dataframe
     tech_data = pd.concat(d_by_tech).sort_index()
-    tech_data.to_csv('tech_data_0.csv')
 
     # clean up units
     tech_data = clean_up_units(tech_data, years, source="dea")
-    tech_data.to_csv('tech_data_1.csv')
 
     # (b) ------ specific assumptions for some technologies -----------------------
 
@@ -2999,12 +3023,10 @@ if __name__ == "__main__":
 
     # drop all rows which only contains zeros
     tech_data = tech_data.loc[(tech_data[years]!=0).sum(axis=1)!=0]
-    tech_data.to_csv('tech_data_2.csv')
 
     # (c) -----  get tech data in pypsa syntax -----------------------------------
     # make categories: investment, FOM, VOM, efficiency, c_b, c_v
     data = order_data(tech_data)
-    data.to_csv('data_0.csv')
 
     # add excel sheet names and further description
     data = add_description(data)
@@ -3016,7 +3038,6 @@ if __name__ == "__main__":
     data = add_carbon_capture(data, tech_data)
     # add perennials and green biorefining
     data = add_perennials_gbr(data)
-    data.to_csv('data_1.csv')
 
 
     # adjust for inflation

@@ -16,7 +16,7 @@ from _helpers import prepare_inflation_rate
 
 path_cwd = pathlib.Path.cwd()
 
-#why not working?
+# why not working?
 
 
 @pytest.mark.parametrize(

@@ -1104,7 +1104,7 @@ if __name__ == "__main__":
             by=["technology", "parameter"]
         ).reset_index(drop=True)
 
-        # Correct for inflation for technology-parameter pairs having units that contain USD
+        # correct for inflation for technology-parameter pairs having units that contain USD
         inflation_rate_series_usd = prepare_inflation_rate(
             input_file_inflation_rate, "USD"
         )
@@ -1123,13 +1123,19 @@ if __name__ == "__main__":
             )["value"]
         )
 
+        # round the value column
+        rounded_df = inflation_adjusted_updated_cost_df.copy()
+        rounded_df.loc[:, "value"] = round(
+            inflation_adjusted_updated_cost_df.value.astype(float), num_digits
+        )
+
         # output the modified cost dataframe
         output_cost_path_list = [
             path for path in snakemake.output if str(year_val) in path
         ]
         if len(output_cost_path_list) == 1:
             output_cost_path = output_cost_path_list[0]
-            inflation_adjusted_updated_cost_df.to_csv(output_cost_path, index=False)
+            rounded_df.to_csv(output_cost_path, index=False)
             logger.info(
                 f"The cost assumptions file for the US has been compiled for year {year_val}"
             )

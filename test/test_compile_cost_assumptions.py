@@ -6,15 +6,12 @@
 
 import copy
 import pathlib
-import sys
 
 import numpy as np
 import pandas as pd
 import pytest
 
-sys.path.append("./scripts")
-
-from compile_cost_assumptions import (
+from scripts.compile_cost_assumptions import (
     add_carbon_capture,
     add_description,
     annuity,
@@ -23,8 +20,10 @@ from compile_cost_assumptions import (
     dea_sheet_names,
     geometric_series,
     get_data_from_DEA,
+    get_dea_vehicle_data,
     get_excel_sheets,
     get_sheet_location,
+    rename_pypsa_old,
     set_round_trip_efficiency,
     set_specify_assumptions,
 )
@@ -115,7 +114,6 @@ def test_get_sheet_location():
         "central solid biomass CHP CC": "inputs/technology_data_for_el_and_dh.xlsx",
         "central solid biomass CHP powerboost CC": "inputs/technology_data_for_el_and_dh.xlsx",
         "central air-sourced heat pump": "inputs/technology_data_for_el_and_dh.xlsx",
-        "central geothermal-sourced heat pump": "inputs/technology_data_for_el_and_dh.xlsx",
         "central geothermal heat source": "inputs/technology_data_for_el_and_dh.xlsx",
         "central excess-heat-sourced heat pump": "inputs/technology_data_for_el_and_dh.xlsx",
         "central ground-sourced heat pump": "inputs/technology_data_for_el_and_dh.xlsx",
@@ -205,8 +203,7 @@ def test_get_data_from_dea(config):
         "central solid biomass CHP CC": (13, 9),
         "central solid biomass CHP powerboost CC": (13, 9),
         "central air-sourced heat pump": (6, 9),
-        "central geothermal-sourced heat pump": (8, 9),
-        "central geothermal heat source": (8, 9),
+        "central geothermal heat source": (11, 9),
         "central excess-heat-sourced heat pump": (6, 9),
         "central ground-sourced heat pump": (5, 9),
         "central resistive heater": (7, 9),
@@ -663,3 +660,44 @@ def test_add_carbon_capture(config):
             index=["2020", "source", "unit", "further description"],
         )
     )
+
+
+def test_get_dea_vehicle_data(config):
+    """
+    The test verifies what is returned by get_dea_vehicle_data.
+    """
+    df = get_dea_vehicle_data(
+        snakemake_input_dictionary["dea_vehicles"], ["2020"], pd.DataFrame()
+    )
+    assert df.shape == (90, 5)
+    assert sorted(list(df.columns)) == sorted(
+        ["2020", "unit", "source", "currency_year", "further description"]
+    )
+
+
+def test_rename_pypsa_old():
+    """
+    The test verifies what is returned by rename_pypsa_old.
+    """
+    data = {
+        ("decentral water tank storage", "investment"): [46.8],
+        ("central CHP", "investment"): [3000],
+        ("hydrogen underground storage", "investment"): [2000],
+        ("retrofitting I", "investment"): [1000],
+        ("retrofitting II", "investment"): [1500],
+    }
+    index = pd.MultiIndex.from_tuples(data.keys())
+    cost_dataframe_pypsa = pd.DataFrame(data.values(), index=index, columns=["value"])
+    expected_data = {
+        ("decentral water tank storage", "investment"): [1.0],
+        ("central gas CHP", "investment"): [3000],
+        ("hydrogen storage underground", "investment"): [2000],
+    }
+    expected_index = pd.MultiIndex.from_tuples(expected_data.keys())
+    expected_df = pd.DataFrame(
+        expected_data.values(), index=expected_index, columns=["value"]
+    )
+    expected_df.loc[("decentral water tank storage", "investment"), "unit"] = "EUR/kWh"
+    output_df = rename_pypsa_old(cost_dataframe_pypsa)
+    comparison_df = output_df.compare(expected_df)
+    assert comparison_df.empty

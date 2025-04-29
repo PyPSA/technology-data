@@ -16,8 +16,6 @@ from _helpers import prepare_inflation_rate
 
 path_cwd = pathlib.Path.cwd()
 
-# why not working?
-
 
 @pytest.mark.parametrize(
     "currency_to_use, expected_series_name, expected_index, expected_values",

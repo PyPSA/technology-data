@@ -14,7 +14,6 @@ import pytest
 from scripts.compile_cost_assumptions import (
     add_carbon_capture,
     add_description,
-    add_gas_storage,
     annuity,
     clean_up_units,
     convert_units,
@@ -74,7 +73,7 @@ def test_get_excel_sheets():
         "inputs/energy_transport_data_sheet_dec_2017.xlsx": 16,
         "inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx": 19,
         "inputs/data_sheets_for_renewable_fuels.xlsx": 45,
-        "inputs/technology_data_catalogue_for_energy_storage.xlsx": 15,
+        "inputs/technology_data_catalogue_for_energy_storage.xlsx": 20,
         "inputs/technology_data_for_el_and_dh.xlsx": 72,
         "inputs/technologydatafor_heating_installations_marts_2018.xlsx": 29,
         "inputs/technology_data_for_industrial_process_heat.xlsx": 32,
@@ -142,6 +141,7 @@ def test_get_sheet_location():
         "industrial heat pump high temperature": "inputs/technology_data_for_industrial_process_heat.xlsx",
         "electric boiler steam": "inputs/technology_data_for_industrial_process_heat.xlsx",
         "gas boiler steam": "inputs/technology_data_for_industrial_process_heat.xlsx",
+        "gas storage": "inputs/technology_data_catalogue_for_energy_storage.xlsx",
         "solid biomass boiler steam": "inputs/technology_data_for_industrial_process_heat.xlsx",
         "solid biomass boiler steam CC": "inputs/technology_data_for_industrial_process_heat.xlsx",
         "biomass boiler": "inputs/technologydatafor_heating_installations_marts_2018.xlsx",
@@ -215,9 +215,9 @@ def test_get_data_from_dea(config):
         "direct firing solid fuels CC": (7, 9),
         "decentral ground-sourced heat pump": (9, 9),
         "decentral air-sourced heat pump": (9, 9),
-        "central water pit storage": (10, 9),
-        "central water tank storage": (10, 9),
-        "decentral water tank storage": (9, 9),
+        "central water pit storage": (12, 9),
+        "central water tank storage": (11, 9),
+        "decentral water tank storage": (10, 9),
         "fuel cell": (8, 9),
         "hydrogen storage underground": (10, 9),
         "hydrogen storage tank type 1 including compressor": (10, 9),
@@ -230,6 +230,7 @@ def test_get_data_from_dea(config):
         "industrial heat pump high temperature": (6, 9),
         "electric boiler steam": (7, 9),
         "gas boiler steam": (7, 9),
+        "gas storage": (7, 9),
         "solid biomass boiler steam": (7, 9),
         "solid biomass boiler steam CC": (7, 9),
         "biomass boiler": (6, 9),
@@ -559,85 +560,6 @@ def test_geometric_series(nom_val, den_val, n_terms, start_val, expected_val):
         np.round(geometric_series(nom_val, den_val, n_terms, start_val), 2)
         == expected_val
     )
-
-
-def test_add_gas_storage(config):
-    """
-    The test verifies what is returned by add_gas_storage.
-    """
-    input_file_path = pathlib.Path(
-        path_cwd, "inputs", "technology_data_catalogue_for_energy_storage.xlsx"
-    )
-    list_of_years = ["2020"]
-    technology_series = pd.Series(
-        [
-            "gas_storage",
-            "gas_storage",
-            "gas storage charger",
-            "gas storage discharger",
-            "gas_storage",
-        ]
-    )
-    parameter_series = pd.Series(
-        [
-            "investment",
-            "lifetime",
-            "investment",
-            "investment",
-            "FOM",
-        ]
-    )
-    technology_dataframe = pd.DataFrame(
-        {
-            "2020": [np.nan] * 5,
-        }
-    ).set_index([technology_series, parameter_series])
-    output_df = add_gas_storage(input_file_path, list_of_years, technology_dataframe)
-    cleaned_df = (
-        output_df.dropna(how="all")
-        .reset_index(drop=False)
-        .rename(columns={"level_0": "technology", "level_1": "parameter"})
-    )
-
-    reference_output_df = pd.DataFrame(
-        {
-            "technology": [
-                "gas storage charger",
-                "gas storage discharger",
-                "gas storage",
-                "gas storage",
-                "gas storage",
-            ],
-            "parameter": ["investment"] * 3 + ["lifetime", "FOM"],
-            "2020": [
-                14.33885157711495,
-                4.77961719237165,
-                0.03290254335105841,
-                100.0,
-                3.5918748566291763,
-            ],
-            "source": ["Danish Energy Agency"] * 3
-            + ["TODO no source"]
-            + ["Danish Energy Agency"],
-            "further description": [
-                "150 Underground Storage of Gas, Process equipment (units converted)"
-            ]
-            * 2
-            + [
-                "150 Underground Storage of Gas, Establishment of one cavern (units converted)"
-            ]
-            + [
-                "estimation: most underground storage are already build, they do have a long lifetime"
-            ]
-            + [
-                "150 Underground Storage of Gas, Operation and Maintenance, salt cavern (units converted)"
-            ],
-            "unit": ["EUR/kW"] * 2 + ["EUR/kWh"] + ["years", "%"],
-            "currency_year": [2015.0, np.nan, 2015.0, np.nan, np.nan],
-        }
-    )
-    comparison_df = cleaned_df.compare(reference_output_df)
-    assert comparison_df.empty
 
 
 def test_add_carbon_capture(config):

@@ -1,6 +1,9 @@
 """Test functionality related to the Source and Sources classes."""
 
+import pytest
+
 import technologydata as td
+from technologydata import Source
 
 
 def test_available_sources() -> None:
@@ -23,3 +26,29 @@ def test_packaged_sources() -> None:
     assert len(technologies.sources.sources) == len(td.AVAILABLE_SOURCES.keys()), (
         "The default constructor should load all packaged sources"
     )
+
+
+def test_archive_file_on_internet_archive() -> None:
+    url = "https://ens.dk/media/3273/download"
+    returned_url = Source.archive_file_on_internet_archive(url)
+    print(returned_url)
+    assert False
+
+
+@pytest.mark.parametrize(
+    "url, expected",
+    [
+        (
+            "https://ens.dk/media/3273/download",
+            (
+                "http://web.archive.org/web/20250506160204/https://ens.dk/media/3273/download",
+                "20250506160204",
+                "200",
+            ),
+        ),
+        ("https://ens.dk/media/3263/download", None),
+    ],
+)
+def test_get_wayback_snapshot(url, expected) -> None:
+    output = Source.get_wayback_snapshot(url)
+    assert output == expected

@@ -6,10 +6,9 @@ from collections.abc import Iterable
 from pathlib import Path
 from typing import Any
 
-import requests
-
 import frictionless as ftl
 import pandas as pd
+import requests
 
 logger = logging.getLogger(__name__)
 
@@ -217,46 +216,61 @@ class Source:
         Ask Internet Archive to save the URL via the Save Page Now API.
         Returns the archived URL or None if failed.
         """
-        save_api = f"https://web.archive.org/save/{url}" #TODO: move it to some config so that it is not hardcoded
+        save_api = f"https://web.archive.org/save/{url}"  # TODO: move it to some config so that it is not hardcoded
         logger.info(f"Requesting archiving for: {url}")
         try:
             response = requests.get(save_api, timeout=30)
             if response.status_code == 200 or response.status_code == 201:
                 # The API may redirect to the archived page URL in 'Content-Location' header
-                archived_path = response.headers.get('Content-Location')
+                archived_path = response.headers.get("Content-Location")
 
                 if archived_path:
                     archived_url = "https://web.archive.org" + archived_path
-                    logger.info(f"Successfully archived URL: {archived_url}")
+                    print(f"Successfully archived URL: {archived_url}")
                     return archived_url
                 else:
-                    logger.info("Archive request succeeded but no Content-Location header found.")
+                    print(
+                        "Archive request succeeded but no Content-Location header found."
+                    )
                     return None
             else:
-                logger.info(f"Archive request failed with status code: {response.status_code}")
+                print(
+                    f"Archive request failed with status code: {response.status_code}"
+                )
                 return None
         except Exception as e:
-            logger.info(f"Exception during archiving request: {e}")
+            print(f"Exception during archiving request: {e}")
             return None
 
     @staticmethod
-    def is_file_available(url) -> bool:
-        """
-        Check if the URL is still reachable.
-        Returns True if reachable (status code 200), False otherwise.
-        """
-        logger.info(f"Checking availability of: {url}")
+    def get_wayback_snapshot(url) -> str | None | Any:
+        api_url = f"http://archive.org/wayback/available?url={url}"
         try:
-            response = requests.head(url, timeout=15, allow_redirects=True)
-            if response.status_code == 200:
-                logger.info("File is available at original URL.")
-                return True
+            response = requests.get(api_url)
+            # Raise an error for bad HTTP status codes
+            response.raise_for_status()
+            data = response.json()
+
+            # Extract the closest archived snapshot information
+            closest = data.get("archived_snapshots", {}).get("closest", {})
+            if closest:
+                available = closest.get("available", False)
+                archived_url = closest.get("url", "")
+                timestamp = closest.get("timestamp", "")
+                status = closest.get("status", "")
+
+                logger.info(f"Available: {available}")
+                logger.info(f"Archived URL: {archived_url}")
+                logger.info(f"Timestamp: {timestamp}")
+                logger.info(f"Status: {status}")
+                return archived_url, timestamp, status
             else:
-                logger.info(f"File unavailable, status code: {response.status_code}")
-                return False
+                logger.info("No archived snapshot found.")
+                var = None
+
         except requests.RequestException as e:
-            logger.info(f"Error checking URL availability: {e}")
-            return False
+            logger.info(f"Error during API request: {e}")
+            var = None
 
     @staticmethod
     def download_file(url, local_path=None) -> str | None:
@@ -267,15 +281,15 @@ class Source:
         Returns the local file path or None if failed.
         """
         if local_path is None:
-            local_path = url.split('/')[-1].split('?')[0]
+            local_path = url.split("/")[-1].split("?")[0]
             if not local_path:
-                local_path = 'downloaded_file'
+                local_path = "downloaded_file"
 
         logger.info(f"Downloading file from {url} to {local_path} ...")
         try:
             with requests.get(url, stream=True, timeout=60) as r:
                 r.raise_for_status()
-                with open(local_path, 'wb') as f:
+                with open(local_path, "wb") as f:
                     for chunk in r.iter_content(chunk_size=8192):
                         if chunk:
                             f.write(chunk)

@@ -4,6 +4,9 @@ import logging
 import subprocess
 from collections.abc import Iterable
 from pathlib import Path
+from typing import Any
+
+import requests
 
 import frictionless as ftl
 import pandas as pd
@@ -207,6 +210,104 @@ class Source:
                 f"Process.py executed successfully for source: {self.path.stem}"
             )
             return True
+
+    @staticmethod
+    def archive_file_on_internet_archive(url) -> str | None | Any:
+        """
+        Ask Internet Archive to save the URL via the Save Page Now API.
+        Returns the archived URL or None if failed.
+        """
+        save_api = f"https://web.archive.org/save/{url}" #TODO: move it to some config so that it is not hardcoded
+        logger.info(f"Requesting archiving for: {url}")
+        try:
+            response = requests.get(save_api, timeout=30)
+            if response.status_code == 200 or response.status_code == 201:
+                # The API may redirect to the archived page URL in 'Content-Location' header
+                archived_path = response.headers.get('Content-Location')
+
+                if archived_path:
+                    archived_url = "https://web.archive.org" + archived_path
+                    logger.info(f"Successfully archived URL: {archived_url}")
+                    return archived_url
+                else:
+                    logger.info("Archive request succeeded but no Content-Location header found.")
+                    return None
+            else:
+                logger.info(f"Archive request failed with status code: {response.status_code}")
+                return None
+        except Exception as e:
+            logger.info(f"Exception during archiving request: {e}")
+            return None
+
+    @staticmethod
+    def is_file_available(url) -> bool:
+        """
+        Check if the URL is still reachable.
+        Returns True if reachable (status code 200), False otherwise.
+        """
+        logger.info(f"Checking availability of: {url}")
+        try:
+            response = requests.head(url, timeout=15, allow_redirects=True)
+            if response.status_code == 200:
+                logger.info("File is available at original URL.")
+                return True
+            else:
+                logger.info(f"File unavailable, status code: {response.status_code}")
+                return False
+        except requests.RequestException as e:
+            logger.info(f"Error checking URL availability: {e}")
+            return False
+
+    @staticmethod
+    def download_file(url, local_path=None) -> str | None:
+        """
+
+        Download a file from the given URL.
+        Saves it to local_path if given, otherwise saves to temporary file with name from URL.
+        Returns the local file path or None if failed.
+        """
+        if local_path is None:
+            local_path = url.split('/')[-1].split('?')[0]
+            if not local_path:
+                local_path = 'downloaded_file'
+
+        logger.info(f"Downloading file from {url} to {local_path} ...")
+        try:
+            with requests.get(url, stream=True, timeout=60) as r:
+                r.raise_for_status()
+                with open(local_path, 'wb') as f:
+                    for chunk in r.iter_content(chunk_size=8192):
+                        if chunk:
+                            f.write(chunk)
+                logger.info("Download successful.")
+                return local_path
+        except Exception as e:
+            logger.info(f"Error downloading file: {e}")
+            return None
+
+    @staticmethod
+    def retrieve_from_internet_archive(archive_url):
+        # Check if the file exists in the Internet Archive
+        # If it does, download it; if not, return an error message
+        pass
+
+    @staticmethod
+    def compare_versions(original_file, archived_file):
+        # Compare the two files and return a warning if they differ
+        pass
+
+    @staticmethod
+    def manage_data_source(url):
+        # Step 1: Archive the current version of the file
+        archive_url = Source.archive_file_on_internet_archive(url)
+
+        # Step 2: Check if the file is still available
+        if Source.is_file_available(url):
+            # Step 3: Retrieve the file from the original source
+            return Source.download_file(url)
+        else:
+            # Step 4: Retrieve the file from the Internet Archive
+            return Source.retrieve_from_internet_archive(archive_url)
 
 
 class Sources:

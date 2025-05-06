@@ -226,20 +226,20 @@ class Source:
 
                 if archived_path:
                     archived_url = "https://web.archive.org" + archived_path
-                    print(f"Successfully archived URL: {archived_url}")
+                    logger.info(f"Successfully archived URL: {archived_url}")
                     return archived_url
                 else:
-                    print(
+                    logger.info(
                         "Archive request succeeded but no Content-Location header found."
                     )
                     return None
             else:
-                print(
+                logger.info(
                     f"Archive request failed with status code: {response.status_code}"
                 )
                 return None
         except Exception as e:
-            print(f"Exception during archiving request: {e}")
+            logger.info(f"Exception during archiving request: {e}")
             return None
 
     @staticmethod

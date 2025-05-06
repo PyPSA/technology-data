@@ -6,10 +6,9 @@ from collections.abc import Iterable
 from pathlib import Path
 from typing import Any
 
-import requests
-
 import frictionless as ftl
 import pandas as pd
+import requests
 
 logger = logging.getLogger(__name__)
 
@@ -217,23 +216,27 @@ class Source:
         Ask Internet Archive to save the URL via the Save Page Now API.
         Returns the archived URL or None if failed.
         """
-        save_api = f"https://web.archive.org/save/{url}" #TODO: move it to some config so that it is not hardcoded
+        save_api = f"https://web.archive.org/save/{url}"  # TODO: move it to some config so that it is not hardcoded
         logger.info(f"Requesting archiving for: {url}")
         try:
             response = requests.get(save_api, timeout=30)
             if response.status_code == 200 or response.status_code == 201:
                 # The API may redirect to the archived page URL in 'Content-Location' header
-                archived_path = response.headers.get('Content-Location')
+                archived_path = response.headers.get("Content-Location")
 
                 if archived_path:
                     archived_url = "https://web.archive.org" + archived_path
                     logger.info(f"Successfully archived URL: {archived_url}")
                     return archived_url
                 else:
-                    logger.info("Archive request succeeded but no Content-Location header found.")
+                    logger.info(
+                        "Archive request succeeded but no Content-Location header found."
+                    )
                     return None
             else:
-                logger.info(f"Archive request failed with status code: {response.status_code}")
+                logger.info(
+                    f"Archive request failed with status code: {response.status_code}"
+                )
                 return None
         except Exception as e:
             logger.info(f"Exception during archiving request: {e}")
@@ -267,15 +270,15 @@ class Source:
         Returns the local file path or None if failed.
         """
         if local_path is None:
-            local_path = url.split('/')[-1].split('?')[0]
+            local_path = url.split("/")[-1].split("?")[0]
             if not local_path:
-                local_path = 'downloaded_file'
+                local_path = "downloaded_file"
 
         logger.info(f"Downloading file from {url} to {local_path} ...")
         try:
             with requests.get(url, stream=True, timeout=60) as r:
                 r.raise_for_status()
-                with open(local_path, 'wb') as f:
+                with open(local_path, "wb") as f:
                     for chunk in r.iter_content(chunk_size=8192):
                         if chunk:
                             f.write(chunk)

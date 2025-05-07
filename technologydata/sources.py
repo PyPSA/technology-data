@@ -105,7 +105,7 @@ class Source:
         self.available_features = self._detect_features()
 
     def _load_details(self) -> pd.DataFrame:
-        """Load the source.csv file into a DataFrame."""
+        """Load the sources.csv file into a DataFrame."""
         source_file = self.path / "sources.csv"
         schema_file = SPECIFICATIONS_PATH / "sources.schema.json"
 
@@ -281,12 +281,12 @@ class Source:
         ------
         requests.RequestException
             If there is an issue with the HTTP request to the Wayback Machine API
-
         """
-        if timestamp is not None:
-            api_url = f"http://archive.org/wayback/available?url={url}&timestamp={timestamp}"
-        else:
+        api_url = ""
+        if timestamp is None:
             api_url = f"http://archive.org/wayback/available?url={url}"
+        else:
+            api_url = f"http://archive.org/wayback/available?url={url}&timestamp={timestamp}"
         try:
             response = requests.get(api_url)
             # Raise an error for bad HTTP status codes

@@ -1,7 +1,5 @@
 """Test functionality related to the Source and Sources classes."""
 
-import pytest
-
 import technologydata as td
 
 

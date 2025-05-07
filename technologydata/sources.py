@@ -5,7 +5,7 @@ import subprocess
 from collections.abc import Iterable
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 import frictionless as ftl
 import pandas as pd
@@ -255,7 +255,9 @@ class Source:
             None
 
     @staticmethod
-    def is_wayback_snapshot_available(url, timestamp: Optional[str] = None) -> str | None | Any:
+    def is_wayback_snapshot_available(
+        url, timestamp: str | None = None
+    ) -> str | None | Any:
         """
         The function queries the Internet Archive's Wayback Machine to check for the availability
         of archived snapshots of a given URL. It constructs an API request to the Wayback Machine
@@ -281,12 +283,15 @@ class Source:
         ------
         requests.RequestException
             If there is an issue with the HTTP request to the Wayback Machine API
+
         """
         api_url = ""
         if timestamp is None:
             api_url = f"http://archive.org/wayback/available?url={url}"
         else:
-            api_url = f"http://archive.org/wayback/available?url={url}&timestamp={timestamp}"
+            api_url = (
+                f"http://archive.org/wayback/available?url={url}&timestamp={timestamp}"
+            )
         try:
             response = requests.get(api_url)
             # Raise an error for bad HTTP status codes

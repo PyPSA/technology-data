@@ -1,5 +1,7 @@
 """Test different ways of loading and initializing the Source and Sources objects."""
 
+import pathlib
+import sys
 from pathlib import Path
 
 import pandas as pd
@@ -7,14 +9,8 @@ import pytest
 
 import technologydata as td
 
-
-@pytest.fixture()
-def example_source():
-    """Fixture to create an example source."""
-    return td.Source(
-        "example01",
-        "technologydata/datasources/example01",
-    )
+sys.path.append("./technology-data")
+path_cwd = pathlib.Path.cwd()
 
 
 def test_source_loading():
@@ -33,7 +29,9 @@ def test_source_initialization(example_source):
     """Test the initialization of the Source class."""
     assert example_source.name == "example01"
     # Path should be the provided path
-    assert example_source.path == Path("technologydata/datasources/example01")
+    assert example_source.path == Path(
+        path_cwd, "technologydata", "datasources", "example01"
+    )
     # Check datatype
     assert isinstance(example_source.details, pd.DataFrame)
     # Ensure the DataFrame is not empty

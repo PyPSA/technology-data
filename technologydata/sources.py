@@ -211,17 +211,6 @@ class Source:
             )
             return True
 
-    def _update_details(self):
-        title = self.details["title"].values[0]
-        url = self.details["url"].values[0]
-        url_date = self.details["url_date"].values[0]
-        url_archived = self.details["url_archived"].values[0]
-        if url is None or url_date is None:
-            logger.info("")
-        if url_archived is None:
-            if url is not None and url_date is not None:
-                Source.is_wayback_snapshot_available(url, timestamp)
-
     @staticmethod
     def change_datetime_format(
         input_datetime_string, input_datetime_format, output_datetime_format

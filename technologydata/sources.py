@@ -3,6 +3,7 @@
 import logging
 import subprocess
 from collections.abc import Iterable
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -243,8 +244,76 @@ class Source:
             return None
 
     @staticmethod
+    def change_datetime_format(
+        input_datetime_string, input_datetime_format, output_datetime_format
+    ) -> str | None:
+        """
+        Change the format of a given datetime string from one format to another. This function takes a
+        datetime string and its current format, then converts it to a specified output format.
+        If the input string does not match the provided input format, it logs an error and returns None.
+
+        Parameters
+        ----------
+        input_datetime_string : str
+            datetime string that needs to be reformatted
+
+        input_datetime_format : str
+            format of the input datetime string, following the strftime format codes
+
+        output_datetime_format : str
+            desired format for the output datetime string, following the strftime format codes.
+
+        Returns
+        -------
+           str | None
+               reformatted datetime string if successful, otherwise None
+
+        Raises
+        ------
+        ValueError
+            If the input datetime string does not match the input format.
+
+        """
+        try:
+            dt = datetime.strptime(input_datetime_string, input_datetime_format)
+            logger.info(
+                f"The datetime string follows the format {input_datetime_format}"
+            )
+            output_datetime_string = dt.strftime(output_datetime_format)
+            logger.info(f"The format is now changed to {output_datetime_format}")
+            return output_datetime_string
+        except ValueError as e:
+            logger.info(f"Error during datetime formatting: {e}")
+            None
+
+    @staticmethod
     def get_wayback_snapshot(url) -> str | None | Any:
-        api_url = f"http://archive.org/wayback/available?url={url}"
+        """
+        The function queries the Internet Archive's Wayback Machine to check for the availability
+        of archived snapshots of a given URL. It constructs an API request to the Wayback Machine
+        and processes the response to extract the closest archived snapshot information.
+
+        Parameters
+        ----------
+        url : str
+            URL for which to retrieve the Wayback Machine snapshot
+
+        Returns
+        -------
+        Tuple[str, str, str] | None
+            The tuple contains:
+                -) archived_url : str URL of the archived snapshot
+                -) timestamp : str timestamp of the archived snapshot
+                -) status : str status of the archived snapshot
+            Returns None if no archived snapshot is found or if an error occurs during the API request.
+
+        Raises
+        ------
+        requests.RequestException
+            If there is an issue with the HTTP request to the Wayback Machine API
+
+        """
+        api_url = f"http://archive.org/wayback/available?url={url}"  # TODO: better to put it in the configs
         try:
             response = requests.get(api_url)
             # Raise an error for bad HTTP status codes
@@ -263,7 +332,13 @@ class Source:
                 logger.info(f"Archived URL: {archived_url}")
                 logger.info(f"Timestamp: {timestamp}")
                 logger.info(f"Status: {status}")
-                return archived_url, timestamp, status
+                # reformatted_timestamp = timestamp
+                reformatted_timestamp = Source.change_datetime_format(
+                    timestamp,
+                    "%Y%m%d%H%M%S",
+                    "%Y-%m-%d %H:%M:%S",
+                )
+                return archived_url, reformatted_timestamp, status
             else:
                 logger.info("No archived snapshot found.")
                 var = None

@@ -270,13 +270,16 @@ class Source:
         """
         Save a webpage to the Wayback Machine.
 
-        Parameters:
+        Parameters
+        ----------
         url_to_save: str
             URL of the page to save
 
-        Returns:
+        Returns
+        -------
         dict
             result with success status, message, and response data or error information
+
         """
         endpoint_url = "https://web.archive.org/save/"
         headers = {
@@ -289,12 +292,14 @@ class Source:
             "url": url_to_save,  # Replace with the URL you want to save
             "capture_all": "on",
             "delay_wb_availability": "1",  # Allow queuing if busy
-            "skip_first_archive": "1"       # Skip checking past archives
+            "skip_first_archive": "1",  # Skip checking past archives
         }
 
         try:
             # Make the POST request
-            response = requests.post(endpoint_url, headers=headers, data=data, timeout=30)
+            response = requests.post(
+                endpoint_url, headers=headers, data=data, timeout=30
+            )
 
             # Raise exception for HTTP error codes
             response.raise_for_status()
@@ -308,7 +313,7 @@ class Source:
             return {
                 "success": True,
                 "message": "Page saved successfully!",
-                "data": json_response
+                "data": json_response,
             }
         except requests.exceptions.HTTPError as http_err:
             return {
@@ -321,7 +326,7 @@ class Source:
             return {
                 "success": False,
                 "message": "Request error occurred while saving page.",
-                "error": str(req_err)
+                "error": str(req_err),
             }
 
     @staticmethod
@@ -356,13 +361,11 @@ class Source:
 
         """
         api_timestamp = Source.change_datetime_format(
-                input_timestamp,
-                "%Y-%m-%d %H:%M:%S",
-                "%Y%m%d%H%M%S",
+            input_timestamp,
+            "%Y-%m-%d %H:%M:%S",
+            "%Y%m%d%H%M%S",
         )
-        api_url = (
-            f"http://archive.org/wayback/available?url={input_url}&timestamp={api_timestamp}"
-        )
+        api_url = f"http://archive.org/wayback/available?url={input_url}&timestamp={api_timestamp}"
         try:
             response = requests.get(api_url)
             # Raise an error for bad HTTP status codes

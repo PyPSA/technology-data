@@ -150,5 +150,3 @@ def test_is_wayback_snapshot_available(url, timestamp, expected) -> None:
     output = Source.is_wayback_snapshot_available(url, timestamp)
     print(output)
     assert output == expected
-
-

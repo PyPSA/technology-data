@@ -159,11 +159,9 @@ def test_is_wayback_snapshot_available(url, timestamp, expected) -> None:
             "source_name": "example03",
             "source_path": pathlib.Path("technologydata", "datasources", "example03"),
         }
-
     ],
     indirect=True,
 )
 def test_download_file_from_wayback(example_source):
     storage_path = example_source.download_file_from_wayback()
     assert storage_path.is_file()
-

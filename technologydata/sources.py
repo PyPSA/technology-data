@@ -1,10 +1,10 @@
 """Classes for source management and processing, for pre-packaged and user-provided data sources."""
 
 import logging
+import pathlib
 import subprocess
 from collections.abc import Iterable
 from datetime import datetime
-import pathlib
 from typing import Any
 
 import frictionless as ftl
@@ -239,25 +239,29 @@ class Source:
         -----
             - The `details` attribute must contain a key "url_archived" with a valid URL
             - The `path` and `name` attributes must be defined in the instance for saving the file
+
         """
         url_archived = self.details["url_archived"].values[0]
         save_path = ""
         try:
             response = requests.get(url_archived)
             response.raise_for_status()  # Check for HTTP errors
-            content_type = response.headers.get('Content-Type')
+            content_type = response.headers.get("Content-Type")
             if "text/plain" in content_type:
                 save_path = pathlib.Path(self.path, self.name + ".txt")
             elif "application/pdf" in content_type:
                 save_path = pathlib.Path(self.path, self.name + ".pdf")
             elif "application/vnd.ms-excel" in content_type:
                 save_path = pathlib.Path(self.path, self.name + ".xls")
-            elif "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" in content_type:
+            elif (
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                in content_type
+            ):
                 save_path = pathlib.Path(self.path, self.name + ".xlsx")
             elif "application/parquet" in content_type:
                 save_path = pathlib.Path(self.path, self.name + ".parquet")
 
-            with open(save_path, 'wb') as file:
+            with open(save_path, "wb") as file:
                 file.write(response.content)
             logger.info(f"File downloaded successfully and saved to {save_path}")
             return save_path

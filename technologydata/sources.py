@@ -211,6 +211,17 @@ class Source:
             )
             return True
 
+    def _update_details(self):
+        title = self.details["title"].values[0]
+        url = self.details["url"].values[0]
+        url_date = self.details["url_date"].values[0]
+        url_archived = self.details["url_archived"].values[0]
+        if url is None or url_date is None:
+            logger.info("")
+        if url_archived is None:
+            if url is not None and url_date is not None:
+                Source.is_wayback_snapshot_available(url, timestamp)
+
     @staticmethod
     def change_datetime_format(
         input_datetime_string, input_datetime_format, output_datetime_format
@@ -255,8 +266,67 @@ class Source:
             None
 
     @staticmethod
+    def save_page_to_wayback(url_to_save: str) -> dict:
+        """
+        Save a webpage to the Wayback Machine.
+
+        Parameters:
+        url_to_save: str
+            URL of the page to save
+
+        Returns:
+        dict
+            result with success status, message, and response data or error information
+        """
+        endpoint_url = "https://web.archive.org/save/"
+        headers = {
+            "Accept": "application/json",
+            "Accept-Language": "en-US,en;q=0.5",
+            "Accept-Encoding": "gzip, deflate, br, zstd",
+            "Connection": "keep-alive",
+        }
+        data = {
+            "url": url_to_save,  # Replace with the URL you want to save
+            "capture_all": "on",
+            "delay_wb_availability": "1",  # Allow queuing if busy
+            "skip_first_archive": "1"       # Skip checking past archives
+        }
+
+        try:
+            # Make the POST request
+            response = requests.post(endpoint_url, headers=headers, data=data, timeout=30)
+
+            # Raise exception for HTTP error codes
+            response.raise_for_status()
+
+            # Parse JSON if possible
+            try:
+                json_response = response.json()
+            except ValueError:
+                json_response = None
+
+            return {
+                "success": True,
+                "message": "Page saved successfully!",
+                "data": json_response
+            }
+        except requests.exceptions.HTTPError as http_err:
+            return {
+                "success": False,
+                "message": "HTTP error occurred while saving page.",
+                "error": str(http_err),
+            }
+        except requests.exceptions.RequestException as req_err:
+            # Handle connection errors, timeouts, etc.
+            return {
+                "success": False,
+                "message": "Request error occurred while saving page.",
+                "error": str(req_err)
+            }
+
+    @staticmethod
     def is_wayback_snapshot_available(
-        url, timestamp: str | None = None
+        input_url: str, input_timestamp: str
     ) -> str | None | Any:
         """
         The function queries the Internet Archive's Wayback Machine to check for the availability
@@ -265,9 +335,9 @@ class Source:
 
         Parameters
         ----------
-        url : str
+        input_url : str
             URL for which to retrieve the Wayback Machine snapshot
-        timestamp : str
+        input_timestamp : str
             timestamp for which to retrieve the Wayback Machine snapshot
 
         Returns
@@ -275,7 +345,7 @@ class Source:
         Tuple[str, str, str] | None
             The tuple contains:
                 -) archived_url : str URL of the archived snapshot
-                -) timestamp : str timestamp of the archived snapshot
+                -) timestamp : str timestamp of the archived snapshot with format YYYY-MM-DD hh:mm:ss
                 -) status : str status of the archived snapshot
             Returns None if no archived snapshot is found or if an error occurs during the API request.
 
@@ -285,13 +355,14 @@ class Source:
             If there is an issue with the HTTP request to the Wayback Machine API
 
         """
-        api_url = ""
-        if timestamp is None:
-            api_url = f"http://archive.org/wayback/available?url={url}"
-        else:
-            api_url = (
-                f"http://archive.org/wayback/available?url={url}&timestamp={timestamp}"
-            )
+        api_timestamp = Source.change_datetime_format(
+                input_timestamp,
+                "%Y-%m-%d %H:%M:%S",
+                "%Y%m%d%H%M%S",
+        )
+        api_url = (
+            f"http://archive.org/wayback/available?url={input_url}&timestamp={api_timestamp}"
+        )
         try:
             response = requests.get(api_url)
             # Raise an error for bad HTTP status codes
@@ -310,12 +381,14 @@ class Source:
                 logger.info(f"Archived URL: {archived_url}")
                 logger.info(f"Timestamp: {timestamp}")
                 logger.info(f"Status: {status}")
-                reformatted_timestamp = Source.change_datetime_format(
+
+                output_timestamp = Source.change_datetime_format(
                     timestamp,
                     "%Y%m%d%H%M%S",
                     "%Y-%m-%d %H:%M:%S",
                 )
-                return archived_url, reformatted_timestamp, status
+
+                return archived_url, output_timestamp, status
             else:
                 logger.info("No archived snapshot found.")
                 var = None

@@ -131,20 +131,24 @@ def test_change_datetime_format(
 
 
 @pytest.mark.parametrize(
-    "url, expected",
+    "url, timestamp, expected",
     [
         (
             "https://ens.dk/media/3273/download",
+            "2025-05-06 16:02:04",
             (
                 "http://web.archive.org/web/20250506160204/https://ens.dk/media/3273/download",
                 "2025-05-06 16:02:04",
                 "200",
             ),
         ),
-        ("https://ens.dk/media/1/download", None),
+        ("https://ens.dk/media/1/download", "2025-05-06 16:02:04", None),
     ],
 )
-def test_is_wayback_snapshot_available(url, expected) -> None:
+def test_is_wayback_snapshot_available(url, timestamp, expected) -> None:
     """Check if the example source is available on the Internet Archive Wayback Machine."""
-    output = Source.is_wayback_snapshot_available(url)
+    output = Source.is_wayback_snapshot_available(url, timestamp)
+    print(output)
     assert output == expected
+
+

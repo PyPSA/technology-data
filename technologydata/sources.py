@@ -4,7 +4,7 @@ import logging
 import subprocess
 from collections.abc import Iterable
 from datetime import datetime
-from pathlib import Path
+import pathlib
 from typing import Any
 
 import frictionless as ftl
@@ -13,12 +13,12 @@ import requests
 
 logger = logging.getLogger(__name__)
 
-DATASOURCES_PATH = Path(__file__).parent / "datasources"
+DATASOURCES_PATH = pathlib.Path(__file__).parent / "datasources"
 SPECIFICATIONS_PATH = DATASOURCES_PATH / "specification"
 
 
 # Generate a list of all available sources currently available in the package's datasources folder.
-def _get_available_sources() -> dict[str, Path]:
+def _get_available_sources() -> dict[str, pathlib.Path]:
     """
     Determine all available sources based on the folders in datasources.
 
@@ -60,7 +60,7 @@ class Source:
 
     """
 
-    def __init__(self, name: str, path: Path | str | None = None) -> None:
+    def __init__(self, name: str, path: pathlib.Path | str | None = None) -> None:
         """
         Create a source of data that can provide one or more data features.
 
@@ -96,7 +96,7 @@ class Source:
 
         # Ensure path is a Path object
         if isinstance(path, str):
-            path = Path(path)
+            path = pathlib.Path(path)
         self.path = path
 
         # pd.DataFrame: Details on the source, containing author, title, URL and other information, loaded from the folder
@@ -210,6 +210,60 @@ class Source:
                 f"Process.py executed successfully for source: {self.path.stem}"
             )
             return True
+
+    def download_file_from_wayback(self) -> pathlib.Path | None:
+        """
+        Download a file from the Wayback Machine and save it to a specified path.
+
+        This method retrieves an archived file from the Wayback Machine using the URL
+        stored in the `details` attribute of the instance. The file is saved in the
+        specified format based on its Content-Type field in the Response Header.
+        Supported formats include:
+        - Plain text (.txt)
+        - PDF (.pdf)
+        - Excel (.xls and .xlsx)
+        - Parquet (.parquet)
+
+        The method handles HTTP errors and prints an appropriate message if an error occurs
+
+        Returns
+        -------
+        pathlib.Path
+            the specified path where the file is stored
+
+        Raises
+        ------
+            requests.exceptions.RequestException: If there is an issue with the HTTP request
+
+        Notes
+        -----
+            - The `details` attribute must contain a key "url_archived" with a valid URL
+            - The `path` and `name` attributes must be defined in the instance for saving the file
+        """
+        url_archived = self.details["url_archived"].values[0]
+        save_path = ""
+        try:
+            response = requests.get(url_archived)
+            response.raise_for_status()  # Check for HTTP errors
+            content_type = response.headers.get('Content-Type')
+            if "text/plain" in content_type:
+                save_path = pathlib.Path(self.path, self.name + ".txt")
+            elif "application/pdf" in content_type:
+                save_path = pathlib.Path(self.path, self.name + ".pdf")
+            elif "application/vnd.ms-excel" in content_type:
+                save_path = pathlib.Path(self.path, self.name + ".xls")
+            elif "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" in content_type:
+                save_path = pathlib.Path(self.path, self.name + ".xlsx")
+            elif "application/parquet" in content_type:
+                save_path = pathlib.Path(self.path, self.name + ".parquet")
+
+            with open(save_path, 'wb') as file:
+                file.write(response.content)
+            logger.info(f"File downloaded successfully and saved to {save_path}")
+            return save_path
+        except requests.exceptions.RequestException as e:
+            logger.info(f"An error occurred: {e}")
+            return None
 
     @staticmethod
     def change_datetime_format(
@@ -410,7 +464,7 @@ class Sources:
     schema = ftl.Schema(str(SPECIFICATIONS_PATH / (schema_name + ".schema.json")))
 
     def __init__(
-        self, sources: str | Source | list[str | Source] | dict[str, Path]
+        self, sources: str | Source | list[str | Source] | dict[str, pathlib.Path]
     ) -> None:
         """
         Create a collection of data sources.
@@ -465,7 +519,7 @@ class Sources:
             ]
         )
 
-    def to_csv(self, path: str | Path) -> None:
+    def to_csv(self, path: str | pathlib.Path) -> None:
         """
         Save the details of the sources to a CSV file.
 
@@ -477,7 +531,7 @@ class Sources:
         """
         self.details.to_csv(path, index=False)
 
-    def to_datapackage(self, path: str | Path, overwrite: bool = False) -> None:
+    def to_datapackage(self, path: str | pathlib.Path, overwrite: bool = False) -> None:
         """
         Export the data to a folder following the datapackage specification.
 
@@ -490,7 +544,7 @@ class Sources:
         overwrite : bool
             Existing files with the same name in the target path will be overwritten, default is False.
         """
-        path = Path(path)
+        path = pathlib.Path(path)
 
         # Check if the path exists and is empty
         if path.exists():

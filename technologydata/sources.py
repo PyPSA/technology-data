@@ -5,7 +5,7 @@ import subprocess
 from collections.abc import Iterable
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional
 
 import frictionless as ftl
 import pandas as pd
@@ -212,38 +212,6 @@ class Source:
             return True
 
     @staticmethod
-    def archive_file_on_internet_archive(url) -> str | None | Any:
-        """
-        Ask Internet Archive to save the URL via the Save Page Now API.
-        Returns the archived URL or None if failed.
-        """
-        save_api = f"https://web.archive.org/save/{url}"  # TODO: move it to some config so that it is not hardcoded
-        logger.info(f"Requesting archiving for: {url}")
-        try:
-            response = requests.get(save_api, timeout=30)
-            if response.status_code == 200 or response.status_code == 201:
-                # The API may redirect to the archived page URL in 'Content-Location' header
-                archived_path = response.headers.get("Content-Location")
-
-                if archived_path:
-                    archived_url = "https://web.archive.org" + archived_path
-                    logger.info(f"Successfully archived URL: {archived_url}")
-                    return archived_url
-                else:
-                    logger.info(
-                        "Archive request succeeded but no Content-Location header found."
-                    )
-                    return None
-            else:
-                logger.info(
-                    f"Archive request failed with status code: {response.status_code}"
-                )
-                return None
-        except Exception as e:
-            logger.info(f"Exception during archiving request: {e}")
-            return None
-
-    @staticmethod
     def change_datetime_format(
         input_datetime_string, input_datetime_format, output_datetime_format
     ) -> str | None:
@@ -287,7 +255,7 @@ class Source:
             None
 
     @staticmethod
-    def get_wayback_snapshot(url) -> str | None | Any:
+    def is_wayback_snapshot_available(url, timestamp: Optional[str] = None) -> str | None | Any:
         """
         The function queries the Internet Archive's Wayback Machine to check for the availability
         of archived snapshots of a given URL. It constructs an API request to the Wayback Machine
@@ -297,6 +265,8 @@ class Source:
         ----------
         url : str
             URL for which to retrieve the Wayback Machine snapshot
+        timestamp : str
+            timestamp for which to retrieve the Wayback Machine snapshot
 
         Returns
         -------
@@ -313,7 +283,10 @@ class Source:
             If there is an issue with the HTTP request to the Wayback Machine API
 
         """
-        api_url = f"http://archive.org/wayback/available?url={url}"  # TODO: better to put it in the configs
+        if timestamp is not None:
+            api_url = f"http://archive.org/wayback/available?url={url}&timestamp={timestamp}"
+        else:
+            api_url = f"http://archive.org/wayback/available?url={url}"
         try:
             response = requests.get(api_url)
             # Raise an error for bad HTTP status codes
@@ -332,7 +305,6 @@ class Source:
                 logger.info(f"Archived URL: {archived_url}")
                 logger.info(f"Timestamp: {timestamp}")
                 logger.info(f"Status: {status}")
-                # reformatted_timestamp = timestamp
                 reformatted_timestamp = Source.change_datetime_format(
                     timestamp,
                     "%Y%m%d%H%M%S",
@@ -346,57 +318,6 @@ class Source:
         except requests.RequestException as e:
             logger.info(f"Error during API request: {e}")
             var = None
-
-    @staticmethod
-    def download_file(url, local_path=None) -> str | None:
-        """
-
-        Download a file from the given URL.
-        Saves it to local_path if given, otherwise saves to temporary file with name from URL.
-        Returns the local file path or None if failed.
-        """
-        if local_path is None:
-            local_path = url.split("/")[-1].split("?")[0]
-            if not local_path:
-                local_path = "downloaded_file"
-
-        logger.info(f"Downloading file from {url} to {local_path} ...")
-        try:
-            with requests.get(url, stream=True, timeout=60) as r:
-                r.raise_for_status()
-                with open(local_path, "wb") as f:
-                    for chunk in r.iter_content(chunk_size=8192):
-                        if chunk:
-                            f.write(chunk)
-                logger.info("Download successful.")
-                return local_path
-        except Exception as e:
-            logger.info(f"Error downloading file: {e}")
-            return None
-
-    @staticmethod
-    def retrieve_from_internet_archive(archive_url):
-        # Check if the file exists in the Internet Archive
-        # If it does, download it; if not, return an error message
-        pass
-
-    @staticmethod
-    def compare_versions(original_file, archived_file):
-        # Compare the two files and return a warning if they differ
-        pass
-
-    @staticmethod
-    def manage_data_source(url):
-        # Step 1: Archive the current version of the file
-        archive_url = Source.archive_file_on_internet_archive(url)
-
-        # Step 2: Check if the file is still available
-        if Source.is_file_available(url):
-            # Step 3: Retrieve the file from the original source
-            return Source.download_file(url)
-        else:
-            # Step 4: Retrieve the file from the Internet Archive
-            return Source.retrieve_from_internet_archive(archive_url)
 
 
 class Sources:

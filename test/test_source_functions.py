@@ -78,6 +78,6 @@ def test_change_datetime_format(
         ("https://ens.dk/media/1/download", None),
     ],
 )
-def test_get_wayback_snapshot(url, expected) -> None:
-    output = Source.get_wayback_snapshot(url)
+def test_is_wayback_snapshot_available(url, expected) -> None:
+    output = Source.is_wayback_snapshot_available(url)
     assert output == expected

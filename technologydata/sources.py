@@ -241,7 +241,7 @@ class Source:
             - The `path` and `name` attributes must be defined in the instance for saving the file
 
         """
-        url_archived = self.details["url_archived"].values[0]
+        url_archived = self.details["url_archived"].to_numpy()[0]
         save_path = ""
         try:
             response = requests.get(url_archived)
@@ -271,7 +271,9 @@ class Source:
 
     @staticmethod
     def change_datetime_format(
-        input_datetime_string, input_datetime_format, output_datetime_format
+        input_datetime_string: str,
+        input_datetime_format: str,
+        output_datetime_format: str,
     ) -> str | None:
         """
         Change the format of a given datetime string from one format to another. This function takes a
@@ -441,11 +443,11 @@ class Source:
                 return archived_url, output_timestamp, status
             else:
                 logger.info("No archived snapshot found.")
-                var = None
+                None
 
         except requests.RequestException as e:
             logger.info(f"Error during API request: {e}")
-            var = None
+            None
 
 
 class Sources:

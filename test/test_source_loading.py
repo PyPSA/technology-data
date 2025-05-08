@@ -162,6 +162,7 @@ def test_is_wayback_snapshot_available(url, timestamp, expected) -> None:
     ],
     indirect=True,
 )
-def test_download_file_from_wayback(example_source):
+def test_download_file_from_wayback(example_source) -> None:
+    """Check if the example source is downloaded from the Internet Archive Wayback Machine."""
     storage_path = example_source.download_file_from_wayback()
     assert storage_path.is_file()

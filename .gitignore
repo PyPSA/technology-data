@@ -8,6 +8,7 @@ __pycache__/
 
 #MacOS files
 .idea
+.idea/*
 .DS_Store
 
 # Distribution / packaging

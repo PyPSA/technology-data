@@ -1,3 +1,15 @@
+"""
+The module is used to define pytest fixtures that can be shared across
+multiple test files in the project.
+Fixtures are a way to provide a fixed baseline upon which tests can
+rely. They allow for setup code to be reused and can help manage
+resources needed for tests, such as database connections, test data,
+or configuration settings.
+By placing fixtures in this file, they become accessible to all test
+modules in the same directory and subdirectories, promoting code
+reusability and organization.
+"""
+
 import pathlib
 import sys
 

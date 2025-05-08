@@ -21,8 +21,8 @@ sys.path.append("./technology-data")
 path_cwd = pathlib.Path.cwd()
 
 
-@pytest.fixture(scope="function")
-def example_source(request) -> td.Source:
+@pytest.fixture(scope="function")  # type: ignore
+def example_source(request: pytest.FixtureRequest) -> td.Source:
     """Fixture to create an example source."""
     source_name = request.param.get("source_name", "example01")
     source_path = request.param.get(

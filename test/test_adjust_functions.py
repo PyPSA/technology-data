@@ -2,19 +2,19 @@
 
 import pytest
 
-import technologydata as td
+from technologydata import Technologies
 
 
 @pytest.fixture
 def example_source():
     """Fixture to provide the example01 source."""
-    return td.Technologies("example01")
+    return Technologies("example01")
 
 
 @pytest.fixture
 def forecast_source():
     """Fixture to provide an example dataset for time-related forecasting."""
-    return td.Technologies({"forecast01": "test/test_adjust_functions/forecast01"})
+    return Technologies({"forecast01": "test/test_adjust_functions/forecast01"})
 
 
 def test_no_economies_of_scale(example_source) -> None:
@@ -53,7 +53,7 @@ def test_adjust_year_linear_interpolation(forecast_source) -> None:
     )
 
 
-def test_adjust_year_linear_extrapolation(forecast_source) -> None:
+def test_adjust_year_linear_extrapolation(forecast_source: Technologies) -> None:
     """Test linear forecasting for a value outside the range of entries provided."""
     forecast = forecast_source.adjust_year(
         year=2040,

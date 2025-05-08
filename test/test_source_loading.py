@@ -6,23 +6,22 @@ import sys
 import pandas as pd
 import pytest
 
-import technologydata as td
-from technologydata import Source
+from technologydata import AVAILABLE_SOURCES, Source, Sources
 
 sys.path.append("./technology-data")
 path_cwd = pathlib.Path.cwd()
 
 
-def test_source_loading():
+def test_source_loading() -> None:
     """Simple approach for custom user sources."""
     name = "example01"
     fp = pathlib.Path(path_cwd, "technologydata", "datasources", "example01")
 
     # Check if the source can be loaded from a string or a path
-    assert td.Source(name, fp)
-    assert td.Source(name, str(fp))
-    assert td.Source(name, fp.absolute())
-    assert td.Source(name, str(fp.absolute()))
+    assert Source(name, fp)
+    assert Source(name, str(fp))
+    assert Source(name, fp.absolute())
+    assert Source(name, str(fp.absolute()))
 
 
 @pytest.mark.parametrize(
@@ -51,7 +50,9 @@ def test_source_loading():
     ],
     indirect=["example_source"],
 )
-def test_source_initialization(example_source, expected_path, expected_features):
+def test_source_initialization(
+    example_source, expected_path, expected_features
+) -> None:
     """Test the initialization of the Source class."""
     # Path should be the provided path
     assert example_source.path == expected_path
@@ -63,8 +64,8 @@ def test_source_initialization(example_source, expected_path, expected_features)
     assert example_source.available_features == expected_features
     # Check whether packaged sources can also be loaded
     assert (
-        td.Source(example_source.name).name == example_source.name
-        and td.Source(example_source.name).path.absolute()
+        Source(example_source.name).name == example_source.name
+        and Source(example_source.name).path.absolute()
         == example_source.path.absolute()
     )
 
@@ -82,21 +83,21 @@ def test_source_initialization(example_source, expected_path, expected_features)
         },
     ],
     indirect=True,
-)
-def test_sources_initialization(example_source):
+)  # type: ignore
+def test_sources_initialization(example_source) -> None:
     """Test different ways of initializing a Sources object."""
     # See if we can directly load all packaged sources directly / load from dict
-    assert td.Sources(td.AVAILABLE_SOURCES)
+    assert Sources(AVAILABLE_SOURCES)
     # Load a single prepackaged source by name
-    assert td.Sources([example_source.name])
+    assert Sources([example_source.name])
     # Load single source not as list
-    assert td.Sources(example_source.name)
+    assert Sources(example_source.name)
     # Convert a single source into a Sources object
-    assert td.Sources(td.Source(example_source.name))
+    assert Sources(Source(example_source.name))
     # Combine multiple loaded sources into one
-    assert td.Sources([example_source, example_source])
+    assert Sources([example_source, example_source])
     # Mixed loading of named and loaded sources
-    assert td.Sources([example_source.name, example_source])
+    assert Sources([example_source.name, example_source])
 
 
 @pytest.mark.parametrize(
@@ -144,7 +145,7 @@ def test_change_datetime_format(
         ),
         ("https://ens.dk/media/1/download", "2025-05-06 16:02:04", None),
     ],
-)
+)  # type: ignore
 def test_is_wayback_snapshot_available(url, timestamp, expected) -> None:
     """Check if the example source is available on the Internet Archive Wayback Machine."""
     output = Source.is_wayback_snapshot_available(url, timestamp)
@@ -161,7 +162,7 @@ def test_is_wayback_snapshot_available(url, timestamp, expected) -> None:
         }
     ],
     indirect=True,
-)
+)  # type: ignore
 def test_download_file_from_wayback(example_source) -> None:
     """Check if the example source is downloaded from the Internet Archive Wayback Machine."""
     storage_path = example_source.download_file_from_wayback()

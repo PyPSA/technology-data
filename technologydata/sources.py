@@ -249,6 +249,10 @@ class Source:
             - The `path` and `name` attributes must be defined in the instance for saving the file
 
         """
+        if self.details is None:
+            logger.error("The details attribute is not set.")
+            return None
+
         url_archived = self.details["url_archived"].to_numpy()[0]
         save_path: pathlib.Path | None = None
 

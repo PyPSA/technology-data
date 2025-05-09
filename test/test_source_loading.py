@@ -49,7 +49,7 @@ def test_source_loading() -> None:
         ),
     ],
     indirect=["example_source"],
-)
+)  # type: ignore
 def test_source_initialization(
     example_source, expected_path, expected_features
 ) -> None:

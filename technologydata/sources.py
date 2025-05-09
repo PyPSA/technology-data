@@ -104,8 +104,12 @@ class Source:
         # list[str]: List of features provided by the source (e.g., 'Technologies')
         self.available_features = self._detect_features()
 
-    def _load_details(self) -> pd.DataFrame:
+    def _load_details(self) -> pd.DataFrame | None:
         """Load the sources.csv file into a DataFrame."""
+        if self.path is None:
+            logger.error("The path attribute is not set.")
+            return None
+
         source_file = self.path / "sources.csv"
         schema_file = SPECIFICATIONS_PATH / "sources.schema.json"
 
@@ -125,9 +129,14 @@ class Source:
 
         return details
 
-    def _detect_features(self) -> list[str]:
+    def _detect_features(self) -> list[str] | None:
         """Detect which features are available in the source folder."""
         # Find all CSV files in the source folder
+
+        if self.path is None:
+            logger.error("The path attribute is not set.")
+            return None
+
         files = {file.stem for file in self.path.glob("*.csv")}
         files = files - {"sources"}  # Exclude source.csv
 
@@ -320,71 +329,7 @@ class Source:
             return output_datetime_string
         except ValueError as e:
             logger.info(f"Error during datetime formatting: {e}")
-            None
-
-    @staticmethod
-    def save_page_to_wayback(url_to_save: str) -> dict:
-        """
-        Save a webpage to the Wayback Machine.
-
-        Parameters
-        ----------
-        url_to_save: str
-            URL of the page to save
-
-        Returns
-        -------
-        dict
-            result with success status, message, and response data or error information
-
-        """
-        endpoint_url = "https://web.archive.org/save/"
-        headers = {
-            "Accept": "application/json",
-            "Accept-Language": "en-US,en;q=0.5",
-            "Accept-Encoding": "gzip, deflate, br, zstd",
-            "Connection": "keep-alive",
-        }
-        data = {
-            "url": url_to_save,  # Replace with the URL you want to save
-            "capture_all": "on",
-            "delay_wb_availability": "1",  # Allow queuing if busy
-            "skip_first_archive": "1",  # Skip checking past archives
-        }
-
-        try:
-            # Make the POST request
-            response = requests.post(
-                endpoint_url, headers=headers, data=data, timeout=30
-            )
-
-            # Raise exception for HTTP error codes
-            response.raise_for_status()
-
-            # Parse JSON if possible
-            try:
-                json_response = response.json()
-            except ValueError:
-                json_response = None
-
-            return {
-                "success": True,
-                "message": "Page saved successfully!",
-                "data": json_response,
-            }
-        except requests.exceptions.HTTPError as http_err:
-            return {
-                "success": False,
-                "message": "HTTP error occurred while saving page.",
-                "error": str(http_err),
-            }
-        except requests.exceptions.RequestException as req_err:
-            # Handle connection errors, timeouts, etc.
-            return {
-                "success": False,
-                "message": "Request error occurred while saving page.",
-                "error": str(req_err),
-            }
+            return None
 
     @staticmethod
     def is_wayback_snapshot_available(
@@ -451,11 +396,11 @@ class Source:
                 return archived_url, output_timestamp, status
             else:
                 logger.info("No archived snapshot found.")
-                None
+                return None
 
         except requests.RequestException as e:
             logger.info(f"Error during API request: {e}")
-            None
+            return None
 
 
 class Sources:

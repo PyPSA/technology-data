@@ -76,6 +76,10 @@ module = "technologydata"
 disallow_untyped_defs = true
 check_untyped_defs = true
 
+[[tool.mypy.overrides]]
+module = "requests"
+ignore_missing_imports = true
+
 # Formatter and linter settings
 
 [tool.ruff]

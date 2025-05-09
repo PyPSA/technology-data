@@ -127,7 +127,6 @@ class Source:
 
     def _detect_features(self) -> list[str]:
         """Detect which features are available in the source folder."""
-        features = []
         # Find all CSV files in the source folder
         files = {file.stem for file in self.path.glob("*.csv")}
         files = files - {"sources"}  # Exclude source.csv
@@ -137,7 +136,7 @@ class Source:
         nicer_names = {
             "technologies": "Technologies",
         }
-        features = {nicer_names[f] for f in files}
+        features = list({nicer_names[f] for f in files})
         features = sorted(features)
 
         return features
@@ -242,7 +241,13 @@ class Source:
 
         """
         url_archived = self.details["url_archived"].to_numpy()[0]
-        save_path = ""
+        save_path: pathlib.Path | None = None
+
+        # Ensure self.path is not None
+        if self.path is None:
+            logger.error("The path attribute is not set.")
+            return None
+
         try:
             response = requests.get(url_archived)
             response.raise_for_status()  # Check for HTTP errors
@@ -260,6 +265,9 @@ class Source:
                 save_path = pathlib.Path(self.path, self.name + ".xlsx")
             elif "application/parquet" in content_type:
                 save_path = pathlib.Path(self.path, self.name + ".parquet")
+            else:
+                logger.warning(f"Unsupported content type: {content_type}")
+                return None  # Return None if the content type is unsupported
 
             with open(save_path, "wb") as file:
                 file.write(response.content)

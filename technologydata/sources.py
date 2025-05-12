@@ -525,6 +525,3 @@ class Sources:
         )  # not part of the schema, drop manually here
         ftl.Resource(data).write(path=str(path / f"{self.schema_name}.csv"))
         self.schema.to_json(path=str(path / f"{self.schema_name}.schema.json"))
-
-
-__all__ = [Source, Sources, AVAILABLE_SOURCES]

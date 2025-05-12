@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
+from typing import Any
 
 import frictionless as ftl
 import numpy as np
@@ -169,6 +170,10 @@ class Technologies:
         )
         resources = []
         for source in self.sources.sources:
+            if source.path is None:
+                logger.error(f"Source path is None for source: {source.name}")
+                raise ValueError(f"Source path is None for source: {source.name}")
+
             with ftl.Resource(
                 path=str(source.path / (self.schema_name + ".csv")),
                 schema=self.schema,
@@ -198,7 +203,6 @@ class Technologies:
             # TODO fix: the forwarding to pandas works, but the return value is still a DataFrame, not the object
             if isinstance(return_value, pd.DataFrame):
                 self.data = return_value
-                return self
             else:
                 return return_value
         raise AttributeError(
@@ -344,7 +348,7 @@ class Technologies:
     def adjust_year(
         self,
         year: int,
-        model: dict,
+        model: dict[str, Any],
         parameters: list[str] | None = None,
     ) -> Technologies:
         """

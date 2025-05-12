@@ -11,4 +11,10 @@ from technologydata.technologies import (
 __version__ = version("technologydata")
 
 
-_all__ = [Source, Sources, Technologies, AVAILABLE_SOURCES, check_source_validity]
+__all__ = [
+    "Source",
+    "Sources",
+    "Technologies",
+    "AVAILABLE_SOURCES",
+    "check_source_validity",
+]

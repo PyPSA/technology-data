@@ -129,13 +129,13 @@ class Source:
 
         return details
 
-    def _detect_features(self) -> list[str] | None:
+    def _detect_features(self) -> list[str]:
         """Detect which features are available in the source folder."""
         # Find all CSV files in the source folder
 
         if self.path is None:
             logger.error("The path attribute is not set.")
-            return None
+            return []  # return an empty list
 
         files = {file.stem for file in self.path.glob("*.csv")}
         files = files - {"sources"}  # Exclude source.csv
@@ -453,7 +453,12 @@ class Sources:
             self.sources = [sources]
         elif isinstance(sources, dict):
             # All sources need to be loaded when specified this way
-            self.sources = [Source(name, path) for name, path in sources.items()]
+            self.sources = [
+                Source(
+                    name, path if isinstance(path, pathlib.Path) else pathlib.Path(path)
+                )
+                for name, path in sources.items()
+            ]
         elif isinstance(sources, Iterable):
             # Directly add already loaded sources to the object
             loaded_sources = [
@@ -465,6 +470,8 @@ class Sources:
             ]
             # Contains all the loaded sources
             self.sources = loaded_sources + unloaded_sources
+        else:
+            raise TypeError(f"Unsupported type for sources: {type(sources)}")
 
         # A pd.DataFrame, containing the details of all the sources
         self.details = pd.concat(

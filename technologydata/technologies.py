@@ -98,7 +98,7 @@ class Technologies:
 
     def __init__(
         self,
-        sources: str | Source | Sources | list[str | Source] | dict[str, str | Path],
+        sources: str | Source | Sources | list[str | Source] | dict[str, Path],
         sort_data: bool = True,
     ) -> None:
         """
@@ -193,7 +193,7 @@ class Technologies:
             # Return the pd.DataFrame representation
             return self.data.__repr__()
 
-    def __getattr__(self, name: str) -> None:
+    def __getattr__(self, name: str) -> Any:
         """Delegate attribute access to the `data` pandas.DataFrame if the attribute is not found in the class."""
         if not self.data.empty and hasattr(self.data, name):
             return_value = getattr(self.data, name)
@@ -292,22 +292,13 @@ class Technologies:
 
         """
         # Default parameters
-        parameters = (
-            parameters
-            if parameters
-            else [
-                "investment",
-                "capex",
-                "opex",
-            ]
-        )
+        parameters = parameters or ["investment", "capex", "opex"]
 
-        changed_data = None
-        unchanged_data = None
-
+        # Filter data based on parameters
         changed_data = self.data.query(f"parameter in {parameters}")
         unchanged_data = self.data.loc[~self.data.index.isin(changed_data.index)]
 
+        # Check for missing scale values
         if changed_data["scale"].isna().any():
             logger.warning(
                 "Some data entries have no associated `scale` and will yield NaN values after scaling. "
@@ -315,35 +306,27 @@ class Technologies:
             )
 
         # TODO create a copy with converted units that align with the requested scale
-        # and use this data for calculating the scaling factors, but don't use the changed values for returning, rather the original units
+        # and use this data for calculating the scaling factors,
+        # but don't use the changed values for returning, rather the original units
+
+        # Check for unit compatibility
         if any(changed_data["scale_unit"] != unit):
             raise NotImplementedError(
                 f"Unit conversion for different units to {unit} is not implemented yet."
             )
 
-        # Calculate the scaling factor, where we assume that all entries are specific values
-        changed_data["scaling_factor"] = (new_scale / changed_data["scale"]) ** (
-            scaling_exponent - 1
-        )
+        # Calculate the scaling factor
+        scaling_factor = (new_scale / changed_data["scale"]) ** (scaling_exponent - 1)
 
-        # Apply the scaling factor
-        changed_data["value"] = changed_data["value"] * changed_data["scaling_factor"]
-
-        # Remove obsolete scaling_factor column
-        changed_data = changed_data.drop(columns=["scaling_factor"])
-
-        # Add information about new scale + unit
-        changed_data["scale"] = new_scale
-        changed_data["scale_unit"] = unit
+        # Create a new DataFrame for adjusted values
+        adjusted_data = changed_data.copy()
+        adjusted_data["value"] *= scaling_factor
+        adjusted_data["scale"] = new_scale
+        adjusted_data["scale_unit"] = unit
 
         # Recombine all data and restore the default order
-        self.data = pd.concat(
-            [unchanged_data, changed_data],
-            ignore_index=True,
-        )
+        self.data = pd.concat([unchanged_data, adjusted_data], ignore_index=True)
         self.sort_data()
-
-        return self
 
     def adjust_year(
         self,

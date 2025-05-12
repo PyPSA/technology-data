@@ -24,13 +24,14 @@ path_cwd = pathlib.Path.cwd()
 @pytest.fixture(scope="function")  # type: ignore
 def example_source(request: pytest.FixtureRequest) -> td.Source:
     """Fixture to create an example source."""
+    # Fetch the necessary values from the request object
     source_name = request.param.get("source_name", "example01")
     source_path = request.param.get(
         "source_path", pathlib.Path("technologydata", "datasources", "example01")
     )
 
     def load_example_source() -> td.Source:
-        """Inner function to create the source."""
+        """Inner function to create the source object."""
         return td.Source(
             source_name,
             pathlib.Path(path_cwd, source_path),

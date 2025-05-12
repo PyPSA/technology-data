@@ -51,7 +51,7 @@ def test_source_loading() -> None:
     indirect=["example_source"],
 )  # type: ignore
 def test_source_initialization(
-    example_source, expected_path, expected_features
+    example_source: Source, expected_path: pathlib.Path, expected_features: list[str]
 ) -> None:
     """Test the initialization of the Source class."""
     # Path should be the provided path
@@ -63,10 +63,11 @@ def test_source_initialization(
     # Check for expected features
     assert example_source.available_features == expected_features
     # Check whether packaged sources can also be loaded
+    loaded_source = Source(example_source.name)
     assert (
-        Source(example_source.name).name == example_source.name
-        and Source(example_source.name).path.absolute()
-        == example_source.path.absolute()
+        loaded_source.name == example_source.name
+        and loaded_source.path is not None  # Ensure path is not None
+        and loaded_source.path.absolute() == example_source.path.absolute()
     )
 
 
@@ -84,7 +85,7 @@ def test_source_initialization(
     ],
     indirect=True,
 )  # type: ignore
-def test_sources_initialization(example_source) -> None:
+def test_sources_initialization(example_source: Source) -> None:
     """Test different ways of initializing a Sources object."""
     # See if we can directly load all packaged sources directly / load from dict
     assert Sources(AVAILABLE_SOURCES)
@@ -122,9 +123,9 @@ def test_sources_initialization(example_source) -> None:
             None,
         ),
     ],
-)
+)  # type: ignore
 def test_change_datetime_format(
-    input_date, input_format, output_format, expected_date
+    input_date: str, input_format: str, output_format: str, expected_date: str
 ) -> None:
     """Check if the datetime is correctly transformed to a new format."""
     output_date = Source.change_datetime_format(input_date, input_format, output_format)
@@ -146,10 +147,11 @@ def test_change_datetime_format(
         ("https://ens.dk/media/1/download", "2025-05-06 16:02:04", None),
     ],
 )  # type: ignore
-def test_is_wayback_snapshot_available(url, timestamp, expected) -> None:
+def test_is_wayback_snapshot_available(
+    url: str, timestamp: str, expected: tuple[str, str, str] | None
+) -> None:
     """Check if the example source is available on the Internet Archive Wayback Machine."""
     output = Source.is_wayback_snapshot_available(url, timestamp)
-    print(output)
     assert output == expected
 
 
@@ -163,7 +165,11 @@ def test_is_wayback_snapshot_available(url, timestamp, expected) -> None:
     ],
     indirect=True,
 )  # type: ignore
-def test_download_file_from_wayback(example_source) -> None:
+def test_download_file_from_wayback(example_source: Source) -> None:
     """Check if the example source is downloaded from the Internet Archive Wayback Machine."""
     storage_path = example_source.download_file_from_wayback()
+    # Check if storage_path is not None
+    assert storage_path is not None, "Expected a valid storage path, but got None."
+
     assert storage_path.is_file()
+    pathlib.Path(storage_path).unlink(missing_ok=True)

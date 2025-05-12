@@ -1,51 +1,71 @@
 """Test functionality related to adjust_X functions in the Technologies class."""
 
+import pathlib
+
 import pytest
 
 from technologydata import Technologies
 
 
 @pytest.fixture
-def example_source():
+def example_technologies():
     """Fixture to provide the example01 source."""
     return Technologies("example01")
 
 
 @pytest.fixture
-def forecast_source():
+def forecast_technologies():
     """Fixture to provide an example dataset for time-related forecasting."""
-    return Technologies({"forecast01": "test/test_adjust_functions/forecast01"})
+    return Technologies(
+        {"forecast01": pathlib.Path("test", "test_adjust_functions", "forecast01")}
+    )
 
 
-def test_no_economies_of_scale(example_source) -> None:
+def test_no_economies_of_scale(example_technologies: Technologies) -> None:
     """Without economies of scale the value should not change."""
-    org_data = example_source.data.copy()
+    org_data = example_technologies.data.copy()
+
+    # Get the adjusted data
+    example_technologies.adjust_scale(
+        new_scale=999,
+        unit="MW",
+        scaling_exponent=1,
+    )
+    adjusted_data = example_technologies.data["value"].copy()
+
+    # Check if all values in adjusted_data are equal to the original values
     assert all(
-        example_source.adjust_scale(
-            new_scale=999,
-            unit="MW",
-            scaling_exponent=1,
-        ).data["value"]
-        == org_data["value"]
+        adjusted_value == original_value
+        for adjusted_value, original_value in zip(adjusted_data, org_data["value"])
     ), "Scaling with exponent 1 should not change the value"
 
 
-def test_economies_of_scale(example_source) -> None:
+def test_economies_of_scale(example_technologies: Technologies) -> None:
     """Test with common economies of scale with exponent 0.5."""
-    org_data = example_source.data.copy()
+    org_data = example_technologies.data.copy()
+
+    # Get the adjusted data
+    example_technologies.adjust_scale(
+        new_scale=2,
+        unit="MW",
+        scaling_exponent=0.5,
+    )
+    adjusted_data = example_technologies.data["value"].copy()
+
+    # Calculate the expected values based on the scaling formula
+    expected_values = org_data["value"] * (2 / org_data["scale"]) ** (0.5 - 1)
+
+    # Check if all adjusted values are approximately equal to the expected values
     assert all(
-        example_source.adjust_scale(
-            new_scale=2,
-            unit="MW",
-            scaling_exponent=0.5,
-        ).data["value"]
-        == org_data["value"] * (2 / org_data["scale"]) ** (0.5 - 1)
+        abs(adjusted_value - expected_value)
+        < 1e-6  # Use a small tolerance for floating-point comparison
+        for adjusted_value, expected_value in zip(adjusted_data, expected_values)
     ), "Scaling with exponent 0.5 should change the value to approx 0.7"
 
 
-def test_adjust_year_linear_interpolation(forecast_source) -> None:
+def test_adjust_year_linear_interpolation(forecast_technologies: Technologies) -> None:
     """Test linear forecasting through a middle value in 2025."""
-    forecast = forecast_source.adjust_year(year=2025, model={"method": "linear"})
+    forecast = forecast_technologies.adjust_year(year=2025, model={"method": "linear"})
 
     assert forecast.shape[0] == 3, "Forecasted data missing additional row"
     assert forecast.iloc[1]["value"] == 150, (
@@ -53,9 +73,9 @@ def test_adjust_year_linear_interpolation(forecast_source) -> None:
     )
 
 
-def test_adjust_year_linear_extrapolation(forecast_source: Technologies) -> None:
+def test_adjust_year_linear_extrapolation(forecast_technologies: Technologies) -> None:
     """Test linear forecasting for a value outside the range of entries provided."""
-    forecast = forecast_source.adjust_year(
+    forecast = forecast_technologies.adjust_year(
         year=2040,
         model={
             "method": "linear",

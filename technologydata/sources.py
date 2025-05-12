@@ -150,7 +150,7 @@ class Source:
 
         return features
 
-    def process(self, trusted_execution: bool = False) -> None:
+    def process(self, trusted_execution: bool = False) -> bool:
         """
         Process the source data.
 

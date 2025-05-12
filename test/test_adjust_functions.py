@@ -7,20 +7,22 @@ import pytest
 from technologydata import Technologies
 
 
-@pytest.fixture
-def example_technologies():
-    """Fixture to provide the example01 source."""
-    return Technologies("example01")
-
-
-@pytest.fixture
-def forecast_technologies():
+@pytest.fixture  # type: ignore
+def forecast_technologies() -> Technologies:
     """Fixture to provide an example dataset for time-related forecasting."""
     return Technologies(
         {"forecast01": pathlib.Path("test", "test_adjust_functions", "forecast01")}
     )
 
 
+@pytest.mark.parametrize(
+    "example_technologies",
+    [
+        {"technologies_name": "example01"},
+        {"technologies_name": "example02"},
+    ],
+    indirect=True,
+)  # type: ignore
 def test_no_economies_of_scale(example_technologies: Technologies) -> None:
     """Without economies of scale the value should not change."""
     org_data = example_technologies.data.copy()
@@ -40,6 +42,14 @@ def test_no_economies_of_scale(example_technologies: Technologies) -> None:
     ), "Scaling with exponent 1 should not change the value"
 
 
+@pytest.mark.parametrize(
+    "example_technologies",
+    [
+        {"technologies_name": "example01"},
+        {"technologies_name": "example02"},
+    ],
+    indirect=True,
+)  # type: ignore
 def test_economies_of_scale(example_technologies: Technologies) -> None:
     """Test with common economies of scale with exponent 0.5."""
     org_data = example_technologies.data.copy()

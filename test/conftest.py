@@ -39,3 +39,17 @@ def example_source(request: pytest.FixtureRequest) -> td.Source:
 
     # Call the inner function and return the result
     return load_example_source()
+
+
+@pytest.fixture(scope="function")  # type: ignore
+def example_technologies(request: pytest.FixtureRequest) -> td.Technologies:
+    """Fixture to provide the example technologies."""
+    # Fetch the necessary values from the request object
+    technologies_name = request.param.get("technologies_name", "example01")
+
+    def load_example_technologies() -> td.Technologies:
+        """Inner function to create the source object."""
+        return td.Technologies(technologies_name)
+
+    # Call the inner function and return the result
+    return load_example_technologies()

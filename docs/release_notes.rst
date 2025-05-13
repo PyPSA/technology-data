@@ -20,6 +20,12 @@ Upcoming Release
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
 
+* Updated DEA Energy Storage data file (technology_data_catalogue_for_energy_storage.xlsx) to the newest version 9 – costs are now given in 2020 currency year.
+
+* Added storage temperatures as a parameter for central and decentral water tanks as well as for pit thermal energy storage.
+
+* Integrated gas storage processing directly into the order_data function and removed the add_gas_storage function, as its data structure now matches that of the other components in the technology_data_catalogue_for_energy_storage.xlsx file.
+
 * Include unit test for compile_cost_assumptions_usa.py (https://github.com/PyPSA/technology-data/pull/170)
 
 * US specific folder for NREL/ATB data (https://github.com/PyPSA/technology-data/pull/172)

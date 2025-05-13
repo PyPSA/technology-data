@@ -541,12 +541,12 @@ allam,VOM,2.0,EUR/MWh,Own assumption. TODO: Find better technology data and cost
 allam,efficiency,0.6,p.u.,Own assumption. TODO: Find better technology data and cost assumptions,,2020.0
 allam,investment,1500.0,EUR/kW,Own assumption. TODO: Find better technology data and cost assumptions,,2020.0
 allam,lifetime,30.0,years,Own assumption. TODO: Find better technology data and cost assumptions,,2020.0
-battery inverter,FOM,0.3375,%/year,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Fixed O&M,2015.0
-battery inverter,efficiency,0.96,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Round trip efficiency DC,2015.0
-battery inverter,investment,169.3155,EUR/kW,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Output capacity expansion cost investment,2015.0
-battery inverter,lifetime,10.0,years,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx, Note K.",:  Technical lifetime,2015.0
-battery storage,investment,150.2675,EUR/kWh,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Energy storage expansion cost investment,2015.0
-battery storage,lifetime,25.0,years,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Technical lifetime,2015.0
+battery inverter,FOM,0.3375,%/year,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Fixed O&M,2020.0
+battery inverter,efficiency,0.96,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Round trip efficiency DC,2020.0
+battery inverter,investment,170.144,EUR/kW,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Output capacity expansion cost investment,2020.0
+battery inverter,lifetime,10.0,years,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx, Note K.",:  Technical lifetime,2020.0
+battery storage,investment,151.0028,EUR/kWh,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Energy storage expansion cost investment,2020.0
+battery storage,lifetime,25.0,years,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Technical lifetime,2020.0
 biochar pyrolysis,FOM,3.4167,%/year,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx","105 Slow pyrolysis, Straw:  Fixed O&M",2020.0
 biochar pyrolysis,VOM,823.497,EUR/MWh_biochar,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx","105 Slow pyrolysis, Straw:  Variable O&M",2020.0
 biochar pyrolysis,efficiency-biochar,0.404,MWh_biochar/MWh_feedstock,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx","105 Slow pyrolysis, Straw:  efficiency biochar",2020.0
@@ -721,18 +721,21 @@ central solid biomass CHP powerboost CC,efficiency,0.2699,per unit,"Danish Energ
 central solid biomass CHP powerboost CC,efficiency-heat,0.8245,per unit,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Heat efficiency, net, annual average",2015.0
 central solid biomass CHP powerboost CC,investment,3544.5017,EUR/kW_e,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Nominal investment ",2015.0
 central solid biomass CHP powerboost CC,lifetime,25.0,years,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Technical lifetime",2015.0
-central water pit charger,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Charger efficiency,2015.0
-central water pit discharger,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Discharger efficiency,2015.0
-central water pit storage,FOM,0.551,%/year,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Fixed O&M,2015.0
-central water pit storage,energy to power ratio,150.0,h,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Ratio between energy storage and input capacity,2015.0
-central water pit storage,investment,0.5761,EUR/kWhCapacity,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Specific investment,2015.0
-central water pit storage,lifetime,25.0,years,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Technical lifetime,2015.0
-central water tank charger,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Charger efficiency,2015.0
-central water tank discharger,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Discharger efficiency,2015.0
-central water tank storage,FOM,0.2901,%/year,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Fixed O&M,2015.0
-central water tank storage,energy to power ratio,60.3448,h,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Ratio between energy storage and input capacity,2015.0
-central water tank storage,investment,3.1374,EUR/kWhCapacity,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Specific investment,2015.0
-central water tank storage,lifetime,40.0,years,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Technical lifetime,2015.0
+central water pit charger,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Charger efficiency,2020.0
+central water pit discharger,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Discharger efficiency,2020.0
+central water pit storage,Bottom storage temperature,35.0,⁰C,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Typical bottom storage temperature,2020.0
+central water pit storage,FOM,0.2354,%/year,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Fixed O&M,2020.0
+central water pit storage,Top storage temperature,90.0,⁰C,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Typical max. storage temperature,2020.0
+central water pit storage,energy to power ratio,30.0,h,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Ratio between energy storage and input capacity,2020.0
+central water pit storage,investment,1.0622,EUR/kWh Capacity,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Specific investment,2020.0
+central water pit storage,lifetime,30.0,years,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",140 PTES seasonal:  Technical lifetime,2020.0
+central water tank charger,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Charger efficiency,2020.0
+central water tank discharger,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Discharger efficiency,2020.0
+central water tank storage,FOM,1.0,%/year,HP, from old pypsa cost assumptions,2015.0
+central water tank storage,Temperature difference,55.0,"hot/cold, K","Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Typical temperature difference,2020.0
+central water tank storage,energy to power ratio,60.3448,h,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Ratio between energy storage and input capacity,2020.0
+central water tank storage,investment,3.0361,EUR/kWhCapacity,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Specific investment,2020.0
+central water tank storage,lifetime,40.0,years,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",141 Large hot water tank:  Technical lifetime,2020.0
 clean water tank storage,FOM,2.0,%/year,"Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Table 1.",,2013.0
 clean water tank storage,investment,69.1286,EUR/m^3-H2O,"Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Table 1.",,2013.0
 clean water tank storage,lifetime,30.0,years,"Caldera et al 2016: Local cost of seawater RO desalination based on solar PV and windenergy: A global estimate. (https://doi.org/10.1016/j.desal.2016.02.004), Table 1.",,
@@ -786,14 +789,15 @@ decentral solar thermal,FOM,1.3,%/year,HP, from old pypsa cost assumptions,2015.
 decentral solar thermal,discount rate,0.04,per unit,Palzer thesis, from old pypsa cost assumptions,2015.0
 decentral solar thermal,investment,285719.8393,EUR/1000m2,HP, from old pypsa cost assumptions,2015.0
 decentral solar thermal,lifetime,20.0,years,HP, from old pypsa cost assumptions,2015.0
-decentral water tank charger,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Charger efficiency,2015.0
-decentral water tank discharger,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Discharger efficiency,2015.0
+decentral water tank charger,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Charger efficiency,2020.0
+decentral water tank discharger,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Discharger efficiency,2020.0
 decentral water tank storage,FOM,1.0,%/year,HP, from old pypsa cost assumptions,2015.0
-decentral water tank storage,VOM,1.0582,EUR/MWh,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",142 Small scale hot water tank:  Variable O&M,2015.0
+decentral water tank storage,Temperature difference,30.0,"hot/cold, K","Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",142 Small scale hot water tank:  Typical temperature difference,2020.0
+decentral water tank storage,VOM,1.0241,EUR/MWh,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",142 Small scale hot water tank:  Variable O&M,2020.0
 decentral water tank storage,discount rate,0.04,per unit,Palzer thesis, from old pypsa cost assumptions,2015.0
-decentral water tank storage,energy to power ratio,0.15,h,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",142 Small scale hot water tank:  Ratio between energy storage and input capacity,2015.0
-decentral water tank storage,investment,433.8709,EUR/kWh,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",142 Small scale hot water tank:  Specific investment,2015.0
-decentral water tank storage,lifetime,30.0,years,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",142 Small scale hot water tank:  Technical lifetime,2015.0
+decentral water tank storage,energy to power ratio,0.15,h,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",142 Small scale hot water tank:  Ratio between energy storage and input capacity,2020.0
+decentral water tank storage,investment,419.8622,EUR/kWh,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",142 Small scale hot water tank:  Specific investment,2020.0
+decentral water tank storage,lifetime,30.0,years,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",142 Small scale hot water tank:  Technical lifetime,2020.0
 digestible biomass,fuel,17.0611,EUR/MWh_th,"JRC ENSPRESO ca avg for MINBIOAGRW1, ENS_Ref for 2040",,2010.0
 digestible biomass to hydrogen,FOM,4.25,%/year,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",,2014.0
 digestible biomass to hydrogen,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,
@@ -891,11 +895,11 @@ gas boiler steam,VOM,1.007,EUR/MWh,"Danish Energy Agency, inputs/technology_data
 gas boiler steam,efficiency,0.93,per unit,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx","311.1c Steam boiler Gas:  Total efficiency, net, annual average",2019.0
 gas boiler steam,investment,45.7727,EUR/kW,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx",311.1c Steam boiler Gas:  Nominal investment,2019.0
 gas boiler steam,lifetime,25.0,years,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx",311.1c Steam boiler Gas:  Technical lifetime,2019.0
-gas storage,FOM,3.5919,%,Danish Energy Agency,"150 Underground Storage of Gas, Operation and Maintenance, salt cavern (units converted)",2015.0
-gas storage,investment,0.0348,EUR/kWh,Danish Energy Agency,"150 Underground Storage of Gas, Establishment of one cavern (units converted)",2015.0
-gas storage,lifetime,100.0,years,TODO no source,"estimation: most underground storage are already build, they do have a long lifetime",2015.0
-gas storage charger,investment,15.1737,EUR/kW,Danish Energy Agency,"150 Underground Storage of Gas, Process equipment (units converted)",2015.0
-gas storage discharger,investment,5.0579,EUR/kW,Danish Energy Agency,"150 Underground Storage of Gas, Process equipment (units converted)",2015.0
+gas storage,FOM,0.5368,%/year,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",150 Underground Storage of Gas:  Fixed O&M,2020.0
+gas storage,investment,0.2366,EUR/kWh,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",150 Underground Storage of Gas:  Specific investment,2020.0
+gas storage,lifetime,100.0,years,TODO no source,"150 Underground Storage of Gas:  estimation: most underground storage are already built, they do have a long lifetime",2020.0
+gas storage charger,investment,15.2479,EUR/kW,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",,2020.0
+gas storage discharger,investment,5.0826,EUR/kW,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",,2020.0
 geothermal,CO2 intensity,0.12,tCO2/MWh_th,"Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551",Likely to be improved; Average of 85 percent of global egs power plant capacity; Result of fluid circulation through rock formations,2020.0
 geothermal,FOM,2.0,%/year,"Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551",See Supplemental Material of source for details,2020.0
 geothermal,district heat surcharge,25.0,%,Frey et al. 2022: Techno-Economic Assessment of Geothermal Resources in the Variscan Basement of the Northern Upper Rhine Graben,"If capital cost of electric generation from EGS is 100%, district heating adds additional 25%. Costs incurred by piping.",2020.0
@@ -905,12 +909,12 @@ helmeth,FOM,3.0,%/year,no source, from old pypsa cost assumptions,2015.0
 helmeth,efficiency,0.8,per unit,HELMETH press release, from old pypsa cost assumptions,2015.0
 helmeth,investment,2116.4433,EUR/kW,no source, from old pypsa cost assumptions,2015.0
 helmeth,lifetime,25.0,years,no source, from old pypsa cost assumptions,2015.0
-home battery inverter,FOM,0.3375,%/year,"Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019, Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Fixed O&M,2015.0
-home battery inverter,efficiency,0.96,per unit,"Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019, Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Round trip efficiency DC,2015.0
-home battery inverter,investment,241.3377,EUR/kW,"Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019, Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Output capacity expansion cost investment,2015.0
-home battery inverter,lifetime,10.0,years,"Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019, Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx, Note K.",:  Technical lifetime,2015.0
-home battery storage,investment,214.7158,EUR/kWh,"Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019, Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Energy storage expansion cost investment,2015.0
-home battery storage,lifetime,25.0,years,"Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019, Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Technical lifetime,2015.0
+home battery inverter,FOM,0.3375,%/year,"Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019, Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Fixed O&M,2020.0
+home battery inverter,efficiency,0.96,per unit,"Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019, Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Round trip efficiency DC,2020.0
+home battery inverter,investment,242.5187,EUR/kW,"Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019, Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Output capacity expansion cost investment,2020.0
+home battery inverter,lifetime,10.0,years,"Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019, Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx, Note K.",:  Technical lifetime,2020.0
+home battery storage,investment,215.7666,EUR/kWh,"Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019, Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Energy storage expansion cost investment,2020.0
+home battery storage,lifetime,25.0,years,"Global Energy System based on 100% Renewable Energy, Energywatchgroup/LTU University, 2019, Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Technical lifetime,2020.0
 hydro,FOM,1.0,%/year,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions,2015.0
 hydro,efficiency,0.9,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions,2015.0
 hydro,investment,2274.8177,EUR/kWel,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions,2010.0
@@ -923,13 +927,13 @@ hydrogen storage tank type 1,FOM,2.0,%/year,"Based on Stöckl et al (2021): http
 hydrogen storage tank type 1,investment,13.5,EUR/kWh_H2,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.","450 EUR/kg_H2 converted with LHV to MWh. For a type 1 hydrogen storage tank (steel, 15-250 bar). Currency year assumed 2020 for initial publication of reference; observe note in SI.4.3 that no currency year is explicitly stated in the reference.",2020.0
 hydrogen storage tank type 1,lifetime,20.0,years,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.",-,2020.0
 hydrogen storage tank type 1,min_fill_level,6.0,%,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.",-,2020.0
-hydrogen storage tank type 1 including compressor,FOM,1.1133,%/year,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Fixed O&M,2015.0
-hydrogen storage tank type 1 including compressor,investment,47.5247,EUR/kWh,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Specific investment,2015.0
-hydrogen storage tank type 1 including compressor,lifetime,30.0,years,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Technical lifetime,2015.0
-hydrogen storage underground,FOM,0.0,%/year,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Fixed O&M,2015.0
-hydrogen storage underground,VOM,0.0,EUR/MWh,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Variable O&M,2015.0
-hydrogen storage underground,investment,2.1164,EUR/kWh,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Specific investment,2015.0
-hydrogen storage underground,lifetime,100.0,years,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Technical lifetime,2015.0
+hydrogen storage tank type 1 including compressor,FOM,1.1133,%/year,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Fixed O&M,2020.0
+hydrogen storage tank type 1 including compressor,investment,47.7573,EUR/kWh,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Specific investment,2020.0
+hydrogen storage tank type 1 including compressor,lifetime,30.0,years,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Technical lifetime,2020.0
+hydrogen storage underground,FOM,0.0,%/year,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Fixed O&M,2020.0
+hydrogen storage underground,VOM,0.0,EUR/MWh,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Variable O&M,2020.0
+hydrogen storage underground,investment,2.1268,EUR/kWh,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Specific investment,2020.0
+hydrogen storage underground,lifetime,100.0,years,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",151c Hydrogen Storage - Caverns:  Technical lifetime,2020.0
 industrial heat pump high temperature,FOM,0.0931,%/year,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx",302.b High temp. hp Up to 150:  Fixed O&M,2019.0
 industrial heat pump high temperature,VOM,3.2224,EUR/MWh,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx",302.b High temp. hp Up to 150:  Variable O&M,2019.0
 industrial heat pump high temperature,efficiency,3.05,per unit,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx","302.b High temp. hp Up to 150:  Total efficiency, net, annual average",2019.0

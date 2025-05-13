@@ -182,5 +182,12 @@ def test_store_snapshot_on_wayback() -> None:
     """Check if a given url is correctly stored as a snapshot on Internet Archive Wayback Machine."""
     url_to_archive = "https://openenergytransition.org/outputs.html"
     archived_info = Source.store_snapshot_on_wayback(url_to_archive)
-    assert archived_info[0] == "https://web.archive.org/web/20250513133237/https://openenergytransition.org/outputs.html"
+
+    # Check if archived_info is None
+    assert archived_info is not None, "archived_info should not be None"
+
+    assert (
+        archived_info[0]
+        == "https://web.archive.org/web/20250513133237/https://openenergytransition.org/outputs.html"
+    )
     assert archived_info[1] == "2025-05-13 13:32:37"

@@ -221,7 +221,7 @@ class Source:
             return True
 
     @staticmethod
-    def store_snapshot_on_wayback(url_to_archive: str) -> tuple[str, str] | None:
+    def store_snapshot_on_wayback(url_to_archive: str) -> tuple[Any, str | None] | None:
         """
         Store a snapshot of the given URL on the Wayback Machine and extract the timestamp.
         This method captures the specified URL using the Wayback Machine and retrieves the
@@ -239,6 +239,7 @@ class Source:
             A tuple containing the archive URL and the formatted timestamp if the operation
             is successful. Returns None if the timestamp cannot be extracted due to a
             ValueError (e.g., if the expected substrings are not found in the archive URL).
+
         """
         archive_url = savepagenow.capture_or_cache(url_to_archive)
         try:
@@ -258,9 +259,6 @@ class Source:
         except ValueError:
             # If "web/" or next "/" not found, return empty string
             return None
-
-    # TODO: write a method that fetches the url from a sources.csv file and updates the sources.csv with the necessary info
-    # The method should use the self attribute
 
     def download_file_from_wayback(self) -> pathlib.Path | None:
         """

@@ -37,6 +37,7 @@ dependencies = [
     "seaborn>=0.13.2",
     "tqdm>=4.67.1",
     "ucumvert>=0.2.1",
+    "waybackpy>=3.0.6",
 ]
 
 [project.urls]

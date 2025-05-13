@@ -297,7 +297,7 @@ class Source:
         output_datetime_format: str,
     ) -> str | None:
         """
-        Change the format of a given datetime string from one format to another. This function takes a
+        Change the format of a given datetime string from one format to another. This method takes a
         datetime string and its current format, then converts it to a specified output format.
         If the input string does not match the provided input format, it logs an error and returns None.
 
@@ -340,7 +340,7 @@ class Source:
         input_url: str, input_timestamp: str
     ) -> str | None | Any:
         """
-        The function queries the Internet Archive's Wayback Machine to check for the availability
+        The method queries the Internet Archive's Wayback Machine to check for the availability
         of archived snapshots of a given URL. It constructs an API request to the Wayback Machine
         and processes the response to extract the closest archived snapshot information.
 

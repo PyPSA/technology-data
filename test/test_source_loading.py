@@ -168,8 +168,19 @@ def test_is_wayback_snapshot_available(
 def test_download_file_from_wayback(example_source: Source) -> None:
     """Check if the example source is downloaded from the Internet Archive Wayback Machine."""
     storage_path = example_source.download_file_from_wayback()
+
     # Check if storage_path is not None
     assert storage_path is not None, "Expected a valid storage path, but got None."
 
     assert storage_path.is_file()
+
+    # Delete the downloaded file
     pathlib.Path(storage_path).unlink(missing_ok=True)
+
+
+def test_store_snapshot_on_wayback() -> None:
+    """Check if a given url is correctly stored as a snapshot on Internet Archive Wayback Machine."""
+    url_to_archive = "https://openenergytransition.org/outputs.html"
+    archived_info = Source.store_snapshot_on_wayback(url_to_archive)
+    assert archived_info[0] == "https://web.archive.org/web/20250513133237/https://openenergytransition.org/outputs.html"
+    assert archived_info[1] == "2025-05-13 13:32:37"

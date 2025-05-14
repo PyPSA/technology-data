@@ -377,7 +377,7 @@ bioethanol crops,fuel,2020,54.6434100368518,EUR/MWhth,2010,"JRC ENSPRESO ca avg 
 bioethanol crops,fuel,2030,72.477665790641,EUR/MWhth,2010,"JRC ENSPRESO ca avg for MINBIOCRP11 (Bioethanol barley, wheat, grain maize, oats, other cereals and rye), ENS_BaU_GFTM",
 bioethanol crops,fuel,2040,75.7178710725453,EUR/MWhth,2010,"JRC ENSPRESO ca avg for MINBIOCRP11 (Bioethanol barley, wheat, grain maize, oats, other cereals and rye), ENS_BaU_GFTM",
 bioethanol crops,fuel,2050,78.995541440487,EUR/MWhth,2010,"JRC ENSPRESO ca avg for MINBIOCRP11 (Bioethanol barley, wheat, grain maize, oats, other cereals and rye), ENS_BaU_GFTM",
-bioethanol crops,CO2 intensity,2020,0.25704,tCO2/MWh_th,,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `Scen_EmisCO2.xls`). Original value 71.4 g CO2/MJ",
+bioethanol crops,CO2 intensity,2020,0.12894,tCO2/MWh_th,,,Based on stochiometric composition and considering 26.7 MJ/kg energy content.
 biodiesel crops,fuel,2020,84.585016773297,EUR/MWhth,2010,"JRC ENSPRESO ca avg for MINBIORPS1 (rape seed), ENS_BaU_GFTM",
 biodiesel crops,fuel,2030,121.021431275337,EUR/MWhth,2010,"JRC ENSPRESO ca avg for MINBIORPS1 (rape seed), ENS_BaU_GFTM",
 biodiesel crops,fuel,2040,120.926387801857,EUR/MWhth,2010,"JRC ENSPRESO ca avg for MINBIORPS1 (rape seed), ENS_BaU_GFTM",

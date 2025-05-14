@@ -186,8 +186,39 @@ def test_store_snapshot_on_wayback() -> None:
     # Check if archived_info is None
     assert archived_info is not None, "archived_info should not be None"
 
+    archived_url, new_capture, output_timestamp = archived_info
     assert (
-        archived_info[0]
+        archived_url
         == "https://web.archive.org/web/20250513133237/https://openenergytransition.org/outputs.html"
     )
-    assert archived_info[1] == "2025-05-13 13:32:37"
+    assert new_capture is False
+    assert output_timestamp == "2025-05-13 13:32:37"
+
+
+# @pytest.mark.parametrize(
+#     "example_source",
+#     [
+#         {
+#             "source_name": "example03",
+#             "source_path": pathlib.Path("technologydata", "datasources", "example03"),
+#         }
+#     ],
+#     indirect=True,
+# )  # type: ignore
+# def test_ensure_snapshot(example_source: Source) -> None:
+#     """Check if a given sources.csv file contains the fields url_date and url_archived."""
+#     source_path = example_source.path
+#     current_file = pd.read_csv(source_path)
+#
+#     example_source.ensure_snapshot()
+#
+#     # Check if archived_info is None
+#     assert archived_info is not None, "archived_info should not be None"
+#
+#     archived_url, new_capture, output_timestamp = archived_info
+#     assert (
+#         archived_url
+#         == "https://web.archive.org/web/20250513133237/https://openenergytransition.org/outputs.html"
+#     )
+#     assert new_capture is False
+#     assert output_timestamp == "2025-05-13 13:32:37"

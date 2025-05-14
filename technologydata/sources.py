@@ -220,8 +220,52 @@ class Source:
             )
             return True
 
+    def ensure_snapshot(self) -> None:
+        """
+        Ensure that the Source object has the url_archived and url_date fields populated.
+        If not, check if the URL already has a snapshot stored. If not, store it and populate
+        url_archived and url_date.
+
+        Returns
+        -------
+        None
+
+        """
+        if self.details is None:
+            logger.error(f"The details attribute of the source {self.name} is not set.")
+            return None
+
+        if self.details.url is None:
+            logger.error(f"The url attribute of the source {self.name} is not set.")
+            return None
+
+        # Check if the url_date is populated. If not, store a snapshot
+        if not self.details.url_date or not self.details.url_archived:
+            archived_info = self.store_snapshot_on_wayback(self.details.url)
+            if archived_info is not None:
+                archived_url, new_capture_flag, timestamp = archived_info
+                if new_capture_flag:
+                    logger.info(
+                        f"A new snapshot has been stored for the url {self.details.url} with timestamp {timestamp} and Archive.org url {archived_url}."
+                    )
+                else:
+                    logger.info(
+                        f"There is already a snapshot for the url {self.details.url}."
+                    )
+                self.details.url_date = timestamp
+                self.details.url_archived = archived_url
+
+                # Update the existing .csv file with the new attributes
+                self.details.to_csv(self.path, index=False)
+        else:
+            logger.info(
+                f"Both url_date and url_archived are present for the source {self.name}"
+            )
+
     @staticmethod
-    def store_snapshot_on_wayback(url_to_archive: str) -> tuple[Any, str | None] | None:
+    def store_snapshot_on_wayback(
+        url_to_archive: str,
+    ) -> tuple[Any, bool | None, str | None] | None:
         """
         Store a snapshot of the given URL on the Wayback Machine and extract the timestamp.
         This method captures the specified URL using the Wayback Machine and retrieves the
@@ -235,10 +279,12 @@ class Source:
 
         Returns
         -------
-        tuple[str, str] | None
-            A tuple containing the archive URL and the formatted timestamp if the operation
-            is successful. Returns None if the timestamp cannot be extracted due to a
-            ValueError (e.g., if the expected substrings are not found in the archive URL).
+        tuple[str, bool, str] | None
+            A tuple containing the archive URL, a boolean indicating if a new capture was conducted (if the boolean is True,
+            archive.org conducted a new capture. If it is False, archive.org has returned a recently cached capture
+            instead, likely taken in the previous minutes) and the formatted timestamp (with format YYYY-MM-DD hh:mm:ss)
+            if the operation is successful. Returns None if the timestamp cannot be extracted due to a ValueError (e.g.,
+            if the expected substrings are not found in the archive URL).
 
         """
         archive_url = savepagenow.capture_or_cache(url_to_archive)
@@ -255,7 +301,7 @@ class Source:
                 "%Y%m%d%H%M%S",
                 "%Y-%m-%d %H:%M:%S",
             )
-            return archive_url[0], output_timestamp
+            return archive_url[0], archive_url[1], output_timestamp
         except ValueError:
             # If "web/" or next "/" not found, return empty string
             return None
@@ -273,62 +319,174 @@ class Source:
         - Excel (.xls and .xlsx)
         - Parquet (.parquet)
 
-        The method handles HTTP errors and prints an appropriate message if an error occurs
-
         Returns
         -------
-        pathlib.Path
-            the specified path where the file is stored
+        pathlib.Path | None
+            The specified path where the file is stored, or None if an error occurs.
 
         Raises
         ------
-            requests.exceptions.RequestException: If there is an issue with the HTTP request
+        requests.exceptions.RequestException
+            If there is an issue with the HTTP request.
 
         Notes
         -----
-            - The `details` attribute must contain a key "url_archived" with a valid URL
-            - The `path` and `name` attributes must be defined in the instance for saving the file
+        - The `details` attribute must contain a key "url_archived" with a valid URL.
+        - The `path` and `name` attributes must be defined in the instance for saving the file.
 
         """
         if self.details is None:
-            logger.error("The details attribute is not set.")
+            logger.error(f"The details attribute of the source {self.name} is not set.")
+            return None
+
+        if (
+            "url_archived" not in self.details
+            or self.details["url_archived"].isna().all()
+        ):
+            logger.error(
+                f"The url_archived attribute of source {self.name} is not set."
+            )
+            return None
+
+        if self.path is None:
+            logger.error(f"The path attribute of the source {self.name} is not set.")
             return None
 
         url_archived = self.details["url_archived"].to_numpy()[0]
-        save_path: pathlib.Path | None = None
+        save_path = self._get_save_path(url_archived)
 
-        # Ensure self.path is not None
-        if self.path is None:
-            logger.error("The path attribute is not set.")
+        if save_path is None:
             return None
 
+        return self._download_file(url_archived, save_path)
+
+    def _get_save_path(self, url_archived: str) -> pathlib.Path | None:
+        """
+        Determine the save path based on the content type.
+        This method retrieves the content type of the archived URL and determines the appropriate
+        file extension based on the content type. It constructs the full save path using the
+        instance's `path` and `name` attributes.
+
+        Parameters
+        ----------
+        url_archived : str
+            The URL of the archived file from which the content type will be determined.
+
+        Returns
+        -------
+        pathlib.Path | None
+            The full path where the file should be saved, including the appropriate file extension,
+            or None if the content type is unsupported or an error occurs.
+
+        Notes
+        -----
+            - Supported content types and their corresponding file extensions:
+                - "text/plain" -> ".txt"
+                - "application/pdf" -> ".pdf"
+                - "application/vnd.ms-excel" -> ".xls"
+                - "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" -> ".xlsx"
+                - "application/parquet" -> ".parquet"
+            - If the content type is unsupported, a warning is logged.
+
+        """
+        content_type = self._get_content_type(url_archived)
+        if content_type is None:
+            return None
+
+        extension_map = {
+            "text/plain": ".txt",
+            "application/pdf": ".pdf",
+            "application/vnd.ms-excel": ".xls",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": ".xlsx",
+            "application/parquet": ".parquet",
+        }
+
+        extension = extension_map.get(content_type)
+        if extension is None:
+            logger.warning(f"Unsupported content type: {content_type}")
+            return None
+
+        if self.path is not None and self.name is not None:
+            return pathlib.Path(self.path, self.name + extension)
+        else:
+            return None
+
+    @staticmethod
+    def _get_content_type(url_archived: str) -> Any:
+        """
+        Fetch the content type of the archived URL.
+
+        This method sends a HEAD request to the specified archived URL to retrieve the
+        Content-Type from the response headers. It returns the content type as a string
+        if the request is successful; otherwise, it logs an error and returns None.
+
+        Parameters
+        ----------
+        url_archived : str
+            The URL of the archived resource for which the content type is to be fetched.
+
+        Returns
+        -------
+        str | None
+            The Content-Type of the archived URL if the request is successful, or None
+            if an error occurs during the request.
+
+        Raises
+        ------
+        requests.exceptions.RequestException
+            If there is an issue with the HTTP request, an error is logged, and None is returned.
+
+        """
+        try:
+            response = requests.head(url_archived)
+            response.raise_for_status()
+            return response.headers.get("Content-Type")
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Failed to retrieve content type: {e}")
+            return None
+
+    @staticmethod
+    def _download_file(
+        url_archived: str, save_path: pathlib.Path
+    ) -> pathlib.Path | None:
+        """
+        Download the file and save it to the specified path.
+
+        This method retrieves the content from the specified archived URL and saves it
+        to the provided file path. It handles HTTP errors and logs appropriate messages
+        based on the outcome of the download operation.
+
+        Parameters
+        ----------
+        url_archived : str
+            The URL of the archived file to be downloaded.
+
+        save_path : pathlib.Path
+            The path where the downloaded file will be saved, including the file name.
+
+        Returns
+        -------
+        pathlib.Path | None
+            The path where the file has been saved if the download is successful, or None
+            if an error occurs during the download process.
+
+        Raises
+        ------
+        requests.exceptions.RequestException
+            If there is an issue with the HTTP request, an error is logged, and None is returned.
+
+        """
         try:
             response = requests.get(url_archived)
             response.raise_for_status()  # Check for HTTP errors
-            content_type = response.headers.get("Content-Type")
-            if "text/plain" in content_type:
-                save_path = pathlib.Path(self.path, self.name + ".txt")
-            elif "application/pdf" in content_type:
-                save_path = pathlib.Path(self.path, self.name + ".pdf")
-            elif "application/vnd.ms-excel" in content_type:
-                save_path = pathlib.Path(self.path, self.name + ".xls")
-            elif (
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                in content_type
-            ):
-                save_path = pathlib.Path(self.path, self.name + ".xlsx")
-            elif "application/parquet" in content_type:
-                save_path = pathlib.Path(self.path, self.name + ".parquet")
-            else:
-                logger.warning(f"Unsupported content type: {content_type}")
-                return None  # Return None if the content type is unsupported
 
             with open(save_path, "wb") as file:
                 file.write(response.content)
+
             logger.info(f"File downloaded successfully and saved to {save_path}")
             return save_path
         except requests.exceptions.RequestException as e:
-            logger.info(f"An error occurred: {e}")
+            logger.error(f"An error occurred during file download: {e}")
             return None
 
     @staticmethod

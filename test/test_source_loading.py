@@ -5,7 +5,6 @@ import sys
 
 import pandas as pd
 import pytest
-import shutil
 
 from technologydata import AVAILABLE_SOURCES, Source, Sources
 
@@ -197,22 +196,41 @@ def test_store_snapshot_on_wayback() -> None:
 
 
 @pytest.mark.parametrize(
-    "example_source",
+    "example_source, expected_archived_url, expected_timestamp",
     [
-        {
-            "source_name": "example03",
-            "source_path": pathlib.Path("technologydata", "datasources", "example03"),
-        },
-        {
-            "source_name": "example04",
-            "source_path": pathlib.Path("technologydata", "datasources", "example04"),
-        },
+        (
+            {
+                "source_name": "example03",
+                "source_path": pathlib.Path(
+                    "technologydata", "datasources", "example03"
+                ),
+            },
+            "http://web.archive.org/web/20250506160204/https://ens.dk/media/3273/download",
+            "2025-05-06 16:02:04",
+        ),
+        (
+            {
+                "source_name": "example04",
+                "source_path": pathlib.Path(
+                    "technologydata", "datasources", "example04"
+                ),
+            },
+            "https://web.archive.org/web/20250513133237/https://openenergytransition.org/outputs.html",
+            "2025-05-13 13:32:37",
+        ),
     ],
-    indirect=True,
+    indirect=["example_source"],
 )  # type: ignore
-def test_ensure_snapshot(example_source: Source) -> None:
+def test_ensure_snapshot(
+    example_source: Source, expected_archived_url: str, expected_timestamp: str
+) -> None:
     """Check if a given sources.csv file contains the fields url_date and url_archived."""
-    example_source.ensure_snapshot()
-    print(example_source.details)
-    assert False
-
+    file_name = "sources_modified.csv"
+    assert example_source.path is not None, "path should not be None"
+    file_path = pathlib.Path(path_cwd, example_source.path, file_name)
+    example_source.ensure_snapshot(file_name)
+    output_df = pd.read_csv(file_path)
+    # Assert if the values in the specified fields are equal to the expected values
+    assert (output_df["url_archived"] == expected_archived_url).all()
+    assert (output_df["url_date"] == expected_timestamp).all()
+    file_path.unlink(missing_ok=True)

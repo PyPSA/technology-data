@@ -220,15 +220,36 @@ class Source:
             )
             return True
 
-    def ensure_snapshot(self) -> None:
+    def ensure_snapshot(self, output_file_name: str) -> None:
         """
         Ensure that the Source object has the url_archived and url_date fields populated.
         If not, check if the URL already has a snapshot stored. If not, store it and populate
         url_archived and url_date.
 
+        Parameters
+        ----------
+        output_file_name : str
+            The name of the output file where the updated details will be saved.
+
         Returns
         -------
         None
+            This method does not return any value. It updates the Source object's details
+            and saves the updated information to a CSV file.
+
+        Raises
+        ------
+        None
+            This method logs errors if the details or URL attributes are not set, but does not raise exceptions.
+
+        Notes
+        -----
+        - The method checks if the `url_date` is populated. If not, it attempts to store a snapshot
+          using the Wayback Machine and updates the `url_archived` and `url_date` fields accordingly.
+        - If a new snapshot is stored, it logs the timestamp and archived URL. If a snapshot already exists,
+          it logs that information instead.
+        - The method also updates the existing CSV file with the new attributes, excluding the first column
+          which is assumed to be `source_name`.
 
         """
         if self.details is None:
@@ -240,8 +261,13 @@ class Source:
             return None
 
         # Check if the url_date is populated. If not, store a snapshot
-        if self.details["url_date"].isna().all() or not self.details["url_archived"].isna().all():
-            archived_info = self.store_snapshot_on_wayback(self.details["url"].to_numpy()[0])
+        if (
+            self.details["url_date"].isna().all()
+            or not self.details["url_archived"].isna().all()
+        ):
+            archived_info = self.store_snapshot_on_wayback(
+                self.details["url"].to_numpy()[0]
+            )
             if archived_info is not None:
                 archived_url, new_capture_flag, timestamp = archived_info
                 if new_capture_flag:
@@ -256,7 +282,17 @@ class Source:
                 self.details.url_archived = archived_url
 
                 # Update the existing .csv file with the new attributes
-                self.details.to_csv(self.path, index=False)
+                if self.path is not None:
+                    output_path = pathlib.Path(self.path, output_file_name)
+                else:
+                    return None
+
+                # Drop the first column source_name
+                details_df = self.details.copy()
+                details_df = details_df.drop(details_df.columns[0], axis=1)
+
+                # Export to sources.csv
+                details_df.to_csv(output_path, index=False)
         else:
             logger.info(
                 f"Both url_date and url_archived are present for the source {self.name}"

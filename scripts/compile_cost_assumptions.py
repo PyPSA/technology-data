@@ -33,15 +33,16 @@ from datetime import date
 
 import numpy as np
 import pandas as pd
-from _helpers import (
+from currency_converter import ECB_URL, CurrencyConverter
+from scipy import interpolate
+
+from scripts._helpers import (
     adjust_for_inflation,
     configure_logging,
     get_relative_fn,
     mock_snakemake,
     prepare_inflation_rate,
 )
-from currency_converter import ECB_URL, CurrencyConverter
-from scipy import interpolate
 
 logger = logging.getLogger(__name__)
 
@@ -103,8 +104,7 @@ dea_sheet_names = {
     "central solid biomass CHP CC": "09a Wood Chips, Large 50 degree",
     "central solid biomass CHP powerboost CC": "09a Wood Chips, Large 50 degree",
     "central air-sourced heat pump": "40 Comp. hp, airsource 3 MW",
-    "central geothermal-sourced heat pump": "45.1.a Geothermal DH, 1200m, E",
-    "central geothermal heat source": "45.1.a Geothermal DH, 1200m, E",
+    "central geothermal heat source": "45.1.b Geothermal DH, 2000m, E",
     "central excess-heat-sourced heat pump": "40 Comp. hp, excess heat 10 MW",
     "central ground-sourced heat pump": "40 Absorption heat pump, DH",
     "central resistive heater": "41 Electric Boilers",
@@ -151,6 +151,7 @@ dea_sheet_names = {
     "waste CHP CC": "08 WtE CHP, Large, 50 degree",
     "biochar pyrolysis": "105 Slow pyrolysis, Straw",
     "electrolysis small": "86 AEC 10 MW",
+    "gas storage": "150 Underground Storage of Gas",
 }
 # [DEA-sheet-names]
 
@@ -176,7 +177,6 @@ uncrtnty_lookup = {
     "central solid biomass CHP powerboost CC": "I:J",
     "solar": "",
     "central air-sourced heat pump": "J:K",
-    "central geothermal-sourced heat pump": "H:K",
     "central geothermal heat source": "H:K",
     "central excess-heat-sourced heat pump": "H:K",
     "central ground-sourced heat pump": "I:J",
@@ -200,7 +200,7 @@ uncrtnty_lookup = {
     "biogas CC": "I:J",
     "biogas upgrading": "I:J",
     "electrolysis": "I:J",
-    "battery": "L,N",
+    "battery": "H,K",
     "direct air capture": "I:J",
     "cement capture": "I:J",
     "biomass CHP capture": "I:J",
@@ -224,6 +224,7 @@ uncrtnty_lookup = {
     "biochar pyrolysis": "J:K",
     "biomethanation": "J:K",
     "electrolysis small": "I:J",
+    "gas storage": "",
 }
 
 # since February 2022 DEA uses a new format for the technology data
@@ -251,6 +252,27 @@ cost_year_2020 = [
     "biochar pyrolysis",
     "biomethanation",
     "electrolysis small",
+    "central water pit storage",
+    "central water tank storage",
+    "decentral water tank storage",
+    "hydrogen storage underground",
+    "hydrogen storage tank type 1 including compressor",
+    "battery",
+    "gas storage",
+]
+
+manual_cost_year_assignments_2020 = [
+    "central water pit charger",
+    "central water pit discharger",
+    "central water tank charger",
+    "central water tank discharger",
+    "decentral water tank charger",
+    "decentral water tank discharger",
+    "battery storage",
+    "battery inverter",
+    "gas storage charger",
+    "gas storage discharger",
+    "gas storage discharger",
 ]
 
 cost_year_2019 = [
@@ -622,9 +644,7 @@ def get_data_DEA(
         logger.info(f"excel file not found for technology: {tech_name}")
         return pd.DataFrame()
 
-    if tech_name == "battery":
-        usecols = "B:J"
-    elif tech_name in [
+    if tech_name in [
         "direct air capture",
         "cement capture",
         "biomass CHP capture",
@@ -643,7 +663,12 @@ def get_data_DEA(
         "direct firing solid fuels CC",
     ]:
         usecols = "A:E"
-    elif tech_name in ["Fischer-Tropsch", "Haber-Bosch", "air separation unit"]:
+    elif tech_name in [
+        "Fischer-Tropsch",
+        "Haber-Bosch",
+        "air separation unit",
+        "gas storage",
+    ]:
         usecols = "B:F"
     else:
         usecols = "B:G"
@@ -717,10 +742,6 @@ def get_data_DEA(
         )
     excel.drop(columns=uncertainty_columns, inplace=True)
 
-    # fix for battery with different Excel sheet format
-    if tech_name == "battery":
-        excel.rename(columns={"Technology": 2040}, inplace=True)
-
     if expectation:
         excel = excel.loc[:, [2020, 2050]]
 
@@ -770,7 +791,18 @@ def get_data_DEA(
         "Input capacity",
         "Output capacity",
         "Energy storage capacity",
+        "Typical temperature difference in storage [hot/cold, K]",
+        "Max. storage temperature, hot",
+        "Storage temperature, discharged",
     ]
+
+    # this is not good at all but requires significant changes to `test_compile_cost_assumptions` otherwise
+    if tech_name == "central geothermal heat source":
+        parameters += [
+            " - of which is installation",
+            "Heat generation capacity for one unit (MW)",
+            "Heat generation from geothermal heat (MJ/s)",
+        ]
 
     df = pd.DataFrame()
     for para in parameters:
@@ -928,15 +960,18 @@ def get_data_DEA(
     if "biochar pyrolysis" in tech_name:
         df = biochar_pyrolysis_harmonise_dea(df)
 
-    elif tech_name == "central geothermal-sourced heat pump":
-        df.loc["Nominal investment (MEUR per MW)"] = df.loc[
-            " - of which is heat pump including its installation"
-        ]
-
     elif tech_name == "central geothermal heat source":
-        df.loc["Nominal investment (MEUR per MW)"] = df.loc[
-            " - of which is equipment excluding heat pump"
-        ]
+        # we need to convert from costs per MW of the entire system (including heat pump)
+        # to costs per MW of the geothermal heat source only
+        # heat_source_costs [MEUR/MW_heat_source] = heat_source_costs [MEUR/MW_entire_system] * MW_entire_system / MW_heat_source
+        df.loc["Nominal investment (MEUR per MW)"] = (
+            (
+                df.loc[" - of which is equipment excluding heat pump"]
+                + df.loc[" - of which is installation"]
+            )
+            * df.loc["Heat generation capacity for one unit (MW)"]
+            / df.loc["Heat generation from geothermal heat (MJ/s)"]
+        )
 
     df_final = pd.DataFrame(index=df.index, columns=years)
 
@@ -957,6 +992,7 @@ def get_data_DEA(
         tech_name in cost_year_2020
         and ("for_carbon_capture_transport_storage" not in excel_file)
         and ("renewable_fuels" not in excel_file)
+        and ("for_energy_storage" not in excel_file)
     ):
         for attr in ["investment", "Fixed O&M"]:
             to_drop = df[
@@ -1616,7 +1652,6 @@ def clean_up_units(
         # the heat output (also MJ/s) unless otherwise noted"
         techs_mwth = [
             "central air-sourced heat pump",
-            "central geothermal-sourced heat pump",
             "central gas boiler",
             "central resistive heater",
             "decentral air-sourced heat pump",
@@ -1867,6 +1902,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 | (df.unit == "EUR/MW_FT/year")
                 | (df.unit == "EUR/MW_NH3")
                 | (df.unit == "EUR/MWhCapacity")
+                | (df.unit == "EUR/MWh Capacity")
                 | (df.unit == "EUR/MWh")
                 | (df.unit == "EUR/MW_CH4")
                 | (df.unit == "EUR/MWh/year")
@@ -1921,6 +1957,10 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                     logger.info(
                         f"check FOM: {str(tech_name)} {str(df[df.index.str.contains('Fixed O&M')].unit)}",
                     )
+            if tech_name == "central water pit storage":
+                # For current data, the FOM values for central water pit storage are too high by a factor of 1000.
+                # See issue: https://github.com/PyPSA/technology-data/issues/203
+                fixed[years] /= 1000  # in €/MWhCapacity/year
             if len(fixed) == 1:
                 fixed["parameter"] = "fixed"
                 clean_df[tech_name] = pd.concat([clean_df[tech_name], fixed])
@@ -1983,6 +2023,23 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
         else:
             lifetime["parameter"] = "lifetime"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], lifetime])
+
+        if tech_name == "gas storage":
+            lifetime_value = 100
+            gas_storage_lifetime_index = "estimation: most underground storage are already built, they do have a long lifetime"
+            gas_storage_lifetime_df = pd.DataFrame(index=[gas_storage_lifetime_index])
+
+            for year in years:
+                gas_storage_lifetime_df[year] = [lifetime_value]
+
+            gas_storage_lifetime_df["parameter"] = "lifetime"
+            gas_storage_lifetime_df["source"] = "TODO no source"
+            gas_storage_lifetime_df["unit"] = "years"
+
+            logger.info(f"Lifetime for {tech_name} manually set to {lifetime_value}")
+            clean_df[tech_name] = pd.concat(
+                [clean_df[tech_name], gas_storage_lifetime_df]
+            )
 
         # ----- efficiencies ------
         efficiency = df[
@@ -2104,6 +2161,66 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             efficiency["parameter"] = "efficiency"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency])
 
+        # add storage temperature for TES
+        if tech_name == "central water pit storage":
+            top_storage_temp_ptes = df.loc[
+                df.index.str.contains("Max. storage temperature, hot")
+            ].copy()
+            top_storage_temp_ptes["parameter"] = "Top storage temperature"
+            top_storage_temp_ptes.rename(
+                index={
+                    "Max. storage temperature, hot": "Typical max. storage temperature"
+                },
+                inplace=True,
+            )
+            clean_df[tech_name] = pd.concat(
+                [clean_df[tech_name], top_storage_temp_ptes]
+            )
+
+            bottom_storage_temp_ptes = df.loc[
+                df.index.str.contains("Storage temperature, discharged")
+            ].copy()
+            bottom_storage_temp_ptes["parameter"] = "Bottom storage temperature"
+            bottom_storage_temp_ptes.rename(
+                index={
+                    "Storage temperature, discharged": "Typical bottom storage temperature"
+                },
+                inplace=True,
+            )
+            clean_df[tech_name] = pd.concat(
+                [clean_df[tech_name], bottom_storage_temp_ptes]
+            )
+
+        if tech_name == "central water tank storage":
+            temp_difference_central_ttes = df.loc[
+                df.index.str.contains("Typical temperature difference in storage")
+            ].copy()
+            temp_difference_central_ttes["parameter"] = "Temperature difference"
+            temp_difference_central_ttes.rename(
+                index={
+                    "Typical temperature difference in storage": "Typical temperature difference"
+                },
+                inplace=True,
+            )
+            clean_df[tech_name] = pd.concat(
+                [clean_df[tech_name], temp_difference_central_ttes]
+            )
+
+        if tech_name == "decentral water tank storage":
+            temp_difference_decentral_ttes = df.loc[
+                df.index.str.contains("Typical temperature difference in storage")
+            ].copy()
+            temp_difference_decentral_ttes["parameter"] = "Temperature difference"
+            temp_difference_decentral_ttes.rename(
+                index={
+                    "Typical temperature difference in storage": "Typical temperature difference"
+                },
+                inplace=True,
+            )
+            clean_df[tech_name] = pd.concat(
+                [clean_df[tech_name], temp_difference_decentral_ttes]
+            )
+
         # add c_v and c_b coefficient
         if "Cb coefficient" in df.index:
             c_b = df.loc[df.index.str.contains("Cb coefficient")].dropna().copy()
@@ -2177,6 +2294,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
     charger_pit = technology_dataframe.loc[
         ("central water pit storage", " - Charge efficiency")
     ].copy()
+    charger_pit[years] *= 100
     charger_pit["further description"] = "Charger efficiency"
 
     charger_pit.rename(
@@ -2289,6 +2407,53 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
         [output_data_dataframe, power_ratio_pit], sort=True
     )
 
+    # add gas storage charger/ discharger
+    # process equipment, injection (2200MW) withdrawal (6600MW)
+    # assuming half of investment costs for injection, half for withdrawal
+    investment_gas_storage_charger = technology_dataframe.loc[
+        ("gas storage", "Total investment cost")
+    ].copy()
+    investment_gas_storage_charger[years] = (
+        investment_gas_storage_charger[years] / 2 / 2200 / 1e3
+    )
+    investment_gas_storage_charger.loc[
+        ("gas storage", "Total investment cost"), "unit"
+    ] = "EUR/kW"
+
+    investment_gas_storage_charger.rename(
+        index={"Total investment cost": "investment"}, level=1, inplace=True
+    )
+    investment_gas_storage_charger.rename(
+        index={"gas storage": "gas storage charger"},
+        level=0,
+        inplace=True,
+    )
+    output_data_dataframe = pd.concat(
+        [output_data_dataframe, investment_gas_storage_charger], sort=True
+    )
+
+    investment_gas_storage_discharger = technology_dataframe.loc[
+        ("gas storage", "Total investment cost")
+    ].copy()
+    investment_gas_storage_discharger[years] = (
+        investment_gas_storage_discharger[years] / 2 / 6600 / 1e3
+    )
+    investment_gas_storage_discharger.loc[
+        ("gas storage", "Total investment cost"), "unit"
+    ] = "EUR/kW"
+
+    investment_gas_storage_discharger.rename(
+        index={"Total investment cost": "investment"}, level=1, inplace=True
+    )
+    investment_gas_storage_discharger.rename(
+        index={"gas storage": "gas storage discharger"},
+        level=0,
+        inplace=True,
+    )
+    output_data_dataframe = pd.concat(
+        [output_data_dataframe, investment_gas_storage_discharger], sort=True
+    )
+
     return output_data_dataframe
 
 
@@ -2375,111 +2540,6 @@ def convert_units(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFra
     technology_dataframe.loc[to_convert, "unit"] = technology_dataframe.loc[
         to_convert, "unit"
     ].str.replace("/MW", "/kW")
-
-    return technology_dataframe
-
-
-def add_gas_storage(
-    gas_storage_file_name: str, years: list, technology_dataframe: pd.DataFrame
-) -> pd.DataFrame:
-    """
-    The function adds gas storage technology data, different methodology from other sheets.
-
-    Parameters
-    ----------
-    gas_storage_file_name: str
-        name of the dea input file containing the gas storage data
-    years : list
-        years for which a cost assumption is provided
-    technology_dataframe : pandas.DataFrame
-        technology data cost assumptions
-
-    Returns
-    -------
-    pandas.DataFrame
-        updated technology data
-    """
-
-    gas_storage = pd.read_excel(
-        gas_storage_file_name,
-        sheet_name="150 Underground Storage of Gas",
-        index_col=1,
-        engine="calamine",
-    )
-    gas_storage.dropna(axis=1, how="all", inplace=True)
-
-    # establishment of one cavern ~ 100*1e6 Nm3 = 1.1 TWh
-    investment = gas_storage.loc["Total cost, 100 mio Nm3 active volume"].iloc[0]
-    # convert million EUR/1.1 TWh -> EUR/kWh
-    investment /= 1.1 * 1e3
-    technology_dataframe.loc[("gas storage", "investment"), years] = investment
-    technology_dataframe.loc[("gas storage", "investment"), "source"] = source_dict[
-        "DEA"
-    ]
-    technology_dataframe.loc[("gas storage", "investment"), "further description"] = (
-        "150 Underground Storage of Gas, Establishment of one cavern (units converted)"
-    )
-    technology_dataframe.loc[("gas storage", "investment"), "unit"] = "EUR/kWh"
-    technology_dataframe.loc[("gas storage", "investment"), "currency_year"] = 2015
-
-    technology_dataframe.loc[("gas storage", "lifetime"), years] = 100
-    technology_dataframe.loc[("gas storage", "lifetime"), "source"] = "TODO no source"
-    technology_dataframe.loc[("gas storage", "lifetime"), "further description"] = (
-        "estimation: most underground storage are already build, they do have a long lifetime"
-    )
-    technology_dataframe.loc[("gas storage", "lifetime"), "unit"] = "years"
-
-    # process equipment, injection (2200MW) withdrawal (6600MW)
-    # assuming half of investment costs for injection, half for withdrawal
-    investment_charge = (
-        gas_storage.loc["Total investment cost"].iloc[0, 0] / 2 / 2200 * 1e3
-    )
-    investment_discharge = (
-        gas_storage.loc["Total investment cost"].iloc[0, 0] / 2 / 6600 * 1e3
-    )
-    technology_dataframe.loc[("gas storage charger", "investment"), years] = (
-        investment_charge
-    )
-    technology_dataframe.loc[("gas storage discharger", "investment"), years] = (
-        investment_discharge
-    )
-
-    technology_dataframe.loc[("gas storage charger", "investment"), "source"] = (
-        source_dict["DEA"]
-    )
-    technology_dataframe.loc[
-        ("gas storage charger", "investment"), "further description"
-    ] = "150 Underground Storage of Gas, Process equipment (units converted)"
-    technology_dataframe.loc[("gas storage charger", "investment"), "unit"] = "EUR/kW"
-    technology_dataframe.loc[("gas storage charger", "investment"), "currency_year"] = (
-        2015
-    )
-
-    technology_dataframe.loc[("gas storage discharger", "investment"), "source"] = (
-        source_dict["DEA"]
-    )
-    technology_dataframe.loc[
-        ("gas storage discharger", "investment"), "further description"
-    ] = "150 Underground Storage of Gas, Process equipment (units converted)"
-    technology_dataframe.loc[("gas storage discharger", "investment"), "unit"] = (
-        "EUR/kW"
-    )
-    technology_dataframe.loc[("gas storage charger", "investment"), "currency_year"] = (
-        2015
-    )
-
-    # operation + maintenance 400-500 million m³ = 4.4-5.5 TWh
-    FOM = (
-        gas_storage.loc["Total, incl. administration"].iloc[0]
-        / (5.5 * investment * 1e3)
-        * 100
-    )
-    technology_dataframe.loc[("gas storage", "FOM"), years] = FOM
-    technology_dataframe.loc[("gas storage", "FOM"), "source"] = source_dict["DEA"]
-    technology_dataframe.loc[("gas storage", "FOM"), "further description"] = (
-        "150 Underground Storage of Gas, Operation and Maintenance, salt cavern (units converted)"
-    )
-    technology_dataframe.loc[("gas storage", "FOM"), "unit"] = "%"
 
     return technology_dataframe
 
@@ -3940,14 +4000,12 @@ if __name__ == "__main__":
     data = add_description(years_list, data, snakemake.config["offwind_no_gridcosts"])
     # convert efficiency from %-> per unit and investment from MW->kW to compare
     data = convert_units(years_list, data)
-    # add gas storage (different methodology than other sheets)
-    data = add_gas_storage(snakemake.input.dea_storage, years_list, data)
     # add carbon capture
     data = add_carbon_capture(years_list, dea_sheet_names, data, tech_data)
 
     # adjust for inflation
     for x in data.index.get_level_values("technology"):
-        if x in cost_year_2020:
+        if x in cost_year_2020 or x in manual_cost_year_assignments_2020:
             data.at[x, "currency_year"] = 2020
         elif x in cost_year_2019:
             data.at[x, "currency_year"] = 2019

@@ -230,7 +230,10 @@ def test_ensure_snapshot(
     file_path = pathlib.Path(path_cwd, example_source.path, file_name)
     example_source.ensure_snapshot(file_name)
     output_df = pd.read_csv(file_path)
-    # Assert if the values in the specified fields are equal to the expected values
-    assert (output_df["url_archived"] == expected_archived_url).all()
-    assert (output_df["url_date"] == expected_timestamp).all()
+    assert (output_df["url_archived"] == expected_archived_url).all(), (
+        f"Not all values in url_archived are equal to {expected_archived_url}"
+    )
+    assert (output_df["url_date"] == expected_timestamp).all(), (
+        f"Not all values in url_date are equal to {expected_timestamp}"
+    )
     file_path.unlink(missing_ok=True)

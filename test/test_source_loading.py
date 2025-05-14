@@ -225,15 +225,30 @@ def test_ensure_snapshot(
     example_source: Source, expected_archived_url: str, expected_timestamp: str
 ) -> None:
     """Check if a given sources.csv file contains the fields url_date and url_archived."""
+    # Construct the file path
     file_name = "sources_modified.csv"
+
     assert example_source.path is not None, "path should not be None"
     file_path = pathlib.Path(path_cwd, example_source.path, file_name)
+
+    # Ensure the snapshot is created
     example_source.ensure_snapshot(file_name)
-    output_df = pd.read_csv(file_path)
+
+    # Read the output DataFrame
+    try:
+        output_df = pd.read_csv(file_path)
+    except Exception as e:
+        pytest.fail(f"Failed to read CSV file: {e}")
+
+    # Assert that the archived URL matches the expected value
     assert (output_df["url_archived"] == expected_archived_url).all(), (
         f"Not all values in url_archived are equal to {expected_archived_url}"
     )
+
+    # Assert that the timestamp matches the expected value
     assert (output_df["url_date"] == expected_timestamp).all(), (
         f"Not all values in url_date are equal to {expected_timestamp}"
     )
+
+    # Clean up by removing the file if it exists
     file_path.unlink(missing_ok=True)

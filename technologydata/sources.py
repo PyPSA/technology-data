@@ -240,8 +240,8 @@ class Source:
             return None
 
         # Check if the url_date is populated. If not, store a snapshot
-        if not self.details.url_date or not self.details.url_archived:
-            archived_info = self.store_snapshot_on_wayback(self.details.url)
+        if self.details["url_date"].isna().all() or not self.details["url_archived"].isna().all():
+            archived_info = self.store_snapshot_on_wayback(self.details["url"].to_numpy()[0])
             if archived_info is not None:
                 archived_url, new_capture_flag, timestamp = archived_info
                 if new_capture_flag:

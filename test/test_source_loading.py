@@ -5,7 +5,6 @@ import sys
 
 import pandas as pd
 import pytest
-import shutil
 
 from technologydata import AVAILABLE_SOURCES, Source, Sources
 
@@ -215,4 +214,3 @@ def test_ensure_snapshot(example_source: Source) -> None:
     example_source.ensure_snapshot()
     print(example_source.details)
     assert False
-

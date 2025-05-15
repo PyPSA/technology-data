@@ -222,9 +222,9 @@ class Source:
 
     def ensure_snapshot(self, output_file_name: str) -> None:
         """
-        Ensure that the Source object has the url_archived and url_date fields populated.
+        Ensure that the Source object has the url_archived and url_date fields populated for each row.
         If not, check if the URL already has a snapshot stored. If not, store it and populate
-        url_archived and url_date.
+        url_archived and url_date for each row.
 
         Parameters
         ----------
@@ -244,7 +244,7 @@ class Source:
 
         Notes
         -----
-        - The method checks if the `url_date` is populated. If not, it attempts to store a snapshot
+        - The method checks if the `url_date` is populated for each row. If not, it attempts to store a snapshot
           using the Wayback Machine and updates the `url_archived` and `url_date` fields accordingly.
         - If a new snapshot is stored, it logs the timestamp and archived URL. If a snapshot already exists,
           it logs that information instead.
@@ -260,43 +260,37 @@ class Source:
             logger.error(f"The url attribute of the source {self.name} is not set.")
             return None
 
-        # Check if the url_date is populated. If not, store a snapshot
-        if (
-            self.details["url_date"].isna().all()
-            or not self.details["url_archived"].isna().all()
-        ):
-            archived_info = self.store_snapshot_on_wayback(
-                self.details["url"].to_numpy()[0]
-            )
-            if archived_info is not None:
-                archived_url, new_capture_flag, timestamp = archived_info
-                if new_capture_flag:
-                    logger.info(
-                        f"A new snapshot has been stored for the url {self.details.url} with timestamp {timestamp} and Archive.org url {archived_url}."
-                    )
-                else:
-                    logger.info(
-                        f"There is already a snapshot for the url {self.details.url}."
-                    )
-                self.details.url_date = timestamp
-                self.details.url_archived = archived_url
+        # Iterate over each row in the DataFrame
+        for index, row in self.details.iterrows():
+            if pd.isna(row["url_date"]) or pd.isna(row["url_archived"]):
+                archived_info = self.store_snapshot_on_wayback(row["url"])
+                if archived_info is not None:
+                    archived_url, new_capture_flag, timestamp = archived_info
+                    if new_capture_flag:
+                        logger.info(
+                            f"A new snapshot has been stored for the url {row['url']} with timestamp {timestamp} and Archive.org url {archived_url}."
+                        )
+                    else:
+                        logger.info(
+                            f"There is already a snapshot for the url {row['url']}."
+                        )
+                    self.details.at[index, "url_date"] = timestamp
+                    self.details.at[index, "url_archived"] = archived_url
 
-                # Update the existing .csv file with the new attributes
-                if self.path is not None:
-                    output_path = pathlib.Path(self.path, output_file_name)
-                else:
-                    return None
-
-                # Drop the first column source_name
-                details_df = self.details.copy()
-                details_df = details_df.drop(details_df.columns[0], axis=1)
-
-                # Export to sources.csv
-                details_df.to_csv(output_path, index=False)
+        # Update the existing .csv file with the new attributes
+        if self.path is not None:
+            output_path = pathlib.Path(self.path, output_file_name)
         else:
-            logger.info(
-                f"Both url_date and url_archived are present for the source {self.name}"
-            )
+            return None
+
+        # Drop the first column source_name
+        details_df = self.details.copy()
+        details_df = details_df.drop(details_df.columns[0], axis=1)
+
+        # Export to sources.csv
+        details_df.to_csv(output_path, index=False)
+
+        logger.info(f"Updated details saved to {output_path}.")
 
     @staticmethod
     def store_snapshot_on_wayback(
@@ -342,7 +336,7 @@ class Source:
             # If "web/" or next "/" not found, return empty string
             return None
 
-    def download_file_from_wayback(self) -> pathlib.Path | None:
+    def download_file_from_wayback(self) -> list[pathlib.Path | None]:
         """
         Download a file from the Wayback Machine and save it to a specified path.
 
@@ -388,13 +382,18 @@ class Source:
             logger.error(f"The path attribute of the source {self.name} is not set.")
             return None
 
-        url_archived = self.details["url_archived"].to_numpy()[0]
-        save_path = self._get_save_path(url_archived)
+        saved_paths = []
+        for index, row in self.details.iterrows():
+            url_archived = row["url_archived"]
+            save_path = self._get_save_path(url_archived)
 
-        if save_path is None:
-            return None
+            if save_path is None:
+                saved_paths.append(None)
+                continue
+            saved_path = self._download_file(url_archived, save_path)
+            saved_paths.append(saved_path)
 
-        return self._download_file(url_archived, save_path)
+        return saved_paths
 
     def _get_save_path(self, url_archived: str) -> pathlib.Path | None:
         """

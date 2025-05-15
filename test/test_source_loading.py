@@ -167,15 +167,16 @@ def test_is_wayback_snapshot_available(
 )  # type: ignore
 def test_download_file_from_wayback(example_source: Source) -> None:
     """Check if the example source is downloaded from the Internet Archive Wayback Machine."""
-    storage_path = example_source.download_file_from_wayback()
-
-    # Check if storage_path is not None
-    assert storage_path is not None, "Expected a valid storage path, but got None."
-
-    assert storage_path.is_file()
-
-    # Delete the downloaded file
-    pathlib.Path(storage_path).unlink(missing_ok=True)
+    storage_paths = example_source.download_file_from_wayback()
+    # Check if storage_paths is not None and is a list
+    assert storage_paths is not None, "Expected a valid storage path list, but got None."
+    assert isinstance(storage_paths, list), "Expected storage_paths to be a list."
+    for storage_path in storage_paths:
+        # Check if each storage_path is not None
+        assert storage_path is not None, "Expected a valid storage path, but got None."
+        assert storage_path.is_file(), f"Expected {storage_path} to be a file, but it does not exist."
+        # Delete the downloaded file
+        storage_path.unlink(missing_ok=True)
 
 
 def test_store_snapshot_on_wayback() -> None:
@@ -199,22 +200,16 @@ def test_store_snapshot_on_wayback() -> None:
     [
         {
             "source_name": "example03",
-            "source_path": pathlib.Path(
-                "technologydata", "datasources", "example03"
-            ),
+            "source_path": pathlib.Path("technologydata", "datasources", "example03"),
         },
         {
             "source_name": "example04",
-            "source_path": pathlib.Path(
-                "technologydata", "datasources", "example04"
-            ),
+            "source_path": pathlib.Path("technologydata", "datasources", "example04"),
         },
     ],
     indirect=["example_source"],
 )  # type: ignore
-def test_ensure_snapshot(
-    example_source: Source
-) -> None:
+def test_ensure_snapshot(example_source: Source) -> None:
     """Check if a given sources.csv file contains the fields url_date and url_archived."""
     # Construct the file path
     file_name = "sources_modified.csv"
@@ -233,13 +228,11 @@ def test_ensure_snapshot(
 
     # Assert that the archived URL is now filled
     assert not output_df["url_archived"].isna().all(), (
-        f"Some values in url_archived are null"
+        "Some values in url_archived are null"
     )
 
     # Assert that the timestamp is now filled
-    assert not output_df["url_date"].isna().all(), (
-        f"Some values in url_date are null"
-    )
+    assert not output_df["url_date"].isna().all(), "Some values in url_date are null"
 
     # Clean up by removing the file if it exists
-    # file_path.unlink(missing_ok=True)
+    file_path.unlink(missing_ok=True)

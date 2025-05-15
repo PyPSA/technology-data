@@ -199,22 +199,16 @@ def test_store_snapshot_on_wayback() -> None:
     [
         {
             "source_name": "example03",
-            "source_path": pathlib.Path(
-                "technologydata", "datasources", "example03"
-            ),
+            "source_path": pathlib.Path("technologydata", "datasources", "example03"),
         },
         {
             "source_name": "example04",
-            "source_path": pathlib.Path(
-                "technologydata", "datasources", "example04"
-            ),
+            "source_path": pathlib.Path("technologydata", "datasources", "example04"),
         },
     ],
     indirect=["example_source"],
 )  # type: ignore
-def test_ensure_snapshot(
-    example_source: Source
-) -> None:
+def test_ensure_snapshot(example_source: Source) -> None:
     """Check if a given sources.csv file contains the fields url_date and url_archived."""
     # Construct the file path
     file_name = "sources_modified.csv"
@@ -233,13 +227,11 @@ def test_ensure_snapshot(
 
     # Assert that the archived URL is now filled
     assert not output_df["url_archived"].isna().all(), (
-        f"Some values in url_archived are null"
+        "Some values in url_archived are null"
     )
 
     # Assert that the timestamp is now filled
-    assert not output_df["url_date"].isna().all(), (
-        f"Some values in url_date are null"
-    )
+    assert not output_df["url_date"].isna().all(), "Some values in url_date are null"
 
     # Clean up by removing the file if it exists
     # file_path.unlink(missing_ok=True)

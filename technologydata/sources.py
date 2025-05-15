@@ -274,8 +274,8 @@ class Source:
                         logger.info(
                             f"There is already a snapshot for the url {row['url']}."
                         )
-                    self.details.at[index, "url_date"] = timestamp
-                    self.details.at[index, "url_archived"] = archived_url
+                    self.details.loc[index, "url_date"] = timestamp
+                    self.details.loc[index, "url_archived"] = archived_url
 
         # Update the existing .csv file with the new attributes
         if self.path is not None:
@@ -367,8 +367,7 @@ class Source:
         """
         if self.details is None:
             logger.error(f"The details attribute of the source {self.name} is not set.")
-            return None
-
+            return []
         if (
             "url_archived" not in self.details
             or self.details["url_archived"].isna().all()
@@ -376,13 +375,12 @@ class Source:
             logger.error(
                 f"The url_archived attribute of source {self.name} is not set."
             )
-            return None
-
+            return []
         if self.path is None:
             logger.error(f"The path attribute of the source {self.name} is not set.")
-            return None
+            return []
 
-        saved_paths = []
+        saved_paths: list[pathlib.Path | None] = []  # Explicit type annotation
         for index, row in self.details.iterrows():
             url_archived = row["url_archived"]
             save_path = self._get_save_path(url_archived)

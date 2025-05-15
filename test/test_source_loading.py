@@ -169,12 +169,16 @@ def test_download_file_from_wayback(example_source: Source) -> None:
     """Check if the example source is downloaded from the Internet Archive Wayback Machine."""
     storage_paths = example_source.download_file_from_wayback()
     # Check if storage_paths is not None and is a list
-    assert storage_paths is not None, "Expected a valid storage path list, but got None."
+    assert storage_paths is not None, (
+        "Expected a valid storage path list, but got None."
+    )
     assert isinstance(storage_paths, list), "Expected storage_paths to be a list."
     for storage_path in storage_paths:
         # Check if each storage_path is not None
         assert storage_path is not None, "Expected a valid storage path, but got None."
-        assert storage_path.is_file(), f"Expected {storage_path} to be a file, but it does not exist."
+        assert storage_path.is_file(), (
+            f"Expected {storage_path} to be a file, but it does not exist."
+        )
         # Delete the downloaded file
         storage_path.unlink(missing_ok=True)
 

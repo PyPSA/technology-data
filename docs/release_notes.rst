@@ -60,6 +60,8 @@ Upcoming Release
 
 * Updates ci.yaml such that it fails if the generated outputs are different than the ones committed (https://github.com/PyPSA/technology-data/pull/205)
 
+* Add BF-BOF and separate natural gas- and hydrogen-based steelmaking (The technology previously called `direct iron reduction furnace` becomes `hydrogen direct iron reduction`, and `natural gas direct iron reduction furnace` represent the conventional direct iron reduction process), cement and ethanol production technologies (https://github.com/PyPSA/technology-data/pull/211)
+
 * Add industrial plant CCS retrofit options (https://github.com/PyPSA/technology-data/pull/212)
 
 * Include further unit tests for compile_cost_assumptions.py (https://github.com/PyPSA/technology-data/pull/210)
@@ -69,7 +71,7 @@ Upcoming Release
 `v0.11.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.11.0>`__ (24th January 2025)
 =======================================================================================
 
-* Country specific cost assumptions and added NREL/ATB data (https://github.com/PyPSA/technology-data/pull/160)
+* Country-specific cost assumptions and added NREL/ATB data (https://github.com/PyPSA/technology-data/pull/160)
 
 * Add missing currency_year for FOM (https://github.com/PyPSA/technology-data/pull/163)
 

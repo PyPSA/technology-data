@@ -2699,7 +2699,7 @@ def add_manual_input(technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             except ValueError:
                 row_series["currency_year"] = np.nan
             for col in ["unit", "source", "further description"]:
-                row_series[col] = "; and\n".join(queried_df[col].unique().astype(str))
+                row_series[col] = "; and ".join(queried_df[col].unique().astype(str))
             row_series = row_series.rename(
                 {"further_description": "further description"}
             )  # match column name between manual_input and original TD workflow

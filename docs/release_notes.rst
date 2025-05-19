@@ -64,6 +64,8 @@ Upcoming Release
 
 * Include further unit tests for compile_cost_assumptions.py (https://github.com/PyPSA/technology-data/pull/210)
 
+* Removed additional newlines in the output csv's, if multiple `further_description` are given and concatenated. Each row in the output csv's should now indicate exactly one technology (https://github.com/PyPSA/technology-data/pull/219)
+
 `v0.11.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.11.0>`__ (24th January 2025)
 =======================================================================================
 

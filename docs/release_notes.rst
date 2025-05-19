@@ -11,14 +11,17 @@ Release Notes
 Upcoming Release
 ================
 
-* Removed geothermal-sourced heat pumps and fixed previously underestimated costs for geothermal heat source. Recommendation: Use excess-heat-sourced heat pump data for geothermal-sourced heat pumps (only the heat pump part of the costs!) and consult the DEA technology catalogue.
-
-* Removed water-sourced heat pumps, as cost assumptions (based on higher uncertainty range in DEA tables) are a) likely overestimates and b) break pessimistic/optimistic scenarios. Recomendation: Use excess-heat-sourced heat pump data or see DEA data on seawater-sourced heat pumps.
-
 .. .. warning:: 
   
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
+
+`v0.12.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.12.0>`__ (19th May 2025)
+=======================================================================================
+
+* Removed geothermal-sourced heat pumps and fixed previously underestimated costs for geothermal heat source. Recommendation: Use excess-heat-sourced heat pump data for geothermal-sourced heat pumps (only the heat pump part of the costs!) and consult the DEA technology catalogue.
+
+* Removed water-sourced heat pumps, as cost assumptions (based on higher uncertainty range in DEA tables) are a) likely overestimates and b) break pessimistic/optimistic scenarios. Recomendation: Use excess-heat-sourced heat pump data or see DEA data on seawater-sourced heat pumps.
 
 * Updated DEA Energy Storage data file (technology_data_catalogue_for_energy_storage.xlsx) to the newest version 9 – costs are now given in 2020 currency year.
 

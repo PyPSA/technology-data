@@ -81,6 +81,10 @@ check_untyped_defs = true
 module = "requests"
 ignore_missing_imports = true
 
+[[tool.mypy.overrides]]
+module = "dateutil"
+ignore_missing_imports = true
+
 # Formatter and linter settings
 
 [tool.ruff]

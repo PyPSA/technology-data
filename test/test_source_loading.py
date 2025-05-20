@@ -2,11 +2,12 @@
 
 import pathlib
 import sys
+from typing import Any
 
 import pandas as pd
 import pytest
 
-from technologydata import AVAILABLE_SOURCES, Source, Sources
+import technologydata as td
 
 sys.path.append("./technology-data")
 path_cwd = pathlib.Path.cwd()
@@ -18,10 +19,10 @@ def test_source_loading() -> None:
     fp = pathlib.Path(path_cwd, "technologydata", "datasources", "example01")
 
     # Check if the source can be loaded from a string or a path
-    assert Source(name, fp)
-    assert Source(name, str(fp))
-    assert Source(name, fp.absolute())
-    assert Source(name, str(fp.absolute()))
+    assert td.Source(name, fp)
+    assert td.Source(name, str(fp))
+    assert td.Source(name, fp.absolute())
+    assert td.Source(name, str(fp.absolute()))
 
 
 @pytest.mark.parametrize(
@@ -51,7 +52,7 @@ def test_source_loading() -> None:
     indirect=["example_source"],
 )  # type: ignore
 def test_source_initialization(
-    example_source: Source, expected_path: pathlib.Path, expected_features: list[str]
+    example_source: td.Source, expected_path: pathlib.Path, expected_features: list[str]
 ) -> None:
     """Test the initialization of the Source class."""
     # Path should be the provided path
@@ -63,7 +64,7 @@ def test_source_initialization(
     # Check for expected features
     assert example_source.available_features == expected_features
     # Check whether packaged sources can also be loaded
-    loaded_source = Source(example_source.name)
+    loaded_source = td.Source(example_source.name)
     assert (
         loaded_source.name == example_source.name
         and loaded_source.path is not None  # Ensure path is not None
@@ -85,51 +86,44 @@ def test_source_initialization(
     ],
     indirect=True,
 )  # type: ignore
-def test_sources_initialization(example_source: Source) -> None:
+def test_sources_initialization(example_source: td.Source) -> None:
     """Test different ways of initializing a Sources object."""
     # See if we can directly load all packaged sources directly / load from dict
-    assert Sources(AVAILABLE_SOURCES)
+    assert td.Sources(td.AVAILABLE_SOURCES)
     # Load a single prepackaged source by name
-    assert Sources([example_source.name])
+    assert td.Sources([example_source.name])
     # Load single source not as list
-    assert Sources(example_source.name)
+    assert td.Sources(example_source.name)
     # Convert a single source into a Sources object
-    assert Sources(Source(example_source.name))
+    assert td.Sources(td.Source(example_source.name))
     # Combine multiple loaded sources into one
-    assert Sources([example_source, example_source])
+    assert td.Sources([example_source, example_source])
     # Mixed loading of named and loaded sources
-    assert Sources([example_source.name, example_source])
+    assert td.Sources([example_source.name, example_source])
 
 
 @pytest.mark.parametrize(
-    "input_date, input_format, output_format, expected_date",
+    "input_datetime_string, date_format_id, expected_date",
     [
-        (
-            "20250507105201",
-            "%Y%m%d%H%M%S",
-            "%Y-%m-%d %H:%M:%S",
-            "2025-05-07 10:52:01",
-        ),
-        (
-            "2025-05-07 10:52:01",
-            "%Y-%m-%d %H:%M:%S",
-            "%Y%m%d%H%M%S",
-            "20250507105201",
-        ),
-        (
-            "2025-05-07 10:52:01",
-            "%Y-%m-%d",
-            "%Y%m%d%H%M%S",
-            None,
-        ),
+        ("2025-05-20 14:45:00", "SoURCES_cSv", "2025-05-20 14:45:00"),
+        ("20250520144500", "SoURCES_cSv", "2025-05-20 14:45:00"),
+        ("2025-05-20 14:45:00", "wayback", "20250520144500"),
+        ("20250520144500", "wayback", "20250520144500"),
+        ("2025-05-20 14:45:00", "unknown_format", ""),
+        ("invalid-date-string", "SoURCES_cSv", ValueError),
+        ("2025/13/01", "wayback", ValueError),
     ],
 )  # type: ignore
 def test_change_datetime_format(
-    input_date: str, input_format: str, output_format: str, expected_date: str
+    input_datetime_string: str, date_format_id: str, expected_date: str | Any
 ) -> None:
     """Check if the datetime is correctly transformed to a new format."""
-    output_date = Source.change_datetime_format(input_date, input_format, output_format)
-    assert output_date == expected_date
+    if expected_date is ValueError:
+        with pytest.raises(ValueError, match="Error during datetime formatting"):
+            td.Source.change_datetime_format(input_datetime_string, date_format_id)
+    else:
+        result = td.Source.change_datetime_format(input_datetime_string, date_format_id)
+        assert result == expected_date
 
 
 @pytest.mark.parametrize(
@@ -151,7 +145,7 @@ def test_is_wayback_snapshot_available(
     url: str, timestamp: str, expected: tuple[str, str, str] | None
 ) -> None:
     """Check if the example source is available on the Internet Archive Wayback Machine."""
-    output = Source.is_wayback_snapshot_available(url, timestamp)
+    output = td.Source.is_wayback_snapshot_available(url, timestamp)
     assert output == expected
 
 
@@ -165,7 +159,7 @@ def test_is_wayback_snapshot_available(
     ],
     indirect=True,
 )  # type: ignore
-def test_download_file_from_wayback(example_source: Source) -> None:
+def test_download_file_from_wayback(example_source: td.Source) -> None:
     """Check if the example source is downloaded from the Internet Archive Wayback Machine."""
     storage_paths = example_source.download_file_from_wayback()
     # Check if storage_paths is not None and is a list
@@ -186,17 +180,10 @@ def test_download_file_from_wayback(example_source: Source) -> None:
 def test_store_snapshot_on_wayback() -> None:
     """Check if a given url is correctly stored as a snapshot on Internet Archive Wayback Machine."""
     url_to_archive = "https://openenergytransition.org/outputs.html"
-    archived_info = Source.store_snapshot_on_wayback(url_to_archive)
+    archived_info = td.Source.store_snapshot_on_wayback(url_to_archive)
 
     # Check if archived_info is None
     assert archived_info is not None, "archived_info should not be None"
-
-    archived_url, new_capture, output_timestamp = archived_info
-    assert (
-        archived_url
-        == "https://web.archive.org/web/20250513133237/https://openenergytransition.org/outputs.html"
-    )
-    assert output_timestamp == "2025-05-13 13:32:37"
 
 
 @pytest.mark.parametrize(
@@ -213,7 +200,7 @@ def test_store_snapshot_on_wayback() -> None:
     ],
     indirect=["example_source"],
 )  # type: ignore
-def test_ensure_snapshot(example_source: Source) -> None:
+def test_ensure_snapshot(example_source: td.Source) -> None:
     """Check if a given sources.csv file contains the fields url_date and url_archived."""
     # Construct the file path
     file_name = "sources_modified.csv"

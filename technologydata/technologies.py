@@ -10,7 +10,7 @@ import frictionless as ftl
 import numpy as np
 import pandas as pd
 
-from technologydata import Source, Sources
+import technologydata as td
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.DEBUG)
@@ -98,7 +98,7 @@ class Technologies:
 
     def __init__(
         self,
-        sources: str | Source | Sources | list[str | Source] | dict[str, Path],
+        sources: str | td.Source | td.Sources | list[str | td.Source] | dict[str, Path],
         sort_data: bool = True,
     ) -> None:
         """
@@ -113,7 +113,9 @@ class Technologies:
             Automatically sort the data after loading following the sort order defined in `self.default_sort_by`.
         """
         # Make the sources available
-        self.sources = sources if isinstance(sources, Sources) else Sources(sources)
+        self.sources = (
+            sources if isinstance(sources, td.Sources) else td.Sources(sources)
+        )
 
         # Only keep sources that provide 'Technologies' as a feature
         sources_without_feature = [
@@ -125,7 +127,7 @@ class Technologies:
             logger.warning(
                 f"The following sources do not provide the feature '{self.feature}' and will not be used: {', '.join([source.name for source in sources_without_feature])}"
             )
-        self.sources = Sources(
+        self.sources = td.Sources(
             [
                 source
                 for source in self.sources.sources
@@ -319,13 +321,12 @@ class Technologies:
         scaling_factor = (new_scale / changed_data["scale"]) ** (scaling_exponent - 1)
 
         # Create a new DataFrame for adjusted values
-        adjusted_data = changed_data.copy()
-        adjusted_data["value"] *= scaling_factor
-        adjusted_data["scale"] = new_scale
-        adjusted_data["scale_unit"] = unit
+        changed_data["value"] *= scaling_factor
+        changed_data["scale"] = new_scale
+        changed_data["scale_unit"] = unit
 
         # Recombine all data and restore the default order
-        self.data = pd.concat([unchanged_data, adjusted_data], ignore_index=True)
+        self.data = pd.concat([unchanged_data, changed_data], ignore_index=True)
         self.sort_data()
 
     def adjust_year(

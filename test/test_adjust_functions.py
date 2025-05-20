@@ -4,13 +4,13 @@ import pathlib
 
 import pytest
 
-from technologydata import Technologies
+import technologydata as td
 
 
 @pytest.fixture  # type: ignore
-def forecast_technologies() -> Technologies:
+def forecast_technologies() -> td.Technologies:
     """Fixture to provide an example dataset for time-related forecasting."""
-    return Technologies(
+    return td.Technologies(
         {"forecast01": pathlib.Path("test", "test_adjust_functions", "forecast01")}
     )
 
@@ -23,7 +23,7 @@ def forecast_technologies() -> Technologies:
     ],
     indirect=True,
 )  # type: ignore
-def test_no_economies_of_scale(example_technologies: Technologies) -> None:
+def test_no_economies_of_scale(example_technologies: td.Technologies) -> None:
     """Without economies of scale the value should not change."""
     org_data = example_technologies.data.copy()
 
@@ -50,7 +50,7 @@ def test_no_economies_of_scale(example_technologies: Technologies) -> None:
     ],
     indirect=True,
 )  # type: ignore
-def test_economies_of_scale(example_technologies: Technologies) -> None:
+def test_economies_of_scale(example_technologies: td.Technologies) -> None:
     """Test with common economies of scale with exponent 0.5."""
     org_data = example_technologies.data.copy()
 
@@ -73,7 +73,9 @@ def test_economies_of_scale(example_technologies: Technologies) -> None:
     ), "Scaling with exponent 0.5 should change the value to approx 0.7"
 
 
-def test_adjust_year_linear_interpolation(forecast_technologies: Technologies) -> None:
+def test_adjust_year_linear_interpolation(
+    forecast_technologies: td.Technologies,
+) -> None:
     """Test linear forecasting through a middle value in 2025."""
     forecast = forecast_technologies.adjust_year(year=2025, model={"method": "linear"})
 
@@ -83,7 +85,9 @@ def test_adjust_year_linear_interpolation(forecast_technologies: Technologies) -
     )
 
 
-def test_adjust_year_linear_extrapolation(forecast_technologies: Technologies) -> None:
+def test_adjust_year_linear_extrapolation(
+    forecast_technologies: td.Technologies,
+) -> None:
     """Test linear forecasting for a value outside the range of entries provided."""
     forecast = forecast_technologies.adjust_year(
         year=2040,

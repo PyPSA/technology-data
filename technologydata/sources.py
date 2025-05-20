@@ -1,21 +1,80 @@
 """Classes for source management and processing, for pre-packaged and user-provided data sources."""
 
+import csv
 import logging
 import pathlib
 import subprocess
 from collections.abc import Iterable
-from datetime import datetime
+from enum import Enum
 from typing import Any
 
 import frictionless as ftl
 import pandas as pd
 import requests
 import savepagenow
+from dateutil import parser
 
 logger = logging.getLogger(__name__)
 
 DATASOURCES_PATH = pathlib.Path(__file__).parent / "datasources"
 SPECIFICATIONS_PATH = DATASOURCES_PATH / "specification"
+
+
+class DateFormatEnum(str, Enum):
+    """
+    Enum for date formats used in different sources.
+
+    Attributes
+    ----------
+    SOURCES_CSV : str
+        Date format for CSV sources, e.g., "2023-10-01 12:00:00".
+    WAYBACK : str
+        Date format for Wayback Machine, e.g., "20231001120000".
+    NONE : str
+        Represents an empty date format.
+
+    """
+
+    SOURCES_CSV = "%Y-%m-%d %H:%M:%S"
+    WAYBACK = "%Y%m%d%H%M%S"
+    NONE = ""
+
+
+def get_date_format(source: str) -> DateFormatEnum:
+    """
+    Get the date format corresponding to the given source.
+
+    Parameters
+    ----------
+    source : str
+        The source name for which the date format is requested.
+        Accepted values are "sources_csv" and "wayback".
+
+    Returns
+    -------
+    DateFormatEnum
+        The date format associated with the specified source.
+        Returns DateFormatEnum.NONE if the source is not recognized.
+
+    Examples
+    --------
+    >>> get_date_format("sources_csv")
+    <DateFormatEnum.SOURCES_CSV: '%Y-%m-%d %H:%M:%S'>
+
+    >>> get_date_format("wayback")
+    <DateFormatEnum.WAYBACK: '%Y%m%d%H%M%S'>
+
+    >>> get_date_format("unknown_source")
+    <DateFormatEnum.NONE: ''>
+
+    """
+    source_lower = source.casefold()
+    if source_lower == "sources_csv":
+        return DateFormatEnum.SOURCES_CSV
+    elif source_lower == "wayback":
+        return DateFormatEnum.WAYBACK
+    else:
+        return DateFormatEnum.NONE
 
 
 # Generate a list of all available sources currently available in the package's datasources folder.
@@ -288,7 +347,9 @@ class Source:
         details_df = details_df.drop(details_df.columns[0], axis=1)
 
         # Export to sources.csv
-        details_df.to_csv(output_path, index=False)
+        details_df.to_csv(
+            output_path, quoting=csv.QUOTE_ALL, quotechar='"', index=False
+        )
 
         logger.info(f"Updated details saved to {output_path}.")
 
@@ -328,8 +389,7 @@ class Source:
             timestamp = archive_url[0][start_index:end_index]
             output_timestamp = Source.change_datetime_format(
                 timestamp,
-                "%Y%m%d%H%M%S",
-                "%Y-%m-%d %H:%M:%S",
+                "sources_csv",
             )
             return archive_url[0], archive_url[1], output_timestamp
         except ValueError:
@@ -525,23 +585,19 @@ class Source:
     @staticmethod
     def change_datetime_format(
         input_datetime_string: str,
-        input_datetime_format: str,
-        output_datetime_format: str,
-    ) -> str | None:
+        date_format_id: str,
+    ) -> str | Any:
         """
-        Change the format of a given datetime string from one format to another. This method takes a
-        datetime string and its current format, then converts it to a specified output format.
-        If the input string does not match the provided input format, it logs an error and returns None.
+        Change the format of a given datetime string to a specified output format. This method takes a
+        datetime string and automatically detects its format, then converts it to the specified output format.
+        If the input string cannot be parsed, it logs an error and returns None.
 
         Parameters
         ----------
         input_datetime_string : str
             datetime string that needs to be reformatted
 
-        input_datetime_format : str
-            format of the input datetime string, following the strftime format codes
-
-        output_datetime_format : str
+        date_format_id : str
             desired format for the output datetime string, following the strftime format codes.
 
         Returns
@@ -552,20 +608,19 @@ class Source:
         Raises
         ------
         ValueError
-            If the input datetime string does not match the input format.
+            If the input datetime string cannot be parsed.
 
         """
         try:
-            dt = datetime.strptime(input_datetime_string, input_datetime_format)
-            logger.info(
-                f"The datetime string follows the format {input_datetime_format}"
-            )
+            # Automatically detect the format of the input datetime string
+            dt = parser.parse(input_datetime_string)
+            logger.debug(f"The datetime string has been parsed successfully: {dt}")
+            output_datetime_format = get_date_format(date_format_id)
             output_datetime_string = dt.strftime(output_datetime_format)
-            logger.info(f"The format is now changed to {output_datetime_format}")
+            logger.debug(f"The format is now changed to {output_datetime_format}")
             return output_datetime_string
         except ValueError as e:
-            logger.info(f"Error during datetime formatting: {e}")
-            return None
+            raise ValueError(f"Error during datetime formatting: {e}")
 
     @staticmethod
     def is_wayback_snapshot_available(
@@ -600,8 +655,7 @@ class Source:
         """
         api_timestamp = Source.change_datetime_format(
             input_timestamp,
-            "%Y-%m-%d %H:%M:%S",
-            "%Y%m%d%H%M%S",
+            "wayback",
         )
         api_url = f"http://archive.org/wayback/available?url={input_url}&timestamp={api_timestamp}"
         try:
@@ -625,8 +679,7 @@ class Source:
 
                 output_timestamp = Source.change_datetime_format(
                     timestamp,
-                    "%Y%m%d%H%M%S",
-                    "%Y-%m-%d %H:%M:%S",
+                    "sources_csv",
                 )
 
                 return archived_url, output_timestamp, status

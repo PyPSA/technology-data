@@ -281,9 +281,9 @@ class Source:
 
     def ensure_snapshot(self, output_file_name: str) -> None:
         """
-        Ensure that the Source object has the url_archived and url_date fields populated for each row.
+        Ensure that the Source object has the url_archived and url_archive_date fields populated for each row.
         If not, check if the URL already has a snapshot stored. If not, store it and populate
-        url_archived and url_date for each row.
+        url_archived and url_archive_date for each row.
 
         Parameters
         ----------
@@ -303,8 +303,8 @@ class Source:
 
         Notes
         -----
-        - The method checks if the `url_date` is populated for each row. If not, it attempts to store a snapshot
-          using the Wayback Machine and updates the `url_archived` and `url_date` fields accordingly.
+        - The method checks if the `url_archive_date` is populated for each row. If not, it attempts to store a snapshot
+          using the Wayback Machine and updates the `url_archived` and `url_archive_date` fields accordingly.
         - If a new snapshot is stored, it logs the timestamp and archived URL. If a snapshot already exists,
           it logs that information instead.
         - The method also updates the existing CSV file with the new attributes, excluding the first column
@@ -321,7 +321,7 @@ class Source:
 
         # Iterate over each row in the DataFrame
         for index, row in self.details.iterrows():
-            if pd.isna(row["url_date"]) or pd.isna(row["url_archived"]):
+            if pd.isna(row["url_archive_date"]) or pd.isna(row["url_archived"]):
                 archived_info = self.store_snapshot_on_wayback(row["url"])
                 if archived_info is not None:
                     archived_url, new_capture_flag, timestamp = archived_info
@@ -333,7 +333,7 @@ class Source:
                         logger.info(
                             f"There is already a snapshot for the url {row['url']}."
                         )
-                    self.details.loc[index, "url_date"] = timestamp
+                    self.details.loc[index, "url_archive_date"] = timestamp
                     self.details.loc[index, "url_archived"] = archived_url
 
         # Update the existing .csv file with the new attributes

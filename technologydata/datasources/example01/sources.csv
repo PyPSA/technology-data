@@ -1,2 +1,2 @@
-"source","type","title","author","date","url","url_date","url_archived","doi"
-"example01","report","Example Data Sheet 01","International Example Agency 01",2023-10-01,https://example.com/link/to/study.pdf,,,
+"source","type","title","author","date","url","url_access_date","url_archive_date","url_archived","doi"
+"example01","report","Example Data Sheet 01","International Example Agency 01",2023-10-01,https://example.com/link/to/study.pdf,,,,

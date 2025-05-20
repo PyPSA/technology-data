@@ -1,2 +1,2 @@
-"source","type","title","author","date","url","url_date","url_archived","doi"
-"example02","website","Example Data Source 02","John Doe, International Example Agency",2025-01-01,"https://example.com/data02",,,
+"source","type","title","author","date","url","url_access_date","url_archive_date","url_archived","doi" 
+"example02","website","Example Data Source 02","John Doe, International Example Agency",2025-01-01,"https://example.com/data02",,,,

@@ -2,6 +2,7 @@
 
 import pathlib
 import sys
+from datetime import datetime
 from typing import Any
 
 import pandas as pd
@@ -184,6 +185,18 @@ def test_store_snapshot_on_wayback() -> None:
 
     # Check if archived_info is None
     assert archived_info is not None, "archived_info should not be None"
+
+    archived_url, new_capture, output_timestamp = archived_info
+
+    assert "https://web.archive.org/web/" in archived_url
+    assert url_to_archive in archived_url
+    assert isinstance(new_capture, bool)
+
+    assert output_timestamp is not None, "output_timestamp should not be None"
+    try:
+        datetime.strptime(output_timestamp, td.sources.DateFormatEnum.SOURCES_CSV)
+    except ValueError:
+        pytest.fail("Valid date-time string did not match the format")
 
 
 @pytest.mark.parametrize(

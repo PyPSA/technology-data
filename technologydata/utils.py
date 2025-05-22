@@ -1,8 +1,10 @@
 """Classes for utils methods."""
-from enum import Enum
-from typing import Any, Tuple, Dict, Type
-from dateutil import parser
+
 import logging
+from enum import Enum
+from typing import Any
+
+from dateutil import parser
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +30,6 @@ class DateFormatEnum(str, Enum):
 
 
 class Utils:
-
     @staticmethod
     def change_datetime_format(
         input_datetime_string: str,

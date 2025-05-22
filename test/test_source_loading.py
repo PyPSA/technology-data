@@ -104,26 +104,36 @@ def test_sources_initialization(example_source: td.Source) -> None:
 
 
 @pytest.mark.parametrize(
-    "input_datetime_string, date_format_id, expected_date",
+    "input_datetime_string, date_format, expected_date",
     [
-        ("2025-05-20 14:45:00", "SoURCES_cSv", "2025-05-20 14:45:00"),
-        ("20250520144500", "SoURCES_cSv", "2025-05-20 14:45:00"),
-        ("2025-05-20 14:45:00", "wayback", "20250520144500"),
-        ("20250520144500", "wayback", "20250520144500"),
-        ("2025-05-20 14:45:00", "unknown_format", ""),
-        ("invalid-date-string", "SoURCES_cSv", ValueError),
-        ("2025/13/01", "wayback", ValueError),
+        (
+            "2025-05-20 14:45:00",
+            td.DateFormatEnum.SOURCES_CSV,
+            "2025-05-20 14:45:00",
+        ),
+        (
+            "20250520144500",
+            td.DateFormatEnum.SOURCES_CSV,
+            "2025-05-20 14:45:00",
+        ),
+        ("2025-05-20 14:45:00", td.DateFormatEnum.WAYBACK, "20250520144500"),
+        ("20250520144500", td.DateFormatEnum.WAYBACK, "20250520144500"),
+        ("2025-05-20 14:45:00", td.DateFormatEnum.NONE, ""),
+        ("invalid-date-string", td.DateFormatEnum.SOURCES_CSV, ValueError),
+        ("2025/13/01", td.DateFormatEnum.SOURCES_CSV, ValueError),
     ],
 )  # type: ignore
 def test_change_datetime_format(
-    input_datetime_string: str, date_format_id: str, expected_date: str | Any
+    input_datetime_string: str,
+    date_format: td.DateFormatEnum,
+    expected_date: str | Any,
 ) -> None:
     """Check if the datetime is correctly transformed to a new format."""
     if expected_date is ValueError:
         with pytest.raises(ValueError, match="Error during datetime formatting"):
-            td.Source.change_datetime_format(input_datetime_string, date_format_id)
+            td.Utils.change_datetime_format(input_datetime_string, date_format)
     else:
-        result = td.Source.change_datetime_format(input_datetime_string, date_format_id)
+        result = td.Utils.change_datetime_format(input_datetime_string, date_format)
         assert result == expected_date
 
 
@@ -194,7 +204,7 @@ def test_store_snapshot_on_wayback() -> None:
 
     assert output_timestamp is not None, "output_timestamp should not be None"
     try:
-        datetime.strptime(output_timestamp, td.sources.DateFormatEnum.SOURCES_CSV)
+        datetime.strptime(output_timestamp, td.DateFormatEnum.SOURCES_CSV)
     except ValueError:
         pytest.fail("Valid date-time string did not match the format")
 

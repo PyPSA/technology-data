@@ -30,6 +30,20 @@ class DateFormatEnum(str, Enum):
 
 
 class Utils:
+    """
+    A utility class for various helper functions.
+    This class contains static methods that provide utility functions for
+    common tasks, such as changing the format of datetime strings. The methods
+    in this class are designed to be stateless and can be called without
+    instantiating the class.
+
+    Methods
+    -------
+    change_datetime_format(input_datetime_string: str, output_datetime_format: DateFormatEnum) -> str | None:
+        Change the format of a given datetime string to a specified output format.
+
+    """
+
     @staticmethod
     def change_datetime_format(
         input_datetime_string: str,

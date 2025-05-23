@@ -138,29 +138,6 @@ def test_change_datetime_format(
 
 
 @pytest.mark.parametrize(
-    "url, timestamp, expected",
-    [
-        (
-            "https://ens.dk/media/3273/download",
-            "2025-05-06 16:02:04",
-            (
-                "http://web.archive.org/web/20250506160204/https://ens.dk/media/3273/download",
-                "2025-05-06 16:02:04",
-                "200",
-            ),
-        ),
-        ("https://ens.dk/media/1/download", "2025-05-06 16:02:04", None),
-    ],
-)  # type: ignore
-def test_is_wayback_snapshot_available(
-    url: str, timestamp: str, expected: tuple[str, str, str] | None
-) -> None:
-    """Check if the example source is available on the Internet Archive Wayback Machine."""
-    output = td.Source.is_wayback_snapshot_available(url, timestamp)
-    assert output == expected
-
-
-@pytest.mark.parametrize(
     "example_source",
     [
         {
@@ -225,30 +202,16 @@ def test_store_snapshot_on_wayback() -> None:
 )  # type: ignore
 def test_ensure_snapshot(example_source: td.Source) -> None:
     """Check if a given sources.csv file contains the fields url_archive_date and url_archived."""
-    # Construct the file path
-    file_name = "sources_modified.csv"
-
-    assert example_source.path is not None, "path should not be None"
-    file_path = pathlib.Path(path_cwd, example_source.path, file_name)
-
     # Ensure the snapshot is created
-    example_source.ensure_snapshot(file_name)
+    example_source.ensure_snapshot()
 
-    # Read the output DataFrame
-    try:
-        output_df = pd.read_csv(file_path)
-    except Exception as e:
-        pytest.fail(f"Failed to read CSV file: {e}")
-
-    # Assert that the archived URL is now filled
-    assert not output_df["url_archived"].isna().all(), (
-        "Some values in url_archived are null"
+    assert example_source.details is not None, "Details should not be None"
+    assert "url_archive_date" in example_source.details.columns, (
+        "url_archive_date column is missing"
+    )
+    assert "url_archived" in example_source.details.columns, (
+        "url_archived column is missing"
     )
 
-    # Assert that the timestamp is now filled
-    assert not output_df["url_archive_date"].isna().all(), (
-        "Some values in url_archive_date are null"
-    )
-
-    # Clean up by removing the file if it exists
-    file_path.unlink(missing_ok=True)
+    assert pd.isna(example_source.details["url_archive_date"]).sum() == 0
+    assert pd.isna(example_source.details["url_archived"]).sum() == 0

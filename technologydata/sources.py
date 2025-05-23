@@ -222,49 +222,43 @@ class Source:
             )
             return True
 
-    def ensure_snapshot(self, output_file_name: str) -> None:
+    def ensure_snapshot(self) -> None:
         """
-        Ensure that the Source object has the url_archived and url_archive_date fields populated for each row.
-        If not, check if the URL already has a snapshot stored. If not, store it and populate
-        url_archived and url_archive_date for each row.
-
-        Parameters
-        ----------
-        output_file_name : str
-            The name of the output file where the updated details will be saved.
+        Ensure that snapshots of URLs are stored in the Wayback Machine.
+        This method checks if the `details` attribute is set and if the `url` attribute is present.
+        It iterates over each row in the DataFrame contained in `details`,
+        checking if the `url_archive_date` or `url_archived` fields are missing.
+        If both is missing, it attempts to store a snapshot of the URL using the
+        Wayback Machine and updates the DataFrame accordingly.
 
         Returns
         -------
         None
             This method does not return any value. It updates the Source object's details
-            and saves the updated information to a CSV file.
 
         Raises
         ------
-        None
-            This method logs errors if the details or URL attributes are not set, but does not raise exceptions.
+        ValueError
+            If the `details` attribute is None or empty or if the `url` attribute is None.
 
-        Notes
-        -----
-        - The method checks if the `url_archive_date` is populated for each row. If not, it attempts to store a snapshot
-          using the Wayback Machine and updates the `url_archived` and `url_archive_date` fields accordingly.
-        - If a new snapshot is stored, it logs the timestamp and archived URL. If a snapshot already exists,
-          it logs that information instead.
-        - The method also updates the existing CSV file with the new attributes, excluding the first column
-          which is assumed to be `source_name`.
+        Examples
+        --------
+        >>> from technologydata import Source
+        >>> source = Source("example01", "./some/local/path/")
+        >>> source.ensure_snapshot()
 
         """
-        if self.details is None:
-            logger.error(f"The details attribute of the source {self.name} is not set.")
-            return None
+        if self.details is None or self.details.empty:
+            raise ValueError(
+                f"The details attribute of the source {self.name} is not set."
+            )
 
         if self.details.url is None:
-            logger.error(f"The url attribute of the source {self.name} is not set.")
-            return None
+            raise ValueError(f"The url attribute of the source {self.name} is not set.")
 
         # Iterate over each row in the DataFrame
         for index, row in self.details.iterrows():
-            if pd.isna(row["url_archive_date"]) or pd.isna(row["url_archived"]):
+            if pd.isna(row["url_archive_date"]) and pd.isna(row["url_archived"]):
                 archived_info = self.store_snapshot_on_wayback(row["url"])
                 if archived_info is not None:
                     archived_url, new_capture_flag, timestamp = archived_info
@@ -274,27 +268,10 @@ class Source:
                         )
                     else:
                         logger.info(
-                            f"There is already a snapshot for the url {row['url']}."
+                            f"There is already a snapshot for the url {row['url']} with timestamp {timestamp} and Archive.org url {archived_url}."
                         )
                     self.details.loc[index, "url_archive_date"] = timestamp
                     self.details.loc[index, "url_archived"] = archived_url
-
-        # Update the existing .csv file with the new attributes
-        if self.path is not None:
-            output_path = pathlib.Path(self.path, output_file_name)
-        else:
-            return None
-
-        # Drop the first column source_name
-        details_df = self.details.copy()
-        details_df = details_df.drop(details_df.columns[0], axis=1)
-
-        # Export to sources.csv
-        details_df.to_csv(
-            output_path, quoting=csv.QUOTE_ALL, quotechar='"', index=False
-        )
-
-        logger.info(f"Updated details saved to {output_path}.")
 
     @staticmethod
     def store_snapshot_on_wayback(
@@ -314,11 +291,17 @@ class Source:
         Returns
         -------
         tuple[str, bool, str] | None
-            A tuple containing the archive URL, a boolean indicating if a new capture was conducted (if the boolean is True,
-            archive.org conducted a new capture. If it is False, archive.org has returned a recently cached capture
+            A tuple containing the archive URL, a boolean indicating if a new capture was conducted (if the boolean is
+            True, archive.org conducted a new capture. If it is False, archive.org has returned a recently cached capture
             instead, likely taken in the previous minutes) and the formatted timestamp (with format YYYY-MM-DD hh:mm:ss)
             if the operation is successful. Returns None if the timestamp cannot be extracted due to a ValueError (e.g.,
             if the expected substrings are not found in the archive URL).
+
+        Examples
+        --------
+        >>> from technologydata import Source
+        >>> some_url = "some_url"
+        >>> archived_info = td.Source.store_snapshot_on_wayback(some_url)
 
         """
         archive_url = savepagenow.capture_or_cache(url_to_archive)
@@ -367,8 +350,14 @@ class Source:
         - The `details` attribute must contain a key "url_archived" with a valid URL.
         - The `path` and `name` attributes must be defined in the instance for saving the file.
 
+        Examples
+        --------
+        >>> from technologydata import Source
+        >>> source = Source("example01", "./some/local/path/")
+        >>> storage_paths = source.download_file_from_wayback()
+
         """
-        if self.details is None:
+        if self.details is None or self.details.empty:
             logger.error(f"The details attribute of the source {self.name} is not set.")
             return []
         if (
@@ -414,6 +403,11 @@ class Source:
             The full path where the file should be saved, including the appropriate file extension,
             or None if the content type is unsupported or an error occurs.
 
+        Raises
+        ------
+        ValueError
+            If the extension is not among the supported ones.
+
         Notes
         -----
             - Supported content types and their corresponding file extensions:
@@ -422,25 +416,16 @@ class Source:
                 - "application/vnd.ms-excel" -> ".xls"
                 - "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" -> ".xlsx"
                 - "application/parquet" -> ".parquet"
-            - If the content type is unsupported, a warning is logged.
+            - If the content type is unsupported, a ValueError exception is raised.
 
         """
         content_type = self._get_content_type(url_archived)
         if content_type is None:
             return None
 
-        extension_map = {
-            "text/plain": ".txt",
-            "application/pdf": ".pdf",
-            "application/vnd.ms-excel": ".xls",
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": ".xlsx",
-            "application/parquet": ".parquet",
-        }
-
-        extension = extension_map.get(content_type)
+        extension = td.FileExtensionEnum.get_extension(content_type)
         if extension is None:
-            logger.warning(f"Unsupported content type: {content_type}")
-            return None
+            raise ValueError(f"Unsupported content type: {content_type}")
 
         if self.path is not None and self.name is not None:
             return pathlib.Path(self.path, self.name + extension)
@@ -478,8 +463,9 @@ class Source:
             response.raise_for_status()
             return response.headers.get("Content-Type")
         except requests.exceptions.RequestException as e:
-            logger.error(f"Failed to retrieve content type: {e}")
-            return None
+            raise requests.exceptions.RequestException(
+                f"Failed to retrieve content type: {e}"
+            )
 
     @staticmethod
     def _download_file(
@@ -522,76 +508,9 @@ class Source:
             logger.info(f"File downloaded successfully and saved to {save_path}")
             return save_path
         except requests.exceptions.RequestException as e:
-            logger.error(f"An error occurred during file download: {e}")
-            return None
-
-    @staticmethod
-    def is_wayback_snapshot_available(
-        input_url: str, input_timestamp: str
-    ) -> str | None | Any:
-        """
-        The method queries the Internet Archive's Wayback Machine to check for the availability
-        of archived snapshots of a given URL. It constructs an API request to the Wayback Machine
-        and processes the response to extract the closest archived snapshot information.
-
-        Parameters
-        ----------
-        input_url : str
-            URL for which to retrieve the Wayback Machine snapshot
-        input_timestamp : str
-            timestamp for which to retrieve the Wayback Machine snapshot
-
-        Returns
-        -------
-        Tuple[str, str, str] | None
-            The tuple contains:
-                -) archived_url : str URL of the archived snapshot
-                -) timestamp : str timestamp of the archived snapshot with format YYYY-MM-DD hh:mm:ss
-                -) status : str status of the archived snapshot
-            Returns None if no archived snapshot is found or if an error occurs during the API request.
-
-        Raises
-        ------
-        requests.RequestException
-            If there is an issue with the HTTP request to the Wayback Machine API
-
-        """
-        api_timestamp = td.Utils.change_datetime_format(
-            input_timestamp,
-            td.DateFormatEnum.WAYBACK,
-        )
-        api_url = f"http://archive.org/wayback/available?url={input_url}&timestamp={api_timestamp}"
-        try:
-            response = requests.get(api_url)
-            # Raise an error for bad HTTP status codes
-            response.raise_for_status()
-            data = response.json()
-
-            # Extract the closest archived snapshot information
-            closest = data.get("archived_snapshots", {}).get("closest", {})
-            if closest:
-                available = closest.get("available", False)
-                archived_url = closest.get("url", "")
-                timestamp = closest.get("timestamp", "")
-                status = closest.get("status", "")
-
-                logger.info(f"Available: {available}")
-                logger.info(f"Archived URL: {archived_url}")
-                logger.info(f"Timestamp: {timestamp}")
-                logger.info(f"Status: {status}")
-
-                output_timestamp = td.Utils.change_datetime_format(
-                    timestamp,
-                    td.DateFormatEnum.SOURCES_CSV,
-                )
-
-                return archived_url, output_timestamp, status
-            else:
-                logger.info("No archived snapshot found.")
-                return None
-
-        except requests.RequestException as e:
-            logger.info(f"Error during API request: {e}")
+            requests.exceptions.RequestException(
+                f"An error occurred during file download: {e}"
+            )
             return None
 
 
@@ -687,7 +606,7 @@ class Sources:
             The path to save the CSV file.
 
         """
-        self.details.to_csv(path, index=False)
+        self.details.to_csv(path, quoting=csv.QUOTE_ALL, quotechar='"', index=False)
 
     def to_datapackage(self, path: str | pathlib.Path, overwrite: bool = False) -> None:
         """

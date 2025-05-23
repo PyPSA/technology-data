@@ -253,8 +253,10 @@ class Source:
                 f"The details attribute of the source {self.name} is not set."
             )
 
-        if self.details.url is None:
-            raise ValueError(f"The url attribute of the source {self.name} is not set.")
+        if "url" not in self.details.columns or self.details["url"].isna().any():
+            raise ValueError(
+                f"The url column of the source {self.name} is not set or contains NaN values."
+            )
 
         # Iterate over each row in the DataFrame
         for index, row in self.details.iterrows():

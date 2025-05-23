@@ -324,7 +324,7 @@ class Source:
             # If "web/" or next "/" not found, return empty string
             return None
 
-    def download_file_from_wayback(self) -> list[pathlib.Path | None]:
+    def download_file_from_wayback(self) -> dict[str, pathlib.Path | None]:
         """
         Download a file from the Wayback Machine and save it to a specified path.
 
@@ -361,7 +361,7 @@ class Source:
         """
         if self.details is None or self.details.empty:
             logger.error(f"The details attribute of the source {self.name} is not set.")
-            return []
+            return {}
         if (
             "url_archived" not in self.details
             or self.details["url_archived"].isna().all()
@@ -369,25 +369,35 @@ class Source:
             logger.error(
                 f"The url_archived attribute of source {self.name} is not set."
             )
-            return []
+            return {}
         if self.path is None:
             logger.error(f"The path attribute of the source {self.name} is not set.")
-            return []
+            return {}
 
-        saved_paths: list[pathlib.Path | None] = []  # Explicit type annotation
+        saved_paths: dict[str, pathlib.Path | None] = {}  # Explicit type annotation
         for index, row in self.details.iterrows():
             url_archived = row["url_archived"]
-            save_path = self._get_save_path(url_archived)
+            source_title = td.Utils.replace_special_characters(row["title"])
+            save_path = self._get_save_path(url_archived, source_title)
 
             if save_path is None:
-                saved_paths.append(None)
+                logger.debug(
+                    f"It was not possible to determine a file path for the source {source_title}."
+                )
                 continue
+
+            if save_path in saved_paths.values() or save_path.is_file():
+                logger.debug(f"There is already a file stored at the path {save_path}.")
+                continue
+
             saved_path = self._download_file(url_archived, save_path)
-            saved_paths.append(saved_path)
+            saved_paths[source_title] = saved_path
 
         return saved_paths
 
-    def _get_save_path(self, url_archived: str) -> pathlib.Path | None:
+    def _get_save_path(
+        self, url_archived: str, source_title: str
+    ) -> pathlib.Path | None:
         """
         Determine the save path based on the content type.
         This method retrieves the content type of the archived URL and determines the appropriate
@@ -398,6 +408,8 @@ class Source:
         ----------
         url_archived : str
             The URL of the archived file from which the content type will be determined.
+        source_title : str
+            The title of the given source from sources.csv.
 
         Returns
         -------
@@ -429,8 +441,8 @@ class Source:
         if extension is None:
             raise ValueError(f"Unsupported content type: {content_type}")
 
-        if self.path is not None and self.name is not None:
-            return pathlib.Path(self.path, self.name + extension)
+        if self.path is not None and source_title is not None:
+            return pathlib.Path(self.path, source_title + extension)
         else:
             return None
 

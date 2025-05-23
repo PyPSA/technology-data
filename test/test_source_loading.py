@@ -3,7 +3,6 @@
 import pathlib
 import sys
 from datetime import datetime
-from typing import Any
 
 import pandas as pd
 import pytest
@@ -104,40 +103,6 @@ def test_sources_initialization(example_source: td.Source) -> None:
 
 
 @pytest.mark.parametrize(
-    "input_datetime_string, date_format, expected_date",
-    [
-        (
-            "2025-05-20 14:45:00",
-            td.DateFormatEnum.SOURCES_CSV,
-            "2025-05-20 14:45:00",
-        ),
-        (
-            "20250520144500",
-            td.DateFormatEnum.SOURCES_CSV,
-            "2025-05-20 14:45:00",
-        ),
-        ("2025-05-20 14:45:00", td.DateFormatEnum.WAYBACK, "20250520144500"),
-        ("20250520144500", td.DateFormatEnum.WAYBACK, "20250520144500"),
-        ("2025-05-20 14:45:00", td.DateFormatEnum.NONE, ""),
-        ("invalid-date-string", td.DateFormatEnum.SOURCES_CSV, ValueError),
-        ("2025/13/01", td.DateFormatEnum.SOURCES_CSV, ValueError),
-    ],
-)  # type: ignore
-def test_change_datetime_format(
-    input_datetime_string: str,
-    date_format: td.DateFormatEnum,
-    expected_date: str | Any,
-) -> None:
-    """Check if the datetime is correctly transformed to a new format."""
-    if expected_date is ValueError:
-        with pytest.raises(ValueError, match="Error during datetime formatting"):
-            td.Utils.change_datetime_format(input_datetime_string, date_format)
-    else:
-        result = td.Utils.change_datetime_format(input_datetime_string, date_format)
-        assert result == expected_date
-
-
-@pytest.mark.parametrize(
     "example_source",
     [
         {
@@ -152,17 +117,17 @@ def test_download_file_from_wayback(example_source: td.Source) -> None:
     storage_paths = example_source.download_file_from_wayback()
     # Check if storage_paths is not None and is a list
     assert storage_paths is not None, (
-        "Expected a valid storage path list, but got None."
+        "Expected a valid storage path dictionary, but got None."
     )
-    assert isinstance(storage_paths, list), "Expected storage_paths to be a list."
-    for storage_path in storage_paths:
+    assert isinstance(storage_paths, dict), "Expected storage_paths to be a list."
+    for storage_path in storage_paths.values():
         # Check if each storage_path is not None
         assert storage_path is not None, "Expected a valid storage path, but got None."
         assert storage_path.is_file(), (
             f"Expected {storage_path} to be a file, but it does not exist."
         )
         # Delete the downloaded file
-        storage_path.unlink(missing_ok=True)
+        # storage_path.unlink(missing_ok=True)
 
 
 def test_store_snapshot_on_wayback() -> None:

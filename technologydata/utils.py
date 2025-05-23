@@ -1,6 +1,7 @@
 """Classes for utils methods."""
 
 import logging
+import re
 from enum import Enum
 from typing import Any
 
@@ -52,13 +53,24 @@ class FileExtensionEnum(Enum):
     """
 
     TEXT_PLAIN = (".txt", "text/plain")
-    APPLICATION_PDF = (".pdf", "application/pdf")
-    MS_EXCEL = (".xls", "application/vnd.ms-excel")
-    OPENXML_EXCEL = (
+    TEXT_HTML = (".html", "text/html")
+    TEXT_CSV = (".csv", "text/csv")
+    TEXT_XML = (".xml", "text/xml")
+    APPLICATION_MS_EXCEL = (".xls", "application/vnd.ms-excel")
+    APPLICATION_ODS = (".ods", "application/vnd.oasis.opendocument.spreadsheet")
+    APPLICATION_OPENXML_EXCEL = (
         ".xlsx",
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     )
-    PARQUET = (".parquet", "application/parquet")
+    APPLICATION_JSON = (".json", "application/json")
+    APPLICATION_XML = (".xml", "application/xml")
+    APPLICATION_PDF = (".pdf", "application/pdf")
+    APPLICATION_PARQUET = (".parquet", "application/parquet")
+    APPLICATION_VDN_PARQUET = (".parquet", "application/vdn.apache.parquet")
+    APPLICATION_RAR_WINDOWS = (".rar", "application/x-rar-compressed")
+    APPLICATION_RAR = (".rar", "application/vnd.rar")
+    APPLICATION_ZIP = (".zip", "application/zip")
+    APPLICATION_ZIP_WINDOWS = (".zip", "application/x-zip-compressed")
 
     @classmethod
     def get_extension(cls, content_type: str) -> str | None:
@@ -79,9 +91,9 @@ class FileExtensionEnum(Enum):
         Examples
         --------
         >>> FileExtensionEnum.get_extension("application/pdf")
-        '.pdf'
+        >>> '.pdf'
         >>> FileExtensionEnum.get_extension("application/unknown")
-        None
+        >>> None
 
         """
         for member in cls:
@@ -143,3 +155,43 @@ class Utils:
             return output_datetime_string
         except ValueError as e:
             raise ValueError(f"Error during datetime formatting: {e}")
+
+    @staticmethod
+    def replace_special_characters(input_string: str) -> str:
+        """
+        Replace special characters and spaces in a string with underscores,
+        collapsing multiple consecutive underscores into a single underscore.
+        Finally, it lowercases all characters of the string and removes leading or
+        trailing underscores.
+
+        Parameters
+        ----------
+        input_string : str
+            The input string from which special characters and spaces will be replaced.
+
+        Returns
+        -------
+        str
+            A new string with all special characters and spaces replaced by a single underscore
+            where consecutive underscores occur.
+
+        Examples
+        --------
+        >>> replace_special_characters("Hello, World! Welcome to Python @ 2023.")
+        'Hello_World_Welcome_to_Python_2023_'
+
+        >>> replace_special_characters("Special#Characters$Are%Fun!")
+        'Special_Characters_Are_Fun_'
+
+        """
+        # Replace any character that is not a word character or whitespace with underscore
+        replaced = re.sub(r"[^\w\s]", "_", input_string)
+        # Replace whitespace with underscore
+        replaced = replaced.replace(" ", "_")
+        # Collapse multiple consecutive underscores into a single underscore
+        replaced = re.sub(r"_+", "_", replaced)
+        # Remove leading and trailing underscores
+        replaced = replaced.strip("_")
+        # Lower case the string
+        replaced = replaced.casefold()
+        return replaced

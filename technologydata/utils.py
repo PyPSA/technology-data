@@ -32,24 +32,47 @@ class DateFormatEnum(str, Enum):
 
 class FileExtensionEnum(Enum):
     """
-    An enumeration that maps file extensions to their corresponding MIME
-    (https://en.wikipedia.org/wiki/MIME) types. This Enum provides a way to associate common
-    file extensions with their respective MIME types, allowing for easy retrieval of file extensions
-    based on content types.
+    An enumeration that maps various file extensions to their corresponding MIME types.
+
+    This Enum provides a structured way to associate common file extensions with their respective
+    MIME types, facilitating easy retrieval of file extensions based on content types. Each member
+    of the enumeration is a tuple containing the file extension and its associated MIME type.
 
     Members
     --------
     TEXT_PLAIN : tuple
         Represents the MIME type "text/plain" with the file extension ".txt".
-    APPLICATION_PDF : tuple
-        Represents the MIME type "application/pdf" with the file extension ".pdf".
-    MS_EXCEL : tuple
+    TEXT_HTML : tuple
+        Represents the MIME type "text/html" with the file extension ".html".
+    TEXT_CSV : tuple
+        Represents the MIME type "text/csv" with the file extension ".csv".
+    TEXT_XML : tuple
+        Represents the MIME type "text/xml" with the file extension ".xml".
+    APPLICATION_MS_EXCEL : tuple
         Represents the MIME type "application/vnd.ms-excel" with the file extension ".xls".
-    OPENXML_EXCEL : tuple
+    APPLICATION_ODS : tuple
+        Represents the MIME type "application/vnd.oasis.opendocument.spreadsheet" with the file extension ".ods".
+    APPLICATION_OPENXML_EXCEL : tuple
         Represents the MIME type "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         with the file extension ".xlsx".
-    PARQUET : tuple
+    APPLICATION_JSON : tuple
+        Represents the MIME type "application/json" with the file extension ".json".
+    APPLICATION_XML : tuple
+        Represents the MIME type "application/xml" with the file extension ".xml".
+    APPLICATION_PDF : tuple
+        Represents the MIME type "application/pdf" with the file extension ".pdf".
+    APPLICATION_PARQUET : tuple
         Represents the MIME type "application/parquet" with the file extension ".parquet".
+    APPLICATION_VDN_PARQUET : tuple
+        Represents the MIME type "application/vdn.apache.parquet" with the file extension ".parquet".
+    APPLICATION_RAR_WINDOWS : tuple
+        Represents the MIME type "application/x-rar-compressed" with the file extension ".rar".
+    APPLICATION_RAR : tuple
+        Represents the MIME type "application/vnd.rar" with the file extension ".rar".
+    APPLICATION_ZIP : tuple
+        Represents the MIME type "application/zip" with the file extension ".zip".
+    APPLICATION_ZIP_WINDOWS : tuple
+        Represents the MIME type "application/x-zip-compressed" with the file extension ".zip".
     """
 
     TEXT_PLAIN = (".txt", "text/plain")
@@ -98,6 +121,34 @@ class FileExtensionEnum(Enum):
         """
         for member in cls:
             if member.value[1] == content_type:
+                return member.value[0]
+        return None
+
+    @classmethod
+    def search_mime_in_url(cls, url: str) -> str | None:
+        """
+        Search for MIME types in a given URL and return the corresponding file extension.
+
+        Parameters
+        ----------
+        url : str
+            The URL to search for MIME types.
+
+        Returns
+        -------
+        str | None
+            The file extension associated with the found MIME type, or None if no match is found.
+
+        Examples
+        --------
+        >>> FileExtensionEnum.search_mime_in_url("https://example.com/file.pdf")
+        '.pdf'
+        >>> FileExtensionEnum.search_mime_in_url("https://example.com/file.unknown")
+        None
+
+        """
+        for member in cls:
+            if re.search(r"\b" + re.escape(member.value[1]) + r"\b", url):
                 return member.value[0]
         return None
 

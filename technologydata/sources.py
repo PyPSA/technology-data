@@ -422,16 +422,6 @@ class Source:
         ValueError
             If the extension is not among the supported ones.
 
-        Notes
-        -----
-            - Supported content types and their corresponding file extensions:
-                - "text/plain" -> ".txt"
-                - "application/pdf" -> ".pdf"
-                - "application/vnd.ms-excel" -> ".xls"
-                - "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" -> ".xlsx"
-                - "application/parquet" -> ".parquet"
-            - If the content type is unsupported, a ValueError exception is raised.
-
         """
         content_type = self._get_content_type(url_archived)
         if content_type is None:

@@ -1,0 +1,73 @@
+{
+    "fields": [
+        {
+            "name": "source",
+            "type": "string",
+            "description": "A name used to identify the data source, must be unique to differentiate among all data sources. The name should match the folder name.",
+            "example": "example01",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "type",
+            "type": "string",
+            "description": "The type of data source, e.g. an article, website, report, misc.",
+            "example": "article",
+            "constraints": {
+                "required": true,
+                "enum": [
+                    "article",
+                    "website",
+                    "report",
+                    "misc"
+                ]
+            }
+        },
+        {
+            "name": "title",
+            "type": "string",
+            "description": "The title of the data source or reference.",
+            "example": "Example Source 01",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "author",
+            "type": "string",
+            "description": "The author(s) or authoring institution of the data source.",
+            "example": "John Doe, Jane Smith, International Example Agency",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "date",
+            "type": "date",
+            "description": "The date of publication.",
+            "example": "2023-01-01",
+            "constraints": {
+                "required": true
+            }
+        },
+        {
+            "name": "url",
+            "type": "string",
+            "description": "The website or URL where the data source can be accessed.",
+            "example": "https://www.example.com/link/to/study.pdf",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
+            "name": "doi",
+            "type": "string",
+            "description": "The DOI (Digital Object Identifier) of the data source.",
+            "example": "10.1234/example.doi",
+            "constraints": {
+                "required": false
+            }
+        }
+    ]
+}

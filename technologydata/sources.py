@@ -324,7 +324,9 @@ class Source:
             # If "web/" or next "/" not found, return empty string
             return None
 
-    def download_file_from_wayback(self) -> dict[str, pathlib.Path | None]:
+    def download_file_from_wayback(
+        self, download_directory: pathlib.Path
+    ) -> dict[str, pathlib.Path | None]:
         """
         Download a file from the Wayback Machine and save it to a specified path.
 
@@ -332,6 +334,12 @@ class Source:
         stored in the `details` attribute of the instance. The file is saved in the
         specified format based on its Content-Type field in the Response Header or the extension
         that can be extracted from the URL.
+
+        Parameters
+        ----------
+        download_directory : pathlib.Path
+            The base path where the file will be saved.
+
 
         Returns
         -------
@@ -346,13 +354,12 @@ class Source:
         Notes
         -----
         - The `details` attribute must contain a key "url_archived" with a valid URL.
-        - The `path` and `name` attributes must be defined in the instance for saving the file.
 
         Examples
         --------
         >>> from technologydata import Source
         >>> source = Source("example01", "./some/local/path/")
-        >>> storage_paths = source.download_file_from_wayback()
+        >>> storage_paths = source.download_file_from_wayback(pathlib.Path("base_path"))
 
         """
         if self.details is None or self.details.empty:
@@ -366,16 +373,17 @@ class Source:
                 f"The url_archived attribute of source {self.name} is not set."
             )
             return {}
-        if self.path is None:
-            logger.error(f"The path attribute of the source {self.name} is not set.")
+        if download_directory is None:
+            logger.error(f"The base path of the source {self.name} is not set.")
             return {}
 
         saved_paths: dict[str, pathlib.Path | None] = {}  # Explicit type annotation
         for index, row in self.details.iterrows():
             url_archived = row["url_archived"]
-            source_path = self.path
             source_title = td.Utils.replace_special_characters(row["title"])
-            save_path = self._get_save_path(url_archived, source_path, source_title)
+            save_path = self._get_save_path(
+                url_archived, download_directory, source_title
+            )
 
             if save_path is None:
                 logger.debug(

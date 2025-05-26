@@ -114,7 +114,7 @@ def test_sources_initialization(example_source: td.Source) -> None:
 )  # type: ignore
 def test_download_file_from_wayback(example_source: td.Source) -> None:
     """Check if the example source is downloaded from the Internet Archive Wayback Machine."""
-    storage_paths = example_source.download_file_from_wayback()
+    storage_paths = example_source.download_file_from_wayback(path_cwd)
     # Check if storage_paths is not None and is a list
     assert storage_paths is not None, (
         "Expected a valid storage path dictionary, but got None."

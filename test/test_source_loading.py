@@ -127,7 +127,7 @@ def test_download_file_from_wayback(example_source: td.Source) -> None:
             f"Expected {storage_path} to be a file, but it does not exist."
         )
         # Delete the downloaded file
-        # storage_path.unlink(missing_ok=True)
+        storage_path.unlink(missing_ok=True)
 
 
 def test_store_snapshot_on_wayback() -> None:
@@ -180,3 +180,33 @@ def test_ensure_snapshot(example_source: td.Source) -> None:
 
     assert pd.isna(example_source.details["url_archive_date"]).sum() == 0
     assert pd.isna(example_source.details["url_archived"]).sum() == 0
+
+
+@pytest.mark.parametrize(
+    "url_archived, source_path, source_title, expected_path",
+    [
+        (
+            "http://web.archive.org/web/20250506160204/https://ens.dk/media/3273/download",
+            path_cwd,
+            "title",
+            pathlib.Path(path_cwd, "title.pdf"),
+        ),
+        (
+            "https://web.archive.org/web/20250522150802/https://oedi-data-lake.s3.amazonaws.com/ATB/electricity/parquet/2024/v3.0.0/ATBe.parquet",
+            path_cwd,
+            "title",
+            pathlib.Path(path_cwd, "title.parquet"),
+        ),
+    ],
+)  # type: ignore
+def test_get_save_path(
+    url_archived: str,
+    source_path: pathlib.Path,
+    source_title: str,
+    expected_path: pathlib.Path,
+) -> None:
+    """Check if the path where to store the file to download follows the requested pattern."""
+    assert (
+        td.Source._get_save_path(url_archived, source_path, source_title)
+        == expected_path
+    )

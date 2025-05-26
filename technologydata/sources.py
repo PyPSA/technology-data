@@ -330,12 +330,8 @@ class Source:
 
         This method retrieves an archived file from the Wayback Machine using the URL
         stored in the `details` attribute of the instance. The file is saved in the
-        specified format based on its Content-Type field in the Response Header.
-        Supported formats include:
-        - Plain text (.txt)
-        - PDF (.pdf)
-        - Excel (.xls and .xlsx)
-        - Parquet (.parquet)
+        specified format based on its Content-Type field in the Response Header or the extension
+        that can be extracted from the URL.
 
         Returns
         -------
@@ -377,8 +373,9 @@ class Source:
         saved_paths: dict[str, pathlib.Path | None] = {}  # Explicit type annotation
         for index, row in self.details.iterrows():
             url_archived = row["url_archived"]
+            source_path = self.path
             source_title = td.Utils.replace_special_characters(row["title"])
-            save_path = self._get_save_path(url_archived, source_title)
+            save_path = self._get_save_path(url_archived, source_path, source_title)
 
             if save_path is None:
                 logger.debug(
@@ -395,21 +392,25 @@ class Source:
 
         return saved_paths
 
+    @staticmethod
     def _get_save_path(
-        self, url_archived: str, source_title: str
+        url_archived: str, source_path: pathlib.Path, source_title: str
     ) -> pathlib.Path | None:
         """
-        Determine the save path based on the content type.
+        Determine the save path based on the content type or archived URL.
+
         This method retrieves the content type of the archived URL and determines the appropriate
-        file extension based on the content type. It constructs the full save path using the
-        instance's `path` and `name` attributes.
+        file extension based on the content type or based on the archived URL. It constructs the full save path using
+        the provided source path and source title.
 
         Parameters
         ----------
         url_archived : str
             The URL of the archived file from which the content type will be determined.
+        source_path : pathlib.Path
+            The base path where the file will be saved.
         source_title : str
-            The title of the given source from sources.csv.
+            The title of the given source from sources.csv, used as the filename.
 
         Returns
         -------
@@ -423,16 +424,18 @@ class Source:
             If the extension is not among the supported ones.
 
         """
-        content_type = self._get_content_type(url_archived)
+        content_type = Source._get_content_type(url_archived)
         if content_type is None:
             return None
 
-        extension = td.FileExtensionEnum.get_extension(content_type)
+        extension = td.FileExtensionEnum.get_extension(
+            content_type
+        ) or td.FileExtensionEnum.search_file_extension_in_url(url_archived)
         if extension is None:
             raise ValueError(f"Unsupported content type: {content_type}")
 
-        if self.path is not None and source_title is not None:
-            return pathlib.Path(self.path, source_title + extension)
+        if source_path is not None and source_title is not None:
+            return pathlib.Path(source_path, source_title + extension)
         else:
             return None
 

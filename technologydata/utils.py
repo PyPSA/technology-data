@@ -125,30 +125,30 @@ class FileExtensionEnum(Enum):
         return None
 
     @classmethod
-    def search_mime_in_url(cls, url: str) -> str | None:
+    def search_file_extension_in_url(cls, url: str) -> str | None:
         """
-        Search for MIME types in a given URL and return the corresponding file extension.
+        Search for the file extension in a given URL.
 
         Parameters
         ----------
         url : str
-            The URL to search for MIME types.
+            The URL to search for the file extension.
 
         Returns
         -------
         str | None
-            The file extension associated with the found MIME type, or None if no match is found.
+            The file extension, or None if no match is found.
 
         Examples
         --------
-        >>> FileExtensionEnum.search_mime_in_url("https://example.com/file.pdf")
+        >>> FileExtensionEnum.search_file_extension_in_url("https://example.com/file.pdf")
         '.pdf'
-        >>> FileExtensionEnum.search_mime_in_url("https://example.com/file.unknown")
+        >>> FileExtensionEnum.search_file_extension_in_url("https://example.com/file.unknown")
         None
 
         """
         for member in cls:
-            if re.search(r"\b" + re.escape(member.value[1]) + r"\b", url):
+            if re.search(r"\b" + re.escape(member.value[0]) + r"\b", url):
                 return member.value[0]
         return None
 

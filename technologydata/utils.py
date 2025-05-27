@@ -229,10 +229,10 @@ class Utils:
         Examples
         --------
         >>> replace_special_characters("Hello, World! Welcome to Python @ 2023.")
-        'Hello_World_Welcome_to_Python_2023_'
+        'hello_world_welcome_to_python_2023'
 
         >>> replace_special_characters("Special#Characters$Are%Fun!")
-        'Special_Characters_Are_Fun_'
+        'special_characters_are_fun'
 
         """
         # Replace any character that is not a word character or whitespace with underscore

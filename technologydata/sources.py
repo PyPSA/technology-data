@@ -386,13 +386,15 @@ class Source:
             )
 
             if save_path is None:
-                logger.debug(
+                logger.warning(
                     f"It was not possible to determine a file path for the source {source_title}."
                 )
                 continue
 
             if save_path in saved_paths.values() or save_path.is_file():
-                logger.debug(f"There is already a file stored at the path {save_path}.")
+                logger.warning(
+                    f"There is already a file stored at the path {save_path}. Not downloading or overwriting this file."
+                )
                 continue
 
             saved_path = self._download_file(url_archived, save_path)
@@ -440,7 +442,9 @@ class Source:
             content_type
         ) or td.FileExtensionEnum.search_file_extension_in_url(url_archived)
         if extension is None:
-            raise ValueError(f"Unsupported content type: {content_type}")
+            raise ValueError(
+                f"Unable to infer file extension from content type: {content_type} or URL: {url_archived}"
+            )
 
         if source_path is not None and source_title is not None:
             return pathlib.Path(source_path, source_title + extension)

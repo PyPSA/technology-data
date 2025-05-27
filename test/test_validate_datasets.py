@@ -19,7 +19,7 @@ dataset_folders = sorted(
     "folder",
     dataset_folders,
     ids=[folder.name for folder in dataset_folders],
-)
+)  # type: ignore
 def test_validate_datasets(folder: Path) -> None:
     """Validate all tables in the given dataset folder against their schemas."""
     # Locations where specifications for the CSVs are stored

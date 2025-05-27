@@ -61,6 +61,33 @@
             }
         },
         {
+            "name": "url_access_date",
+            "type": "string",
+            "description": "The timestamp the original document was accessed and data extracted. To be introduced manually.",
+            "example": "2020-08-07 12:12:01",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
+            "name": "url_archive_date",
+            "type": "string",
+            "description": "The timestamp of the archiving on Internet Archive Wayback Machine.",
+            "example": "2020-08-07 12:12:01",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
+            "name": "url_archived",
+            "type": "string",
+            "description": "The URL to the archived snapshot in the Internet Archive Wayback Machine.",
+            "example": "http://web.archive.org/web/20130919044612/http://example.com/",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
             "name": "doi",
             "type": "string",
             "description": "The DOI (Digital Object Identifier) of the data source.",

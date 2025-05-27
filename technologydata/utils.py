@@ -156,7 +156,8 @@ class FileExtensionEnum(Enum):
 class Utils:
     """
     A utility class for various helper functions.
-    This class contains static methods that provide utility functions for
+
+    The class contains static methods that provide utility functions for
     common tasks, such as changing the format of datetime strings. The methods
     in this class are designed to be stateless and can be called without
     instantiating the class.
@@ -174,8 +175,9 @@ class Utils:
         output_datetime_format: DateFormatEnum,
     ) -> str | Any:
         """
-        Change the format of a given datetime string to a specified output format. This method takes a
-        datetime string and automatically detects its format, then converts it to the specified output format.
+        Change the format of a given datetime string to a specified output format.
+
+        The method takes a datetime string and automatically detects its format, then converts it to the specified output format.
         If the input string cannot be parsed, it logs an error and returns None.
 
         Parameters
@@ -210,9 +212,10 @@ class Utils:
     @staticmethod
     def replace_special_characters(input_string: str) -> str:
         """
-        Replace special characters and spaces in a string with underscores,
-        collapsing multiple consecutive underscores into a single underscore.
-        Finally, it lowercases all characters of the string and removes leading or
+        Replace special characters and spaces in a string.
+
+        The method replaces special characters and spaces in a string with underscores,
+        collapsing multiple consecutive underscores into a single underscore. Finally, it lowercases all characters of the string and removes leading or
         trailing underscores.
 
         Parameters

@@ -225,7 +225,8 @@ class Source:
     def ensure_snapshot(self) -> None:
         """
         Ensure that snapshots of URLs are stored in the Wayback Machine.
-        This method checks if the `details` attribute is set and if the `url` attribute is present.
+
+        The method checks if the `details` attribute is set and if the `url` attribute is present.
         It iterates over each row in the DataFrame contained in `details`,
         checking if the `url_archive_date` or `url_archived` fields are missing.
         If both is missing, it attempts to store a snapshot of the URL using the
@@ -234,7 +235,7 @@ class Source:
         Returns
         -------
         None
-            This method does not return any value. It updates the Source object's details
+            The method does not return any value. It updates the Source object's details
 
         Raises
         ------
@@ -281,7 +282,8 @@ class Source:
     ) -> tuple[Any, bool | None, str | None] | None:
         """
         Store a snapshot of the given URL on the Wayback Machine and extract the timestamp.
-        This method captures the specified URL using the Wayback Machine and retrieves the
+
+        The method captures the specified URL using the Wayback Machine and retrieves the
         corresponding archive URL along with a formatted timestamp. The timestamp is extracted
         from the archive URL and converted to a more readable format.
 
@@ -330,7 +332,7 @@ class Source:
         """
         Download a file from the Wayback Machine and save it to a specified path.
 
-        This method retrieves an archived file from the Wayback Machine using the URL
+        The method retrieves an archived file from the Wayback Machine using the URL
         stored in the `details` attribute of the instance. The file is saved in the
         specified format based on its Content-Type field in the Response Header or the extension
         that can be extracted from the URL.
@@ -409,7 +411,7 @@ class Source:
         """
         Determine the save path based on the content type or archived URL.
 
-        This method retrieves the content type of the archived URL and determines the appropriate
+        The method retrieves the content type of the archived URL and determines the appropriate
         file extension based on the content type or based on the archived URL. It constructs the full save path using
         the provided source path and source title.
 
@@ -456,7 +458,7 @@ class Source:
         """
         Fetch the content type of the archived URL.
 
-        This method sends a HEAD request to the specified archived URL to retrieve the
+        The method sends a HEAD request to the specified archived URL to retrieve the
         Content-Type from the response headers. It returns the content type as a string
         if the request is successful; otherwise, it logs an error and returns None.
 
@@ -493,7 +495,7 @@ class Source:
         """
         Download the file and save it to the specified path.
 
-        This method retrieves the content from the specified archived URL and saves it
+        The method retrieves the content from the specified archived URL and saves it
         to the provided file path. It handles HTTP errors and logs appropriate messages
         based on the outcome of the download operation.
 

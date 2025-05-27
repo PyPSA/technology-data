@@ -1,6 +1,6 @@
 """
-The module is used to define pytest fixtures that can be shared across
-multiple test files in the project.
+The module is used to define sharable pytest fixtures.
+
 Fixtures are a way to provide a fixed baseline upon which tests can
 rely. They allow for setup code to be reused and can help manage
 resources needed for tests, such as database connections, test data,

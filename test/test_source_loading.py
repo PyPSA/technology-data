@@ -119,7 +119,7 @@ def test_download_file_from_wayback(example_source: td.Source) -> None:
     assert storage_paths is not None, (
         "Expected a valid storage path dictionary, but got None."
     )
-    assert isinstance(storage_paths, dict), "Expected storage_paths to be a list."
+    assert isinstance(storage_paths, dict), "Expected storage_paths to be a dict."
     for storage_path in storage_paths.values():
         # Check if each storage_path is not None
         assert storage_path is not None, "Expected a valid storage path, but got None."

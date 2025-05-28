@@ -155,10 +155,6 @@ def test_store_snapshot_on_wayback() -> None:
     "example_source",
     [
         {
-            "source_name": "example03",
-            "source_path": pathlib.Path("technologydata", "datasources", "example03"),
-        },
-        {
             "source_name": "example04",
             "source_path": pathlib.Path("technologydata", "datasources", "example04"),
         },

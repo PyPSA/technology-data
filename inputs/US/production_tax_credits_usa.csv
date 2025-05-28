@@ -1,0 +1,157 @@
+technology,parameter,year,value,unit,currency_year,financial_case,scenario,source,further description
+biomass,PTC,2025,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+biomass,PTC,2025,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+biomass,PTC,2025,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+biomass,PTC,2030,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+biomass,PTC,2030,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+biomass,PTC,2030,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+biomass,PTC,2035,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+biomass,PTC,2035,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+biomass,PTC,2035,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+biomass,PTC,2040,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+biomass,PTC,2040,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+biomass,PTC,2040,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+biomass,PTC,2045,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+biomass,PTC,2045,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+biomass,PTC,2045,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+biomass,PTC,2050,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+biomass,PTC,2050,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+biomass,PTC,2050,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+hydro,PTC,2025,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+hydro,PTC,2025,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+hydro,PTC,2025,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+hydro,PTC,2030,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+hydro,PTC,2030,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+hydro,PTC,2030,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+hydro,PTC,2035,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+hydro,PTC,2035,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+hydro,PTC,2035,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+hydro,PTC,2040,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+hydro,PTC,2040,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+hydro,PTC,2040,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+hydro,PTC,2045,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+hydro,PTC,2045,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+hydro,PTC,2045,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+hydro,PTC,2050,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+hydro,PTC,2050,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+hydro,PTC,2050,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+onwind,PTC,2025,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+onwind,PTC,2025,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+onwind,PTC,2025,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+onwind,PTC,2030,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+onwind,PTC,2030,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+onwind,PTC,2030,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+onwind,PTC,2035,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+onwind,PTC,2035,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+onwind,PTC,2035,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+onwind,PTC,2040,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+onwind,PTC,2040,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+onwind,PTC,2040,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+onwind,PTC,2045,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+onwind,PTC,2045,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+onwind,PTC,2045,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+onwind,PTC,2050,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+onwind,PTC,2050,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+onwind,PTC,2050,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+PHS,PTC,2025,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+PHS,PTC,2025,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+PHS,PTC,2025,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+PHS,PTC,2030,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+PHS,PTC,2030,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+PHS,PTC,2030,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+PHS,PTC,2035,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+PHS,PTC,2035,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+PHS,PTC,2035,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+PHS,PTC,2040,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+PHS,PTC,2040,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+PHS,PTC,2040,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+PHS,PTC,2045,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+PHS,PTC,2045,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+PHS,PTC,2045,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+PHS,PTC,2050,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+PHS,PTC,2050,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+PHS,PTC,2050,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+ror,PTC,2025,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+ror,PTC,2025,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+ror,PTC,2025,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+ror,PTC,2030,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+ror,PTC,2030,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+ror,PTC,2030,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+ror,PTC,2035,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+ror,PTC,2035,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+ror,PTC,2035,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+ror,PTC,2040,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+ror,PTC,2040,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+ror,PTC,2040,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+ror,PTC,2045,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+ror,PTC,2045,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+ror,PTC,2045,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+ror,PTC,2050,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+ror,PTC,2050,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+ror,PTC,2050,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+solar-utility,PTC,2025,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+solar-utility,PTC,2025,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+solar-utility,PTC,2025,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+solar-utility,PTC,2030,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+solar-utility,PTC,2030,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+solar-utility,PTC,2030,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+solar-utility,PTC,2035,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+solar-utility,PTC,2035,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+solar-utility,PTC,2035,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+solar-utility,PTC,2040,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+solar-utility,PTC,2040,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+solar-utility,PTC,2040,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+solar-utility,PTC,2045,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+solar-utility,PTC,2045,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+solar-utility,PTC,2045,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+solar-utility,PTC,2050,27.5,USD/Mwh,2022,Market,Advanced,"NREL, NREL ATB 2024",
+solar-utility,PTC,2050,27.5,USD/Mwh,2022,Market,Moderate,"NREL, NREL ATB 2024",
+solar-utility,PTC,2050,27.5,USD/Mwh,2022,Market,Conservative,"NREL, NREL ATB 2024",
+Alkaline electrolyzer,PTC,2020,90,USD/Mwh,2022,Market,Advanced,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+Alkaline electrolyzer,PTC,2030,90,USD/Mwh,2022,Market,Advanced,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+Alkaline electrolyzer,PTC,2040,90,USD/Mwh,2022,Market,Advanced,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+Alkaline electrolyzer,PTC,2050,90,USD/Mwh,2022,Market,Advanced,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+PEM electrolyzer,PTC,2020,90,USD/Mwh,2022,Market,Advanced,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+PEM electrolyzer,PTC,2030,90,USD/Mwh,2022,Market,Advanced,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+PEM electrolyzer,PTC,2040,90,USD/Mwh,2022,Market,Advanced,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+PEM electrolyzer,PTC,2050,90,USD/Mwh,2022,Market,Advanced,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+SOEC,PTC,2020,90,USD/Mwh,2022,Market,Advanced,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+SOEC,PTC,2030,90,USD/Mwh,2022,Market,Advanced,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+SOEC,PTC,2040,90,USD/Mwh,2022,Market,Advanced,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+SOEC,PTC,2050,90,USD/Mwh,2022,Market,Advanced,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+Alkaline electrolyzer,PTC,2020,90,USD/Mwh,2022,Market,Moderate,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+Alkaline electrolyzer,PTC,2030,90,USD/Mwh,2022,Market,Moderate,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+Alkaline electrolyzer,PTC,2040,90,USD/Mwh,2022,Market,Moderate,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+Alkaline electrolyzer,PTC,2050,90,USD/Mwh,2022,Market,Moderate,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+PEM electrolyzer,PTC,2020,90,USD/Mwh,2022,Market,Moderate,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+PEM electrolyzer,PTC,2030,90,USD/Mwh,2022,Market,Moderate,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+PEM electrolyzer,PTC,2040,90,USD/Mwh,2022,Market,Moderate,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+PEM electrolyzer,PTC,2050,90,USD/Mwh,2022,Market,Moderate,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+SOEC,PTC,2020,90,USD/Mwh,2022,Market,Moderate,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+SOEC,PTC,2030,90,USD/Mwh,2022,Market,Moderate,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+SOEC,PTC,2040,90,USD/Mwh,2022,Market,Moderate,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+SOEC,PTC,2050,90,USD/Mwh,2022,Market,Moderate,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+Alkaline electrolyzer,PTC,2020,90,USD/Mwh,2022,Market,Conservative,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+Alkaline electrolyzer,PTC,2030,90,USD/Mwh,2022,Market,Conservative,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+Alkaline electrolyzer,PTC,2040,90,USD/Mwh,2022,Market,Conservative,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+Alkaline electrolyzer,PTC,2050,90,USD/Mwh,2022,Market,Conservative,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+PEM electrolyzer,PTC,2020,90,USD/Mwh,2022,Market,Conservative,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+PEM electrolyzer,PTC,2030,90,USD/Mwh,2022,Market,Conservative,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+PEM electrolyzer,PTC,2040,90,USD/Mwh,2022,Market,Conservative,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+PEM electrolyzer,PTC,2050,90,USD/Mwh,2022,Market,Conservative,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+SOEC,PTC,2020,90,USD/Mwh,2022,Market,Conservative,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+SOEC,PTC,2030,90,USD/Mwh,2022,Market,Conservative,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+SOEC,PTC,2040,90,USD/Mwh,2022,Market,Conservative,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+SOEC,PTC,2050,90,USD/Mwh,2022,Market,Conservative,45V Tax Credit Guidance,Plants emitting ≤ 0.45 kg CO2e/kg H2
+direct air capture,PTC,2020,130,USD/t_CO2,2022,Market,Advanced,45Q Tax Credit Guidance,CO2 captured for Enhanced Oil Recovery (EOR) or other uses – available for plants built prior than 2033 for 12 years
+direct air capture,PTC,2030,130,USD/t_CO2,2022,Market,Advanced,45Q Tax Credit Guidance,CO2 captured for Enhanced Oil Recovery (EOR) or other uses – available for plants built prior than 2033 for 12 years
+direct air capture,PTC,2040,0,USD/t_CO2,2022,Market,Advanced,45Q Tax Credit Guidance,CO2 captured for Enhanced Oil Recovery (EOR) or other uses – available for plants built prior than 2033 for 12 years
+direct air capture,PTC,2050,0,USD/t_CO2,2022,Market,Advanced,45Q Tax Credit Guidance,CO2 captured for Enhanced Oil Recovery (EOR) or other uses – available for plants built prior than 2033 for 12 years
+direct air capture,PTC,2020,130,USD/t_CO2,2022,Market,Moderate,45Q Tax Credit Guidance,CO2 captured for Enhanced Oil Recovery (EOR) or other uses – available for plants built prior than 2033 for 12 years
+direct air capture,PTC,2030,130,USD/t_CO2,2022,Market,Moderate,45Q Tax Credit Guidance,CO2 captured for Enhanced Oil Recovery (EOR) or other uses – available for plants built prior than 2033 for 12 years
+direct air capture,PTC,2040,0,USD/t_CO2,2022,Market,Moderate,45Q Tax Credit Guidance,CO2 captured for Enhanced Oil Recovery (EOR) or other uses – available for plants built prior than 2033 for 12 years
+direct air capture,PTC,2050,0,USD/t_CO2,2022,Market,Moderate,45Q Tax Credit Guidance,CO2 captured for Enhanced Oil Recovery (EOR) or other uses – available for plants built prior than 2033 for 12 years
+direct air capture,PTC,2020,130,USD/t_CO2,2022,Market,Conservative,45Q Tax Credit Guidance,CO2 captured for Enhanced Oil Recovery (EOR) or other uses – available for plants built prior than 2033 for 12 years
+direct air capture,PTC,2030,130,USD/t_CO2,2022,Market,Conservative,45Q Tax Credit Guidance,CO2 captured for Enhanced Oil Recovery (EOR) or other uses – available for plants built prior than 2033 for 12 years
+direct air capture,PTC,2040,0,USD/t_CO2,2022,Market,Conservative,45Q Tax Credit Guidance,CO2 captured for Enhanced Oil Recovery (EOR) or other uses – available for plants built prior than 2033 for 12 years
+direct air capture,PTC,2050,0,USD/t_CO2,2022,Market,Conservative,45Q Tax Credit Guidance,CO2 captured for Enhanced Oil Recovery (EOR) or other uses – available for plants built prior than 2033 for 12 years

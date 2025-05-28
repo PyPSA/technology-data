@@ -1,9 +1,0 @@
-description,file/folder/function in script,licence,source
-"Danish Energy Agency Technology Database, most technologies","technology_data*.xlsx, energy_transport_data_sheet_dec_2017.xlsx",,https://ens.dk/en/our-services/projections-and-models/technology-data
-"Vartiaien et. al., utility-scale solar PV",function in script,,https://onlinelibrary.wiley.com/doi/full/10.1002/pip.3189
-"Fraunhofer ISE Studie, gas pipeline costs",Fraunhofer_ISE_*.csv,,https://www.ise.fraunhofer.de/de/veroeffentlichungen/studien/wege-zu-einem-klimaneutralen-energiesystem.html
-Older data collected by the PyPSA team from a variety of sources,costs_PyPSA.csv,,
-"The European Technology and Innovation Platform for Photovoltaics, solar rooftop",function in script,,https://etip-pv.eu/
-"Lazard, conventional carriers",function in script,,https://www.lazard.com/media/451086/lazards-levelized-cost-of-energy-version-130-vf.pdf
-"Zappe et. al., fuel cost",function in script,,https://doi.org/10.1016/j.apenergy.2018.08.109
-"Umweltbundesamt – Entwicklung Kohlendioxid, fuel cost",function in script,,https://www.umweltbundesamt.de/publikationen/entwicklung-der-spezifischen-kohlendioxid-5

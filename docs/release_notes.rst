@@ -16,6 +16,8 @@ Upcoming Release
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
 
+* Add several electrolyzer technologies and fix FOM values for US-specific electrolyzer costs (https://github.com/PyPSA/technology-data/pull/222)
+
 `v0.12.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.12.0>`__ (19th May 2025)
 =======================================================================================
 

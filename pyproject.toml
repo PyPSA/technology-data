@@ -44,6 +44,17 @@ dependencies = [
 Homepage = "https://github.com/PyPSA/technology-data"
 Source = "https://github.com/PyPSA/technology-data"
 
+[project.optional-dependencies]
+docs = [
+    "mkdocs-autolinks-plugin>=0.7.1",
+    "mkdocs-git-revision-date-localized-plugin>=1.4.7",
+    "mkdocs-material>=9.6.14",
+    "mkdocs-minify-plugin>=0.8.0",
+    "mkdocs-open-in-new-tab>=1.0.8",
+    "mkdocstrings>=0.29.1",
+    "mkdocstrings-python>=1.16.11",
+]
+
 
 # Setuptools_scm settings
 

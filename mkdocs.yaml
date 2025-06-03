@@ -1,0 +1,122 @@
+site_name: Documentation
+site_url: !ENV READTHEDOCS_CANONICAL_URL
+repo_url: https://github.com/PyPSA/technology-data
+repo_name: PyPSA/technology-data
+
+nav:
+- Home:
+  - Home: index.md
+  - Introduction: introduction.md
+  - Relase Notes: release-notes.md
+  - Installation: installation.md
+  - Quick Start: quick-start.md
+  - FAQ: faq.md
+  - Users: users.md
+      # - Examples:
+      # - User Guide:
+- Reference:
+  - Classes:
+    - Sources: api/sources.md
+    - Technologies: api/technologies.md
+  - Utilities: api/utils.md
+
+theme:
+  name: material
+
+  features:
+  - navigation.tabs
+  - navigation.sections
+  - navigation.indexes
+  - navigation.expand
+  - navigation.path
+  - navigation.top
+  - navigation.footer
+      # - content.action.edit
+  - toc.follow
+  - search.suggest
+  - announce.dismiss
+
+  palette:
+  - media: "(prefers-color-scheme: light)"
+    primary: custom
+    scheme: default
+    toggle:
+      icon: material/weather-sunny
+      name: Switch to dark mode
+  - media: "(prefers-color-scheme: dark)"
+    primary: custom
+    scheme: slate
+    toggle:
+      icon: material/weather-night
+      name: Switch to light mode
+
+markdown_extensions:
+- admonition
+- pymdownx.details
+- pymdownx.superfences
+
+plugins:
+- search
+- tags
+- git-revision-date-localized:
+    enable_creation_date: true
+- open-in-new-tab:
+    add_icon: true
+- minify:
+    minify_html: true
+    minify_js: true
+    minify_css: true
+    htmlmin_opts:
+      remove_comments: true
+- mkdocstrings:
+    enabled: !ENV [ENABLE_MKDOCSTRINGS, true]
+    default_handler: python
+    handlers:
+      python:
+        options:
+          docstring_style: numpy
+          docstring_options:
+            ignore_init_summary: true
+          docstring_section_style: list
+          filters: ["!^_"]
+          heading_level: 1
+          merge_init_into_class: true
+          parameter_headings: true
+          separate_signature: true
+          show_root_heading: true
+          show_root_full_path: false
+          show_signature_annotations: true
+          show_source: false
+          show_symbol_type_heading: true
+          show_symbol_type_toc: true
+          signature_crossrefs: true
+          summary: true
+          show_if_no_docstring: true
+              # docstring_section_style: list
+              # backlinks: flat
+              # find_stubs_package: true
+              # parameter_headings: false
+              # merge_init_into_class: true
+              # separate_signature: true
+              # show_signature_annotations: true
+              # signature_crossrefs: true
+          show_inheritance_diagram: true
+          extra:
+            show_base_class: true
+
+extra:
+  version:
+    provider: mike
+  social:
+  - icon: fontawesome/brands/discord
+    link: https://discord.com/invite/AnuJBk23FU
+  - icon: fontawesome/brands/github
+    link: https://github.com/PyPSA
+
+  generator: false
+
+  extra:
+  homepage: https://pypsa.org
+
+copyright: >-
+  &copy Copyright PyPSA team and contributors

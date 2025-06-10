@@ -61,18 +61,6 @@ NG Combined Cycle F-Class integrated retrofit 95%-CCS,efficiency,2030,0.536,p.u.
 Alkaline electrolyzer,lifetime,2020,30,years,-,ICCT IRA e-fuels assumptions ,,,
 PEM electrolyzer,lifetime,2020,30,years,-,ICCT IRA e-fuels assumptions ,,,
 SOEC,lifetime,2020,30,years,-,ICCT IRA e-fuels assumptions ,,,
-Alkaline electrolyzer,electricity-input,2020,1.54,p.u.,,ICCT IRA e-fuels assumptions ,,,
-Alkaline electrolyzer,electricity-input,2030,1.45,p.u.,,ICCT IRA e-fuels assumptions ,,,
-Alkaline electrolyzer,electricity-input,2040,1.35,p.u.,,ICCT IRA e-fuels assumptions ,,,
-Alkaline electrolyzer,electricity-input,2050,1.28,p.u.,,ICCT IRA e-fuels assumptions ,,,
-PEM electrolyzer,electricity-input,2020,1.59,p.u.,,ICCT IRA e-fuels assumptions ,,,
-PEM electrolyzer,electricity-input,2030,1.47,p.u.,,ICCT IRA e-fuels assumptions ,,,
-PEM electrolyzer,electricity-input,2040,1.41,p.u.,,ICCT IRA e-fuels assumptions ,,,
-PEM electrolyzer,electricity-input,2050,1.37,p.u.,,ICCT IRA e-fuels assumptions ,,,
-SOEC,electricity-input,2020,1.22,p.u.,,ICCT IRA e-fuels assumptions ,,,
-SOEC,electricity-input,2030,1.19,p.u.,,ICCT IRA e-fuels assumptions ,,,
-SOEC,electricity-input,2040,1.15,p.u.,,ICCT IRA e-fuels assumptions ,,,
-SOEC,electricity-input,2050,1.11,p.u.,,ICCT IRA e-fuels assumptions ,,,
 Alkaline electrolyzer,investment,2020,1471,USD/kW,2022,"ICCT IRA e-fuels assumptions, https://theicct.org/wp-content/uploads/2022/02/fuels-eu-cost-renew-H-produced-onsite-H-refueling-stations-europe-feb22.pdf adjusted according to DOE observations https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/24005-clean-hydrogen-production-cost-pem-electrolyzer.pdf?sfvrsn=8cb10889_1#:~:text=This%20Record%20shows%20that%20the,factors%20of%2050%2D75%25",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,R&D,Moderate
 Alkaline electrolyzer,investment,2030,1202,USD/kW,2022,"ICCT IRA e-fuels assumptions, https://theicct.org/wp-content/uploads/2022/02/fuels-eu-cost-renew-H-produced-onsite-H-refueling-stations-europe-feb22.pdf adjusted according to DOE observations https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/24005-clean-hydrogen-production-cost-pem-electrolyzer.pdf?sfvrsn=8cb10889_1#:~:text=This%20Record%20shows%20that%20the,factors%20of%2050%2D75%25",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,R&D,Moderate
 Alkaline electrolyzer,investment,2040,982,USD/kW,2022,"ICCT IRA e-fuels assumptions, https://theicct.org/wp-content/uploads/2022/02/fuels-eu-cost-renew-H-produced-onsite-H-refueling-stations-europe-feb22.pdf adjusted according to DOE observations https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/24005-clean-hydrogen-production-cost-pem-electrolyzer.pdf?sfvrsn=8cb10889_1#:~:text=This%20Record%20shows%20that%20the,factors%20of%2050%2D75%25",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,R&D,Moderate

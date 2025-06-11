@@ -4098,8 +4098,7 @@ direct air capture,investment,16757431.0661,USD/t_CO2/h,ICCT IRA e-fuels assumpt
 direct air capture,investment,16757431.0661,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
 direct air capture,investment,6206123.5739,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 direct air capture,investment,6206123.5739,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
-direct air capture,lifetime,20.0,years,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture,2020.0,,
-direct air capture,years,30.0,years,ICCT IRA e-fuels assumptions ,,,,
+direct air capture,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,,,
 direct firing gas,FOM,1.0909,%/year,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx",312.a Direct firing Natural Gas:  Fixed O&M,2019.0,,
 direct firing gas,VOM,0.282,EUR/MWh,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx",312.a Direct firing Natural Gas:  Variable O&M,2019.0,,
 direct firing gas,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx","312.a Direct firing Natural Gas:  Total efficiency, net, annual average",2019.0,,

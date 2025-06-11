@@ -932,9 +932,9 @@ ethanol from sugar crops,lifetime,20.0,years,"JRC, 01_JRC-EU-TIMES Full model, h
 fuel cell,FOM,5.0,%/year,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",12 LT-PEMFC CHP:  Fixed O&M,2015.0
 fuel cell,VOM,77.105,EUR/MWh_e,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_10_TECHS_CHP_SUP_IND.xlsx`, Sheet `SUP` (EUH2FCPEM, EPEM fuel cell system running on hydrogen 100 kW based)",,2013.0
 fuel cell,c_b,1.25,50oC/100oC,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",12 LT-PEMFC CHP:  Cb coefficient,2015.0
-fuel cell,efficiency,0.465,per unit,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_10_TECHS_CHP_SUP_IND.xlsx`, Sheet `SUP` (EUH2FCPEM, EPEM fuel cell system running on hydrogen 100 kW based)",,2015.0
+fuel cell,efficiency,0.465,per unit,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_10_TECHS_CHP_SUP_IND.xlsx`, Sheet `SUP` (EUH2FCPEM, EPEM fuel cell system running on hydrogen 100 kW based)",,2013.0
 fuel cell,investment,1861.1547,EUR/kW_e,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_10_TECHS_CHP_SUP_IND.xlsx`, Sheet `SUP` (EUH2FCPEM, EPEM fuel cell system running on hydrogen 100 kW based)",,2013.0
-fuel cell,lifetime,15.0,years,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_10_TECHS_CHP_SUP_IND.xlsx`, Sheet `SUP` (EUH2FCPEM, EPEM fuel cell system running on hydrogen 100 kW based)",,2015.0
+fuel cell,lifetime,15.0,years,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_10_TECHS_CHP_SUP_IND.xlsx`, Sheet `SUP` (EUH2FCPEM, EPEM fuel cell system running on hydrogen 100 kW based)",,2013.0
 fuelwood,fuel,13.8577,EUR/MWhth,"JRC ENSPRESO ca avg for MINBIOWOO (FuelwoodRW), ENS_BaU_GFTM",,2010.0
 gas,CO2 intensity,0.198,tCO2/MWh_th,Stoichiometric calculation with 50 GJ/t CH4,,
 gas,fuel,24.568,EUR/MWh_th,"DIW (2013): Current and propsective costs of electricity generation until 2050, http://hdl.handle.net/10419/80348 , pg. 80 text below figure 10, accessed: 2023-12-14.",Based on IEA 2011 data.,2010.0

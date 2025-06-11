@@ -3815,23 +3815,23 @@ digestible biomass to hydrogen,FOM,4.25,%/year,"Zech et.al. DBFZ Report Nr. 19. 
 digestible biomass to hydrogen,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,,,
 digestible biomass to hydrogen,efficiency,0.39,per unit,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",,,,
 digestible biomass to hydrogen,investment,4237.1194,EUR/kW_th,"Zech et.al. DBFZ Report Nr. 19. Hy-NOW - Evaluierung der Verfahren und Technologien für die Bereitstellung von Wasserstoff auf Basis von Biomasse, DBFZ, 2014",,2014.0,,
-direct air capture,FOM,1.3,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
-direct air capture,FOM,1.3,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
-direct air capture,FOM,1.3,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-direct air capture,FOM,1.3,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
-direct air capture,FOM,1.3,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
-direct air capture,FOM,1.3,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
+direct air capture,FOM,1.3,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,R&D,Moderate
+direct air capture,FOM,1.3,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,Market,Moderate
+direct air capture,FOM,1.3,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,R&D,Conservative
+direct air capture,FOM,1.3,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,Market,Conservative
+direct air capture,FOM,1.3,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,R&D,Advanced
+direct air capture,FOM,1.3,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,Market,Advanced
 direct air capture,compression-electricity-input,0.15,MWh/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture,2020.0,,
 direct air capture,compression-heat-output,0.2,MWh/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture,2020.0,,
 direct air capture,electricity-input,0.24,MWh_el/t_CO2,ICCT IRA e-fuels assumptions ,,,,
 direct air capture,heat-input,1.17,MWh_th/t_CO2,ICCT IRA e-fuels assumptions ,,,,
 direct air capture,heat-output,1.25,MWh/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture,2020.0,,
-direct air capture,investment,10832365.6771,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
-direct air capture,investment,10832365.6771,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
-direct air capture,investment,16757431.0661,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-direct air capture,investment,16757431.0661,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
-direct air capture,investment,6206123.5739,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
-direct air capture,investment,6206123.5739,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
+direct air capture,investment,10516859.8807,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,R&D,Moderate
+direct air capture,investment,10516859.8807,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,Market,Moderate
+direct air capture,investment,16269350.5496,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,R&D,Conservative
+direct air capture,investment,16269350.5496,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,Market,Conservative
+direct air capture,investment,6025362.6931,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,R&D,Advanced
+direct air capture,investment,6025362.6931,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,Market,Advanced
 direct air capture,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,,,
 direct firing gas,FOM,1.2121,%/year,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx",312.a Direct firing Natural Gas:  Fixed O&M,2019.0,,
 direct firing gas,VOM,0.2845,EUR/MWh,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx",312.a Direct firing Natural Gas:  Variable O&M,2019.0,,

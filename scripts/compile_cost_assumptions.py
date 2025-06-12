@@ -794,6 +794,7 @@ def get_data_DEA(
         "Typical temperature difference in storage [hot/cold, K]",
         "Max. storage temperature, hot",
         "Storage temperature, discharged",
+        "Energy losses during storage"
     ]
 
     # this is not good at all but requires significant changes to `test_compile_cost_assumptions` otherwise
@@ -2190,6 +2191,15 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             clean_df[tech_name] = pd.concat(
                 [clean_df[tech_name], bottom_storage_temp_ptes]
             )
+            energy_loss = df.loc[
+                df.index.str.contains("Energy losses during storage")
+            ].copy()
+            energy_loss["parameter"] = "Energy losses during storage"
+            energy_loss[years] = energy_loss[years] / 78 * 100 / 24 # 78°C is the average temperature for ptes
+            energy_loss["unit"] = "per unit"
+            clean_df[tech_name] = pd.concat(
+                [clean_df[tech_name], energy_loss]
+            )
 
         if tech_name == "central water tank storage":
             temp_difference_central_ttes = df.loc[
@@ -2205,6 +2215,15 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             clean_df[tech_name] = pd.concat(
                 [clean_df[tech_name], temp_difference_central_ttes]
             )
+            energy_loss = df.loc[
+                df.index.str.contains("Energy losses during storage")
+            ].copy()
+            energy_loss["parameter"] = "Energy losses during storage"
+            energy_loss[years] = energy_loss[years] / 24
+            energy_loss["unit"] = "per unit"
+            clean_df[tech_name] = pd.concat(
+                [clean_df[tech_name], energy_loss]
+            )
 
         if tech_name == "decentral water tank storage":
             temp_difference_decentral_ttes = df.loc[
@@ -2219,6 +2238,14 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             )
             clean_df[tech_name] = pd.concat(
                 [clean_df[tech_name], temp_difference_decentral_ttes]
+            )
+            energy_loss = df.loc[
+                df.index.str.contains("Energy losses during storage")
+            ].copy()
+            energy_loss["parameter"] = "Energy losses during storage"
+            energy_loss["unit"] = "per unit"
+            clean_df[tech_name] = pd.concat(
+                [clean_df[tech_name], energy_loss]
             )
 
         # add c_v and c_b coefficient

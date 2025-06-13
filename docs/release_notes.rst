@@ -16,6 +16,11 @@ Upcoming Release
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
 
+`v0.13.1 <https://github.com/PyPSA/technology-data/releases/tag/v0.13.2>`__ (13th June 2025)
+=======================================================================================
+
+* Change `Alkaline electrolyzer` in US folder in `Alkaline electrolyzer large size` to align with generic cost folder (https://github.com/PyPSA/technology-data/pull/228)
+
 `v0.13.1 <https://github.com/PyPSA/technology-data/releases/tag/v0.13.1>`__ (11th June 2025)
 =======================================================================================
 

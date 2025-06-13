@@ -19,7 +19,7 @@ Upcoming Release
 `v0.13.2 <https://github.com/PyPSA/technology-data/releases/tag/v0.13.2>`__ (13th June 2025)
 =======================================================================================
 
-* Change `Alkaline electrolyzer` in US folder in `Alkaline electrolyzer large size` to align with generic cost folder (https://github.com/PyPSA/technology-data/pull/228)
+* Refine size subdivision and add reference capacities for Alkaline and PEM elctrolyzers (https://github.com/PyPSA/technology-data/pull/228)
 
 `v0.13.1 <https://github.com/PyPSA/technology-data/releases/tag/v0.13.1>`__ (11th June 2025)
 =======================================================================================

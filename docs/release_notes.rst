@@ -16,6 +16,8 @@ Upcoming Release
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
 
+* Add standing losses as parameters for LTES
+
 `v0.13.2 <https://github.com/PyPSA/technology-data/releases/tag/v0.13.2>`__ (13th June 2025)
 =======================================================================================
 

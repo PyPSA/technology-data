@@ -16,6 +16,11 @@ Upcoming Release
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
 
+`v0.13.2 <https://github.com/PyPSA/technology-data/releases/tag/v0.13.2>`__ (13th June 2025)
+=======================================================================================
+
+* Refine size subdivision and add reference capacities for Alkaline and PEM elctrolyzers (https://github.com/PyPSA/technology-data/pull/228)
+
 `v0.13.1 <https://github.com/PyPSA/technology-data/releases/tag/v0.13.1>`__ (11th June 2025)
 =======================================================================================
 

@@ -2196,7 +2196,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             ].copy()
             energy_loss["parameter"] = "Energy losses during storage"
             energy_loss[years] = (
-                energy_loss[years] / 78 * 100 / 24
+                energy_loss[years] / (78 - bottom_storage_temp_ptes[years]) * 100 / 24
             )  # 78°C is the average temperature for ptes
             energy_loss["unit"] = "per unit"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], energy_loss])

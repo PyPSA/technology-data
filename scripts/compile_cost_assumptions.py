@@ -2196,9 +2196,16 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             ].copy()
             energy_loss["parameter"] = "Energy losses during storage"
             energy_loss.loc[("Energy losses during storage", years)] = (
-                    energy_loss.loc[("Energy losses during storage", years)] /
-                    (78 - bottom_storage_temp_ptes.loc[("Typical bottom storage temperature", years)]) * 100 / 24
-            ) # 78°C is the average temperature for ptes
+                energy_loss.loc[("Energy losses during storage", years)]
+                / (
+                    78
+                    - bottom_storage_temp_ptes.loc[
+                        ("Typical bottom storage temperature", years)
+                    ]
+                )
+                * 100
+                / 24
+            )  # 78°C is the average temperature for ptes
             energy_loss["unit"] = "per unit"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], energy_loss])
 
@@ -2787,7 +2794,8 @@ def rename_ISE(cost_dataframe_ise: pd.DataFrame) -> pd.DataFrame:
 def rename_ISE_vehicles(costs_vehicles_dataframe: pd.DataFrame) -> pd.DataFrame:
     """
     The function renames ISE vehicles costs to fit to tech data.
-energy
+    energy
+
     Parameters
     ----------
     costs_vehicles_dataframe: pandas.DataFrame

@@ -821,9 +821,11 @@ def get_data_DEA(
     # average data  in format "lower_value-upper_value"
     df = df.apply(
         lambda row: row.apply(
-            lambda x: (float(x.split("-")[0]) + float(x.split("-")[1])) / 2
-            if isinstance(x, str) and "-" in x
-            else x
+            lambda x: (
+                (float(x.split("-")[0]) + float(x.split("-")[1])) / 2
+                if isinstance(x, str) and "-" in x
+                else x
+            )
         ),
         axis=1,
     )
@@ -1354,15 +1356,15 @@ def biochar_pyrolysis_harmonise_dea(df: pd.DataFrame) -> pd.DataFrame:
     # rename units
     df.rename(
         index={
-            df.loc[df.index.str.contains("Specific investment")].index[0]: df.loc[
-                df.index.str.contains("Specific investment")
-            ].index.str.replace("MW", "MW_biochar")[0],
-            df.loc[df.index.str.contains("Fixed O&M")].index[0]: df.loc[
-                df.index.str.contains("Fixed O&M")
-            ].index.str.replace("MW", "MW_biochar")[0],
-            df.loc[df.index.str.contains("Variable O&M")].index[0]: df.loc[
-                df.index.str.contains("Variable O&M")
-            ].index.str.replace("MWh", "MWh_biochar")[0],
+            df.loc[df.index.str.contains("Specific investment")]
+            .index[0]: df.loc[df.index.str.contains("Specific investment")]
+            .index.str.replace("MW", "MW_biochar")[0],
+            df.loc[df.index.str.contains("Fixed O&M")]
+            .index[0]: df.loc[df.index.str.contains("Fixed O&M")]
+            .index.str.replace("MW", "MW_biochar")[0],
+            df.loc[df.index.str.contains("Variable O&M")]
+            .index[0]: df.loc[df.index.str.contains("Variable O&M")]
+            .index.str.replace("MWh", "MWh_biochar")[0],
         },
         inplace=True,
     )
@@ -2194,7 +2196,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             energy_loss = df.loc[
                 df.index.str.contains("Energy losses during storage")
             ].copy()
-            energy_loss["parameter"] = "Energy losses during storage"
+            energy_loss["parameter"] = "standing losses"
             energy_loss.loc[("Energy losses during storage", years)] = (
                 energy_loss.loc[("Energy losses during storage", years)]
                 / (
@@ -2206,14 +2208,14 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 * 100
                 / 24
             )  # 78°C is the average temperature for ptes
-            energy_loss["unit"] = "per unit"
+            energy_loss["unit"] = "%/hour"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], energy_loss])
 
         if tech_name == "central water tank storage":
             temp_difference_central_ttes = df.loc[
                 df.index.str.contains("Typical temperature difference in storage")
             ].copy()
-            temp_difference_central_ttes["parameter"] = "Temperature difference"
+            temp_difference_central_ttes["parameter"] = "temperature difference"
             temp_difference_central_ttes.rename(
                 index={
                     "Typical temperature difference in storage": "Typical temperature difference"
@@ -2226,16 +2228,16 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             energy_loss = df.loc[
                 df.index.str.contains("Energy losses during storage")
             ].copy()
-            energy_loss["parameter"] = "Energy losses during storage"
+            energy_loss["parameter"] = "standing losses"
             energy_loss[years] = energy_loss[years] / 24
-            energy_loss["unit"] = "per unit"
+            energy_loss["unit"] = "%/hour"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], energy_loss])
 
         if tech_name == "decentral water tank storage":
             temp_difference_decentral_ttes = df.loc[
                 df.index.str.contains("Typical temperature difference in storage")
             ].copy()
-            temp_difference_decentral_ttes["parameter"] = "Temperature difference"
+            temp_difference_decentral_ttes["parameter"] = "temperature difference"
             temp_difference_decentral_ttes.rename(
                 index={
                     "Typical temperature difference in storage": "Typical temperature difference"
@@ -2248,8 +2250,8 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             energy_loss = df.loc[
                 df.index.str.contains("Energy losses during storage")
             ].copy()
-            energy_loss["parameter"] = "Energy losses during storage"
-            energy_loss["unit"] = "per unit"
+            energy_loss["parameter"] = "standing losses"
+            energy_loss["unit"] = "%/hour"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], energy_loss])
 
         # add c_v and c_b coefficient
@@ -2525,9 +2527,9 @@ def add_description(
 
     # add comment for offwind investment
     if offwind_no_grid_costs_flag:
-        technology_dataframe.loc[("offwind", "investment"), "further description"] += (
-            " grid connection costs subtracted from investment costs"
-        )
+        technology_dataframe.loc[
+            ("offwind", "investment"), "further description"
+        ] += " grid connection costs subtracted from investment costs"
 
     return technology_dataframe
 
@@ -2682,7 +2684,7 @@ def rename_pypsa_old(cost_dataframe_pypsa: pd.DataFrame) -> pd.DataFrame:
     # convert EUR/m^3 to EUR/kWh for 40 K diff and 1.17 kWh/m^3/K
     cost_dataframe_pypsa.loc[
         ("decentral water tank storage", "investment"), "value"
-    ] /= 1.17 * 40
+    ] /= (1.17 * 40)
     cost_dataframe_pypsa.loc[("decentral water tank storage", "investment"), "unit"] = (
         "EUR/kWh"
     )
@@ -3254,16 +3256,17 @@ def energy_penalty(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
         cost_dataframe.loc[(tech_name, "efficiency"), "further description"] = ""
 
         if "CHP" in tech_name:
-            cost_dataframe.loc[(tech_name, "efficiency-heat"), "value"] = (
-                cost_dataframe.loc[(tech_name, "efficiency-heat"), "value"]
-                * scalingFactor
-                + cost_dataframe.loc[("solid biomass", "CO2 intensity"), "value"]
-                * (
-                    cost_dataframe.loc[("biomass CHP capture", "heat-output"), "value"]
-                    + cost_dataframe.loc[
-                        ("biomass CHP capture", "compression-heat-output"), "value"
-                    ]
-                )
+            cost_dataframe.loc[
+                (tech_name, "efficiency-heat"), "value"
+            ] = cost_dataframe.loc[
+                (tech_name, "efficiency-heat"), "value"
+            ] * scalingFactor + cost_dataframe.loc[
+                ("solid biomass", "CO2 intensity"), "value"
+            ] * (
+                cost_dataframe.loc[("biomass CHP capture", "heat-output"), "value"]
+                + cost_dataframe.loc[
+                    ("biomass CHP capture", "compression-heat-output"), "value"
+                ]
             )
             cost_dataframe.loc[(tech_name, "efficiency-heat"), "source"] = (
                 "Combination of " + tech_name + " and " + boiler

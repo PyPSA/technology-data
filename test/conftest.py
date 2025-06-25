@@ -46,10 +46,13 @@ def example_technologies(request: pytest.FixtureRequest) -> td.Technologies:
     """Fixture to provide the example technologies."""
     # Fetch the necessary values from the request object
     technologies_name = request.param.get("technologies_name", "example01")
+    technologies_path = request.param.get(
+        "technologies_path", pathlib.Path("technologydata", "datasources", "example01")
+    )
 
     def load_example_technologies() -> td.Technologies:
         """Inner function to create the source object."""
-        return td.Technologies(technologies_name)
+        return td.Technologies({technologies_name: technologies_path})
 
     # Call the inner function and return the result
     return load_example_technologies()

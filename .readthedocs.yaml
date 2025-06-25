@@ -9,13 +9,13 @@ build:
     python: "3.13"
   jobs:
     pre_system_dependencies:
-      - git fetch --unshallow # Needed to get version tags
+    - git fetch --unshallow   # Needed to get version tags
     pre_install:
-      - pip install mkdocs-material
+    - pip install mkdocs-material
 
 python:
   install:
-    - method: pip
-      path: .
-      extra_requirements:
-        - docs
+  - method: pip
+    path: .
+    extra_requirements:
+    - docs

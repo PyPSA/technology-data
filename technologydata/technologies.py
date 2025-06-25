@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import re
 from pathlib import Path
 from typing import Any
 
@@ -213,51 +214,55 @@ class Technologies:
 
     def adjust_currency(
         self,
-        currency: str,
-        currency_year: int,
+        to_currency: str,
         source: str = "World Bank",
-        parameters: list[str] | None = None,
-    ) -> Technologies:
+    ) -> None:
         """
-        Change the currency of the data and adjust for inflation based on the region the data is from.
+        Adjust currency values in the instance's data based on the specified parameters.
 
-        Params
-        -------
-        currency: str
-            The currency to convert to.
-        currency_year: int
-            The year to adjust for inflation.
-        region: str
-            The region to adjust for inflation.
-        source: str
-            Source of the data to use for inflation adjustments, supports 'World Bank' and 'International Monetary Fund'.
-            'World Bank' is the default based on historic data, but is limited to the past (current year -2).
-            'International Monetary Fund' includes past values and projections into the future.
-        parameters: list[str]
-            Parameters which are affected by the currency conversion, by default the function will only rows related to the indicators
-            ['investment', 'capex', 'opex'].
+        This method modifies the instance's data by converting and/or adjusting currency values
+        to a target currency and base year using a specified deflation source. It determines
+        the appropriate conversion function based on the provided source and applies the
+        adjustment to the data.
+
+        Parameters
+        ----------
+        to_currency : str
+            The target currency units matching the format `<CURRENCY_CODE>_<YEAR>`,
+            with the currency code specified with the ISO 4217 standard (e.g. 'USD', 'EUR').
+
+        source : str, optional
+            The source of the deflation data to be used for the adjustment. Supported values
+            are "World Bank", "World Bank (Linked)", and "International Monetary Fund".
+            The default is "World Bank".
+
+        Raises
+        ------
+        ValueError
+            If the specified source is not recognized. Supported sources are
+            'World Bank', 'World Bank (Linked)', and 'International Monetary Fund'.
+
+        Notes
+        -----
+        This method directly modifies the instance's `data` attribute, which is expected
+        to be a DataFrame containing currency values that need to be adjusted.
+
+        Examples
+        --------
+        >>> techs.adjust_currency("USD-2022", "International Monetary Fund")
+
         """
-        # TODO implement
-        raise NotImplementedError("Currency conversion is not implemented yet.")
-
-        # import pydeflate
-
-        # if source == "World Bank":
-        #     conversion_function = pydeflate.wb_exchange
-        # elif source == "International Monetary Fund":
-        #     conversion_function = pydeflate.imf_exchange
-        # else:
-        #     raise ValueError(
-        #         f"Unknown source '{source}'. Supported sources are 'World Bank' and 'International Monetary Fund'."
-        #     )
-
-        # # Default parameters
-        # if parameters is None:
-        #     parameters = [
-        #         "investment",
-        #         "capex",
-        #         "opex",
-        #     ]
+        match = re.match(td.Currencies.CURRENCY_UNIT_DEFAULT_FORMAT, to_currency)
+        if match:
+            currency = match.group(1)
+            base_year = int(match.group(2))
+            self.data = td.Currencies.adjust_currency(
+                base_year, currency, self.data, source
+            )
+        else:
+            raise ValueError(
+                "The target currency unit does not match the requested format `<3-letter currency code>_<year>`."
+            )
 
     def adjust_scale(
         self,
@@ -487,7 +492,7 @@ class Technologies:
         path : str|Path
             The path to save the CSV file to.
         """
-        self.data.to_csv(path=path, index=False)
+        self.data.to_csv(path, index=False)
 
     def to_datapackage(self, path: str | Path, overwrite: bool = False) -> None:
         """

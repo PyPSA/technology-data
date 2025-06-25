@@ -1,4 +1,4 @@
-"""Classes for utils methods."""
+"""Classes for Commons methods."""
 
 import logging
 import re
@@ -115,6 +115,7 @@ class FileExtensionEnum(Enum):
         --------
         >>> FileExtensionEnum.get_extension("application/pdf")
         >>> '.pdf'
+
         >>> FileExtensionEnum.get_extension("application/unknown")
         >>> None
 
@@ -143,6 +144,7 @@ class FileExtensionEnum(Enum):
         --------
         >>> FileExtensionEnum.search_file_extension_in_url("https://example.com/file.pdf")
         '.pdf'
+
         >>> FileExtensionEnum.search_file_extension_in_url("https://example.com/file.unknown")
         None
 
@@ -153,19 +155,26 @@ class FileExtensionEnum(Enum):
         return None
 
 
-class Utils:
+class Commons:
     """
     A utility class for various helper functions.
 
-    The class contains static methods that provide utility functions for
-    common tasks, such as changing the format of datetime strings. The methods
-    in this class are designed to be stateless and can be called without
-    instantiating the class.
+    This class provides static methods for common tasks, such as changing the format of datetime strings and replacing
+    special characters in strings. The methods are stateless and can be called without instantiating the class.
 
     Methods
     -------
     change_datetime_format(input_datetime_string: str, output_datetime_format: DateFormatEnum) -> str | None:
         Change the format of a given datetime string to a specified output format.
+    replace_special_characters(input_string: str) -> str:
+        Replace special characters and spaces in a string with underscores.
+
+    Examples
+    --------
+    >>> Commons.change_datetime_format("20250520144500", DateFormatEnum.SOURCES_CSV)
+    '2025-05-20 14:45:00'
+    >>> Commons.replace_special_characters("Hello, World! Welcome to Python @ 2023.")
+    'hello_world_welcome_to_python_2023'
 
     """
 
@@ -197,6 +206,11 @@ class Utils:
         ------
         ValueError
             If the input datetime string cannot be parsed.
+
+        Examples
+        --------
+        >>> Commons.change_datetime_format("20250520144500", DateFormatEnum.SOURCES_CSV)
+        >>> "2025-05-20 14:45:00"
 
         """
         try:

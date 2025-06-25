@@ -1,7 +1,6 @@
 """Test different ways of loading and initializing the Source and Sources objects."""
 
 import pathlib
-import sys
 from datetime import datetime
 
 import pandas as pd
@@ -9,7 +8,6 @@ import pytest
 
 import technologydata as td
 
-sys.path.append("./technology-data")
 path_cwd = pathlib.Path.cwd()
 
 

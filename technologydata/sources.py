@@ -317,7 +317,7 @@ class Source:
             end_index = archive_url[0].index("/", start_index)
             # Extract the timestamp substring
             timestamp = archive_url[0][start_index:end_index]
-            output_timestamp = td.Utils.change_datetime_format(
+            output_timestamp = td.Commons.change_datetime_format(
                 timestamp,
                 td.DateFormatEnum.SOURCES_CSV,
             )
@@ -382,7 +382,7 @@ class Source:
         saved_paths: dict[str, pathlib.Path | None] = {}  # Explicit type annotation
         for index, row in self.details.iterrows():
             url_archived = row["url_archived"]
-            source_title = td.Utils.replace_special_characters(row["title"])
+            source_title = td.Commons.replace_special_characters(row["title"])
             save_path = self._get_save_path(
                 url_archived, download_directory, source_title
             )

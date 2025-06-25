@@ -1,15 +1,10 @@
 """Test the utility methods."""
 
-import pathlib
-import sys
 from typing import Any
 
 import pytest
 
 import technologydata as td
-
-sys.path.append("./technology-data")
-path_cwd = pathlib.Path.cwd()
 
 
 @pytest.mark.parametrize(
@@ -40,9 +35,9 @@ def test_change_datetime_format(
     """Check if the datetime is correctly transformed to a new format."""
     if expected_date is ValueError:
         with pytest.raises(ValueError, match="Error during datetime formatting"):
-            td.Utils.change_datetime_format(input_datetime_string, date_format)
+            td.Commons.change_datetime_format(input_datetime_string, date_format)
     else:
-        result = td.Utils.change_datetime_format(input_datetime_string, date_format)
+        result = td.Commons.change_datetime_format(input_datetime_string, date_format)
         assert result == expected_date
 
 
@@ -68,7 +63,7 @@ def test_replace_special_characters(
     expected_string: str,
 ) -> None:
     """Check if the special characters are removed from a string and the string is lowercased."""
-    assert td.Utils.replace_special_characters(input_string) == expected_string
+    assert td.Commons.replace_special_characters(input_string) == expected_string
 
 
 @pytest.mark.parametrize(

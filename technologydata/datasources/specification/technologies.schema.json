@@ -45,7 +45,7 @@
             "name": "parameter",
             "type": "string",
             "description": "The name of the parameter, indicates the type of data for the technology.",
-            "example": "CAPEX, VOM, lifetime, construction time, input.",
+            "example": "CAPEX, VOM, lifetime, construction time, input, capacity, investment, specific-investment.",
             "constraints": {
                 "required": true
             }
@@ -76,25 +76,6 @@
             "example": "For currency related values: USD_2022/kW_electricity, EUR_2020/kWh_hydrogen, RMB_2015/t_methanol, %/year, years, hours. For efficiency related values: kWh_electricity/kWh_coal, kWh_hydrogen/kWh_electricity.",
             "constraints": {
                 "required": true
-            }
-        },
-        {
-            "name": "scale",
-            "type": "number",
-            "description": "The scale of the technology or project, indicating its reference size or capacity to properly account for economies of scale.",
-            "example": "1000",
-            "constraints": {
-                "required": false,
-                "minimum": 0
-            }
-        },
-        {
-            "name": "scale_unit",
-            "type": "string",
-            "description": "The unit for the reference scale of the project or technology.",
-            "example": "MW, MWh, t, m3, km.",
-            "constraints": {
-                "required": false
             }
         },
         {

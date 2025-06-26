@@ -266,72 +266,98 @@ class Technologies:
 
     def adjust_scale(
         self,
-        new_scale: float,
-        unit: str,
+        to_capacity: float,
+        to_capacity_unit: str,
         scaling_exponent: float,
-        parameters: list[str] | None = None,
+        scaled_parameters: list[str] | None = None,
+        absolute_parameters: list[str] | None = None,
     ) -> None:
         """
-        Adjust the scale of the data to account for economies of scale, by applying a calculated scaling factor.
+        Adjust parameters for all technologies to account for economies of scale using a scaling exponent.
 
-        The scaling factor is calculated based on the provided scale and unit, and the scaling exponent.
-            scaling_factor = (new_scale / original scale of data) ** (scaling_exponent - 1)
+        A scaling factor is calculated with each technology's capacity and unit, and the scaling exponent:
 
-        where it is assumed that all values are specific values and are subject to the scaling factor accordingly.
+            scaling factor = (to_capacity / original capacity) ** (scaling_exponent - 1)
+
+        The scaling factor is applied to all parameters specified in by `scaled_parameters`.
+        The parameters affected by the scaling factor are the ones that are typically related to specific values, such as 'specific-investment' or 'specific-capex';
+        these parameters are defined through the `scaling_parameters` argument.
+
+        Some parameters are always scale with a scaling exponent of 1, such as 'capacity' or 'investment';
+        these parameters are defined through the `absolute_parameters` argument.
 
         Parameters
         ----------
-        new_scale: float
-            The scale value to adjust to, used to calculate the scaling factor.
-        unit: str
-            The unit associated with the scale value, needed to correctly calculate the scaling factor.
+        to_capacity: float
+            The new capacity value to adjust to.
+        to_capacity_unit: str
+            The unit associated with the capacity value, will be used to calculate the scaling factor.
         scaling_exponent: float
             The scaling exponent used to calculate the scaling factor, typical scaling exponents are 0.5 or 0.7.
-        parameters: list[str]
-            Parameters which are affected by the scaling, by default will affect rows of the indicators ['investment', 'capex', 'opex'].
+        scaled_parameters: list[str] | None
+            Parameters that are affected by the scaling factor. Defaults to ['specific-investment', 'specific-capex'].
+        absolute_parameters: list[str] | None
+            Parameters that are affected by the absolute capacity value changes, i.e. a scaling exponent of 1. Defaults to ['capacity', 'investment']
 
         Example
         -------
         >>> from technologydata import Technologies
         >>> tech = Technologies()
-        >>> tech.adjust_scale(new_scale=1000, unit='MW', scaling_exponent=0.7)
+        >>> tech.adjust_scale(to_capacity=1000, to_capacity_unit='MW', scaling_exponent=0.7)
         >>> tech.data.head()
 
         """
-        # Default parameters
-        parameters = parameters or ["investment", "capex", "opex"]
+        # Default parameters that are affected
+        absolute_parameters = absolute_parameters or [
+            "capacity",
+            "investment",
+        ]
+        scaled_parameters = scaled_parameters or [
+            "specific-investment",
+            "specific-capex",
+        ]
 
-        # Filter data based on parameters
-        changed_data = self.data.query(f"parameter in {parameters}")
-        unchanged_data = self.data.loc[~self.data.index.isin(changed_data.index)]
+        # Find all unique groups / technologies based on these cols (excluding: parameter, year, value, unit, comment)
+        group_cols = ["source", "technology", "detailed_technology", "case", "region"]
+        grouped = self.data.groupby(group_cols, observed=True)
+        updated_rows = []
 
-        # Check for missing scale values
-        if changed_data["scale"].isna().any():
-            logger.warning(
-                "Some data entries have no associated `scale` and will yield NaN values after scaling. "
-                "Set their `scale` or remove them from the collection before using this function."
-            )
+        # Iterate over each technology and rescale if possible
+        for group_keys, group_df in grouped:
+            # Find the capacity row for this group
+            cap_row = group_df.loc[(group_df["parameter"] == "capacity")]
+            if cap_row.empty:
+                logger.warning(
+                    f"No row with parameter='capacity' found for technology {group_keys}. Skipping scaling for this technology."
+                )
+            elif len(cap_row) == 1:
+                if cap_row.iloc[0]["unit"] != to_capacity_unit:
+                    # TODO consider to_capacity_unit conversion here, if needed, and pass over technology if the units are not compatible
+                    raise NotImplementedError(
+                        f"Unit conversion from {cap_row.iloc[0]['unit']} to {to_capacity_unit} is not implemented yet."
+                    )
 
-        # TODO create a copy with converted units that align with the requested scale
-        # and use this data for calculating the scaling factors,
-        # but don't use the changed values for returning, rather the original units
+                original_capacity = cap_row.iloc[0]["value"]
 
-        # Check for unit compatibility
-        if any(changed_data["scale_unit"] != unit):
-            raise NotImplementedError(
-                f"Unit conversion for different units to {unit} is not implemented yet."
-            )
+                # Update parameters that are scaled by the absolute change
+                scaling_base = to_capacity / original_capacity
+                mask = group_df["parameter"].isin(absolute_parameters)
+                group_df.loc[mask, "value"] *= scaling_base
 
-        # Calculate the scaling factor
-        scaling_factor = (new_scale / changed_data["scale"]) ** (scaling_exponent - 1)
+                # Update parameters that are scaled by the scaling exponent
+                scaling_factor = scaling_base ** (scaling_exponent - 1)
+                mask = group_df["parameter"].isin(scaled_parameters)
+                group_df.loc[mask, "value"] *= scaling_factor
 
-        # Create a new DataFrame for adjusted values
-        changed_data["value"] *= scaling_factor
-        changed_data["scale"] = new_scale
-        changed_data["scale_unit"] = unit
+            else:
+                raise ValueError(
+                    f"Multiple rows with parameter='capacity' found for technology {group_keys}. Skipping scaling for this technology."
+                )
 
-        # Recombine all data and restore the default order
-        self.data = pd.concat([unchanged_data, changed_data], ignore_index=True)
+            # technology processed and rows updated, append to the list
+            updated_rows.append(group_df)
+
+        self.data = pd.concat(updated_rows, ignore_index=True)
         self.sort_data()
 
     def adjust_year(

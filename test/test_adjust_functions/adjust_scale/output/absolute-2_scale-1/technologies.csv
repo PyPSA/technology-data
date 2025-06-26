@@ -1,0 +1,4 @@
+source,technology,detailed_technology,case,region,parameter,year,value,unit,comment
+example,tech,detail,case1,REG,capacity,2020,2,MW,
+example,tech,detail,case1,REG,investment,2020,200000,USD_2020,
+example,tech,detail,case1,REG,specific-investment,2030,200,USD_2020/kW,

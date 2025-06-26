@@ -9,81 +9,140 @@ import technologydata as td
 
 
 @pytest.mark.parametrize(
-    "example_technologies",
+    "input_technologies, to_capacity, to_capacity_unit, scaling_exponent, scaled_parameters, absolute_parameters, expected_technologies",
     [
-        {
-            "technologies_name": "example01",
-            "technologies_path": pathlib.Path(
-                "technologydata", "datasources", "example01"
-            ),
-        },
-        {
-            "technologies_name": "example02",
-            "technologies_path": pathlib.Path(
-                "technologydata", "datasources", "example02"
-            ),
-        },
+        (
+            {
+                "input": pathlib.Path(
+                    "test", "test_adjust_functions", "adjust_scale", "input"
+                ),
+            },
+            1,  # Original capacity equals the target capacity mean no change in scale.
+            "MW",
+            0.5,
+            None,  # default
+            None,  # default
+            {
+                "output": pathlib.Path(
+                    "test",
+                    "test_adjust_functions",
+                    "adjust_scale",
+                    "output",
+                    "no-change",
+                ),
+            },
+        ),
+        (
+            {
+                "input": pathlib.Path(
+                    "test", "test_adjust_functions", "adjust_scale", "input"
+                ),
+            },
+            2,  # This should double absolute values, but not change specific values.
+            "MW",
+            1.0,
+            None,  # default
+            None,  # default
+            {
+                "output": pathlib.Path(
+                    "test",
+                    "test_adjust_functions",
+                    "adjust_scale",
+                    "output",
+                    "absolute-2_scale-1",
+                ),
+            },
+        ),
+        (
+            # This is the interesting case where the scaling exponent is not 1.0
+            # and the capacity is not equal to the target capacity.
+            {
+                "input": pathlib.Path(
+                    "test", "test_adjust_functions", "adjust_scale", "input"
+                ),
+            },
+            10,
+            "MW",
+            0.7,
+            None,  # default
+            None,  # default
+            {
+                "output": pathlib.Path(
+                    "test",
+                    "test_adjust_functions",
+                    "adjust_scale",
+                    "output",
+                    "absolute-10_scale-0.7",
+                ),
+            },
+        ),
+        (
+            # Test to not scale certain parameters
+            {
+                "input": pathlib.Path(
+                    "test", "test_adjust_functions", "adjust_scale", "input"
+                ),
+            },
+            10,
+            "MW",
+            0.7,
+            None,  # default
+            ["capacity"],  # Only scale the capacity parameter
+            {
+                "output": pathlib.Path(
+                    "test",
+                    "test_adjust_functions",
+                    "adjust_scale",
+                    "output",
+                    "absolute-10_scale-0.7_unmodified-investment",
+                ),
+            },
+        ),
+        (
+            {
+                "input": pathlib.Path(
+                    "test", "test_adjust_functions", "adjust_scale", "input"
+                ),
+            },
+            1,
+            "kg",  # Incompatible unit for scaling
+            1.0,
+            None,  # default
+            None,  # default
+            NotImplementedError,
+        ),
     ],
-    indirect=True,
 )  # type: ignore
-def test_no_economies_of_scale(example_technologies: td.Technologies) -> None:
-    """Without economies of scale the value should not change."""
-    org_data = example_technologies.data.copy()
-
-    # Get the adjusted data
-    example_technologies.adjust_scale(
-        new_scale=999,
-        unit="MW",
-        scaling_exponent=1,
-    )
-    adjusted_data = example_technologies.data["value"].copy()
-
-    # Check if all values in adjusted_data are equal to the original values
-    assert all(
-        adjusted_value == original_value
-        for adjusted_value, original_value in zip(adjusted_data, org_data["value"])
-    ), "Scaling with exponent 1 should not change the value"
-
-
-@pytest.mark.parametrize(
-    "example_technologies",
-    [
-        {
-            "technologies_name": "example01",
-            "technologies_path": pathlib.Path(
-                "technologydata", "datasources", "example01"
-            ),
-        },
-        {
-            "technologies_name": "example02",
-            "technologies_path": pathlib.Path(
-                "technologydata", "datasources", "example02"
-            ),
-        },
-    ],
-    indirect=True,
-)  # type: ignore
-def test_economies_of_scale(example_technologies: td.Technologies) -> None:
-    """Test with common economies of scale with exponent 0.5."""
-    org_data = example_technologies.data.copy()
-
-    # Get the adjusted data
-    example_technologies.adjust_scale(
-        new_scale=2,
-        unit="MW",
-        scaling_exponent=0.5,
-    )
-    adjusted_data = example_technologies.data["value"].copy()
-
-    # Calculate the expected values based on the scaling formula
-    expected_values = org_data["value"] * (2 / org_data["scale"]) ** (0.5 - 1)
-
-    # Check if all adjusted values are approximately equal to the expected values
-    assert all(
-        abs(adjusted_value - expected_value)
-        < 1e-6  # Use a small tolerance for floating-point comparison
-        for adjusted_value, expected_value in zip(adjusted_data, expected_values)
-    ), "Scaling with exponent 0.5 should change the value to approx 0.7"
+def test_adjust_scale(
+    input_technologies: dict[str, pathlib.Path],
+    to_capacity: float,
+    to_capacity_unit: str,
+    scaling_exponent: float,
+    scaled_parameters: list[str] | None,
+    absolute_parameters: list[str] | None,
+    expected_technologies: dict[str, pathlib.Path] | type[Exception],
+) -> None:
+    """Test adjust_scale using input/output files and Technologies object comparison."""
+    tech = td.Technologies(input_technologies)
+    if isinstance(expected_technologies, dict):
+        tech.adjust_scale(
+            to_capacity=to_capacity,
+            to_capacity_unit=to_capacity_unit,
+            scaling_exponent=scaling_exponent,
+            scaled_parameters=scaled_parameters,
+            absolute_parameters=absolute_parameters,
+        )
+        expected = td.Technologies(expected_technologies)
+        pd.testing.assert_frame_equal(
+            tech.data, expected.data, check_like=True, atol=1e-4
+        )
+    else:
+        with pytest.raises(expected_technologies):
+            tech.adjust_scale(
+                to_capacity=to_capacity,
+                to_capacity_unit=to_capacity_unit,
+                scaling_exponent=scaling_exponent,
+            )
 
 
 @pytest.mark.parametrize(

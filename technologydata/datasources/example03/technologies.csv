@@ -1,3 +1,5 @@
-"source","technology","detailed_technology","case","region","parameter","year","value","unit",scale,scale_unit,"comment"
-"example03","Solar photovoltaics","Si-HC","example-scenario","DEU","investment",2022,500,"EUR_2022/kW_el","1","MW",
-"example03","Solar photovoltaics","Si-HC","example-project","DEU","investment",2022,350,"EUR_2022/kW_el","1","MW",
+"source","technology","detailed_technology","case","region","parameter","year","value","unit","comment"
+"example03","Solar photovoltaics","Si-HC","example-scenario","DEU","investment",2022,500,"EUR_2022/kW_el",
+"example03","Solar photovoltaics","Si-HC","example-scenario","DEU","capacity",2022,1,"MW",
+"example03","Solar photovoltaics","Si-HC","example-project","DEU","investment",2022,350,"EUR_2022/kW_el",
+"example03","Solar photovoltaics","Si-HC","example-project","DEU","capacity",2022,1,"MW",

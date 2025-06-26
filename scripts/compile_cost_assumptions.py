@@ -2229,7 +2229,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 df.index.str.contains("Energy losses during storage")
             ].copy()
             energy_loss["parameter"] = "standing losses"
-            energy_loss[years] = (energy_loss[years] / 24)
+            energy_loss[years] = energy_loss[years] / 24
             energy_loss["unit"] = "%/hour"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], energy_loss])
 
@@ -2251,7 +2251,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 df.index.str.contains("Energy losses during storage")
             ].copy()
             energy_loss["parameter"] = "standing losses"
-            energy_loss[years] = (energy_loss[years])
+            energy_loss[years] = energy_loss[years]
             energy_loss["unit"] = "%/hour"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], energy_loss])
 

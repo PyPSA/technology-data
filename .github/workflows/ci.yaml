@@ -1,0 +1,45 @@
+name: Technologydata prototype CI
+
+on:
+  push:
+    branches: [prototype]
+  pull_request:
+    branches: [prototype]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Cache pydeflate data
+      uses: actions/cache@v4
+      with:
+        path: technologydata/utils/pydeflate
+        key: ${{ runner.os }}-pydeflate-${{ hashFiles('technologydata/utils/pydeflate/*') }}
+        restore-keys: |
+          ${{ runner.os }}-pydeflate-
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.13"
+
+    - name: Cache Python dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/uv.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    - name: Install package and dependencies
+      run: |
+        python -m pip install uv
+        uv lock
+        uv sync
+
+    - name: Run unit tests
+      run: |
+        uv run pytest

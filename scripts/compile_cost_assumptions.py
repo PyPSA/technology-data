@@ -2205,9 +2205,10 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                         ("Typical bottom storage temperature", years)
                     ]
                 )
+                * 100
                 / 24
             )  # 78°C is the average temperature for ptes
-            energy_loss["unit"] = "per unit/h"
+            energy_loss["unit"] = "%/hour"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], energy_loss])
 
         if tech_name == "central water tank storage":
@@ -2228,8 +2229,8 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 df.index.str.contains("Energy losses during storage")
             ].copy()
             energy_loss["parameter"] = "standing losses"
-            energy_loss[years] = (energy_loss[years] / 24) / 100
-            energy_loss["unit"] = "per unit/h"
+            energy_loss[years] = (energy_loss[years] / 24)
+            energy_loss["unit"] = "%/hour"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], energy_loss])
 
         if tech_name == "decentral water tank storage":
@@ -2250,8 +2251,8 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 df.index.str.contains("Energy losses during storage")
             ].copy()
             energy_loss["parameter"] = "standing losses"
-            energy_loss[years] = (energy_loss[years]) / 100
-            energy_loss["unit"] = "per unit/h"
+            energy_loss[years] = (energy_loss[years])
+            energy_loss["unit"] = "%/hour"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], energy_loss])
 
         # add c_v and c_b coefficient

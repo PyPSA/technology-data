@@ -821,9 +821,11 @@ def get_data_DEA(
     # average data  in format "lower_value-upper_value"
     df = df.apply(
         lambda row: row.apply(
-            lambda x: (float(x.split("-")[0]) + float(x.split("-")[1])) / 2
-            if isinstance(x, str) and "-" in x
-            else x
+            lambda x: (
+                (float(x.split("-")[0]) + float(x.split("-")[1])) / 2
+                if isinstance(x, str) and "-" in x
+                else x
+            )
         ),
         axis=1,
     )
@@ -2194,7 +2196,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             energy_loss = df.loc[
                 df.index.str.contains("Energy losses during storage")
             ].copy()
-            energy_loss["parameter"] = "Energy losses during storage"
+            energy_loss["parameter"] = "standing losses"
             energy_loss.loc[("Energy losses during storage", years)] = (
                 energy_loss.loc[("Energy losses during storage", years)]
                 / (
@@ -2206,14 +2208,14 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 * 100
                 / 24
             )  # 78°C is the average temperature for ptes
-            energy_loss["unit"] = "per unit"
+            energy_loss["unit"] = "%/hour"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], energy_loss])
 
         if tech_name == "central water tank storage":
             temp_difference_central_ttes = df.loc[
                 df.index.str.contains("Typical temperature difference in storage")
             ].copy()
-            temp_difference_central_ttes["parameter"] = "Temperature difference"
+            temp_difference_central_ttes["parameter"] = "temperature difference"
             temp_difference_central_ttes.rename(
                 index={
                     "Typical temperature difference in storage": "Typical temperature difference"
@@ -2226,16 +2228,16 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             energy_loss = df.loc[
                 df.index.str.contains("Energy losses during storage")
             ].copy()
-            energy_loss["parameter"] = "Energy losses during storage"
+            energy_loss["parameter"] = "standing losses"
             energy_loss[years] = energy_loss[years] / 24
-            energy_loss["unit"] = "per unit"
+            energy_loss["unit"] = "%/hour"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], energy_loss])
 
         if tech_name == "decentral water tank storage":
             temp_difference_decentral_ttes = df.loc[
                 df.index.str.contains("Typical temperature difference in storage")
             ].copy()
-            temp_difference_decentral_ttes["parameter"] = "Temperature difference"
+            temp_difference_decentral_ttes["parameter"] = "temperature difference"
             temp_difference_decentral_ttes.rename(
                 index={
                     "Typical temperature difference in storage": "Typical temperature difference"
@@ -2248,8 +2250,9 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             energy_loss = df.loc[
                 df.index.str.contains("Energy losses during storage")
             ].copy()
-            energy_loss["parameter"] = "Energy losses during storage"
-            energy_loss["unit"] = "per unit"
+            energy_loss["parameter"] = "standing losses"
+            energy_loss[years] = energy_loss[years]
+            energy_loss["unit"] = "%/hour"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], energy_loss])
 
         # add c_v and c_b coefficient

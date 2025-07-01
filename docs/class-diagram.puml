@@ -1,0 +1,232 @@
+@startuml Class Diagram
+class UnitValue {
+  - value: float
+  - unit: str
+}
+
+note left of UnitValue::unit
+  Unit should be able to accomodate any unit of measurement,
+  currencies+years, LHVs and different energy carriers.
+  e.g. EUR_2020, kWh_electricity, kWh_hydrogen_LHV
+end note
+
+class Source {
+  - name: str
+  - authors: str
+  - url: str
+  - url_archive: str
+  - urldate: str
+  - urldate_archive: str
+
+  + store_in_wayback()
+  + retrieve_from_wayback()
+}
+
+note right of Source::store_in_wayback
+  Stores the source in the Internet Archive's Wayback Machine,
+  to keep it accessible in the future.
+end note
+
+note right of Source::retrieve_from_wayback
+  Retrieves the archive of the source, e.g., from a URL.
+end note
+
+class Parameter {
+  - quantity: UnitValue
+  - provenance: str
+  - note: str
+  - sources: SourceContainer
+}
+
+Parameter --> UnitValue : quantity
+
+note right of Parameter
+  Encapsulates a value, its unit (via UnitValue, as quantity),
+  data provenance (via sources).
+end note
+
+class Technology {
+  - region: str
+  - case: str
+  - year: int
+  - technology: str
+  - detailed_technology: str
+  - capacity: Parameter
+  - investment: Parameter
+  - specific_investment: Parameter
+  - lifetime: Parameter
+  - wacc: Parameter
+  // Parameters are examples
+  // The user should be able to freely add more parameters
+  - ...: Parameter
+  // To distinguish different inputs/outputs, use prefixes like
+  - input-hydrogen: Parameter
+  - input-electricity: Parameter
+  - ...
+  - output-hydrogen: Parameter
+  - output-electricity: Parameter
+
+  + adjust_currency(): Technology               // or inplace
+  + adjust_region(): Technology                 // or inplace
+  + adjust_scale(): Technology                  // or inplace
+  + calculate_EAC(): Parameter                  // or inplace
+  + calculate_efficiency(): Parameter           // or inplace
+  + calculate_specific_investment(): Parameter  // or inplace
+}
+
+note right of Technology::inputs
+    A technology generally represents a conversion between
+    an input and an output. These are all the inputs, e.g.
+    quantity of water and electricity.
+end note
+
+note right of Technology::outputs
+    A technology generally represents a conversion between
+    an input and an output. These are all the outputs, e.g.
+    quantity hydrogen, oxygen and heat.
+end note
+
+note right of Technology::adjust_currency
+  Changes the currency used by all attributes using currencies.
+end note
+
+note right of Technology::adjust_region
+  Based on yet-to-be-determined logic and inputs, change the
+  attributes of the Technology to match a different region.
+end note
+
+note right of Technology::adjust_scale
+  Scales some members values (e.g., capacity, investment) to a
+  different capacity based on a scaling factor.
+end note
+
+note right of Technology::calculate_EAC
+  The `calculate_XXX` methods use attributes from the
+  Technology object to calculate the values of missing attributes
+  (or potentially calculate and then compare with current values
+  to check for consistency).
+end note
+
+class Container {
+  - schema_name: str
+  - schema_path: Path
+  + get(**criteria): object | Container | None
+  + to_csv()
+  + to_excel()
+  + to_dataframe()
+}
+
+note top of Container
+  Consider 'Container' as abstract base class for all containers
+  for unifying the common export and schema-related functionality
+  required by all data-holding classes.
+end note
+
+note left of Container::schema_name
+  The name of the schema used for this container, e.g. currently "technologies" or "sources".
+  This is used to identify the type of data contained in the container.
+end note
+
+note left of Container::get
+ Provides a generic get(**criteria)
+  method to retrieve contained objects matching selection criteria:
+  - If exactly one object matches, returns that object or a Container with this one object.
+  - If multiple objects match, returns a Container of the same type with the matches.
+  - If no matches, returns None or an empty Container.
+end note
+
+note left of Container::to_csv
+  Export the data to a csv file for sharing / usage in e.g. Excel, ... .
+  Aligned with datapackage schema.
+  e.g. all {technology} or {source} objects.
+  Like the current Technologies(...).to_csv() method.
+end note
+
+note left of Container::to_excel
+  Export all the data to a excel file for usage in Excel and similar tools, ... .
+  Aligned with datapackage schema.
+end note
+
+note left of Container::to_dataframe
+  Flatten the Container and its members into a pandas DataFrame, that can be manipulated.
+  Dataframe should be compatible with the datapackage schema, such that it can be used for e.g. the to_csv() method.
+end note
+
+
+class TechnologyContainer {
+  - technologies: Iterable<Technology>
+  + get(**criteria): Technology | TechnologyContainer | None
+  + create_projection(): TechnologyContainer
+  ' TODO: Think about more methods here
+}
+
+note right of TechnologyContainer::get
+  Implements the generic get method from "Container" for "TechnologyContainer".
+  Filters contained Technology objects by the attributes and returns matches:
+  region, case, year, technology, detailed_technology.
+  - If exactly one Technology matches, returns that Technology.
+  - If multiple Technologies match, returns a TechnologyContainer with the matches.
+  - If no matches, returns None or an empty TechnologyContainer.
+end note
+
+note right of TechnologyContainer::create_projection
+  e.g. learning curve, interpolation, extrapolation;
+  based on the Technology objects in the container.
+  Either returns a new TechnologyContainer or adds the 
+  Technology objects to the current container.
+end note
+
+class SourceContainer {
+  - sources: Iterable<Source>
+  + retrieve_all_archives()
+}
+
+note left of SourceContainer::retrieve_all_archives
+  Triggers the retrieve_from_wayback method for all sources
+  and stores the files locally.
+end note
+
+class Datapackage {
+  - name: str
+  - path: Path
+  - technologies: TechnologyContainer
+  - sources: SourceContainer
+  - // potentially other Containers in the future
+  + to_datapackage()
+}
+
+note top of Datapackage
+  Represents a datapackage, which is a collection of data files
+  and metadata that describes the data.
+  Our package includes pre-packaged data in this format and allows
+  enables to read and write data in this standardised way.
+  Currently implemented through frictionless with .csv and schema.json files.
+end note
+
+note right of Datapackage::name
+  Currently we use "source" as a reference to pre-packaged data and for a column in "technologies.csv".
+  The Datapackage.name would substitute for referencing to pre-packaged data, e.g. "example01" would be
+  a packaged data included with `technologydata`.
+end note
+
+note right of Datapackage::technologies
+  Derived from the TechnologyContainer.
+end note
+
+note right of Datapackage::sources
+  Derived from all Source objects that are related to the TechnologyContainer (i.e., all sources referenced by technologies and their parameters).
+end note
+
+note right of Datapackage::to_datapackage
+  Exports all member Source and TechnologyContainer to a folder following the datapackage
+  specification, including the schema .json files and the .csv files.
+end note
+
+Container <|-- TechnologyContainer
+Container <|-- SourceContainer
+Parameter --> SourceContainer : sources
+Technology --> "*" Parameter : uses for its members
+TechnologyContainer --> "*" Technology : consists of
+SourceContainer --> "*" Source : consists of
+Datapackage --> "1" TechnologyContainer : contains
+@enduml

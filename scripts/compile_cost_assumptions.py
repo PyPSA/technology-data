@@ -189,7 +189,7 @@ uncrtnty_lookup = {
     "direct firing solid fuels CC": "H:I",
     "decentral ground-sourced heat pump": "I:J",
     "decentral air-sourced heat pump": "I:J",
-    "central water pit storage": "J:K",
+    "central water pit storage": "I:L",
     "central water tank storage": "J:K",
     "decentral water tank storage": "J:K",
     "fuel cell": "I:J",
@@ -670,6 +670,10 @@ def get_data_DEA(
         "gas storage",
     ]:
         usecols = "B:F"
+    elif tech_name in [
+        "central water pit storage",
+    ]:
+        usecols = "B:H"
     else:
         usecols = "B:G"
 

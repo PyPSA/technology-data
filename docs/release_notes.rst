@@ -16,6 +16,9 @@ Upcoming Release
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
 
+* Updated indexing of DEA Excel data for PTES and revised capital cost and FOM assumptions for 2045 and 2050.
+
+
 * Corrected units for standing losses of TES technologies from per unit to %/hour and changed parameter names from "Energy losses during storage" to "standing losses" as well as "Temperature difference" to "temperature difference" for naming consistency.
 
 

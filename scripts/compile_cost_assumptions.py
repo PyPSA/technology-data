@@ -189,7 +189,7 @@ uncrtnty_lookup = {
     "direct firing solid fuels CC": "H:I",
     "decentral ground-sourced heat pump": "I:J",
     "decentral air-sourced heat pump": "I:J",
-    "central water pit storage": "J:K",
+    "central water pit storage": "I:L",
     "central water tank storage": "J:K",
     "decentral water tank storage": "J:K",
     "fuel cell": "I:J",
@@ -670,6 +670,10 @@ def get_data_DEA(
         "gas storage",
     ]:
         usecols = "B:F"
+    elif tech_name in [
+        "central water pit storage",
+    ]:
+        usecols = "B:H"
     else:
         usecols = "B:G"
 
@@ -1356,15 +1360,15 @@ def biochar_pyrolysis_harmonise_dea(df: pd.DataFrame) -> pd.DataFrame:
     # rename units
     df.rename(
         index={
-            df.loc[df.index.str.contains("Specific investment")].index[0]: df.loc[
-                df.index.str.contains("Specific investment")
-            ].index.str.replace("MW", "MW_biochar")[0],
-            df.loc[df.index.str.contains("Fixed O&M")].index[0]: df.loc[
-                df.index.str.contains("Fixed O&M")
-            ].index.str.replace("MW", "MW_biochar")[0],
-            df.loc[df.index.str.contains("Variable O&M")].index[0]: df.loc[
-                df.index.str.contains("Variable O&M")
-            ].index.str.replace("MWh", "MWh_biochar")[0],
+            df.loc[df.index.str.contains("Specific investment")]
+            .index[0]: df.loc[df.index.str.contains("Specific investment")]
+            .index.str.replace("MW", "MW_biochar")[0],
+            df.loc[df.index.str.contains("Fixed O&M")]
+            .index[0]: df.loc[df.index.str.contains("Fixed O&M")]
+            .index.str.replace("MW", "MW_biochar")[0],
+            df.loc[df.index.str.contains("Variable O&M")]
+            .index[0]: df.loc[df.index.str.contains("Variable O&M")]
+            .index.str.replace("MWh", "MWh_biochar")[0],
         },
         inplace=True,
     )
@@ -2528,9 +2532,9 @@ def add_description(
 
     # add comment for offwind investment
     if offwind_no_grid_costs_flag:
-        technology_dataframe.loc[("offwind", "investment"), "further description"] += (
-            " grid connection costs subtracted from investment costs"
-        )
+        technology_dataframe.loc[
+            ("offwind", "investment"), "further description"
+        ] += " grid connection costs subtracted from investment costs"
 
     return technology_dataframe
 
@@ -2685,7 +2689,7 @@ def rename_pypsa_old(cost_dataframe_pypsa: pd.DataFrame) -> pd.DataFrame:
     # convert EUR/m^3 to EUR/kWh for 40 K diff and 1.17 kWh/m^3/K
     cost_dataframe_pypsa.loc[
         ("decentral water tank storage", "investment"), "value"
-    ] /= 1.17 * 40
+    ] /= (1.17 * 40)
     cost_dataframe_pypsa.loc[("decentral water tank storage", "investment"), "unit"] = (
         "EUR/kWh"
     )
@@ -3257,16 +3261,17 @@ def energy_penalty(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
         cost_dataframe.loc[(tech_name, "efficiency"), "further description"] = ""
 
         if "CHP" in tech_name:
-            cost_dataframe.loc[(tech_name, "efficiency-heat"), "value"] = (
-                cost_dataframe.loc[(tech_name, "efficiency-heat"), "value"]
-                * scalingFactor
-                + cost_dataframe.loc[("solid biomass", "CO2 intensity"), "value"]
-                * (
-                    cost_dataframe.loc[("biomass CHP capture", "heat-output"), "value"]
-                    + cost_dataframe.loc[
-                        ("biomass CHP capture", "compression-heat-output"), "value"
-                    ]
-                )
+            cost_dataframe.loc[
+                (tech_name, "efficiency-heat"), "value"
+            ] = cost_dataframe.loc[
+                (tech_name, "efficiency-heat"), "value"
+            ] * scalingFactor + cost_dataframe.loc[
+                ("solid biomass", "CO2 intensity"), "value"
+            ] * (
+                cost_dataframe.loc[("biomass CHP capture", "heat-output"), "value"]
+                + cost_dataframe.loc[
+                    ("biomass CHP capture", "compression-heat-output"), "value"
+                ]
             )
             cost_dataframe.loc[(tech_name, "efficiency-heat"), "source"] = (
                 "Combination of " + tech_name + " and " + boiler

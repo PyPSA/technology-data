@@ -1,7 +1,11 @@
+<!--
+SPDX-FileCopyrightText: The technology-data authors
+SPDX-License-Identifier: MIT
+-->
 ## General
 
 * Description of use cases in `docs/design.md`
-* Class diagramm in `docs/class-diagram.puml`
+* Class diagram in `docs/class-diagram.puml`
 
 ## Tools
 

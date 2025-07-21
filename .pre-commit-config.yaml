@@ -1,0 +1,68 @@
+# SPDX-FileCopyrightText: The technology-data authors
+#
+# SPDX-License-Identifier: MIT
+
+ci:
+  autoupdate_schedule: quarterly
+
+repos:
+  # Basic pre-commit hooks for whitespace, merge conflicts, etc.
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v5.0.0
+  hooks:
+  - id: check-merge-conflict
+  - id: check-added-large-files
+    args: ['--maxkb=1000']
+  - id: trailing-whitespace
+  - id: end-of-file-fixer
+
+  # Ruff: Python linter and formatter
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.11.8
+  hooks:
+  - id: ruff
+    args: [--fix]
+  - id: ruff-format
+
+  # Codespell: Checks for common misspellings
+- repo: https://github.com/codespell-project/codespell
+  rev: v2.4.1
+  hooks:
+  - id: codespell
+    args: ['--ignore-regex="(\b[A-Z]+\b)"', '--ignore-words=.codespell.ignore']
+    types_or: [python, rst, markdown]
+
+  # Jupyter notebook cleanup
+- repo: https://github.com/aflc/pre-commit-jupyter
+  rev: v1.2.1
+  hooks:
+  - id: jupyter-notebook-cleanup
+    args: ['--remove-kernel-metadata']
+
+  # Pretty-format-yaml: YAML formatter
+- repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
+  rev: v2.14.0
+  hooks:
+  - id: pretty-format-yaml
+    args: [--autofix, --indent, '2', --preserve-quotes]
+
+  # Mypy: Static type checker for Python
+- repo: https://github.com/pre-commit/mirrors-mypy
+  rev: 'v1.15.0'
+  hooks:
+  - id: mypy
+    args: [--strict, --ignore-missing-imports, --config-file=pyproject.toml]
+    additional_dependencies: [tokenize-rt==3.2.0]
+
+  # Pyupgrade: Automatically upgrades Python syntax
+- repo: https://github.com/asottile/pyupgrade
+  rev: v3.16.0
+  hooks:
+  - id: pyupgrade
+    args: ["--py311-plus"]
+
+  # REUSE: Checks for REUSE license compliance
+- repo: https://github.com/fsfe/reuse-tool
+  rev: v5.0.2
+  hooks:
+  - id: reuse

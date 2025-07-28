@@ -15,6 +15,36 @@ path_cwd = pathlib.Path.cwd()
 
 
 @pytest.mark.parametrize(
+    "example_source_collection, expected_string",
+    [
+        (
+            [
+                {
+                    "source_title": "atb_nrel",
+                    "source_authors": "NREL/ATB",
+                    "source_url_date": "2025-05-22 15:08:02",
+                },
+                {
+                    "source_title": "tech_data_generation",
+                    "source_authors": "Danish Energy Agency",
+                    "source_url_date_archive": "2025-05-06 16:02:04",
+                },
+            ],
+            "SourceCollection with 2 sources: "
+            "'NREL/ATB': 'atb_nrel', last accessed on '2025-05-22 15:08:02', "
+            "'Danish Energy Agency': 'tech_data_generation', on '2025-05-06 16:02:04'.",
+        ),
+    ],
+    indirect=["example_source_collection"],
+)  # type: ignore
+def test_str(
+    example_source_collection: technologydata.SourceCollection, expected_string: str
+) -> None:
+    """Check if the example source collection is cast to string as expected."""
+    assert str(example_source_collection) == expected_string
+
+
+@pytest.mark.parametrize(
     "example_source_collection",
     [
         [
@@ -28,7 +58,7 @@ path_cwd = pathlib.Path.cwd()
             },
         ]
     ],
-    indirect=True,
+    indirect=["example_source_collection"],
 )  # type: ignore
 def test_example_source_collection(
     example_source_collection: technologydata.SourceCollection,
@@ -69,7 +99,7 @@ def test_example_source_collection(
             },
         ],
     ],
-    indirect=True,
+    indirect=["example_source_collection"],
 )  # type: ignore
 def test_retrieve_all_from_wayback(
     example_source_collection: technologydata.SourceCollection,
@@ -118,7 +148,7 @@ def test_retrieve_all_from_wayback(
             },
         ],
     ],
-    indirect=True,
+    indirect=["example_source_collection"],
 )  # type: ignore
 def test_to_csv(example_source_collection: technologydata.SourceCollection) -> None:
     """Check if the example source collection is exported to CSV."""
@@ -150,12 +180,12 @@ def test_to_csv(example_source_collection: technologydata.SourceCollection) -> N
             },
         ],
     ],
-    indirect=True,
+    indirect=["example_source_collection"],
 )  # type: ignore
 def test_to_json(example_source_collection: technologydata.SourceCollection) -> None:
     """Check if the example source collection is exported to JSON."""
     output_file = pathlib.Path(path_cwd, "sources.json")
-    schema_file = pathlib.Path(path_cwd, "source_collection_schema.json")
+    schema_file = pathlib.Path(path_cwd, "sources.schema.json")
     example_source_collection.to_json(pathlib.Path(output_file))
     assert output_file.is_file()
     assert schema_file.is_file()
@@ -185,7 +215,7 @@ def test_to_json(example_source_collection: technologydata.SourceCollection) -> 
             },
         ],
     ],
-    indirect=True,
+    indirect=["example_source_collection"],
 )  # type: ignore
 def test_to_dataframe(
     example_source_collection: technologydata.SourceCollection,
@@ -195,11 +225,11 @@ def test_to_dataframe(
 
 
 def test_from_json() -> None:
-    """Check if the example source collection is exported to JSON."""
+    """Check if the example source collection is imported from JSON."""
     input_file = pathlib.Path(
         path_cwd, "test", "test_data", "solar_photovoltaics_example_03", "sources.json"
     )
-    source_collection = technologydata.SourceCollection.from_json(input_file)
+    source_collection = technologydata.SourceCollection.from_json(file_path=input_file)
     assert isinstance(source_collection, technologydata.SourceCollection)
     assert len(source_collection) == 2
 
@@ -214,6 +244,6 @@ def test_get(title_pattern: str, authors_pattern: str) -> None:
         path_cwd, "test", "test_data", "solar_photovoltaics_example_03", "sources.json"
     )
 
-    source_collection = technologydata.SourceCollection.from_json(input_file)
+    source_collection = technologydata.SourceCollection.from_json(file_path=input_file)
     result = source_collection.get(title=title_pattern, authors=authors_pattern)
     assert len(result.sources) == 1

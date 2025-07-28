@@ -11,76 +11,135 @@ Examples
 
 """
 
+import logging
 import pathlib
+import typing
 
 import pydantic
 
 from technologydata.source_collection import SourceCollection
+from technologydata.technology_collection import TechnologyCollection
 
-# from technologydata.technology_collection import TechnologyCollection
+logger = logging.getLogger(__name__)
 
 
-# TODO complete class
 class DataPackage(pydantic.BaseModel):  # type: ignore
     """
     Container for a collection of Technology objects and/or Source objects, with batch operations and loading utilities.
 
-    Parameters
-    ----------
-    name : str
-        The short-name code of the source
-    technologies : List[Technology]
-        List of Technology objects.
-
     Attributes
     ----------
-    technologies : List[Technology]
+    technologies : Optional[TechnologyCollection]
         List of Technology objects.
+    sources : Optional[SourceCollection]
+        List of Source objects.
 
     """
 
-    name: str
-    path: pathlib.Path
-    # technologies: TechnologyCollection
-    sources: SourceCollection
+    technologies: typing.Annotated[
+        TechnologyCollection | None,
+        pydantic.Field(description="List of Technology objects."),
+    ] = None
+    sources: typing.Annotated[
+        SourceCollection | None, pydantic.Field(description="List of Source objects.")
+    ] = None
 
-    # @classmethod
-    # def from_json(cls, path: pathlib.Path) -> technologydata.DataPackage:
-    #     """
-    #     Load a DataPackage from a JSON file.
-    #
-    #     Parameters
-    #     ----------
-    #     path : Path
-    #         Path to the JSON file.
-    #
-    #     Returns
-    #     -------
-    #     DataPackage
-    #         The loaded DataPackage instance.
-    #
-    #     """
-    #     with open(path) as f:
-    #         data = json.load(f)
-    #     techs = technologydata.TechnologyCollection(
-    #         [technologydata.Technology(**t) for t in data.get("technologies", [])]
-    #     )
-    #     # TODO: redo this part once an example JSON is available
-    #     techs = technologydata.TechnologyCollection(
-    #         [technologydata.Technology(**t) for t in data.get("technologies", [])]
-    #     )
-    #     # You should also handle 'name', 'sources', etc. as needed
-    #     return cls(
-    #         name=data.get("name", ""),
-    #         path=path,
-    #         technologies=techs,
-    #         sources=technologydata.SourceCollection(data.get("sources", [])),
-    #     )
-    #
-    # @classmethod
-    # def to_json(cls, path: pathlib.Path) -> None:
-    #     pass
-    #
-    # @classmethod
-    # def to_datapackage(cls, path: pathlib.Path) -> None:
-    #     pass
+    def get_source_collection(self) -> None:
+        """
+        Get the SourceCollection associated with this DataPackage from the TechnologyCollection.
+
+        Returns
+        -------
+        SourceCollection
+            The SourceCollection instance.
+
+        """
+        sources_set = set()
+        if self.sources is None:
+            if self.technologies is not None:
+                for technology in self.technologies:
+                    for parameter in technology.parameters.values():
+                        for source in parameter.sources:
+                            sources_set.add(source)
+            else:
+                raise ValueError(
+                    "No technologies available to extract a sources collection from."
+                )
+        else:
+            logger.info("The data package already has a sources collection.")
+        self.sources = SourceCollection(sources=list(sources_set))
+
+    @classmethod
+    def from_json(cls, path_to_folder: pathlib.Path | str) -> "DataPackage":
+        """
+        Load a DataPackage from a JSON file.
+
+        Parameters
+        ----------
+        path_to_folder : pathlib.Path or str
+            Path to the data package folder.
+
+        Returns
+        -------
+        DataPackage
+            The loaded DataPackage instance.
+
+        """
+        # Load technologies
+        technologies_path = pathlib.Path(path_to_folder, "technologies.json")
+        technologies = TechnologyCollection.from_json(technologies_path)
+
+        # Create DataPackage instance
+        data_package = cls(
+            path=path_to_folder,
+            technologies=technologies,
+        )
+
+        # Generate sources collection from technologies if sources is None
+        data_package.get_source_collection()
+
+        return data_package
+
+    def to_json(self, folder_path: pathlib.Path) -> None:
+        """
+        Export the Datapackage to JSON files.
+
+        The files are:
+         - the 'technologies' attribute is exported to technologies.json, together with the corresponding data schema
+         - the 'sources' attribute is exported to sources.json, together with the corresponding data schema
+
+        Parameters
+        ----------
+        folder_path : pathlib.Path
+            The path to the folder where the JSON files are created
+
+        """
+        if self.technologies is not None:
+            technologies_path = pathlib.Path(folder_path, "technologies.json")
+            self.technologies.to_json(technologies_path)
+
+        if self.sources is not None:
+            sources_path = pathlib.Path(folder_path, "sources.json")
+            self.sources.to_json(sources_path)
+
+    def to_csv(self, folder_path: pathlib.Path) -> None:
+        """
+        Export the Datapackage to CSV files.
+
+        The files are:
+         - the 'technologies' attribute is exported to technologies.csv
+         - the 'sources' attribute is exported to sources.csv
+
+        Parameters
+        ----------
+        folder_path : pathlib.Path
+            The path to the folder where the CSV files are created
+
+        """
+        if self.technologies is not None:
+            technologies_path = pathlib.Path(folder_path, "technologies.csv")
+            self.technologies.to_csv(path_or_buf=technologies_path)
+
+        if self.sources is not None:
+            sources_path = pathlib.Path(folder_path, "sources.csv")
+            self.sources.to_csv(path_or_buf=sources_path)

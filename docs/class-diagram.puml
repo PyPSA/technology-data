@@ -10,7 +10,7 @@ class UnitValue {
 }
 
 note left of UnitValue::unit
-  Unit should be able to accomodate any unit of measurement,
+  Unit should be able to accommodate any unit of measurement,
   currencies+years, LHVs and different energy carriers.
   e.g. EUR_2020, kWh_electricity, kWh_hydrogen_LHV
 end note
@@ -20,8 +20,8 @@ class Source {
   - authors: str
   - url: str
   - url_archive: str
-  - urldate: str
-  - urldate_archive: str
+  - url_date: str
+  - url_date_archive: str
 
   + ensure_in_wayback()
   + store_in_wayback()
@@ -42,6 +42,7 @@ class Parameter {
   - provenance: str
   - note: str
   - sources: SourceCollection
+  + from_dict(): Parameter
 }
 
 Parameter --> UnitValue : quantity
@@ -72,6 +73,7 @@ class Technology {
   - output-hydrogen: Parameter
   - output-electricity: Parameter
 
+  + from_dict(): Technology
   + adjust_currency(): Technology               // or inplace
   + adjust_region(): Technology                 // or inplace
   + adjust_scale(): Technology                  // or inplace
@@ -116,6 +118,11 @@ end note
 class TechnologyCollection {
   - technologies: Iterable<Technology>
   + get(**criteria): Technology | TechnologyCollection | None
+  + from_dict(): TechnologyCollection
+  + to_json(): str
+  + to_csv(): str
+  + to_dataframe(): pd.DataFrame
+  + from_json(): TechnologyCollection
   + create_projection(): TechnologyCollection
   ' TODO: Think about more methods here
 }
@@ -149,12 +156,12 @@ note left of SourceCollection::retrieve_all_from_wayback
   and stores the files locally.
 end note
 
-note left of SourceCollection::to_csv
-  Export the source collection into a csv file.
-end note
-
 note left of SourceCollection::to_json
   Export the source collection into a json file.
+end note
+
+note left of SourceCollection::to_csv
+  Export the source collection into a csv file.
 end note
 
 note left of SourceCollection::to_dataframe
@@ -162,12 +169,10 @@ note left of SourceCollection::to_dataframe
 end note
 
 class Datapackage {
-  - name: str
-  - path: Path
   - technologies: TechnologyCollection
   - sources: SourceCollection
   - // potentially other Collections in the future
-  + to_datapackage()
+  + to_csv()
   + from_json()
   + to_json()
   + get_source_collection()
@@ -182,23 +187,12 @@ note top of Datapackage
   Please note that the "sources" field is built in the background from "technologies"
 end note
 
-note right of Datapackage::name
-  Currently we use "source" as a reference to pre-packaged data and for a column in "technologies.csv".
-  The Datapackage.name would substitute for referencing to pre-packaged data, e.g. "example01" would be
-  a packaged data included with `technologydata`. It is meant to be independent of the "TechnologyCollection" or its members.
-end note
-
 note right of Datapackage::technologies
   Derived from the TechnologyCollection.
 end note
 
 note right of Datapackage::sources
   Built in the background with the get_source_collection() method, which derives it from all Source objects that are related to the TechnologyCollection (i.e., all sources referenced by technologies and their parameters).
-end note
-
-note right of Datapackage::to_datapackage
-  Exports all member Source and TechnologyCollection to a folder following the datapackage
-  specification, including the schema .json files and the .csv files.
 end note
 
 Parameter --> SourceCollection : sources

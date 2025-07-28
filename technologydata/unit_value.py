@@ -17,6 +17,8 @@ Examples
 
 """
 
+import typing
+
 import pint
 import pydantic
 
@@ -27,13 +29,6 @@ class UnitValue(pydantic.BaseModel):  # type: ignore
     """
     Represent a numerical value with an associated unit of measurement.
 
-    Parameters
-    ----------
-    value : float
-        The numerical value.
-    unit : str
-        The unit of measurement (e.g., 'EUR_2020', 'kWh_electricity', 'kWh_hydrogen_LHV').
-
     Attributes
     ----------
     value : float
@@ -43,8 +38,8 @@ class UnitValue(pydantic.BaseModel):  # type: ignore
 
     """
 
-    value: float = pydantic.Field(..., description="The numerical value.")
-    unit: str = pydantic.Field(..., description="The unit of measurement.")
+    value: typing.Annotated[float, pydantic.Field(description="The numerical value.")]
+    unit: typing.Annotated[str, pydantic.Field(description="The unit of measurement.")]
 
     def to(self, new_unit: str) -> "UnitValue":
         """

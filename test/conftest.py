@@ -42,25 +42,13 @@ def create_source_from_params(params: dict[str, str]) -> technologydata.Source:
 
     Returns
     -------
-    td.Source
+    technologydata.Source
         A Source object initialized with the provided parameters.
 
     Raises
     ------
     ValueError
         If any of the required fields ("source_title", "source_authors") are missing from the params.
-
-    Examples
-    --------
-    >>> params_dict = {
-    ...     "source_title": "Example Title",
-    ...     "source_authors": "John Doe",
-    ...     "source_url": "http://example.com",
-    ...     "source_url_archive": "http://web.archive.org/web/20231001120000/http://example.com",
-    ...     "source_url_date": "2023-10-01",
-    ...     "source_url_date_archive": "2023-10-01T12:00:00Z"
-    ... }
-    >>> source = create_source_from_params(params_dict)
 
     """
     return technologydata.Source(

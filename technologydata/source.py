@@ -30,21 +30,6 @@ class Source(pydantic.BaseModel):  # type: ignore
     """
     Represent a data source, including bibliographic and web information.
 
-    Parameters
-    ----------
-    title : str
-        Title of the source.
-    authors : str
-        Authors of the source.
-    url : Optional[str]
-        URL of the source.
-    url_archive : Optional[str]
-        Archived URL (e.g., from the Wayback Machine).
-    url_date : Optional[str]
-        Date the URL was accessed.
-    url_date_archive : Optional[str]
-        Date the URL was archived.
-
     Attributes
     ----------
     title : str
@@ -62,16 +47,95 @@ class Source(pydantic.BaseModel):  # type: ignore
 
     """
 
-    title: str = pydantic.Field(..., description="Title of the source.")
-    authors: str = pydantic.Field(..., description="Authors of the source.")
-    url: str | None = pydantic.Field(None, description="URL of the source.")
-    url_archive: str | None = pydantic.Field(None, description="Archived URL.")
-    url_date: str | None = pydantic.Field(
-        None, description="Date the URL was accessed."
-    )
-    url_date_archive: str | None = pydantic.Field(
-        None, description="Date the URL was archived."
-    )
+    title: typing.Annotated[str, pydantic.Field(description="Title of the source.")]
+    authors: typing.Annotated[str, pydantic.Field(description="Authors of the source.")]
+    url: typing.Annotated[
+        str | None, pydantic.Field(description="URL of the source.")
+    ] = None
+    url_archive: typing.Annotated[
+        str | None, pydantic.Field(description="Archived URL.")
+    ] = None
+    url_date: typing.Annotated[
+        str | None, pydantic.Field(description="Date the URL was accessed.")
+    ] = None
+    url_date_archive: typing.Annotated[
+        str | None, pydantic.Field(description="Date the URL was archived.")
+    ] = None
+
+    def __eq__(self, other: object) -> bool:
+        """
+        Check for equality with another Source object based on non-None attributes.
+
+        Compares all attributes of the current instance with those of the other object.
+        Only compares attributes that are not None in both instances.
+
+        Parameters
+        ----------
+        other : object
+            The object to compare with. Expected to be an instance of Source.
+
+        Returns
+        -------
+        bool
+            True if all non-None attributes are equal between self and other, False otherwise.
+            Returns False if other is not a Source instance.
+
+        Notes
+        -----
+        This method considers only attributes that are not None in both objects.
+        If an attribute is None in either object, it is ignored in the comparison.
+
+        """
+        if not isinstance(other, Source):
+            logger.error("The object is not a Source instance.")
+            return False
+
+        for field in self.__class__.model_fields.keys():
+            value_self = getattr(self, field)
+            value_other = getattr(other, field)
+            if value_self != value_other:
+                return False
+        return True
+
+    def __hash__(self) -> int:
+        """
+        Return a hash value for the Source instance based on all attributes.
+
+        This method computes a combined hash of the instance's attributes to
+        uniquely identify the object in hash-based collections such as sets and dictionaries.
+
+        Returns
+        -------
+        int
+            The hash value of the Source instance.
+
+        """
+        # Retrieve all attribute values dynamically
+        attribute_values = tuple(
+            getattr(self, field) for field in self.__class__.model_fields.keys()
+        )
+        return hash(attribute_values)
+
+    def __str__(self) -> str:
+        """
+        Return a string representation of the Source, including all available attributes.
+
+        Returns
+        -------
+        str
+            A string detailing the source's information.
+
+        """
+        parts = [f"'{self.authors}': '{self.title}'"]
+        if self.url:
+            parts.append(f"from url '{self.url}'")
+        if self.url_date:
+            parts.append(f"last accessed on '{self.url_date}'")
+        if self.url_archive:
+            parts.append(f"archived at '{self.url_archive}'")
+        if self.url_date_archive:
+            parts.append(f"on '{self.url_date_archive}'.")
+        return ", ".join(parts)
 
     def ensure_in_wayback(self) -> None:
         """

@@ -3,164 +3,168 @@
     "region": "DEU",
     "case": "example-scenario",
     "year": 2022,
-    "technology": "Solar photovoltaics",
+    "name": "Solar photovoltaics",
     "detailed_technology": "Si-HC",
-    "capacity": {
-      "quantity": {
-        "value": 1,
-        "unit": "MW"
+    "parameters": {
+      "capacity": {
+        "quantity": {
+          "value": 1,
+          "unit": "MW"
+        },
+        "provenance": "Model calculation",
+        "note": "Average capacity factor of 22% assumed",
+        "sources": [
+          {
+            "title": "example04",
+            "authors": "Open Energy Transition gGmbH",
+            "url": "https://openenergytransition.org/outputs.html"
+          }
+        ]
       },
-      "provenance": "Model calculation",
-      "note": "Average capacity factor of 22% assumed",
-      "sources": [
-        {
-          "title": "example04",
-          "authors": "Open Energy Transition gGmbH",
-          "url": "https://openenergytransition.org/outputs.html"
-        }
-      ]
-    },
-    "investment": {
-      "quantity": {
-        "value": 500,
-        "unit": "EUR_2022/KW_el"
+      "investment": {
+        "quantity": {
+          "value": 500,
+          "unit": "EUR_2022/KW_el"
+        },
+        "provenance": "Industry report",
+        "note": "Average overnight cost",
+        "sources": [
+          {
+            "title": "example04",
+            "authors": "Open Energy Transition gGmbH",
+            "url": "https://openenergytransition.org/outputs.html"
+          }
+        ]
       },
-      "provenance": "Industry report",
-      "note": "Average overnight cost",
-      "sources": [
-        {
-          "title": "example04",
-          "authors": "Open Energy Transition gGmbH",
-          "url": "https://openenergytransition.org/outputs.html"
-        }
-      ]
-    },
-    "specific_investment": {
-      "quantity": {
-        "value": 0.95,
-        "unit": "USD/W"
+      "specific_investment": {
+        "quantity": {
+          "value": 0.95,
+          "unit": "USD/W"
+        },
+        "provenance": "Derived",
+        "note": "Calculated from investment/capacity",
+        "sources": [
+          {
+            "title": "example04",
+            "authors": "Open Energy Transition gGmbH",
+            "url": "https://openenergytransition.org/outputs.html"
+          }
+        ]
       },
-      "provenance": "Derived",
-      "note": "Calculated from investment/capacity",
-      "sources": [
-        {
-          "title": "example04",
-          "authors": "Open Energy Transition gGmbH",
-          "url": "https://openenergytransition.org/outputs.html"
-        }
-      ]
-    },
-    "lifetime": {
-      "quantity": {
-        "value": 30,
-        "unit": "years"
+      "lifetime": {
+        "quantity": {
+          "value": 30,
+          "unit": "years"
+        },
+        "provenance": "Manufacturer specification",
+        "note": "With performance degradation guarantee",
+        "sources": [
+          {
+            "title": "example04",
+            "authors": "Open Energy Transition gGmbH",
+            "url": "https://openenergytransition.org/outputs.html"
+          }
+        ]
       },
-      "provenance": "Manufacturer specification",
-      "note": "With performance degradation guarantee",
-      "sources": [
-        {
-          "title": "example04",
-          "authors": "Open Energy Transition gGmbH",
-          "url": "https://openenergytransition.org/outputs.html"
-        }
-      ]
-    },
-    "wacc": {
-      "quantity": {
-        "value": 0.05,
-        "unit": "fraction"
-      },
-      "provenance": "Financial analysis",
-      "note": "Nominal weighted average cost of capital",
-      "sources": [
-        {
-          "title": "example04",
-          "authors": "Open Energy Transition gGmbH",
-          "url": "https://openenergytransition.org/outputs.html"
-        }
-      ]
+      "wacc": {
+        "quantity": {
+          "value": 0.05,
+          "unit": "fraction"
+        },
+        "provenance": "Financial analysis",
+        "note": "Nominal weighted average cost of capital",
+        "sources": [
+          {
+            "title": "example04",
+            "authors": "Open Energy Transition gGmbH",
+            "url": "https://openenergytransition.org/outputs.html"
+          }
+        ]
+      }
     }
   },
   {
     "region": "DEU",
     "case": "example-project",
     "year": 2022,
-    "technology": "Solar photovoltaics",
+    "name": "Solar photovoltaics",
     "detailed_technology": "Si-HC",
-    "capacity": {
-      "quantity": {
-        "value": 1.0,
-        "unit": "MW"
+    "parameters": {
+      "capacity": {
+        "quantity": {
+          "value": 1.0,
+          "unit": "MW"
+        },
+        "provenance": "Model calculation",
+        "note": "Average capacity factor of 25% assumed",
+        "sources": [
+          {
+            "title": "example04",
+            "authors": "Open Energy Transition gGmbH",
+            "url": "https://openenergytransition.org/outputs.html"
+          }
+        ]
       },
-      "provenance": "Model calculation",
-      "note": "Average capacity factor of 25% assumed",
-      "sources": [
-        {
-          "title": "example04",
-          "authors": "Open Energy Transition gGmbH",
-          "url": "https://openenergytransition.org/outputs.html"
-        }
-      ]
-    },
-    "investment": {
-      "quantity": {
-        "value": 350,
-        "unit": "EUR_2022/KW_el"
+      "investment": {
+        "quantity": {
+          "value": 350,
+          "unit": "EUR_2022/KW_el"
+        },
+        "provenance": "Industry report",
+        "note": "Average overnight cost for another tech",
+        "sources": [
+          {
+            "title": "example04",
+            "authors": "Open Energy Transition gGmbH",
+            "url": "https://openenergytransition.org/outputs.html"
+          }
+        ]
       },
-      "provenance": "Industry report",
-      "note": "Average overnight cost for another tech",
-      "sources": [
-        {
-          "title": "example04",
-          "authors": "Open Energy Transition gGmbH",
-          "url": "https://openenergytransition.org/outputs.html"
-        }
-      ]
-    },
-    "specific_investment": {
-      "quantity": {
-        "value": 0.95,
-        "unit": "USD/W"
+      "specific_investment": {
+        "quantity": {
+          "value": 0.95,
+          "unit": "USD/W"
+        },
+        "provenance": "Derived",
+        "note": "Calculated from investment/capacity",
+        "sources": [
+          {
+            "title": "example04",
+            "authors": "Open Energy Transition gGmbH",
+            "url": "https://openenergytransition.org/outputs.html"
+          }
+        ]
       },
-      "provenance": "Derived",
-      "note": "Calculated from investment/capacity",
-      "sources": [
-        {
-          "title": "example04",
-          "authors": "Open Energy Transition gGmbH",
-          "url": "https://openenergytransition.org/outputs.html"
-        }
-      ]
-    },
-    "lifetime": {
-      "quantity": {
-        "value": 30,
-        "unit": "years"
+      "lifetime": {
+        "quantity": {
+          "value": 30,
+          "unit": "years"
+        },
+        "provenance": "Manufacturer specification",
+        "note": "With performance degradation guarantee",
+        "sources": [
+          {
+            "title": "example04",
+            "authors": "Open Energy Transition gGmbH",
+            "url": "https://openenergytransition.org/outputs.html"
+          }
+        ]
       },
-      "provenance": "Manufacturer specification",
-      "note": "With performance degradation guarantee",
-      "sources": [
-        {
-          "title": "example04",
-          "authors": "Open Energy Transition gGmbH",
-          "url": "https://openenergytransition.org/outputs.html"
-        }
-      ]
-    },
-    "wacc": {
-      "quantity": {
-        "value": 0.05,
-        "unit": "fraction"
-      },
-      "provenance": "Financial analysis",
-      "note": "Nominal weighted average cost of capital",
-      "sources": [
-        {
-          "title": "example04",
-          "authors": "Open Energy Transition gGmbH",
-          "url": "https://openenergytransition.org/outputs.html"
-        }
-      ]
+      "wacc": {
+        "quantity": {
+          "value": 0.05,
+          "unit": "fraction"
+        },
+        "provenance": "Financial analysis",
+        "note": "Nominal weighted average cost of capital",
+        "sources": [
+          {
+            "title": "example04",
+            "authors": "Open Energy Transition gGmbH",
+            "url": "https://openenergytransition.org/outputs.html"
+          }
+        ]
+      }
     }
   }
 ]

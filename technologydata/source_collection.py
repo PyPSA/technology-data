@@ -8,6 +8,7 @@ import csv
 import json
 import pathlib
 import re
+import typing
 
 import pandas
 import pydantic
@@ -19,11 +20,6 @@ class SourceCollection(pydantic.BaseModel):  # type: ignore
     """
     Represent a collection of sources.
 
-    Parameters
-    ----------
-    sources : List[Source]
-        List of Source objects.
-
     Attributes
     ----------
     sources : List[Source]
@@ -31,7 +27,46 @@ class SourceCollection(pydantic.BaseModel):  # type: ignore
 
     """
 
-    sources: list[Source] = pydantic.Field(..., description="List of Source objects.")
+    sources: typing.Annotated[
+        list[Source], pydantic.Field(description="List of Source objects.")
+    ]
+
+    def __iter__(self) -> typing.Iterator["Source"]:
+        """
+        Return an iterator over the list of Source objects.
+
+        Returns
+        -------
+        Iterator[Source]
+            An iterator over the Source objects contained in the collection.
+
+        """
+        return iter(self.sources)
+
+    def __len__(self) -> int:
+        """
+        Return the number of sources in this collection.
+
+        Returns
+        -------
+        int
+            The number of Source objects in the sources list.
+
+        """
+        return len(self.sources)
+
+    def __str__(self) -> str:
+        """
+        Return a string representation of the SourceCollection.
+
+        Returns
+        -------
+        str
+            A string representation of the SourceCollection, showing the number of sources.
+
+        """
+        sources_str = ", ".join(str(source) for source in self.sources)
+        return f"SourceCollection with {len(self.sources)} sources: {sources_str}"
 
     def get(self, title: str, authors: str) -> "SourceCollection":
         """
@@ -65,18 +100,6 @@ class SourceCollection(pydantic.BaseModel):  # type: ignore
             ]
 
         return SourceCollection(sources=filtered_sources)
-
-    def __len__(self) -> int:
-        """
-        Return the number of sources in this collection.
-
-        Returns
-        -------
-        int
-            The number of Source objects in the sources list.
-
-        """
-        return len(self.sources)
 
     def retrieve_all_from_wayback(
         self, download_directory: pathlib.Path
@@ -162,7 +185,7 @@ class SourceCollection(pydantic.BaseModel):  # type: ignore
         file_path : pathlib.Path
             The path to the JSON file to be created.
         schema_path : pathlib.Path
-            The path to the JSON schema file to be created. By default created with a `schema` suffix next to `file_path`.
+            The path to the JSON schema file to be created. By default, created with a `schema` suffix next to `file_path`.
 
         """
         if schema_path is None:
@@ -180,20 +203,46 @@ class SourceCollection(pydantic.BaseModel):  # type: ignore
             jsonfile.write(json_data)
 
     @classmethod
-    def from_json(cls, file_path: pathlib.Path | str) -> "SourceCollection":
+    def from_json(
+        cls,
+        file_path: pathlib.Path | str | None = None,
+        from_str: list[dict[str, typing.Any]] | None = None,
+    ) -> "SourceCollection":
         """
         Import the SourceCollection from a JSON file.
 
         Parameters
         ----------
-        file_path : pathlib.Path
+        file_path : Optional[pathlib.Path | str]
             The path to the JSON file to be imported.
+        from_str : Optional[list]
+            The list of dictionaries with Source fields.
 
         """
-        if isinstance(file_path, pathlib.Path | str):
-            file_path = pathlib.Path(file_path)
-        else:
-            raise TypeError("file_path must be a pathlib.Path or str")
-        with open(file_path, encoding="utf-8") as jsonfile:
-            json_data = json.load(jsonfile)
+        if file_path is None and from_str is None:
+            raise ValueError(
+                "Both file_path and from_str are None. One must be provided."
+            )
+
+        json_data = None
+
+        # Load data from file if file_path is provided
+        if file_path is not None:
+            if not isinstance(file_path, (pathlib.Path | str)):
+                raise TypeError(
+                    f"file_path must be a pathlib.Path or str, but got {type(file_path)}"
+                )
+            path = pathlib.Path(file_path)
+            with path.open(encoding="utf-8") as jsonfile:
+                json_data = json.load(jsonfile)
+
+        # Override json_data if from_str is provided
+        if from_str is not None:
+            if not isinstance(from_str, list):
+                raise TypeError(f"from_str must be a list, but got {type(from_str)}")
+            json_data = {"sources": [Source(**source) for source in from_str]}
+
+        if json_data is None:
+            raise ValueError("No data to load. Provide either a file_path or from_str.")
+
         return cls(**json_data)

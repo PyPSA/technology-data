@@ -15,6 +15,102 @@ path_cwd = pathlib.Path.cwd()
 
 
 @pytest.mark.parametrize(
+    "example_source, expected_equal",
+    [
+        (
+            {
+                "source_title": "atb_nrel",
+                "source_authors": "NREL/ATB",
+                "source_url": "https:download",
+                "source_url_archive": "http:/3273/download",
+                "source_url_date": "2025-05-22 15:08:02",
+                "source_url_date_archive": "2025-05-22 15:08:02",
+            },
+            False,  # Expect not equal
+        ),
+        (
+            {
+                "source_title": "tech_data_generation",
+                "source_authors": "Danish Energy Agency",
+                "source_url": "https:download",
+                "source_url_archive": "http:/3273/download",
+                "source_url_date": "2025-05-06 16:02:04",
+                "source_url_date_archive": "2025-05-06 16:02:04",
+            },
+            True,  # Expect equal
+        ),
+        (
+            {
+                "source_title": "tech_data_generation",
+                "source_authors": "Danish Energy Agency",
+            },
+            False,  # Expect not equal
+        ),
+    ],
+    indirect=["example_source"],
+)  # type: ignore
+def test_eq(example_source: technologydata.Source, expected_equal: bool) -> None:
+    """Check if the override method __eq__ works as expected."""
+    reference_source = technologydata.Source(
+        title="tech_data_generation",
+        authors="Danish Energy Agency",
+        url="https:download",
+        url_archive="http:/3273/download",
+        url_date="2025-05-06 16:02:04",
+        url_date_archive="2025-05-06 16:02:04",
+    )
+    assert (example_source == reference_source) == expected_equal
+
+
+@pytest.mark.parametrize(
+    "example_source",
+    [
+        {
+            "source_title": "atb_nrel",
+            "source_authors": "NREL/ATB",
+            "source_url_archive": "http:/3273/download",
+            "source_url_date_archive": "2025-05-22 15:08:02",
+        },
+        {
+            "source_title": "tech_data_generation",
+            "source_authors": "Danish Energy Agency",
+            "source_url": "https:download",
+            "source_url_archive": "http:/3273/download",
+            "source_url_date": "2025-05-06 16:02:04",
+            "source_url_date_archive": "2025-05-06 16:02:04",
+        },
+    ],
+    indirect=["example_source"],
+)  # type: ignore
+def test_hash(example_source: technologydata.Source) -> None:
+    """Check if the override method __hash__ works as expected."""
+    assert isinstance(hash(example_source), int)
+
+
+@pytest.mark.parametrize(
+    "example_source, expected_string",
+    [
+        (
+            {
+                "source_title": "OET project page",
+                "source_authors": "Open Energy Transition gGmbH",
+                "source_url": "https://outputs.html",
+                "source_url_archive": "https:archived.html",
+                "source_url_date": "2025-05-06 16:02:04",
+                "source_url_date_archive": "2025-05-06 16:02:04",
+            },
+            "'Open Energy Transition gGmbH': 'OET project page', from url 'https://outputs.html', last accessed on '2025-05-06 16:02:04', archived at 'https:archived.html', on '2025-05-06 16:02:04'.",
+        )
+    ],
+    indirect=["example_source"],
+)  # type: ignore
+def test_str(example_source: technologydata.Source, expected_string: str) -> None:
+    """Check if the override method __str__ works as expected."""
+    # Ensure the snapshot is created
+    assert str(example_source) == expected_string
+
+
+@pytest.mark.parametrize(
     "example_source",
     [
         {
@@ -34,7 +130,7 @@ path_cwd = pathlib.Path.cwd()
             "source_url_date_archive": "2025-05-06 16:02:04",
         },
     ],
-    indirect=True,
+    indirect=["example_source"],
 )  # type: ignore
 def test_retrieve_from_wayback(example_source: technologydata.Source) -> None:
     """Check if the example source is downloaded from the Internet Archive Wayback Machine."""

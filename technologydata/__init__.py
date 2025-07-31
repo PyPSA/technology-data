@@ -9,8 +9,16 @@ from technologydata.source import Source
 from technologydata.source_collection import SourceCollection
 from technologydata.technology import Technology
 from technologydata.technology_collection import TechnologyCollection
-from technologydata.unit_value import UnitValue
 from technologydata.utils.commons import Commons, DateFormatEnum, FileExtensionEnum
+from technologydata.utils.units import (
+    CURRENCY_UNIT_PATTERN,
+    creg,
+    extract_currency_units,
+    get_conversion_rate,
+    get_iso3_from_currency_code,
+    hvreg,
+    ureg,
+)
 
 __all__ = [
     "Commons",
@@ -22,5 +30,11 @@ __all__ = [
     "SourceCollection",
     "Technology",
     "TechnologyCollection",
-    "UnitValue",
+    "CURRENCY_UNIT_PATTERN",
+    "creg",
+    "extract_currency_units",
+    "get_conversion_rate",
+    "get_iso3_from_currency_code",
+    "hvreg",
+    "ureg",
 ]

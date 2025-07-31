@@ -27,10 +27,15 @@ classifiers=[
 ]
 requires-python = ">=3.12"
 dependencies = [
+    "frozendict>=2.4.6",
+    "hdx-python-country>=3.9.6",
     "ipykernel>=6.29.5", # this one can go into optional as "dev"
     "mypy>=1.15.0",
     "pandas>=2.2.3",
+    "pint>=0.24.4",
     "pre-commit>=4.2.0", # this one can go into optional as "dev"
+    "pydantic>=2.11.7",
+    "pydeflate>=2.1.3", # this one can go into optional as "dev"
     "pytest>=8.3.5", # this one can go into optional as "dev"
     "pytest-cov>=6.2.1", # this one can go into optional as "dev"
     "pytest-xdist>=3.8.0", # this one can go into optional as "dev"

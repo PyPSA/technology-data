@@ -5,9 +5,9 @@ name: Technologydata prototype CI
 
 on:
   push:
-    branches: [prototype]
+    branches: [ai-prototype]
   pull_request:
-    branches: [prototype]
+    branches: [ai-prototype]
 
 jobs:
   test:

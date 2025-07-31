@@ -64,10 +64,9 @@ class Source(pydantic.BaseModel):  # type: ignore
 
     def __eq__(self, other: object) -> bool:
         """
-        Check for equality with another Source object based on non-None attributes.
+        Check for equality with another Source object.
 
         Compares all attributes of the current instance with those of the other object.
-        Only compares attributes that are not None in both instances.
 
         Parameters
         ----------
@@ -80,12 +79,10 @@ class Source(pydantic.BaseModel):  # type: ignore
             True if all non-None attributes are equal between self and other, False otherwise.
             Returns False if other is not a Source instance.
 
-        Notes
-        -----
-        This method considers only attributes that are not None in both objects.
-        If an attribute is None in either object, it is ignored in the comparison.
-
         """
+        if not isinstance(other, Source):
+            return NotImplemented
+
         if not isinstance(other, Source):
             logger.error("The object is not a Source instance.")
             return False

@@ -1,0 +1,29 @@
+# SPDX-FileCopyrightText: The technology-data authors
+#
+# SPDX-License-Identifier: MIT
+
+# Definitions for the default carriers supported by the package.
+# Each carrier is defined as an independent dimension.
+# This way, pint allows for operations like division or multiplication,
+# and at the same time prevents incompatible operations on these dimensions.
+#
+# See also: https://pint.readthedocs.io/en/latest/defining.html
+
+
+# Format:
+# <carrier_name> = [<carrier_name>] [= <alias>]
+
+carbon = [carbon] = C
+carbon_dioxide = [carbon_dioxide] = CO2
+carbon_monoxide = [carbon_monoxide] = CO
+coal = [coal]
+diesel = [diesel]
+jet_fuel_a1 = [jet_fuel_a1] = JETA1
+electricity = [electricity] = e = el
+hydrogen = [hydrogen] = H2
+methane = [methane] = CH4
+methanol = [methanol] = CH3OH = MeOH
+natural_gas = [natural_gas] = NG
+nitrogen = [nitrogen] = N2
+oxygen = [oxygen] = O2
+water = [water] = H2O

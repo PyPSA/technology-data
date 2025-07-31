@@ -83,3 +83,18 @@ def example_source_collection(
     sources_params: list[dict[str, str]] = request.param
     sources = [create_source_from_params(params) for params in sources_params]
     return technologydata.SourceCollection(sources=sources)
+
+
+@pytest.fixture(scope="function")  # type: ignore
+def example_parameter(request: pytest.FixtureRequest) -> technologydata.Parameter:
+    """Fixture to create an example parameter."""
+    source_list = request.param.pop("parameter_sources", [])
+    return technologydata.Parameter(
+        magnitude=request.param.get("parameter_magnitude"),
+        units=request.param.get("parameter_units"),
+        carrier=request.param.get("parameter_carrier"),
+        heating_value=request.param.get("parameter_heating_value"),
+        provenance=request.param.get("parameter_provenance"),
+        note=request.param.get("parameter_note"),
+        sources=technologydata.SourceCollection(sources=source_list),
+    )

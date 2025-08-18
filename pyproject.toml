@@ -62,6 +62,9 @@ docs = [
 ]
 
 [tool.pytest.ini_options]
+pythonpath = [
+    "src",
+]
 testpaths = "test"
 addopts = "--cov=technologydata --cov-report=term"
 filterwarnings = [
@@ -78,6 +81,12 @@ version_scheme = "no-guess-dev"
 
 [tool.setuptools.packages.find]
 include = ["technologydata"]
+
+# code coverage settings
+[tool.coverage.run]
+source = [
+    "src/technologydata",
+]
 
 # Static type checker settings
 

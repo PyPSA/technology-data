@@ -153,7 +153,7 @@ class TestSource:
 
     def test_store_in_wayback(self) -> None:
         """Check if a given url is correctly stored as a snapshot on Internet Archive Wayback Machine."""
-        url_to_archive = "https://www.openenergytransition.org/outputs.html"
+        url_to_archive = "https://openenergytransition.org/outputs.html"
         archived_info = technologydata.Source.store_in_wayback(url_to_archive)
 
         # Check if archived_info is None

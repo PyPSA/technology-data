@@ -7,7 +7,7 @@
 
 """Technology class for representing a technology with parameters and transformation methods."""
 
-import typing
+from typing import Annotated, Any, Self
 
 import pydantic
 
@@ -35,17 +35,15 @@ class Technology(pydantic.BaseModel):  # type: ignore
 
     """
 
-    name: typing.Annotated[str, pydantic.Field(description="Name of the technology.")]
-    region: typing.Annotated[str, pydantic.Field(description="Region identifier.")]
-    year: typing.Annotated[int, pydantic.Field(description="Year of the data.")]
-    parameters: typing.Annotated[
+    name: Annotated[str, pydantic.Field(description="Name of the technology.")]
+    region: Annotated[str, pydantic.Field(description="Region identifier.")]
+    year: Annotated[int, pydantic.Field(description="Year of the data.")]
+    parameters: Annotated[
         dict[str, Parameter],
         pydantic.Field(default_factory=dict, description="Parameters."),
     ]
-    case: typing.Annotated[
-        str, pydantic.Field(description="Case or scenario identifier.")
-    ]
-    detailed_technology: typing.Annotated[
+    case: Annotated[str, pydantic.Field(description="Case or scenario identifier.")]
+    detailed_technology: Annotated[
         str, pydantic.Field(description="Detailed technology name.")
     ]
 
@@ -95,9 +93,7 @@ class Technology(pydantic.BaseModel):  # type: ignore
         missing = [p for p in required if p not in self.parameters]
         return len(missing) == 0
 
-    def calculate_parameters(
-        self, parameters: typing.Any | None = None
-    ) -> "Technology":
+    def calculate_parameters(self, parameters: Any | None = None) -> Self:
         """
         Calculate missing or derived parameters.
 
@@ -115,7 +111,7 @@ class Technology(pydantic.BaseModel):  # type: ignore
         # Placeholder: implement calculation logic as needed
         return self
 
-    def adjust_currency(self, target_currency: str) -> "Technology":
+    def adjust_currency(self, target_currency: str) -> Self:
         """
         Adjust all currency parameters to a target currency.
 
@@ -133,7 +129,7 @@ class Technology(pydantic.BaseModel):  # type: ignore
         # Placeholder: implement currency adjustment logic
         return self
 
-    def adjust_region(self, target_region: str) -> "Technology":
+    def adjust_region(self, target_region: str) -> Self:
         """
         Adjust technology parameters to match a different region.
 
@@ -151,7 +147,7 @@ class Technology(pydantic.BaseModel):  # type: ignore
         # Placeholder: implement region adjustment logic
         return self
 
-    def adjust_scale(self, scaling_factor: float) -> "Technology":
+    def adjust_scale(self, scaling_factor: float) -> Self:
         """
         Scale parameter values by a scaling factor.
 
@@ -170,7 +166,7 @@ class Technology(pydantic.BaseModel):  # type: ignore
         return self
 
     @classmethod
-    def from_dict(cls, data: dict[str, typing.Any]) -> "Technology":
+    def from_dict(cls, data: dict[str, Any]) -> Self:
         """
         Create an instance of the class from a dictionary.
 

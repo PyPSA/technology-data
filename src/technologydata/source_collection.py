@@ -8,7 +8,8 @@ import csv
 import json
 import pathlib
 import re
-import typing
+from collections.abc import Iterator
+from typing import Annotated, Any, Self
 
 import pandas
 import pydantic
@@ -27,11 +28,11 @@ class SourceCollection(pydantic.BaseModel):  # type: ignore
 
     """
 
-    sources: typing.Annotated[
+    sources: Annotated[
         list[Source], pydantic.Field(description="List of Source objects.")
     ]
 
-    def __iter__(self) -> typing.Iterator["Source"]:
+    def __iter__(self) -> Iterator["Source"]:
         """
         Return an iterator over the list of Source objects.
 
@@ -68,7 +69,7 @@ class SourceCollection(pydantic.BaseModel):  # type: ignore
         sources_str = ", ".join(str(source) for source in self.sources)
         return f"SourceCollection with {len(self.sources)} sources: {sources_str}"
 
-    def get(self, title: str, authors: str) -> "SourceCollection":
+    def get(self, title: str, authors: str) -> Self:
         """
         Filter sources based on regex patterns for non-optional attributes.
 
@@ -206,8 +207,8 @@ class SourceCollection(pydantic.BaseModel):  # type: ignore
     def from_json(
         cls,
         file_path: pathlib.Path | str | None = None,
-        from_str: list[dict[str, typing.Any]] | None = None,
-    ) -> "SourceCollection":
+        from_str: list[dict[str, Any]] | None = None,
+    ) -> Self:
         """
         Import the SourceCollection from a JSON file.
 

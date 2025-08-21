@@ -8,8 +8,8 @@ import csv
 import json
 import pathlib
 import re
-import typing
 from collections.abc import Iterator
+from typing import Annotated, Self
 
 import pandas
 import pydantic
@@ -28,11 +28,11 @@ class TechnologyCollection(pydantic.BaseModel):  # type: ignore
 
     """
 
-    technologies: typing.Annotated[
+    technologies: Annotated[
         list[Technology], pydantic.Field(description="List of Technology objects.")
     ]
 
-    def __iter__(self) -> Iterator["Technology"]:
+    def __iter__(self) -> Iterator[Technology]:
         """
         Return an iterator over the list of Technology objects.
 
@@ -58,7 +58,7 @@ class TechnologyCollection(pydantic.BaseModel):  # type: ignore
 
     def get(
         self, name: str, region: str, year: int, case: str, detailed_technology: str
-    ) -> "TechnologyCollection":
+    ) -> Self:
         """
         Filter technologies based on regex patterns for non-optional attributes.
 
@@ -200,7 +200,7 @@ class TechnologyCollection(pydantic.BaseModel):  # type: ignore
             jsonfile.write(json_data)
 
     @classmethod
-    def from_json(cls, file_path: pathlib.Path | str) -> "TechnologyCollection":
+    def from_json(cls, file_path: pathlib.Path | str) -> Self:
         """
         Load a TechnologyCollection instance from a JSON file.
 

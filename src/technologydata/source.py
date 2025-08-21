@@ -15,7 +15,7 @@ Examples
 
 import logging
 import pathlib
-import typing
+from typing import Annotated, Any
 
 import pydantic
 import requests
@@ -47,18 +47,16 @@ class Source(pydantic.BaseModel):  # type: ignore
 
     """
 
-    title: typing.Annotated[str, pydantic.Field(description="Title of the source.")]
-    authors: typing.Annotated[str, pydantic.Field(description="Authors of the source.")]
-    url: typing.Annotated[
-        str | None, pydantic.Field(description="URL of the source.")
-    ] = None
-    url_archive: typing.Annotated[
-        str | None, pydantic.Field(description="Archived URL.")
-    ] = None
-    url_date: typing.Annotated[
+    title: Annotated[str, pydantic.Field(description="Title of the source.")]
+    authors: Annotated[str, pydantic.Field(description="Authors of the source.")]
+    url: Annotated[str | None, pydantic.Field(description="URL of the source.")] = None
+    url_archive: Annotated[str | None, pydantic.Field(description="Archived URL.")] = (
+        None
+    )
+    url_date: Annotated[
         str | None, pydantic.Field(description="Date the URL was accessed.")
     ] = None
-    url_date_archive: typing.Annotated[
+    url_date_archive: Annotated[
         str | None, pydantic.Field(description="Date the URL was archived.")
     ] = None
 
@@ -191,7 +189,7 @@ class Source(pydantic.BaseModel):  # type: ignore
     @staticmethod
     def store_in_wayback(
         url_to_archive: str,
-    ) -> tuple[typing.Any, bool | None, str | None] | None:
+    ) -> tuple[Any, bool | None, str | None] | None:
         """
         Store a snapshot of the given URL on the Wayback Machine and extract the timestamp.
 
@@ -355,7 +353,7 @@ class Source(pydantic.BaseModel):  # type: ignore
             return None
 
     @staticmethod
-    def _get_content_type(url_archived: str) -> typing.Any:
+    def _get_content_type(url_archived: str) -> Any:
         """
         Fetch the content type of the archived URL.
 

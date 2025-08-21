@@ -13,7 +13,7 @@ Examples
 
 import logging
 import pathlib
-import typing
+from typing import Annotated, Self
 
 import pydantic
 
@@ -36,11 +36,11 @@ class DataPackage(pydantic.BaseModel):  # type: ignore
 
     """
 
-    technologies: typing.Annotated[
+    technologies: Annotated[
         TechnologyCollection | None,
         pydantic.Field(description="List of Technology objects."),
     ] = None
-    sources: typing.Annotated[
+    sources: Annotated[
         SourceCollection | None, pydantic.Field(description="List of Source objects.")
     ] = None
 
@@ -70,7 +70,7 @@ class DataPackage(pydantic.BaseModel):  # type: ignore
         self.sources = SourceCollection(sources=list(sources_set))
 
     @classmethod
-    def from_json(cls, path_to_folder: pathlib.Path | str) -> "DataPackage":
+    def from_json(cls, path_to_folder: pathlib.Path | str) -> Self:
         """
         Load a DataPackage from a JSON file.
 

@@ -15,8 +15,7 @@ Examples
 """
 
 import logging
-import typing
-from typing import Annotated
+from typing import Annotated, Any, Self
 
 import pint
 from pydantic import BaseModel, Field, PrivateAttr
@@ -144,7 +143,7 @@ class Parameter(BaseModel):  # type: ignore
         else:
             self._pint_heating_value = None
 
-    def to(self, units: str) -> "Parameter":
+    def to(self, units: str) -> Self:
         """Convert the parameter's quantity to new units."""
         self._update_pint_attributes()
 
@@ -170,7 +169,7 @@ class Parameter(BaseModel):  # type: ignore
 
     def change_currency(
         self, to_currency: str, country: str, source: str = "worldbank"
-    ) -> "Parameter":
+    ) -> Self:
         """
         Change the currency of the parameter.
 
@@ -279,7 +278,7 @@ class Parameter(BaseModel):  # type: ignore
             sources=self.sources,
         )
 
-    def change_heating_value(self, to_heating_value: str) -> "Parameter":
+    def change_heating_value(self, to_heating_value: str) -> Self:
         """
         Change the heating value of the parameter.
 
@@ -373,7 +372,7 @@ class Parameter(BaseModel):  # type: ignore
             sources=self.sources,
         )
 
-    def _check_parameter_compatibility(self, other: "Parameter") -> None:
+    def _check_parameter_compatibility(self, other: Self) -> None:
         """
         Check if two parameters are compatible in terms of units, carrier, and heating value.
 
@@ -400,7 +399,7 @@ class Parameter(BaseModel):  # type: ignore
                 f"'{self._pint_heating_value}' and '{other._pint_heating_value}'."
             )
 
-    def __add__(self, other: "Parameter") -> "Parameter":
+    def __add__(self, other: Self) -> Self:
         """
         Add this Parameter to another Parameter.
 
@@ -436,7 +435,7 @@ class Parameter(BaseModel):  # type: ignore
             ),
         )
 
-    def __sub__(self, other: "Parameter") -> "Parameter":
+    def __sub__(self, other: Self) -> Self:
         """
         Subtract another Parameter from this Parameter.
 
@@ -471,7 +470,7 @@ class Parameter(BaseModel):  # type: ignore
             ),
         )
 
-    def __truediv__(self, other: "Parameter") -> "Parameter":
+    def __truediv__(self, other: Self) -> Self:
         """
         Divide this Parameter by another Parameter.
 
@@ -529,7 +528,7 @@ class Parameter(BaseModel):  # type: ignore
             ),
         )
 
-    def __mul__(self, other: "Parameter") -> "Parameter":
+    def __mul__(self, other: Self) -> Self:
         """
         Multiply two Parameter instances.
 
@@ -617,7 +616,7 @@ class Parameter(BaseModel):  # type: ignore
                 return False
         return True
 
-    def __pow__(self, exponent: float | int) -> "Parameter":
+    def __pow__(self, exponent: float | int) -> Self:
         """
         Raise the parameter's value to a specified power.
 
@@ -651,7 +650,7 @@ class Parameter(BaseModel):  # type: ignore
         )
 
     @classmethod
-    def from_dict(cls, data: dict[str, typing.Any]) -> "Parameter":
+    def from_dict(cls, data: dict[str, Any]) -> Self:
         """
         Create an instance of the class from a dictionary.
 

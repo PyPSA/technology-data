@@ -7,7 +7,7 @@
 import enum
 import logging
 import re
-import typing
+from typing import Any
 
 import dateutil
 
@@ -186,7 +186,7 @@ class Commons:
     def change_datetime_format(
         input_datetime_string: str,
         output_datetime_format: DateFormatEnum,
-    ) -> str | typing.Any:
+    ) -> str | Any:
         """
         Change the format of a given datetime string to a specified output format.
 

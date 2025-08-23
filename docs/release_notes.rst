@@ -21,6 +21,8 @@ Upcoming Release
 
 * Add standing losses as parameters for LTES
 
+* Corrected CO2 content in biogas
+
 `v0.13.2 <https://github.com/PyPSA/technology-data/releases/tag/v0.13.2>`__ (13th June 2025)
 =======================================================================================
 

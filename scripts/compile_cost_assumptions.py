@@ -3126,7 +3126,7 @@ def carbon_flow(
             CH4_density = 0.657  # kg/Nm3
             CO2_density = 1.98  # kg/Nm3
             CH4_vol_energy_density = (
-                CH4_specific_energy * CH4_density / (1000 * 3.6)
+                (1 - AD_CO2_share) * CH4_specific_energy * CH4_density / (1000 * 3.6)
             )  # MJ/Nm3 -> MWh/Nm3
             CO2_weight_share = (
                 AD_CO2_share * CO2_density

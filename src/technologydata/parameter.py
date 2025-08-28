@@ -42,7 +42,7 @@ class Parameter(BaseModel):  # type: ignore
 
     Attributes
     ----------
-    magnitude : float
+    magnitude : int | float
         The numerical value of the parameter.
     units : Optional[str]
         The unit of the parameter.
@@ -60,7 +60,7 @@ class Parameter(BaseModel):  # type: ignore
     """
 
     magnitude: Annotated[
-        float, Field(description="The numerical value of the parameter.")
+        int | float, Field(description="The numerical value of the parameter.")
     ]
     units: Annotated[str | None, Field(description="The unit of the parameter.")] = None
     carrier: Annotated[
@@ -470,14 +470,14 @@ class Parameter(BaseModel):  # type: ignore
             ),
         )
 
-    def __truediv__(self, other: Self) -> Self:
+    def __truediv__(self, other: int | float | Self) -> Self:
         """
         Divide this Parameter by another Parameter.
 
         Parameters
         ----------
-        other : Parameter
-            The Parameter instance to divide by.
+        other : float | Parameter
+            A scalar or a Parameter instance to divide by.
 
         Returns
         -------
@@ -495,6 +495,17 @@ class Parameter(BaseModel):  # type: ignore
         It also handles the division of carriers and heating values if present.
 
         """
+        if isinstance(other, (int | float)):
+            return Parameter(
+                magnitude=self.magnitude / other,
+                units=self.units,
+                carrier=self.carrier,
+                heating_value=self.heating_value,
+                provenance=self.provenance,
+                note=self.note,
+                sources=self.sources,
+            )
+
         # We don't check general compatibility here, as division is not a common operation for parameters.
         # Only ensure that the heating values are compatible.
         if self._pint_heating_value != other._pint_heating_value:
@@ -528,14 +539,14 @@ class Parameter(BaseModel):  # type: ignore
             ),
         )
 
-    def __mul__(self, other: Self) -> Self:
+    def __mul__(self, other: int | float | Self) -> Self:
         """
         Multiply two Parameter instances.
 
         Parameters
         ----------
-        other : Parameter
-            The other Parameter instance to multiply with.
+        other : int | float | Parameter
+            A scalar or a Parameter instance to multiply with.
 
         Returns
         -------
@@ -556,6 +567,17 @@ class Parameter(BaseModel):  # type: ignore
         - Compatibility checks beyond heating values are not performed.
 
         """
+        if isinstance(other, int | float):
+            return Parameter(
+                magnitude=self.magnitude * other,
+                units=self.units,
+                carrier=self.carrier,
+                heating_value=self.heating_value,
+                provenance=self.provenance,
+                note=self.note,
+                sources=self.sources,
+            )
+
         # We don't check general compatibility here, as multiplication is not a common operation for parameters.
         # Only ensure that the heating values are compatible.
         if self._pint_heating_value != other._pint_heating_value:

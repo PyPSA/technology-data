@@ -772,7 +772,7 @@ def get_data_DEA(
         "Eletricity input",
         "Heat out",
         "capture rate",
-        "FT Liquids Output, MWh/MWh Total Input",
+        "FT Liquids Output, [MWh/MWh Total Input]",
         " - hereof recoverable for district heating [%-points of heat loss]",
         " - hereof recoverable for district heating (%-points of heat loss)",
         "Bio SNG Output [% of fuel input]",
@@ -2054,7 +2054,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 (df.index.str.contains("efficiency"))
                 | (df.index.str.contains("Hydrogen output, at LHV"))
                 | (df.index.str.contains("Hydrogen Output"))
-                | (df.index.str.contains("FT Liquids Output, MWh/MWh Total Input"))
+                | (df.index.str.contains("FT Liquids Output"))
                 | (df.index.str.contains("Methanol Output"))
                 | (df.index.str.contains("District heat  Output"))
                 | (df.index.str.contains("Electricity Output"))
@@ -2074,6 +2074,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 | (df.unit == "MWh_th/MWh_th")
                 | (df.unit == "MWh/MWh Total Input")
                 | df.unit.str.contains("MWh_FT/MWh_H2")
+                | df.unit.str.contains("MWh/MWh Total Input")
                 | df.unit.str.contains("MWh_biochar/MWh_feedstock")
                 | df.unit.str.contains("ton biochar/MWh_feedstock")
                 | df.unit.str.contains("MWh_CH4/MWh_H2")

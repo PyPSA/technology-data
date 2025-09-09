@@ -153,7 +153,9 @@ class TestSource:
 
     def test_store_in_wayback(self) -> None:
         """Check if a given url is correctly stored as a snapshot on Internet Archive Wayback Machine."""
-        url_to_archive = "https://openenergytransition.org/outputs.html"
+        url_to_archive = (
+            "https://www.engineeringtoolbox.com/co2-emission-fuels-d_1085.html"
+        )
         archived_info = technologydata.Source.store_in_wayback(url_to_archive)
 
         # Check if archived_info is None
@@ -177,9 +179,9 @@ class TestSource:
         "example_source",
         [
             {
-                "source_title": "OET project page",
-                "source_authors": "Open Energy Transition gGmbH",
-                "source_url": "https://openenergytransition.org/outputs.html",
+                "source_title": "Engineering Toolbox",
+                "source_authors": "The Engineering ToolBox (2009). Combustion of Fuels - Carbon Dioxide Emission",
+                "source_url": "https://www.engineeringtoolbox.com/co2-emission-fuels-d_1085.html",
             },
         ],
         indirect=["example_source"],

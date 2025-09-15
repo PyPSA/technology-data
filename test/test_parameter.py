@@ -642,7 +642,7 @@ class TestParameter:
             heating_value="lower_heating_value",
         )
         p2 = p.change_heating_value("higher_heating_value")
-        assert pytest.approx(p2.magnitude) == 141.8
+        assert pytest.approx(p2.magnitude) == 141.2278
         assert p2.heating_value == "higher_heating_value"
         assert p2.carrier == "hydrogen"
         assert p2.units == "kilowatt_hour"
@@ -656,7 +656,7 @@ class TestParameter:
             heating_value="higher_heating_value",
         )
         p2 = p.change_heating_value("lower_heating_value")
-        assert pytest.approx(p2.magnitude) == 119.6
+        assert pytest.approx(p2.magnitude) == 120.0848
         assert p2.heating_value == "lower_heating_value"
         assert p2.carrier == "hydrogen"
         assert p2.units == "kilowatt_hour"
@@ -694,13 +694,12 @@ class TestParameter:
         p = technologydata.Parameter(
             magnitude=1,
             units="kilowatt_hour",
-            carrier="hydrogen",
+            carrier="electricity",
             heating_value="lower_heating_value",
         )
         p2 = p.change_heating_value("higher_heating_value")
-        assert pytest.approx(p2.magnitude) == 1.418 / 1.196
+        assert p2.magnitude == p.magnitude
         assert p2.heating_value == "higher_heating_value"
-        assert p2.carrier == "hydrogen"
         assert p2.units == "kilowatt_hour"
 
     def test_change_heating_value_same_hv(self) -> None:

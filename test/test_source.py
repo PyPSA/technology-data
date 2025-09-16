@@ -114,6 +114,7 @@ class TestSource:
         # Ensure the snapshot is created
         assert str(example_source) == expected_string
 
+    @pytest.mark.webarchive  # type: ignore
     @pytest.mark.parametrize(
         "example_source",
         [
@@ -151,6 +152,7 @@ class TestSource:
         # Delete the downloaded file
         storage_path.unlink(missing_ok=True)
 
+    @pytest.mark.webarchive  # type: ignore
     def test_store_in_wayback(self) -> None:
         """Check if a given url is correctly stored as a snapshot on Internet Archive Wayback Machine."""
         url_to_archive = (
@@ -175,6 +177,7 @@ class TestSource:
         except ValueError:
             pytest.fail("Valid date-time string did not match the format")
 
+    @pytest.mark.webarchive  # type: ignore
     @pytest.mark.parametrize(
         "example_source",
         [

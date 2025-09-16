@@ -25,6 +25,69 @@ sys.path.append("./technology-data")
 path_cwd = pathlib.Path.cwd()
 
 
+def pytest_addoption(parser: pytest.Parser) -> None:
+    """
+    Add custom command-line options to pytest.
+
+    This function adds a custom option `--run_webarchive` to the pytest command line.
+    When this option is specified, it allows the execution of tests marked with the `webarchive` marker.
+
+    Parameters
+    ----------
+    parser : argparse.ArgumentParser
+        The parser object used to add custom options.
+
+    """
+    parser.addoption(
+        "--run_webarchive",
+        action="store_true",
+        default=False,
+        help="run the webarchive tests",
+    )
+
+
+def pytest_configure(config: pytest.Config) -> None:
+    """
+    Configure pytest with custom markers.
+
+    This function adds a custom marker `webarchive` to pytest. Tests marked with this marker
+    will only be run if the `--run_webarchive` option is specified.
+
+    Parameters
+    ----------
+    config : pytest.Config
+        The pytest configuration object.
+
+    """
+    config.addinivalue_line("markers", "webarchive: mark test as webarchive to run")
+
+
+def pytest_collection_modifyitems(config: pytest.Config, items: pytest.Item) -> None:
+    """
+    Modify the test items collection based on command-line options.
+
+    This function modifies the collection of test items. If the `--run_webarchive` option is not specified,
+    it skips tests marked with the `webarchive` marker.
+    By default, tests marked with `webarchive` will be skipped unless the option `--run_webarchive` is provided.
+    This is because the CI was failing due to rate limits on anonymous capture webarchive requests using savepagenow.
+    For further details, see https://github.com/open-energy-transition/technology-data/pull/41.
+
+    Parameters
+    ----------
+    config : pytest.Config
+        The pytest configuration object.
+    items : list
+        The list of test items collected by pytest.
+
+    """
+    if config.getoption("--run_webarchive"):
+        return
+    skip_webarchive = pytest.mark.skip(reason="need --run_webarchive option to run")
+    for item in items:
+        if "webarchive" in item.keywords:
+            item.add_marker(skip_webarchive)
+
+
 def create_source_from_params(params: dict[str, str]) -> technologydata.Source:
     """
     Create a Source object from a parameter dictionary with validation.

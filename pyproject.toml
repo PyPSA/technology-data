@@ -45,7 +45,7 @@ BugTracker = "https://github.com/PyPSA/technology-data/issues"
 Changelog = "https://github.com/PyPSA/technology-data/releases"
 
 # https://docs.astral.sh/uv/concepts/projects/dependencies/#dependency-groups
-# editable install of package and non-packaged dependencies
+# editable installation of package and non-packaged dependencies
 [dependency-groups]
 dev = [
     "ipykernel>=6.29.5",
@@ -58,13 +58,26 @@ dev = [
 ]
 
 docs = [
+    "cairosvg>=2.8.2",
+    "gurobipy>=12.0.3",
+    "mkdocs-argref-plugin>=0.5.0",
     "mkdocs-autolinks-plugin>=0.7.1",
+    "mkdocs-ezlinks-plugin>=0.1.14",
+    "mkdocs-git-committers-plugin>=0.2.3",
     "mkdocs-git-revision-date-localized-plugin>=1.4.7",
+    "mkdocs-jupyter>=0.25.1",
     "mkdocs-material>=9.6.14",
     "mkdocs-minify-plugin>=0.8.0",
     "mkdocs-open-in-new-tab>=1.0.8",
+    "mkdocs-redirects>=1.2.2",
+    "mkdocs-table-reader-plugin>=3.1.0",
+    "mkdocs-video>=1.5.0",
     "mkdocstrings>=0.29.1",
     "mkdocstrings-python>=1.16.11",
+    "openpyxl>=3.1.5",
+    "pillow>=11.3.0",
+    "python-calamine>=0.4.0",
+    "tsam>=2.3.9",
 ]
 
 [tool.pytest.ini_options]
@@ -100,9 +113,7 @@ source = [
 ]
 
 # Static type checker settings
-
 [tool.mypy]
-exclude = ['dev/*', 'examples/*', 'doc/*', 'test/*']
 ignore_missing_imports = true
 no_implicit_optional = true
 warn_unused_ignores = true
@@ -127,6 +138,7 @@ ignore_missing_imports = true
 
 [tool.ruff]
 extend-include = ['*.ipynb']
+exclude = ["docs/"]
 
 [tool.ruff.lint]
 select = [

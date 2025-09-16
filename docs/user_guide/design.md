@@ -1,27 +1,21 @@
+# Use cases we have designed `technology-data` for
+
 <!--
 SPDX-FileCopyrightText: The technology-data authors
 SPDX-License-Identifier: MIT
+
 -->
-# Design
 
-1. [Design](#design)
-    1. [Target audience](#target-audience)
-    2. [Use Cases](#use-cases)
-        1. [🧾 UC-001: Screen techno-economic inputs for validity and completeness](#uc-001-screen-techno-economic-inputs-for-validity-and-completeness)
-        2. [🧾 UC-002: Harmonize multiple input datasets](#uc-002-harmonize-multiple-input-datasets)
-        3. [🧾 UC-003: Transform assumptions into model-ready formats](#uc-003-transform-assumptions-into-model-ready-formats)
-        4. [🧾 UC-004: Compare techno-economic indicators across datasets](#uc-004-compare-techno-economic-indicators-across-datasets)
-        5. [🧾 UC-005: Audit data provenance and transformation trace](#uc-005-audit-data-provenance-and-transformation-trace)
-
+## Design
 
 `technologydata` is designed for energy system modellers in mind.
 It intendeds to serve common use cases encountered during the design, development and execution of energy system model experiments, such as:
 
-* Screening techno-economic inputs for energy systems
-* Comparing techno-economics indicators
-* Harmonizing inputs
-* Modelling of input assumptions for gap filling
-* Transformation of assumptions into model-ready input formats
+- Screening techno-economic inputs for energy systems
+- Comparing techno-economics indicators
+- Harmonizing inputs
+- Modelling of input assumptions for gap filling
+- Transformation of assumptions into model-ready input formats
 
 The project was started for PyPSA-Eur and has since then been expanded to serve more models and purposes.
 As such it has been leaning towards serving the purposes of PyPSA-Eur and related models.
@@ -32,28 +26,39 @@ We hope to expand it to serve the wider energy system modeling community and a s
 The users we target are Energy System Modellers and Analysts.
 We assume they are all:
 
-* Familiar with the concept of techno-economics on how to describe technical and economic parameters of technologies for energy system models
-* Familiar with the methodology of transforming techno-economic parameters for alignment and harmonization
+- Familiar with the concept of techno-economics on how to describe technical and economic parameters of technologies for energy system models
+- Familiar with the methodology of transforming techno-economic parameters for alignment and harmonization
 
 The users differ in their experience in these fields, but are generally aware of the methodological background behind
 the transformations that we make available, like inflation adjustments, currency conversions or unit conversions.
 
-* They prefer simplicity and robustness in use over being able to customize the transformations.
-* They would like to be offered a range of options to choose from, but not too many.
-* They would like to be able to use the package without having to read too much documentation, but require clear documentation on the transformations that are applied.
-* Data provenance and reproducibility are important to them, so they need to be able to trace data back to its source and understand all individual steps that were applied in the transformation process to the data.
+- They prefer simplicity and robustness in use over being able to customize the transformations.
+- They would like to be offered a range of options to choose from, but not too many.
+- They would like to be able to use the package without having to read too much documentation, but require clear documentation on the transformations that are applied.
+- Data provenance and reproducibility are important to them, so they need to be able to trace data back to its source and understand all individual steps that were applied in the transformation process to the data.
 
-The users differ in their experience with Python and programming in general, we aim to serve three main user types:
+The users differ in their experience with Python and programming in general, we aim to serve three main user types
 
-1. Programmers and Data Engineers:
-    * Well familiar with using Python and object-oriented programming languages, data processing and exchange formats.
-    * Interacts with the package through Python scripts, Python modules and Jupyter notebooks.
-2. Energy System Modeller:
-    * Only basic Python programming skills.
-    * Interacts with the package through a Jupyter notebook or a Python script; may want to simply access and inspect the data without writing and executing code.
-3. Energy Analyst:
-    * No programming skills or only very basic Python skills like using pandas or DataFrames.
-    * Interacts with the package either through a Jupyter notebook or wants to be able to use csv / Spreadsheet files for inspection and use of the data.
+### Programmers and Data Engineers
+
+These users are:
+
+- Well familiar with using Python and object-oriented programming languages, data processing and exchange formats.
+- Interacts with the package through Python scripts, Python modules and Jupyter notebooks.
+
+#### Energy System Modeller
+
+These users are:
+
+- Only basic Python programming skills.
+- Interacts with the package through a Jupyter notebook or a Python script; may want to simply access and inspect the data without writing and executing code.
+
+#### Energy Analyst
+
+These users are:
+
+- No programming skills or only very basic Python skills like using pandas or DataFrames.
+- Interacts with the package either through a Jupyter notebook or wants to be able to use csv / Spreadsheet files for inspection and use of the data.
 
 ## Use Cases
 
@@ -66,6 +71,7 @@ Below follow central use cases that we want to serve with `technologydata`.
 - **Secondary**: Energy Analyst (if reviewing pre-screened data)
 
 #### 🎯 Goal
+
 Detect and correct inconsistencies or omissions in techno-economic input data, ensuring it adheres to the package's schema and parameter constraints.
 
 #### 📚 Pre-conditions
@@ -85,12 +91,16 @@ Detect and correct inconsistencies or omissions in techno-economic input data, e
 1. User gets/loads or defines technology input (via JSON, DataFrame, or the packaged data).
 2. `Technology` object is instantiated, triggering automatic validation.
 3. Schema checks enforce:
-   - Presence of required fields (e.g., name, parameter value, unit, source)
-   - Consistency between parameters (e.g., energy unit alignment)
+
+- Presence of required fields (e.g., name, parameter value, unit, source)
+- Consistency between parameters (e.g., energy unit alignment)
+
 4. User manually runs `.check_consistency()` or similar method to detect conflicting or incomplete parameters.
 5. User manually runs `.calculate_parameters()` to derive
-    - specific missing parameters based on known rules (e.g., specific investment, EAC), or
-    - all missing parameters that can be derived from the existing parameters
+
+- specific missing parameters based on known rules (e.g., specific investment, EAC), or
+- all missing parameters that can be derived from the existing parameters
+
 6. The User can manually update parameters, either overwriting existing or adding missing ones.
 7. Validated and completed `Technology` object is now ready for transformation or analysis.
 
@@ -141,13 +151,13 @@ tech = Technology(
 
 #### 📊 Importance & Frequency
 
-* Importance: High
-* Usage Frequency: Frequent, core workflow entry point
+- Importance: High
+- Usage Frequency: Frequent, core workflow entry point
 
 #### 📌 Notes
 
-* Consistency logic includes checks for units, and dependency constraints between parameters (e.g. one parameter may be derived from one or more other parameters).
-* Schema-based validation is extensible to new parameter types and sources.
+- Consistency logic includes checks for units, and dependency constraints between parameters (e.g. one parameter may be derived from one or more other parameters).
+- Schema-based validation is extensible to new parameter types and sources.
 
 ### 🧾 UC-002: Harmonize multiple input datasets
 
@@ -156,6 +166,7 @@ tech = Technology(
 - **Secondary**: Data Engineer
 
 #### 🎯 Goal
+
 Enable the user to bring multiple techno-economic datasets to a common basis (currency, year, units) using explicit, user-invoked transformation methods, so that they can be compared or combined.
 
 #### 📚 Pre-conditions
@@ -171,10 +182,12 @@ Enable the user to bring multiple techno-economic datasets to a common basis (cu
 1. User loads datasets (e.g., from JSON, CSV, or DataFrame) into separate `DataPackage` or `TechnologyCollection` objects or creates them programmatically through the package's class interface.
 2. User inspects the datasets to identify differences in currency, year, units, or other conventions.
 3. User applies transformation methods as needed:
-    - `.adjust_currency(target_currency)`
-    - `.adjust_scale(target_capacity, scaling_exponent)`
-    - `.adjust_region(target_region)`
-    - Unit conversions per parameter via Technology or TechnologyCollection level methods
+
+- `.adjust_currency(target_currency)`
+- `.adjust_scale(target_capacity, scaling_exponent)`
+- `.adjust_region(target_region)`
+- Unit conversions per parameter via Technology or TechnologyCollection level methods
+
 4. User repeats or chains transformations as required or desired for each dataset.
 5. User verifies harmonization by inspecting key parameters and units.
 6. Harmonized datasets are now ready for comparison, merging, or further analysis.
@@ -209,14 +222,14 @@ dp1.technologies = dp1.technologies.adjust_units(parameter="specific-investment"
 
 #### 📊 Importance & Frequency
 
-* Importance: High
-* Usage Frequency: Frequent, especially when integrating or comparing datasets
+- Importance: High
+- Usage Frequency: Frequent, especially when integrating or comparing datasets
 
 #### 📌 Notes
 
-* All harmonization steps are explicit and user-driven; no automatic harmonization is performed.
-* The user is responsible for the order and combination of transformations.
-* Optionally, each transformation could be logged as data provenance, allowing users to trace back the steps taken and record them in e.g. a output file for documentation.
+- All harmonization steps are explicit and user-driven; no automatic harmonization is performed.
+- The user is responsible for the order and combination of transformations.
+- Optionally, each transformation could be logged as data provenance, allowing users to trace back the steps taken and record them in e.g. a output file for documentation.
 
 ### 🧾 UC-003: Transform assumptions into model-ready formats
 
@@ -224,6 +237,7 @@ dp1.technologies = dp1.technologies.adjust_units(parameter="specific-investment"
 - **Primary**: Energy System Modeller, Programmer
 
 #### 🎯 Goal
+
 Allow the user to derive and access all model-relevant parameters (e.g., EAC, specific investment) from harmonized data, ready for direct use in energy system models such as PyPSA-Eur.
 
 #### 📚 Pre-conditions
@@ -237,8 +251,10 @@ Allow the user to derive and access all model-relevant parameters (e.g., EAC, sp
 
 1. User ensures all required base parameters (e.g., WACC, lifetime, investment) are present and harmonized.
 2. User invokes calculation methods to derive model-ready parameters:
-    - `.calculate_parameters(parameters="EAC")`
-    - `.calculate_parameters(parameters="specific-investment")`
+
+- `.calculate_parameters(parameters="EAC")`
+- `.calculate_parameters(parameters="specific-investment")`
+
 3. System computes and adds the derived parameters to the relevant `Technology` objects.
 4. User accesses the parameters directly from the `Technology` objects for export or further use.
 
@@ -263,8 +279,8 @@ tech["EAC"].value  # Access the calculated EAC parameter value
 
 #### 📊 Importance & Frequency
 
-* Importance: High
-* Usage Frequency: Frequent, especially before running model scenarios
+- Importance: High
+- Usage Frequency: Frequent, especially before running model scenarios
 
 #### 📌 Notes
 
@@ -276,6 +292,7 @@ tech["EAC"].value  # Access the calculated EAC parameter value
 - **Primary**: Energy Analyst, Energy System Modeller
 
 #### 🎯 Goal
+
 Enable the user to systematically compare key techno-economic parameters (e.g., CAPEX, OPEX, efficiency) across multiple harmonized datasets in a tabular format.
 
 #### 📚 Pre-conditions
@@ -316,13 +333,13 @@ techs["lifetime"].values  # Access lifetime values across technologies
 
 #### 📊 Importance & Frequency
 
-* Importance: Medium
-* Usage Frequency: Regular, especially for data quality checks and exploring values to be included into a model
+- Importance: Medium
+- Usage Frequency: Regular, especially for data quality checks and exploring values to be included into a model
 
 #### 📌 Notes
 
-* Tabular comparison is the core feature; visualizations can be build on top of the DataFrame by the user themselves.
-* Optional: Outlier detection and summary statistics could be a nice feature, but are also part of `pandas` already, so we can put this into the documentation as a suggestion for the user to explore themselves.
+- Tabular comparison is the core feature; visualizations can be build on top of the DataFrame by the user themselves.
+- Optional: Outlier detection and summary statistics could be a nice feature, but are also part of `pandas` already, so we can put this into the documentation as a suggestion for the user to explore themselves.
 
 ### 🧾 UC-005: Audit data provenance and transformation trace
 
@@ -331,6 +348,7 @@ techs["lifetime"].values  # Access lifetime values across technologies
 - **Secondary**: Energy Analyst
 
 #### 🎯 Goal
+
 Allow the user to trace the origin and transformation history of each data point, enabling transparency and reproducibility.
 
 #### 📚 Pre-conditions
@@ -344,8 +362,10 @@ Allow the user to trace the origin and transformation history of each data point
 1. User selects a `parameter` of a `Technology` object.
 2. The user requests the provenance information for that parameter.
 3. System provides the information about:
-    - Original source(s) of the data (from `Source` and `SourceCollection`) of the parameter
-    - All transformations applied by our package (e.g., currency adjustment, scaling, calculations, including the values that were used for these transformations)
+
+- Original source(s) of the data (from `Source` and `SourceCollection`) of the parameter
+- All transformations applied by our package (e.g., currency adjustment, scaling, calculations, including the values that were used for these transformations)
+
 4. User can export or document the provenance trace for reporting or documentation.
 
 #### 🔁 Alternate Flows
@@ -370,10 +390,10 @@ dp.to_json("<datapackage_folder>") # Includes provenance information in the JSON
 
 #### 📊 Importance & Frequency
 
-* Importance: Medium (for transparency and reproducibility)
-* Usage Frequency: Occasional, but critical for future-us, report writing and rapport
+- Importance: Medium (for transparency and reproducibility)
+- Usage Frequency: Occasional, but critical for future-us, report writing and rapport
 
 #### 📌 Notes
 
-* Only transformations performed by the package are tracked; user-made changes must be recorded manually.
-* Provenance tracking should be automatic and cover all package-driven transformations.
+- Only transformations performed by the package are tracked; user-made changes must be recorded manually.
+- Provenance tracking should be automatic and cover all package-driven transformations.

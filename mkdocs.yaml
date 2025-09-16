@@ -1,0 +1,175 @@
+site_name: Documentation
+site_url: !ENV READTHEDOCS_CANONICAL_URL
+repo_url: https://github.com/PyPSA/technology-data
+repo_name: PyPSA/technology-data
+edit_uri: edit/master/docs/
+
+# Navigation
+nav:
+- Home:
+  - Home: index.md
+  - Overview:
+    - Release Notes: home/release-notes.md
+  - Getting Started:
+    - Installation: home/installation.md
+  - Reference:
+    - Users: home/users.md
+    - Citing: home/citing.md
+    - License: home/license.md
+  - Support:
+    - FAQ: home/faq.md
+    - Contacts: home/contacts.md
+
+- User Guide:
+  - Use Cases: user_guide/design.md
+  - Parameter: user_guide/parameter.md
+
+- Contributing:
+  - Instructions: contributing/instructions.md
+  - Code of Conduct: contributing/CODE_OF_CONDUCT.md
+  - Contributors: contributing/contributors.md
+
+# Theme settings
+theme:
+  name: material
+  logo: assets/logo/technology_data_logo.png
+  favicon: assets/logo/technology_data_logo.png
+  custom_dir: docs/assets/overrides
+  font:
+    text: Overpass
+  features:
+  - navigation.tabs
+  - navigation.tabs.sticky
+  - navigation.sections
+  - navigation.tracking  # Anchor tracking
+  - navigation.indexes  # Section indexes
+  - navigation.path
+  - navigation.top # Back to top button
+  # - navigation.foot
+  - header.autohide
+  - content.action.edit
+  - content.action.view
+  - toc.follow
+  - search
+  - search.suggest
+  - search.highlight
+  - search.share
+  - announce.dismiss
+
+  palette:
+  - media: "(prefers-color-scheme: light)"
+    primary: custom
+    scheme: default
+    toggle:
+      icon: material/weather-sunny
+      name: Switch to dark mode
+  - media: "(prefers-color-scheme: dark)"
+    primary: custom
+    scheme: slate
+    toggle:
+      icon: material/weather-night
+      name: Switch to light mode
+
+extra_css:
+- assets/stylesheets/extra.css
+
+extra_javascript:
+- assets/javascripts/readthedocs.js
+- assets/javascripts/mathjax.js
+- https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+markdown_extensions:
+# Callouts/ Admonitions
+- admonition
+- pymdownx.details
+- pymdownx.superfences:
+    custom_fences:
+    - name: mermaid
+      class: mermaid
+      format: !!python/name:pymdownx.superfences.fence_code_format
+- pymdownx.arithmatex:
+    generic: true
+# Footnotes
+- footnotes
+# Tabbed content
+- pymdownx.tabbed:
+    alternate_style: true  # Abbreviations
+- pymdownx.snippets:
+    auto_append:
+    - includes/abbreviations.md
+- abbr
+- attr_list
+- md_in_html
+  # Emojis
+- pymdownx.emoji:
+    emoji_index: !!python/name:material.extensions.emoji.twemoji
+    emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  # Toctree with permalinks
+- toc:
+    title: On this page
+    permalink: true
+    toc_depth: 3
+  # Grids
+- md_in_html
+- pymdownx.caret
+- pymdownx.tilde
+
+
+plugins:
+- search
+- tags
+- autolinks
+- table-reader
+- mkdocs-video
+- git-revision-date-localized:
+    type: timeago
+    timezone: Europe/Berlin
+    enable_creation_date: true
+- git-committers:
+    repository: PyPSA/PyPSA
+    branch: v1-docs # TODO: Change to master before merging
+    token: !!python/object/apply:os.getenv ["MKDOCS_GIT_COMMITTERS_APIKEY"]
+- argref:
+    autolinks:
+    - reference_prefix: ":octicons-git-pull-request-16:"
+      target_url: https://github.com/PyPSA/technology-data/pull/<num>
+- social:
+    cards_layout_options:
+      font_family: Overpass
+      background_color: "#292F36"
+
+# Docstring generation
+- mkdocstrings:
+    enabled: true
+    default_handler: python
+    handlers:
+      python:
+        options:
+          docstring_style: numpy
+          docstring_options:
+            ignore_init_summary: true
+          docstring_section_style: list
+          filters:
+          - "!^_[^_]"
+          - "!logger"
+          heading_level: 1
+          merge_init_into_class: true
+          parameter_headings: false
+          separate_signature: true
+          show_root_heading: true
+          show_root_full_path: false
+          show_signature_annotations: true
+          show_source: false
+          show_symbol_type_heading: true
+          show_symbol_type_toc: true
+          signature_crossrefs: true
+          summary: true
+          show_if_no_docstring: true
+          show_inheritance_diagram: true
+
+
+hooks:
+- docs/assets/overrides/hooks/shortcodes.py
+
+copyright: >-
+  &copy The technology-data authors

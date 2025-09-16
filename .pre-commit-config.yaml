@@ -18,7 +18,7 @@ repos:
 
   # Ruff: Python linter and formatter
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.11.8
+  rev: v0.12.10
   hooks:
   - id: ruff
     args: [--fix]
@@ -53,6 +53,7 @@ repos:
   - id: mypy
     args: [--strict, --ignore-missing-imports, --config-file=pyproject.toml]
     additional_dependencies: [tokenize-rt==3.2.0]
+    exclude: ^docs/
 
   # Pyupgrade: Automatically upgrades Python syntax
 - repo: https://github.com/asottile/pyupgrade
@@ -66,3 +67,9 @@ repos:
   rev: v5.0.2
   hooks:
   - id: reuse
+
+- repo: https://github.com/rvben/rumdl-pre-commit
+  rev: v0.0.99  # Use the latest release tag
+  hooks:
+  - id: rumdl
+    args: ["--fix", "--disable=MD013, MD024, MD030"]

@@ -1,10 +1,11 @@
+# `Parameter` Class Documentation
+
 <!--
 SPDX-FileCopyrightText: The technology-data authors
 
 SPDX-License-Identifier: MIT
--->
 
-# `Parameter` Class Documentation
+-->
 
 ## Overview
 
@@ -126,7 +127,6 @@ param_mixed_hhv = param_mixed.change_heating_value("HHV")
 >>> print(param_mixed_hhv.magnitude, param_mixed_hhv.units, param_mixed_hhv.heating_value)
 0.13 kWh/kg higher_heating_value
 ```
-
 
 ## Limitations & Missing Features
 

@@ -239,7 +239,7 @@ Coal integrated retrofit 90%-CCS,VOM,12.8428,USD/MWh,NREL/ATB-https://data.opene
 Coal integrated retrofit 90%-CCS,VOM,13.9436,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 Coal integrated retrofit 90%-CCS,VOM,15.0357,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
 Coal integrated retrofit 90%-CCS,capture_rate,0.9,per unit,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
-Coal integrated retrofit 90%-CCS,efficiency,0.4,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
+Coal integrated retrofit 90%-CCS,efficiency,0.386,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
 Coal integrated retrofit 90%-CCS,investment,1127.8067,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 Coal integrated retrofit 90%-CCS,investment,1382.5658,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 Coal integrated retrofit 90%-CCS,investment,1637.3248,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
@@ -258,8 +258,8 @@ Coal integrated retrofit 95%-CCS,VOM,15.3851,USD/MWh,NREL/ATB-https://data.opene
 Coal integrated retrofit 95%-CCS,VOM,13.0699,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 Coal integrated retrofit 95%-CCS,VOM,14.2319,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 Coal integrated retrofit 95%-CCS,VOM,15.3851,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-Coal integrated retrofit 95%-CCS,capture_rate,1.0,per unit,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
-Coal integrated retrofit 95%-CCS,efficiency,0.4,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
+Coal integrated retrofit 95%-CCS,capture_rate,0.95,per unit,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
+Coal integrated retrofit 95%-CCS,efficiency,0.386,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
 Coal integrated retrofit 95%-CCS,investment,1172.9749,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 Coal integrated retrofit 95%-CCS,investment,1442.062,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 Coal integrated retrofit 95%-CCS,investment,1711.149,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
@@ -278,14 +278,14 @@ Coal-95%-CCS,VOM,13.2621,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?buck
 Coal-95%-CCS,VOM,11.1217,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 Coal-95%-CCS,VOM,12.1875,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 Coal-95%-CCS,VOM,13.2621,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-Coal-95%-CCS,capture_rate,1.0,per unit,"NREL, NREL ATB 2024",,,,
+Coal-95%-CCS,capture_rate,0.95,per unit,"NREL, NREL ATB 2024",,,,
 Coal-95%-CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 Coal-95%-CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 Coal-95%-CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
 Coal-95%-CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 Coal-95%-CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 Coal-95%-CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-Coal-95%-CCS,efficiency,0.4,p.u.,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
+Coal-95%-CCS,efficiency,0.403,p.u.,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
 Coal-95%-CCS,investment,4509.0336,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 Coal-95%-CCS,investment,4699.0058,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 Coal-95%-CCS,investment,4888.978,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
@@ -305,14 +305,14 @@ Coal-99%-CCS,VOM,13.5854,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?buck
 Coal-99%-CCS,VOM,11.3139,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 Coal-99%-CCS,VOM,12.4496,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 Coal-99%-CCS,VOM,13.5854,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-Coal-99%-CCS,capture_rate,1.0,per unit,"NREL, NREL ATB 2024",,,,
+Coal-99%-CCS,capture_rate,0.99,per unit,"NREL, NREL ATB 2024",,,,
 Coal-99%-CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 Coal-99%-CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 Coal-99%-CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
 Coal-99%-CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 Coal-99%-CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 Coal-99%-CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-Coal-99%-CCS,efficiency,0.4,p.u.,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
+Coal-99%-CCS,efficiency,0.403,p.u.,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
 Coal-99%-CCS,investment,4574.3366,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 Coal-99%-CCS,investment,4786.868,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 Coal-99%-CCS,investment,4999.5073,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
@@ -347,7 +347,7 @@ Coal-IGCC-90%-CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of
 Coal-IGCC-90%-CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 Coal-IGCC-90%-CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 Coal-IGCC-90%-CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-Coal-IGCC-90%-CCS,efficiency,0.4,p.u.,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
+Coal-IGCC-90%-CCS,efficiency,0.403,p.u.,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`",,,,
 Coal-IGCC-90%-CCS,investment,7881.3642,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 Coal-IGCC-90%-CCS,investment,8159.8462,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 Coal-IGCC-90%-CCS,investment,8438.2202,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
@@ -860,10 +860,10 @@ FT fuel transport ship,lifetime,15.0,years,"Assume comparable tanker as for LOHC
 Fischer-Tropsch,FOM,4.0,%/year,ICCT IRA e-fuels assumptions ,,2022.0,,
 Fischer-Tropsch,VOM,3.4029,EUR/MWh_FT,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",102 Hydrogen to Jet:  Variable O&M,2020.0,,
 Fischer-Tropsch,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,,,
-Fischer-Tropsch,carbondioxide-input,0.3,t_CO2/MWh_FT,ICCT IRA e-fuels assumptions ,"Input per 1t FT liquid fuels output, carbon efficiency increases with years (4.3, 3.9, 3.6, 3.3 t_CO2/t_FT from 2020-2050 with LHV 11.95 MWh_th/t_FT).",,,
+Fischer-Tropsch,carbondioxide-input,0.32,t_CO2/MWh_FT,ICCT IRA e-fuels assumptions ,"Input per 1t FT liquid fuels output, carbon efficiency increases with years (4.3, 3.9, 3.6, 3.3 t_CO2/t_FT from 2020-2050 with LHV 11.95 MWh_th/t_FT).",,,
 Fischer-Tropsch,efficiency,0.7,per unit,ICCT IRA e-fuels assumptions ,,,,
-Fischer-Tropsch,electricity-input,0.0,MWh_el/MWh_FT,ICCT IRA e-fuels assumptions ,"0.005 MWh_el input per FT output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output).",,,
-Fischer-Tropsch,hydrogen-input,1.4,MWh_H2/MWh_FT,ICCT IRA e-fuels assumptions ,"0.995 MWh_H2 per output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output).",,,
+Fischer-Tropsch,electricity-input,0.04,MWh_el/MWh_FT,ICCT IRA e-fuels assumptions ,"0.005 MWh_el input per FT output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output).",,,
+Fischer-Tropsch,hydrogen-input,1.43,MWh_H2/MWh_FT,ICCT IRA e-fuels assumptions ,"0.995 MWh_H2 per output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output).",,,
 Fischer-Tropsch,investment,1482100.9059,USD/MW_FT,ICCT IRA e-fuels assumptions ,,2022.0,,
 Fischer-Tropsch,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,,,
 Gasnetz,FOM,2.5,%,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz,2020.0,,
@@ -1980,7 +1980,7 @@ NG 2-on-1 Combined Cycle (F-Frame),discount rate,0.0536,per unit,"NREL, NREL ATB
 NG 2-on-1 Combined Cycle (F-Frame),discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 NG 2-on-1 Combined Cycle (F-Frame),discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 NG 2-on-1 Combined Cycle (F-Frame),discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-NG 2-on-1 Combined Cycle (F-Frame),efficiency,0.6,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
+NG 2-on-1 Combined Cycle (F-Frame),efficiency,0.573,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
 NG 2-on-1 Combined Cycle (F-Frame),investment,1093.8019,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 NG 2-on-1 Combined Cycle (F-Frame),investment,1129.2397,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 NG 2-on-1 Combined Cycle (F-Frame),investment,1164.7749,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
@@ -2000,14 +2000,14 @@ NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,VOM,3.9577,USD/MWh,NREL/ATB-https://d
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,VOM,2.9442,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,VOM,3.451,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,VOM,3.9577,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,capture_rate,1.0,per unit,"NREL, NREL ATB 2024",,,,
+NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,capture_rate,0.95,per unit,"NREL, NREL ATB 2024",,,,
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,efficiency,0.5,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
+NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,efficiency,0.527,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,investment,1624.2983,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,investment,1930.8743,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,investment,2237.4504,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
@@ -2027,14 +2027,14 @@ NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,VOM,4.0363,USD/MWh,NREL/ATB-https://d
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,VOM,2.9792,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,VOM,3.5121,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,VOM,4.0363,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,capture_rate,1.0,per unit,"NREL, NREL ATB 2024",,,,
+NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,capture_rate,0.97,per unit,"NREL, NREL ATB 2024",,,,
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,discount rate,0.0536,per unit,"NREL, NREL ATB 2024",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,efficiency,0.5,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
+NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,efficiency,0.525,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,investment,1638.0256,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,investment,1954.0452,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 NG 2-on-1 Combined Cycle (F-Frame) 97% CCS,investment,2270.1623,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
@@ -2109,7 +2109,7 @@ NG Combined Cycle F-Class integrated retrofit 90%-CCS,VOM,3.4946,USD/MWh,NREL/AT
 NG Combined Cycle F-Class integrated retrofit 90%-CCS,VOM,3.7655,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 NG Combined Cycle F-Class integrated retrofit 90%-CCS,VOM,4.0363,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
 NG Combined Cycle F-Class integrated retrofit 90%-CCS,capture_rate,0.9,per unit,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
-NG Combined Cycle F-Class integrated retrofit 90%-CCS,efficiency,0.5,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
+NG Combined Cycle F-Class integrated retrofit 90%-CCS,efficiency,0.536,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
 NG Combined Cycle F-Class integrated retrofit 90%-CCS,investment,671.7566,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 NG Combined Cycle F-Class integrated retrofit 90%-CCS,investment,839.4118,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 NG Combined Cycle F-Class integrated retrofit 90%-CCS,investment,1007.1544,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
@@ -2128,8 +2128,8 @@ NG Combined Cycle F-Class integrated retrofit 95%-CCS,VOM,4.1499,USD/MWh,NREL/AT
 NG Combined Cycle F-Class integrated retrofit 95%-CCS,VOM,3.5645,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Advanced
 NG Combined Cycle F-Class integrated retrofit 95%-CCS,VOM,3.8616,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 NG Combined Cycle F-Class integrated retrofit 95%-CCS,VOM,4.1499,USD/MWh,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
-NG Combined Cycle F-Class integrated retrofit 95%-CCS,capture_rate,1.0,per unit,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
-NG Combined Cycle F-Class integrated retrofit 95%-CCS,efficiency,0.5,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
+NG Combined Cycle F-Class integrated retrofit 95%-CCS,capture_rate,0.95,per unit,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
+NG Combined Cycle F-Class integrated retrofit 95%-CCS,efficiency,0.536,p.u.,"NREL, “Cost and performance projections for coal- and natural gas-fired power plants""",,,,
 NG Combined Cycle F-Class integrated retrofit 95%-CCS,investment,698.1411,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Advanced
 NG Combined Cycle F-Class integrated retrofit 95%-CCS,investment,875.0571,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 NG Combined Cycle F-Class integrated retrofit 95%-CCS,investment,1051.9731,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Conservative
@@ -4142,15 +4142,15 @@ direct air capture,FOM,1.3,%/year,ICCT IRA e-fuels assumptions ,Meaning of scena
 direct air capture,FOM,1.3,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,Market,Advanced
 direct air capture,compression-electricity-input,0.15,MWh/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture,2020.0,,
 direct air capture,compression-heat-output,0.2,MWh/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture,2020.0,,
-direct air capture,electricity-input,0.2,MWh_el/t_CO2,ICCT IRA e-fuels assumptions ,,,,
-direct air capture,heat-input,1.2,MWh_th/t_CO2,ICCT IRA e-fuels assumptions ,,,,
+direct air capture,electricity-input,0.24,MWh_el/t_CO2,ICCT IRA e-fuels assumptions ,,,,
+direct air capture,heat-input,1.17,MWh_th/t_CO2,ICCT IRA e-fuels assumptions ,,,,
 direct air capture,heat-output,0.75,MWh/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",403.a Direct air capture,2020.0,,
-direct air capture,investment,10516859.8722,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,R&D,Moderate
-direct air capture,investment,10516859.8722,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,Market,Moderate
-direct air capture,investment,16269350.5242,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,R&D,Conservative
-direct air capture,investment,16269350.5242,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,Market,Conservative
-direct air capture,investment,6025362.6846,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,R&D,Advanced
-direct air capture,investment,6025362.6846,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,Market,Advanced
+direct air capture,investment,10516859.8807,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,R&D,Moderate
+direct air capture,investment,10516859.8807,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,Market,Moderate
+direct air capture,investment,16269350.5496,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,R&D,Conservative
+direct air capture,investment,16269350.5496,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,Market,Conservative
+direct air capture,investment,6025362.6931,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,R&D,Advanced
+direct air capture,investment,6025362.6931,USD/t_CO2/h,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2023.0,Market,Advanced
 direct air capture,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,,,
 direct firing gas,FOM,1.1515,%/year,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx",312.a Direct firing Natural Gas:  Fixed O&M,2019.0,,
 direct firing gas,VOM,0.282,EUR/MWh,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx",312.a Direct firing Natural Gas:  Variable O&M,2019.0,,
@@ -4330,11 +4330,11 @@ hydrogen direct iron reduction furnace,investment,4277858.0,EUR/t_HBI/h,"Model a
 hydrogen direct iron reduction furnace,lifetime,40.0,years,"Model assumptions from MPP Steel Transition Tool: https://github.com/missionpossiblepartnership/mpp-steel-model/blob/9eca52db92bd2d9715f30e98ccaaf36677fdb516/mppsteel/data/import_data/CAPEX%20OPEX%20Per%20Technology.xlsx, accessed: 2022-12-05.",MPP steel model distinguishes between plant lifetime (40 years) and investment cycle (20 years). Choose plant lifetime.,2020.0,,
 hydrogen direct iron reduction furnace,ore-input,1.59,t_ore/t_hbi,"Mission Possible Partnership (2022): Steel Model (https://github.com/missionpossiblepartnership/mpp-steel-model/blob/9eca52db92bd2d9715f30e98ccaaf36677fdb516/mppsteel/data/import_data/Technology%20Business%20Cases.csv, accessed: 2022-12-03). ",Based on process ‘DRI-EAF_100% green H2’.,2020.0,,
 hydrogen storage compressor,FOM,4.0,%/year,ICCT IRA e-fuels assumptions ,,2022.0,,
-hydrogen storage compressor,compression-electricity-input,0.1,MWh_el/MWh_H2,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",1.707 kWh/kg.,,,
-hydrogen storage compressor,investment,2.0094,USD/kWh_H2,ICCT IRA e-fuels assumptions ,,2022.0,,
+hydrogen storage compressor,compression-electricity-input,0.05,MWh_el/MWh_H2,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.4.",1.707 kWh/kg.,,,
+hydrogen storage compressor,investment,1.9919,USD/kWh_H2,ICCT IRA e-fuels assumptions ,,2022.0,,
 hydrogen storage compressor,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,,,
 hydrogen storage tank type 1,FOM,4.0,%/year,ICCT IRA e-fuels assumptions ,,2022.0,,
-hydrogen storage tank type 1,investment,14.7648,USD/kWh_H2,ICCT IRA e-fuels assumptions ,,2022.0,,
+hydrogen storage tank type 1,investment,14.7386,USD/kWh_H2,ICCT IRA e-fuels assumptions ,,2022.0,,
 hydrogen storage tank type 1,lifetime,30.0,years,ICCT IRA e-fuels assumptions ,,,,
 hydrogen storage tank type 1,min_fill_level,6.0,%,"Based on Stöckl et al (2021): https://doi.org/10.48550/arXiv.2005.03464, table SI.9.",,,,
 hydrogen storage tank type 1 including compressor,FOM,1.8484,%/year,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",151a Hydrogen Storage - Tanks:  Fixed O&M,2020.0,,

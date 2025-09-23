@@ -41,11 +41,11 @@ theme:
   - navigation.tabs
   - navigation.tabs.sticky
   - navigation.sections
-  - navigation.tracking  # Anchor tracking
-  - navigation.indexes  # Section indexes
+  - navigation.tracking   # Anchor tracking
+  - navigation.indexes   # Section indexes
   - navigation.path
-  - navigation.top # Back to top button
-  # - navigation.foot
+  - navigation.top   # Back to top button
+    # - navigation.foot
   - header.autohide
   - content.action.edit
   - content.action.view
@@ -79,7 +79,7 @@ extra_javascript:
 - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 
 markdown_extensions:
-# Callouts/ Admonitions
+  # Callouts/ Admonitions
 - admonition
 - pymdownx.details
 - pymdownx.superfences:
@@ -89,31 +89,31 @@ markdown_extensions:
       format: !!python/name:pymdownx.superfences.fence_code_format
 - pymdownx.arithmatex:
     generic: true
-# Footnotes
+  # Footnotes
 - footnotes
-# Tabbed content
+  # Tabbed content
 - pymdownx.tabbed:
-    alternate_style: true  # Abbreviations
+    alternate_style: true   # Abbreviations
 - pymdownx.snippets:
     auto_append:
     - includes/abbreviations.md
 - abbr
 - attr_list
 - md_in_html
-  # Emojis
+    # Emojis
 - pymdownx.emoji:
     emoji_index: !!python/name:material.extensions.emoji.twemoji
     emoji_generator: !!python/name:material.extensions.emoji.to_svg
-  # Toctree with permalinks
+                                                       # Toctree with permalinks
+
 - toc:
     title: On this page
     permalink: true
     toc_depth: 3
-  # Grids
+    # Grids
 - md_in_html
 - pymdownx.caret
 - pymdownx.tilde
-
 
 plugins:
 - search
@@ -125,10 +125,6 @@ plugins:
     type: timeago
     timezone: Europe/Berlin
     enable_creation_date: true
-- git-committers:
-    repository: PyPSA/PyPSA
-    branch: v1-docs # TODO: Change to master before merging
-    token: !!python/object/apply:os.getenv ["MKDOCS_GIT_COMMITTERS_APIKEY"]
 - argref:
     autolinks:
     - reference_prefix: ":octicons-git-pull-request-16:"
@@ -138,7 +134,7 @@ plugins:
       font_family: Overpass
       background_color: "#292F36"
 
-# Docstring generation
+  # Docstring generation
 - mkdocstrings:
     enabled: true
     default_handler: python
@@ -166,7 +162,6 @@ plugins:
           summary: true
           show_if_no_docstring: true
           show_inheritance_diagram: true
-
 
 hooks:
 - docs/assets/overrides/hooks/shortcodes.py

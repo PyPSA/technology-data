@@ -367,6 +367,7 @@ HVDC underground,investment,1008.2934,EUR/MW/km,Härtel et al. (2017): https://d
 HVDC underground,lifetime,40.0,years,Purvins et al. (2018): https://doi.org/10.1016/j.jclepro.2018.03.095 .,"Based on estimated costs for a NA-EU connector (bidirectional,4 GW, 3000km length and ca. 3000m depth). Costs in return based on existing/currently under construction undersea cables. (same as for HVDC submarine)",2018.0
 Haber-Bosch,FOM,3.0,%/year,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Fixed O&M,2015.0
 Haber-Bosch,VOM,0.0225,EUR/MWh_NH3,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Variable O&M,2015.0
+Haber-Bosch,efficiency-heat,0.0015,per unit,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  High value heat Output,2015.0
 Haber-Bosch,electricity-input,0.2473,MWh_el/MWh_NH3,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), table 11.",Assume 5 GJ/t_NH3 for compressors and NH3 LHV = 5.16666 MWh/t_NH3.,
 Haber-Bosch,hydrogen-input,1.1484,MWh_H2/MWh_NH3,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), pg. 57.","178 kg_H2 per t_NH3, LHV for both assumed.",
 Haber-Bosch,investment,1194.148,EUR/kW_NH3,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",103 Hydrogen to Ammonia:  Specific investment,2015.0
@@ -646,6 +647,7 @@ biogas CC,lifetime,20.0,years,"Danish Energy Agency, inputs/data_sheets_for_rene
 biogas manure,fuel,19.8782,EUR/MWhth,"JRC ENSPRESO ca avg for MINBIOGAS1 (manure), ENS_BaU_GFTM",,2010.0
 biogas plus hydrogen,FOM,4.0,%/year,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Fixed O&M,2020.0
 biogas plus hydrogen,VOM,3.0626,EUR/MWh_CH4,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Variable O&M,2020.0
+biogas plus hydrogen,efficiency,0.001,per unit,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx","99 SNG from methan. of biogas:  District Heating Output,",2020.0
 biogas plus hydrogen,investment,643.1443,EUR/kW_CH4,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Specific investment,2020.0
 biogas plus hydrogen,lifetime,25.0,years,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Technical lifetime,2020.0
 biogas upgrading,FOM,17.8139,%/year,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx","82 Upgrading 3,000 Nm3 per h:  Fixed O&M ",2020.0

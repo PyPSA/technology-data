@@ -799,6 +799,9 @@ def get_data_DEA(
         "Max. storage temperature, hot",
         "Storage temperature, discharged",
         "Energy losses during storage",
+        "District Heating Output, [MWh/MWh Total Input]",
+        "High value heat Output [MWh/MWh Total Input]",
+        "District Heating Output [MWh/MWh Total Input]",
     ]
 
     # this is not good at all but requires significant changes to `test_compile_cost_assumptions` otherwise
@@ -2059,6 +2062,9 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 | (df.index.str.contains("District heat  Output"))
                 | (df.index.str.contains("Electricity Output"))
                 | (df.index.str.contains("hereof recoverable for district heating"))
+                | (df.index.str.contains("District Heating Output,"))
+                | (df.index.str.contains("High value heat Output"))
+                | (df.index.str.contains("District Heating Output"))
                 | (df.index.str.contains("Bio SNG"))
                 | (df.index.str.contains("biochar"))
                 | (df.index == ("Hydrogen"))
@@ -2083,6 +2089,22 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
 
         if tech_name == "Fischer-Tropsch":
             efficiency[years] *= 100
+
+        if tech_name == "Haber-Bosch":
+            with_high_value_heat_recovery = efficiency.index.str.contains("High value heat Output")
+            with_district_heat_recovery = efficiency.index.str.contains("District Heating Output,")
+
+            efficiency_high_value_heat = efficiency[with_high_value_heat_recovery].copy()
+            efficiency_district_heat = efficiency[with_district_heat_recovery].copy()
+
+            # change dtype at years columns to float to avoid issues with summation
+            efficiency_high_value_heat[years] = efficiency_high_value_heat[years].astype(float)
+            efficiency_district_heat[years] = efficiency_district_heat[years].astype(float)
+
+            efficiency_heat = efficiency_high_value_heat
+            efficiency_heat[years] += efficiency_district_heat[years].iloc[0]
+            efficiency_heat["parameter"] = "efficiency-heat"
+            clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_heat])
 
         # take annual average instead of name plate efficiency, unless central air-sourced heat pump
         if (
@@ -2157,7 +2179,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
 
         elif len(efficiency) != 1:
             switch = True
-            if not any(efficiency.index.str.contains("Round trip")):
+            if len(efficiency) == 0 or not any(efficiency.index.str.contains("Round trip")):
                 if df[df.index.str.contains("efficiency")].unit.empty:
                     logger.info(f"check efficiency: {str(tech_name)} is not available")
                 else:

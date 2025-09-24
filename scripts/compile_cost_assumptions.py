@@ -2091,34 +2091,34 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             )
         ].copy()
 
-        if tech_name == "Fischer-Tropsch":
-            efficiency[years] *= 100
-            with_district_heat_recovery = efficiency.index.str.contains("District Heat  Output,")
-            efficiency_heat = efficiency[with_district_heat_recovery].copy()
-            efficiency_heat["parameter"] = "efficiency-heat"
-            clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_heat])
+        if tech_name in ["Fischer-Tropsch", "methanolisation", "Haber-Bosch"]:
+            # Technology-specific setup
+            if tech_name == "Fischer-Tropsch":
+                efficiency[years] *= 100
+                patterns = ["District Heat  Output,"]
+            elif tech_name == "methanolisation":
+                patterns = ["District heating"]
+            else:  # Haber-Bosch
+                patterns = ["High value heat Output", "District Heating Output,"]
 
-        if tech_name == "methanolisation":
-            with_district_heat_recovery = efficiency.index.str.contains("District heating")
-            efficiency_heat = efficiency[with_district_heat_recovery].copy()
-            efficiency_heat["parameter"] = "efficiency-heat"
-            clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_heat])
+            # Find all matching heat recovery rows
+            heat_masks = [efficiency.index.str.contains(pattern) for pattern in patterns]
+            matching_data = [efficiency[mask] for mask in heat_masks if mask.any()]
 
-        if tech_name == "Haber-Bosch":
-            with_high_value_heat_recovery = efficiency.index.str.contains("High value heat Output")
-            with_district_heat_recovery = efficiency.index.str.contains("District Heating Output,")
+            if matching_data:
+                # Start with the first matching dataset
+                efficiency_heat = matching_data[0].copy()
+                efficiency_heat[years] = efficiency_heat[years].astype(float)
 
-            efficiency_high_value_heat = efficiency[with_high_value_heat_recovery].copy()
-            efficiency_district_heat = efficiency[with_district_heat_recovery].copy()
+                # Add any additional heat sources
+                for additional_heat in matching_data[1:]:
+                    additional_heat_values = additional_heat[years].astype(float)
+                    efficiency_heat[years] += additional_heat_values.iloc[0]
 
-            # change dtype at years columns to float to avoid issues with summation
-            efficiency_high_value_heat[years] = efficiency_high_value_heat[years].astype(float)
-            efficiency_district_heat[years] = efficiency_district_heat[years].astype(float)
-
-            efficiency_heat = efficiency_high_value_heat
-            efficiency_heat[years] += efficiency_district_heat[years].iloc[0]
-            efficiency_heat["parameter"] = "efficiency-heat"
-            clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_heat])
+                efficiency_heat["parameter"] = "efficiency-heat"
+                clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_heat])
+            else:
+                raise ValueError(f"No heat recovery data found for {tech_name} with patterns: {patterns}")
 
         # take annual average instead of name plate efficiency, unless central air-sourced heat pump
         if (

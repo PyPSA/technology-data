@@ -802,6 +802,7 @@ def get_data_DEA(
         "District Heating Output, [MWh/MWh Total Input]",
         "High value heat Output [MWh/MWh Total Input]",
         "District Heat  Output, [MWh/MWh Total Input]",
+        "District heating [MWh/MWh total input]",
     ]
 
     # this is not good at all but requires significant changes to `test_compile_cost_assumptions` otherwise
@@ -2066,6 +2067,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 | (df.index.str.contains("High value heat Output"))
                 | (df.index.str.contains("District Heating Output"))
                 | (df.index.str.contains("District Heat  Output,"))
+                | (df.index.str.contains("District heating"))
                 | (df.index.str.contains("Bio SNG"))
                 | (df.index.str.contains("biochar"))
                 | (df.index == ("Hydrogen"))
@@ -2080,6 +2082,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 | (df.unit == "MWh_e/MWh_th")
                 | (df.unit == "MWh_th/MWh_th")
                 | (df.unit == "MWh/MWh Total Input")
+                | (df.unit == "MWh/MWh total input")
                 | df.unit.str.contains("MWh_FT/MWh_H2")
                 | df.unit.str.contains("MWh_biochar/MWh_feedstock")
                 | df.unit.str.contains("ton biochar/MWh_feedstock")
@@ -2091,6 +2094,12 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
         if tech_name == "Fischer-Tropsch":
             efficiency[years] *= 100
             with_district_heat_recovery = efficiency.index.str.contains("District Heat  Output,")
+            efficiency_heat = efficiency[with_district_heat_recovery].copy()
+            efficiency_heat["parameter"] = "efficiency-heat"
+            clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_heat])
+
+        if tech_name == "methanolisation":
+            with_district_heat_recovery = efficiency.index.str.contains("District heating")
             efficiency_heat = efficiency[with_district_heat_recovery].copy()
             efficiency_heat["parameter"] = "efficiency-heat"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_heat])

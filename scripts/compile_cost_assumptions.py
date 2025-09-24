@@ -2102,7 +2102,9 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 patterns = ["High value heat Output", "District Heating Output,"]
 
             # Find all matching heat recovery rows
-            heat_masks = [efficiency.index.str.contains(pattern) for pattern in patterns]
+            heat_masks = [
+                efficiency.index.str.contains(pattern) for pattern in patterns
+            ]
             matching_data = [efficiency[mask] for mask in heat_masks if mask.any()]
 
             if matching_data:
@@ -2118,7 +2120,9 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 efficiency_heat["parameter"] = "efficiency-heat"
                 clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_heat])
             else:
-                raise ValueError(f"No heat recovery data found for {tech_name} with patterns: {patterns}")
+                raise ValueError(
+                    f"No heat recovery data found for {tech_name} with patterns: {patterns}"
+                )
 
         # take annual average instead of name plate efficiency, unless central air-sourced heat pump
         if (
@@ -2193,7 +2197,9 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
 
         elif len(efficiency) != 1:
             switch = True
-            if len(efficiency) == 0 or not any(efficiency.index.str.contains("Round trip")):
+            if len(efficiency) == 0 or not any(
+                efficiency.index.str.contains("Round trip")
+            ):
                 if df[df.index.str.contains("efficiency")].unit.empty:
                     logger.info(f"check efficiency: {str(tech_name)} is not available")
                 else:

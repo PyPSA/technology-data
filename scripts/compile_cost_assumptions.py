@@ -799,10 +799,6 @@ def get_data_DEA(
         "Max. storage temperature, hot",
         "Storage temperature, discharged",
         "Energy losses during storage",
-        "District Heating Output, [MWh/MWh Total Input]",
-        "High value heat Output [MWh/MWh Total Input]",
-        "District Heat  Output, [MWh/MWh Total Input]",
-        "District heating [MWh/MWh total input]",
     ]
 
     # this is not good at all but requires significant changes to `test_compile_cost_assumptions` otherwise
@@ -873,9 +869,11 @@ def get_data_DEA(
 
     if tech_name == "methanolisation":
         df.drop(df.loc[df.index.str.contains("1,000 t Methanol")].index, inplace=True)
+        parameters += ["District heating"]
 
     if tech_name == "Fischer-Tropsch":
         df.drop(df.loc[df.index.str.contains("l FT Liquids")].index, inplace=True)
+        parameters += ["District Heat  Output,"]
 
     if tech_name == "biomass boiler":
         df.drop(
@@ -910,6 +908,7 @@ def get_data_DEA(
             ].index,
             inplace=True,
         )
+        parameters = ["High value heat Output", "District Heating Output,"]
 
     if tech_name == "air separation unit":
         divisor = (

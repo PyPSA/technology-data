@@ -648,6 +648,7 @@ biogas CC,lifetime,20.0,years,"Danish Energy Agency, inputs/data_sheets_for_rene
 biogas manure,fuel,19.8676,EUR/MWhth,"JRC ENSPRESO ca avg for MINBIOGAS1 (manure), ENS_BaU_GFTM",,2010.0
 biogas plus hydrogen,FOM,4.0,%/year,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Fixed O&M,2020.0
 biogas plus hydrogen,VOM,3.8282,EUR/MWh_CH4,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Variable O&M,2020.0
+biogas plus hydrogen,efficiency,0.001,per unit,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx","99 SNG from methan. of biogas:  District Heating Output,",2020.0
 biogas plus hydrogen,investment,803.9304,EUR/kW_CH4,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Specific investment,2020.0
 biogas plus hydrogen,lifetime,25.0,years,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",99 SNG from methan. of biogas:  Technical lifetime,2020.0
 biogas upgrading,FOM,17.0397,%/year,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx","82 Upgrading 3,000 Nm3 per h:  Fixed O&M ",2020.0

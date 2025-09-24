@@ -818,6 +818,10 @@ def get_data_DEA(
     if tech_name == "Haber-Bosch":
         parameters += ["High value heat Output", "District Heating Output,"]
 
+    if tech_name == "biogas plus hydrogen":
+        parameters += ["District Heating Output,"]
+ 
+
     df = pd.DataFrame()
     for para in parameters:
         # attr = excel[excel.index.str.contains(para)]

@@ -16,6 +16,8 @@ Upcoming Release
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
 
+* Add excess heat output rates for renewable fuel production (methanation, methanolisation, Fischer-Tropsch, Haber-Bosch) and fuel cells.
+
 * Updated indexing of DEA Excel data for PTES and revised capital cost and FOM assumptions for 2045 and 2050.
 
 

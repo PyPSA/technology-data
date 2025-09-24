@@ -820,7 +820,6 @@ def get_data_DEA(
 
     if tech_name == "biogas plus hydrogen":
         parameters += ["District Heating Output,"]
- 
 
     df = pd.DataFrame()
     for para in parameters:

@@ -2108,7 +2108,6 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 patterns = ["High value heat Output", "District Heating Output,"]
 
             # Find all matching heat recovery rows
-            breakpoint()
             heat_masks = [
                 efficiency.index.str.contains(pattern) for pattern in patterns
             ]

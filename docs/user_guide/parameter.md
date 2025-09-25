@@ -13,7 +13,7 @@ The `Parameter` class in `technologydata` encapsulates a value, its unit, proven
 
 ## Features
 
-- **Value and Units**: Stores a numerical value (`magnitude`) and its associated units (`units`). Units are handled using `pint` and support custom currency units (e.g., `USD_2020/kW`).
+- **Value and Units**: Stores a numerical value (`magnitude`) and its associated units (`units`). Units are handled using `pint` and support custom currency units (e.g., `USD_2020/kW`). The default `pint` units definition file is available [here](https://github.com/hgrecco/pint/blob/master/pint/default_en.txt) for reference. Be mindful of false unit-friends, e.g. `t = metric_ton = tonne != ton = US_ton`
 - **Currency Unit Convention**: Currency units must follow the pattern `XYZ_YYYY`, where `XYZ` is the 3-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code (e.g., `USD`, `EUR`, `CNY`) and `YYYY` is the 4-digit year (e.g., `USD_2020`). This allows for both currency and inflation adjustment.
 - **Carrier and Heating Value**: Optionally specify an energy carrier (e.g., `H2`) and a heating value type (`LHV` or `HHV`).
 - **Provenance and Notes**: Track the origin of the data and any additional notes.

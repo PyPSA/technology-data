@@ -2015,6 +2015,12 @@ Nuclear - Small,investment,7988.9511,USD/kW,NREL/ATB-https://data.openei.org/s3_
 Nuclear - Small,investment,7988.9511,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2020.0,R&D,Moderate
 OCGT,FOM,1.7772,%/year,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",52 OCGT - Natural gas:  Fixed O&M,2015.0,,
 OCGT,VOM,4.762,EUR/MWh,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",52 OCGT - Natural gas:  Variable O&M,2015.0,,
+OCGT,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Advanced
+OCGT,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Conservative
+OCGT,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,Market,Moderate
+OCGT,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Advanced
+OCGT,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Conservative
+OCGT,discount rate,0.0394,per unit,"NREL, NREL ATB 2022",Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2018.0,R&D,Moderate
 OCGT,efficiency,0.4,per unit,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","52 OCGT - Natural gas:  Electricity efficiency, annual average",2015.0,,
 OCGT,investment,480.3903,EUR/kW,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",52 OCGT - Natural gas:  Specific investment,2015.0,,
 OCGT,lifetime,25.0,years,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx",52 OCGT - Natural gas:  Technical lifetime,2015.0,,

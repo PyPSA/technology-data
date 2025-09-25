@@ -1,49 +1,75 @@
-# SPDX-FileCopyrightText: Contributors to technology-data <https://github.com/pypsa/technology-data>
+# SPDX-FileCopyrightText: The technology-data authors
 #
-# SPDX-License-Identifier: GPL-3.0-only
-exclude: "^LICENSES"
+# SPDX-License-Identifier: MIT
 
 ci:
   autoupdate_schedule: quarterly
 
 repos:
+  # Basic pre-commit hooks for whitespace, merge conflicts, etc.
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v5.0.0
   hooks:
   - id: check-merge-conflict
   - id: check-added-large-files
-    args: ["--maxkb=2000"]
+    args: ['--maxkb=1000']
+  - id: trailing-whitespace
+  - id: end-of-file-fixer
 
-# Run ruff to lint and format
+  # Ruff: Python linter and formatter
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  # Ruff version.
-  rev: v0.12.2
+  rev: v0.12.10
   hooks:
-    # Run the linter.
   - id: ruff
     args: [--fix]
-    # Run the formatter.
   - id: ruff-format
 
-  # Find common spelling mistakes in comments and docstrings
+  # Codespell: Checks for common misspellings
 - repo: https://github.com/codespell-project/codespell
   rev: v2.4.1
   hooks:
   - id: codespell
-    args: ['--ignore-regex="(\b[A-Z]+\b)"', '--ignore-words-list=fom,appartment,bage,ore,setis,tabacco,berfore,vor,pris,WEGE,Wege,Eletricity'] # Ignore capital case words, e.g. country codes
+    args: ['--ignore-regex="(\b[A-Z]+\b)"', '--ignore-words=.codespell.ignore']
     types_or: [python, rst, markdown]
-    files: ^(scripts|doc)/
 
-  # YAML formatting
+  # Jupyter notebook cleanup
+- repo: https://github.com/aflc/pre-commit-jupyter
+  rev: v1.2.1
+  hooks:
+  - id: jupyter-notebook-cleanup
+    args: ['--remove-kernel-metadata']
+
+  # Pretty-format-yaml: YAML formatter
 - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
-  rev: v2.15.0
+  rev: v2.14.0
   hooks:
   - id: pretty-format-yaml
-    exclude: pinned\.yaml$
-    args: [--autofix, --indent, "2", --preserve-quotes]
+    args: [--autofix, --indent, '2', --preserve-quotes]
 
-  # Format Snakemake rule / workflow files
-- repo: https://github.com/snakemake/snakefmt
-  rev: v0.11.0
+  # Mypy: Static type checker for Python
+- repo: https://github.com/pre-commit/mirrors-mypy
+  rev: 'v1.15.0'
   hooks:
-  - id: snakefmt
+  - id: mypy
+    args: [--strict, --ignore-missing-imports, --config-file=pyproject.toml]
+    additional_dependencies: [tokenize-rt==3.2.0]
+    exclude: ^docs/
+
+  # Pyupgrade: Automatically upgrades Python syntax
+- repo: https://github.com/asottile/pyupgrade
+  rev: v3.16.0
+  hooks:
+  - id: pyupgrade
+    args: ["--py311-plus"]
+
+  # REUSE: Checks for REUSE license compliance
+- repo: https://github.com/fsfe/reuse-tool
+  rev: v5.0.2
+  hooks:
+  - id: reuse
+
+- repo: https://github.com/rvben/rumdl-pre-commit
+  rev: v0.0.99  # Use the latest release tag
+  hooks:
+  - id: rumdl
+    args: ["--fix", "--disable=MD013, MD024, MD030"]

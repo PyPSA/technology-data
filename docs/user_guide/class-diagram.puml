@@ -1,0 +1,224 @@
+/'
+SPDX-FileCopyrightText: The technology-data authors
+SPDX-License-Identifier: MIT
+'/
+
+@startuml Class Diagram
+
+class Source {
+  - name: str
+  - authors: str
+  - url: str
+  - url_archive: str
+  - url_date: str
+  - url_date_archive: str
+
+  + ensure_in_wayback()
+  + store_in_wayback()
+  + retrieve_from_wayback()
+  + _get_save_path()
+  + _get_content_type()
+  + _download_file()
+  + __eq__(other)
+  + __hash__(other)
+  + __str__(other)
+}
+
+note right of Source::store_in_wayback
+  Stores the source in the Internet Archive's Wayback Machine,
+  to keep it accessible in the future.
+end note
+
+note right of Source::retrieve_from_wayback
+  Retrieves the archive of the source, e.g., from a URL.
+end note
+
+class Parameter {
+  - magnitude: float
+  - units: str
+  - carrier: str
+  - heating_value: str
+  - provenance: str
+  - note: str
+  - sources: SourceCollection
+  - _pint_quantity: pint.Quantity
+  - _pint_carrier: pint.Unit
+  - _pint_heating_value: pint.Unit
+
+  + _update_pint_attributes()
+  + _check_parameter_compatibility()
+  + change_currency()
+  + change_heating_value()
+  + to()
+  + from_dict(): Parameter
+  + __add__(other: Parameter)
+  + __sub__(other: Parameter)
+  + __mul__(other: Parameter)
+  + __truediv__(other: Parameter)
+  + __pow__(other: Parameter)
+  + __eq__(other: Parameter)
+}
+
+note right of Parameter
+  Encapsulates a value, its unit,
+  data provenance (via sources).
+end note
+
+class Technology {
+  - region: str
+  - case: str
+  - year: int
+  - technology: str
+  - detailed_technology: str
+  - capacity: Parameter
+  - investment: Parameter
+  - specific_investment: Parameter
+  - lifetime: Parameter
+  - wacc: Parameter
+  // Parameters are examples
+  // The user should be able to freely add more parameters
+  - ...: Parameter
+  // To distinguish different inputs/outputs, use prefixes like
+  - input-hydrogen: Parameter
+  - input-electricity: Parameter
+  - ...
+  - output-hydrogen: Parameter
+  - output-electricity: Parameter
+
+  + __getitem__()
+  + __setitem__()
+  + from_dict(): Technology
+  + adjust_currency(): Technology               // or inplace
+  + adjust_region(): Technology                 // or inplace
+  + adjust_scale(): Technology                  // or inplace
+  + calculate_EAC(): Parameter                  // or inplace
+  + calculate_efficiency(): Parameter           // or inplace
+  + calculate_specific_investment(): Parameter  // or inplace
+  + check_consistency()
+}
+
+note right of Technology::inputs
+    A technology generally represents a conversion between
+    an input and an output. These are all the inputs, e.g.
+    quantity of water and electricity.
+end note
+
+note right of Technology::outputs
+    A technology generally represents a conversion between
+    an input and an output. These are all the outputs, e.g.
+    quantity hydrogen, oxygen and heat.
+end note
+
+note right of Technology::adjust_currency
+  Changes the currency used by all attributes using currencies.
+end note
+
+note right of Technology::adjust_region
+  Based on yet-to-be-determined logic and inputs, change the
+  attributes of the Technology to match a different region.
+end note
+
+note right of Technology::adjust_scale
+  Scales some members values (e.g., capacity, investment) to a
+  different capacity based on a scaling factor.
+end note
+
+note right of Technology::calculate_EAC
+  The `calculate_XXX` methods use attributes from the
+  Technology object to calculate the values of missing attributes
+  (or potentially calculate and then compare with current values
+  to check for consistency).
+end note
+
+class TechnologyCollection {
+  - technologies: Iterable<Technology>
+  + get(**criteria): Technology | TechnologyCollection | None
+  + from_dict(): TechnologyCollection
+  + to_json(): str
+  + to_csv(): str
+  + to_dataframe(): pd.DataFrame
+  + from_json(): TechnologyCollection
+  + create_projection(): TechnologyCollection
+  + __iter__()
+  + __len__()
+  ' TODO: Think about more methods here
+}
+
+note right of TechnologyCollection::get
+  Filters contained Technology objects by the attributes and returns matches:
+  region, case, year, technology, detailed_technology.
+  - If exactly one Technology matches, returns that Technology.
+  - If multiple Technologies match, returns a TechnologyCollection with the matches.
+  - If no matches, returns None or an empty TechnologyCollection.
+end note
+
+note right of TechnologyCollection::create_projection
+  e.g. learning curve, interpolation, extrapolation;
+  based on the Technology objects in the collection.
+  Either returns a new TechnologyCollection or adds the
+  Technology objects to the current collection.
+end note
+
+class SourceCollection {
+  - sources: Iterable<Source>
+  + retrieve_all_from_wayback()
+  + to_json()
+  + to_csv()
+  + to_dataframe()
+  + from_json()
+  + __iter__()
+  + __len__()
+  + __str__()
+  + get()
+}
+
+note left of SourceCollection::retrieve_all_from_wayback
+  Triggers the retrieve_from_wayback method for all sources
+  and stores the files locally.
+end note
+
+note left of SourceCollection::to_json
+  Export the source collection into a json file.
+end note
+
+note left of SourceCollection::to_csv
+  Export the source collection into a csv file.
+end note
+
+note left of SourceCollection::to_dataframe
+  Export the source collection into a Pandas dataframe.
+end note
+
+class Datapackage {
+  - technologies: TechnologyCollection
+  - sources: SourceCollection
+  - // potentially other Collections in the future
+  + to_csv()
+  + from_json()
+  + to_json()
+  + get_source_collection()
+}
+
+note top of Datapackage
+  Represents a datapackage, which is a collection of data files
+  and metadata that describes the data.
+  Our package includes pre-packaged data in this format and allows
+  enables to read and write data in this standardised way.
+  Currently implemented through frictionless with .csv and schema.json files.
+  Please note that the "sources" field is built in the background from "technologies"
+end note
+
+note right of Datapackage::technologies
+  Derived from the TechnologyCollection.
+end note
+
+note right of Datapackage::sources
+  Built in the background with the get_source_collection() method, which derives it from all Source objects that are related to the TechnologyCollection (i.e., all sources referenced by technologies and their parameters).
+end note
+
+Parameter --> SourceCollection : sources
+Technology --> "*" Parameter : uses for its members
+TechnologyCollection --> "*" Technology : consists of
+SourceCollection --> "*" Source : consists of
+Datapackage --> "1" TechnologyCollection : contains
+@enduml

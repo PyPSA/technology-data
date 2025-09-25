@@ -1,327 +1,163 @@
-# SPDX-FileCopyrightText: Contributors to technology-data <https://github.com/pypsa/technology-data>
+# SPDX-FileCopyrightText: The technology-data authors
 #
-# SPDX-License-Identifier: GPL-3.0-only
+# SPDX-License-Identifier: MIT
 
-# coding: utf-8
+"""
+The module is used to define sharable pytest fixtures.
+
+Fixtures are a way to provide a fixed baseline upon which tests can
+rely. They allow for setup code to be reused and can help manage
+resources needed for tests, such as database connections, test data,
+or configuration settings.
+By placing fixtures in this file, they become accessible to all test
+modules in the same directory and subdirectories, promoting code
+reusability and organization.
+"""
 
 import pathlib
+import sys
 
-import pandas as pd
 import pytest
-import yaml
+
+import technologydata
+
+sys.path.append("./technology-data")
+path_cwd = pathlib.Path.cwd()
 
 
-@pytest.fixture(scope="session")
-def config():
+def pytest_addoption(parser: pytest.Parser) -> None:
     """
-    Fixture to load configuration from config.yaml file.
+    Add custom command-line options to pytest.
 
-    Returns
-    -------
-    dict
-        configuration dictionary
-    """
-    path_config = pathlib.Path(pathlib.Path.cwd(), "config.yaml")
-    try:
-        with open(path_config) as file:
-            config_dict = yaml.safe_load(file)
-    except FileNotFoundError:
-        pytest.fail(f"Configuration file {path_config} not found.")
-    return config_dict
-
-
-@pytest.fixture(scope="function")
-def cost_dataframe():
-    """
-    Fixture to provide a sample cost dataframe.
-
-    Returns
-    -------
-    pandas.DataFrame
-        sample data for cost
-    """
-    return pd.DataFrame(
-        {
-            "technology": ["coal"] * 8 + ["another_tech"],
-            "parameter": [
-                "investment",
-                "FOM",
-                "VOM",
-                "fuel",
-                "investment",
-                "discount rate",
-                "co2 intensity",
-                "lifetime",
-                "investment",
-            ],
-            "value": [1.0] * 8 + [3.0],
-            "unit": ["unit"] * 9,
-            "source": ["source"] * 9,
-            "further description": list("abcdefghi"),
-            "currency_year": [2020] * 9,
-        }
-    )
-
-
-@pytest.fixture(scope="function")
-def atb_cost_dataframe():
-    """
-    Fixture to provide a sample ATB cost dataframe.
-
-    Returns
-    -------
-    pandas.DataFrame
-        sample data for ATB cost
-    """
-    return pd.DataFrame(
-        {
-            "technology": ["coal"] * 6,
-            "parameter": [
-                "investment",
-                "FOM",
-                "VOM",
-                "fuel",
-                "investment",
-                "discount rate",
-            ],
-            "value": [2.0] * 6,
-            "unit": ["unit_atb"] * 6,
-            "source": ["source_atb"] * 6,
-            "further description": list("abcdef"),
-            "currency_year": [2020] * 6,
-            "financial_case": ["R&D"] * 6,
-            "scenario": ["Moderate"] * 6,
-        }
-    )
-
-
-@pytest.fixture(scope="function")
-def mock_input_data():
-    """
-    Fixture to provide a sample mock input dataframe.
-
-    Returns
-    -------
-    pandas.DataFrame
-        sample mock input data
-    """
-    return pd.DataFrame(
-        {
-            "technology": ["random_tech"] * 50
-            + [
-                "central air-sourced heat pump",
-                "central gas boiler",
-                "central resistive heater",
-                "decentral air-sourced heat pump",
-                "decentral gas boiler",
-                "decentral ground-sourced heat pump",
-            ]
-            + ["fuel cell"] * 4,
-            "unit": [
-                "kW",
-                "€",
-                " per ",
-                " / ",
-                " /",
-                "J/s",
-                "$",
-                "₤",
-                "MEUR",
-                "mio EUR",
-                "mill. EUR",
-                "1000EUR",
-                "k EUR",
-                "r/kW",
-                "r/GWh",
-                "r/GJ",
-                " a year",
-                "2015EUR",
-                "2015-EUR",
-                "2020-EUR",
-                "EUR2015",
-                "EUR-2015",
-                "MWe",
-                "EUR/MW of total input_e",
-                "MWth",
-                "MWheat",
-                "MWhth",
-                "MWhheat",
-                "MWH Liquids",
-                "MW Liquids",
-                "MW Methanol",
-                "MW/year FT Liquids/year",
-                "MW/year Methanol",
-                "MWh FT Liquids/year",
-                "MWh methanol",
-                "MW/year SNG",
-                "MWh SNG",
-                "MW SNG",
-                "EUR/MWh of total input",
-                "EUR/MWeh",
-                "% -points of heat loss",
-                "FT Liquids Output, MWh/MWh Total Input",
-                "MW Ammonia output",
-                "MW Ammonia",
-                "MWh Ammonia",
-                "EUR/MW/y",
-                "EUR/MW",
-                "EUR/MW/year",
-                "EUR/MWh",
-                "MW",
-                "EUR/MW",
-                "EUR/MWh",
-                "MW",
-                "EUR/MW",
-                "EUR/MW/year",
-                "EUR/MWh",
-                "EUR/MW",
-                "EUR/MW/year",
-                "EUR/MWh",
-                "MW",
-            ],
-            "value": [1000.0]
-            + [1.0] * 7
-            + [0.000001] * 3
-            + [0.001] * 3
-            + [1000.0]
-            + [1.0] * 45,
-        },
-    ).set_index(["technology"])
-
-
-@pytest.fixture(scope="function")
-def mock_output_data():
-    """
-    Fixture to provide a sample mock output dataframe.
-
-    Returns
-    -------
-    Callable
-        a function to generate mock output data based on the source
-    """
-
-    def mock_output(source):
-        unit_list = (
-            ["MW", "EUR"]
-            + ["/"] * 3
-            + ["W"]
-            + ["EUR"] * 7
-            + ["r/MW"]
-            + ["r/MWh"] * 2
-            + ["/year"]
-            + ["EUR"] * 5
-            + [
-                "MW_e",
-                "EUR/MW_e",
-                "MW_th",
-                "MW_th",
-                "MWh_th",
-                "MWh_th",
-                "MWh_FT",
-                "MW_FT",
-                "MW_MeOH",
-                "MW_FT/year",
-                "MW_MeOH/year",
-                "MWh_FT",
-                "MWh_MeOH",
-                "MW_CH4/year",
-                "MWh_CH4",
-                "MW_CH4",
-                "EUR/MWh_e",
-                "EUR/MW_eh",
-                "MWh_th/MWh_el",
-                "MWh_FT/MWh_H2",
-                "MW_NH3",
-                "MW_NH3",
-                "MWh_NH3",
-                "EUR/MW/year",
-                "EUR/MW",
-                "EUR/MW/year",
-                "EUR/MWh",
-                "MW",
-            ]
-        )
-
-        if source == "dea":
-            unit_list += [
-                "EUR/MW_th",
-                "EUR/MWh_th",
-                "MW_th",
-                "EUR/MW_th",
-                "EUR/MW_th/year",
-                "EUR/MWh_th",
-                "EUR/MW_e",
-                "EUR/MW_e/year",
-                "EUR/MWh_e",
-                "MW_e",
-            ]
-        else:
-            unit_list += [
-                "EUR/MW",
-                "EUR/MWh",
-                "MW",
-                "EUR/MW",
-                "EUR/MW/year",
-                "EUR/MWh",
-                "EUR/MW",
-                "EUR/MW/year",
-                "EUR/MWh",
-                "MW",
-            ]
-
-        return pd.DataFrame(
-            {
-                "technology": ["random_tech"] * 50
-                + [
-                    "central air-sourced heat pump",
-                    "central gas boiler",
-                    "central resistive heater",
-                    "decentral air-sourced heat pump",
-                    "decentral gas boiler",
-                    "decentral ground-sourced heat pump",
-                ]
-                + ["fuel cell"] * 4,
-                "unit": unit_list,
-                "value": [1.0] * 6
-                + [
-                    0.8917822267802202,
-                    1.177107611177814,
-                ]
-                + [1.0] * 7
-                + [3.6]
-                + [1.0] * 44,
-            },
-        ).set_index(["technology"])
-
-    return mock_output
-
-
-@pytest.fixture(scope="function")
-def mock_inflation_data(tmpdir):
-    """
-    Fixture to provide a mock data for the inflation rate.
+    This function adds a custom option `--run_webarchive` to the pytest command line.
+    When this option is specified, it allows the execution of tests marked with the `webarchive` marker.
 
     Parameters
     ----------
-    tmpdir
-        pytest built-in fixture that provides a temporary directory unique to the test invocation
+    parser : argparse.ArgumentParser
+        The parser object used to add custom options.
+
+    """
+    parser.addoption(
+        "--run_webarchive",
+        action="store_true",
+        default=False,
+        help="run the webarchive tests",
+    )
+
+
+def pytest_configure(config: pytest.Config) -> None:
+    """
+    Configure pytest with custom markers.
+
+    This function adds a custom marker `webarchive` to pytest. Tests marked with this marker
+    will only be run if the `--run_webarchive` option is specified.
+
+    Parameters
+    ----------
+    config : pytest.Config
+        The pytest configuration object.
+
+    """
+    config.addinivalue_line("markers", "webarchive: mark test as webarchive to run")
+
+
+def pytest_collection_modifyitems(config: pytest.Config, items: pytest.Item) -> None:
+    """
+    Modify the test items collection based on command-line options.
+
+    This function modifies the collection of test items. If the `--run_webarchive` option is not specified,
+    it skips tests marked with the `webarchive` marker.
+    By default, tests marked with `webarchive` will be skipped unless the option `--run_webarchive` is provided.
+    This is because the CI was failing due to rate limits on anonymous capture webarchive requests using savepagenow.
+    For further details, see https://github.com/open-energy-transition/technology-data/pull/41.
+
+    Parameters
+    ----------
+    config : pytest.Config
+        The pytest configuration object.
+    items : list
+        The list of test items collected by pytest.
+
+    """
+    if config.getoption("--run_webarchive"):
+        return
+    skip_webarchive = pytest.mark.skip(reason="need --run_webarchive option to run")
+    for item in items:
+        if "webarchive" in item.keywords:
+            item.add_marker(skip_webarchive)
+
+
+def create_source_from_params(params: dict[str, str]) -> technologydata.Source:
+    """
+    Create a Source object from a parameter dictionary with validation.
+
+    This function takes a dictionary of parameters and validates that the required fields are present.
+    If any required fields are missing, a ValueError is raised. If all required fields are present,
+    a new Source object is created and returned.
+
+    Parameters
+    ----------
+    params : dict[str, str]
+        A dictionary containing the parameters for creating a Source object.
+        Must include the keys "source_title" and "source_authors".
+        Other keys are optional.
 
     Returns
     -------
-    pathlib.Path
-        temporary file path containing the mock data
+    technologydata.Source
+        A Source object initialized with the provided parameters.
+
+    Raises
+    ------
+    ValueError
+        If any of the required fields ("source_title", "source_authors") are missing from the params.
+
     """
-    data = {
-        2001: [2.0],
-        2002: [1.5],
-        2003: [2.5],
-        2004: [1.8],
-    }
-    index = ["European Union - 27 countries (from 2020)", "United States"]
-    inflation_rate_output_path = pathlib.Path(tmpdir, "inflation_rate.xlsx")
-    inflation_rate_dataframe = pd.DataFrame(data, index=index)
-    inflation_rate_dataframe.to_excel(
-        inflation_rate_output_path, sheet_name="Sheet 1", startrow=8
+    return technologydata.Source(
+        title=params["source_title"],
+        authors=params["source_authors"],
+        url=params.get("source_url"),
+        url_archive=params.get("source_url_archive"),
+        url_date=params.get("source_url_date"),
+        url_date_archive=params.get("source_url_date_archive"),
     )
-    yield inflation_rate_output_path
-    pathlib.Path(inflation_rate_output_path).unlink(missing_ok=True)
+
+
+@pytest.fixture(scope="function")  # type: ignore
+def example_source(request: pytest.FixtureRequest) -> technologydata.Source:
+    """Fixture to create an example source."""
+    return create_source_from_params(request.param)
+
+
+@pytest.fixture(scope="function")  # type: ignore
+def example_source_collection(
+    request: pytest.FixtureRequest,
+) -> technologydata.SourceCollection:
+    """
+    Fixture to create an example SourceCollection from a list of parameter dicts.
+
+    Each dict in the list must contain the following keys:
+        - source_title
+        - source_authors
+
+    This fixture is compatible with pytest parametrize.
+    """
+    sources_params: list[dict[str, str]] = request.param
+    sources = [create_source_from_params(params) for params in sources_params]
+    return technologydata.SourceCollection(sources=sources)
+
+
+@pytest.fixture(scope="function")  # type: ignore
+def example_parameter(request: pytest.FixtureRequest) -> technologydata.Parameter:
+    """Fixture to create an example parameter."""
+    source_list = request.param.pop("parameter_sources", [])
+    return technologydata.Parameter(
+        magnitude=request.param.get("parameter_magnitude"),
+        units=request.param.get("parameter_units"),
+        carrier=request.param.get("parameter_carrier"),
+        heating_value=request.param.get("parameter_heating_value"),
+        provenance=request.param.get("parameter_provenance"),
+        note=request.param.get("parameter_note"),
+        sources=technologydata.SourceCollection(sources=source_list),
+    )

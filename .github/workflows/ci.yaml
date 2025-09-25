@@ -1,64 +1,41 @@
-name: CI
+# SPDX-FileCopyrightText: The technology-data authors
+#
+# SPDX-License-Identifier: MIT
+name: Technologydata prototype CI
 
 on:
   push:
-    branches: [master]
+    branches: [prototype-2]
   pull_request:
-    branches: [master]
-  schedule:
-  - cron: "0 5 * * 0"
-
-
-# Cancel any in-progress runs when a new run is triggered
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+    branches: [prototype-2]
 
 jobs:
-  build:
-    name: CI
+  test:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        shell: bash -l {0}
-
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Setup micromamba
-      uses: mamba-org/setup-micromamba@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
       with:
-        micromamba-version: latest
-        environment-file: environment.yaml
-        log-level: debug
-        init-shell: bash
-        cache-environment: true
-        cache-downloads: true
+        python-version: "3.13"
+
+    - name: Cache Python dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/uv.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+    - name: Install package and dependencies
+      run: |
+        python -m pip install uv
+        uv lock
+        uv sync
 
     - name: Run unit tests
       run: |
-        make unit-test
-
-    - name: Test snakemake workflows
-      run: |
-        make test
-
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: technology-data
-        path: outputs/
-
-    - name: Check for differences in generated outputs
-      run: |-
-        git config --global --add safe.directory $GITHUB_WORKSPACE
-        git add outputs/
-        if ! git diff --cached --quiet; then
-          echo "Generated outputs differ from the branch. Please commit rerun `snakemake` and commit the changes to the `outputs/*.csv` files."
-          git diff --cached
-          exit 1
-        else
-          echo "No differences found in generated outputs."
-        fi
+        uv run pytest

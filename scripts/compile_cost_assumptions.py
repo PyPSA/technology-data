@@ -2096,9 +2096,9 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
         ].copy()
 
         if tech_name in ["Fischer-Tropsch", "Haber-Bosch"]:
+            efficiency[years] *= 100
             # Technology-specific setup
             if tech_name == "Fischer-Tropsch":
-                efficiency[years] *= 100
                 patterns = ["District Heat  Output,"]
             else:  # Haber-Bosch
                 patterns = ["High value heat Output", "District Heating Output,"]
@@ -2120,6 +2120,9 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                     efficiency_heat[years] += additional_heat_values.iloc[0]
 
                 efficiency_heat["parameter"] = "efficiency-heat"
+                if len(patterns) > 1:
+                    # pass correct information to "further description" column
+                    efficiency_heat.index = [f"{patterns[0]} + {patterns[1]}"]
                 clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_heat])
             else:
                 raise ValueError(

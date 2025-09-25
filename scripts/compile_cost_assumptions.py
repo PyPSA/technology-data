@@ -2072,7 +2072,6 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 | (df.index.str.contains("High value heat Output"))
                 | (df.index.str.contains("District Heating Output"))
                 | (df.index.str.contains("District Heat  Output,"))
-                | (df.index.str.contains("District heating"))
                 | (df.index.str.contains("Bio SNG"))
                 | (df.index.str.contains("biochar"))
                 | (df.index == ("Hydrogen"))
@@ -2096,13 +2095,11 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             )
         ].copy()
 
-        if tech_name in ["Fischer-Tropsch", "methanolisation", "Haber-Bosch"]:
+        if tech_name in ["Fischer-Tropsch", "Haber-Bosch"]:
             # Technology-specific setup
             if tech_name == "Fischer-Tropsch":
                 efficiency[years] *= 100
                 patterns = ["District Heat  Output,"]
-            elif tech_name == "methanolisation":
-                patterns = ["District heating"]
             else:  # Haber-Bosch
                 patterns = ["High value heat Output", "District Heating Output,"]
 

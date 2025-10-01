@@ -229,7 +229,7 @@ FT fuel transport ship,FOM,5.0,%/year,"Assume comparable tanker as for LOHC tran
 FT fuel transport ship,capacity,75000.0,t_FTfuel,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",,2020.0
 FT fuel transport ship,investment,35000000.0,EUR,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",,2020.0
 FT fuel transport ship,lifetime,15.0,years,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",,2020.0
-Fischer-Tropsch,FOM,0.0008,%/year,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",102 Hydrogen to Jet:  Fixed O&M,2020.0
+Fischer-Tropsch,FOM,6.1818,%/year,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",102 Hydrogen to Jet:  Fixed O&M,2020.0
 Fischer-Tropsch,VOM,3.4029,EUR/MWh_FT,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",102 Hydrogen to Jet:  Variable O&M,2020.0
 Fischer-Tropsch,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,
 Fischer-Tropsch,carbondioxide-input,0.301,t_CO2/MWh_FT,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","Input per 1t FT liquid fuels output, carbon efficiency increases with years (4.3, 3.9, 3.6, 3.3 t_CO2/t_FT from 2020-2050 with LHV 11.95 MWh_th/t_FT).",

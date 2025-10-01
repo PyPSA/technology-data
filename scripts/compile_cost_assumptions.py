@@ -1593,6 +1593,9 @@ def clean_up_units(
         "MWh SNG", "MWh_CH4"
     )
     technology_dataframe.unit = technology_dataframe.unit.str.replace(
+        "MW-methanol", "MW_MeOH"
+    )
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
         "MW SNG", "MW_CH4"
     )
     technology_dataframe.unit = technology_dataframe.unit.str.replace(
@@ -1688,12 +1691,6 @@ def clean_up_units(
                 "MW": "MW_e",
             }
         )
-
-        if "methanolisation" in technology_dataframe.index:
-            technology_dataframe = technology_dataframe.sort_index()
-            technology_dataframe.loc[("methanolisation", "Variable O&M"), "unit"] = (
-                "EUR/MWh_MeOH"
-            )
 
     technology_dataframe.unit = technology_dataframe.unit.str.replace(r"\)", "")
     return technology_dataframe
@@ -1892,6 +1889,9 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
         clean_df[tech_name] = pd.DataFrame()
         switch = False
         df = technology_dataframe.loc[tech_name]
+        if tech_name == "methanolisation":
+            print(df)
+            input('')
 
         # --- investment ----
         investment = df[

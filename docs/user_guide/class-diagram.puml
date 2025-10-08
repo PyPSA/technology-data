@@ -14,7 +14,7 @@ class Source {
   - url_date_archive: str
 
   + ensure_in_wayback()
-  + store_in_wayback()
+  + _store_in_wayback()
   + retrieve_from_wayback()
   + _get_save_path()
   + _get_content_type()
@@ -24,7 +24,7 @@ class Source {
   + __str__(other)
 }
 
-note right of Source::store_in_wayback
+note right of Source::_store_in_wayback
   Stores the source in the Internet Archive's Wayback Machine,
   to keep it accessible in the future.
 end note

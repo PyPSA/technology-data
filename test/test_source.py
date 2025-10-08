@@ -158,7 +158,7 @@ class TestSource:
         url_to_archive = (
             "https://www.engineeringtoolbox.com/co2-emission-fuels-d_1085.html"
         )
-        archived_info = technologydata.Source.store_in_wayback(url_to_archive)
+        archived_info = technologydata.Source._store_in_wayback(url_to_archive)
 
         # Check if archived_info is None
         assert archived_info is not None, "archived_info should not be None"

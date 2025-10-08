@@ -8,7 +8,7 @@ Source class for representing bibliographic and web sources, with archiving supp
 Examples
 --------
 >>> src = Source(title="Example Source", authors="The Authors")
->>> src.store_in_wayback()
+>>> src._store_in_wayback()
 >>> src.retrieve_from_wayback()
 
 """
@@ -172,7 +172,7 @@ class Source(pydantic.BaseModel):  # type: ignore
             )
 
         if self.url_archive is None and self.url_date_archive is None:
-            archived_info = self.store_in_wayback(self.url)
+            archived_info = self._store_in_wayback(self.url)
             if archived_info is not None:
                 archived_url, new_capture_flag, timestamp = archived_info
                 if new_capture_flag:
@@ -187,7 +187,7 @@ class Source(pydantic.BaseModel):  # type: ignore
                 self.url_archive = archived_url
 
     @staticmethod
-    def store_in_wayback(
+    def _store_in_wayback(
         url_to_archive: str,
     ) -> tuple[Any, bool | None, str | None] | None:
         """
@@ -215,7 +215,7 @@ class Source(pydantic.BaseModel):  # type: ignore
         --------
         >>> from technologydata import Source
         >>> some_url = "some_url"
-        >>> archived_info = Source.store_in_wayback(some_url)
+        >>> archived_info = Source._store_in_wayback(some_url)
 
         """
         archive_url = savepagenow.capture_or_cache(url_to_archive)

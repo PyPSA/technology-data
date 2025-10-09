@@ -869,6 +869,7 @@ def get_data_DEA(
 
     if tech_name == "methanolisation":
         df.drop(df.loc[df.index.str.contains("1,000 t Methanol")].index, inplace=True)
+        df.drop(df.loc[df.index.str.contains("TPD")].index, inplace=True)
 
     if tech_name == "Fischer-Tropsch":
         df.drop(df.loc[df.index.str.contains("l FT Liquids")].index, inplace=True)
@@ -963,6 +964,9 @@ def get_data_DEA(
 
     if "solid biomass power" in tech_name:
         df.index = df.index.str.replace("EUR/MWeh", "EUR/MWh")
+
+    if "methanolisation" in tech_name:
+        df.index = df.index.str.replace("[MW-methanol/year]", "MW_MeOH/year")
 
     if "biochar pyrolysis" in tech_name:
         df = biochar_pyrolysis_harmonise_dea(df)
@@ -1573,6 +1577,9 @@ def clean_up_units(
     technology_dataframe.unit = technology_dataframe.unit.str.replace(
         "MW Methanol", "MW_MeOH"
     )
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
+        "[MW_MeOH/year]", "MW_MeOH/year"
+    )
     technology_dataframe.unit = technology_dataframe.unit.str.replace("MW output", "MW")
     technology_dataframe.unit = technology_dataframe.unit.str.replace(
         "MW/year FT Liquids/year", "MW_FT/year"
@@ -1889,10 +1896,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
         clean_df[tech_name] = pd.DataFrame()
         switch = False
         df = technology_dataframe.loc[tech_name]
-        if tech_name == "methanolisation":
-            print(df)
-            input('')
-
+        
         # --- investment ----
         investment = df[
             (
@@ -1915,7 +1919,6 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 | (df.unit == "EUR/MWh/year")
                 | (df.unit == "EUR/MW_e, 2020")
                 | (df.unit == "EUR/MW input")
-                | (df.unit == "EUR/MW-methanol")
                 | (df.unit == "EUR/t_N2/h")  # air separation unit
                 | (df.unit == "EUR/MW_biochar")
             )

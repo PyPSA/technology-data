@@ -8,11 +8,13 @@ import csv
 import json
 import pathlib
 import re
+import typing
 from collections.abc import Iterator
-from typing import Annotated, Any, Self
+from typing import Annotated, Self
 
 import pandas
 import pydantic
+import pydantic_core
 
 from technologydata.source import Source
 
@@ -206,44 +208,31 @@ class SourceCollection(pydantic.BaseModel):  # type: ignore
     @classmethod
     def from_json(
         cls,
-        file_path: pathlib.Path | str | None = None,
-        from_str: list[dict[str, Any]] | None = None,
+        file_path: pathlib.Path | str,
     ) -> Self:
         """
         Import the SourceCollection from a JSON file.
 
         Parameters
         ----------
-        file_path : Optional[pathlib.Path | str]
+        file_path : pathlib.Path | str
             The path to the JSON file to be imported.
-        from_str : Optional[list]
-            The list of dictionaries with Source fields.
 
         """
-        if file_path is None and from_str is None:
-            raise ValueError(
-                "Both file_path and from_str are None. One must be provided."
-            )
+        if isinstance(file_path, (pathlib.Path | str)):
+            file_path = pathlib.Path(file_path)
+        else:
+            raise TypeError("file_path must be a pathlib.Path or str")
 
         json_data = None
 
         # Load data from file if file_path is provided
-        if file_path is not None:
-            if not isinstance(file_path, (pathlib.Path | str)):
-                raise TypeError(
-                    f"file_path must be a pathlib.Path or str, but got {type(file_path)}"
-                )
-            path = pathlib.Path(file_path)
-            with path.open(encoding="utf-8") as jsonfile:
-                json_data = json.load(jsonfile)
+        with open(file_path, encoding="utf-8") as jsonfile:
+            json_data = jsonfile.read()
 
-        # Override json_data if from_str is provided
-        if from_str is not None:
-            if not isinstance(from_str, list):
-                raise TypeError(f"from_str must be a list, but got {type(from_str)}")
-            json_data = {"sources": [Source(**source) for source in from_str]}
-
-        if json_data is None:
-            raise ValueError("No data to load. Provide either a file_path or from_str.")
-
-        return cls(**json_data)
+        # pydantic_core.from_json return Any. Therefore, typing.cast makes sure that
+        # the output is indeed a TechnologyCollection
+        return typing.cast(
+            SourceCollection,
+            cls.model_validate(pydantic_core.from_json(json_data, allow_partial=True)),
+        )

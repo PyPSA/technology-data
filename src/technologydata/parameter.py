@@ -15,7 +15,7 @@ Examples
 """
 
 import logging
-from typing import Annotated, Any, Self
+from typing import Annotated, Self
 
 import pint
 from pydantic import BaseModel, Field, PrivateAttr
@@ -669,46 +669,4 @@ class Parameter(BaseModel):  # type: ignore
             provenance=self.provenance,
             note=self.note,
             sources=self.sources,
-        )
-
-    @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> Self:
-        """
-        Create an instance of the class from a dictionary.
-
-        Parameters
-        ----------
-        cls : type
-            The class to instantiate.
-        data : dict
-            A dictionary containing the data to initialize the class instance. Expected keys include:
-                - "magnitude"
-                - "units"
-                - "carrier"
-                - "heating_value"
-                - "provenance"
-                - "note"
-                - "sources" (list): A list of source data dictionaries, to be converted into a SourceCollection.
-
-        Returns
-        -------
-        Parameter
-            An instance of the class initialized with the provided data.
-
-        Notes
-        -----
-        This method converts the "sources" list into a `SourceCollection` using `SourceCollection.from_json()`.
-
-        """
-        # Convert sources list into SourceCollection
-        sources_data = data.get("sources", [])
-        sources = SourceCollection.from_json(from_str=sources_data)
-        return cls(
-            magnitude=data.get("magnitude"),
-            units=data.get("units"),
-            carrier=data.get("carrier"),
-            heating_value=data.get("heating_value"),
-            provenance=data.get("provenance"),
-            note=data.get("note"),
-            sources=sources,
         )

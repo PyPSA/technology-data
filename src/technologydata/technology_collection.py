@@ -8,11 +8,13 @@ import csv
 import json
 import pathlib
 import re
+import typing
 from collections.abc import Iterator
 from typing import Annotated, Self
 
 import pandas
 import pydantic
+import pydantic_core
 
 from technologydata.technology import Technology
 
@@ -219,20 +221,18 @@ class TechnologyCollection(pydantic.BaseModel):  # type: ignore
         TypeError
             If `file_path` is not a pathlib.Path or str.
 
-        Notes
-        -----
-        This method reads the JSON data from the specified file, creates `Technology` objects
-        for each item in the JSON list using `Technology.from_dict()`, and returns a new
-        `TechnologyCollection` containing these objects.
-
         """
-        if isinstance(file_path, pathlib.Path | str):
+        if isinstance(file_path, (pathlib.Path | str)):
             file_path = pathlib.Path(file_path)
         else:
             raise TypeError("file_path must be a pathlib.Path or str")
+
         with open(file_path, encoding="utf-8") as jsonfile:
-            json_data = json.load(jsonfile)
-        techs = []
-        for item in json_data:
-            techs.append(Technology.from_dict(item))
-        return cls(technologies=techs)
+            json_data = jsonfile.read()
+
+        # pydantic_core.from_json return Any. Therefore, typing.cast makes sure that
+        # the output is indeed a TechnologyCollection
+        return typing.cast(
+            TechnologyCollection,
+            cls.model_validate(pydantic_core.from_json(json_data, allow_partial=True)),
+        )

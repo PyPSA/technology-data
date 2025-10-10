@@ -20,7 +20,7 @@ class TestDatapackage:
             path_cwd,
             "test",
             "test_data",
-            "solar_photovoltaics_example_03",
+            "solar_photovoltaics_example",
             "technologies.json",
         )
 

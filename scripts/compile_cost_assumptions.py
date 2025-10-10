@@ -1896,7 +1896,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
         clean_df[tech_name] = pd.DataFrame()
         switch = False
         df = technology_dataframe.loc[tech_name]
-        
+
         # --- investment ----
         investment = df[
             (
@@ -1972,7 +1972,9 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 # See issue: https://github.com/PyPSA/technology-data/issues/203
                 fixed[years] /= 1000  # in €/MWhCapacity/year
             if tech_name == "Fischer-Tropsch":
-                fixed[years] *= 8000 # conversion from €/MWh to €/MW/year, assuming 8000 full load hours
+                fixed[years] *= (
+                    8000  # conversion from €/MWh to €/MW/year, assuming 8000 full load hours
+                )
             if len(fixed) == 1:
                 fixed["parameter"] = "fixed"
                 clean_df[tech_name] = pd.concat([clean_df[tech_name], fixed])

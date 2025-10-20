@@ -22,29 +22,29 @@ class Technology(pydantic.BaseModel):  # type: ignore
     ----------
     name : str
         Name of the technology.
+    detailed_technology : str
+        More detailed technology name.
+    case : str
+        Case or scenario identifier.
     region : str
         Region identifier.
     year : int
         Year of the data.
     parameters : Dict[str, Parameter]
         Dictionary of parameter names to Parameter objects.
-    case : str
-        Case or scenario identifier.
-    detailed_technology : str
-        More detailed technology name.
 
     """
 
     name: Annotated[str, pydantic.Field(description="Name of the technology.")]
+    detailed_technology: Annotated[
+        str, pydantic.Field(description="Detailed technology name.")
+    ]
+    case: Annotated[str, pydantic.Field(description="Case or scenario identifier.")]
     region: Annotated[str, pydantic.Field(description="Region identifier.")]
     year: Annotated[int, pydantic.Field(description="Year of the data.")]
     parameters: Annotated[
         dict[str, Parameter],
         pydantic.Field(default_factory=dict, description="Parameters."),
-    ]
-    case: Annotated[str, pydantic.Field(description="Case or scenario identifier.")]
-    detailed_technology: Annotated[
-        str, pydantic.Field(description="Detailed technology name.")
     ]
 
     def __getitem__(self, key: str) -> Parameter:

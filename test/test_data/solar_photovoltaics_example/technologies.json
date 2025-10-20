@@ -2,6 +2,8 @@
     "technologies": [
         {
             "name": "Solar photovoltaics",
+            "detailed_technology": "Si-HC",
+            "case": "example-scenario",
             "region": "DEU",
             "year": 2022,
             "parameters": {
@@ -145,12 +147,12 @@
                         ]
                     }
                 }
-            },
-            "case": "example-scenario",
-            "detailed_technology": "Si-HC"
+            }
         },
         {
             "name": "Solar photovoltaics",
+            "detailed_technology": "Si-HC",
+            "case": "example-project",
             "region": "DEU",
             "year": 2022,
             "parameters": {
@@ -294,9 +296,7 @@
                         ]
                     }
                 }
-            },
-            "case": "example-project",
-            "detailed_technology": "Si-HC"
+            }
         }
     ]
 }

@@ -137,3 +137,110 @@ class TestTechnologyCollection:
         )
         assert isinstance(result, technologydata.TechnologyCollection)
         assert len(result.technologies) == 1
+
+    def test_to_currency(self) -> None:
+        """Test currency conversion for all technologies in the collection."""
+        input_file = pathlib.Path(
+            path_cwd,
+            "test",
+            "test_data",
+            "solar_photovoltaics_example",
+            "technologies.json",
+        )
+        technology_collection = technologydata.TechnologyCollection.from_json(
+            input_file
+        )
+
+        # Convert to USD_2020
+        converted = technology_collection.to_currency("USD_2020")
+
+        # Check that a new TechnologyCollection object was returned
+        assert isinstance(converted, technologydata.TechnologyCollection)
+        assert converted is not technology_collection
+
+        # Check that the number of technologies is the same
+        assert len(converted) == len(technology_collection)
+
+        # Check that all technologies have been converted
+        for tech in converted:
+            for param_name, param in tech.parameters.items():
+                if param.units and "EUR_2022" in param.units:
+                    # Should not happen - all EUR_2022 should be converted
+                    assert False, f"Parameter {param_name} still has EUR_2022"
+
+    def test_to_currency_with_overwrite_country(self) -> None:
+        """Test currency conversion with a different country for inflation adjustment."""
+        input_file = pathlib.Path(
+            path_cwd,
+            "test",
+            "test_data",
+            "solar_photovoltaics_example",
+            "technologies.json",
+        )
+        technology_collection = technologydata.TechnologyCollection.from_json(
+            input_file
+        )
+
+        # Convert using a different country (USA) for inflation adjustment
+        converted = technology_collection.to_currency(
+            "USD_2023", overwrite_country="USA"
+        )
+
+        assert isinstance(converted, technologydata.TechnologyCollection)
+        assert len(converted) == len(technology_collection)
+
+        # Check that currencies have been converted
+        for tech in converted:
+            for param in tech.parameters.values():
+                if param.units and "USD" in param.units:
+                    assert "USD_2023" in param.units
+
+    def test_to_currency_with_source(self) -> None:
+        """Test currency conversion with different inflation data sources."""
+        input_file = pathlib.Path(
+            path_cwd,
+            "test",
+            "test_data",
+            "solar_photovoltaics_example",
+            "technologies.json",
+        )
+        technology_collection = technologydata.TechnologyCollection.from_json(
+            input_file
+        )
+
+        # Convert using worldbank source
+        converted_wb = technology_collection.to_currency(
+            "USD_2022", source="international_monetary_fund"
+        )
+        assert isinstance(converted_wb, technologydata.TechnologyCollection)
+        assert len(converted_wb) == len(technology_collection)
+
+        # Convert using IMF source
+        converted_imf = technology_collection.to_currency("USD_2022", source="imf")
+        assert isinstance(converted_imf, technologydata.TechnologyCollection)
+        assert len(converted_imf) == len(technology_collection)
+
+    def test_to_currency_preserves_technology_attributes(self) -> None:
+        """Test that currency conversion preserves technology attributes."""
+        input_file = pathlib.Path(
+            path_cwd,
+            "test",
+            "test_data",
+            "solar_photovoltaics_example",
+            "technologies.json",
+        )
+        technology_collection = technologydata.TechnologyCollection.from_json(
+            input_file
+        )
+
+        converted = technology_collection.to_currency("USD_2020")
+
+        # Check that technology attributes are preserved
+        for orig_tech, conv_tech in zip(
+            technology_collection.technologies, converted.technologies
+        ):
+            assert orig_tech.name == conv_tech.name
+            assert orig_tech.detailed_technology == conv_tech.detailed_technology
+            assert orig_tech.case == conv_tech.case
+            assert orig_tech.region == conv_tech.region
+            assert orig_tech.year == conv_tech.year

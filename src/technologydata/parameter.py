@@ -157,8 +157,8 @@ class Parameter(BaseModel):  # type: ignore
             sources=self.sources,
         )
 
-    def change_currency(
-        self, to_currency: str, country: str, source: str = "worldbank"
+    def to_currency(
+        self, target_currency: str, country: str, source: str = "worldbank"
     ) -> Self:
         """
         Change the currency of the parameter.
@@ -173,7 +173,7 @@ class Parameter(BaseModel):  # type: ignore
 
         Parameters
         ----------
-        to_currency : str
+        target_currency : str
             The target currency unit to convert to, e.g. "USD_2020", "EUR_2024", "CNY_2022".
         country : str
             The country for which the inflation adjustment should be made for.
@@ -190,22 +190,22 @@ class Parameter(BaseModel):  # type: ignore
 
         Examples
         --------
-        >>> param.change_currency("USD_2024", "USA")
-        >>> param.change_currency("EUR_2020", "DEU", source="imf")
-        >>> param.change_currency("EUR_2023", "USA", source="worldbank")
+        >>> param.to_currency("USD_2024", "USA")
+        >>> param.to_currency("EUR_2020", "DEU", source="imf")
+        >>> param.to_currency("EUR_2023", "USA", source="worldbank")
 
         """
         self._update_pint_attributes()
 
         # Ensure the target currency is a valid unit
-        technologydata.ureg.ensure_currency_is_unit(to_currency)
+        technologydata.ureg.ensure_currency_is_unit(target_currency)
 
         # Current unit and currency/currencies
         from_units = self._pint_quantity.units
         from_currencies = technologydata.extract_currency_units(from_units)
         # Replace all currency units in the from_units with the target currency
         to_units = technologydata.CURRENCY_UNIT_PATTERN.sub(
-            to_currency, str(from_units)
+            target_currency, str(from_units)
         )
 
         # Create a temporary context to which we add the conversion rates
@@ -228,7 +228,7 @@ class Parameter(BaseModel):  # type: ignore
             )
 
         # Get conversion rates for all involved currencies
-        currencies = set(from_currencies).union({to_currency})
+        currencies = set(from_currencies).union({target_currency})
         # Avoid recursion error in pint definition by re-adding the reference currency
         currencies = currencies - {ref_currency}
 

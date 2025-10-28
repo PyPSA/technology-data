@@ -236,3 +236,45 @@ class TechnologyCollection(pydantic.BaseModel):  # type: ignore
             TechnologyCollection,
             cls.model_validate(pydantic_core.from_json(json_data, allow_partial=True)),
         )
+
+    def to_currency(
+        self,
+        target_currency: str,
+        overwrite_country: None | str = None,
+        source: str = "worldbank",
+    ) -> Self:
+        """
+        Adjust the currency of all parameters of all contained Technology objects to the target currency.
+
+        The conversion includes inflation and exchange rates based on each Technology objects's region.
+        If a different country should be used for inflation adjustment, use `overwrite_country`.
+
+        Parameters
+        ----------
+        target_currency : str
+            The target currency (e.g., 'EUR_2020').
+        overwrite_country : str, optional
+            ISO 3166 alpha-3 country code to use for inflation adjustment instead of the object's region.
+        source: str, optional
+            The source of the inflation data, either "worldbank"/"wb" or "international_monetary_fund"/"imf".
+            Defaults to "worldbank".
+            Depending on the source, different years to adjust for inflation may be available.
+
+        Returns
+        -------
+        TechnologyCollection
+            A new TechnologyCollection object with all its parameters adjusted to the target currency.
+
+        """
+        new_techs = []
+
+        for i, tech in enumerate(self.technologies):
+            new_techs.append(
+                tech.to_currency(
+                    target_currency=target_currency,
+                    overwrite_country=overwrite_country,
+                    source=source,
+                )
+            )
+
+        return TechnologyCollection(technologies=new_techs)

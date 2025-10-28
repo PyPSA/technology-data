@@ -111,23 +111,51 @@ class Technology(pydantic.BaseModel):  # type: ignore
         # Placeholder: implement calculation logic as needed
         return self
 
-    def adjust_currency(self, target_currency: str) -> Self:
+    def to_currency(
+        self,
+        target_currency: str,
+        overwrite_country: None | str = None,
+        source: str = "worldbank",
+    ) -> Self:
         """
-        Adjust all currency parameters to a target currency.
+        Adjust the currency of all parameters of the technology to the target currency.
+
+        The conversion includes inflation and exchange rates based on the object's region.
+        If a different country should be used for inflation adjustment, use `overwrite_country`.
 
         Parameters
         ----------
         target_currency : str
             The target currency (e.g., 'EUR_2020').
+        overwrite_country : str, optional
+            ISO 3166 alpha-3 country code to use for inflation adjustment instead of the object's region.
+        source: str, optional
+            The source of the inflation data, either "worldbank"/"wb" or "international_monetary_fund"/"imf".
+            Defaults to "worldbank".
+            Depending on the source, different years to adjust for inflation may be available.
 
         Returns
         -------
         Technology
-            A new Technology object with adjusted currency.
+            A new Technology object with all its parameters adjusted to the target currency.
 
         """
-        # Placeholder: implement currency adjustment logic
-        return self
+        country = self.region
+        if overwrite_country:
+            country = overwrite_country
+
+        # Copy the Technology object
+        new_tech: Self = self.model_copy(deep=True)
+
+        # Iterate over parameters and convert their currency
+        for name, param in new_tech.parameters.items():
+            new_tech.parameters[name] = param.to_currency(
+                target_currency=target_currency,
+                country=country,
+                source=source,
+            )
+
+        return new_tech
 
     def adjust_region(self, target_region: str) -> Self:
         """

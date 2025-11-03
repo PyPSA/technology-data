@@ -18,6 +18,8 @@ Upcoming Release
 
 * Align cost units for NREL battery data with PyPSA modeling, fetching investment cost and FOM for both `battery storage` and `battery inverter` instead of a single value for `battery storage`, which was instead representative of the full plant (battery storage + battery inverter).
 
+* Add excess heat output rates for Fischer-Tropsch and Haber-Bosch processes.
+
 * Updated indexing of DEA Excel data for PTES and revised capital cost and FOM assumptions for 2045 and 2050.
 
 

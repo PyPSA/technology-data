@@ -809,6 +809,15 @@ def get_data_DEA(
             "Heat generation from geothermal heat (MJ/s)",
         ]
 
+    if tech_name == "methanolisation":
+        parameters += ["District heating"]
+
+    if tech_name == "Fischer-Tropsch":
+        parameters += ["District Heat  Output,"]
+
+    if tech_name == "Haber-Bosch":
+        parameters += ["High value heat Output", "District Heating Output,"]
+
     df = pd.DataFrame()
     for para in parameters:
         # attr = excel[excel.index.str.contains(para)]
@@ -2059,6 +2068,10 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 | (df.index.str.contains("District heat  Output"))
                 | (df.index.str.contains("Electricity Output"))
                 | (df.index.str.contains("hereof recoverable for district heating"))
+                | (df.index.str.contains("District Heating Output,"))
+                | (df.index.str.contains("High value heat Output"))
+                | (df.index.str.contains("District Heating Output"))
+                | (df.index.str.contains("District Heat  Output,"))
                 | (df.index.str.contains("Bio SNG"))
                 | (df.index.str.contains("biochar"))
                 | (df.index == ("Hydrogen"))
@@ -2073,6 +2086,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 | (df.unit == "MWh_e/MWh_th")
                 | (df.unit == "MWh_th/MWh_th")
                 | (df.unit == "MWh/MWh Total Input")
+                | (df.unit == "MWh/MWh total input")
                 | df.unit.str.contains("MWh_FT/MWh_H2")
                 | df.unit.str.contains("MWh_biochar/MWh_feedstock")
                 | df.unit.str.contains("ton biochar/MWh_feedstock")
@@ -2081,8 +2095,39 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             )
         ].copy()
 
-        if tech_name == "Fischer-Tropsch":
+        if tech_name in ["Fischer-Tropsch", "Haber-Bosch"]:
             efficiency[years] *= 100
+            # Technology-specific setup
+            if tech_name == "Fischer-Tropsch":
+                patterns = ["District Heat  Output,"]
+            else:  # Haber-Bosch
+                patterns = ["High value heat Output", "District Heating Output,"]
+
+            # Find all matching heat recovery rows
+            heat_masks = [
+                efficiency.index.str.contains(pattern) for pattern in patterns
+            ]
+            matching_data = [efficiency[mask] for mask in heat_masks if mask.any()]
+
+            if matching_data:
+                # Start with the first matching dataset
+                efficiency_heat = matching_data[0].copy()
+                efficiency_heat[years] = efficiency_heat[years].astype(float)
+
+                # Add any additional heat sources
+                for additional_heat in matching_data[1:]:
+                    additional_heat_values = additional_heat[years].astype(float)
+                    efficiency_heat[years] += additional_heat_values.iloc[0]
+
+                efficiency_heat["parameter"] = "efficiency-heat"
+                if len(patterns) > 1:
+                    # pass correct information to "further description" column
+                    efficiency_heat.index = [f"{patterns[0]} + {patterns[1]}"]
+                clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_heat])
+            else:
+                raise ValueError(
+                    f"No heat recovery data found for {tech_name} with patterns: {patterns}"
+                )
 
         # take annual average instead of name plate efficiency, unless central air-sourced heat pump
         if (
@@ -2157,7 +2202,9 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
 
         elif len(efficiency) != 1:
             switch = True
-            if not any(efficiency.index.str.contains("Round trip")):
+            if len(efficiency) == 0 or not any(
+                efficiency.index.str.contains("Round trip")
+            ):
                 if df[df.index.str.contains("efficiency")].unit.empty:
                     logger.info(f"check efficiency: {str(tech_name)} is not available")
                 else:

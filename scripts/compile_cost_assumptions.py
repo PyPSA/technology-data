@@ -3115,17 +3115,6 @@ def carbon_flow(
             cost_dataframe.loc[("electrobiofuels", "efficiency-tot"), "source"] = (
                 "Stoichiometric calculation"
             )
-
-            inv_cost = (
-                btl_cost[year_to_use]
-                + cost_dataframe.loc[("Fischer-Tropsch", "investment"), "value"]
-                * efuel_scale_factor
-            )
-            VOM = (
-                cost_dataframe.loc[("BtL", "VOM"), "value"]
-                + cost_dataframe.loc[("Fischer-Tropsch", "VOM"), "value"]
-                * efuel_scale_factor
-            )
             FOM = cost_dataframe.loc[("BtL", "FOM"), "value"]
             medium_out = "oil"
             currency_year = cost_dataframe.loc[

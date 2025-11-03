@@ -6,6 +6,7 @@
 import json
 import logging
 import re
+import typing
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
@@ -309,6 +310,112 @@ def get_iso3_from_currency_code(
         ) from e
 
 
+def patch_pint_registry_error_handling(registry: pint.registry.UnitRegistry) -> None:
+    """
+    Patch a Pint registry to use CustomUndefinedUnitError.
+
+    Parameters
+    ----------
+    registry : pint.registry.UnitRegistry
+        The Pint unit registry to patch.
+
+    """
+    # Store the original method
+    original_get_name = registry.get_name
+
+    def patched_get_name(
+        self: pint.registry.UnitRegistry, name: str, *args: Any, **kwargs: Any
+    ) -> Any:
+        try:
+            return original_get_name(name, *args, **kwargs)
+        except pint.errors.UndefinedUnitError as e:
+            # Raise the custom error with the same arguments
+            raise CustomUndefinedUnitError(e.args[0]) from e
+
+    # Replace the method
+    registry.get_name = patched_get_name.__get__(registry)
+
+
+class CustomUndefinedUnitError(pint.errors.UndefinedUnitError):  # type: ignore
+    """
+    Custom message for undefined unit errors.
+
+    This custom error is raised when a unit is not defined in the unit registry.
+    It provides more specific error messages, especially for currency units
+    that are missing the currency year.
+
+    Parameters
+    ----------
+    unit_names : list of str
+        The names of the units that are not defined in the unit registry.
+
+    Attributes
+    ----------
+    unit_names : list of str
+        The names of the units that are not defined in the unit registry.
+
+    Notes
+    -----
+    This error is a subclass of `pint.errors.UndefinedUnitError` and is designed
+    to provide more specific error messages for currency units that are missing
+    the currency year.
+
+    """
+
+    def __init__(self, unit_names: str | typing.Iterable[str]) -> None:
+        """
+        Initialize a CustomUndefinedUnitError instance.
+
+        This constructor creates a new `CustomUndefinedUnitError` object,
+        inheriting all default behaviors from `pint.errors.UndefinedUnitError`.
+
+        Parameters
+        ----------
+        unit_names : str or iterable of str
+            The name or names of the undefined units that caused the error.
+
+        """
+        # Use all defaults definitions from a standard pint.errors.UndefinedUnitError
+        super().__init__(unit_names)
+
+    def __str__(self) -> str:
+        """
+        Generate a custom error message string.
+
+        This method generates a custom error message string based on the
+        unit names that are not defined in the unit registry. It provides
+        specific messages for currency units that are missing the currency year.
+
+        Returns
+        -------
+        str
+            The custom error message string.
+
+        """
+        # Retrieve unit names, defaulting to an empty list if not present
+        unit_names = getattr(self, "unit_names", [])
+
+        # Precompute valid currency codes for efficiency
+        all_currency_codes = set(get_iso3_to_currency_codes().values())
+
+        # Identify currency units without a year specification
+        currency_errors = [
+            code
+            for unit in unit_names
+            for code in re.findall(r"[A-Z]{3}", str(unit))
+            if code in all_currency_codes
+            and not CURRENCY_UNIT_PATTERN.search(str(unit))
+        ]
+
+        # Generate specific error message for currency units
+        if currency_errors:
+            missing_code = currency_errors[0]
+            return f"Currency unit '{missing_code}' is missing the 4-digit currency year (e.g. {missing_code}_2020)."
+
+        # Fallback to parent class error message if no specific currency error found
+        return super().__str__()  # type: ignore
+
+
 class SpecialUnitRegistry(pint.UnitRegistry):  # type: ignore
     """A special pint.UnitRegistry subclass that includes methods for handling currency units and conversion using pydeflate."""
 
@@ -405,3 +512,5 @@ creg = pint.UnitRegistry(
 hvreg = pint.UnitRegistry(
     filename=Path(__file__).parent / "heating_values.txt"
 )  # For tracking heating values and ensuring compatibility between them
+
+patch_pint_registry_error_handling(ureg)

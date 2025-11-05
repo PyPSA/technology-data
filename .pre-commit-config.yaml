@@ -52,7 +52,7 @@ repos:
   hooks:
   - id: mypy
     args: [--strict, --ignore-missing-imports, --config-file=pyproject.toml]
-    additional_dependencies: [tokenize-rt==3.2.0]
+    additional_dependencies: [tokenize-rt==3.2.0, pydantic>=2.11.7]
     exclude: ^docs/
 
   # Pyupgrade: Automatically upgrades Python syntax

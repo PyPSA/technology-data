@@ -23,7 +23,7 @@ from technologydata.technology_collection import TechnologyCollection
 logger = logging.getLogger(__name__)
 
 
-class DataPackage(pydantic.BaseModel):  # type: ignore
+class DataPackage(pydantic.BaseModel):
     """
     Container for a collection of Technology objects and/or Source objects, with batch operations and loading utilities.
 

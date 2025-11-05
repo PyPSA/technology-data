@@ -26,7 +26,7 @@ from technologydata.source_collection import SourceCollection
 logger = logging.getLogger(__name__)
 
 
-class Parameter(BaseModel):  # type: ignore
+class Parameter(BaseModel):
     """
     Encapsulate a value with its unit, provenance, notes, sources, and more optional attributes required to describe technology parameters, like carrier, and heating value.
 
@@ -143,7 +143,7 @@ class Parameter(BaseModel):  # type: ignore
         ) != technologydata.extract_currency_units(units):
             raise NotImplementedError(
                 "Currency conversion is not supported in the `to` method. "
-                "Use `change_currency` for currency conversions."
+                "Use `to_currency` for currency conversions."
             )
 
         self._pint_quantity = self._pint_quantity.to(units)
@@ -155,7 +155,7 @@ class Parameter(BaseModel):  # type: ignore
             provenance=self.provenance,
             note=self.note,
             sources=self.sources,
-        )
+        )  # type: ignore
 
     def to_currency(
         self, target_currency: str, country: str, source: str = "worldbank"
@@ -266,7 +266,7 @@ class Parameter(BaseModel):  # type: ignore
             provenance=self.provenance,
             note=self.note,
             sources=self.sources,
-        )
+        )  # type: ignore
 
     def change_heating_value(self, to_heating_value: str) -> Self:
         """
@@ -370,7 +370,7 @@ class Parameter(BaseModel):  # type: ignore
             provenance=self.provenance,  # TODO implement for this function
             note=self.note,
             sources=self.sources,
-        )
+        )  # type: ignore
 
     def _check_parameter_compatibility(self, other: Self) -> None:
         """
@@ -433,7 +433,7 @@ class Parameter(BaseModel):  # type: ignore
             sources=SourceCollection(
                 sources=(self.sources.sources + other.sources.sources)
             ),
-        )
+        )  # type: ignore
 
     def __sub__(self, other: Self) -> Self:
         """
@@ -468,7 +468,7 @@ class Parameter(BaseModel):  # type: ignore
             sources=SourceCollection(
                 sources=(self.sources.sources + other.sources.sources)
             ),
-        )
+        )  # type: ignore
 
     def __truediv__(self, other: int | float | Self) -> Self:
         """
@@ -504,7 +504,7 @@ class Parameter(BaseModel):  # type: ignore
                 provenance=self.provenance,
                 note=self.note,
                 sources=self.sources,
-            )
+            )  # type: ignore
 
         # We don't check general compatibility here, as division is not a common operation for parameters.
         # Only ensure that the heating values are compatible.
@@ -537,7 +537,7 @@ class Parameter(BaseModel):  # type: ignore
             sources=SourceCollection(
                 sources=(self.sources.sources + other.sources.sources)
             ),
-        )
+        )  # type: ignore
 
     def __mul__(self, other: int | float | Self) -> Self:
         """
@@ -576,7 +576,7 @@ class Parameter(BaseModel):  # type: ignore
                 provenance=self.provenance,
                 note=self.note,
                 sources=self.sources,
-            )
+            )  # type: ignore
 
         # We don't check general compatibility here, as multiplication is not a common operation for parameters.
         # Only ensure that the heating values are compatible.
@@ -605,7 +605,7 @@ class Parameter(BaseModel):  # type: ignore
             sources=SourceCollection(
                 sources=(self.sources.sources + other.sources.sources)
             ),
-        )
+        )  # type: ignore
 
     def __eq__(self, other: object) -> bool:
         """
@@ -669,4 +669,4 @@ class Parameter(BaseModel):  # type: ignore
             provenance=self.provenance,
             note=self.note,
             sources=self.sources,
-        )
+        )  # type: ignore

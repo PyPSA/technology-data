@@ -26,7 +26,7 @@ import technologydata
 logger = logging.getLogger(__name__)
 
 
-class Source(pydantic.BaseModel):  # type: ignore
+class Source(pydantic.BaseModel):
     """
     Represent a data source, including bibliographic and web information.
 

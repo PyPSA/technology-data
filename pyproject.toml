@@ -36,6 +36,7 @@ dependencies = [
     "pydeflate>=2.1.3",
     "requests>=2.32.3",
     "savepagenow>=1.3.0",
+    "scipy>=1.16.1",
 ]
 
 [project.urls]
@@ -114,6 +115,7 @@ source = [
 
 # Static type checker settings
 [tool.mypy]
+plugins = ["pydantic.mypy"]
 ignore_missing_imports = true
 no_implicit_optional = true
 warn_unused_ignores = true

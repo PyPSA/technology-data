@@ -72,3 +72,6 @@ coverage.xml
 # mypy
 .mypy_cache/
 .dmypy.json
+
+# folder for misc developments
+dev/

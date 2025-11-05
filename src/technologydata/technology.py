@@ -14,7 +14,7 @@ import pydantic
 from technologydata.parameter import Parameter
 
 
-class Technology(pydantic.BaseModel):  # type: ignore
+class Technology(pydantic.BaseModel):
     """
     Represent a technology with region, year, and a flexible set of parameters.
 

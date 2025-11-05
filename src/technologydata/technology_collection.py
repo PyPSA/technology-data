@@ -6,9 +6,9 @@
 
 import csv
 import json
+import logging
 import pathlib
 import re
-import typing
 from collections.abc import Iterator
 from typing import Annotated, Self
 
@@ -16,10 +16,14 @@ import pandas
 import pydantic
 import pydantic_core
 
+from technologydata.parameter import Parameter
+from technologydata.technologies.growth_models import GrowthModel, LinearGrowth
 from technologydata.technology import Technology
 
+logger = logging.getLogger(__name__)
 
-class TechnologyCollection(pydantic.BaseModel):  # type: ignore
+
+class TechnologyCollection(pydantic.BaseModel):
     """
     Represent a collection of technologies.
 
@@ -34,7 +38,7 @@ class TechnologyCollection(pydantic.BaseModel):  # type: ignore
         list[Technology], pydantic.Field(description="List of Technology objects.")
     ]
 
-    def __iter__(self) -> Iterator[Technology]:
+    def __iter__(self) -> Iterator[Technology]:  # type: ignore
         """
         Return an iterator over the list of Technology objects.
 
@@ -117,7 +121,7 @@ class TechnologyCollection(pydantic.BaseModel):  # type: ignore
                 if pattern_detailed_technology.search(t.detailed_technology)
             ]
 
-        return TechnologyCollection(technologies=filtered_technologies)
+        return TechnologyCollection(technologies=filtered_technologies)  # type: ignore
 
     def to_dataframe(self) -> pandas.DataFrame:
         """
@@ -232,9 +236,8 @@ class TechnologyCollection(pydantic.BaseModel):  # type: ignore
 
         # pydantic_core.from_json return Any. Therefore, typing.cast makes sure that
         # the output is indeed a TechnologyCollection
-        return typing.cast(
-            TechnologyCollection,
-            cls.model_validate(pydantic_core.from_json(json_data, allow_partial=True)),
+        return cls.model_validate(
+            pydantic_core.from_json(json_data, allow_partial=True)
         )
 
     def to_currency(
@@ -277,4 +280,180 @@ class TechnologyCollection(pydantic.BaseModel):  # type: ignore
                 )
             )
 
-        return TechnologyCollection(technologies=new_techs)
+        return TechnologyCollection(technologies=new_techs)  # type: ignore
+
+    def fit(
+        self, parameter: str, model: GrowthModel, p0: dict[str, float] | None = None
+    ) -> GrowthModel:
+        """
+        Fit a growth model to a specified parameter across all technologies in the collection.
+
+        This method aggregates data points for the specified parameter from all technologies
+        in the collection, adds them to the provided growth model, and fits the model using
+        the initial parameter guesses provided in `p0`.
+
+        Parameters
+        ----------
+        parameter : str
+            The name of the parameter to fit the model to (e.g., "installed capacity").
+        model : GrowthModel
+            An instance of a growth model (e.g., LinearGrowth, ExponentialGrowth) to be fitted.
+            May already be partially initialized with some parameters and/or data points.
+        p0 : dict[str, float], optional
+            Initial guess for the model parameters.
+
+        Returns
+        -------
+        GrowthModel
+            The fitted growth model with optimized parameters.
+
+        Raises
+        ------
+        ValueError
+            If the collection contains incompatible parameters with different units, heating values, or carriers.
+
+        """
+        first_param = None
+        # Aggregate data points for the specified parameter from all technologies
+        for tech in self.technologies:
+            param = tech.parameters[parameter]
+            if first_param is None:
+                first_param = param
+
+            try:
+                first_param._check_parameter_compatibility(param)
+            except ValueError as e:
+                raise ValueError(
+                    f"The collection contains one or more parameters with incompatible units/heating values/carriers:\n"
+                    f"* {first_param}, and\n"
+                    f"* {param}."
+                ) from e
+
+            model.add_data((tech.year, param.magnitude))
+
+        # Fit the model using the provided initial parameter guesses
+        model.fit(p0=p0)
+
+        return model
+
+    def project(
+        self,
+        to_years: list[int],
+        parameters: dict[str, GrowthModel | str],
+    ) -> Self:
+        """
+        Project specified parameters for all technologies in the collection to future years.
+
+        This method uses the provided growth models to project the specified parameters
+        for each technology in the collection to the given future years.
+
+        To keep other parameters that should not be projected, add them to the dictionary as well
+        without a growth model. Instead, there are other options available:
+        'mean', 'closest' and 'NaN'.
+        'mean' will set the parameter to the mean of all existing values in the collection,
+        while 'NaN' will add the parameter with NaN values as a placeholder.
+        'closest' will set the parameter to the value of the closest year in the original data,
+        with a preference for past years if equidistant. (Not yet implemented.)
+
+        The method creates new Technology objects for each combination of original technology
+        and future year, applying the appropriate growth model projections.
+
+        Parameters
+        ----------
+        to_years : list[int]
+            List of future years to which the parameters should be projected.
+        parameters : dict[str, GrowthModel | str]
+            A dictionary mapping parameter names to their respective growth models for projection.
+            If provided, `parameter` and `model` cannot be used.
+            To keep other parameters without projecting, available options are 'mean', 'closest' and 'NaN'.
+
+        Returns
+        -------
+        TechnologyCollection
+            A new TechnologyCollection with technologies projected to the specified future years.
+
+        Raises
+        ------
+        ValueError
+            If neither `parameter` and `model`, or `parameters` are not or all provided.
+
+        Examples
+        --------
+        >>> tc.project(
+        ...     to_years=[2030, 2040],
+        ...     parameters={
+        ...         "installed capacity": LinearGrowth(m=0.5, A=10),
+        ...         "lifetime": "mean",
+        ...         "efficiency": "NaN"
+        ...     }
+        ... )
+
+        """
+        logger.debug(f"Projecting parameters as follows: {parameters}")
+
+        projected_technologies = []
+        for to_year in to_years:
+            # Create a new Technology object for the projected year
+            new_tech = Technology(
+                name=self.technologies[0].name,
+                region=self.technologies[0].region,
+                year=to_year,
+                case=self.technologies[0].case,
+                detailed_technology=self.technologies[0].detailed_technology,
+                parameters={},
+            )
+
+            for param, model in parameters.items():
+                new_param: Parameter
+
+                # Trick: A linear growth with m=0 returns the mean of the provided data points
+                # this way we can reuse the logic already implemented for fitting and projecting below
+                if model == "mean":
+                    model = LinearGrowth(m=0)
+
+                if isinstance(model, GrowthModel):
+                    # Fit the model to the parameter data
+                    model = self.fit(param, model.model_copy())
+
+                    # Project the model to the specified future years
+                    param_value = model.project(to_year)
+
+                    logger.debug(
+                        f"Resulting model for {param} in year {to_year}: {model}"
+                    )
+                    # Add the projected parameter to the new technology
+                    new_param = (
+                        self.technologies[0]
+                        .parameters[param]
+                        .model_copy(
+                            deep=True,
+                            update={
+                                "magnitude": param_value,
+                                "provenance": f"Projected to {to_year} using {model}.",
+                                "note": None,  # Clear any existing note
+                                "sources": None,  # Clear any existing sources
+                            },
+                        )
+                    )
+
+                elif model == "NaN":
+                    new_param = Parameter(
+                        magnitude=float("nan"),
+                        note="Placeholder parameters with NaN value.",
+                    )
+                elif model == "closest":
+                    raise NotImplementedError(
+                        "'closest' option for '{param}' not yet implemented."
+                    )  # TODO
+                else:
+                    raise ValueError(
+                        f"Unexpected model type for parameter '{param}': {model}"
+                    )
+
+                new_tech.parameters[param] = new_param
+
+            logger.debug(f"Projected technology for year {to_year}: {new_tech}")
+
+            projected_technologies.append(new_tech)
+
+        return TechnologyCollection(technologies=projected_technologies)  # type: ignore

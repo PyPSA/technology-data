@@ -136,7 +136,8 @@ class TechnologyCollection {
   + to_csv(): str
   + to_dataframe(): pd.DataFrame
   + from_json(): TechnologyCollection
-  + create_projection(): TechnologyCollection
+  + create_projection(method: GrowthModel): TechnologyCollection
+  + learn(method: LearningModel): TechnologyCollection
   + __iter__()
   + __len__()
   ' TODO: Think about more methods here
@@ -155,6 +156,80 @@ note right of TechnologyCollection::create_projection
   based on the Technology objects in the collection.
   Either returns a new TechnologyCollection or adds the
   Technology objects to the current collection.
+  Uses a GrowthModel (see below) to project values.
+end note
+
+abstract class GrowthModel {
+  - data_points: list[tuple[float, float]]
+  - model_parameters: list[str]
+  - provided_parameters: dict[str, float]
+  - missing_parameters: list[str]
+  + add_data(data_points: tuple[float, float]): self
+  + project(to_x: float): float
+  + fit(p0): self
+  + _kwpartial(func: Callable, **fixed_kwargs): Callable
+  + function(x, ...): float // abstract method
+}
+
+class LinearGrowth {
+  Project with linear growth model.
+
+  - A
+  - m
+  + function(x, A, m)
+}
+
+class ExponentialGrowth {
+  Project with exponential growth model.
+
+  - A
+  - m
+  - k
+  - x0
+  + function(x, A, m, k, x0)
+}
+
+class LogisticGrowth {
+  Project with logistic growth model.
+
+  - A
+  - L
+  - k
+  - x0
+  + function(x, A, L, k, x0)
+}
+
+class GompertzGrowth {
+  Project with Gompertz growth model.
+
+  - A
+  - k
+  - x0
+  - b
+  + function(x, A, k, x0, b)
+}
+
+class GeneralLogisticGrowth {
+  Project with a general logistic growth model,
+
+  - A
+  - K
+  - B
+  - Q
+  - C
+  - nu
+  + function(x, A, K, B, Q, C, nu)
+}
+
+note right of GrowthModel
+  Abstract base for growth models used in projections.
+  Subclasses implement specific growth curve logic.
+  Each subclass should support two approaches: fitting around
+  data from the TechnologyCollection, and extrapolating using a
+  single value as support with parameters for the GrowthModels specified
+  by the user.
+  `project()` returns a new `TechnologyCollection` with
+  the original Technology objects and new objects for the projection.
 end note
 
 class SourceCollection {
@@ -183,7 +258,7 @@ note left of SourceCollection::to_csv
   Export the source collection into a csv file.
 end note
 
-note left of SourceCollection::to_dataframe
+note right of SourceCollection::to_dataframe
   Export the source collection into a Pandas dataframe.
 end note
 
@@ -219,4 +294,37 @@ Technology --> "*" Parameter : uses for its members
 TechnologyCollection --> "*" Technology : consists of
 SourceCollection --> "*" Source : consists of
 Datapackage --> "1" TechnologyCollection : contains
+TechnologyCollection --> GrowthModel : used for learn(...)
+GrowthModel <|-- LinearGrowth
+GrowthModel <|-- ExponentialGrowth
+GrowthModel <|-- LogisticGrowth
+GrowthModel <|-- GompertzGrowth
+GrowthModel <|-- GeneralLogisticGrowth
+
+abstract class LearningModel {
+  + project_costs(collection: TechnologyCollection): TechnologyCollection
+}
+
+class ExperienceLearning {
+  Implements cost change via experience curve \n(cumulative experience).
+}
+
+class ProductionLearning {
+  Implements cost change via production-based \nlearning (cumulative production).
+}
+
+class TimebasedLearning {
+  Implements cost change via time-based learning \n(improvement over time).
+}
+
+note right of LearningModel
+  Abstract base for learning models used in cost projections.
+  Subclasses implement specific learning logic.
+  `project_costs()` returns a new TechnologyCollection with cost projections.
+end note
+
+TechnologyCollection --> LearningModel : uses for learn(...) \n (cost modifications)
+LearningModel <|-- ExperienceLearning
+LearningModel <|-- ProductionLearning
+LearningModel <|-- TimebasedLearning
 @enduml

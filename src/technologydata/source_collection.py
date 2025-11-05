@@ -8,7 +8,6 @@ import csv
 import json
 import pathlib
 import re
-import typing
 from collections.abc import Iterator
 from typing import Annotated, Self
 
@@ -19,7 +18,7 @@ import pydantic_core
 from technologydata.source import Source
 
 
-class SourceCollection(pydantic.BaseModel):  # type: ignore
+class SourceCollection(pydantic.BaseModel):
     """
     Represent a collection of sources.
 
@@ -34,7 +33,7 @@ class SourceCollection(pydantic.BaseModel):  # type: ignore
         list[Source], pydantic.Field(description="List of Source objects.")
     ]
 
-    def __iter__(self) -> Iterator["Source"]:
+    def __iter__(self) -> Iterator["Source"]:  # type: ignore
         """
         Return an iterator over the list of Source objects.
 
@@ -102,7 +101,7 @@ class SourceCollection(pydantic.BaseModel):  # type: ignore
                 s for s in filtered_sources if pattern_authors.search(s.authors)
             ]
 
-        return SourceCollection(sources=filtered_sources)
+        return SourceCollection(sources=filtered_sources)  # type: ignore
 
     def retrieve_all_from_wayback(
         self, download_directory: pathlib.Path
@@ -232,7 +231,6 @@ class SourceCollection(pydantic.BaseModel):  # type: ignore
 
         # pydantic_core.from_json return Any. Therefore, typing.cast makes sure that
         # the output is indeed a TechnologyCollection
-        return typing.cast(
-            SourceCollection,
-            cls.model_validate(pydantic_core.from_json(json_data, allow_partial=True)),
+        return cls.model_validate(
+            pydantic_core.from_json(json_data, allow_partial=True)
         )

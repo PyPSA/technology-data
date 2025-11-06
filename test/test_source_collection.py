@@ -81,6 +81,7 @@ class TestSourceCollection:
         assert example_source_collection.sources[0].authors == "Author 1"
         assert example_source_collection.sources[1].authors == "Author 2"
 
+    @pytest.mark.webarchive  # type: ignore
     @pytest.mark.parametrize(
         "example_source_collection",
         [

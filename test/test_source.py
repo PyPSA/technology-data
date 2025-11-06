@@ -196,6 +196,7 @@ class TestSource:
         assert example_source.url_date_archive is not None
         assert example_source.url_archive is not None
 
+    @pytest.mark.webarchive  # type: ignore
     @pytest.mark.parametrize(
         "url_archived, source_path, source_title, expected_path",
         [

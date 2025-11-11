@@ -69,7 +69,6 @@ def get_conversion_dictionary(flag: str) -> dict:
             "Offshore Wind - Class 3": "offwind",
             "Utility PV - Class 5": "solar-utility",
             "Commercial PV - Class 1": "solar-rooftop",
-            "Utility-Scale Battery Storage - 6Hr": "battery storage",
             "Biopower": "biomass",
             "Biopower - Dedicated": "biomass",
             "CSP - Class 2": "csp-tower",

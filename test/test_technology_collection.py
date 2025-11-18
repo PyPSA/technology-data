@@ -48,7 +48,11 @@ class TestTechnologyCollection:
         )
         assert isinstance(technology_collection.to_dataframe(), pandas.DataFrame)
 
-    def test_to_json(self) -> None:
+    @pytest.mark.parametrize(
+        "output_schema",
+        [True, False],
+    )  # type: ignore
+    def test_to_json(self, output_schema: bool) -> None:
         """Check if to_json works as expected."""
         input_file = pathlib.Path(
             path_cwd,
@@ -62,9 +66,14 @@ class TestTechnologyCollection:
         )
         output_file = pathlib.Path(path_cwd, "technologies.json")
         schema_file = pathlib.Path(path_cwd, "technologies.schema.json")
-        technology_collection.to_json(pathlib.Path(output_file))
+        technology_collection.to_json(
+            pathlib.Path(output_file), output_schema=output_schema
+        )
         assert output_file.is_file()
-        assert schema_file.is_file()
+        if output_schema:
+            assert schema_file.is_file()
+        else:
+            assert not schema_file.is_file()
         output_file.unlink(missing_ok=True)
         schema_file.unlink(missing_ok=True)
 
@@ -97,7 +106,7 @@ class TestTechnologyCollection:
         )
         output_file = pathlib.Path("to_json_test.json")
         schema_file = pathlib.Path(path_cwd, "to_json_test.schema.json")
-        technology_collection.to_json(output_file)
+        technology_collection.to_json(output_file, output_schema=True)
 
         # Read files and strip trailing whitespace/newlines before comparing
         with open(input_file) as f1, open(output_file) as f2:

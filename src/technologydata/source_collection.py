@@ -177,7 +177,10 @@ class SourceCollection(pydantic.BaseModel):
         output_dataframe.to_csv(**merged_kwargs)
 
     def to_json(
-        self, file_path: pathlib.Path, schema_path: pathlib.Path | None = None
+        self,
+        file_path: pathlib.Path,
+        schema_path: pathlib.Path | None = None,
+        output_schema: bool = False,
     ) -> None:
         """
         Export the SourceCollection to a JSON file, together with a data schema.
@@ -188,17 +191,21 @@ class SourceCollection(pydantic.BaseModel):
             The path to the JSON file to be created.
         schema_path : pathlib.Path
             The path to the JSON schema file to be created. By default, created with a `schema` suffix next to `file_path`.
+        output_schema : bool, default False
+            If True, generates a JSON schema file describing the data structure.
+            The schema will include field descriptions and type information.
 
         """
-        if schema_path is None:
-            schema_path = file_path.with_suffix(".schema.json")
+        if output_schema:
+            if schema_path is None:
+                schema_path = file_path.with_suffix(".schema.json")
 
-        # Export the model's schema with descriptions to a dict
-        schema = self.model_json_schema()
+            # Export the model's schema with descriptions to a dict
+            schema = self.model_json_schema()
 
-        # Save the schema (which includes descriptions) to a JSON file
-        with open(schema_path, "w") as f:
-            json.dump(schema, f, indent=4)
+            # Save the schema (which includes descriptions) to a JSON file
+            with open(schema_path, "w") as f:
+                json.dump(schema, f, indent=4)
 
         with open(file_path, mode="w", encoding="utf-8") as jsonfile:
             json_data = self.model_dump_json(indent=4)  # Convert to JSON string

@@ -164,39 +164,74 @@ class TestSourceCollection:
         assert output_file.is_file()
         output_file.unlink(missing_ok=True)
 
+    # python
     @pytest.mark.parametrize(
-        "example_source_collection",
+        "example_source_collection, output_schema",
         [
-            [
-                {
-                    "source_title": "atb_nrel",
-                    "source_authors": "NREL/ATB",
-                    "source_url": "https://oedi-data-lake.s3.amazonaws.com/ATB/electricity/parquet/2024/v3.0.0/ATBe.parquet",
-                    "source_url_archive": "https://web.archive.org/web/20250522150802/https://oedi-data-lake.s3.amazonaws.com/ATB/electricity/parquet/2024/v3.0.0/ATBe.parquet",
-                    "source_url_date": "2025-05-22 15:08:02",
-                    "source_url_date_archive": "2025-05-22 15:08:02",
-                },
-                {
-                    "source_title": "tech_data_generation",
-                    "source_authors": "Danish Energy Agency",
-                    "source_url": "https://ens.dk/media/3273/download",
-                    "source_url_archive": "http://web.archive.org/web/20250506160204/https://ens.dk/media/3273/download",
-                    "source_url_date": "2025-05-06 16:02:04",
-                    "source_url_date_archive": "2025-05-06 16:02:04",
-                },
-            ],
+            (
+                [
+                    {
+                        "source_title": "atb_nrel",
+                        "source_authors": "NREL/ATB",
+                        "source_url": "https://oedi-data-lake.s3.amazonaws.com/ATB/electricity/parquet/2024/v3.0.0/ATBe.parquet",
+                        "source_url_archive": "https://web.archive.org/web/20250522150802/https://oedi-data-lake.s3.amazonaws.com/ATB/electricity/parquet/2024/v3.0.0/ATBe.parquet",
+                        "source_url_date": "2025-05-22 15:08:02",
+                        "source_url_date_archive": "2025-05-22 15:08:02",
+                    },
+                    {
+                        "source_title": "tech_data_generation",
+                        "source_authors": "Danish Energy Agency",
+                        "source_url": "https://ens.dk/media/3273/download",
+                        "source_url_archive": "http://web.archive.org/web/20250506160204/https://ens.dk/media/3273/download",
+                        "source_url_date": "2025-05-06 16:02:04",
+                        "source_url_date_archive": "2025-05-06 16:02:04",
+                    },
+                ],
+                True,
+            ),
+            (
+                [
+                    {
+                        "source_title": "atb_nrel",
+                        "source_authors": "NREL/ATB",
+                        "source_url": "https://oedi-data-lake.s3.amazonaws.com/ATB/electricity/parquet/2024/v3.0.0/ATBe.parquet",
+                        "source_url_archive": "https://web.archive.org/web/20250522150802/https://oedi-data-lake.s3.amazonaws.com/ATB/electricity/parquet/2024/v3.0.0/ATBe.parquet",
+                        "source_url_date": "2025-05-22 15:08:02",
+                        "source_url_date_archive": "2025-05-22 15:08:02",
+                    },
+                    {
+                        "source_title": "tech_data_generation",
+                        "source_authors": "Danish Energy Agency",
+                        "source_url": "https://ens.dk/media/3273/download",
+                        "source_url_archive": "http://web.archive.org/web/20250506160204/https://ens.dk/media/3273/download",
+                        "source_url_date": "2025-05-06 16:02:04",
+                        "source_url_date_archive": "2025-05-06 16:02:04",
+                    },
+                ],
+                False,
+            ),
         ],
         indirect=["example_source_collection"],
     )  # type: ignore
     def test_to_json(
-        self, example_source_collection: technologydata.SourceCollection
+        self,
+        example_source_collection: technologydata.SourceCollection,
+        output_schema: bool,
     ) -> None:
         """Check if the example source collection is exported to JSON."""
         output_file = pathlib.Path(path_cwd, "sources.json")
         schema_file = pathlib.Path(path_cwd, "sources.schema.json")
-        example_source_collection.to_json(pathlib.Path(output_file))
+
+        example_source_collection.to_json(
+            pathlib.Path(output_file), output_schema=output_schema
+        )
+
         assert output_file.is_file()
-        assert schema_file.is_file()
+        if output_schema:
+            assert schema_file.is_file()
+        else:
+            assert not schema_file.is_file()
+
         output_file.unlink(missing_ok=True)
         schema_file.unlink(missing_ok=True)
 
@@ -258,7 +293,7 @@ class TestSourceCollection:
         source_collection = technologydata.SourceCollection.from_json(input_file)
         output_file = pathlib.Path("to_json_test.json")
         schema_file = pathlib.Path(path_cwd, "to_json_test.schema.json")
-        source_collection.to_json(output_file)
+        source_collection.to_json(output_file, output_schema=True)
         # Read files and strip trailing whitespace/newlines before comparing
         with open(input_file) as f1, open(output_file) as f2:
             assert f1.read().rstrip() == f2.read().rstrip(), "Files are not identical"

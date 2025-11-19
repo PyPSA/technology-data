@@ -13,3 +13,17 @@ SPDX-License-Identifier = "MIT"
 path = ["test/test_data/**",]
 SPDX-FileCopyrightText = "The technology-data authors"
 SPDX-License-Identifier = "CC-BY-4.0"
+
+[[annotations]]
+path = [
+    "src/technologydata/package_data/dea_energy_storage/*.json", "src/technologydata/package_data/schemas/*.json"
+]
+SPDX-FileCopyrightText = "The technology-data authors"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+[[annotations]]
+path = [
+    "src/technologydata/package_data/raw/Technology_datasheet_for_energy_storage.xlsx"
+]
+SPDX-FileCopyrightText = "The Danish Energy Agency"
+SPDX-License-Identifier = "CC-BY-4.0"

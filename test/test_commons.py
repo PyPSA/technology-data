@@ -151,3 +151,20 @@ class TestCommonsUtils:
             technologydata.FileExtensionEnum.search_file_extension_in_url(input_string)
             == expected_string
         )
+
+    @pytest.mark.parametrize(
+        "input_unit, input_year, expected_string",
+        [
+            ("EUR/kWh", "2020", "EUR_2020/kWh"),
+            ("USD/kWh", "2020", "USD_2020/kWh"),
+            ("USD_2023/kWh", "2020", "USD_2023/kWh"),
+        ],
+    )  # type: ignore
+    def test_update_unit_with_currency_year(
+        self, input_unit: str, input_year: str, expected_string: str
+    ) -> None:
+        """Check if update_unit_with_currency_year works as expected."""
+        result = technologydata.Commons.update_unit_with_currency_year(
+            input_unit, input_year
+        )
+        assert result == expected_string

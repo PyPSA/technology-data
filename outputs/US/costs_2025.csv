@@ -4108,6 +4108,7 @@ geothermal,investment,5801.3417,USD/kW,NREL/ATB-https://data.openei.org/s3_viewe
 geothermal,investment,6019.6998,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 geothermal,investment,6209.9926,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=ATB%2Felectricity%2Fcsv%2F2022%2F,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative
 geothermal,lifetime,30.0,years,"Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551",,2020.0,,
+grey methanol synthesis,efficiency,0.569,per unit,"From https://www.sciencedirect.com/science/article/pii/S0016236119311767, table 2, Methanol Synthesis with integrated autothermal reforming. Efficiency is the exergetic efficiency ",,2020.0,,
 helmeth,FOM,3.0,%/year,no source, from old pypsa cost assumptions,2015.0,,
 helmeth,efficiency,0.8,per unit,HELMETH press release, from old pypsa cost assumptions,2015.0,,
 helmeth,investment,2116.4433,EUR/kW,no source, from old pypsa cost assumptions,2015.0,,

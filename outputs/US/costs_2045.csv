@@ -4290,6 +4290,7 @@ geothermal,investment,5629.996,USD/kW,NREL/ATB-https://data.openei.org/s3_viewer
 geothermal,lifetime,30.0,years,"Aghahosseini, Breyer 2020: From hot rock to useful energy: A global estimate of enhanced geothermal systems potential, https://www.sciencedirect.com/science/article/pii/S0306261920312551",,2020.0,,
 grey methanol synthesis,carbondioxide-output,0.0568,t_CO2/MWh_gas,Calculated from the carbon content of gas (0.198 t_CO2/MWh) compared to the carbon content of MeOH (0.2482 t_CO2/MWh),,2020.0,,
 grey methanol synthesis,efficiency,0.569,MWh_MeOH/MWh_gas,"From https://www.sciencedirect.com/science/article/pii/S0016236119311767, table 2, Methanol Synthesis with integrated autothermal reforming. Efficiency is the exergetic efficiency ",,2020.0,,
+grey methanol synthesis,investment,1001188.0,EUR/MW_MeOH,Calculated from https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2021/Jan/IRENA_Innovation_Renewable_Methanol_2021.pdf) Table 25 with an exchange rate of 0.8775 EUR/USD and energy content of 5.528 MWh_MeOH/t_MeOH,,2020.0,,
 helmeth,FOM,3.0,%/year,no source, from old pypsa cost assumptions,2015.0,,
 helmeth,efficiency,0.8,per unit,HELMETH press release, from old pypsa cost assumptions,2015.0,,
 helmeth,investment,2116.4433,EUR/kW,no source, from old pypsa cost assumptions,2015.0,,

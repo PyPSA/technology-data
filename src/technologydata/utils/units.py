@@ -20,6 +20,8 @@ from platformdirs import user_cache_dir
 
 logger = logging.getLogger(__name__)
 
+pydeflate.set_pydeflate_path("./pydeflate_data")
+
 CURRENCY_UNIT_PATTERN = re.compile(r"\b(?P<cu_iso3>[A-Z]{3})_(?P<year>\d{4})\b")
 
 # Set up cache directory and file for currency codes

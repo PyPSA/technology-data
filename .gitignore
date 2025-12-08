@@ -75,3 +75,6 @@ coverage.xml
 
 # folder for misc developments
 dev/
+
+# pydeflate cache
+pydeflate_data/

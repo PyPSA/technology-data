@@ -219,7 +219,10 @@ methanol-to-kerosene,lifetime,2050,30,years,-,"Concawe (2022): E-Fuels: A techno
 methanol-to-kerosene,investment,2050,200000,EUR/MW_kerosene,2020,"Concawe (2022): E-Fuels: A technoeconomic assessment of European domestic production and imports towards 2050 (https://www.concawe.eu/wp-content/uploads/Rpt_22-17.pdf), table 94.",
 methanol-to-kerosene,FOM,2050,4.5,%/year,2020,"Concawe (2022): E-Fuels: A technoeconomic assessment of European domestic production and imports towards 2050 (https://www.concawe.eu/wp-content/uploads/Rpt_22-17.pdf), table 94.",
 methanol-to-kerosene,VOM,2050,1.35,EUR/MWh_kerosene,2020,"Concawe (2022): E-Fuels: A technoeconomic assessment of European domestic production and imports towards 2050 (https://www.concawe.eu/wp-content/uploads/Rpt_22-17.pdf), table 94.",
-Fischer-Tropsch,efficiency,2020,0.799,per unit,2017,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), section 6.3.2.2.",
+Fischer-Tropsch,efficiency,2020,0.653,per unit,, Inverse of hydrogen input,
+Fischer-Tropsch,efficiency,2030,0.704,per unit,, Inverse of hydrogen input,
+Fischer-Tropsch,efficiency,2040,0.734,per unit,, Inverse of hydrogen input,
+Fischer-Tropsch,efficiency,2050,0.754,per unit,, Inverse of hydrogen input,
 Fischer-Tropsch,investment,2020,788000,EUR/MW_FT,2017,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), table 8: “Reference scenario”.","Well developed technology, no significant learning expected."
 Fischer-Tropsch,lifetime,2020,20,years,2017,"Danish Energy Agency, Technology Data for Renewable Fuels (04/2022), Data sheet “Methanol to Power”.",
 Fischer-Tropsch,FOM,2020,3,%/year,2017,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), section 6.3.2.1.",

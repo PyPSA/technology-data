@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: technologydata contributors
+#
+# SPDX-License-Identifier: MIT
+
+cff-version: 1.2.0
+message: "If you use this package, we suggest the following way of citing it."
+title: "technologydata: Data for Energy Systems Models"
+repository: https://github.com/open-energy-transition/technology-data
+version: 0.1.0 # Don't touch, will be updated by the release script
+license: MIT
+authors:
+  - family-names: Hampp
+    given-names: Johannes
+    orcid: 0000-0002-1776-116X
+  - family-names: Finozzi
+    given-names: Fabrizio
+    orcid: 0009-0002-3876-2564

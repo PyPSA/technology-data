@@ -1,7 +1,7 @@
 # Copilot Coding Agent Instructions for `technologydata`
 
 <!--
-SPDX-FileCopyrightText: The technology-data authors
+SPDX-FileCopyrightText: technologydata contributors
 
 SPDX-License-Identifier: MIT
 

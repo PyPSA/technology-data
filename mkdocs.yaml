@@ -1,7 +1,7 @@
 site_name: Documentation
 site_url: !ENV READTHEDOCS_CANONICAL_URL
-repo_url: https://github.com/PyPSA/technology-data
-repo_name: PyPSA/technology-data
+repo_url: https://github.com/open-energy-transition/technology-data
+repo_name: open-energy-transition/technology-data
 edit_uri: edit/master/docs/
 
 # Navigation
@@ -21,8 +21,34 @@ nav:
     - Contacts: home/contacts.md
 
 - User Guide:
-  - Use Cases: user_guide/design.md
+  - Data Package: user_guide/datapackage.md
+  - Models: user_guide/models.md
   - Parameter: user_guide/parameter.md
+  - Source: user_guide/source.md
+  - Source Collection: user_guide/source_collection.md
+  - Technology: user_guide/technology.md
+  - Technology Collection: user_guide/technology_collection.md
+  - Use Cases: user_guide/design.md
+
+- Examples:
+  - Danish Energy Agency Parser: examples/dea_storage.md
+
+- API Reference:
+  - Data Package: api/datapackage.md
+  - Parameter: api/parameter.md
+  - Source: api/source.md
+  - Source Collection: api/source_collection.md
+  - Technology: api/technology.md
+  - Technology Collection: api/technology_collection.md
+  - Utils:
+    - Commons:
+      - Common functionalities: api/commons/commons.md
+      - File extension enumeration: api/commons/fileextensionenum.md
+      - Date format enumeration: api/commons/dateformatenum.md
+    - Units:
+      - Custom undefined unit error: api/units/customundefineduniterror.md
+      - Special unit registry: api/units/specialunitregistry.md
+
 
 - Contributing:
   - Instructions: contributing/instructions.md
@@ -128,7 +154,7 @@ plugins:
 - argref:
     autolinks:
     - reference_prefix: ":octicons-git-pull-request-16:"
-      target_url: https://github.com/PyPSA/technology-data/pull/<num>
+      target_url: https://github.com/open-energy-transition/technology-data/pull/<num>
 - social:
     cards_layout_options:
       font_family: Overpass
@@ -148,6 +174,7 @@ plugins:
           filters:
           - "!^_[^_]"
           - "!logger"
+          - "!iteration"
           heading_level: 1
           merge_init_into_class: true
           parameter_headings: false
@@ -162,9 +189,10 @@ plugins:
           summary: true
           show_if_no_docstring: true
           show_inheritance_diagram: true
+          show_root_toc_entry: false
 
 hooks:
 - docs/assets/overrides/hooks/shortcodes.py
 
 copyright: >-
-  &copy The technology-data authors
+  &copy technologydata contributors

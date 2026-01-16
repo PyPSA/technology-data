@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: The technology-data authors
+# SPDX-FileCopyrightText: technologydata contributors
 #
 # SPDX-License-Identifier: MIT
 
@@ -72,4 +72,4 @@ repos:
   rev: v0.0.99  # Use the latest release tag
   hooks:
   - id: rumdl
-    args: ["--fix", "--disable=MD013, MD024, MD030"]
+    args: ["--fix", "--disable=MD006, MD013, MD024, MD030, MD033, MD041"]

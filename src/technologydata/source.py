@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: The technology-data authors
+# SPDX-FileCopyrightText: technologydata contributors
 #
 # SPDX-License-Identifier: MIT
 
@@ -139,10 +139,6 @@ class Source(pydantic.BaseModel):
         This method checks if the source's `url` attribute is set and whether
         an archived URL or archive date is already present. If neither is available, it attempts to archive the
         URL using the Wayback Machine and updates the corresponding attributes.
-
-        Parameters
-        ----------
-        None
 
         Returns
         -------

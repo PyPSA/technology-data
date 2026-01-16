@@ -1,17 +1,12 @@
-# Title
-
-<!--
-SPDX-FileCopyrightText: 2025 The technology-data authors
-
-SPDX-License-Identifier: MIT
-
--->
+# Growth Models Documentation
 
 ## Models
 
 Different models can be used to modify assumptions to fit specific scenarios.
 
 ## Supported Model Types
+
+`technologydata` currently supports the following model types:
 
 - **Growth models**: For projecting technology parameters forward in time using mathematical models.
 
@@ -20,8 +15,6 @@ These are implemented as Python classes and can be used for fitting to data and 
 ## Growth Models
 
 Growth models are mathematical models for projecting technology parameters over time. They are implemented as Pydantic classes in `technologydata.technologies.growth_models` and can be used for both fitting to data and making projections. The following growth models are available:
-
-### Available Growth Models
 
 - `LinearGrowth`: Linear model, $f(x) = m \cdot (x - x_0) + c$
 - `ExponentialGrowth`: Exponential model, $f(x) = A \cdot \exp(k \cdot (x - x_0))$
@@ -36,7 +29,7 @@ Each model exposes:
 - A `project(to_year)` method to project to a given year. Requires all parameters of the models to be set, either manually or via fitting.
 - Data points can be added via each models constructor or later via the `add_data((x, y))` function
 
-#### Model Parameters
+### Model Parameters
 
 Each model has its own parameters, e.g. for `LinearGrowth` those are `x0`, `A` and `m`.
 These parameters can either be set when instantiating the model or later by setting the attributes directly.
@@ -44,6 +37,7 @@ Not all parameters need to be set, e.g. if you are planning on fitting one param
 Omitting parameters can be done by either not providing them at all or setting them to `None`.
 
 ```python
+from technologydata.technologies.growth_models import LinearGrowth
 model = LinearGrowth(x0=2020, A=None)  # Set only x0; A and m are not set
 
 # Set A after instantiation of the model
@@ -75,7 +69,7 @@ and the function docstring:
 ::: technologydata.technologies.growth_models.LinearGrowth.function
 ```
 
-#### Creating a model and projecting a value
+### Creating a model and projecting a value
 
 To create a model, e.g. for the growth of electric vehicles over time, instantiate the model with the known parameters:
 
@@ -101,7 +95,7 @@ LinearGrowth().function(2030, x0=2020, A=5_000_000, m=2_000_000)
 Note that when using the `function` method directly, all parameters must be explicitly provided.
 (TODO: maybe function should be a classmethod or read the parameters from the instance if they are set?)
 
-#### Fitting a model to data
+### Fitting a model to data
 
 To fit a model to data points, provide the data points to the model via the `data_points` argument when instantiating the model or add them later via the `add_data((x, y))` method:
 
@@ -209,7 +203,6 @@ Take for example the following `TechnologyCollection` for utility scale solar ph
 
 ```python
 from technologydata import TechnologyCollection, Technology, Parameter
-from technologydata.technologies.growth_models import ExponentialGrowth, LinearGrowth
 
 tc = TechnologyCollection(
     technologies=[
@@ -260,6 +253,7 @@ By using models it is possible to create consistent scenarios for the parameters
 Using the `.project()` method of the `TechnologyCollection`, models can be specified for each parameter to be projected to specified years:
 
 ```python
+from technologydata.technologies.growth_models import ExponentialGrowth, LinearGrowth
 tc.project(
     to_years=[2010, 2020, 2030, 2040, 2050],
     parameters={
@@ -289,6 +283,7 @@ This allows models to be reused across multiple projections, e.g. for different 
 A model can also be fit to data points before being provided to the `project` method, allowing more control over the fitting process like providing initial guesses `p0`:
 
 ```python
+from technologydata.technologies.growth_models import ExponentialGrowth
 model = tc.fit(
     parameter="electricity supply",
     model=ExponentialGrowth(x0=2010),

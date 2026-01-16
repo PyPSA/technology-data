@@ -1,0 +1,1 @@
+::: technologydata.technology.Technology

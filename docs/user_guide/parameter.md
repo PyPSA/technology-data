@@ -1,12 +1,5 @@
 # `Parameter` Class Documentation
 
-<!--
-SPDX-FileCopyrightText: The technology-data authors
-
-SPDX-License-Identifier: MIT
-
--->
-
 ## Overview
 
 The `Parameter` class in `technologydata` encapsulates a value, its unit, provenance, notes, sources, and additional attributes required to describe technology parameters, such as carrier and heating value. It is designed for use in energy system modeling workflows, supporting unit handling, currency/inflation adjustments, and provenance tracking.
@@ -14,7 +7,7 @@ The `Parameter` class in `technologydata` encapsulates a value, its unit, proven
 ## Features
 
 - **Value and Units**: Stores a numerical value (`magnitude`) and its associated units (`units`). Units are handled using `pint` and support custom currency units (e.g., `USD_2020/kW`). The default `pint` units definition file is available [here](https://github.com/hgrecco/pint/blob/master/pint/default_en.txt) for reference. Be mindful of false unit-friends, e.g. `t = metric_ton = tonne != ton = US_ton`
-- **Currency Unit Convention**: Currency units must follow the pattern `XYZ_YYYY`, where `XYZ` is the 3-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code (e.g., `USD`, `EUR`, `CNY`) and `YYYY` is the 4-digit year (e.g., `USD_2020`). This allows for both currency and inflation adjustment.
+- **Currency Unit Convention**: Currency units must follow the pattern `XYZ_YYYY`, where `XYZ` is the 3-letter [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code (e.g., `USD`, `EUR`, `CNY`) and `YYYY` is the 4-digit year (e.g., `USD_2020`). This allows for both currency and inflation adjustments.
 - **Carrier and Heating Value**: Optionally specify an energy carrier (e.g., `H2`) and a heating value type (`LHV` or `HHV`).
 - **Provenance and Notes**: Track the origin of the data and any additional notes.
 - **Sources**: Attach a `SourceCollection` of references for traceability.
@@ -39,12 +32,12 @@ param = Parameter(
     provenance="Directly extracted from literature",
     note="Estimated",
     sources=SourceCollection(sources=[
-        Source(name="Example Source", authors="some authors", title="Example Title")
+        Source(title="Example Title", authors="some authors")
     ]),
 )
 
 >>> param
-Parameter(magnitude=1000.0, units='USD_2020/kW', carrier='H2', heating_value='LHV', provenance='literature', note='Estimated', sources=SourceCollection(sources=[Source(name='Example Source', authors='some authors', title='Example Title')]))
+Parameter(magnitude=1000.0, units='USD_2020/kW', carrier='H2', heating_value='LHV', provenance='literature', note='Estimated', sources=SourceCollection(sources=[Source(title='Example Title', authors='some authors', )]))
 ```
 
 ### Unit Conversion (excluding currency)
@@ -64,15 +57,17 @@ euro_param = param.to_currency("EUR_2023", "DEU", source="worldbank")
 950.0 EUR_2023 / kilowatt
 ```
 
-Currency conversion and infation adjustment are also available for `Technology` and `TechnologyCollection` objects.
-This allows to quickly adjust and harmonise the currency of all parameters in a technology or collection.
+Currency conversion and inflation adjustment are also available for `Technology` and `TechnologyCollection` objects. This allows to quickly adjust and harmonise the currency of all parameters in a technology or collection.
 
 ```python
 # for a Technology
 from technologydata.technology import Technology
 tech = Technology(
     name="Example Tech",
+    detailed_technology="Detailed Example Tech",
+    case="Scenario",
     region="DEU",
+    year="2020",
     parameters={"cost": param}
 )
 converted_tech = tech.to_currency("USD_2020", source="worldbank")
@@ -88,7 +83,7 @@ USD_2020 / kilowatt
 ```
 
 Compared to the `to_currency()` method of the `Parameter` class, the `to_currency()` methods of `Technology` and `TechnologyCollection` do not require specifying a country for inflation adjustment.
-By default the `region` field of the `Technology` object or the `Technology` objects in the `TechnologyCollection` are used for inflation adjustment.
+By default, the `region` field of the `Technology` object or the `Technology` objects in the `TechnologyCollection` are used for inflation adjustment.
 If the value of the `region` field should not be used or is not suitable, because e.g. it is not a valid ISO 3166 alpha-3 country code, the optional `overwrite_country` argument can be used to specify a different country code for inflation adjustment.
 
 ```python
@@ -104,6 +99,8 @@ DEU
 ### Arithmetic Operations
 
 ```python
+from technologydata.parameter import Parameter
+
 param2 = Parameter(magnitude=500, units="USD_2020/kW", carrier="H2", heating_value="LHV")
 sum_param = param + param2
 >>> print(sum_param.magnitude, sum_param.units)
@@ -113,6 +110,8 @@ sum_param = param + param2
 **Note:** If you try to add or subtract parameters with different carriers or heating values, a `ValueError` will be raised:
 
 ```python
+from technologydata.parameter import Parameter
+
 param_hhv = Parameter(magnitude=1, units="USD_2020/kW", carrier="H2", heating_value="HHV")
 param + param_hhv
 >>> # ValueError: Cannot add parameters with different heating values
@@ -135,8 +134,7 @@ Only parameters with the same heating value can be used in arithmetic operations
 The heating value can be changed using the `change_heating_value` method, which uses the `carrier` attribute of the `Parameter` to determine the conversion factor between LHV and HHV based on their energy densities.
 
 - **Supported Carriers:** The method currently supports conversion for common carriers such as hydrogen and methane. For any other carrier that is not implemented, a ratio of 1 is assumed.
-- **Changing Heating Value
-- **Adding Carriers:** New carriers can be added programmatically by extending the `EnergyDensityLHV` and `EnergyDensityHHV` dictionaries in the `technologydata.constants`. The LHV/HHV ratio is calculated based on these two dictionaries, so any new carrier must have both LHV and HHV energy densities defined. In addition the carrier name must be a valid dimensionality defined in `technologydata.utils.units.creg`.
+- **Adding Carriers:** New carriers can be added programmatically by extending the `EnergyDensityLHV` and `EnergyDensityHHV` dictionaries in `technologydata.constants`. The LHV/HHV ratio is calculated based on these two dictionaries, so any new carrier must have both LHV and HHV energy densities defined. In addition, the carrier name must be a valid dimensionality defined in `technologydata.utils.units.creg`.
 
 ### Example: Converting Between LHV and HHV
 
@@ -165,7 +163,11 @@ param_mixed_hhv = param_mixed.change_heating_value("HHV")
 0.13 kWh/kg higher_heating_value
 ```
 
-## Limitations & Missing Features
+## API Reference
+
+Please refer to the [API documentation](../api/parameter.md) for detailed information on the `Parameter` class methods and attributes.
+
+## Notes
 
 - **Provenance/Note/Sources in Arithmetic**: When performing arithmetic operations, the handling and merging of `provenance`, `note`, and `sources` is not yet implemented (see `TODO` comments in the code).
 - **Unit Conversion**: The `.to()` method does not support currency conversion; use `.to_currency()` for that.

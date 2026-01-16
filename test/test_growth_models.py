@@ -1,4 +1,5 @@
-# SPDX-FileCopyrightText: 2025 The technology-data authors
+# SPDX-FileCopyrightText: technologydata contributors
+#
 # SPDX-License-Identifier: MIT
 """Unit tests for growth models in technologydata.technologies.growth_models."""
 

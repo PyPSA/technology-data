@@ -1,11 +1,5 @@
 # Instructions for contributing to the project
 
-<!--
-SPDX-FileCopyrightText: The technology-data authors
-SPDX-License-Identifier: MIT
-
--->
-
 First of all, thank you for your contributions to `technologydata`!
 
 We enthusiastically invite anyone interested in `technologydata` to share new ideas, provide suggestions, submit bug reports, or contribute code changes.
@@ -17,7 +11,7 @@ We enthusiastically invite anyone interested in `technologydata` to share new id
 
 ## Where to go for help
 
-- To **discuss** with other `technologydata` users, organise projects, share news, and get in touch with the community, please refer to the [Contacts](/docs/home/contacts.md) page.
+- To **discuss** with other `technologydata` users, organise projects, share news, and get in touch with the community, please refer to the [Contacts](../home/contacts.md) page.
 - For **guidelines to contribute**, stay right here.
 
 ## Code contributions
@@ -182,6 +176,8 @@ The documentation is generated with [MkDocs](https://www.mkdocs.org/). The docum
     If you are not familiar with Markdown, consult the following [quick guide](https://www.markdownguide.org/basic-syntax/).
 
 MkDocs offers the possibility to start a built-in development server to preview the documentation as you work on it.  To start the development server run:
+
+### Building the documentation locally
 
 ```bash
 mkdocs serve

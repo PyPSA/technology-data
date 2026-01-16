@@ -1,13 +1,6 @@
 # technologydata
 
 <!--
-SPDX-FileCopyrightText: The technology-data authors
-
-SPDX-License-Identifier: MIT
-
--->
-
-<!--
 
 TODO: Add badges
 **Suggestions:**
@@ -25,8 +18,7 @@ A Python package to manage techno-economic assumptions for energy system models.
 It provides a structured way to store, retrieve, and manipulate data related to various technologies used in energy systems,
 including unit-ful parameters, currency conversions, inflation adjustment, and temporal modelling.
 
-In the future it will include pre-parsed data from common public data sources such NREL's ATB or DEA's Technology Catalogue.
-For these datasources it will also include parsers that can be modified to extract data in a custom way.
+The package currently includes a pre-parsed dataset from the DEA's Technology Catalogue focusing on energy storage technologies and a dedicated parser (see [here](docs/examples/dea_storage.md)).  In the future it will include other common public data sources such NREL's ATB.
 
 The goal of this package is to make energy system modelling easier and more efficient,
 automating common tasks and transformations to reduce errors and allowing for easier data exchange between models.
@@ -64,9 +56,15 @@ and a few right ways to convert these to e.g. EUR and adjust it for inflation to
 
 ## Install
 
-The package is currently under development and not yet published to `PyPI` or `conda-forge`.
+The package is currently under development. A pre-release is published to `PyPI`. The package is not yet available on `conda-forge`.
 
-To install the package locally from GitHub, first clone the package and then use `uv` to install it in editable mode:
+To install the package
+
+```bash
+pip install technologydata
+```
+
+Alternatively, to install the package locally from GitHub, first clone the package and then use `uv` to install it in editable mode:
 
 ```bash
 git clone https://github.com/open-energy-transition/technology-data/tree/prototype-2
@@ -77,26 +75,7 @@ uv sync --group dev --group docs
 
 ## Usage
 
-Detailed usage instructions and examples can be found in the [documentation](https://technology-data--240.org.readthedocs.build/en/240/).
-
-To create a `Technology` object with some parameters and then adjust for inflation and convert to a different currency, you can use the following code:
-
-```python
-from technologydata import Technology, Parameter
-
-tech = Technology(
-    name="Solar PV",
-    detailed_technology="Utility-scale PV",
-    region="USA",
-    year=2020,
-    parameters={
-        "capital_cost": Parameter(value=600, unit="USD_2020/kW"),
-        "efficiency": Parameter(value=15, unit="percent"),
-    }
-)
-
-tech = tech.to_currency("EUR_2023")
-```
+Detailed usage instructions and examples can be found in the available documentation. To build the documentation locally, follow the steps outlined [here](docs/contributing/instructions.md#building-the-documentation-locally).
 
 ## Maintainers
 
@@ -111,7 +90,7 @@ Development of this prototype package would not have been possible without the f
 
 ## Contributing
 
-For contributing instructions, guidelines and our code of conduct, please refer to the [contributing section](https://technology-data--240.org.readthedocs.build/en/240/contributing/instructions/) in the documentation.
+For contributing instructions, guidelines and our code of conduct, please refer to the [contributing section](docs/contributing) in the documentation.
 
 ## License
 

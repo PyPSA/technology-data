@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: The technology-data authors
+# SPDX-FileCopyrightText: technologydata contributors
 #
 # SPDX-License-Identifier: MIT
 
@@ -40,10 +40,10 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/PyPSA/technology-data"
-Source = "https://github.com/PyPSA/technology-data"
-BugTracker = "https://github.com/PyPSA/technology-data/issues"
-Changelog = "https://github.com/PyPSA/technology-data/releases"
+Homepage = "https://github.com/open-energy-transition/technology-data"
+Source = "https://github.com/open-energy-transition/technology-data"
+BugTracker = "https://github.com/open-energy-transition/technology-data/issues"
+Changelog = "https://github.com/open-energy-transition/technology-data/releases"
 
 # https://docs.astral.sh/uv/concepts/projects/dependencies/#dependency-groups
 # editable installation of package and non-packaged dependencies

@@ -1,24 +1,24 @@
 version = 1
 SPDX-PackageName = "technologydata"
-SPDX-PackageSupplier = "The technology-data authors"
-SPDX-PackageDownloadLocation = "https://github.com/pypsa/technology-data"
+SPDX-PackageSupplier = "technologydata contributors"
+SPDX-PackageDownloadLocation = "https://github.com/open-energy-transition/technology-data"
 
 [[annotations]]
-path = ["uv.lock", "*.yaml", "docs/**",]
-SPDX-FileCopyrightText = "The technology-data authors"
+path = ["uv.lock", "*.yaml", "docs/**", "*.md", "*.in"]
+SPDX-FileCopyrightText = "technologydata contributors"
 SPDX-License-Identifier = "MIT"
 
 
 [[annotations]]
 path = ["test/test_data/**",]
-SPDX-FileCopyrightText = "The technology-data authors"
+SPDX-FileCopyrightText = "technologydata contributors"
 SPDX-License-Identifier = "CC-BY-4.0"
 
 [[annotations]]
 path = [
     "src/technologydata/package_data/dea_energy_storage/*.json", "src/technologydata/package_data/schemas/*.json"
 ]
-SPDX-FileCopyrightText = "The technology-data authors"
+SPDX-FileCopyrightText = "technologydata contributors"
 SPDX-License-Identifier = "CC-BY-4.0"
 
 [[annotations]]

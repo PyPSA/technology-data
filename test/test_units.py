@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: The technology-data authors
+# SPDX-FileCopyrightText: technologydata contributors
 #
 # SPDX-License-Identifier: MIT
 """Test the creation of custom units and handling of currencies using Pint."""

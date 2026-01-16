@@ -1,6 +1,6 @@
 # Installation
 
-You can install `technologydata` using either **PyPI** or **conda-forge**. Choose the method that best fits your workflow.
+You can install `technologydata` using **PyPI**.
 
 ## Using pip (from PyPI)
 
@@ -12,10 +12,4 @@ pip install technologydata
 
 ```bash
 uv pip install technologydata
-```
-
-## Using conda (from conda-forge)
-
-```bash
-conda install -c conda-forge technologydata
 ```

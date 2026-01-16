@@ -1,6 +1,7 @@
-# SPDX-FileCopyrightText: 2025 The technology-data authors
+# SPDX-FileCopyrightText: technologydata contributors
 #
 # SPDX-License-Identifier: MIT
+
 """Growth models for projecting technology parameters over time."""
 
 import inspect

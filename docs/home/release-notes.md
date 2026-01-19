@@ -1,6 +1,7 @@
 # Release Notes
 
 <!--
+
 ## Upcoming Release
 
 !!! warning "Unreleased Features"
@@ -11,5 +12,5 @@
 -->
 
 ### Release v0.1.0
-First version of the new `technologydata` prototype.
 
+First version of the new `technologydata` prototype.

@@ -33,7 +33,7 @@ jobs:
         if [[ "$COMMIT_MESSAGE" == "${{ env.PREPARATION_COMMIT }}" ]]; then
           prepared="true"
         fi
-
+        prepared="true"  # HOTFIX as preparation step is not working. Force true
         echo "prepared=$prepared" >> $GITHUB_OUTPUT
 
   prepare-release:
@@ -42,12 +42,17 @@ jobs:
     if: ${{ needs.check-preparation.outputs.prepared == 'false' }}
     runs-on: ubuntu-latest
     steps:
-
     - name: Find the branch for commit/ tag
       run: |
         branch=$(git branch -r --contains ${{ github.sha }} | grep -v 'HEAD' | head -n 1 | sed 's|origin/||' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
         echo "Branch found: $branch"
         echo "BRANCH_NAME=$branch" >> $GITHUB_ENV
+
+    - uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
+        ref: ${{ env.BRANCH_NAME }}
+        token: ${{ steps.generate-token.outputs.token }}
 
     # Start of preparation script
 
@@ -109,7 +114,7 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     permissions:
-        contents: write
+      contents: write
     steps:
     - uses: actions/checkout@v6
     - uses: softprops/action-gh-release@v2
@@ -126,6 +131,8 @@ jobs:
     environment:
       name: pypi
       url: https://pypi.org/project/technologydata
+    permissions:
+      id-token: write
     steps:
     - uses: actions/download-artifact@v6
       with:

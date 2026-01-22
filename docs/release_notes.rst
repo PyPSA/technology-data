@@ -16,6 +16,8 @@ Upcoming Release
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
 
+* Add `Post-combustion carbon capture retrofit - 500 MW(th) biomass-fired boiler` as `biomass boiler capture` (https://github.com/PyPSA/technology-data/pull/253)
+
 * Adding `grey methanol synthesis`.
 
 * Align cost units for NREL battery data with PyPSA modeling, fetching investment cost and FOM for both `battery storage` and `battery inverter` instead of a single value for `battery storage`, which was instead representative of the full plant (battery storage + battery inverter).

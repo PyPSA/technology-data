@@ -2708,6 +2708,7 @@ def add_carbon_capture(
 
     return new_technology_dataframe
 
+
 def add_perennials_gbr(
     years: list,
     sheet_names_dict: dict,
@@ -2748,7 +2749,9 @@ def add_perennials_gbr(
 
     # --- Mass & energy balance assumptions (R1) ---
     DM_perennials = 0.18  # dry matter content (t_DM / t_wet)
-    ch4_mass_fraction_in_biogas = 0.348  # mass fraction CH4 in biogas (check definition in R1)
+    ch4_mass_fraction_in_biogas = (
+        0.348  # mass fraction CH4 in biogas (check definition in R1)
+    )
     flh_y = 4200  # full-load hours per year (green crops harvest May–Oct)
 
     perennials_input_flow = 40 * DM_perennials  # t_DM/h
@@ -2758,7 +2761,9 @@ def add_perennials_gbr(
     protein_output_annual = protein_output_flow * flh_y  # t_DM/y
 
     # (t_biogas / t_DM) * (mass fraction CH4) * (MWh/t_CH4)
-    biogas_output_flow = 0.29 * ch4_mass_fraction_in_biogas * LHV_ch4  # MWh/h (per t_DM/h basis)
+    biogas_output_flow = (
+        0.29 * ch4_mass_fraction_in_biogas * LHV_ch4
+    )  # MWh/h (per t_DM/h basis)
 
     # electricity input
     electricity_input_flow = 7.33 / 100 * perennials_input_flow
@@ -2823,12 +2828,14 @@ def add_perennials_gbr(
     new_technology_dataframe.loc[(tech_name, "electricity-input"), years] = (
         electricity_input_flow / perennials_input_flow
     )
-    new_technology_dataframe.loc[(tech_name, "electricity-input"), "unit"] = "MWh/tDM"  # verify!
+    new_technology_dataframe.loc[(tech_name, "electricity-input"), "unit"] = (
+        "MWh/tDM"  # verify!
+    )
 
     # Metadata (apply to whole tech row, like add_carbon_capture)
     new_technology_dataframe.loc[tech_name, "source"] = source_r1
-    new_technology_dataframe.loc[tech_name, "further description"] = sheet_names_dict.get(
-        tech_name, ""
+    new_technology_dataframe.loc[tech_name, "further description"] = (
+        sheet_names_dict.get(tech_name, "")
     )
 
     # Per-variable descriptions (optional but often nice)

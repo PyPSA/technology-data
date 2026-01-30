@@ -32,6 +32,7 @@ nav:
 
 - Examples:
   - Danish Energy Agency Parser: examples/dea_storage.md
+  - Manual Input USA Parser: examples/manual_input_usa.md
 
 - API Reference:
   - Data Package: api/datapackage.md

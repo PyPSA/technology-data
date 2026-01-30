@@ -8,22 +8,21 @@ path = ["uv.lock", "*.yaml", "docs/**", "*.md", "*.in"]
 SPDX-FileCopyrightText = "technologydata contributors"
 SPDX-License-Identifier = "MIT"
 
-
 [[annotations]]
-path = ["test/test_data/**",]
+path = ["test/test_data/**"]
 SPDX-FileCopyrightText = "technologydata contributors"
 SPDX-License-Identifier = "CC-BY-4.0"
 
 [[annotations]]
 path = [
-    "src/technologydata/package_data/dea_energy_storage/*.json", "src/technologydata/package_data/schemas/*.json"
+    "src/technologydata/parsers/dea_energy_storage/*.json", "src/technologydata/parsers/schemas/*.json", "src/technologydata/parsers/raw/manual_input_usa.csv", "src/technologydata/parsers/manual_input_usa/*.json",
 ]
 SPDX-FileCopyrightText = "technologydata contributors"
 SPDX-License-Identifier = "CC-BY-4.0"
 
 [[annotations]]
 path = [
-    "src/technologydata/package_data/raw/Technology_datasheet_for_energy_storage.xlsx"
+    "src/technologydata/parsers/raw/Technology_datasheet_for_energy_storage.xlsx"
 ]
 SPDX-FileCopyrightText = "The Danish Energy Agency"
 SPDX-License-Identifier = "CC-BY-4.0"

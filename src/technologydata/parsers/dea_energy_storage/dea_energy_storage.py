@@ -7,19 +7,19 @@ Data parser for the DEA energy storage data set.
 
 How to run:
     From the repository root, execute:
-        python src/technologydata/package_data/dea_energy_storage/dea_energy_storage.py
+        python src/technologydata/parsers/dea_energy_storage/dea_energy_storage.py
 
 Configuration options (command-line arguments):
     --num_digits <int>         Number of significant digits to round the values. Default: 4
     --store_source             Store the source object on the Wayback Machine. Default: False
     --filter_params            Filter the parameters stored to technologies.json. Default: False
+    --export_schema            Export the Source/TechnologyCollection schemas. Default: False
 
 Example:
-    python src/technologydata/package_data/dea_energy_storage/dea_energy_storage.py --num_digits 3 --store_source --filter_params
+    python src/technologydata/parsers/dea_energy_storage/dea_energy_storage.py --num_digits 3 --store_source --filter_params
 
 """
 
-import argparse
 import logging
 import pathlib
 import re
@@ -36,6 +36,7 @@ from technologydata import (
     Technology,
     TechnologyCollection,
 )
+from technologydata.parsers.commons import ArgumentConfig, CommonsParser
 
 path_cwd = pathlib.Path.cwd()
 
@@ -478,60 +479,26 @@ def build_technology_collection(
     return TechnologyCollection(technologies=list_techs)
 
 
-@pydantic.validate_call
-def parse_input_arguments() -> argparse.Namespace:
-    """
-    Parse command line arguments.
-
-    Returns
-    -------
-    argparse.Namespace
-        Parsed command line arguments containing:
-        - Number of significant digits
-        - Store source flag
-
-    """
-    # Create the parser
-    parser = argparse.ArgumentParser(
-        description="Parse the DEA technology storage dataset",
-        formatter_class=argparse.RawTextHelpFormatter,
-    )
-
-    # Define arguments
-    parser.add_argument(
-        "--num_digits",
-        type=int,
-        default=4,
-        help="Name of significant digits to round the values. ",
-    )
-
-    parser.add_argument(
-        "--store_source",
-        action="store_true",
-        help="store_source, store the source object on the wayback machine. Default: false",
-    )
-
-    parser.add_argument(
-        "--filter_params",
-        action="store_true",
-        help="filter_params. Filter the parameters stored to technologies.json. Default: false",
-    )
-
-    parser.add_argument(
-        "--export_schema",
-        action="store_true",
-        help="export_schema. Export the Source/TechnologyCollection schemas. Default: false",
-    )
-
-    # Parse arguments
-    args = parser.parse_args()
-
-    return args
-
-
 if __name__ == "__main__":
     # Parse input arguments
-    input_args = parse_input_arguments()
+
+    additional_input_args = [
+        ArgumentConfig(
+            name="--filter_params",
+            action="store_true",
+            help="filter_params. Filter the parameters stored to technologies.json. Default: false",
+        ),
+        ArgumentConfig(
+            name="--export_schema",
+            action="store_true",
+            help="export_schema. Export the Source/TechnologyCollection schemas. Default: false",
+        ),
+    ]
+
+    input_args = CommonsParser.parse_input_arguments(
+        additional_arguments=additional_input_args,
+        description="Parse the DEA technology storage dataset",
+    )
     logger.info("Command line arguments parsed.")
 
     # Read the raw data
@@ -539,7 +506,7 @@ if __name__ == "__main__":
         path_cwd,
         "src",
         "technologydata",
-        "package_data",
+        "parsers",
         "raw",
         "Technology_datasheet_for_energy_storage.xlsx",
     )
@@ -651,7 +618,7 @@ if __name__ == "__main__":
         path_cwd,
         "src",
         "technologydata",
-        "package_data",
+        "parsers",
         "dea_energy_storage",
     )
     output_technologies_path = pathlib.Path(
@@ -676,7 +643,7 @@ if __name__ == "__main__":
     if input_args.export_schema:
         # Move schema files if they exist
         schema_folder = pathlib.Path(
-            path_cwd, "src", "technologydata", "package_data", "schemas"
+            path_cwd, "src", "technologydata", "parsers", "schemas"
         )
         sources_schema = pathlib.Path(dea_storage_path, "sources.schema.json")
         technologies_schema = pathlib.Path(dea_storage_path, "technologies.schema.json")

@@ -10,7 +10,7 @@ import typing
 import pandas
 import pytest
 
-from technologydata.package_data.dea_energy_storage.dea_energy_storage import (
+from technologydata.parsers.dea_energy_storage.dea_energy_storage import (
     build_technology_collection,
     clean_est_string,
     clean_parameter_string,

@@ -19,6 +19,7 @@ carbon_dioxide = [carbon_dioxide] = CO2
 carbon_monoxide = [carbon_monoxide] = CO
 coal = [coal] = anthracite = hard_coal = black_coal
 diesel = [diesel]
+fischer_tropsch = [fischer_tropsch] = FT = FTF = fischer_tropsch_fuel
 gasoline = [gasoline] = petrol
 jet_fuel_a1 = [jet_fuel_a1] = JETA1
 electricity = [electricity] = e = el
@@ -29,5 +30,6 @@ methanol = [methanol] = CH3OH = MeOH
 natural_gas = [natural_gas] = NG
 nitrogen = [nitrogen] = N2
 oxygen = [oxygen] = O2
+thermal = [thermal] = th
 water = [water] = H2O
 wood = [wood]

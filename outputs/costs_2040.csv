@@ -694,6 +694,15 @@ biomass boiler,efficiency,0.87,per unit,"Danish Energy Agency, inputs/technology
 biomass boiler,investment,654.3303,EUR/kW_th,"Danish Energy Agency, inputs/technologydatafor_heating_installations_marts_2018.xlsx","204 Biomass boiler, automatic:  Specific investment",2015.0
 biomass boiler,lifetime,20.0,years,"Danish Energy Agency, inputs/technologydatafor_heating_installations_marts_2018.xlsx","204 Biomass boiler, automatic:  Technical lifetime",2015.0
 biomass boiler,pelletizing cost,9.0,EUR/MWh_pellets,Assumption based on doi:10.1016/j.rser.2019.109506,,2019.0
+biomass boiler capture,FOM,3.0,%/year,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.b Post comb - Large biomass,2020.0
+biomass boiler capture,capture_rate,0.95,per unit,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.b Post comb - Large biomass,2020.0
+biomass boiler capture,compression-electricity-input,0.075,MWh/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.b Post comb - Large biomass,2020.0
+biomass boiler capture,compression-heat-output,0.13,MWh/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.b Post comb - Large biomass,2020.0
+biomass boiler capture,electricity-input,0.023,MWh/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.b Post comb - Large biomass,2020.0
+biomass boiler capture,heat-input,0.66,MWh/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.b Post comb - Large biomass,2020.0
+biomass boiler capture,heat-output,0.66,MWh/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.b Post comb - Large biomass,2020.0
+biomass boiler capture,investment,2000000.0,EUR/(tCO2/h),"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.b Post comb - Large biomass,2020.0
+biomass boiler capture,lifetime,25.0,years,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.b Post comb - Large biomass,2020.0
 biomass-to-methanol,C in fuel,0.4265,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
 biomass-to-methanol,C stored,0.5735,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
 biomass-to-methanol,CO2 stored,0.2103,tCO2/MWh_th,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,

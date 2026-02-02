@@ -137,6 +137,7 @@ dea_sheet_names = {
     "electrolysis": "86 AEC 100 MW",
     "direct air capture": "403.a Direct air capture",
     "biomass CHP capture": "401.a Post comb - small CHP",
+    "biomass boiler capture": "401.b Post comb - Large biomass",
     "cement capture": "401.c Post comb - Cement kiln",
     "BioSNG": "84 Gasif. CFB, Bio-SNG",
     "BtL": "85 Gasif. Ent. Flow FT, liq fu ",
@@ -204,6 +205,7 @@ uncrtnty_lookup = {
     "direct air capture": "I:J",
     "cement capture": "I:J",
     "biomass CHP capture": "I:J",
+    "biomass boiler capture": "I:J",
     "BioSNG": "I:J",
     "BtL": "J:K",
     "biomass-to-methanol": "J:K",
@@ -242,6 +244,7 @@ cost_year_2020 = [
     "biogas upgrading",
     "direct air capture",
     "biomass CHP capture",
+    "biomass boiler capture",
     "cement capture",
     "BioSNG",
     "BtL",
@@ -648,6 +651,7 @@ def get_data_DEA(
         "direct air capture",
         "cement capture",
         "biomass CHP capture",
+        "biomass boiler capture",
     ]:
         usecols = "A:F"
     elif tech_name in [
@@ -2655,16 +2659,29 @@ def add_carbon_capture(
         updated technology data
     """
 
-    for tech_name in ["cement capture", "biomass CHP capture"]:
-        new_technology_dataframe.loc[(tech_name, "capture_rate"), years] = (
-            technology_dataframe.loc[
-                (tech_name, "Ax) CO2 capture rate, net"), years
-            ].values[0]
-            / 100
-        )
+    for tech_name in [
+        "cement capture",
+        "biomass CHP capture",
+        "biomass boiler capture",
+    ]:
+        if tech_name == "biomass boiler capture":
+            # in 2020, only biomass boiler capture has a "A3" in its index
+            # by February 2024, all techs have "A3" rather than "Ax"
+            capture_rate_str = "A3) CO2 capture rate, net"
+        else:
+            capture_rate_str = "Ax) CO2 capture rate, net"
+
+        value = technology_dataframe.loc[(tech_name, capture_rate_str), years].values[0]
+
+        new_technology_dataframe.loc[(tech_name, "capture_rate"), years] = value / 100
         new_technology_dataframe.loc[(tech_name, "capture_rate"), "unit"] = "per unit"
 
-    for tech_name in ["direct air capture", "cement capture", "biomass CHP capture"]:
+    for tech_name in [
+        "direct air capture",
+        "cement capture",
+        "biomass CHP capture",
+        "biomass boiler capture",
+    ]:
         new_technology_dataframe.loc[(tech_name, "investment"), years] = (
             technology_dataframe.loc[(tech_name, "Specific investment"), years].values[
                 0

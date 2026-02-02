@@ -2,6 +2,8 @@
   <img src="assets/logo/technology_data_logo.png" alt="technologydata Header Logo" width="400"/>
 </p>
 
+
+[![PyPI version](https://img.shields.io/pypi/v/technologydata.svg)](https://pypi.python.org/pypi/technologydata)
 [![License](https://img.shields.io/pypi/l/pypsa.svg)](https://github.com/PyPSA/pypsa?tab=MIT-1-ov-file)
 [![Discord](https://img.shields.io/discord/911692131440148490?logo=discord)](https://discord.gg/T7YZbnVU)
 

@@ -48,7 +48,6 @@ oil,2030,VOM,3,EUR/MWhel,DIW DataDoc http://hdl.handle.net/10419/80348
 biomass,2030,fuel,7,EUR/MWhth,IEA2011b
 biogas,2030,fuel,59,EUR/MWhth,JRC and Zappa
 solid biomass,2030,fuel,25.2,EUR/MWhth,JRC and Zappa
-oil,2030,fuel,50,EUR/MWhth,IEA WEM2017 97USD/boe = http://www.iea.org/media/weowebsite/2017/WEM_Documentation_WEO2017.pdf
 PHS,2030,efficiency,0.75,per unit,DIW DataDoc http://hdl.handle.net/10419/80348
 hydro,2030,efficiency,0.9,per unit,DIW DataDoc http://hdl.handle.net/10419/80348
 ror,2030,efficiency,0.9,per unit,DIW DataDoc http://hdl.handle.net/10419/80348

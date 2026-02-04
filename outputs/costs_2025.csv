@@ -1,4 +1,7 @@
 technology,parameter,value,unit,source,further description,currency_year
+Afforestation,FOM,5.0,%/year,https://onlinelibrary.wiley.com/doi/epdf/10.1111/rec.13515,,2020.0
+Afforestation,investment,7749.0,EUR/ha,https://onlinelibrary.wiley.com/doi/epdf/10.1111/rec.13515,,2020.0
+Afforestation,lifetime,30.0,years,https://onlinelibrary.wiley.com/doi/full/10.1111/rec.13515,,
 Alkaline electrolyzer large size,FOM,4.6,%/year,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`  (SELCH2EC01, H2 Production-Alkaline Electrolyser, large size, centralized) and currency year from file `SubRES_15_TECHS_HYDROGEN.xlsx`, Sheet `INPUT-Data(HP)`",Reference capacity 72 MW,2010.0
 Alkaline electrolyzer large size,VOM,0.2389,EUR/MWh_H2,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`  (SELCH2EC01, H2 Production-Alkaline Electrolyser, large size, centralized) and currency year from file `SubRES_15_TECHS_HYDROGEN.xlsx`, Sheet `INPUT-Data(HP)`",Reference capacity 72 MW,2010.0
 Alkaline electrolyzer large size,electricity-input,1.38,MWh_el/MWh_H2,"JRC, 01_JRC-EU-TIMES Full model, https://zenodo.org/records/3544900, file `SubRES_15_TECHS_HYDROGEN.xlsx`  (SELCH2EC01, H2 Production-Alkaline Electrolyser, large size, centralized) and currency year from file `SubRES_15_TECHS_HYDROGEN.xlsx`, Sheet `INPUT-Data(HP)`",Reference capacity 72 MW,

@@ -1,4 +1,7 @@
 technology,parameter,value,unit,source,further description,currency_year,financial_case,scenario
+Afforestation,FOM,5.0,%/year,https://onlinelibrary.wiley.com/doi/epdf/10.1111/rec.13515,,2020.0,,
+Afforestation,investment,7749.0,EUR/ha,https://onlinelibrary.wiley.com/doi/epdf/10.1111/rec.13515,,2020.0,,
+Afforestation,lifetime,30.0,years,https://onlinelibrary.wiley.com/doi/full/10.1111/rec.13515,,,,
 Alkaline electrolyzer large size,FOM,4.0,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Moderate
 Alkaline electrolyzer large size,FOM,4.0,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,Market,Moderate
 Alkaline electrolyzer large size,FOM,4.0,%/year,ICCT IRA e-fuels assumptions ,Meaning of scenario and financial case: https://atb.nrel.gov/electricity/2024/definitions#scenarios,2022.0,R&D,Conservative

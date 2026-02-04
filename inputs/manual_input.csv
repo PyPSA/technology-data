@@ -623,3 +623,7 @@ H2 production biomass gasification CC,VOM,2020,0.46,EUR/MWh_H2,2010,"JRC, 01_JRC
 grey methanol synthesis,efficiency,2030,0.569,MWh_MeOH/MWh_gas,2020,"From https://www.sciencedirect.com/science/article/pii/S0016236119311767, table 2, Methanol Synthesis with integrated autothermal reforming. Efficiency is the exergetic efficiency ",
 grey methanol synthesis,carbondioxide-output,2030,0.0567742,t_CO2/MWh_gas,2020,"Calculated from the carbon content of gas (0.198 t_CO2/MWh) compared to the carbon content of MeOH (0.2482 t_CO2/MWh)",
 grey methanol synthesis,investment,2030,1001188,EUR/MW_MeOH,2020,"Calculated from https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2021/Jan/IRENA_Innovation_Renewable_Methanol_2021.pdf) Table 25 with an exchange rate of 0.8775 EUR/USD and energy content of 5.528 MWh_MeOH/t_MeOH",
+Enhanced Weathering,investment,2020,110099,EUR/tCO2,2014," Jessica Strefler et al 2018 Environ. Res. Lett. 13 034010 https://doi.org/10.1088/1748-9326/aaa9c4, conversion 0.7541 EUR/US (2014)",
+Enhanced Weathering,VOM,2020,166.15,EUR/h/tCO2,2014," Jessica Strefler et al 2018 Environ. Res. Lett. 13 034010 https://doi.org/10.1088/1748-9326/aaa9c4, conversion 0.7541 EUR/US (2014)",
+Enhanced Weathering,electricity-input,2020,0.1852,MWh/tCO2 ,, Jessica Strefler et al 2018 Environ. Res. Lett. 13 034010 https://doi.org/10.1088/1748-9326/aaa9c4,
+Enhanced Weathering,lifetime,2020,1,years,,costs are given per year,

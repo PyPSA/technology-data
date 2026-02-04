@@ -295,7 +295,9 @@ class Parameter(BaseModel):
                 "Cannot change heating value without a current heating value. "
                 "Please provide a valid heating value."
             )
-        if to_heating_value == self.heating_value:
+        # pint uses canonical names for units, ensure we compare against that
+        to_heating_value_pint = str(technologydata.hvreg.Unit(to_heating_value))
+        if to_heating_value_pint == self.heating_value:
             # No change needed, return the same parameter
             return self
 

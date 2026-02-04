@@ -740,6 +740,21 @@ class TestParameter:
         assert p2.heating_value == "lower_heating_value"
         assert p2.carrier == "methane"
 
+    def test_change_heating_value_multiple_calls(self) -> None:
+        """Test conversion when multiple calls are performed and to_heating_value is constant."""
+        p = technologydata.Parameter(
+            magnitude=10, units="kW", heating_value="LHV", carrier="natural_gas"
+        )
+        p = p.change_heating_value("HHV")
+        assert p.units == "kilowatt"
+        assert pytest.approx(p.magnitude) == 11.0828
+        p = p.change_heating_value("HHV")
+        assert p.units == "kilowatt"
+        assert pytest.approx(p.magnitude) == 11.0828
+        p = p.change_heating_value("HHV")
+        assert p.units == "kilowatt"
+        assert pytest.approx(p.magnitude) == 11.0828
+
     def test_change_heating_value_no_carrier_in_units(self) -> None:
         """Test conversion when carrier does not appear in units (should treat as 1 appearance)."""
         p = technologydata.Parameter(

@@ -152,6 +152,7 @@ dea_sheet_names = {
     "biochar pyrolysis": "105 Slow pyrolysis, Straw",
     "electrolysis small": "86 AEC 10 MW",
     "gas storage": "150 Underground Storage of Gas",
+    "biomethanation": "106 Biomethanation of biogas",
 }
 # [DEA-sheet-names]
 
@@ -976,6 +977,9 @@ def get_data_DEA(
     if "biochar pyrolysis" in tech_name:
         df = biochar_pyrolysis_harmonise_dea(df)
 
+    if "biomethanation" in tech_name:
+        df = biomethanation_dea(df)
+
     elif tech_name == "central geothermal heat source":
         # we need to convert from costs per MW of the entire system (including heat pump)
         # to costs per MW of the geothermal heat source only
@@ -1306,6 +1310,93 @@ def unify_diw(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
     cost_dataframe.loc[("hydro", "investment"), "currency_year"] = 2010
 
     return cost_dataframe
+
+
+def biomethanation_dea(df):
+    """
+    This function does:
+    - import DEA data for biomethanation (4H2 + CO2 -> CH4 + 2H2O)
+    - recalculates cost and inputs per MW of H2 added (bus 0 is H2)
+    """
+
+    CO2_density = 1.98 / 1000  # kg/Nm3
+    CH4_vol = 0.58  # biogas vol%, from DEA source for biomethanation
+    CO2_vol = 0.42  # biogas vol%, from DEA source for biomethanation
+    CH4_lhv = 35.8 / 3600  # MWh/Nm3
+    CO2_biogas = CO2_vol / CH4_vol / CH4_lhv * CO2_density  # t_CO2/MWh_biogas
+
+    # Find index labels directly
+    idx = df.index[df.index.str.contains("Total Input")]
+    idx2 = df.index[df.index.str.contains("Hydrogen Consumption")]
+    idx3 = df.index[df.index.str.contains("CO2 Consumption")]
+    idx4 = df.index[df.index.str.contains("Methane Output")]
+    idx5 = df.index[df.index.str.contains("EUR")]
+
+    # H2/CH4 ratio (MW/MW)
+    CH4_H2_ratio = df.loc[idx4].astype(float) / df.loc[idx2[0]].astype(float)
+
+    # Adjust costs from €/MWh CH4 to €/MW_H2
+    df.loc[idx5] = df.loc[idx5].astype(float).mul(CH4_H2_ratio.values.flatten(), axis=1)
+    df.index = [
+        i.replace("MW", "MW_H2").replace("MWh", "MWh_H2") if i in idx5 else i
+        for i in df.index
+    ]
+
+    # Normalize all inputs & outputs to MW of hydrogen
+    df.loc[idx] = df.loc[idx].astype(float) / df.loc[idx2[0]].astype(float)
+
+    # Convert CO2 input from Nm3 to tons
+    df.loc[idx3[0]] = df.loc[idx3[0]].astype(float) * CO2_density  # tCO2 / h / MW_H2
+
+    # Biogas input in MWh/MWh_H2
+    df.loc["Biogas Consumption, [MWh_th/MWh_H2]"] = (
+        df.loc[idx3[0]].astype(float) / CO2_biogas
+    )
+
+    # Add biogas back to methane output (correct total output)
+    df.loc[idx4] = (
+        df.loc[idx4].astype(float) + df.loc["Biogas Consumption, [MWh_th/MWh_H2]"]
+    )
+
+    # change unit to H2 basis
+    df.index = df.index.str.replace(" Total Input", "_H2")
+
+    # Rename indices and update units
+    replacements = {
+        "Hydrogen Consumption": "Hydrogen Input",
+        "CO2 Consumption": "CO2 Input",
+        "Electricity Consumption": "El-Input",
+        "Methane Output": "Methane Output",
+        "Heat Output": "H-Output",
+    }
+
+    old_units = {
+        "Hydrogen Consumption": "MWh/",
+        "CO2 Consumption": "Nm3",
+        "Electricity Consumption": "MWh/",
+        "Methane Output": "MWh/",
+        "Heat Output": "MWh/",
+    }
+
+    new_units = {
+        "Hydrogen Consumption": "MWh_H2/",
+        "CO2 Consumption": "t_CO2",
+        "Electricity Consumption": "MWh_e/",
+        "Methane Output": "MWh_CH4/",
+        "Heat Output": "MWh_th/",
+    }
+
+    for old_label, new_label in replacements.items():
+        matches = df.index[df.index.str.contains(old_label)]
+        if not matches.empty:
+            old_index = matches[0]
+            updated_index = old_index.replace(old_label, new_label)
+            updated_index = updated_index.replace(
+                old_units[old_label], new_units[old_label]
+            )
+            df.rename(index={old_index: updated_index}, inplace=True)
+
+    return df
 
 
 def biochar_pyrolysis_harmonise_dea(df: pd.DataFrame) -> pd.DataFrame:
@@ -1926,6 +2017,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 | (df.unit == "EUR/MW input")
                 | (df.unit == "EUR/MW-methanol")
                 | (df.unit == "EUR/t_N2/h")  # air separation unit
+                | (df.unit == "EUR/MW_H2")
                 | (df.unit == "EUR/MW_biochar")
             )
         ].copy()
@@ -1960,6 +2052,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                     | (df.unit == "EUR/MW_MeOH/year")
                     | (df.unit == "EUR/MW_CH4/year")
                     | (df.unit == "EUR/MW_biochar/year")
+                    | (df.unit == "EUR/MW_H2/year")
                     | (df.unit == "% of specific investment/year")
                     | (df.unit == investment.unit.str.split(" ").iloc[0][0] + "/year")
                 )
@@ -2008,6 +2101,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 | (df.unit == "EUR/MWhoutput")
                 | (df.unit == "EUR/MWh_CH4")
                 | (df.unit == "EUR/MWh_biochar")
+                | (df.unit == "EUR/MWh_H2")
                 | (tech_name == "biogas upgrading")
             )
         ].copy()
@@ -2074,6 +2168,15 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 | (df.index.str.contains("District Heat  Output,"))
                 | (df.index.str.contains("Bio SNG"))
                 | (df.index.str.contains("biochar"))
+                | (df.index.str.contains("biomethanation"))
+                | (df.index.str.contains("H-Output"))
+                | (df.index.str.contains("Hydrogen Input"))
+                | (df.index.str.contains("CO2 Input"))
+                | (df.index.str.contains("SNG Output"))
+                | (df.index.str.contains("Biogas Consumption"))
+                | (df.index.str.contains("Methane Output"))
+                | (df.index.str.contains("Biomass Input"))
+                | (df.index.str.contains("El-Input"))
                 | (df.index == ("Hydrogen"))
             )
             & (
@@ -2091,6 +2194,12 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 | df.unit.str.contains("MWh_biochar/MWh_feedstock")
                 | df.unit.str.contains("ton biochar/MWh_feedstock")
                 | df.unit.str.contains("MWh_CH4/MWh_H2")
+                | df.unit.str.contains("t_CO2/MWh_H2")
+                | df.unit.str.contains("MWh_e/MWh_H2")
+                | df.unit.str.contains("MWh_CH4/MWh_H2")
+                | df.unit.str.contains("MWh/MWh_H2")
+                | df.unit.str.contains("MWh_th/MWh_H2")
+                | df.unit.str.contains("/MWh_H2")
                 | df.unit.str.contains("% MWh_feedstock")
             )
         ].copy()
@@ -2199,6 +2308,36 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             ].copy()
             efficiency_heat["parameter"] = "efficiency-heat"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_heat])
+
+        elif tech_name == "biomethanation":
+            h2_input = efficiency[
+                efficiency.index.str.contains("Hydrogen Input")
+            ].copy()
+            h2_input["parameter"] = "Hydrogen Input"
+            clean_df[tech_name] = pd.concat([clean_df[tech_name], h2_input])
+            co2_input = efficiency[efficiency.index.str.contains("CO2 Input")].copy()
+            co2_input["parameter"] = "CO2 Input"
+            clean_df[tech_name] = pd.concat([clean_df[tech_name], co2_input])
+            efficiency_heat_out = efficiency[
+                efficiency.index.str.contains("H-Output")
+            ].copy()
+            efficiency_heat_out["parameter"] = "heat output"
+            clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_heat_out])
+            biomass_input = efficiency[
+                efficiency.index.str.contains("Methane Output")
+            ].copy()
+            biomass_input["parameter"] = "Methane Output"
+            clean_df[tech_name] = pd.concat([clean_df[tech_name], biomass_input])
+            electricity_input = efficiency[
+                efficiency.index.str.contains("El-Input")
+            ].copy()
+            electricity_input["parameter"] = "electricity input"
+            clean_df[tech_name] = pd.concat([clean_df[tech_name], electricity_input])
+            biogas_input = efficiency[
+                efficiency.index.str.contains("Biogas Consumption")
+            ].copy()
+            biogas_input["parameter"] = "Biogas Input"
+            clean_df[tech_name] = pd.concat([clean_df[tech_name], biogas_input])
 
         elif len(efficiency) != 1:
             switch = True

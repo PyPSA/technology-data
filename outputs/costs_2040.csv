@@ -195,6 +195,10 @@ Diesel Truck Trailer max 56 tons,VOM,0.1068,EUR/km,"Danish Energy Agency, inputs
 Diesel Truck Trailer max 56 tons,efficiency,2.9453,kWh/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L2,2022.0
 Diesel Truck Trailer max 56 tons,investment,177515.1425,EUR/vehicle,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L2,2022.0
 Diesel Truck Trailer max 56 tons,lifetime,13.8,years,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L2,2022.0
+Enhanced Weathering,VOM,175.9993,EUR/h/tCO2," Jessica Strefler et al 2018 Environ. Res. Lett. 13 034010 https://doi.org/10.1088/1748-9326/aaa9c4, conversion 0.7541 EUR/US (2014)",,2014.0
+Enhanced Weathering,electricity-input,0.1852,MWh/tCO2 , Jessica Strefler et al 2018 Environ. Res. Lett. 13 034010 https://doi.org/10.1088/1748-9326/aaa9c4,,
+Enhanced Weathering,investment,116625.6521,EUR/tCO2," Jessica Strefler et al 2018 Environ. Res. Lett. 13 034010 https://doi.org/10.1088/1748-9326/aaa9c4, conversion 0.7541 EUR/US (2014)",,2014.0
+Enhanced Weathering,lifetime,1.0,years,costs are given per year,,
 FCV Bus city,FOM,0.0002,%/year,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV B1,2022.0
 FCV Bus city,Motor size,420.3448,kW,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV B1,2022.0
 FCV Bus city,VOM,0.0979,EUR/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV B1,2022.0
@@ -705,6 +709,15 @@ biomass-to-methanol,efficiency-electricity,0.02,MWh_e/MWh_th,"Danish Energy Agen
 biomass-to-methanol,efficiency-heat,0.22,per unit,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx","97 Methanol from biomass gasif.:  District heat  Output,",2020.0
 biomass-to-methanol,investment,2255.697,EUR/kW_MeOH,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",97 Methanol from biomass gasif.:  Specific investment,2020.0
 biomass-to-methanol,lifetime,20.0,years,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",97 Methanol from biomass gasif.:  Technical lifetime,2020.0
+biomethanation,Biogas Input,1.1444,MWh_th/MWh_H2,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  Biogas Consumption,",2020.0
+biomethanation,CO2 Input,0.165,t_CO2/MWh_H2,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  CO2 Input,",2020.0
+biomethanation,FOM,6.6667,%/year,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",106 Biomethanation of biogas:  Fixed O&M ,2020.0
+biomethanation,Hydrogen Input,1.0,MWh_H2/MWh_H2,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  Hydrogen Input,",2020.0
+biomethanation,Methane Output,1.9673,MWh_CH4/MWh_H2,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  Methane Output,",2020.0
+biomethanation,electricity input,0.0417,MWh_e/MWh_H2,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  El-Input,",2020.0
+biomethanation,heat output,0.1667,MWh_th/MWh_H2,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx","106 Biomethanation of biogas:  H-Output,",2020.0
+biomethanation,investment,987.5,EUR/kW_H2,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",106 Biomethanation of biogas:  Specific investment ,2020.0
+biomethanation,lifetime,30.0,years,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",106 Biomethanation of biogas:  Technical lifetime,2020.0
 blast furnace-basic oxygen furnace,FOM,14.18,%/year,"Model assumptions from MPP Steel Transition Tool: https://github.com/missionpossiblepartnership/mpp-steel-model/blob/9eca52db92bd2d9715f30e98ccaaf36677fdb516/mppsteel/data/import_data/CAPEX%20OPEX%20Per%20Technology.xlsx, accessed: 2025-04-15.",123.67 EUR/t_steel output/a. MPP steel tool uses CAPEX/OPEX for technology ‘BF-BOF’.,2020.0
 blast furnace-basic oxygen furnace,coal-input,5.34,MWh_coal/t_steel,"Mission Possible Partnership (2022): Steel Model https://github.com/missionpossiblepartnership/mpp-steel-model/blob/9eca52db92bd2d9715f30e98ccaaf36677fdb516/mppsteel/data/import_data/Technology%20Business%20Cases.csv#L21, accessed: 2025-11-10). ","Based on process ‘BAT BF-BOF` Emissivity without CCS using specific emissivity for coal of 0.3361 t_CO2/MWh; composition of 0.44 GJ met-coal, 4.75 GJ coke, 1.35 GJ thermal coal which is translated to one representative coal demand which also includes coal demand for intermediate products like BF gas, BOF gas and COG.",2020.0
 blast furnace-basic oxygen furnace,economic_lifetime,20.0,years,"Mission Possible Partnership (2022): Steel Model Documentation (https://mpp.gitbook.io/mpp-steel-model/model-overview/model-components/technologies, accessed: 2025-04-15).",,2020.0

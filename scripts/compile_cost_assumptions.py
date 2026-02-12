@@ -3112,7 +3112,8 @@ def carbon_flow(
             )
 
             cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "value"] = (
-                1 / cost_dataframe.loc[("Fischer-Tropsch", "hydrogen-input"), "value"]
+                1
+                / cost_dataframe.loc[("Fischer-Tropsch", "hydrogen-input"), "value"]
                 / efuel_scale_factor
             )
             cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "unit"] = (
@@ -3138,7 +3139,8 @@ def carbon_flow(
             )
 
             cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "value"] = (
-                1 / cost_dataframe.loc[("Fischer-Tropsch", "hydrogen-input"), "value"]
+                1
+                / cost_dataframe.loc[("Fischer-Tropsch", "hydrogen-input"), "value"]
                 / efuel_scale_factor
             )
             cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "unit"] = (

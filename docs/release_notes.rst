@@ -16,6 +16,8 @@ Upcoming Release
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
 
+* Update fossil fuel (gas, oil, lignite) and nuclear fuel (nuclear, uranium) costs based on TYNDP 2024 scenarios data.
+
 * Adding `grey methanol synthesis`.
 
 * Align cost units for NREL battery data with PyPSA modeling, fetching investment cost and FOM for both `battery storage` and `battery inverter` instead of a single value for `battery storage`, which was instead representative of the full plant (battery storage + battery inverter).

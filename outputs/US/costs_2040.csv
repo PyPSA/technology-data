@@ -4215,7 +4215,7 @@ electrobiofuels,VOM,3.2988,EUR/MWh_th,combination of BtL and electrofuels,,2022.
 electrobiofuels,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,,,
 electrobiofuels,efficiency-biomass,1.325,per unit,Stoichiometric calculation,,,,
 electrobiofuels,efficiency-hydrogen,1.0989,per unit,Stoichiometric calculation,,,,
-electrobiofuels,efficiency-tot,0.6443,per unit,Stoichiometric calculation,,,,
+electrobiofuels,efficiency-tot,0.6163,per unit,Stoichiometric calculation,,,,
 electrobiofuels,investment,1083159.2016,EUR/kW_th,combination of BtL and electrofuels,,2022.0,,
 electrolysis,FOM,4.0,%/year,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Fixed O&M ,2020.0,,
 electrolysis,efficiency,0.6532,per unit,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Hydrogen Output,2020.0,,

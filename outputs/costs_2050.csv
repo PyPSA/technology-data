@@ -233,7 +233,7 @@ Fischer-Tropsch,FOM,6.5778,%/year,"Danish Energy Agency, inputs/data_sheets_for_
 Fischer-Tropsch,VOM,2.2331,EUR/MWh_FT,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",102 Hydrogen to Jet:  Variable O&M,2020.0
 Fischer-Tropsch,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,
 Fischer-Tropsch,carbondioxide-input,0.276,t_CO2/MWh_FT,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","Input per 1t FT liquid fuels output, carbon efficiency increases with years (4.3, 3.9, 3.6, 3.3 t_CO2/t_FT from 2020-2050 with LHV 11.95 MWh_th/t_FT).",
-Fischer-Tropsch,efficiency,0.799,per unit,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), section 6.3.2.2.",,2017.0
+Fischer-Tropsch,efficiency,0.754,per unit, Inverse of hydrogen input,,
 Fischer-Tropsch,efficiency-heat,0.15,per unit,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx","102 Hydrogen to Jet:  District Heat  Output,",2020.0
 Fischer-Tropsch,electricity-input,0.007,MWh_el/MWh_FT,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","0.005 MWh_el input per FT output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output).",
 Fischer-Tropsch,hydrogen-input,1.327,MWh_H2/MWh_FT,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","0.995 MWh_H2 per output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output).",
@@ -976,8 +976,8 @@ electrobiofuels,C in fuel,0.9316,per unit,Stoichiometric calculation,,
 electrobiofuels,FOM,3.0,%/year,combination of BtL and electrofuels,,2015.0
 electrobiofuels,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,
 electrobiofuels,efficiency-biomass,1.3283,per unit,Stoichiometric calculation,,
-electrobiofuels,efficiency-hydrogen,1.2971,per unit,Stoichiometric calculation,,
-electrobiofuels,efficiency-tot,0.6563,per unit,Stoichiometric calculation,,
+electrobiofuels,efficiency-hydrogen,1.2241,per unit,Stoichiometric calculation,,
+electrobiofuels,efficiency-tot,0.637,per unit,Stoichiometric calculation,,
 electrolysis,FOM,4.0,%/year,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Fixed O&M ,2020.0
 electrolysis,efficiency,0.6994,per unit,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Hydrogen Output,2020.0
 electrolysis,efficiency-heat,0.1294,per unit,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:   - hereof recoverable for district heating,2020.0

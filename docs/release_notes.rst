@@ -34,6 +34,8 @@ Upcoming Release
 
 * Corrected CO2 content in biogas
 
+* Change to DEA costs for Fischer-Tropsch and methanolisation
+
 `v0.13.2 <https://github.com/PyPSA/technology-data/releases/tag/v0.13.2>`__ (13th June 2025)
 =======================================================================================
 

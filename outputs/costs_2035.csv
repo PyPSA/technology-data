@@ -229,16 +229,16 @@ FT fuel transport ship,FOM,5.0,%/year,"Assume comparable tanker as for LOHC tran
 FT fuel transport ship,capacity,75000.0,t_FTfuel,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",,2020.0
 FT fuel transport ship,investment,35000000.0,EUR,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",,2020.0
 FT fuel transport ship,lifetime,15.0,years,"Assume comparable tanker as for LOHC transport above, c.f. Runge et al 2020, Table 10, https://papers.ssrn.com/abstract=3623514 .",,2020.0
-Fischer-Tropsch,FOM,3.0,%/year,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), section 6.3.2.1.",,2017.0
+Fischer-Tropsch,FOM,6.2815,%/year,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",102 Hydrogen to Jet:  Fixed O&M,2020.0
 Fischer-Tropsch,VOM,3.9346,EUR/MWh_FT,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",102 Hydrogen to Jet:  Variable O&M,2020.0
 Fischer-Tropsch,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,
 Fischer-Tropsch,carbondioxide-input,0.3135,t_CO2/MWh_FT,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","Input per 1t FT liquid fuels output, carbon efficiency increases with years (4.3, 3.9, 3.6, 3.3 t_CO2/t_FT from 2020-2050 with LHV 11.95 MWh_th/t_FT).",
-Fischer-Tropsch,efficiency,0.719,per unit, Inverse of hydrogen input,,2020.0
+Fischer-Tropsch,efficiency,0.719,per unit, Inverse of hydrogen input,,
 Fischer-Tropsch,efficiency-heat,0.185,per unit,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx","102 Hydrogen to Jet:  District Heat  Output,",2020.0
 Fischer-Tropsch,electricity-input,0.007,MWh_el/MWh_FT,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","0.005 MWh_el input per FT output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output).",
 Fischer-Tropsch,hydrogen-input,1.392,MWh_H2/MWh_FT,"DEA (2022): Technology Data for Renewable Fuels (https://ens.dk/en/our-services/projections-and-models/technology-data/technology-data-renewable-fuels), Hydrogen to Jet Fuel, Table 10 / pg. 267.","0.995 MWh_H2 per output, output increasing from 2020 to 2050 (0.65, 0.7, 0.73, 0.75 MWh liquid FT output).",
-Fischer-Tropsch,investment,657729.5552,EUR/MW_FT,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), table 8: “Reference scenario”.","Well developed technology, no significant learning expected.",2017.0
-Fischer-Tropsch,lifetime,20.0,years,"Danish Energy Agency, Technology Data for Renewable Fuels (04/2022), Data sheet “Methanol to Power”.",,2017.0
+Fischer-Tropsch,investment,1435.59,EUR/kW_FT/year,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",102 Hydrogen to Jet:  Specific investment,2020.0
+Fischer-Tropsch,lifetime,25.0,years,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",102 Hydrogen to Jet:  Technical lifetime,2020.0
 Gasnetz,FOM,2.5,%,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz,2020.0
 Gasnetz,investment,28.0,EUR/kWGas,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz,2020.0
 Gasnetz,lifetime,30.0,years,"WEGE ZU EINEM KLIMANEUTRALEN ENERGIESYSEM, Anhang zur Studie, Fraunhofer-Institut für Solare Energiesysteme ISE, Freiburg",Gasnetz,2020.0
@@ -974,12 +974,10 @@ electricity grid connection,investment,148.151,EUR/kW,DEA, from old pypsa cost a
 electricity grid connection,lifetime,40.0,years,TODO, from old pypsa cost assumptions,2015.0
 electrobiofuels,C in fuel,0.9281,per unit,Stoichiometric calculation,,
 electrobiofuels,FOM,2.7484,%/year,combination of BtL and electrofuels,,2015.0
-electrobiofuels,VOM,3.8235,EUR/MWh_th,combination of BtL and electrofuels,,2017.0
 electrobiofuels,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,
 electrobiofuels,efficiency-biomass,1.3233,per unit,Stoichiometric calculation,,
-electrobiofuels,efficiency-hydrogen,1.1104,per unit,Stoichiometric calculation,,
-electrobiofuels,efficiency-tot,0.6038,per unit,Stoichiometric calculation,,
-electrobiofuels,investment,428759.8057,EUR/kW_th,combination of BtL and electrofuels,,2017.0
+electrobiofuels,efficiency-hydrogen,1.1094,per unit,Stoichiometric calculation,,
+electrobiofuels,efficiency-tot,0.6035,per unit,Stoichiometric calculation,,
 electrolysis,FOM,4.0,%/year,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Fixed O&M ,2020.0
 electrolysis,efficiency,0.6374,per unit,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:  Hydrogen Output,2020.0
 electrolysis,efficiency-heat,0.2039,per unit,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",86 AEC 100 MW:   - hereof recoverable for district heating,2020.0
@@ -1113,14 +1111,14 @@ methanol-to-olefins/aromatics,electricity-input,1.3889,MWh_el/t_HVC,"DECHEMA 201
 methanol-to-olefins/aromatics,investment,2781006.4359,EUR/(t_HVC/h),"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), Table 35",Assuming CAPEX of 1200 €/t actually given in €/(t/a).,2015.0
 methanol-to-olefins/aromatics,lifetime,30.0,years,Guesstimate,same as steam cracker,
 methanol-to-olefins/aromatics,methanol-input,18.03,MWh_MeOH/t_HVC,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf), Sections 4.5 (for ethylene and propylene) and 4.6 (for BTX)","Weighted average: 2.83 t_MeOH/t_ethylene+propylene for 21.7 Mt of ethylene and 17 Mt of propylene, 4.2 t_MeOH/t_BTX for 15.7 Mt of BTX. Assuming 5.54 MWh_MeOH/t_MeOH. ",
-methanolisation,FOM,3.0,%/year,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), section 6.3.2.1.",,2017.0
+methanolisation,FOM,2.9787,%/year,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",98 Methanol from hydrogen:  Fixed O&M,2020.0
 methanolisation,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,
 methanolisation,carbondioxide-input,0.248,t_CO2/MWh_MeOH,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf) , pg. 66.",,
 methanolisation,electricity-input,0.271,MWh_e/MWh_MeOH,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf) , pg. 65.",,
 methanolisation,heat-output,0.1,MWh_th/MWh_MeOH,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf) , pg. 65.",steam generation of 2 GJ/t_MeOH,
 methanolisation,hydrogen-input,1.138,MWh_H2/MWh_MeOH,"DECHEMA 2017: DECHEMA: Low carbon energy and feedstock for the European chemical industry (https://dechema.de/dechema_media/Downloads/Positionspapiere/Technology_study_Low_carbon_energy_and_feedstock_for_the_European_chemical_industry.pdf) , pg. 64.",189 kg_H2 per t_MeOH,
-methanolisation,investment,657729.5552,EUR/MW_MeOH,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), table 8: “Reference scenario”.","Well developed technology, no significant learning expected.",2017.0
-methanolisation,lifetime,20.0,years,"Danish Energy Agency, Technology Data for Renewable Fuels (04/2022), Data sheet “Methanol to Power”.",,2017.0
+methanolisation,investment,1020.3015,EUR/kW_MeOH,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",98 Methanol from hydrogen:  Specific investment,2020.0
+methanolisation,lifetime,30.0,years,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx",98 Methanol from hydrogen:  Technical lifetime,2020.0
 micro CHP,FOM,6.1765,%/year,"Danish Energy Agency, inputs/technologydatafor_heating_installations_marts_2018.xlsx",219 LT-PEMFC mCHP - natural gas:  Fixed O&M,2015.0
 micro CHP,efficiency,0.351,per unit,"Danish Energy Agency, inputs/technologydatafor_heating_installations_marts_2018.xlsx","219 LT-PEMFC mCHP - natural gas:  Electric efficiency, annual average, net",2015.0
 micro CHP,efficiency-heat,0.609,per unit,"Danish Energy Agency, inputs/technologydatafor_heating_installations_marts_2018.xlsx","219 LT-PEMFC mCHP - natural gas:  Heat efficiency, annual average, net",2015.0

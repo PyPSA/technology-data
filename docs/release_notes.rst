@@ -16,6 +16,8 @@ Upcoming Release
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
 
+* Changed currency year from 2020 to 2025 for all cost assumptions using updated Eurostat inflation rates.
+
 * Update fossil fuel (gas, oil, lignite) and nuclear fuel (nuclear, uranium) costs based on TYNDP 2024 scenarios data.
 
 * Adding `grey methanol synthesis`.

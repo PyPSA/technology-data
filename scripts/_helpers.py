@@ -217,20 +217,27 @@ def prepare_inflation_rate(fn: str, currency_to_use: str = "eur") -> pd.Series:
     if currency_to_use.casefold() == "usd":
         row_to_use = "United States"
     else:
-        row_to_use = "European Union - 27 countries (from 2020)"
+        row_to_use = "European Economic Area (EEA18-1995, EEA28-2004, EEA30-2007, EEA31-2013, EEA30-2020)"
 
-    inflation_rate_series = pd.read_excel(
-        fn, sheet_name="Sheet 1", index_col=0, header=[8], engine="calamine"
+    df = (
+        pd.read_excel(
+            fn,
+            sheet_name="Sheet 1",
+            index_col=0,
+            na_values=[":", "d"],
+            header=8,
+            engine="calamine",
+        )
+        .loc[row_to_use]
+        .dropna()
     )
-    inflation_rate_series = (inflation_rate_series.loc[row_to_use].dropna()).loc[
-        "2001"::
-    ]
-    inflation_rate_series.rename(
-        index=lambda inflation_rate_val: int(inflation_rate_val), inplace=True
-    )
-    inflation_rate_series = inflation_rate_series.astype(float)
-    inflation_rate_series /= 100.0
-    return inflation_rate_series
+
+    df.index = df.index.astype(int)
+    df = df.astype(float)
+
+    df /= 100.0
+
+    return df
 
 
 def adjust_for_inflation(

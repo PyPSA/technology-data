@@ -22,16 +22,16 @@ path_cwd = pathlib.Path.cwd()
     [
         (
             "eur",
-            "European Union - 27 countries (from 2020)",
+            "European Economic Area (EEA18-1995, EEA28-2004, EEA30-2007, EEA31-2013, EEA30-2020)",
             [2017, 2022, 2023],
-            [0.016, 0.092, 0.064],
+            [0.017, 0.092, 0.064],
         ),
         ("usd", "United States", [2017, 2022, 2023], [0.018, 0.087, 0.03]),
         (
             "EuR",
-            "European Union - 27 countries (from 2020)",
+            "European Economic Area (EEA18-1995, EEA28-2004, EEA30-2007, EEA31-2013, EEA30-2020)",
             [2017, 2022, 2023],
-            [0.016, 0.092, 0.064],
+            [0.017, 0.092, 0.064],
         ),
         ("USD", "United States", [2017, 2022, 2023], [0.018, 0.087, 0.03]),
     ],
@@ -43,7 +43,7 @@ def test_prepare_inflation_rate(
     The test verifies what is returned by prepare_inflation_rate.
     """
     inflation_rate_input_file_path = pathlib.Path(
-        path_cwd, "inputs", "Eurostat_inflation_rates.xlsx"
+        path_cwd, "inputs", "prc_hicp_aind__custom_20097956_spreadsheet.xlsx"
     )
     output_series = prepare_inflation_rate(
         inflation_rate_input_file_path, currency_to_use

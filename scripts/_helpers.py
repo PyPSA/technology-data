@@ -239,16 +239,6 @@ def prepare_inflation_rate(fn: str, currency_to_use: str = "eur") -> pd.Series:
 
     return df
 
-    inflation_rate_series = pd.read_excel(
-        fn, sheet_name="Sheet 1", index_col=0, header=[8], engine="calamine"
-    )
-    inflation_rate_series = (inflation_rate_series.loc[row_to_use].dropna()).loc[
-        "1997"::
-    ]
-    inflation_rate_series.rename(
-        index=lambda inflation_rate_val: int(inflation_rate_val), inplace=True
-    )
-
 
 def adjust_for_inflation(
     inflation_rate: pd.Series,

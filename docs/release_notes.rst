@@ -16,29 +16,33 @@ Upcoming Release
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
 
-* Update electricity transmission and offshore wind connection costs based on latest DEA data (https://ens.dk/en/analyses-and-statistics/technology-data-transport-energy, July 2025).
-  Align unit costs of offshore wind connection and general transmission. For offshore wind connections, include missing FOM.
-* Changed currency year from 2020 to 2025 for all cost assumptions using updated Eurostat inflation rates.
+`v0.14.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.14.0>`__ (13th February 2026)
+================================================================================================
 
-* Update fossil fuel (gas, oil, lignite) and nuclear fuel (nuclear, uranium) costs based on TYNDP 2024 scenarios data.
+* Changed currency year from 2020 to 2025 for all cost assumptions using updated Eurostat inflation rates. (https://github.com/PyPSA/technology-data/pull/263)
 
-* Adding `grey methanol synthesis`.
+* Updated electricity transmission and offshore wind connection costs based on latest DEA data (https://ens.dk/en/analyses-and-statistics/technology-data-transport-energy, July 2025).
+  Aligned unit costs of offshore wind connection and general transmission. For offshore wind connections, included missing FOM. (https://github.com/PyPSA/technology-data/pull/262)
 
-* Align cost units for NREL battery data with PyPSA modeling, fetching investment cost and FOM for both `battery storage` and `battery inverter` instead of a single value for `battery storage`, which was instead representative of the full plant (battery storage + battery inverter).
+* Updated fossil fuel (gas, oil, lignite) and nuclear fuel (nuclear, uranium) costs based on TYNDP 2024 scenarios data. (https://github.com/PyPSA/technology-data/pull/259)
 
-* Add excess heat output rates for Fischer-Tropsch and Haber-Bosch processes.
+* Changed to DEA assumptions for Fischer-Tropsch and methanolisation. (https://github.com/PyPSA/technology-data/pull/251)
 
-* Updated indexing of DEA Excel data for PTES and revised capital cost and FOM assumptions for 2045 and 2050.
+* Corrected CO2 content in biogas. (https://github.com/PyPSA/technology-data/pull/236)
 
+* Added excess heat output rates for Fischer-Tropsch and Haber-Bosch processes. (https://github.com/PyPSA/technology-data/pull/241)
 
-* Corrected units for standing losses of TES technologies from per unit to %/hour and changed parameter names from "Energy losses during storage" to "standing losses" as well as "Temperature difference" to "temperature difference" for naming consistency.
+* Fixed indexing for PTES and revised capital cost and FOM assumptions for 2045 and 2050. (https://github.com/PyPSA/technology-data/pull/234)
 
+* Corrected units for standing losses of TES technologies from per unit to %/hour and changed parameter names from "Energy losses during storage" to "standing losses" as well as "Temperature difference" to "temperature difference" for naming consistency. (https://github.com/PyPSA/technology-data/pull/230)
 
-* Add standing losses as parameters for LTES
+* Added standing losses as parameters for LTES. (https://github.com/PyPSA/technology-data/pull/229)
 
-* Corrected CO2 content in biogas
+* Fixed coal consumption of blast furnace steelmaking. (https://github.com/PyPSA/technology-data/pull/246)
 
-* Change to DEA costs for Fischer-Tropsch and methanolisation
+* Added grey methanol synthesis. (https://github.com/PyPSA/technology-data/pull/248)
+
+* Aligned cost units for NREL battery data with PyPSA modeling, fetching investment cost and FOM for both `battery storage` and `battery inverter` instead of a single value for `battery storage`, which was instead representative of the full plant (battery storage + battery inverter). (https://github.com/PyPSA/technology-data/pull/239)
 
 `v0.13.2 <https://github.com/PyPSA/technology-data/releases/tag/v0.13.2>`__ (13th June 2025)
 =======================================================================================
@@ -52,6 +56,7 @@ Upcoming Release
 
 `v0.13.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.13.0>`__ (11th June 2025)
 =======================================================================================
+
 
 * Add several H2 production technologies (generic cost assumptions), fix FOM values and rename of efficiency to electricity-input in US cost assumptions for US-specific electrolyzer costs (https://github.com/PyPSA/technology-data/pull/222)
 

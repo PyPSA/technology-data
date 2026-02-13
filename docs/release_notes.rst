@@ -16,6 +16,9 @@ Upcoming Release
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
 
+* Update electricity transmission and offshore wind connection costs based on latest DEA data (https://ens.dk/en/analyses-and-statistics/technology-data-transport-energy, July 2025).
+  Align unit costs of offshore wind connection and general transmission. For offshore wind connections, include missing FOM.
+
 * Update fossil fuel (gas, oil, lignite) and nuclear fuel (nuclear, uranium) costs based on TYNDP 2024 scenarios data.
 
 * Adding `grey methanol synthesis`.

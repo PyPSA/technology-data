@@ -28,21 +28,27 @@ Upcoming Release
 
 * Changed to DEA assumptions for Fischer-Tropsch and methanolisation. (https://github.com/PyPSA/technology-data/pull/251)
 
-* Corrected CO2 content in biogas. (https://github.com/PyPSA/technology-data/pull/236)
-
-* Added excess heat output rates for Fischer-Tropsch and Haber-Bosch processes. (https://github.com/PyPSA/technology-data/pull/241)
-
-* Fixed indexing for PTES and revised capital cost and FOM assumptions for 2045 and 2050. (https://github.com/PyPSA/technology-data/pull/234)
-
-* Corrected units for standing losses of TES technologies from per unit to %/hour and changed parameter names from "Energy losses during storage" to "standing losses" as well as "Temperature difference" to "temperature difference" for naming consistency. (https://github.com/PyPSA/technology-data/pull/230)
-
-* Added standing losses as parameters for LTES. (https://github.com/PyPSA/technology-data/pull/229)
-
 * Fixed coal consumption of blast furnace steelmaking. (https://github.com/PyPSA/technology-data/pull/246)
 
 * Added grey methanol synthesis. (https://github.com/PyPSA/technology-data/pull/248)
 
 * Aligned cost units for NREL battery data with PyPSA modeling, fetching investment cost and FOM for both `battery storage` and `battery inverter` instead of a single value for `battery storage`, which was instead representative of the full plant (battery storage + battery inverter). (https://github.com/PyPSA/technology-data/pull/239)
+
+`v0.13.4 <https://github.com/PyPSA/technology-data/releases/tag/v0.13.4>`__ (20th October 2025)
+===============================================================================================
+
+* Corrected CO2 content in biogas. (https://github.com/PyPSA/technology-data/pull/236)
+
+* Fixed indexing for PTES and revised capital cost and FOM assumptions for 2045 and 2050. (https://github.com/PyPSA/technology-data/pull/234)
+
+* Added excess heat output rates for Fischer-Tropsch and Haber-Bosch processes. (https://github.com/PyPSA/technology-data/pull/241)
+
+`v0.13.3 <https://github.com/PyPSA/technology-data/releases/tag/v0.13.3>`__ (1st July 2025)
+===========================================================================================
+
+* Corrected units for standing losses of TES technologies from per unit to %/hour and changed parameter names from "Energy losses during storage" to "standing losses" as well as "Temperature difference" to "temperature difference" for naming consistency. (https://github.com/PyPSA/technology-data/pull/230)
+
+* Added standing losses as parameters for LTES. (https://github.com/PyPSA/technology-data/pull/229)
 
 `v0.13.2 <https://github.com/PyPSA/technology-data/releases/tag/v0.13.2>`__ (13th June 2025)
 =======================================================================================

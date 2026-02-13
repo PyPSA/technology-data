@@ -317,7 +317,10 @@ def mock_inflation_data(tmpdir):
         2003: [2.5],
         2004: [1.8],
     }
-    index = ["European Union - 27 countries (from 2020)", "United States"]
+    index = [
+        "European Economic Area (EEA18-1995, EEA28-2004, EEA30-2007, EEA31-2013, EEA30-2020)",
+        "United States",
+    ]
     inflation_rate_output_path = pathlib.Path(tmpdir, "inflation_rate.xlsx")
     inflation_rate_dataframe = pd.DataFrame(data, index=index)
     inflation_rate_dataframe.to_excel(

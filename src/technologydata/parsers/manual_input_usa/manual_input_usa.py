@@ -240,11 +240,11 @@ if __name__ == "__main__":
     )
     output_technologies_path = pathlib.Path(
         manual_input_usa_base_path,
-        "technologies.json",
+        "v0.13.4/technologies.json",
     )
     output_sources_path = pathlib.Path(
         manual_input_usa_base_path,
-        "sources.json",
+        "v0.13.4/sources.json",
     )
 
     tech_col = build_technology_collection(

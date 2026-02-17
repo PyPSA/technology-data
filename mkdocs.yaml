@@ -28,6 +28,7 @@ nav:
   - Source Collection: user_guide/source_collection.md
   - Technology: user_guide/technology.md
   - Technology Collection: user_guide/technology_collection.md
+  - Data Accessor: user_guide/data_accessor.md
   - Use Cases: user_guide/design.md
 
 - Examples:
@@ -41,6 +42,7 @@ nav:
   - Source Collection: api/source_collection.md
   - Technology: api/technology.md
   - Technology Collection: api/technology_collection.md
+  - Data Accessor: api/data_accessor.md
   - Utils:
     - Commons:
       - Common functionalities: api/commons/commons.md

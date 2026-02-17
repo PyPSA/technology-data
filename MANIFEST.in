@@ -1,6 +1,6 @@
 include src/technologydata/utils/*.txt
-include src/technologydata/parsers/dea_energy_storage/*.json
-include src/technologydata/parsers/manual_input_usa/*.json
+include src/technologydata/parsers/dea_energy_storage/v10/*.json
+include src/technologydata/parsers/manual_input_usa/v0.13.4/*.json
 include src/technologydata/parsers/raw/*
 include test/test_data/currency_conversion/WB_CNY_2020/*
 include test/test_data/currency_conversion/WB_EUR_2020/*

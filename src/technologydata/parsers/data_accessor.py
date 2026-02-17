@@ -1,0 +1,143 @@
+# SPDX-FileCopyrightText: technologydata contributors
+#
+# SPDX-License-Identifier: MIT
+
+"""Provide a class to access data from a data source."""
+
+import logging
+import pathlib
+import re
+from enum import Enum
+from typing import Annotated
+
+import pydantic
+from packaging.version import parse
+from pydantic import field_validator
+
+from technologydata import DataPackage
+
+path_cwd = pathlib.Path.cwd()
+
+logger = logging.getLogger(__name__)
+
+
+class DataSourceName(str, Enum):
+    """An enumeration of available data sources."""
+
+    DEA_ENERGY_STORAGE = "dea_energy_storage"
+    MANUAL_INPUT_USA = "manual_input_usa"
+
+
+class DataAccessor(pydantic.BaseModel):
+    """
+    Access data from a versioned data source.
+
+    This class provides a standardized interface to locate and load technology
+    datasets from predefined data sources. It can either load a specific version
+    or automatically determine and load the latest available version.
+
+    Parameters
+    ----------
+    data_source_name : str
+        The name of the data source to access, as defined in the
+        `DataSourceName` enumeration.
+    data_version : str, optional
+        The specific version string of the data to load (e.g., "v1.0.0").
+        If not provided, the latest version will be automatically determined
+        and used. Default is None.
+
+    Attributes
+    ----------
+    data_source_name : str
+        The name of the data source.
+    data_version : str or None
+        The version of the data source.
+
+    """
+
+    data_source_name: Annotated[
+        str, pydantic.Field(description="The name of the data source.")
+    ]
+    data_version: Annotated[
+        str | None, pydantic.Field(description="The version of the data source.")
+    ] = None
+
+    @field_validator("data_source_name", mode="before")
+    @classmethod
+    def _validate_data_source_name(cls, v: str) -> DataSourceName:
+        # Validate if the given string is a valid DataSourceName
+        try:
+            return DataSourceName(v)
+        except ValueError:
+            raise ValueError(
+                f"{v} is not a valid DataSourceName. Available options: {[e for e in DataSourceName]}"
+            )
+
+    @staticmethod
+    def get_latest_version_string(data_source_path_list: list[pathlib.Path]) -> str:
+        """
+        Find the latest version string for the data source.
+
+        Returns
+        -------
+        str
+            The string of the latest version (e.g., 'v10', 'v1.0.0').
+
+        Raises
+        ------
+        FileNotFoundError
+            If the data source directory or valid version directories are not found.
+
+        """
+        version_pattern = re.compile(r"^v(\d+(\.\d+)*)$")
+        versions = []
+        for item in data_source_path_list:
+            if item.is_dir():
+                match = version_pattern.match(item.name)
+                if match:
+                    versions.append(item.name)
+
+        if not versions:
+            raise FileNotFoundError("No valid version directories found.")
+
+        latest_version_str = max(versions, key=lambda v: parse(v[1:]))
+        return latest_version_str
+
+    def load(self) -> DataPackage:
+        """
+        Load the default 'technologies.json' from the package data.
+
+        Returns
+        -------
+        DataPackage
+            An instance of DataPackage initialized with the requested data.
+
+        Raises
+        ------
+        FileNotFoundError
+            If the data source directory or the specified version directory is not found.
+        ValueError
+            If the specified version is not found. The user is notified of  the latest available version.
+
+        """
+        source_path = pathlib.Path(
+            path_cwd, "src", "technologydata", "parsers", self.data_source_name
+        )
+        if not source_path.is_dir():
+            raise FileNotFoundError(f"Data source directory not found: {source_path}")
+
+        source_path_list = [p.name for p in source_path.iterdir() if p.is_dir()]
+
+        if self.data_version and self.data_version in source_path_list:
+            version = self.data_version
+            logger.info(
+                f"Data source directory corresponding to version {self.data_version} found."
+            )
+        else:
+            version = self.get_latest_version_string(list(source_path.iterdir()))
+            raise ValueError(
+                f"Data source version '{self.data_version}' not found. The latest available version is {version}."
+            )
+
+        data_path = pathlib.Path(source_path, version)
+        return DataPackage.from_json(data_path)

@@ -623,11 +623,11 @@ if __name__ == "__main__":
     )
     output_technologies_path = pathlib.Path(
         dea_storage_path,
-        "technologies.json",
+        "v10/technologies.json",
     )
     output_sources_path = pathlib.Path(
         dea_storage_path,
-        "sources.json",
+        "v10/sources.json",
     )
 
     tech_col = build_technology_collection(

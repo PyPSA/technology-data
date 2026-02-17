@@ -112,6 +112,7 @@ include = ["technologydata"]
 source = [
     "src/technologydata",
 ]
+omit = ["*/__init__.py"]
 
 # Static type checker settings
 [tool.mypy]

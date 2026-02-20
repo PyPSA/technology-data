@@ -13,6 +13,7 @@ The `DataPackage` class in `technologydata` provides a container for managing co
 
 ## Features
 
+- **Name & Version**: Stores the dataset name (required) and version (optional) as first-class attributes.
 - **Technology Collection**: Stores a collection of `Technology` objects via the `TechnologyCollection` class.
 - **Source Collection**: Stores a collection of `Source` objects via the `SourceCollection` class.
 - **Batch Operations**: Supports batch export to JSON and CSV formats.
@@ -23,13 +24,15 @@ The `DataPackage` class in `technologydata` provides a container for managing co
 
 ### Creating a DataPackage
 
-You can create a `DataPackage` by instantiating it directly or by loading from JSON files.
+You can create a `DataPackage` by instantiating it directly or by loading from JSON files. The `name` field is required; `version` is optional.
 
 ```python
 from technologydata import DataPackage, TechnologyCollection, SourceCollection
 
 # Create a DataPackage with existing collections
 dp = DataPackage(
+    name="dataset_name",
+    version="v10",
     technologies=TechnologyCollection(...),
     sources=SourceCollection(...),
 )
@@ -37,11 +40,16 @@ dp = DataPackage(
 
 ### Loading from JSON
 
-To load a `DataPackage` from a folder containing `technologies.json` and (optionally) `sources.json`:
+To load a `DataPackage` from a folder containing `technologies.json` and (optionally) `sources.json`, pass the dataset `name`, an optional `version`, and the path to the folder:
 
 ```python
 from technologydata import DataPackage
-dp = DataPackage.from_json("path/to/data_package_folder")
+
+dp = DataPackage.from_json(
+    name="dataset_name",
+    version="v10",
+    path_to_folder="path/to/data_package_folder",
+)
 ```
 
 This will automatically extract sources from the technologies if not already present.
@@ -55,6 +63,8 @@ from technologydata import DataPackage, TechnologyCollection, SourceCollection
 
 # Create a DataPackage with existing collections
 dp = DataPackage(
+    name="dataset_name",
+    version="v10",
     technologies=TechnologyCollection(...),
     sources=SourceCollection(...),
 )
@@ -70,6 +80,8 @@ from technologydata import DataPackage, TechnologyCollection, SourceCollection
 
 # Create a DataPackage with existing collections
 dp = DataPackage(
+    name="dataset_name",
+    version="v10",
     technologies=TechnologyCollection(...),
     sources=SourceCollection(...),
 )
@@ -90,6 +102,8 @@ from technologydata.technology_collection import TechnologyCollection
 
 # Create a DataPackage with existing collections
 dp = DataPackage(
+    name="dataset_name",
+    version="v10",
     technologies=TechnologyCollection(...),
 )
 

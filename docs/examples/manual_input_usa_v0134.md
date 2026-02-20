@@ -1,8 +1,18 @@
 # Manual Input USA Parser Documentation
 
+<!--
+SPDX-FileCopyrightText: technologydata contributors
+
+SPDX-License-Identifier: MIT
+
+-->
+
 ## Overview
 
-The Manual Input USA data parser `manual_input_usa.py` demonstrates a data-cleaning and transformation pipeline for converting manually curated, USA-specific tabular data into the `technologydata` schema files `technologies.json` and `sources.json`. The parser is implemented in `src/technologydata/parsers/manual_input_usa/manual_input_usa.py`.
+!!! note
+    This example refers specifically to **version 0.13.4** (`v0134`) of the Manual Input USA dataset.
+
+The Manual Input USA data parser demonstrates a data-cleaning and transformation pipeline for converting manually curated, USA-specific tabular data into the `technologydata` schema files `technologies.json` and `sources.json`. The parser is implemented in `src/technologydata/parsers/manual_input_usa/`.
 
 ## Dataset Description
 
@@ -14,13 +24,6 @@ The dataset is in CSV format and includes a flat table of technology parameters 
 
 The parser is articulated in the following steps.
 
-### Command line argument parsing
-
-Function `CommonsParser.parse_input_arguments()` defines and parses the command-line arguments:
-
-- `--num_digits` (int, default 4) — number of decimals used when rounding numeric values. The default value is 4.
-- `--store_source` (boolean flag) — whether to store the source on the Wayback Machine. The default value is `false`.
-
 ### Read the raw data
 
 The script reads the raw data available at `src/technologydata/parsers/raw/manual_input_usa.csv` in a `pandas` dataframe. It uses `pandas.read_csv(..., dtype=str, na_values="None")`. All entries are handled as strings initially except for the `value` column which is converted to float.
@@ -29,7 +32,7 @@ The script reads the raw data available at `src/technologydata/parsers/raw/manua
 
 The data cleaning and validation happens with the following steps.
 
-Function `extract_units_carriers_heating_value()` extracts standardized units, carriers, and heating values from input unit strings. This function maps complex unit representations to simplified unit, carrier, and heating value combinations using a predefined dictionary of special patterns. Examples include:
+Function `_extract_units_carriers_heating_value()` extracts standardized units, carriers, and heating values from input unit strings. This function maps complex unit representations to simplified unit, carrier, and heating value combinations using a predefined dictionary of special patterns. Examples include:
 
 - `USD_2022/MW_FT` → unit: `USD_2022/MW`, carrier: `1/FT`, heating_value: `1/LHV`
 - `MWh_H2/MWh_FT` → unit: `MWh/MWh`, carrier: `H2/FT`, heating_value: `LHV`
@@ -50,9 +53,9 @@ Function `Commons.update_unit_with_currency_year(unit, currency_year)` appends `
 
 ### Populate and export the source and technology collections
 
-Function `build_technology_collection()`:
+Function `_build_technology_collection()`:
 
-- if `store_source` is set, constructs a `Source` object for the manual input USA dataset, calls `ensure_in_wayback()` and writes `sources.json`; otherwise reads an existing `sources.json`.
+- if `archive_source` is set, constructs a `Source` object for the manual input USA dataset, calls `ensure_in_wayback()` and writes `sources.json`; otherwise reads an existing `sources.json`.
 - groups the cleaned DataFrame by `scenario`, `year`, `technology`.
 - for each group, builds a dictionary of `Parameter` objects (each with `magnitude`, `sources`, and optionally `carrier`, `heating_value`, `units`, `note`).
 - captures the `financial_case` value from rows within each group to combine with `scenario`.
@@ -64,15 +67,40 @@ Function `build_technology_collection()`:
 
 ### Execution instructions
 
-From repository root:
+The parser is run using the `DataAccessor` class. You need to create an instance of `DataAccessor` with the desired `data_source` and `version`, and then call the `parse()` method.
 
-- Basic run: `python src/technologydata/parsers/manual_input_usa/manual_input_usa.py`
-- Example with options: `--num_digits 3 --store_source`
+Here is an example of how to run the parser from a Python script:
+
+```python
+from technologydata.parsers.data_accessor import DataAccessor
+
+# Create an accessor for the version to be parsed
+parser_accessor = DataAccessor(
+    data_source="manual_input_usa",
+    version="v0.13.4"
+)
+
+# Run the parser with desired options
+parser_accessor.parse(
+    input_file_name="manual_input_usa.csv",
+    num_digits=3,
+    archive_source=True,
+    export_schema=True,
+)
+```
+
+The `parse` method accepts the following arguments:
+- `input_file_name` (str): The name of the raw data file located in `src/technologydata/parsers/raw/`.
+- `num_digits` (int, default 4): Number of decimals for rounding numeric values.
+- `archive_source` (bool, default False): Whether to store the source on the Wayback Machine.
+- `filter_params` (bool, default False): Whether to filter parameters (not used by this parser).
+- `export_schema` (bool, default False): Whether to export Pydantic schemas.
 
 ### Outputs
 
-The parser generates the following outputs:
+The parser generates the following outputs inside `src/technologydata/parsers/manual_input_usa/v0.13.4/`:
 
-- `src/technologydata/parsers/manual_input_usa/technologies.json`.
-- `src/technologydata/parsers/manual_input_usa/sources.json`.
-- Optional schema files moved to `src/technologydata/parsers/schemas` when `--export_schema` is used.
+- `technologies.json`
+- `sources.json`
+
+If `export_schema` is set to `True`, the Pydantic schema files are generated and moved to `src/technologydata/parsers/schemas/`.

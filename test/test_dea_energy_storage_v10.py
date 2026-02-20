@@ -10,17 +10,7 @@ import typing
 import pandas
 import pytest
 
-from technologydata.parsers.dea_energy_storage.dea_energy_storage import (
-    build_technology_collection,
-    clean_est_string,
-    clean_parameter_string,
-    clean_technology_string,
-    drop_invalid_rows,
-    extract_year,
-    filter_parameters,
-    format_val_number,
-    standardize_units,
-)
+from technologydata.parsers.dea_energy_storage import DeaEnergyStorageV10Parser
 
 
 class TestDEAEnergyStorage:
@@ -40,7 +30,10 @@ class TestDEAEnergyStorage:
         self, input_string: str, expected_string: str
     ) -> None:
         """Check if the clean_parameter_string works as expected."""
-        assert clean_parameter_string(input_string) == expected_string
+        assert (
+            DeaEnergyStorageV10Parser._clean_parameter_string(input_string)
+            == expected_string
+        )
 
     def test_drop_invalid_rows(self) -> None:
         """Check if the drop_invalid_rows works as expected."""
@@ -68,7 +61,9 @@ class TestDEAEnergyStorage:
                 "year": ["nearly 2020", "2024"],
             }
         )
-        output_dataframe = drop_invalid_rows(input_dataframe).reset_index(drop=True)
+        output_dataframe = DeaEnergyStorageV10Parser._drop_invalid_rows(
+            input_dataframe
+        ).reset_index(drop=True)
         comparison_df = output_dataframe.compare(expected_dataframe)
         assert comparison_df.empty
 
@@ -86,7 +81,7 @@ class TestDEAEnergyStorage:
         self, input_string: str, expected_string: str
     ) -> None:
         """Check if clean_technology_string works as expected."""
-        result = clean_technology_string(input_string)
+        result = DeaEnergyStorageV10Parser._clean_technology_string(input_string)
         assert result == expected_string
         assert isinstance(result, str)
 
@@ -100,7 +95,7 @@ class TestDEAEnergyStorage:
     )  # type: ignore
     def test_extract_year(self, input_year: str, expected_year: int) -> None:
         """Check if extract_year works as expected."""
-        result = extract_year(input_year)
+        result = DeaEnergyStorageV10Parser._extract_year(input_year)
         assert result == expected_year
         assert isinstance(result, int)
 
@@ -116,7 +111,7 @@ class TestDEAEnergyStorage:
         self, input_number: str, expected_number: int | None | typing.Any
     ) -> None:
         """Check if format_val_number works as expected, including exception handling."""
-        result = format_val_number(input_number, 2)
+        result = DeaEnergyStorageV10Parser._format_val_number(input_number, 2)
         assert isinstance(result, float)
         assert result == expected_number
 
@@ -130,7 +125,7 @@ class TestDEAEnergyStorage:
     )  # type: ignore
     def test_clean_est_string(self, input_string: str, expected_string: str) -> None:
         """Check if clean_est_string works as expected."""
-        result = clean_est_string(input_string)
+        result = DeaEnergyStorageV10Parser._clean_est_string(input_string)
         assert isinstance(result, str)
         assert result == expected_string
 
@@ -194,7 +189,7 @@ class TestDEAEnergyStorage:
         )
         input_dataframe[["par", "unit"]] = (
             input_dataframe[["par", "unit"]]
-            .apply(standardize_units, axis=1)
+            .apply(DeaEnergyStorageV10Parser._standardize_units, axis=1)
             .reset_index(drop=True)
         )
         comparison_df = input_dataframe.compare(expected_dataframe)
@@ -205,9 +200,9 @@ class TestDEAEnergyStorage:
         dataframe = pandas.DataFrame(
             {"par": ["technical lifetime", "other"], "Technology": ["A", "B"]}
         )
-        filtered = filter_parameters(dataframe, True)
+        filtered = DeaEnergyStorageV10Parser._filter_parameters(dataframe, True)
         assert all(filtered["par"] == "technical lifetime")
-        filtered2 = filter_parameters(dataframe, False)
+        filtered2 = DeaEnergyStorageV10Parser._filter_parameters(dataframe, False)
         assert len(filtered2) == 2
 
     @pytest.mark.webarchive  # type: ignore
@@ -225,6 +220,8 @@ class TestDEAEnergyStorage:
             }
         )
         sources_path = pathlib.Path(tmp_path, "sources.json")
-        tech_collection = build_technology_collection(dataframe, sources_path)
+        tech_collection = DeaEnergyStorageV10Parser._build_technology_collection(
+            dataframe, sources_path
+        )
         assert len(tech_collection.technologies) == 1
         assert "specific_investment" in tech_collection.technologies[0].parameters

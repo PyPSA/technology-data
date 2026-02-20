@@ -28,8 +28,12 @@ class TestDatapackage:
             input_file
         )
         data_package = technologydata.DataPackage(
+            name="solar_photovoltaics_example",
+            version="v1.0",
             technologies=technologies_collection,
         )
         data_package.get_source_collection()
         assert isinstance(data_package.sources, technologydata.SourceCollection)
         assert len(data_package.sources) == 2
+        assert data_package.name == "solar_photovoltaics_example"
+        assert data_package.version == "v1.0"

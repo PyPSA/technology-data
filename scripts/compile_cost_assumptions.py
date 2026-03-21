@@ -2356,17 +2356,17 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             efficiency_heat_out = efficiency[
                 efficiency.index.str.contains("H-Output")
             ].copy()
-            efficiency_heat_out["parameter"] = "heat output"
+            efficiency_heat_out["parameter"] = "heat-output"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_heat_out])
             biomass_input = efficiency[
                 efficiency.index.str.contains("Biomass Input")
             ].copy()
-            biomass_input["parameter"] = "biomass input"
+            biomass_input["parameter"] = "biomass-input"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], biomass_input])
             electricity_input = efficiency[
                 efficiency.index.str.contains("El-Input")
             ].copy()
-            electricity_input["parameter"] = "electricity input"
+            electricity_input["parameter"] = "electricity-input"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], electricity_input])
 
         elif len(efficiency) != 1:

@@ -2313,30 +2313,30 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             h2_input = efficiency[
                 efficiency.index.str.contains("Hydrogen Input")
             ].copy()
-            h2_input["parameter"] = "Hydrogen Input"
+            h2_input["parameter"] = "hydrogen-input"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], h2_input])
             co2_input = efficiency[efficiency.index.str.contains("CO2 Input")].copy()
-            co2_input["parameter"] = "CO2 Input"
+            co2_input["parameter"] = "CO2-input"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], co2_input])
             efficiency_heat_out = efficiency[
                 efficiency.index.str.contains("H-Output")
             ].copy()
-            efficiency_heat_out["parameter"] = "heat output"
+            efficiency_heat_out["parameter"] = "heat-output"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_heat_out])
             biomass_input = efficiency[
                 efficiency.index.str.contains("Methane Output")
             ].copy()
-            biomass_input["parameter"] = "Methane Output"
+            biomass_input["parameter"] = "methane-output"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], biomass_input])
             electricity_input = efficiency[
                 efficiency.index.str.contains("El-Input")
             ].copy()
-            electricity_input["parameter"] = "electricity input"
+            electricity_input["parameter"] = "electricity-input"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], electricity_input])
             biogas_input = efficiency[
                 efficiency.index.str.contains("Biogas Consumption")
             ].copy()
-            biogas_input["parameter"] = "Biogas Input"
+            biogas_input["parameter"] = "biogas-input"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], biogas_input])
 
         elif len(efficiency) != 1:

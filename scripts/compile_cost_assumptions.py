@@ -2790,7 +2790,7 @@ def add_perennials_gbr(
     protein_price = 535  # EUR/t (R1)
     perennial_cost = 130  # EUR/tDM (R1)
 
-    # EUR/tDM (R1 Table 4: "labor and maintenance" converted to per tDM)
+    # EUR/tDM (R1 Table 4): "labor and maintenance" converted to per tDM)
     other_VOM = 0.45e6 / (40 * DM_perennials * flh_y)
 
     # EUR/tDM: cost of perennials - revenue from protein + other variable costs
@@ -2840,11 +2840,11 @@ def add_perennials_gbr(
 
     # Per-variable descriptions (optional but often nice)
     new_technology_dataframe.loc[(tech_name, "investment"), "further description"] = (
-        "Includes GBR plant and scaled biogas plant without upgrading"
+        "Includes GBR plant and scaled biogas plant without upgrading, Table 4"
     )
     new_technology_dataframe.loc[(tech_name, "VOM"), "further description"] = (
-        "Includes purchase of perennials and revenue from protein concentrate; "
-        "incl. wages/maintenance/aux costs (R1)"
+        "Includes purchase of perennials and revenue from sales of protein concentrate; "
+        "incl. wages/maintenance/aux costs (Tables 2 -4)"
     )
 
     return new_technology_dataframe

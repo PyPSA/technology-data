@@ -11,7 +11,7 @@ configfile: "config.yaml"
 
 rule compile_cost_assumptions:
     input:
-        inflation_rate="inputs/Eurostat_inflation_rates.xlsx",
+        inflation_rate="inputs/prc_hicp_aind__custom_20097956_spreadsheet.xlsx",
         pypsa_costs="inputs/costs_PyPSA.csv",
         fraunhofer_costs="inputs/Fraunhofer_ISE_costs.csv",
         fraunhofer_energy_prices="inputs/Fraunhofer_ISE_energy_prices.csv",
@@ -49,7 +49,7 @@ rule compile_cost_assumptions_usa:
             year=config["nrel_atb"]["nrel_atb_input_years"],
         ),
         nrel_atb_manual_input_usa="inputs/US/manual_input_usa.csv",
-        inflation_rate="inputs/Eurostat_inflation_rates.xlsx",
+        inflation_rate="inputs/prc_hicp_aind__custom_20097956_spreadsheet.xlsx",
         nrel_atb_input_discount_rate="inputs/US/discount_rates_usa.csv",
         nrel_atb_input_fuel_costs="inputs/US/fuel_costs_usa.csv",
     output:

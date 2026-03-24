@@ -2848,6 +2848,67 @@ def add_carbon_capture(
     return new_technology_dataframe
 
 
+def add_biomethanation_CO2(
+    years: list,
+    sheet_names_dict: dict,
+    new_technology_dataframe: pd.DataFrame,
+    technology_dataframe: pd.DataFrame,
+) -> pd.DataFrame:
+    """
+    Biomethanation from pure CO2 and H2, it is obtained from the biomethanation (biogas)
+    technology with scaling of cost for the different inlet volumen flow and recalculation of energy and mass balance for the different inlet.
+
+    Parameters
+    ----------
+    years : list
+        Years for which a cost assumption is provided (e.g. [2020, 2025, ...]).
+    sheet_names_dict : dict
+        Dictionary having the technology name as keys and source/sheet references as values.
+        (Used for "further description" to match repository conventions.)
+    new_technology_dataframe : pandas.DataFrame
+        DataFrame to be filled/updated with the new technology data.
+    technology_dataframe : pandas.DataFrame
+        Existing technology data cost assumptions (used to reference e.g. biogas CAPEX).
+
+    Returns
+    -------
+    pandas.DataFrame
+        Updated technology data with "perennials gbr".
+    """
+
+    tech_name = "biomethanation CO2"
+    base_tech_name = "biomethanation"
+
+    # Cost scaling assumptions:
+    #   - Cost proportional to reactor volume
+    #   - Residence time is the same between BG and CO2 cases
+    #   - Volumetric flow (product) is proportional to reactor volume
+    #   - T, P conditions for product (biomethane) do not vary between the two cases
+    #   - Investment cost scales by the CH4 output ratio between the two cases
+    output_ratio = (1 - technology_dataframe.loc[(base_tech_name, "biogas-input"), years]
+                    / technology_dataframe.loc[(base_tech_name, "methane-output"), years])
+
+    # Copy all entries from base technology unchanged (source, descriptions, units, etc.)
+    for param in technology_dataframe.loc[base_tech_name].index:
+        new_technology_dataframe.loc[(tech_name, param), :] = technology_dataframe.loc[(base_tech_name, param), :]
+
+    # Override only the two entries that differ (scaled by volumetric flow ratio)
+    new_technology_dataframe.loc[(tech_name, "methane-output"), years] = (
+        technology_dataframe.loc[(base_tech_name, "methane-output"), years] * output_ratio
+    )
+    new_technology_dataframe.loc[(tech_name, "investment"), years] = (
+        technology_dataframe.loc[(base_tech_name, "investment"), years] * output_ratio
+    )
+    new_technology_dataframe.loc[(tech_name, "investment"), "further description"] = (
+        "scaled from biomethanation based on volumetric flow"
+    )
+
+    # Remove "Biogas Input" as it is not applicable for the pure CO2 case
+    new_technology_dataframe.drop((tech_name, "biogas-input"), inplace=True)
+
+    return new_technology_dataframe
+
+
 def rename_pypsa_old(cost_dataframe_pypsa: pd.DataFrame) -> pd.DataFrame:
     """
     The function renames old technology names to new ones to compare converts units from water tanks to compare.
@@ -4227,6 +4288,8 @@ if __name__ == "__main__":
     data = convert_units(years_list, data)
     # add carbon capture
     data = add_carbon_capture(years_list, dea_sheet_names, data, tech_data)
+    # add biomethanation from pure CO2
+    data = add_biomethanation_CO2(years_list, dea_sheet_names, data, data)
 
     # adjust for inflation
     for x in data.index.get_level_values("technology"):

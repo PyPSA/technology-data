@@ -30,13 +30,13 @@ rule compile_cost_assumptions:
         manual_input="inputs/manual_input.csv",
     output:
         expand("outputs/costs_{year}.csv", year=config["years"]),
+    log:
+        pathlib.Path("logs", "compile_cost_assumptions.log"),
+    conda:
+        "environment.yaml"
     threads: 1
     resources:
         mem=500,
-    conda:
-        "environment.yaml"
-    log:
-        pathlib.Path("logs", "compile_cost_assumptions.log"),
     script:
         "scripts/compile_cost_assumptions.py"
 
@@ -54,13 +54,13 @@ rule compile_cost_assumptions_usa:
         nrel_atb_input_fuel_costs="inputs/US/fuel_costs_usa.csv",
     output:
         expand("outputs/US/costs_{year}.csv", year=config["years"]),
+    log:
+        pathlib.Path("logs", "compile_cost_assumptions_usa.log"),
+    conda:
+        "environment.yaml"
     threads: 1
     resources:
         mem=500,
-    conda:
-        "environment.yaml"
-    log:
-        pathlib.Path("logs", "compile_cost_assumptions_usa.log"),
     script:
         "scripts/compile_cost_assumptions_usa.py"
 
@@ -82,20 +82,20 @@ rule convert_EWG:
         EWG="docu/EWG_LUT_100RE_All_Sectors_Global_Report_2019.pdf",
     output:
         costs="inputs/EWG_costs.csv",
+    conda:
+        "environment.yaml"
     threads: 1
     resources:
         mem=500,
-    conda:
-        "environment.yaml"
     script:
         "scripts/convert_pdf_EWG_to_dataframe.py"
 
 
 rule all:
+    default_target: True
     input:
         rules.compile_cost_assumptions.output,
         rules.compile_cost_assumptions_usa.output,
-    default_target: True
 
 
 rule purge:

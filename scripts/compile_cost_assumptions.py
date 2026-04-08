@@ -2672,6 +2672,7 @@ def add_carbon_capture(
         "biomass CHP capture",
         "biomass boiler capture",
     ]:
+        # for direct air capture, capture rate makes no sense as the CO2 is captured from ambient air, hence excluded
         if tech_name == "biomass boiler capture":
             # in 2020, only biomass boiler capture has a "A3" in its index
             # by February 2024, all techs have "A3" rather than "Ax"
@@ -2683,6 +2684,12 @@ def add_carbon_capture(
 
         new_technology_dataframe.loc[(tech_name, "capture_rate"), years] = value / 100
         new_technology_dataframe.loc[(tech_name, "capture_rate"), "unit"] = "per unit"
+
+        # for direct air capture, O&M is not split in fixed and variable, hence excluded
+        new_technology_dataframe.loc[(tech_name, "Variable O&M"), years] = (
+            technology_dataframe.loc[(tech_name, "Variable O&M"), years].values[0]
+        )
+        new_technology_dataframe.loc[(tech_name, "Variable O&M"), "unit"] = "EUR/tCO2"
 
     for tech_name in [
         "direct air capture",

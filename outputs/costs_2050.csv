@@ -195,8 +195,8 @@ Diesel Truck Trailer max 56 tons,VOM,0.1068,EUR/km,"Danish Energy Agency, inputs
 Diesel Truck Trailer max 56 tons,efficiency,2.5876,kWh/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L2,2022.0
 Diesel Truck Trailer max 56 tons,investment,177515.1425,EUR/vehicle,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L2,2022.0
 Diesel Truck Trailer max 56 tons,lifetime,13.8,years,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",Diesel L2,2022.0
-Enhanced Weathering,VOM,190.2467,EUR/tCO2," Jessica Strefler et al 2018 Environ. Res. Lett. 13 034010 https://doi.org/10.1088/1748-9326/aaa9c4, excluding electricity costs from supplemental J5 (basalt 20µm particle size), assuming 0.7541 EUR(2014)/USD(2014) and 3.33 tCO2/t basalt",,2014.0
-Enhanced Weathering,electricity-input,0.1852,MWh/tCO2 ," ""Jessica Strefler et al 2018 Environ. Res. Lett. 13 034010 https://doi.org/10.1088/1748-9326/aaa9c4 from supplemental J5 (basalt 20µm particle size) assuming 3.33 tCO2/t basalt""",,
+Enhanced Weathering,VOM,190.2467,EUR/t_CO2,"Jessica Strefler et al 2018 Environ. Res. Lett. 13 034010 https://doi.org/10.1088/1748-9326/aaa9c4, excluding electricity costs from supplemental J5 (basalt 20µm particle size), assuming 0.7541 EUR(2014)/USD(2014) and 3.33 t_basalt/t_CO2",,2014.0
+Enhanced Weathering,electricity-input,0.1852,MWh_el/t_CO2,"Jessica Strefler et al 2018 Environ. Res. Lett. 13 034010 https://doi.org/10.1088/1748-9326/aaa9c4 from supplemental J5 assuming 3.33 t_basalt/t_CO2, for crashing basalt and produce particles with 20µm size",,
 FCV Bus city,FOM,0.0003,%/year,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV B1,2022.0
 FCV Bus city,Motor size,450.0,kW,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV B1,2022.0
 FCV Bus city,VOM,0.0979,EUR/km,"Danish Energy Agency, inputs/data_sheets_for_commercial_freight_and_passenger_transport_0.xlsx",FCV B1,2022.0

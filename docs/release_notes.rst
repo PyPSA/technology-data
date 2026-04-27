@@ -10,7 +10,7 @@ Release Notes
 
 Upcoming Release
 ================
-* Added Afforestation costs. (https://github.com/PyPSA/technology-data/pull/254)
+* Added Afforestation costs as Carbon Dioxide Removal technology (https://github.com/PyPSA/technology-data/pull/254)
 
 .. .. warning:: 
   

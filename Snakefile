@@ -11,7 +11,7 @@ configfile: "config.yaml"
 
 rule compile_cost_assumptions:
     input:
-        inflation_rate="inputs/Eurostat_inflation_rates.xlsx",
+        inflation_rate="inputs/prc_hicp_aind__custom_20097956_spreadsheet.xlsx",
         pypsa_costs="inputs/costs_PyPSA.csv",
         fraunhofer_costs="inputs/Fraunhofer_ISE_costs.csv",
         fraunhofer_energy_prices="inputs/Fraunhofer_ISE_energy_prices.csv",
@@ -30,13 +30,13 @@ rule compile_cost_assumptions:
         manual_input="inputs/manual_input.csv",
     output:
         expand("outputs/costs_{year}.csv", year=config["years"]),
+    log:
+        pathlib.Path("logs", "compile_cost_assumptions.log"),
+    conda:
+        "environment.yaml"
     threads: 1
     resources:
         mem=500,
-    conda:
-        "environment.yaml"
-    log:
-        pathlib.Path("logs", "compile_cost_assumptions.log"),
     script:
         "scripts/compile_cost_assumptions.py"
 
@@ -49,18 +49,18 @@ rule compile_cost_assumptions_usa:
             year=config["nrel_atb"]["nrel_atb_input_years"],
         ),
         nrel_atb_manual_input_usa="inputs/US/manual_input_usa.csv",
-        inflation_rate="inputs/Eurostat_inflation_rates.xlsx",
+        inflation_rate="inputs/prc_hicp_aind__custom_20097956_spreadsheet.xlsx",
         nrel_atb_input_discount_rate="inputs/US/discount_rates_usa.csv",
         nrel_atb_input_fuel_costs="inputs/US/fuel_costs_usa.csv",
     output:
         expand("outputs/US/costs_{year}.csv", year=config["years"]),
+    log:
+        pathlib.Path("logs", "compile_cost_assumptions_usa.log"),
+    conda:
+        "environment.yaml"
     threads: 1
     resources:
         mem=500,
-    conda:
-        "environment.yaml"
-    log:
-        pathlib.Path("logs", "compile_cost_assumptions_usa.log"),
     script:
         "scripts/compile_cost_assumptions_usa.py"
 
@@ -82,20 +82,20 @@ rule convert_EWG:
         EWG="docu/EWG_LUT_100RE_All_Sectors_Global_Report_2019.pdf",
     output:
         costs="inputs/EWG_costs.csv",
+    conda:
+        "environment.yaml"
     threads: 1
     resources:
         mem=500,
-    conda:
-        "environment.yaml"
     script:
         "scripts/convert_pdf_EWG_to_dataframe.py"
 
 
 rule all:
+    default_target: True
     input:
         rules.compile_cost_assumptions.output,
         rules.compile_cost_assumptions_usa.output,
-    default_target: True
 
 
 rule purge:

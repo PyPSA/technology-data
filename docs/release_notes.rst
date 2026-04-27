@@ -10,6 +10,7 @@ Release Notes
 
 Upcoming Release
 ================
+* Added Afforestation costs. (https://github.com/PyPSA/technology-data/pull/254)
 
 .. .. warning:: 
   
@@ -18,7 +19,6 @@ Upcoming Release
 
 `v0.14.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.14.0>`__ (13th February 2026)
 ================================================================================================
-
 * Changed currency year from 2020 to 2025 for all cost assumptions using updated Eurostat inflation rates. (https://github.com/PyPSA/technology-data/pull/263)
 
 * Updated electricity transmission and offshore wind connection costs based on latest DEA data (https://ens.dk/en/analyses-and-statistics/technology-data-transport-energy, July 2025).

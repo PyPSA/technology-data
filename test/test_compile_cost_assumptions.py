@@ -31,7 +31,7 @@ from scripts.compile_cost_assumptions import (
 path_cwd = pathlib.Path.cwd()
 
 snakemake_input_dictionary = {
-    "inflation_rate": "inputs/Eurostat_inflation_rate.xlsx",
+    "inflation_rate": "inputs/prc_hicp_aind__custom_20097956_spreadsheet.xlsx",
     "pypsa_costs": "inputs/costs_PyPSA.csv",
     "fraunhofer_costs": "inputs/Fraunhofer_ISE_costs.csv",
     "fraunhofer_energy_prices": "inputs/Fraunhofer_ISE_energy_prices.csv",
@@ -242,8 +242,8 @@ def test_get_data_from_dea(config):
         "BtL": (6, 9),
         "biomass-to-methanol": (8, 9),
         "biogas plus hydrogen": (6, 9),
-        "methanolisation": (8, 9),
-        "Fischer-Tropsch": (7, 9),
+        "methanolisation": (6, 9),
+        "Fischer-Tropsch": (8, 9),
         "central hydrogen CHP": (8, 9),
         "Haber-Bosch": (12, 9),
         "air separation unit": (7, 9),

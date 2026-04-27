@@ -772,7 +772,7 @@ def get_data_DEA(
         "Eletricity input",
         "Heat out",
         "capture rate",
-        "FT Liquids Output, MWh/MWh Total Input",
+        "FT Liquids Output, [MWh/MWh Total Input]",
         " - hereof recoverable for district heating [%-points of heat loss]",
         " - hereof recoverable for district heating (%-points of heat loss)",
         "Bio SNG Output [% of fuel input]",
@@ -878,6 +878,7 @@ def get_data_DEA(
 
     if tech_name == "methanolisation":
         df.drop(df.loc[df.index.str.contains("1,000 t Methanol")].index, inplace=True)
+        df.drop(df.loc[df.index.str.contains("TPD")].index, inplace=True)
 
     if tech_name == "Fischer-Tropsch":
         df.drop(df.loc[df.index.str.contains("l FT Liquids")].index, inplace=True)
@@ -972,6 +973,9 @@ def get_data_DEA(
 
     if "solid biomass power" in tech_name:
         df.index = df.index.str.replace("EUR/MWeh", "EUR/MWh")
+
+    if "methanolisation" in tech_name:
+        df.index = df.index.str.replace("[MW-methanol/year]", "MW_MeOH/year")
 
     if "biochar pyrolysis" in tech_name:
         df = biochar_pyrolysis_harmonise_dea(df)
@@ -1582,6 +1586,9 @@ def clean_up_units(
     technology_dataframe.unit = technology_dataframe.unit.str.replace(
         "MW Methanol", "MW_MeOH"
     )
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
+        "[MW_MeOH/year]", "MW_MeOH/year"
+    )
     technology_dataframe.unit = technology_dataframe.unit.str.replace("MW output", "MW")
     technology_dataframe.unit = technology_dataframe.unit.str.replace(
         "MW/year FT Liquids/year", "MW_FT/year"
@@ -1600,6 +1607,9 @@ def clean_up_units(
     )
     technology_dataframe.unit = technology_dataframe.unit.str.replace(
         "MWh SNG", "MWh_CH4"
+    )
+    technology_dataframe.unit = technology_dataframe.unit.str.replace(
+        "MW-methanol", "MW_MeOH"
     )
     technology_dataframe.unit = technology_dataframe.unit.str.replace(
         "MW SNG", "MW_CH4"
@@ -1697,12 +1707,6 @@ def clean_up_units(
                 "MW": "MW_e",
             }
         )
-
-        if "methanolisation" in technology_dataframe.index:
-            technology_dataframe = technology_dataframe.sort_index()
-            technology_dataframe.loc[("methanolisation", "Variable O&M"), "unit"] = (
-                "EUR/MWh_MeOH"
-            )
 
     technology_dataframe.unit = technology_dataframe.unit.str.replace(r"\)", "")
     return technology_dataframe
@@ -1924,7 +1928,6 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 | (df.unit == "EUR/MWh/year")
                 | (df.unit == "EUR/MW_e, 2020")
                 | (df.unit == "EUR/MW input")
-                | (df.unit == "EUR/MW-methanol")
                 | (df.unit == "EUR/t_N2/h")  # air separation unit
                 | (df.unit == "EUR/MW_biochar")
             )
@@ -1977,6 +1980,10 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 # For current data, the FOM values for central water pit storage are too high by a factor of 1000.
                 # See issue: https://github.com/PyPSA/technology-data/issues/203
                 fixed[years] /= 1000  # in €/MWhCapacity/year
+            if tech_name == "Fischer-Tropsch":
+                fixed[years] *= (
+                    8000  # conversion from €/MWh to €/MW/year, assuming 8000 full load hours
+                )
             if len(fixed) == 1:
                 fixed["parameter"] = "fixed"
                 clean_df[tech_name] = pd.concat([clean_df[tech_name], fixed])
@@ -2063,7 +2070,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 (df.index.str.contains("efficiency"))
                 | (df.index.str.contains("Hydrogen output, at LHV"))
                 | (df.index.str.contains("Hydrogen Output"))
-                | (df.index.str.contains("FT Liquids Output, MWh/MWh Total Input"))
+                | (df.index.str.contains("FT Liquids Output"))
                 | (df.index.str.contains("Methanol Output"))
                 | (df.index.str.contains("District heat  Output"))
                 | (df.index.str.contains("Electricity Output"))
@@ -2088,6 +2095,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 | (df.unit == "MWh/MWh Total Input")
                 | (df.unit == "MWh/MWh total input")
                 | df.unit.str.contains("MWh_FT/MWh_H2")
+                | df.unit.str.contains("MWh/MWh Total Input")
                 | df.unit.str.contains("MWh_biochar/MWh_feedstock")
                 | df.unit.str.contains("ton biochar/MWh_feedstock")
                 | df.unit.str.contains("MWh_CH4/MWh_H2")
@@ -3104,7 +3112,8 @@ def carbon_flow(
             )
 
             cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "value"] = (
-                cost_dataframe.loc[("Fischer-Tropsch", "efficiency"), "value"]
+                1
+                / cost_dataframe.loc[("Fischer-Tropsch", "hydrogen-input"), "value"]
                 / efuel_scale_factor
             )
             cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "unit"] = (
@@ -3130,7 +3139,8 @@ def carbon_flow(
             )
 
             cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "value"] = (
-                cost_dataframe.loc[("Fischer-Tropsch", "efficiency"), "value"]
+                1
+                / cost_dataframe.loc[("Fischer-Tropsch", "hydrogen-input"), "value"]
                 / efuel_scale_factor
             )
             cost_dataframe.loc[("electrobiofuels", "efficiency-hydrogen"), "unit"] = (
@@ -3153,17 +3163,6 @@ def carbon_flow(
             )
             cost_dataframe.loc[("electrobiofuels", "efficiency-tot"), "source"] = (
                 "Stoichiometric calculation"
-            )
-
-            inv_cost = (
-                btl_cost[year_to_use]
-                + cost_dataframe.loc[("Fischer-Tropsch", "investment"), "value"]
-                * efuel_scale_factor
-            )
-            VOM = (
-                cost_dataframe.loc[("BtL", "VOM"), "value"]
-                + cost_dataframe.loc[("Fischer-Tropsch", "VOM"), "value"]
-                * efuel_scale_factor
             )
             FOM = cost_dataframe.loc[("BtL", "FOM"), "value"]
             medium_out = "oil"

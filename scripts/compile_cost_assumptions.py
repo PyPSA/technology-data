@@ -2805,7 +2805,7 @@ def add_perennials_gbr(
 
     # --- Write to dataframe (match repo conventions) ---
     new_technology_dataframe.loc[(tech_name, "investment"), years] = investment
-    new_technology_dataframe.loc[(tech_name, "investment"), "unit"] = "EUR/tDM/h"
+    new_technology_dataframe.loc[(tech_name, "investment"), "unit"] = "EUR/(tDM h)"
     new_technology_dataframe.loc[(tech_name, "investment"), "currency_year"] = 2020
 
     new_technology_dataframe.loc[(tech_name, "lifetime"), years] = 25
@@ -2840,7 +2840,7 @@ def add_perennials_gbr(
 
     # Per-variable descriptions (optional but often nice)
     new_technology_dataframe.loc[(tech_name, "investment"), "further description"] = (
-        "Includes GBR plant and scaled biogas plant without upgrading, Table 4"
+        "DM (Dry Matter or perennial crops). The investment includes green biorefinery plant and a scaleup in capacity for biogas plant without upgrading, Table 4"
     )
     new_technology_dataframe.loc[(tech_name, "VOM"), "further description"] = (
         "Includes purchase of perennials and revenue from sales of protein concentrate; "

@@ -1173,7 +1173,7 @@ perennials gbr,FOM,0.0,%/year,https://doi.org/10.1016/B978-0-323-95879-0.50147-8
 perennials gbr,VOM,43.2317,EUR/tDM,https://doi.org/10.1016/B978-0-323-95879-0.50147-8,Includes purchase of perennials and revenue from sales of protein concentrate; incl. wages/maintenance/aux costs (Tables 2 -4),2015.0
 perennials gbr,biogas-output,0.1947,MWh/tDM,https://doi.org/10.1016/B978-0-323-95879-0.50147-8,,2015.0
 perennials gbr,electricity-input,0.0733,MWh/tDM,https://doi.org/10.1016/B978-0-323-95879-0.50147-8,,2015.0
-perennials gbr,investment,1371509.7864,EUR/tDM/h,https://doi.org/10.1016/B978-0-323-95879-0.50147-8,"Includes GBR plant and scaled biogas plant without upgrading, Table 4",2015.0
+perennials gbr,investment,1371509.7864,EUR/(tDM h),https://doi.org/10.1016/B978-0-323-95879-0.50147-8,"DM (Dry Matter or perennial crops). The investment includes green biorefinery plant and a scaleup in capacity for biogas plant without upgrading, Table 4",2015.0
 perennials gbr,lifetime,25.0,years,https://doi.org/10.1016/B978-0-323-95879-0.50147-8,,2015.0
 ror,FOM,2.0,%/year,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions,2015.0
 ror,efficiency,0.9,per unit,DIW DataDoc http://hdl.handle.net/10419/80348, from old pypsa cost assumptions,2015.0

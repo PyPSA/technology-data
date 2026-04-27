@@ -10,11 +10,12 @@ Release Notes
 
 Upcoming Release
 ================
-
-.. .. warning:: 
+.. .. warning::
   
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
+
+* Added Rock Weathering (of Rocks) as Carbon Dioxide Removal Technology (https://github.com/PyPSA/technology-data/pull/240)
 
 * Adding `grey methanol synthesis`.
 

@@ -249,7 +249,7 @@ def test_get_data_from_dea(config):
         "air separation unit": (7, 9),
         "waste CHP": (16, 9),
         "waste CHP CC": (16, 9),
-        "biochar pyrolysis": (7, 9),
+        "biochar pyrolysis": (9, 9),
         "electrolysis small": (7, 9),
         "random tech": (0, 0),
     }

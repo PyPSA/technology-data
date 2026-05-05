@@ -16,6 +16,8 @@ Upcoming Release
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
 
+* Updated Biochar pyrolysis: units updated with rebase on CO2 sequestered, biomass properties aligned with other biomass technolgies, 0.7 coefficient applied to calculate final CO2 sequestration beyond 100 years.
+
 `v0.14.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.14.0>`__ (13th February 2026)
 ================================================================================================
 

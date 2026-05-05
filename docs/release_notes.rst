@@ -18,6 +18,7 @@ Upcoming Release
 
 `v0.14.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.14.0>`__ (13th February 2026)
 ================================================================================================
+* Adding `perennials gbr` for production of perennial crops instead of 1st generation biofuels, followed by Green Bio Refining to proteins and biogas.
 
 * Changed currency year from 2020 to 2025 for all cost assumptions using updated Eurostat inflation rates. (https://github.com/PyPSA/technology-data/pull/263)
 

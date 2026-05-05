@@ -1,4 +1,7 @@
 technology,parameter,year,value,unit,currency_year,source,further_description
+electricity grid connection,investment,2025,150,EUR/kW,2020,DEA - Technology Data Catalogue for el and DH - v17 - Page 15 - Paragraph 'Cost of grid expanion',"The costs of grid expansion from adding a new electricity generator or a new large consumer -  related to strengthening or expansion of the local grid and/or substations (voltage transformation, pumping or compression/expansion"
+electricity grid connection,lifetime,2025,40,years,2020,same as 'electricity distribution grid',
+electricity grid connection,FOM,2025,2,%/year,2020,same as 'electricity distribution grid',
 methanation,investment,2020,748,EUR/kW_CH4,2017,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), table 6: “Reference scenario”.",
 methanation,lifetime,2020,20,years,2017,Guesstimate.,"Based on lifetime for methanolisation, Fischer-Tropsch plants."
 methanation,FOM,2020,3,%/year,2017,"Agora Energiewende (2018): The Future Cost of Electricity-Based Synthetic Fuels (https://www.agora-energiewende.de/en/publications/the-future-cost-of-electricity-based-synthetic-fuels-1/), section 6.2.3.1",

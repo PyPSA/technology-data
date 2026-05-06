@@ -674,6 +674,7 @@ biomass CHP,efficiency-heat,0.7088,per unit,"Danish Energy Agency, inputs/techno
 biomass CHP,investment,4402.5067,EUR/kW_e,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","09c Straw, Large, 40 degree:  Nominal investment ",2015.0
 biomass CHP,lifetime,25.0,years,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","09c Straw, Large, 40 degree:  Technical lifetime",2015.0
 biomass CHP capture,FOM,3.0,%/year,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.a Post comb - small CHP,2020.0
+biomass CHP capture,Variable O&M,2.5,EUR/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.a Post comb - small CHP,2020.0
 biomass CHP capture,capture_rate,0.9,per unit,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.a Post comb - small CHP,2020.0
 biomass CHP capture,compression-electricity-input,0.1,MWh/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.a Post comb - small CHP,2020.0
 biomass CHP capture,compression-heat-output,0.16,MWh/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.a Post comb - small CHP,2020.0
@@ -700,6 +701,16 @@ biomass boiler,efficiency,0.84,per unit,"Danish Energy Agency, inputs/technology
 biomass boiler,investment,889.6264,EUR/kW_th,"Danish Energy Agency, inputs/technologydatafor_heating_installations_marts_2018.xlsx","204 Biomass boiler, automatic:  Specific investment",2015.0
 biomass boiler,lifetime,20.0,years,"Danish Energy Agency, inputs/technologydatafor_heating_installations_marts_2018.xlsx","204 Biomass boiler, automatic:  Technical lifetime",2015.0
 biomass boiler,pelletizing cost,9.0,EUR/MWh_pellets,Assumption based on doi:10.1016/j.rser.2019.109506,,2019.0
+biomass boiler capture,FOM,3.0,%/year,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.b Post comb - Large biomass,2020.0
+biomass boiler capture,Variable O&M,2.5,EUR/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.b Post comb - Large biomass,2020.0
+biomass boiler capture,capture_rate,0.9,per unit,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.b Post comb - Large biomass,2020.0
+biomass boiler capture,compression-electricity-input,0.1,MWh/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.b Post comb - Large biomass,2020.0
+biomass boiler capture,compression-heat-output,0.16,MWh/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.b Post comb - Large biomass,2020.0
+biomass boiler capture,electricity-input,0.03,MWh/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.b Post comb - Large biomass,2020.0
+biomass boiler capture,heat-input,0.833,MWh/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.b Post comb - Large biomass,2020.0
+biomass boiler capture,heat-output,0.833,MWh/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.b Post comb - Large biomass,2020.0
+biomass boiler capture,investment,3143336.5029,EUR/(tCO2/h),"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.b Post comb - Large biomass,2020.0
+biomass boiler capture,lifetime,25.0,years,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.b Post comb - Large biomass,2020.0
 biomass-to-methanol,C in fuel,0.4028,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
 biomass-to-methanol,C stored,0.5972,per unit,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
 biomass-to-methanol,CO2 stored,0.219,tCO2/MWh_th,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,
@@ -719,6 +730,7 @@ blast furnace-basic oxygen furnace,lifetime,40.0,years,"Mission Possible Partner
 blast furnace-basic oxygen furnace,ore-input,1.539,t_ore/t_steel,"Mission Possible Partnership (2022): Steel Model (https://github.com/missionpossiblepartnership/mpp-steel-model/blob/9eca52db92bd2d9715f30e98ccaaf36677fdb516/mppsteel/data/import_data/Technology%20Business%20Cases.csv, accessed: 2025-04-15). ",Based on process ‘Avg BF-BOF`,2020.0
 blast furnace-basic oxygen furnace,scrap-input,0.051,t_scrap/t_steel,"Mission Possible Partnership (2022): Steel Model (https://github.com/missionpossiblepartnership/mpp-steel-model/blob/9eca52db92bd2d9715f30e98ccaaf36677fdb516/mppsteel/data/import_data/Technology%20Business%20Cases.csv, accessed: 2025-04-15). ",Based on process ‘Avg BF-BOF`,2020.0
 cement capture,FOM,3.0,%/year,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.c Post comb - Cement kiln,2020.0
+cement capture,Variable O&M,2.5,EUR/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.c Post comb - Cement kiln,2020.0
 cement capture,capture_rate,0.9,per unit,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.c Post comb - Cement kiln,2020.0
 cement capture,compression-electricity-input,0.1,MWh/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.c Post comb - Cement kiln,2020.0
 cement capture,compression-heat-output,0.16,MWh/tCO2,"Danish Energy Agency, inputs/technology_data_for_carbon_capture_transport_storage.xlsx",401.c Post comb - Cement kiln,2020.0

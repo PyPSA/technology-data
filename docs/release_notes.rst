@@ -17,8 +17,9 @@ Upcoming Release
 ..   To use the features already you have to use the ``master`` branch.
 
 * Add `Post-combustion carbon capture retrofit - 500 MW(th) biomass-fired boiler` as `biomass boiler capture` (https://github.com/PyPSA/technology-data/pull/253); also add Variable O&M for all carbon capture retrofits
-
 * Adding `grey methanol synthesis`.
+* Add missing discount rate for OCGT in US-specific data. (https://github.com/PyPSA/technology-data/pull/269)
+
 `v0.14.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.14.0>`__ (13th February 2026)
 
 * Changed currency year from 2020 to 2025 for all cost assumptions using updated Eurostat inflation rates. (https://github.com/PyPSA/technology-data/pull/263)

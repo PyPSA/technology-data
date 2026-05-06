@@ -17,6 +17,8 @@ Upcoming Release
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
 
+* Add missing discount rate for OCGT in US-specific data. (https://github.com/PyPSA/technology-data/pull/269)
+
 `v0.14.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.14.0>`__ (13th February 2026)
 ================================================================================================
 * Changed currency year from 2020 to 2025 for all cost assumptions using updated Eurostat inflation rates. (https://github.com/PyPSA/technology-data/pull/263)

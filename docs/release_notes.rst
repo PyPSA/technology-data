@@ -16,7 +16,7 @@ Upcoming Release
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
 
-* Update technology data for carbon dioxide compression step to dense phase for transport in large pipelines. (https://github.com/PyPSA/technology-data/pull/273)
+* Update technology data for `CO2 liquefaction`, i.e. the dense-phase carbon dioxide compression/liquefaction step for transport in large pipelines. (https://github.com/PyPSA/technology-data/pull/273)
 
 * Add missing discount rate for OCGT in US-specific data. (https://github.com/PyPSA/technology-data/pull/269)
 

@@ -943,6 +943,9 @@ direct firing solid fuels CC,VOM,0.415,EUR/MWh,"Danish Energy Agency, inputs/tec
 direct firing solid fuels CC,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx","312.b Direct firing Sold Fuels:  Total efficiency, net, annual average",2019.0
 direct firing solid fuels CC,investment,278.5499,EUR/kW,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx",312.b Direct firing Sold Fuels:  Nominal investment,2019.0
 direct firing solid fuels CC,lifetime,15.0,years,"Danish Energy Agency, inputs/technology_data_for_industrial_process_heat.xlsx",312.b Direct firing Sold Fuels:  Technical lifetime,2019.0
+distribution grid reinforcement,FOM,2.0,%/year,same as 'electricity distribution grid',,2020.0
+distribution grid reinforcement,investment,188.6002,EUR/kW,DEA - Technology Data Catalogue for el and DH - v17 - Page 15 - Paragraph 'Cost of grid expansion',"The costs of grid expansion from adding a new electricity generator or a new large consumer -  related to strengthening or expansion of the local grid and/or substations (voltage transformation, pumping or compression/expansion)",2020.0
+distribution grid reinforcement,lifetime,40.0,years,same as 'electricity distribution grid',,2020.0
 dry bulk carrier Capesize,FOM,4.0,%/year,"Based on https://www.hellenicshippingnews.com/capesize-freight-returns-below-operating-expense-levels-but-shipowners-reject-lay-ups/, accessed: 2022-12-03.","5000 USD/d OPEX, exchange rate: 1.15 USD = 1 EUR; absolute value calculate relative to investment cost.",2020.0
 dry bulk carrier Capesize,capacity,180000.0,t,-,"DWT; corresponds to size of Capesize bulk carriers which have previously docked at the habour in Hamburg, Germany. Short of 200 kt limit for VLBCs.",2020.0
 dry bulk carrier Capesize,investment,50293384.0456,EUR,"Based on https://www.hellenicshippingnews.com/dry-bulk-carriers-in-high-demand-as-rates-keep-rallying/, accessed: 2022-12-03.","See figure for ‘Dry Bulk Newbuild Prices’, Capesize at end of 2020. Exchange rate: 1.15 USD = 1 EUR.",2020.0
@@ -975,9 +978,6 @@ electric steam cracker,naphtha-input,14.8,MWh_naphtha/t_HVC,"Lechtenböhmer et a
 electricity distribution grid,FOM,2.0,%/year,TODO, from old pypsa cost assumptions,2015.0
 electricity distribution grid,investment,667.9016,EUR/kW,TODO, from old pypsa cost assumptions,2015.0
 electricity distribution grid,lifetime,40.0,years,TODO, from old pypsa cost assumptions,2015.0
-electricity grid connection,FOM,2.0,%/year,TODO, from old pypsa cost assumptions,2015.0
-electricity grid connection,investment,187.0124,EUR/kW,DEA, from old pypsa cost assumptions,2015.0
-electricity grid connection,lifetime,40.0,years,TODO, from old pypsa cost assumptions,2015.0
 electrobiofuels,C in fuel,0.9257,per unit,Stoichiometric calculation,,
 electrobiofuels,FOM,2.5263,%/year,combination of BtL and electrofuels,,2015.0
 electrobiofuels,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,

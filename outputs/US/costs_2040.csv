@@ -137,7 +137,7 @@ CH4 liquefaction,methane-input,1.0,MWh_CH4/MWh_CH4,"Pospíšil et al. (2019): En
 CO2 dense phase compression,FOM,5.0,%/year,Table 4-11 AIT Study https://www.ait.ac.at/fileadmin/user_upload/CO2Netz_Bericht_241007.pdf,,2024.0,,
 CO2 dense phase compression,carbondioxide-input,1.0,t_CO2/t_CO2,,,,,
 CO2 dense phase compression,electricity-input,0.1051,MWh_el/t_CO2,Table 4-10 AIT Study https://www.ait.ac.at/fileadmin/user_upload/CO2Netz_Bericht_241007.pdf,,,,
-CO2 dense phase compression,investment,34120.2,EUR/t_CO2/h,Table 4-5 + 4-6 operation point 15 AIT Study https://www.ait.ac.at/fileadmin/user_upload/CO2Netz_Bericht_241007.pdf,,2024.0,,
+CO2 dense phase compression,investment,34120.2,EUR/t_CO2/h,Table 4-5 + 4-6 operation point 15 AIT Study https://www.ait.ac.at/fileadmin/user_upload/CO2Netz_Bericht_241007.pdf," ""Conversion: 19 Mio. EUR / (5 Mt/yr) = 19*1e6 EUR / (5*1e6 t * (1/8760) h) = 33 288 EUR/t/h""",2024.0,,
 CO2 dense phase compression,lifetime,25.0,years,"Guesstimate, based on CH4 liquefaction.",,2024.0,,
 CO2 liquefaction,FOM,5.0,%/year,Mitsubish Heavy Industries Ltd. and IEA (2004): https://ieaghg.org/docs/General_Docs/Reports/PH4-30%20Ship%20Transport.pdf .,,2004.0,,
 CO2 liquefaction,carbondioxide-input,1.0,t_CO2/t_CO2,Mitsubish Heavy Industries Ltd. and IEA (2004): https://ieaghg.org/docs/General_Docs/Reports/PH4-30%20Ship%20Transport.pdf .,"Assuming a pure, humid, low-pressure input stream. Neglecting possible gross-effects of CO2 which might be cycled for the cooling process.",,,

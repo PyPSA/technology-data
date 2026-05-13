@@ -1,7 +1,7 @@
 
 ..
   SPDX-FileCopyrightText: Contributors to technology-data <https://github.com/pypsa/technology-data>
-
+iiasdfI
   SPDX-License-Identifier: GPL-3.0-only
 
 ##########################################
@@ -19,7 +19,9 @@ Upcoming Release
 * Breaking changes: 
   - Renamed "electricity grid connection" to "distribution grid reinforcement" and updated description for more clarity on the technology and consistency with the source.
 
-* Add missing discount rate for OCGT in US-specific data. (https://github.com/PyPSA/technology-data/pull/269)
+ii* Add missing discount rate for OCGT in US-specific data. (https://github.com/PyPSA/technology-data/pull/269)
+
+* The "currency_year" column will now reflect the inflation adjusted currency year instead of the original currency year of the input data. (https://github.com/PyPSA/technology-data/pull/275)
 
 `v0.14.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.14.0>`__ (13th February 2026)
 ================================================================================================

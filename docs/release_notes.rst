@@ -17,7 +17,12 @@ Upcoming Release
 ..   To use the features already you have to use the ``master`` branch.
 
 * Add `Post-combustion carbon capture retrofit - 500 MW(th) biomass-fired boiler` as `biomass boiler capture` (https://github.com/PyPSA/technology-data/pull/253).
+
 * Added Variable O&M for carbon capture retrofits: "biomass CHP capture" and "cement capture" (https://github.com/PyPSA/technology-data/pull/253).
+
+* Breaking changes: 
+  - Renamed "electricity grid connection" to "distribution grid reinforcement" and updated description for more clarity on the technology and consistency with the source.
+
 * Add missing discount rate for OCGT in US-specific data. (https://github.com/PyPSA/technology-data/pull/269)
 
 `v0.14.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.14.0>`__ (13th February 2026)

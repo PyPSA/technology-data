@@ -17,6 +17,8 @@ Upcoming Release
 ..   To use the features already you have to use the ``master`` branch.
 
 * Add technology data for `CO2 dense phase compression` step for transport in large pipelines (https://github.com/PyPSA/technology-data/pull/273) which is different from the current `CO2 liquefaction` technology parameters that is take for ship transport.
+* Breaking changes: 
+  - Renamed "electricity grid connection" to "distribution grid reinforcement" and updated description for more clarity on the technology and consistency with the source.
 
 * Add missing discount rate for OCGT in US-specific data. (https://github.com/PyPSA/technology-data/pull/269)
 

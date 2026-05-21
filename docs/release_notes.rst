@@ -19,7 +19,7 @@ Upcoming Release
 * Breaking changes: 
   - Renamed "electricity grid connection" to "distribution grid reinforcement" and updated description for more clarity on the technology and consistency with the source.
 
-ii* Add missing discount rate for OCGT in US-specific data. (https://github.com/PyPSA/technology-data/pull/269)
+* Add missing discount rate for OCGT in US-specific data. (https://github.com/PyPSA/technology-data/pull/269)
 
 * The "currency_year" column will now reflect the inflation adjusted currency year instead of the original currency year of the input data. (https://github.com/PyPSA/technology-data/pull/275)
 

@@ -17,7 +17,7 @@ Upcoming Release
 
 * Add `Post-combustion carbon capture retrofit - 500 MW(th) biomass-fired boiler` as `biomass boiler capture` (https://github.com/PyPSA/technology-data/pull/253).
 
-* Added Variable O&M for carbon capture retrofits: "biomass CHP capture" and "cement capture" (https://github.com/PyPSA/technology-data/pull/253).
+* Added VOM for carbon capture retrofits: "biomass CHP capture" and "cement capture" (https://github.com/PyPSA/technology-data/pull/253).
 
 * Add technology data for `CO2 dense phase compression` step for transport in large pipelines (https://github.com/PyPSA/technology-data/pull/273) which is different from the current `CO2 liquefaction` technology parameters that is take for ship transport.
 

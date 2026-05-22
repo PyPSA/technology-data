@@ -2685,11 +2685,11 @@ def add_carbon_capture(
         new_technology_dataframe.loc[(tech_name, "capture_rate"), years] = value / 100
         new_technology_dataframe.loc[(tech_name, "capture_rate"), "unit"] = "per unit"
 
-        # for direct air capture, O&M is not split in fixed and variable, hence excluded
-        new_technology_dataframe.loc[(tech_name, "Variable O&M"), years] = (
+        # for direct air capture, VOM is not split in fixed and variable, hence excluded
+        new_technology_dataframe.loc[(tech_name, "VOM"), years] = (
             technology_dataframe.loc[(tech_name, "Variable O&M"), years].values[0]
         )
-        new_technology_dataframe.loc[(tech_name, "Variable O&M"), "unit"] = "EUR/tCO2"
+        new_technology_dataframe.loc[(tech_name, "VOM"), "unit"] = "EUR/tCO2"
 
     for tech_name in [
         "direct air capture",

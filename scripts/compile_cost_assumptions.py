@@ -252,7 +252,6 @@ cost_year_2020 = [
     "biogas plus hydrogen",
     "methanolisation",
     "Fischer-Tropsch",
-    "biochar pyrolysis",
     "biomethanation",
     "electrolysis small",
     "central water pit storage",
@@ -2763,6 +2762,18 @@ def add_description(
             " grid connection costs subtracted from investment costs"
         )
 
+    # add comment for biochar pyrolysis biomass input and investment
+    biochar_sequestration_comment = (
+        " Only 70% of carbon in biochar is assumed to be sequestered"
+        " when spread on soil"
+    )
+    technology_dataframe.loc[
+        ("biochar pyrolysis", "biomass-input"), "further description"
+    ] += biochar_sequestration_comment
+    technology_dataframe.loc[
+        ("biochar pyrolysis", "investment"), "further description"
+    ] += biochar_sequestration_comment
+
     return technology_dataframe
 
 
@@ -4289,6 +4300,11 @@ if __name__ == "__main__":
         else:
             data.at[x, "currency_year"] = 2015
 
+    # biochar pyrolysis investment/FOM/VOM were updated with new DEA figures
+    # already given in 2025 EUR, not the DEA-catalogue-wide 2020 EUR
+    # convention assumed by cost_year_2020 above
+    data.at["biochar pyrolysis", "currency_year"] = 2025
+
     # add heavy-duty assumptions, cost year is 2022
     data = get_dea_vehicle_data(snakemake.input.dea_vehicles, years_list, data)
 
@@ -4440,7 +4456,12 @@ if __name__ == "__main__":
         costs_tot.drop("fixed", level=1, inplace=True)
 
         # adjust for inflation
-        techs = costs_tot.index.get_level_values(0).unique()
+        # biochar pyrolysis investment/FOM/VOM are already given in eur_year
+        # EUR (not the DEA-catalogue-wide 2020 EUR assumed via cost_year_2020),
+        # so it is exempted from inflation adjustment entirely
+        techs = costs_tot.index.get_level_values(0).unique().drop(
+            "biochar pyrolysis", errors="ignore"
+        )
         costs_tot["currency_year"] = costs_tot.currency_year.astype(float)
         costs_tot = adjust_for_inflation(
             inflation_rate, costs_tot, techs, snakemake.config["eur_year"], "value"

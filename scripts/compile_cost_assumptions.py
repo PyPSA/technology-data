@@ -4459,8 +4459,10 @@ if __name__ == "__main__":
         # biochar pyrolysis investment/FOM/VOM are already given in eur_year
         # EUR (not the DEA-catalogue-wide 2020 EUR assumed via cost_year_2020),
         # so it is exempted from inflation adjustment entirely
-        techs = costs_tot.index.get_level_values(0).unique().drop(
-            "biochar pyrolysis", errors="ignore"
+        techs = (
+            costs_tot.index.get_level_values(0)
+            .unique()
+            .drop("biochar pyrolysis", errors="ignore")
         )
         costs_tot["currency_year"] = costs_tot.currency_year.astype(float)
         costs_tot = adjust_for_inflation(

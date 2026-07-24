@@ -148,6 +148,7 @@ def test_get_sheet_location():
         "electrolysis": "inputs/data_sheets_for_renewable_fuels.xlsx",
         "direct air capture": "inputs/technology_data_for_carbon_capture_transport_storage.xlsx",
         "biomass CHP capture": "inputs/technology_data_for_carbon_capture_transport_storage.xlsx",
+        "biomass boiler capture": "inputs/technology_data_for_carbon_capture_transport_storage.xlsx",
         "cement capture": "inputs/technology_data_for_carbon_capture_transport_storage.xlsx",
         "BioSNG": "inputs/data_sheets_for_renewable_fuels.xlsx",
         "BtL": "inputs/data_sheets_for_renewable_fuels.xlsx",
@@ -237,6 +238,7 @@ def test_get_data_from_dea(config):
         "electrolysis": (7, 9),
         "direct air capture": (8, 9),
         "biomass CHP capture": (10, 9),
+        "biomass boiler capture": (10, 9),
         "cement capture": (10, 9),
         "BioSNG": (6, 9),
         "BtL": (6, 9),
@@ -568,9 +570,10 @@ def test_add_carbon_capture(config):
     """
     list_of_years = ["2020"]
     technology_series = pd.Series(
-        ["cement capture"] * 9
-        + ["biomass CHP capture"] * 9
-        + ["direct air capture"] * 9,
+        ["cement capture"] * 10
+        + ["biomass CHP capture"] * 10
+        + ["direct air capture"] * 10
+        + ["biomass boiler capture"] * 10,
     )
     input_parameter_series = pd.Series(
         [
@@ -583,16 +586,35 @@ def test_add_carbon_capture(config):
             "CO₂ compression and dehydration - Electricity input",
             "CO₂ compression and dehydration - Heat out",
             "lifetime",
+            "Variable O&M",
         ]
-        * 3,
+        * 3
+        + [
+            "A3) CO2 capture rate, net",
+            "Specific investment",
+            "Fixed O&M",
+            "C2) Eletricity input ",
+            "C1) Heat  input ",
+            "C1) Heat out ",
+            "CO₂ compression and dehydration - Electricity input",
+            "CO₂ compression and dehydration - Heat out",
+            "lifetime",
+            "Variable O&M",
+        ],
     )
     technology_dataframe = pd.DataFrame(
         {
-            "2020": [50, 100, 10, 40, 90, 9, 30, 80, 10] * 3,
-            "source": ["source"] * 27,
+            "2020": [50, 100, 10, 40, 90, 9, 30, 80, 10, 5] * 4,
+            "source": ["source"] * 40,
         }
     ).set_index([technology_series, input_parameter_series])
 
+    out_technology_series = pd.Series(
+        ["cement capture"] * 10
+        + ["biomass CHP capture"] * 10
+        + ["direct air capture"] * 10
+        + ["biomass boiler capture"] * 10,
+    )
     output_parameter_series = pd.Series(
         [
             "capture_rate",
@@ -604,15 +626,16 @@ def test_add_carbon_capture(config):
             "compression-electricity-input",
             "compression-heat-output",
             "lifetime",
+            "VOM",
         ]
-        * 3,
+        * 4,
     )
     new_technology_dataframe = pd.DataFrame(
         {
-            "2020": [np.nan] * 27,
-            "source": ["source"] * 27,
+            "2020": [np.nan] * 40,
+            "source": ["source"] * 40,
         }
-    ).set_index([technology_series, output_parameter_series])
+    ).set_index([out_technology_series, output_parameter_series])
 
     output_df = add_carbon_capture(
         list_of_years, dea_sheet_names, new_technology_dataframe, technology_dataframe

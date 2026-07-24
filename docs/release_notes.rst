@@ -15,22 +15,31 @@ Upcoming Release
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
 
-* Add `Post-combustion carbon capture retrofit - 500 MW(th) biomass-fired boiler` as `biomass boiler capture` (https://github.com/PyPSA/technology-data/pull/253).
+* Adding `Enhanced Weathering` (or Rocks) as CDR technology. (https://github.com/PyPSA/technology-data/pull/256)
 
-* Added VOM for carbon capture retrofits: "biomass CHP capture" and "cement capture" (https://github.com/PyPSA/technology-data/pull/253).
+`v0.15.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.15.0>`__ (9th June 2026)
+================================================================================================
 
-* Add technology data for `CO2 dense phase compression` step for transport in large pipelines (https://github.com/PyPSA/technology-data/pull/273) which is different from the current `CO2 liquefaction` technology parameters that is take for ship transport.
+**Breaking changes**
 
-* Breaking changes: 
-  - Renamed "electricity grid connection" to "distribution grid reinforcement" and updated description for more clarity on the technology and consistency with the source.
+* Renamed ``electricity grid connection`` to ``distribution grid reinforcement`` and updated description for more clarity on the technology and consistency with the source.
 
-* Add missing discount rate for OCGT in US-specific data. (https://github.com/PyPSA/technology-data/pull/269)
+**Changes**
 
-* The "currency_year" column will now reflect the inflation adjusted currency year instead of the original currency year of the input data. (https://github.com/PyPSA/technology-data/pull/275)
+* Added "Post-combustion carbon capture retrofit - 500 MW(th) biomass-fired boiler" as ``biomass boiler capture`` (https://github.com/PyPSA/technology-data/pull/253).
+
+* Added VOM for carbon capture retrofits: ``biomass CHP capture`` and ``cement capture`` (https://github.com/PyPSA/technology-data/pull/253).
+
+* Added technology data for ``CO2 dense phase compression`` step for transport in large pipelines which is different from the current ``CO2 liquefaction`` technology parameters that is taken for ship transport  (https://github.com/PyPSA/technology-data/pull/273).
+
+* Added missing discount rate for OCGT in US-specific data. (https://github.com/PyPSA/technology-data/pull/269)
+
+* The ``currency_year`` column will now reflect the inflation adjusted currency year instead of the original currency year of the input data. (https://github.com/PyPSA/technology-data/pull/275)
 
 * Add cost assumptions for water network infrastructure: water pipeline HDPE and water pipeline booster pump (https://github.com/PyPSA/technology-data/pull/277)
 
 `v0.14.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.14.0>`__ (13th February 2026)
+================================================================================================
 
 * Changed currency year from 2020 to 2025 for all cost assumptions using updated Eurostat inflation rates. (https://github.com/PyPSA/technology-data/pull/263)
 

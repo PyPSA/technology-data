@@ -17,6 +17,8 @@ Upcoming Release
 
 * Adding `Enhanced Weathering` (or Rocks) as CDR technology. (https://github.com/PyPSA/technology-data/pull/256)
 
+* Add cost assumptions for water network infrastructure: water pipeline HDPE and water pipeline booster pump (https://github.com/PyPSA/technology-data/pull/277)
+
 `v0.15.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.15.0>`__ (9th June 2026)
 ================================================================================================
 
@@ -35,8 +37,6 @@ Upcoming Release
 * Added missing discount rate for OCGT in US-specific data. (https://github.com/PyPSA/technology-data/pull/269)
 
 * The ``currency_year`` column will now reflect the inflation adjusted currency year instead of the original currency year of the input data. (https://github.com/PyPSA/technology-data/pull/275)
-
-* Add cost assumptions for water network infrastructure: water pipeline HDPE and water pipeline booster pump (https://github.com/PyPSA/technology-data/pull/277)
 
 `v0.14.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.14.0>`__ (13th February 2026)
 ================================================================================================

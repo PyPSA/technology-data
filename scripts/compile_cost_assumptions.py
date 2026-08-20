@@ -2741,7 +2741,7 @@ def add_carbon_capture(
     return new_technology_dataframe
 
 
-def add_perennials_gbr(
+def add_perennials_refining(
     years: list,
     sheet_names_dict: dict,
     new_technology_dataframe: pd.DataFrame,
@@ -2768,10 +2768,10 @@ def add_perennials_gbr(
     Returns
     -------
     pandas.DataFrame
-        Updated technology data with "perennials gbr".
+        Updated technology data with "perennials refining".
     """
 
-    tech_name = "perennials gbr"
+    tech_name = "perennials refining"
 
     # References (store also in "source" below)
     source_r1 = "https://doi.org/10.1016/B978-0-323-95879-0.50147-8"
@@ -4253,7 +4253,7 @@ if __name__ == "__main__":
     # add carbon capture
     data = add_carbon_capture(years_list, dea_sheet_names, data, tech_data)
     # add perennials and green biorefining
-    data = add_perennials_gbr(years_list, dea_sheet_names, data, data)
+    data = add_perennials_refining(years_list, dea_sheet_names, data, data)
 
     # adjust for inflation
     for x in data.index.get_level_values("technology"):

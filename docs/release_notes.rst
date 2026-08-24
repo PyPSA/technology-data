@@ -14,6 +14,7 @@ Upcoming Release
   
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
+* Added the specific process emissions for clinker production that are unavoidable.
 
 * Adding `Enhanced Weathering` (or Rocks) as CDR technology. (https://github.com/PyPSA/technology-data/pull/256)
 

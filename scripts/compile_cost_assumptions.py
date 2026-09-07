@@ -3735,14 +3735,24 @@ def add_energy_storage_database(
     )
     df = df.drop(columns=["ref_size_MW", "EP_ratio_h"])
     df = df.fillna(df.dtypes.replace({"float64": 0.0, "O": "NULL"}))
+
     df.loc[:, "unit"] = df.unit.str.replace("NULL", "per unit")
 
+    df.loc[
+        (df["parameter"] == "efficiency")
+        & (df["unit"].isna()),
+        "unit",
+    ] = "per unit"
+    
     # b) Change data to PyPSA format (aggregation of components, units, currency, etc.)
     df = clean_up_units(df, "value")  # base clean up
-
+    
     # rewrite technology to be charger, store, discharger, bidirectional-charger
     df.loc[:, "carrier"] = df.carrier.str.replace("NULL", "")
+    df = df[df["carrier"].notna()]    
+
     df.loc[:, "carrier"] = df["carrier"].apply(lambda x: x.split("-"))
+
     carrier_list_len = df["carrier"].apply(lambda x: len(x))
     carrier_str_len = df["carrier"].apply(lambda x: len(x[0]))
     carrier_first_item = df["carrier"].apply(lambda x: x[0])
@@ -3867,7 +3877,7 @@ def add_energy_storage_database(
                     or tech_name == "Pumped-Heat-store"
                 ):
                     x1 = pd.concat(
-                        [x, pd.DataFrame(other_segments_points)], ignore_index=True
+                        [x.reset_index(drop=True), pd.Series(other_segments_points)], ignore_index=True
                     )
                     y1 = y
                     factor = 5
@@ -3880,7 +3890,7 @@ def add_energy_storage_database(
                             number_of_terms=i + 1,
                         )
                         y1 = pd.concat(
-                            [y1, pd.DataFrame([cost_at_year])], ignore_index=True
+                            [y1, pd.Series([cost_at_year])], ignore_index=True
                         )
                     f = interpolate.interp1d(
                         x1.squeeze(),
@@ -3890,7 +3900,7 @@ def add_energy_storage_database(
                     )
                 elif tech_name == "Hydrogen-charger":
                     x2 = pd.concat(
-                        [x, pd.DataFrame(other_segments_points)], ignore_index=True
+                        [x.reset_index(drop=True), pd.Series(other_segments_points)], ignore_index=True
                     )
                     y2 = y
                     factor = 6.5
@@ -3901,7 +3911,7 @@ def add_energy_storage_database(
                             number_of_terms=i + 1,
                         )
                         y2 = pd.concat(
-                            [y2, pd.DataFrame([cost_at_year])], ignore_index=True
+                            [y2, pd.Series([cost_at_year])], ignore_index=True
                         )
                     f = interpolate.interp1d(
                         x2.squeeze(),
@@ -3911,7 +3921,7 @@ def add_energy_storage_database(
                     )
                 else:
                     x3 = pd.concat(
-                        [x, pd.DataFrame(other_segments_points)], ignore_index=True
+                        [x.reset_index(drop=True), pd.Series(other_segments_points)], ignore_index=True
                     )
                     y3 = y
                     factor = 2
@@ -3922,7 +3932,7 @@ def add_energy_storage_database(
                             number_of_terms=i + 1,
                         )
                         y3 = pd.concat(
-                            [y3, pd.DataFrame([cost_at_year])], ignore_index=True
+                            [y3, pd.Series([cost_at_year])], ignore_index=True
                         )
                     f = interpolate.interp1d(
                         x3.squeeze(),
@@ -3968,14 +3978,19 @@ def add_energy_storage_database(
                 df = pd.concat([df, df_new], ignore_index=True)
 
     # d) Combine metadata and add to cost database
+    df["source"] = df["source"].fillna("").astype(str)
+    df["reference"] = df["reference"].fillna("").astype(str)
     df.loc[:, "source"] = df["source"] + ", " + df["reference"]
+
+   
+
     for i in df.index:
         df.loc[i, "further description"] = str(
             {
                 "carrier": df.loc[i, "carrier"],
                 "technology_type": [df.loc[i, "technology_type"]],
                 "type": [df.loc[i, "type"]],
-                "note": [df.loc[i, "note"]],
+                "note": [str(df.loc[i, "note"])],
             }
         )
     # keep only relevant columns

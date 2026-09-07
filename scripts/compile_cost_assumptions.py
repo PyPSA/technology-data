@@ -3735,6 +3735,12 @@ def add_energy_storage_database(
     )
     df = df.drop(columns=["ref_size_MW", "EP_ratio_h"])
     df = df.fillna(df.dtypes.replace({"float64": 0.0, "O": "NULL"}))
+    #df["carrier"] = df["carrier"].fillna("")
+    # df["unit"] = df["unit"].fillna("")
+    #df["source"] = df["source"].fillna("")
+    #df["reference"] = df["reference"].fillna("")
+    #df["note"] = df["note"].fillna("")
+    #df["value"] = df["value"].fillna(0.0)
 
     df.loc[:, "unit"] = df.unit.str.replace("NULL", "per unit")
 
@@ -3749,14 +3755,29 @@ def add_energy_storage_database(
     
     # rewrite technology to be charger, store, discharger, bidirectional-charger
     df.loc[:, "carrier"] = df.carrier.str.replace("NULL", "")
-    df = df[df["carrier"].notna()]    
 
-    df.loc[:, "carrier"] = df["carrier"].apply(lambda x: x.split("-"))
+    df["carrier"] = (
+        df["carrier"]
+        .fillna("")
+        .astype(str)
+        .str.strip()
+        .apply(lambda x: x.split("-") if x else [])
+    )
 
-    carrier_list_len = df["carrier"].apply(lambda x: len(x))
-    carrier_str_len = df["carrier"].apply(lambda x: len(x[0]))
-    carrier_first_item = df["carrier"].apply(lambda x: x[0])
-    carrier_last_item = df["carrier"].apply(lambda x: x[-1])
+    carrier_list_len = df["carrier"].apply(len)
+
+    carrier_str_len = df["carrier"].apply(
+        lambda x: len(x[0]) if len(x) > 0 else 0
+    )
+
+    carrier_first_item = df["carrier"].apply(
+        lambda x: x[0] if len(x) > 0 else ""
+    )
+
+    carrier_last_item = df["carrier"].apply(
+        lambda x: x[-1] if len(x) > 0 else ""
+    )
+
     bicharger_filter = carrier_list_len == 3
     charger_filter = (carrier_list_len == 2) & (carrier_first_item == "elec")
     discharger_filter = (carrier_list_len == 2) & (carrier_last_item == "elec")
@@ -3981,8 +4002,6 @@ def add_energy_storage_database(
     df["source"] = df["source"].fillna("").astype(str)
     df["reference"] = df["reference"].fillna("").astype(str)
     df.loc[:, "source"] = df["source"] + ", " + df["reference"]
-
-   
 
     for i in df.index:
         df.loc[i, "further description"] = str(

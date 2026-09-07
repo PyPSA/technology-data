@@ -3735,12 +3735,6 @@ def add_energy_storage_database(
     )
     df = df.drop(columns=["ref_size_MW", "EP_ratio_h"])
     df = df.fillna(df.dtypes.replace({"float64": 0.0, "O": "NULL"}))
-    #df["carrier"] = df["carrier"].fillna("")
-    # df["unit"] = df["unit"].fillna("")
-    #df["source"] = df["source"].fillna("")
-    #df["reference"] = df["reference"].fillna("")
-    #df["note"] = df["note"].fillna("")
-    #df["value"] = df["value"].fillna(0.0)
 
     df.loc[:, "unit"] = df.unit.str.replace("NULL", "per unit")
 

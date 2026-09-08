@@ -3266,6 +3266,7 @@ def energy_penalty(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
         "direct firing solid fuels CC",
         "direct firing gas CC",
         "biogas CC",
+        "central gas CHP CC"
     ]:
         if "powerboost" in tech_name:
             boiler = "electric boiler steam"
@@ -3283,6 +3284,30 @@ def energy_penalty(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
             feedstock = "solid biomass"
             co2_capture = cost_dataframe.loc[(feedstock, "CO2 intensity"), "value"]
 
+        if "gas CHP" in tech_name:
+            base_tech = "central gas CHP"
+            cost_dataframe.loc[(base_tech, "efficiency-heat"), "value"] = (
+                cost_dataframe.loc[(base_tech, "efficiency"), "value"] /
+                cost_dataframe.loc[(base_tech, "c_b"), "value"]
+                )
+            cost_dataframe.loc[(base_tech, "efficiency-heat"), "source"] = (
+                "Calculated based on electric efficiency and back pressure ratio"
+                )
+            cost_dataframe.loc[(base_tech, "efficiency-heat"), "unit"] = (
+                "per unit"
+                )
+            
+            cost_dataframe.loc[(tech_name, "efficiency-heat"), "value"] = (
+                cost_dataframe.loc[(tech_name, "efficiency"), "value"] /
+                cost_dataframe.loc[(tech_name, "c_b"), "value"]
+                )
+            cost_dataframe.loc[(base_tech, "efficiency-heat"), "source"] = (
+                "Calculated based on electric efficiency and back pressure ratio"
+                )
+            cost_dataframe.loc[(tech_name, "efficiency-heat"), "unit"] = (
+                "per unit"
+                )
+        
         # Scaling biomass input to account for heat demand of carbon capture
         scalingFactor = 1 / (
             1

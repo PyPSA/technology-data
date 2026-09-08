@@ -3276,6 +3276,7 @@ def energy_penalty(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
         elif "biogas" in tech_name:
             boiler = "gas boiler steam"
             co2_capture = cost_dataframe.loc[(tech_name, "CO2 stored"), "value"]
+            cost_dataframe.loc[(tech_name, "VOM"), "unit"] = "EUR/MWh"
         elif "gas" in tech_name:
             boiler = "gas boiler steam"
             feedstock = "gas"
@@ -3368,19 +3369,6 @@ def energy_penalty(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
             cost_dataframe.loc[
                 (tech_name, "efficiency-heat"), "further description"
             ] = ""
-
-        if "biogas CC" in tech_name:
-            cost_dataframe.loc[(tech_name, "VOM"), "value"] = 0
-            cost_dataframe.loc[(tech_name, "VOM"), "unit"] = "EUR/MWh"
-
-        cost_dataframe.loc[(tech_name, "VOM"), "value"] = (
-            cost_dataframe.loc[(tech_name, "VOM"), "value"] * eta_old / eta_main
-            + cost_dataframe.loc[(boiler, "VOM"), "value"] * eta_steam / eta_main
-        )
-        cost_dataframe.loc[(tech_name, "VOM"), "source"] = (
-            "Combination of " + tech_name + " and " + boiler
-        )
-        cost_dataframe.loc[(tech_name, "VOM"), "further description"] = ""
 
     return cost_dataframe
 

@@ -3301,7 +3301,7 @@ def energy_penalty(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
                 cost_dataframe.loc[(tech_name, "efficiency"), "value"]
                 / cost_dataframe.loc[(tech_name, "c_b"), "value"]
             )
-            cost_dataframe.loc[(base_tech, "efficiency-heat"), "source"] = (
+            cost_dataframe.loc[(tech_name, "efficiency-heat"), "source"] = (
                 "Calculated based on electric efficiency and back pressure ratio"
             )
             cost_dataframe.loc[(tech_name, "efficiency-heat"), "unit"] = "per unit"
@@ -3318,19 +3318,16 @@ def energy_penalty(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
             (boiler, "efficiency"), "value"
         ]
         eta_old = cost_dataframe.loc[(tech_name, "efficiency"), "value"]
+        eta_main = eta_old * scalingFactor
 
-        eta_main = (
-            cost_dataframe.loc[(tech_name, "efficiency"), "value"] * scalingFactor
-        )
+        source = f"Combination of {tech_name} and {boiler}"
 
         # Adapting investment share of tech due to steam boiler addition. Investment per MW_el.
         cost_dataframe.loc[(tech_name, "investment"), "value"] = (
             cost_dataframe.loc[(tech_name, "investment"), "value"] * eta_old / eta_main
             + cost_dataframe.loc[(boiler, "investment"), "value"] * eta_steam / eta_main
         )
-        cost_dataframe.loc[(tech_name, "investment"), "source"] = (
-            "Combination of " + tech_name + " and " + boiler
-        )
+        cost_dataframe.loc[(tech_name, "investment"), "source"] = source
         cost_dataframe.loc[(tech_name, "investment"), "further description"] = ""
 
         if (tech_name, "VOM") not in cost_dataframe.index:
@@ -3340,15 +3337,11 @@ def energy_penalty(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
             cost_dataframe.loc[(tech_name, "VOM"), "value"] * eta_old / eta_main
             + cost_dataframe.loc[(boiler, "VOM"), "value"] * eta_steam / eta_main
         )
-        cost_dataframe.loc[(tech_name, "VOM"), "source"] = (
-            "Combination of " + tech_name + " and " + boiler
-        )
+        cost_dataframe.loc[(tech_name, "VOM"), "source"] = source
         cost_dataframe.loc[(tech_name, "VOM"), "further description"] = ""
 
         cost_dataframe.loc[(tech_name, "efficiency"), "value"] = eta_main
-        cost_dataframe.loc[(tech_name, "efficiency"), "source"] = (
-            "Combination of " + tech_name + " and " + boiler
-        )
+        cost_dataframe.loc[(tech_name, "efficiency"), "source"] = source
         cost_dataframe.loc[(tech_name, "efficiency"), "further description"] = ""
 
         if "CHP" in tech_name:
@@ -3363,12 +3356,8 @@ def energy_penalty(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
                     ]
                 )
             )
-            cost_dataframe.loc[(tech_name, "efficiency-heat"), "source"] = (
-                "Combination of " + tech_name + " and " + boiler
-            )
-            cost_dataframe.loc[
-                (tech_name, "efficiency-heat"), "further description"
-            ] = ""
+            cost_dataframe.loc[(tech_name, "efficiency-heat"), "source"] = source
+            cost_dataframe.loc[(tech_name, "efficiency-heat"), "further description"] = ""
 
     return cost_dataframe
 

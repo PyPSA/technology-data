@@ -3357,7 +3357,9 @@ def energy_penalty(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
                 )
             )
             cost_dataframe.loc[(tech_name, "efficiency-heat"), "source"] = source
-            cost_dataframe.loc[(tech_name, "efficiency-heat"), "further description"] = ""
+            cost_dataframe.loc[
+                (tech_name, "efficiency-heat"), "further description"
+            ] = ""
 
     return cost_dataframe
 

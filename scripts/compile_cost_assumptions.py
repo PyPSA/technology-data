@@ -3806,14 +3806,20 @@ def add_energy_storage_database(
     df = df.drop(columns=["ref_size_MW", "EP_ratio_h"])
     df = df.fillna(df.dtypes.replace({"float64": 0.0, "O": "NULL"}))
     df.loc[:, "unit"] = df.unit.str.replace("NULL", "per unit")
-    df.loc[(df["parameter"] == "efficiency") & (df["unit"].isna()),"unit"] = "per unit"
+    df.loc[(df["parameter"] == "efficiency") & (df["unit"].isna()), "unit"] = "per unit"
 
     # b) Change data to PyPSA format (aggregation of components, units, currency, etc.)
     df = clean_up_units(df, "value")  # base clean up
 
     # rewrite technology to be charger, store, discharger, bidirectional-charger
     df.loc[:, "carrier"] = df.carrier.str.replace("NULL", "")
-    df["carrier"] = df["carrier"].fillna("").astype(str).str.strip().apply(lambda x: x.split("-") if x else [])
+    df["carrier"] = (
+        df["carrier"]
+        .fillna("")
+        .astype(str)
+        .str.strip()
+        .apply(lambda x: x.split("-") if x else [])
+    )
     carrier_list_len = df["carrier"].apply(len)
     carrier_str_len = df["carrier"].apply(lambda x: len(x[0]) if len(x) > 0 else 0)
     carrier_first_item = df["carrier"].apply(lambda x: x[0] if len(x) > 0 else "")
@@ -3938,7 +3944,8 @@ def add_energy_storage_database(
                     or tech_name == "Pumped-Heat-store"
                 ):
                     x1 = pd.concat(
-                        [x.reset_index(drop=True), pd.Series(other_segments_points)], ignore_index=True
+                        [x.reset_index(drop=True), pd.Series(other_segments_points)],
+                        ignore_index=True,
                     )
                     y1 = y
                     factor = 5
@@ -3961,7 +3968,8 @@ def add_energy_storage_database(
                     )
                 elif tech_name == "Hydrogen-charger":
                     x2 = pd.concat(
-                        [x.reset_index(drop=True), pd.Series(other_segments_points)], ignore_index=True
+                        [x.reset_index(drop=True), pd.Series(other_segments_points)],
+                        ignore_index=True,
                     )
                     y2 = y
                     factor = 6.5
@@ -3982,7 +3990,8 @@ def add_energy_storage_database(
                     )
                 else:
                     x3 = pd.concat(
-                        [x.reset_index(drop=True), pd.Series(other_segments_points)], ignore_index=True
+                        [x.reset_index(drop=True), pd.Series(other_segments_points)],
+                        ignore_index=True,
                     )
                     y3 = y
                     factor = 2

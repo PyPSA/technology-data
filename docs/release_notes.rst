@@ -21,6 +21,8 @@ Upcoming Release
 
 * Fix bug preventing add_energy_storage_database to run through
 
+* Fix bug preventing energy penalty for carbon capture technologies
+
 `v0.15.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.15.0>`__ (9th June 2026)
 ================================================================================================
 

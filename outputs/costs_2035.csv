@@ -845,12 +845,12 @@ central solid biomass CHP CC,efficiency-heat,0.9455,per unit,Combination of cent
 central solid biomass CHP CC,investment,6389.1491,EUR/kW_e,Combination of central solid biomass CHP CC and solid biomass boiler steam,,2025.0
 central solid biomass CHP CC,lifetime,25.0,years,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Technical lifetime",2015.0
 central solid biomass CHP powerboost CC,FOM,2.8627,%/year,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Fixed O&M",2015.0
-central solid biomass CHP powerboost CC,VOM,6.1515,EUR/MWh_e,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Variable O&M ",2025.0
+central solid biomass CHP powerboost CC,VOM,12.0447,EUR/MWh_e,Combination of central solid biomass CHP powerboost CC and electric boiler steam,,2025.0
 central solid biomass CHP powerboost CC,c_b,0.3485,50°C/100°C,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Cb coefficient",2015.0
 central solid biomass CHP powerboost CC,c_v,1.0,50°C/100°C,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Cv coefficient",2015.0
-central solid biomass CHP powerboost CC,efficiency,0.2687,per unit,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Electricity efficiency, net, annual average",2015.0
-central solid biomass CHP powerboost CC,efficiency-heat,0.8257,per unit,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Heat efficiency, net, annual average",2015.0
-central solid biomass CHP powerboost CC,investment,4409.6254,EUR/kW_e,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Nominal investment ",2025.0
+central solid biomass CHP powerboost CC,efficiency,0.214,per unit,Combination of central solid biomass CHP powerboost CC and electric boiler steam,,2015.0
+central solid biomass CHP powerboost CC,efficiency-heat,0.9602,per unit,Combination of central solid biomass CHP powerboost CC and electric boiler steam,,2015.0
+central solid biomass CHP powerboost CC,investment,5624.5645,EUR/kW_e,Combination of central solid biomass CHP powerboost CC and electric boiler steam,,2025.0
 central solid biomass CHP powerboost CC,lifetime,25.0,years,"Danish Energy Agency, inputs/technology_data_for_el_and_dh.xlsx","09a Wood Chips, Large 50 degree:  Technical lifetime",2015.0
 central water pit charger,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Charger efficiency,2020.0
 central water pit discharger,efficiency,1.0,per unit,"Danish Energy Agency, inputs/technology_data_catalogue_for_energy_storage.xlsx",:  Discharger efficiency,2020.0

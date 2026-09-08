@@ -3266,7 +3266,8 @@ def energy_penalty(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
         "direct firing solid fuels CC",
         "direct firing gas CC",
         "biogas CC",
-        "central gas CHP CC"
+        "central gas CHP CC",
+        "central solid biomass CHP powerboost CC"
     ]:
         if "powerboost" in tech_name:
             boiler = "electric boiler steam"

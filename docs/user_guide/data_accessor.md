@@ -47,7 +47,7 @@ Once the `DataAccessor` is instantiated, call the `load()` method to load the da
 
 The directory structure is expected to be: `src/technologydata/parsers/<data_source_name>/<version>/`.
 
-The `load()` method will look for the exact version specified during instantiation. If the version is not provided or not found, it will raise a `ValueError` and inform you of the latest available version.
+The `load()` method will look for the exact version specified during instantiation. If the version is not provided, it will log a warning and use the latest available version. If the version is provided but not found, it will raise a `ValueError` and inform you of the latest available version.
 
 ```python
 # Assuming the path .../parsers/manual_input_usa/v1.0.0/ exists

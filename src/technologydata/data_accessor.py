@@ -162,9 +162,6 @@ class DataAccessor(pydantic.BaseModel):
 
         if self.version and self.version in source_path_list:
             version = self.version
-            logger.info(
-                f"Data source directory corresponding to version {self.version} found."
-            )
         else:
             version = self.get_latest_version_string(list(source_path.iterdir()))
             if self.version is None:

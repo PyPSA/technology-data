@@ -45,6 +45,12 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         default=False,
         help="run the webarchive tests",
     )
+    parser.addoption(
+        "--test-docs",
+        action="store_true",
+        default=False,
+        help="run the documentation doctests",
+    )
 
 
 def pytest_configure(config: pytest.Config) -> None:
@@ -87,6 +93,12 @@ def pytest_collection_modifyitems(config: pytest.Config, items: pytest.Item) -> 
     for item in items:
         if "webarchive" in item.keywords:
             item.add_marker(skip_webarchive)
+
+
+@pytest.fixture(scope="session")  # type: ignore
+def test_docs_flag(pytestconfig: pytest.Config) -> bool:
+    """Check if the `--test-docs` flag was passed on the command line."""
+    return bool(pytestconfig.getoption("--test-docs", default=False))
 
 
 def create_source_from_params(params: dict[str, str]) -> technologydata.Source:

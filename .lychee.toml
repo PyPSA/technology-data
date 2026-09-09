@@ -1,0 +1,27 @@
+# SPDX-FileCopyrightText: technologydata contributors
+#
+# SPDX-License-Identifier: MIT
+
+# lychee link checker config (https://lychee.cli.rs).
+# Checks external links referenced from the documentation and README.
+scheme = ["https", "http"]
+
+# Accept every reachable response except definitive "not found" codes, so only
+# 404 and 410 fail. Publishers routinely answer bots with 400/403/429, which is
+# not link rot.
+accept = ["100..=403", "405..=409", "411..=599"]
+
+# Slow or rate-limiting hosts time out on a different random subset each run.
+# Timeouts are not link rot, so tolerate them; genuine 404/410 and connection
+# failures still fail the check.
+accept_timeouts = true
+
+# Placeholder URL used in code examples throughout the docs, not a real link.
+exclude = [
+  "example.com",
+]
+
+timeout = 30
+max_retries = 5
+max_redirects = 10
+host_concurrency = 4

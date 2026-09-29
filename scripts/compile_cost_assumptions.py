@@ -276,6 +276,7 @@ manual_cost_year_assignments_2020 = [
     "gas storage charger",
     "gas storage discharger",
     "gas storage discharger",
+    "perennials refining",
 ]
 
 cost_year_2019 = [
@@ -2741,6 +2742,126 @@ def add_carbon_capture(
     return new_technology_dataframe
 
 
+def add_perennials_refining(
+    years: list,
+    sheet_names_dict: dict,
+    new_technology_dataframe: pd.DataFrame,
+) -> pd.DataFrame:
+    """
+    Add perennials + green biorefining (GBR) excl. biogas production plant.
+
+    It considers purchase of raw materials (perennials) and sales of other products
+    (protein concentrate and biogas feedstock) in the VOM.
+
+    Parameters
+    ----------
+    years : list
+        Years for which a cost assumption is provided (e.g. [2020, 2025, ...]).
+    sheet_names_dict : dict
+        Dictionary having the technology name as keys and source/sheet references as values.
+        (Used for "further description" to match repository conventions.)
+    new_technology_dataframe : pandas.DataFrame
+        DataFrame to be filled/updated with the new technology data.
+
+    Returns
+    -------
+    pandas.DataFrame
+        Updated technology data with "perennials refining".
+    """
+
+    tech_name = "perennials refining"
+
+    # References (store also in "source" below)
+    source_r1 = "Andrade, Ambye-Jensen: Process Integration and Techno-Economic Assessment of a Green Biorefinery Demonstration Scale Platform for Leaf Protein Production (2022), https://doi.org/10.1016/B978-0-323-95879-0.50147-8"
+
+    # --- Constants ---
+    LHV_ch4 = 50 / 3.6  # MWh/t_CH4
+
+    # --- Mass & energy balance assumptions (R1) ---
+    DM_perennials = 0.18  # dry matter content (t_DM / t_wet)
+    ch4_mass_fraction_in_biogas = (
+        0.348  # mass fraction CH4 in biogas (check definition in R1)
+    )
+    flh_y = 4200  # full-load hours per year (green crops harvest May–Oct)
+
+    perennials_input_flow = 40 * DM_perennials  # t_DM/h
+    perennials_input_annual = perennials_input_flow * flh_y  # t_DM/y
+
+    protein_output_flow = 1.4  # t_DM/h (protein concentrate on DM basis)
+    protein_output_annual = protein_output_flow * flh_y  # t_DM/y
+
+    # (t_biogas/h) * (mass fraction CH4) * (MWh/t_CH4)
+    biogas_output_flow = 0.29 * ch4_mass_fraction_in_biogas * LHV_ch4  # MW_CH4
+
+    # electricity input
+    electricity_input_flow = 7.33 / 100 * perennials_input_flow
+
+    # --- CAPEX ---
+    # Biogas plant is excluded, as PyPSA-Eur charges it in "biogas to gas".
+    # GBR investment from R1 Table 4, divided by input capacity (tDM/h)
+    investment = 9.33e6 / (40 * DM_perennials)
+
+    # --- OPEX / VOM ---
+    protein_price = 535  # EUR/t (R1)
+    perennial_cost = 130  # EUR/tDM (R1)
+
+    # EUR/tDM: cost of perennials - revenue from protein
+    VOM = perennial_cost - protein_price * (
+        protein_output_annual / perennials_input_annual
+    )
+
+    # "labor and maintenance" (EUR/year, R1 Table 4) relative to investment
+    FOM = 0.45e6 / 9.33e6 * 100  # %/year
+
+    # --- Write to dataframe (match repo conventions) ---
+    new_technology_dataframe.loc[(tech_name, "investment"), years] = investment
+    new_technology_dataframe.loc[(tech_name, "investment"), "unit"] = "EUR/(t_DM/h)"
+    new_technology_dataframe.loc[(tech_name, "investment"), "currency_year"] = 2020
+
+    new_technology_dataframe.loc[(tech_name, "lifetime"), years] = 25
+    new_technology_dataframe.loc[(tech_name, "lifetime"), "unit"] = "years"
+
+    new_technology_dataframe.loc[(tech_name, "FOM"), years] = FOM
+    new_technology_dataframe.loc[(tech_name, "FOM"), "unit"] = "%/year"
+    new_technology_dataframe.loc[(tech_name, "FOM"), "currency_year"] = 2020
+
+    new_technology_dataframe.loc[(tech_name, "VOM"), years] = VOM
+    new_technology_dataframe.loc[(tech_name, "VOM"), "unit"] = "EUR/t_DM"
+    new_technology_dataframe.loc[(tech_name, "VOM"), "currency_year"] = 2020
+
+    # Outputs/inputs per tDM
+    new_technology_dataframe.loc[(tech_name, "biogas-output"), years] = (
+        biogas_output_flow / perennials_input_flow
+    )
+    new_technology_dataframe.loc[(tech_name, "biogas-output"), "unit"] = "MWh/t_DM"
+
+    new_technology_dataframe.loc[(tech_name, "electricity-input"), years] = (
+        electricity_input_flow / perennials_input_flow
+    )
+    new_technology_dataframe.loc[(tech_name, "electricity-input"), "unit"] = (
+        "MWh/t_DM"  # verify!
+    )
+
+    # Metadata (apply to whole tech row, like add_carbon_capture)
+    new_technology_dataframe.loc[tech_name, "source"] = source_r1
+    new_technology_dataframe.loc[tech_name, "further description"] = (
+        "DM: dry matter of perennial crops."
+    )
+
+    # Per-variable descriptions (optional but often nice)
+    new_technology_dataframe.loc[(tech_name, "investment"), "further description"] = (
+        "DM: dry matter of perennial crops. The investment includes the green biorefinery plant only, not the biogas plant, Table 4"
+    )
+    new_technology_dataframe.loc[(tech_name, "VOM"), "further description"] = (
+        "DM: dry matter of perennial crops. Includes purchase of perennials and revenue from sales of protein concentrate (Tables 2 -4)"
+    )
+    new_technology_dataframe.loc[(tech_name, "FOM"), "further description"] = (
+        "Labor and maintenance of 0.45 MEUR/year relative to investment of 9.33 MEUR, Table 4"
+    )
+
+    return new_technology_dataframe
+
+
 def rename_pypsa_old(cost_dataframe_pypsa: pd.DataFrame) -> pd.DataFrame:
     """
     The function renames old technology names to new ones to compare converts units from water tanks to compare.
@@ -4111,6 +4232,8 @@ if __name__ == "__main__":
     data = convert_units(years_list, data)
     # add carbon capture
     data = add_carbon_capture(years_list, dea_sheet_names, data, tech_data)
+    # add perennials and green biorefining
+    data = add_perennials_refining(years_list, dea_sheet_names, data)
 
     # adjust for inflation
     for x in data.index.get_level_values("technology"):

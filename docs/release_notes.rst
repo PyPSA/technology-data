@@ -19,6 +19,8 @@ Upcoming Release
 
 * Add cost assumptions for water network infrastructure: water pipeline HDPE and water pipeline booster pump (https://github.com/PyPSA/technology-data/pull/277)
 
+* Adding `perennials refining` for production of perennial crops instead of 1st generation biofuels, followed by Green Bio Refining to proteins and biogas, and mass-based conversion efficiencies for ``ethanol from wheat``, ``ethanol from sugar beet`` and ``biodiesel from rapeseed``. (https://github.com/PyPSA/technology-data/pull/255)
+
 `v0.15.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.15.0>`__ (9th June 2026)
 ================================================================================================
 

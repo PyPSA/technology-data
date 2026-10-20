@@ -5,6 +5,7 @@ Closes # (if applicable).
 
 ## Checklist
 
+- [ ] Data changes should be aligned with the [data review checklist](https://technology-data.readthedocs.io/en/latest/review.html).
 - [ ] Code changes are sufficiently documented; i.e. new functions contain docstrings and further explanations may be given in `doc`.
 - [ ] Data source for new technologies is clearly stated.
 - [ ] Newly introduced dependencies are added to `environment.yaml` (if applicable).

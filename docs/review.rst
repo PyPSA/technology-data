@@ -39,7 +39,7 @@ Work through the list in order:
 #. **Data over model assumptions:** Prefer publications about data and avoid adding data that is just an assumption of another energy system model.
 #. **Trajectories:** Include several years for a technology if the source gives a trajectory, even if only historic. The workflow automatically inter- and extrapolates linearly until 2050.
 #. **US data** in ``inputs/US/manual_input_usa.csv`` gets the same checks, plus its ``financial_case`` and ``scenario`` columns.
-#. **Release note:** One concise sentence under *Upcoming Release* in ``docs/release_notes.rst`` that names the technologies and links the PR. People get details from the PR description and the release notes help them understand whether they are affected by a change or not.
+#. **Release note:** One concise sentence under *Upcoming Release* in ``docs/release_notes.rst`` that names the technologies and links the PR. People get details from the PR description and the release notes help them understand whether they are affected by a change or not. E.g. "Added <list of parameters> for <technology> based on <source> (<Link to PR>).".
 #. **Write the review:** Sort comments into *must fix*, *should fix*, *questions* and *nits*. It is usually easiest to attach comments to specific lines using GitHub's review functionality. Be as concrete as possible and keep the tone short and friendly.
 
 Thank you for contributing! :)

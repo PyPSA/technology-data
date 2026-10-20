@@ -3266,22 +3266,45 @@ def energy_penalty(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
         "direct firing solid fuels CC",
         "direct firing gas CC",
         "biogas CC",
+        "central gas CHP CC",
+        "central solid biomass CHP powerboost CC",
     ]:
         if "powerboost" in tech_name:
             boiler = "electric boiler steam"
             feedstock = "solid biomass"
             co2_capture = cost_dataframe.loc[(feedstock, "CO2 intensity"), "value"]
+        elif "biogas" in tech_name:
+            boiler = "gas boiler steam"
+            co2_capture = cost_dataframe.loc[(tech_name, "CO2 stored"), "value"]
+            cost_dataframe.loc[(tech_name, "VOM"), "unit"] = "EUR/MWh"
         elif "gas" in tech_name:
             boiler = "gas boiler steam"
             feedstock = "gas"
             co2_capture = cost_dataframe.loc[(feedstock, "CO2 intensity"), "value"]
-        elif "biogas" in tech_name:
-            boiler = "gas boiler steam"
-            co2_capture = cost_dataframe.loc[(tech_name, "CO2 stored"), "value"]
         else:
             boiler = "solid biomass boiler steam"
             feedstock = "solid biomass"
             co2_capture = cost_dataframe.loc[(feedstock, "CO2 intensity"), "value"]
+
+        if "gas CHP" in tech_name:
+            base_tech = "central gas CHP"
+            cost_dataframe.loc[(base_tech, "efficiency-heat"), "value"] = (
+                cost_dataframe.loc[(base_tech, "efficiency"), "value"]
+                / cost_dataframe.loc[(base_tech, "c_b"), "value"]
+            )
+            cost_dataframe.loc[(base_tech, "efficiency-heat"), "source"] = (
+                "Calculated based on electric efficiency and back pressure ratio"
+            )
+            cost_dataframe.loc[(base_tech, "efficiency-heat"), "unit"] = "per unit"
+
+            cost_dataframe.loc[(tech_name, "efficiency-heat"), "value"] = (
+                cost_dataframe.loc[(tech_name, "efficiency"), "value"]
+                / cost_dataframe.loc[(tech_name, "c_b"), "value"]
+            )
+            cost_dataframe.loc[(tech_name, "efficiency-heat"), "source"] = (
+                "Calculated based on electric efficiency and back pressure ratio"
+            )
+            cost_dataframe.loc[(tech_name, "efficiency-heat"), "unit"] = "per unit"
 
         # Scaling biomass input to account for heat demand of carbon capture
         scalingFactor = 1 / (
@@ -3295,46 +3318,37 @@ def energy_penalty(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
             (boiler, "efficiency"), "value"
         ]
         eta_old = cost_dataframe.loc[(tech_name, "efficiency"), "value"]
+        eta_main = eta_old * scalingFactor
 
-        eta_main = (
-            cost_dataframe.loc[(tech_name, "efficiency"), "value"] * scalingFactor
-        )
+        source = f"Combination of {tech_name} and {boiler}"
 
         # Adapting investment share of tech due to steam boiler addition. Investment per MW_el.
         cost_dataframe.loc[(tech_name, "investment"), "value"] = (
             cost_dataframe.loc[(tech_name, "investment"), "value"] * eta_old / eta_main
             + cost_dataframe.loc[(boiler, "investment"), "value"] * eta_steam / eta_main
         )
-        cost_dataframe.loc[(tech_name, "investment"), "source"] = (
-            "Combination of " + tech_name + " and " + boiler
-        )
+        cost_dataframe.loc[(tech_name, "investment"), "source"] = source
         cost_dataframe.loc[(tech_name, "investment"), "further description"] = ""
 
-        if cost_dataframe.loc[(tech_name, "VOM"), "value"]:
-            break
-        else:
+        if (tech_name, "VOM") not in cost_dataframe.index:
             cost_dataframe.loc[(tech_name, "VOM"), "value"] = 0.0
 
         cost_dataframe.loc[(tech_name, "VOM"), "value"] = (
             cost_dataframe.loc[(tech_name, "VOM"), "value"] * eta_old / eta_main
             + cost_dataframe.loc[(boiler, "VOM"), "value"] * eta_steam / eta_main
         )
-        cost_dataframe.loc[(tech_name, "VOM"), "source"] = (
-            "Combination of " + tech_name + " and " + boiler
-        )
+        cost_dataframe.loc[(tech_name, "VOM"), "source"] = source
         cost_dataframe.loc[(tech_name, "VOM"), "further description"] = ""
 
         cost_dataframe.loc[(tech_name, "efficiency"), "value"] = eta_main
-        cost_dataframe.loc[(tech_name, "efficiency"), "source"] = (
-            "Combination of " + tech_name + " and " + boiler
-        )
+        cost_dataframe.loc[(tech_name, "efficiency"), "source"] = source
         cost_dataframe.loc[(tech_name, "efficiency"), "further description"] = ""
 
         if "CHP" in tech_name:
             cost_dataframe.loc[(tech_name, "efficiency-heat"), "value"] = (
                 cost_dataframe.loc[(tech_name, "efficiency-heat"), "value"]
                 * scalingFactor
-                + cost_dataframe.loc[("solid biomass", "CO2 intensity"), "value"]
+                + co2_capture
                 * (
                     cost_dataframe.loc[("biomass CHP capture", "heat-output"), "value"]
                     + cost_dataframe.loc[
@@ -3342,25 +3356,10 @@ def energy_penalty(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
                     ]
                 )
             )
-            cost_dataframe.loc[(tech_name, "efficiency-heat"), "source"] = (
-                "Combination of " + tech_name + " and " + boiler
-            )
+            cost_dataframe.loc[(tech_name, "efficiency-heat"), "source"] = source
             cost_dataframe.loc[
                 (tech_name, "efficiency-heat"), "further description"
             ] = ""
-
-        if "biogas CC" in tech_name:
-            cost_dataframe.loc[(tech_name, "VOM"), "value"] = 0
-            cost_dataframe.loc[(tech_name, "VOM"), "unit"] = "EUR/MWh"
-
-        cost_dataframe.loc[(tech_name, "VOM"), "value"] = (
-            cost_dataframe.loc[(tech_name, "VOM"), "value"] * eta_old / eta_main
-            + cost_dataframe.loc[(boiler, "VOM"), "value"] * eta_steam / eta_main
-        )
-        cost_dataframe.loc[(tech_name, "VOM"), "source"] = (
-            "Combination of " + tech_name + " and " + boiler
-        )
-        cost_dataframe.loc[(tech_name, "VOM"), "further description"] = ""
 
     return cost_dataframe
 
@@ -3806,17 +3805,24 @@ def add_energy_storage_database(
     df = df.drop(columns=["ref_size_MW", "EP_ratio_h"])
     df = df.fillna(df.dtypes.replace({"float64": 0.0, "O": "NULL"}))
     df.loc[:, "unit"] = df.unit.str.replace("NULL", "per unit")
+    df.loc[(df["parameter"] == "efficiency") & (df["unit"].isna()), "unit"] = "per unit"
 
     # b) Change data to PyPSA format (aggregation of components, units, currency, etc.)
     df = clean_up_units(df, "value")  # base clean up
 
     # rewrite technology to be charger, store, discharger, bidirectional-charger
     df.loc[:, "carrier"] = df.carrier.str.replace("NULL", "")
-    df.loc[:, "carrier"] = df["carrier"].apply(lambda x: x.split("-"))
-    carrier_list_len = df["carrier"].apply(lambda x: len(x))
-    carrier_str_len = df["carrier"].apply(lambda x: len(x[0]))
-    carrier_first_item = df["carrier"].apply(lambda x: x[0])
-    carrier_last_item = df["carrier"].apply(lambda x: x[-1])
+    df["carrier"] = (
+        df["carrier"]
+        .fillna("")
+        .astype(str)
+        .str.strip()
+        .apply(lambda x: x.split("-") if x else [])
+    )
+    carrier_list_len = df["carrier"].apply(len)
+    carrier_str_len = df["carrier"].apply(lambda x: len(x[0]) if len(x) > 0 else 0)
+    carrier_first_item = df["carrier"].apply(lambda x: x[0] if len(x) > 0 else "")
+    carrier_last_item = df["carrier"].apply(lambda x: x[-1] if len(x) > 0 else "")
     bicharger_filter = carrier_list_len == 3
     charger_filter = (carrier_list_len == 2) & (carrier_first_item == "elec")
     discharger_filter = (carrier_list_len == 2) & (carrier_last_item == "elec")
@@ -3937,7 +3943,8 @@ def add_energy_storage_database(
                     or tech_name == "Pumped-Heat-store"
                 ):
                     x1 = pd.concat(
-                        [x, pd.DataFrame(other_segments_points)], ignore_index=True
+                        [x.reset_index(drop=True), pd.Series(other_segments_points)],
+                        ignore_index=True,
                     )
                     y1 = y
                     factor = 5
@@ -3950,7 +3957,7 @@ def add_energy_storage_database(
                             number_of_terms=i + 1,
                         )
                         y1 = pd.concat(
-                            [y1, pd.DataFrame([cost_at_year])], ignore_index=True
+                            [y1, pd.Series([cost_at_year])], ignore_index=True
                         )
                     f = interpolate.interp1d(
                         x1.squeeze(),
@@ -3960,7 +3967,8 @@ def add_energy_storage_database(
                     )
                 elif tech_name == "Hydrogen-charger":
                     x2 = pd.concat(
-                        [x, pd.DataFrame(other_segments_points)], ignore_index=True
+                        [x.reset_index(drop=True), pd.Series(other_segments_points)],
+                        ignore_index=True,
                     )
                     y2 = y
                     factor = 6.5
@@ -3971,7 +3979,7 @@ def add_energy_storage_database(
                             number_of_terms=i + 1,
                         )
                         y2 = pd.concat(
-                            [y2, pd.DataFrame([cost_at_year])], ignore_index=True
+                            [y2, pd.Series([cost_at_year])], ignore_index=True
                         )
                     f = interpolate.interp1d(
                         x2.squeeze(),
@@ -3981,7 +3989,8 @@ def add_energy_storage_database(
                     )
                 else:
                     x3 = pd.concat(
-                        [x, pd.DataFrame(other_segments_points)], ignore_index=True
+                        [x.reset_index(drop=True), pd.Series(other_segments_points)],
+                        ignore_index=True,
                     )
                     y3 = y
                     factor = 2
@@ -3992,7 +4001,7 @@ def add_energy_storage_database(
                             number_of_terms=i + 1,
                         )
                         y3 = pd.concat(
-                            [y3, pd.DataFrame([cost_at_year])], ignore_index=True
+                            [y3, pd.Series([cost_at_year])], ignore_index=True
                         )
                     f = interpolate.interp1d(
                         x3.squeeze(),
@@ -4038,7 +4047,10 @@ def add_energy_storage_database(
                 df = pd.concat([df, df_new], ignore_index=True)
 
     # d) Combine metadata and add to cost database
+    df["source"] = df["source"].fillna("").astype(str)
+    df["reference"] = df["reference"].fillna("").astype(str)
     df.loc[:, "source"] = df["source"] + ", " + df["reference"]
+    df["note"] = df["note"].fillna("NULL").astype(str)
     for i in df.index:
         df.loc[i, "further description"] = str(
             {

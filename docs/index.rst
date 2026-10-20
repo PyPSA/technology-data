@@ -69,6 +69,17 @@ Documentation
 
    addnew
 
+**Data review checklist**
+
+* :doc:`review`
+
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: Data review checklist
+
+   review
+
 **References**
 
 * :doc:`release_notes`

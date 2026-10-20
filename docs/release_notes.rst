@@ -15,6 +15,12 @@ Upcoming Release
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
 
+**Breaking changes**
+
+* ``biochar pyrolysis`` is now a carbon dioxide removal technology with all values per t_CO2 sequestered for >100 years instead of per MWh_biochar. ``investment`` is in EUR/t_CO2/h and ``VOM`` in EUR/t_CO2. New parameters ``biomass-input`` (MWh_biomass/t_CO2), ``electricity-input`` (MWh_e/t_CO2) and ``heat-output`` (MWh_th/t_CO2) replace ``efficiency-biochar`` and ``efficiency-heat``. ``yield-biochar`` is renamed to ``biochar-output`` and given in t_biochar per MWh of solid biomass (15% moisture) instead of per MWh of dried feedstock. 35% of the biomass carbon is assumed to be sequestered: 50% ends up in biochar, of which 70% is stable for >100 years. (https://github.com/PyPSA/technology-data/pull/258)
+
+**Changes**
+
 * Adding `Enhanced Weathering` (or Rocks) as CDR technology. (https://github.com/PyPSA/technology-data/pull/256)
 
 * Add cost assumptions for water network infrastructure: water pipeline HDPE and water pipeline booster pump (https://github.com/PyPSA/technology-data/pull/277)

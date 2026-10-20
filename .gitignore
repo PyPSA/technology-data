@@ -25,3 +25,4 @@ gurobi.log
 *.cb2
 .*.lb
 .claude/*
+!.claude/skills/review-data-pr/

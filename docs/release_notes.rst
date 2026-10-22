@@ -19,6 +19,8 @@ Upcoming Release
 
 * Add cost assumptions for water network infrastructure: water pipeline HDPE and water pipeline booster pump (https://github.com/PyPSA/technology-data/pull/277)
 
+* Fix the unit conversion of the ``CO2 liquefaction`` investment cost (the construction cost had been divided by the annual throughput instead of the hourly capacity) and add ``CO2 liquefaction small scale`` from the Danish Energy Agency's Technology Data for Carbon Capture, Transport and Storage (https://github.com/PyPSA/technology-data/pull/289).
+
 `v0.15.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.15.0>`__ (9th June 2026)
 ================================================================================================
 

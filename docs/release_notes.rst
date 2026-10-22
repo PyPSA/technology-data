@@ -19,7 +19,7 @@ Upcoming Release
 
 * Add cost assumptions for water network infrastructure: water pipeline HDPE and water pipeline booster pump (https://github.com/PyPSA/technology-data/pull/277)
 
-* Replace the CO2 liquefaction cost assumptions (investment, FOM, lifetime, electricity and heat input) from a 2004 Mitsubishi Heavy Industries/IEA report with the Danish Energy Agency's Technology Data for Carbon Capture, Transport and Storage (datasheet 411, 2020 EUR). The investment cost was about 5 orders of magnitude too low (about 21 EUR/(tCO2/h) instead of about 1.7 million EUR/(tCO2/h) in 2025 EUR). (https://github.com/PyPSA/technology-data/pull/289)
+* Fix the unit conversion of the ``CO2 liquefaction`` investment cost (the construction cost had been divided by the annual throughput instead of the hourly capacity) and add ``CO2 liquefaction small scale`` from the Danish Energy Agency's Technology Data for Carbon Capture, Transport and Storage (https://github.com/PyPSA/technology-data/pull/289).
 
 `v0.15.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.15.0>`__ (9th June 2026)
 ================================================================================================

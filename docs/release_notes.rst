@@ -19,7 +19,7 @@ Upcoming Release
 
 * Add cost assumptions for water network infrastructure: water pipeline HDPE and water pipeline booster pump (https://github.com/PyPSA/technology-data/pull/277)
 
-* Correct the nuclear fuel price (``nuclear``, ``uranium``) to Lazard's LCOE+ v19.0 (2026) assumption of 0.85 USD/MMBtu, i.e. 2.50 EUR(2026)/MWh_th. The TYNDP 2024 value it replaces (1.6808 EUR/GJ) is the 2011-2021 average of EIA's nuclear fuel expenses per kWh of electricity generated (EIA Table 8.4), so using it as a thermal fuel price applied the plant efficiency twice (about 3x too high).
+* Correct the nuclear fuel price (``nuclear``, ``uranium``) using Lazard's LCOE+ assumption (https://github.com/PyPSA/technology-data/pull/291)
 
 `v0.15.0 <https://github.com/PyPSA/technology-data/releases/tag/v0.15.0>`__ (9th June 2026)
 ================================================================================================

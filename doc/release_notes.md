@@ -12,7 +12,11 @@
 
 **Breaking changes**
 
-* Migrated the environment management from `conda` to [pixi](https://pixi.sh). Dependencies are now declared in `pixi.toml` and locked in `pixi.lock`. The conda environment file moved from `environment.yaml` to `envs/environment.yaml`, alongside pinned per-platform files `envs/default_<platform>.pin.txt`. These conda files contain runtime dependencies only; test and development tools (`pytest`, `pre-commit`, `ruff`, `ipykernel`) are only available via `pixi`. The `Makefile` was removed: `make unit-test` and `make test` are replaced by `pixi run unit-tests` and `pixi run integration-tests`. The minimum Python version is now 3.12. The `conda:` directives were removed from the `Snakefile`; `snakemake --sdm conda` no longer creates per-rule environments, run the workflow inside the `pixi` environment instead.
+* Switched from `conda` to `pixi` for environment management. (<https://github.com/PyPSA/technology-data/pull/293>)
+
+* Minimum Python version raised to 3.12. (<https://github.com/PyPSA/technology-data/pull/293>)
+
+* Switched from `sphinx` to `mkdocs` and `mkdocs-material` for the documentation. (<https://github.com/PyPSA/technology-data/pull/293>)
 
 **Changes**
 
@@ -21,8 +25,6 @@
 * Add cost assumptions for water network infrastructure: water pipeline HDPE and water pipeline booster pump (<https://github.com/PyPSA/technology-data/pull/277>)
 
 * Correct the nuclear fuel price (`nuclear`, `uranium`) using Lazard's LCOE+ assumption (<https://github.com/PyPSA/technology-data/pull/291>)
-
-* Migrated the documentation from Sphinx and reStructuredText to MkDocs with the Material theme. The documentation sources moved from `docs/` to `doc/` and are written in Markdown. Build the documentation locally with `pixi run -e doc mkdocs serve`.
 
 ## [v0.15.0](https://github.com/PyPSA/technology-data/releases/tag/v0.15.0) (9th June 2026)
 

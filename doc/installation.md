@@ -74,3 +74,9 @@ To generate the technology data with your settings run:
 ```bash
 projects/technology-data % pixi run snakemake -j1
 ```
+
+The `run-all` task does the same on all available CPU cores:
+
+```bash
+projects/technology-data % pixi run run-all
+```

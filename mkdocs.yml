@@ -30,13 +30,14 @@ theme:
   - search.share
 
 nav:
-- Home: index.md
-- Getting Started:
-  - Installation: installation.md
-  - Structure of the Repository: structure.md
-  - How to Add a New Technology: addnew.md
-- References:
-  - Release Notes: release_notes.md
+- Home:
+  - index.md
+  - Getting Started:
+    - Installation: installation.md
+    - Structure of the Repository: structure.md
+    - How to Add a New Technology: addnew.md
+  - References:
+    - Release Notes: release_notes.md
 
 plugins:
 - search

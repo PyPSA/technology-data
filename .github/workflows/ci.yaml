@@ -41,7 +41,8 @@ jobs:
 
     - name: Test snakemake workflows
       run: |
-        pixi run integration-tests
+        pixi run -e test snakemake --cores all -f compile_cost_assumptions --configfile config.yaml
+        pixi run -e test snakemake --cores all -f compile_cost_assumptions_usa --configfile config.yaml
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v7
@@ -54,7 +55,7 @@ jobs:
         git config --global --add safe.directory $GITHUB_WORKSPACE
         git add outputs/
         if ! git diff --cached --quiet; then
-          echo 'Generated outputs differ from the branch. Please rerun "pixi run integration-tests" and commit the changes to the outputs/*.csv files.'
+          echo 'Generated outputs differ from the branch. Please rerun the workflow with pixi and commit the changes to the outputs/*.csv files.'
           git diff --cached
           exit 1
         else

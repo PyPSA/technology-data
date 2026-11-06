@@ -12,8 +12,8 @@
 This script compiles assumptions on energy system technologies (such as costs, efficiencies, lifetimes, etc.) for chosen years (e.g. [2020, 2030, 2050]) from a variety
 of sources into CSV files to be read by energy system modelling software. The merged outputs have standardized cost years, technology names, units and source information.
 
-This project is maintained by the [Photovoltaic Solar Energy group](https://eng.au.dk/en/research/mechanical-engineering/energy-systems-and-thermodynamics/photovoltaic-solar-energy/) at the Department of Engineering at
-[Aarhus University](https://international.au.dk/) and the [Department of Digital Transformation in Energy Systems](https://www.ensys.tu-berlin.de) at the [Technische Universität Berlin](https://www.tu.berlin).
+This project is maintained by the [Department of Digital Transformation in Energy Systems](https://www.ensys.tu-berlin.de) at the [Technische Universität Berlin](https://www.tu.berlin)
+and [Open Energy Transition (OET)](https://openenergytransition.org).
 
 ## Documentation
 

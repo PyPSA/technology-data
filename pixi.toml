@@ -12,6 +12,8 @@ requires-pixi = ">=0.71.0"
 
 [tasks]
 
+run-all = "snakemake --cores all"
+
 sync-locks = """
     pixi install -e default && \
     pixi workspace export conda-explicit-spec -e default envs && \
@@ -42,12 +44,6 @@ ruff = ">=0.17.3"
 ipykernel = ">=7.4.0"
 
 [feature.test.tasks]
-
-integration-tests = """
-    snakemake --cores all -f compile_cost_assumptions --configfile config.yaml &&
-    snakemake --cores all -f compile_cost_assumptions_usa --configfile config.yaml &&
-    echo "All tests completed successfully."
-"""
 unit-tests = "pytest test"
 
 [feature.test.dependencies]

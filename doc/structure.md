@@ -1,19 +1,13 @@
-..
-  SPDX-FileCopyrightText: Contributors to technology-data <https://github.com/pypsa/technology-data>
+<!-- SPDX-FileCopyrightText: Contributors to technology-data <https://github.com/pypsa/technology-data> -->
+<!-- SPDX-License-Identifier: GPL-3.0-only -->
 
-  SPDX-License-Identifier: GPL-3.0-only
-
-.. _structure:
-
-##########################################
-Structure of the repository
-##########################################
+# Structure of the repository
 
 This repository has the following structure:
 
--  **inputs**: input data in format .csv, .xlsx or .parquet
+- **inputs**: input data in format .csv, .xlsx or .parquet
 
--  **outputs**: technology data saved as ``costs_{year}.csv`` format for defined years. In the output ``costs_{year}.csv`` are specified
+- **outputs**: technology data saved as `costs_{year}.csv` format for defined years. In the output `costs_{year}.csv` are specified
 
     * technology (e.g. 'onwind')
     * parameter (e.g. FOM)
@@ -23,7 +17,7 @@ This repository has the following structure:
     * further description (specific assumptions, sheet name if data from a multi-sheet Excel file)
     * currency_year (year used for adjusting economic values to reflect current purchasing power)
 
--  **outputs/US**: US-specific technology data saved as ``US/costs_{year}.csv`` format for defined years. In the outputs ``US/costs_{year}.csv`` are specified
+- **outputs/US**: US-specific technology data saved as `US/costs_{year}.csv` format for defined years. In the outputs `US/costs_{year}.csv` are specified
 
     * technology (e.g. 'onwind')
     * parameter (e.g. FOM)
@@ -35,13 +29,13 @@ This repository has the following structure:
     * financial_case (financial assumptions for the definition of the cost of capital)
     * scenario (technology innovation scenario)
 
--  **config**:
+- **config**:
 
-	.. literalinclude:: ../config.yaml
-	   :language: yaml
-	   :lines: 4-41
+    ```yaml
+    --8<-- "config.yaml:4"
+    ```
 
- The following parameters can be set in the ``config.yaml``
+    The following parameters can be set in the `config.yaml`
 
     * years : numpy array of all the years of which an output costs csv should be created
     * nrel_atb_input_years : list of years that define the source files
@@ -58,29 +52,24 @@ This repository has the following structure:
     * ewg_home_battery: Bool (True/False) add home battery data derived from DEA data and EWG study
     * add_data: Bool (True/False) add storage data mainly from PNNL
     * approx_beyond_2030: ["geometric_series"] or ["same_as_2030"]
-    * offwind_no_gridcosts : Bool (True/False) if offshore wind grid connection costs should be removed (they are calculated seperately in PyPSA-Eur)
+    * offwind_no_gridcosts : Bool (True/False) if offshore wind grid connection costs should be removed (they are calculated separately in PyPSA-Eur)
     * salinity : estimated in PSU (Practical Salinity Unit) = kg/m^3
     * ndigits : number of significant digits
 
--  **scripts** :
-    * :mod:`compile_cost_assumptions.py` converts input data from multiple sources to ``cost_{year}.csv`` for chosen year. Interpolates data for missing years or calculates the costs at a certain year based on the inflation rate. Technology data from the `Danish Energy Agency <https://github.com/PyPSA/technology-data>`_ are preferred. If data are missing from all sources, these are taken from the old PyPSA cost assumptions (with a printed warning).
-    * :mod:`compile_cost_assumptions_usa.py` converts input data from NREL/ATB to ``US/cost_{year}.csv`` for chosen year. It starts from the cost assumptions files produced by `compile_cost_assumptions.py`. All technology-parameter pairs present in the NREL/ATB input data are updated. Those not present in NREL/ATB are left untouched.
-    * :mod:`convert_pdf_fraunhofer_to_dataframe.py` converts table from Fraunhofer ISE report in pdf to csv format for input data. Script can be modified to convert other .pdf sources to .csv format
-    * :mod:`retrieve_data_from_dea.py` downloads up-to-date technology data from DEA website and saves it in the **input** folder. Optional, also retrieves the documentation of the data into the folder **docu**
+- **scripts** :
 
--  **docu**: reports, paper, additional information about the input data, format .pdf
+    * [`compile_cost_assumptions.py`](https://github.com/PyPSA/technology-data/blob/master/scripts/compile_cost_assumptions.py) converts input data from multiple sources to `cost_{year}.csv` for chosen year. Interpolates data for missing years or calculates the costs at a certain year based on the inflation rate. Technology data from the [Danish Energy Agency](https://github.com/PyPSA/technology-data) are preferred. If data are missing from all sources, these are taken from the old PyPSA cost assumptions (with a printed warning).
+    * [`compile_cost_assumptions_usa.py`](https://github.com/PyPSA/technology-data/blob/master/scripts/compile_cost_assumptions_usa.py) converts input data from NREL/ATB to `US/cost_{year}.csv` for chosen year. It starts from the cost assumptions files produced by `compile_cost_assumptions.py`. All technology-parameter pairs present in the NREL/ATB input data are updated. Those not present in NREL/ATB are left untouched.
+    * [`convert_pdf_fraunhofer_to_dataframe.py`](https://github.com/PyPSA/technology-data/blob/master/scripts/convert_pdf_fraunhofer_to_dataframe.py) converts table from Fraunhofer ISE report in pdf to csv format for input data. Script can be modified to convert other .pdf sources to .csv format
+    * [`retrieve_data_from_dea.py`](https://github.com/PyPSA/technology-data/blob/master/scripts/retrieve_data_from_dea.py) downloads up-to-date technology data from DEA website and saves it in the **input** folder. Optional, also retrieves the documentation of the data into the folder **docu**
 
--  **latex_tables**: .tex files with tables of the cost.csv and two python scripts
+- **docu**: reports, paper, additional information about the input data, format .pdf
 
-	* ``tables_in_latex.py`` to create .tex files with nice names
-	* ``tables_in_csv.py`` to create csv files with nice name (which can be used in latex with csv autotabular)
+- **latex_tables**: .tex files with tables of the cost.csv and two python scripts
 
+    * `tables_in_latex.py` to create .tex files with nice names
+    * `tables_in_csv.py` to create csv files with nice name (which can be used in latex with csv autotabular)
 
 The data licences and sources are given in the following table.
 
-
-.. csv-table::
-   :header-rows: 1
-   :file: data.csv
-
-
+{{ read_csv("doc/data.csv", keep_default_na=False) }}

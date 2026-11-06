@@ -15,6 +15,12 @@ Upcoming Release
 ..   The features listed below are not released yet, but will be part of the next release! 
 ..   To use the features already you have to use the ``master`` branch.
 
+**Breaking changes**
+
+* Migrated the environment management from ``conda`` to `pixi <https://pixi.sh>`__. Dependencies are now declared in ``pixi.toml`` and locked in ``pixi.lock``. The conda environment file moved from ``environment.yaml`` to ``envs/environment.yaml``, alongside pinned per-platform files ``envs/default_<platform>.pin.txt``. These conda files contain runtime dependencies only; test and development tools (``pytest``, ``pre-commit``, ``ruff``, ``ipykernel``) are only available via ``pixi``. The ``Makefile`` was removed: ``make unit-test`` and ``make test`` are replaced by ``pixi run unit-tests`` and ``pixi run integration-tests``. The minimum Python version is now 3.12. The ``conda:`` directives were removed from the ``Snakefile``; ``snakemake --sdm conda`` no longer creates per-rule environments, run the workflow inside the ``pixi`` environment instead.
+
+**Changes**
+
 * Adding `Enhanced Weathering` (or Rocks) as CDR technology. (https://github.com/PyPSA/technology-data/pull/256)
 
 * Add cost assumptions for water network infrastructure: water pipeline HDPE and water pipeline booster pump (https://github.com/PyPSA/technology-data/pull/277)

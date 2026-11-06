@@ -25,3 +25,5 @@ gurobi.log
 *.cb2
 .*.lb
 .claude/*
+.pixi/*
+!.pixi/config.toml

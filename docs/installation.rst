@@ -28,36 +28,49 @@ If you want to use the technology-data with `PyPSA-Eur <https://github.com/PyPSA
 Environment/package requirements
 ================================
 
-We recommend using the package manager and environment management system ``conda`` to install python dependencies.
-Install `miniconda <https://docs.conda.io/en/latest/miniconda.html>`_, which is a mini version of `Anaconda <https://www.anaconda.com/>`_ that includes only ``conda`` and its dependencies or make sure ``conda`` is already installed on your system.
-For instructions for your operating system follow the ``conda`` `installation guide <https://docs.conda.io/projects/conda/en/latest/user-guide/install/>`_.
+Preferred method: pixi
+----------------------
 
-The python package requirements are created in the `environment.yaml <https://github.com/PyPSA/technology-data/blob/master/environment.yaml>`_ file.
-The environment can be installed and activated using
+We recommend using the package and environment manager `pixi <https://pixi.sh>`_ to install the python dependencies.
+Follow the `pixi installation guide <https://pixi.sh/latest/installation/>`_ for your operating system.
+
+The dependencies are declared in `pixi.toml <https://github.com/PyPSA/technology-data/blob/master/pixi.toml>`_ and locked for all supported platforms in ``pixi.lock``.
+Pixi installs the environment automatically when you first run a command in it.
+Either activate the environment in your shell
 
 .. code:: bash
 
-    .../technology-data % conda env create -f environment.yaml
+    .../technology-data % pixi shell
+
+or prefix individual commands with ``pixi run``, e.g.
+
+.. code:: bash
+
+    .../technology-data % pixi run snakemake -j1
+
+Legacy method: conda
+--------------------
+
+Alternatively, the environment can be installed with ``conda``.
+The `envs <https://github.com/PyPSA/technology-data/tree/master/envs>`_ directory contains a pinned environment file for each platform (``linux-64``, ``osx-64``, ``osx-arm64``, ``win-64``), exported from ``pixi.lock``.
+These files contain the runtime dependencies only, without test and development tools.
+Create and activate the environment for your platform using
+
+.. code:: bash
+
+    .../technology-data % conda create -n technology-data --file envs/default_<platform>.pin.txt
 
     .../technology-data % conda activate technology-data
 
+If no pinned file fits your platform, use the unpinned environment file instead:
+
+.. code:: bash
+
+    .../technology-data % conda env create -f envs/environment.yaml
+
 .. note::
     Note that activation is local to the currently open shell!
-    After opening a new terminal window, one needs to reissue the second command!
-
-.. note::
-    If you have troubles with a slow ``conda`` installation, we recommend to install
-    `mamba <https://github.com/QuantStack/mamba>`_ as a fast drop-in replacement via
-
-    .. code:: bash
-        
-        conda install -c conda-forge mamba
-
-    and then install the environment with
-
-    .. code:: bash
-
-        mamba env create -f environment.yaml
+    After opening a new terminal window, one needs to reissue the activation command!
 
 
 
@@ -80,6 +93,6 @@ To generate the technology data with your settings run:
 
 .. code:: bash
 
-    projects/technology-data % snakemake -j1
+    projects/technology-data % pixi run snakemake -j1
 
 

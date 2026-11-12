@@ -7,6 +7,7 @@ on:
     branches: [master]
   schedule:
   - cron: "0 5 * * 0"
+  workflow_dispatch:
 
 
 # Cancel any in-progress runs when a new run is triggered
@@ -27,23 +28,21 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v7
 
-    - name: Setup micromamba
-      uses: mamba-org/setup-micromamba@v3
+    - name: Setup Pixi
+      uses: prefix-dev/setup-pixi@v0.11.2
       with:
-        micromamba-version: latest
-        environment-file: environment.yaml
-        log-level: debug
-        init-shell: bash
-        cache-environment: true
-        cache-downloads: true
+        environments: test
+        cache: true
+        cache-write: ${{ github.event_name == 'push' && github.ref_name == 'master' }}
 
     - name: Run unit tests
       run: |
-        make unit-test
+        pixi run unit-tests
 
     - name: Test snakemake workflows
       run: |
-        make test
+        pixi run -e test snakemake --cores all -f compile_cost_assumptions --configfile config.yaml
+        pixi run -e test snakemake --cores all -f compile_cost_assumptions_usa --configfile config.yaml
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v7
@@ -56,7 +55,7 @@ jobs:
         git config --global --add safe.directory $GITHUB_WORKSPACE
         git add outputs/
         if ! git diff --cached --quiet; then
-          echo "Generated outputs differ from the branch. Please commit rerun `snakemake` and commit the changes to the `outputs/*.csv` files."
+          echo 'Generated outputs differ from the branch. Please rerun the workflow with pixi and commit the changes to the outputs/*.csv files.'
           git diff --cached
           exit 1
         else

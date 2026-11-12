@@ -83,7 +83,7 @@ source_dict = {
     "vehicles": "PATHS TO A CLIMATE-NEUTRAL ENERGY SYSTEM The German energy transformation in its social context. https://www.ise.fraunhofer.de/en/publications/studies/paths-to-a-climate-neutral-energy-system.html",
 }
 
-# [DEA-sheet-names]
+# --8<-- [start:DEA-sheet-names]
 dea_sheet_names = {
     "onwind": "20 Onshore turbines",
     "offwind": "21 Offshore turbines",
@@ -154,7 +154,7 @@ dea_sheet_names = {
     "electrolysis small": "86 AEC 10 MW",
     "gas storage": "150 Underground Storage of Gas",
 }
-# [DEA-sheet-names]
+# --8<-- [end:DEA-sheet-names]
 
 uncrtnty_lookup = {
     "onwind": "J:K",
@@ -999,7 +999,7 @@ def get_data_DEA(
 
     df_final = pd.DataFrame(index=df.index, columns=years)
 
-    # [RTD-interpolation-example]
+    # --8<-- [start:RTD-interpolation-example]
     for index in df_final.index:
         values = np.interp(
             x=years,
@@ -1007,6 +1007,7 @@ def get_data_DEA(
             fp=df.loc[index, :].values.astype(float),
         )
         df_final.loc[index, :] = values
+    # --8<-- [end:RTD-interpolation-example]
 
     # if year-specific data is missing and not fixed by interpolation fill forward with same values
     df_final = df_final.ffill(axis=1)
@@ -1189,6 +1190,7 @@ def add_co2_intensity(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
     return cost_dataframe
 
 
+# --8<-- [start:add-solar-from-others]
 def add_solar_from_other(years: list, cost_dataframe: pd.DataFrame) -> pd.DataFrame:
     """
     The function adds solar from other sources than DEA (since the lifetime assumed in
@@ -1206,6 +1208,7 @@ def add_solar_from_other(years: list, cost_dataframe: pd.DataFrame) -> pd.DataFr
     pandas.DataFrame
         updated cost dataframe
     """
+    # --8<-- [end:add-solar-from-others]
 
     # solar utility from Vartiaian 2019
     interpolated_data = np.interp(
@@ -1267,7 +1270,7 @@ def add_solar_from_other(years: list, cost_dataframe: pd.DataFrame) -> pd.DataFr
     return cost_dataframe
 
 
-# [add-h2-from-other]
+# --8<-- [start:add-h2-from-other]
 def add_h2_from_other(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
     """
     The function assumes higher efficiency for electrolysis (0.8) and fuel cell (0.58).
@@ -1282,6 +1285,7 @@ def add_h2_from_other(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
     pandas.DataFrame
         updated cost dataframe
     """
+    # --8<-- [end:add-h2-from-other]
 
     cost_dataframe.loc[("electrolysis", "efficiency"), "value"] = 0.8
     cost_dataframe.loc[("fuel cell", "efficiency"), "value"] = 0.58
@@ -1293,7 +1297,7 @@ def add_h2_from_other(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
     return cost_dataframe
 
 
-# [unify-diw-inflation]
+# --8<-- [start:unify-diw-inflation]
 def unify_diw(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
     """
     The function adds currency year for the DIW costs from 2010.
@@ -1308,6 +1312,7 @@ def unify_diw(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
     pandas.DataFrame
         updated cost dataframe
     """
+    # --8<-- [end:unify-diw-inflation]
 
     cost_dataframe.loc[("PHS", "investment"), "currency_year"] = 2010
     cost_dataframe.loc[("ror", "investment"), "currency_year"] = 2010
@@ -4187,11 +4192,12 @@ if __name__ == "__main__":
 
     data.index.names = ["technology", "parameter"]
     # %% (3) ------ add additional sources and save cost as csv ------------------
-    # [RTD-target-multiindex-df]
+    # --8<-- [start:RTD-target-multiindex-df]
     for year in years_list:
         costs = data[
             [year, "unit", "source", "further description", "currency_year"]
         ].rename(columns={year: "value"})
+        # --8<-- [end:RTD-target-multiindex-df]
         costs["value"] = costs["value"].astype(float)
 
         # biomass is differentiated by biomass CHP and HOP

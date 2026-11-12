@@ -1,0 +1,66 @@
+# SPDX-FileCopyrightText: Contributors to technology-data <https://github.com/pypsa/technology-data>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
+[workspace]
+authors = ["Contributors to technology-data"]
+channels = ["conda-forge", "bioconda"]
+name = "technology-data"
+platforms = ["win-64", "linux-64", "osx-64", "osx-arm64"]
+exclude-newer = "7d"
+requires-pixi = ">=0.71.0"
+
+[tasks]
+
+run-all = "snakemake --cores all"
+
+sync-locks = """
+    pixi install -e default && \
+    pixi workspace export conda-explicit-spec -e default envs && \
+    bash -c 'for f in envs/*_conda_spec*; do mv "$f" "${f/_conda_spec/.pin}"; done' && \
+    pixi workspace export conda-environment -e default envs/environment.yaml -n technology-data
+"""
+
+[dependencies]
+python = ">=3.12"
+snakemake-minimal = ">=8.5"
+pandas = ">=2.1,<3"
+openpyxl = ">=3.1.2"
+pypsa = ">=1.2.4"
+pyarrow = ">=25.0.0"
+numpy = ">=2.5.4"
+beautifulsoup4 = ">=4.15.0"
+xlrd = ">=2.0.2"
+scipy = ">=1.18.1"
+python-calamine = ">=0.9.0"
+packaging = ">=25.0"
+requests = ">=2.34.2"
+tabula-py = ">=2.7.0"
+currencyconverter = ">=0.18.22"
+
+[feature.dev.dependencies]
+pre-commit = ">=4.7.0"
+ruff = ">=0.17.3"
+ipykernel = ">=7.4.0"
+
+[feature.test.tasks]
+unit-tests = "pytest test"
+
+[feature.test.dependencies]
+pytest = ">=9.2.0"
+pyyaml = ">=6.0.3"
+
+[feature.doc.tasks.build-docs]
+cmd = "mkdocs build -d {{ dir }}/html"
+args = ["dir"]
+
+[feature.doc.dependencies]
+mkdocs = ">=1.6,<2"
+mkdocs-material = ">=9.5"
+pymdown-extensions = ">=10.0"
+mkdocs-table-reader-plugin = ">=3.1"
+
+[environments]
+doc = { features = ["doc"], no-default-feature = true }
+test = ["test", "dev"]
+dev = ["dev"]

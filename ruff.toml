@@ -51,3 +51,7 @@ ignore = [
     # Include once available
     # https://github.com/astral-sh/ruff/issues/2310
     ]
+
+[format]
+# Python fences in the docs contain pymdownx.snippets includes, not Python code
+exclude = ["doc/**/*.md"]

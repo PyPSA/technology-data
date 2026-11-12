@@ -31,7 +31,7 @@ repos:
   hooks:
   - id: codespell
     args: ['--ignore-regex="(\b[A-Z]+\b)"', '--ignore-words-list=fom,appartment,bage,ore,setis,tabacco,berfore,vor,pris,WEGE,Wege,Eletricity'] # Ignore capital case words, e.g. country codes
-    types_or: [python, rst, markdown]
+    types_or: [python, markdown]
     files: ^(scripts|doc)/
 
   # YAML formatting

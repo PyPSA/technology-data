@@ -13,5 +13,6 @@ __pycache__
 *.pyc
 *.pyo
 *.ipynb
-docs
+doc
 latex_tables
+.pixi

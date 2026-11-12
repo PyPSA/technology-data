@@ -49,6 +49,7 @@ SPECIAL_CASES_CURRENCY_CODE_TO_ISO3 = frozendict(
         "ANG": "CUW",  # Curaçao (GDP-weighted proxy)
         "XAF": "CAF",  # Central African Republic (lowest inflation differential)
         "XCD": "GRD",  # Grenada (lowest inflation differential)
+        "XCG": "SXM",  # Sint Maarten (Caribbean guilder)
         "XOF": "NER",  # Niger (lowest inflation differential 2015-2023)
         "XPF": "PYF",  # French Polynesia (data availability)
     }
@@ -289,15 +290,11 @@ def get_iso3_from_currency_code(
     # Special cases should handle all non-unique currency codes, check to make sure
     # and return the ones that are not handled in special cases
 
-    if (
-        duplicated_iso3 := currency_codes_to_iso3.explode("iso3")[
-            "currency"
-        ].duplicated()
-    ).any():
+    if (duplicated_iso3 := currency_codes_to_iso3["currency"].duplicated()).any():
         raise ValueError(
             "Some currency codes are used by multiple ISO3 codes but are not handled in `special_cases` "
             "and need to be added to the mapping: "
-            f"{currency_codes_to_iso3[duplicated_iso3]}"
+            f"\n{currency_codes_to_iso3[duplicated_iso3]}"
         )
 
     currency_codes_to_iso3 = currency_codes_to_iso3.set_index("currency")[

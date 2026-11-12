@@ -3809,7 +3809,10 @@ def add_energy_storage_database(
         engine="calamine",
     )
     df = df.drop(columns=["ref_size_MW", "EP_ratio_h"])
-    df = df.fillna(df.dtypes.replace({"float64": 0.0, "O": "NULL"}))
+    # Fill by column kind, not dtype name: text columns are "object" in pandas 2 but "str" in pandas 3
+    df = df.fillna({col: 0.0 for col in df.select_dtypes("number").columns}).fillna(
+        "NULL"
+    )
     df.loc[:, "unit"] = df.unit.str.replace("NULL", "per unit")
     df.loc[(df["parameter"] == "efficiency") & (df["unit"].isna()), "unit"] = "per unit"
 

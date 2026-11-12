@@ -28,6 +28,10 @@
 
 * Fixed bug preventing add_energy_storage_database to run through (https://github.com/PyPSA/technology-data/pull/286).
 
+* Fixed incorrect unit conversion of the ``CO2 liquefaction`` investment cost, previous costs were too low (https://github.com/PyPSA/technology-data/pull/289).
+
+* Adding ``CO2 liquefaction small scale`` from the Danish Energy Agency's Technology Data for Carbon Capture, Transport and Storage (https://github.com/PyPSA/technology-data/pull/289).
+
 ## [v0.15.0](https://github.com/PyPSA/technology-data/releases/tag/v0.15.0) (9th June 2026)
 
 **Breaking changes**

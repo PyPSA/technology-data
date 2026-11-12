@@ -26,6 +26,8 @@
 
 * Correct the nuclear fuel price (`nuclear`, `uranium`) using Lazard's LCOE+ assumption (<https://github.com/PyPSA/technology-data/pull/291>)
 
+* Fixed bug preventing add_energy_storage_database to run through (https://github.com/PyPSA/technology-data/pull/286).
+
 ## [v0.15.0](https://github.com/PyPSA/technology-data/releases/tag/v0.15.0) (9th June 2026)
 
 **Breaking changes**

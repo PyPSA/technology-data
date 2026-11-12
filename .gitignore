@@ -4,7 +4,7 @@
 
 .DS_Store
 .snakemake
-_build
+/site
 .idea
 .vscode
 gurobi.log
@@ -25,3 +25,5 @@ gurobi.log
 *.cb2
 .*.lb
 .claude/*
+.pixi/*
+!.pixi/config.toml

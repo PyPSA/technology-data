@@ -6,7 +6,7 @@ cff-version: 1.2.0
 message: "If you use this package, we suggest the following way of citing it."
 title: "technologydata: Data for Energy Systems Models"
 repository: https://github.com/open-energy-transition/technology-data
-version: 0.3.0
+version: 0.4.0
 license: MIT
 authors:
   - family-names: Hampp

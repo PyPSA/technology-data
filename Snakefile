@@ -32,8 +32,6 @@ rule compile_cost_assumptions:
         expand("outputs/costs_{year}.csv", year=config["years"]),
     log:
         pathlib.Path("logs", "compile_cost_assumptions.log"),
-    conda:
-        "environment.yaml"
     threads: 1
     resources:
         mem=500,
@@ -56,8 +54,6 @@ rule compile_cost_assumptions_usa:
         expand("outputs/US/costs_{year}.csv", year=config["years"]),
     log:
         pathlib.Path("logs", "compile_cost_assumptions_usa.log"),
-    conda:
-        "environment.yaml"
     threads: 1
     resources:
         mem=500,
@@ -73,7 +69,6 @@ rule compile_cost_assumptions_usa:
 #         energy_prices = "inputs/Fraunhofer_ISE_energy_prices.csv"
 #     threads: 1
 #     resources: mem=500
-#     conda: "environment.yaml"
 #     script: "scripts/convert_pdf_fraunhofer_to_dataframe.py"
 
 
@@ -82,8 +77,6 @@ rule convert_EWG:
         EWG="docu/EWG_LUT_100RE_All_Sectors_Global_Report_2019.pdf",
     output:
         costs="inputs/EWG_costs.csv",
-    conda:
-        "environment.yaml"
     threads: 1
     resources:
         mem=500,

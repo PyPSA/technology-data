@@ -3532,8 +3532,15 @@ def energy_penalty(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
         cost_dataframe.loc[(tech_name, "investment"), "source"] = source
         cost_dataframe.loc[(tech_name, "investment"), "further description"] = ""
 
-        if (tech_name, "VOM") not in cost_dataframe.index:
+        if (tech_name, "VOM") not in cost_dataframe.index or pd.isna(
+            cost_dataframe.loc[(tech_name, "VOM"), "value"]
+            ):
             cost_dataframe.loc[(tech_name, "VOM"), "value"] = 0.0
+
+        if pd.isna(cost_dataframe.loc[(tech_name, "VOM"), "currency_year"]):
+            cost_dataframe.loc[(tech_name, "VOM"), "currency_year"] = cost_dataframe.loc[
+                (tech_name, "investment"), "currency_year"
+                ]
 
         cost_dataframe.loc[(tech_name, "VOM"), "value"] = (
             cost_dataframe.loc[(tech_name, "VOM"), "value"] * eta_old / eta_main

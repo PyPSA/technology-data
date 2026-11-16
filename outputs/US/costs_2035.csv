@@ -3812,7 +3812,7 @@ biogas,investment,1180.2823,EUR/kW,"Danish Energy Agency, inputs/data_sheets_for
 biogas,lifetime,20.0,years,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx","81 Biogas, Basic plant, small:  Technical lifetime",2020.0,,
 biogas CC,CO2 stored,0.1447,tCO2/MWh_th,"Stoichiometric calculation, doi:10.1016/j.apenergy.2022.120016",,,,
 biogas CC,FOM,7.7769,%/year,"Danish Energy Agency, inputs/data_sheets_for_renewable_fuels.xlsx","81 Biogas, Basic plant, small:  Total O&M",2020.0,,
-biogas CC,VOM,,EUR/MWh,Combination of biogas CC and gas boiler steam,,2025.0,,
+biogas CC,VOM,0.1255,EUR/MWh,Combination of biogas CC and gas boiler steam,,2025.0,,
 biogas CC,capture rate,0.9,per unit,Assumption based on doi:10.1016/j.biombioe.2015.01.006,,,,
 biogas CC,efficiency,0.9031,per unit,Combination of biogas CC and gas boiler steam,,,,
 biogas CC,investment,1312.6624,EUR/kW,Combination of biogas CC and gas boiler steam,,2025.0,,

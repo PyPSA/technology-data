@@ -34,7 +34,9 @@
 
 * Adding ``CO2 liquefaction small scale`` from the Danish Energy Agency's Technology Data for Carbon Capture, Transport and Storage (https://github.com/PyPSA/technology-data/pull/289).
 
-* Fix bug preventing energy penalty for carbon capture technologies to be applied (https://github.com/PyPSA/technology-data/pull/287).
+* Fix bug preventing energy penalty for carbon capture technologies to be applied; affects `biogas CC`, `central gas CHP CC`, `central solid biomass CHP CC`, `central solid biomass CHP powerboost CC`, `direct firing gas CC`, `direct firing solid fuels CC`, `solid biomass boiler steam CC`, and `waste CHP CC` (https://github.com/PyPSA/technology-data/pull/287).
+
+* New entry `efficiency-heat` for `central gas CHP` and `central gas CHP CC` (https://github.com/PyPSA/technology-data/pull/287).
 
 ## [v0.15.0](https://github.com/PyPSA/technology-data/releases/tag/v0.15.0) (9th June 2026)
 

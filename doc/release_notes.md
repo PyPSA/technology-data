@@ -26,6 +26,8 @@
 
 * Added `afforestation restorative` as carbon dioxide removal technology, with investment per hectare of new forest. (<https://github.com/PyPSA/technology-data/pull/254>)
 
+* Added `perennials refining` (perennial crops with green biorefining to protein and biogas) and mass-based efficiencies for `ethanol from wheat`, `ethanol from sugar beet` and `biodiesel from rapeseed`. (<https://github.com/PyPSA/technology-data/pull/255>)
+
 * Adding `Enhanced Weathering` (or Rocks) as CDR technology. (<https://github.com/PyPSA/technology-data/pull/256>)
 
 * Add cost assumptions for water network infrastructure: water pipeline HDPE and water pipeline booster pump (<https://github.com/PyPSA/technology-data/pull/277>)

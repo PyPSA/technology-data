@@ -303,6 +303,9 @@ def adjust_for_inflation(
         inflation.loc[filter_i], axis=0
     )
 
+    # Modify the currency year to the reference year for the inflation adjustment
+    costs.loc[filter_i, "currency_year"] = eur_year
+
     return costs
 
 

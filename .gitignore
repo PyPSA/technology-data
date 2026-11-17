@@ -25,5 +25,8 @@ gurobi.log
 *.cb2
 .*.lb
 .claude/*
+!.claude/skills/
+.claude/skills/*
+!.claude/skills/review-data-pr/
 .pixi/*
 !.pixi/config.toml

@@ -46,6 +46,8 @@
 
 * New entry `efficiency-heat` for `central gas CHP` and `central gas CHP CC` (https://github.com/PyPSA/technology-data/pull/287).
 
+* Add a data review checklist to the documentation and link it from the pull request template (https://github.com/PyPSA/technology-data/pull/290).
+
 ## [v0.15.0](https://github.com/PyPSA/technology-data/releases/tag/v0.15.0) (9th June 2026)
 
 **Breaking changes**

@@ -29,6 +29,10 @@ and [Open Energy Transition (OET)](https://openenergytransition.org).
 
 * [How to add a new technology](addnew.md)
 
+**Data review checklist**
+
+* [Data review checklist](review.md)
+
 **References**
 
 * [Release Notes](release_notes.md)

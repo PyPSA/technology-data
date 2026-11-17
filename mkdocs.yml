@@ -36,6 +36,7 @@ nav:
     - Installation: installation.md
     - Structure of the Repository: structure.md
     - How to Add a New Technology: addnew.md
+    - Data Review Checklist: review.md
   - References:
     - Release Notes: release_notes.md
 

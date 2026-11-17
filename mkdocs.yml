@@ -1,0 +1,66 @@
+# SPDX-FileCopyrightText: Contributors to technology-data <https://github.com/pypsa/technology-data>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+
+site_name: technology-data
+site_url: https://technology-data.readthedocs.io
+repo_url: https://github.com/pypsa/technology-data
+repo_name: pypsa/technology-data
+edit_uri: edit/master/doc/
+
+docs_dir: doc
+
+theme:
+  name: material
+  features:
+  - navigation.tabs
+  - navigation.tabs.sticky
+  - navigation.sections
+  - navigation.expand
+  - navigation.indexes
+  - navigation.top
+  - navigation.tracking
+  - search.suggest
+  - content.code.copy
+  - content.tabs.link
+  - content.action.edit
+  - content.action.view
+  - toc.follow
+  - search.highlight
+  - search.share
+
+nav:
+- Home:
+  - index.md
+  - Getting Started:
+    - Installation: installation.md
+    - Structure of the Repository: structure.md
+    - How to Add a New Technology: addnew.md
+  - References:
+    - Release Notes: release_notes.md
+
+plugins:
+- search
+- table-reader
+
+markdown_extensions:
+- admonition
+- pymdownx.details
+- pymdownx.snippets:
+    base_path: .
+    check_paths: true
+    dedent_subsections: true
+- pymdownx.superfences
+- pymdownx.highlight
+- pymdownx.inlinehilite
+- tables
+- attr_list
+- md_in_html
+- toc:
+    permalink: true
+
+extra_css:
+- assets/stylesheets/extra.css
+
+copyright: >-
+  &copy Copyright technology-data Contributors | GPL-3.0-only

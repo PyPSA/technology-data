@@ -277,6 +277,7 @@ manual_cost_year_assignments_2020 = [
     "gas storage charger",
     "gas storage discharger",
     "gas storage discharger",
+    "perennials refining",
 ]
 
 cost_year_2019 = [
@@ -3080,6 +3081,103 @@ def add_carbon_capture(
     return new_technology_dataframe
 
 
+def add_perennials_refining(
+    years: list,
+    new_technology_dataframe: pd.DataFrame,
+) -> pd.DataFrame:
+    """
+    Add perennials + green biorefining (GBR) excl. biogas production plant.
+
+    It considers purchase of raw materials (perennials) and sales of other products
+    (protein concentrate and biogas feedstock) in the VOM.
+
+    Parameters
+    ----------
+    years : list
+        Years for which a cost assumption is provided (e.g. [2020, 2025, ...]).
+    new_technology_dataframe : pandas.DataFrame
+        DataFrame to be filled/updated with the new technology data.
+
+    Returns
+    -------
+    pandas.DataFrame
+        Updated technology data with "perennials refining".
+    """
+
+    tech_name = "perennials refining"
+
+    source_r1 = "Andrade and Ambye-Jensen (2022), Process Integration and Techno-Economic Assessment of a Green Biorefinery Demonstration Scale Platform for Leaf Protein Production, https://doi.org/10.1016/B978-0-323-95879-0.50147-8"
+
+    LHV_ch4 = 50 / 3.6  # MWh/t_CH4
+    operating_hours = 4200  # h/a, Section 2.3
+    perennials_input_flow = 40 * 0.18  # t_DM/h, 40 t/h at 18% DM, Table 2
+    protein_output_flow = 1.4  # t/h, Table 2
+    ch4_mass_share = 0.593 * 16.04 / (0.593 * 16.04 + 0.405 * 44.01)  # Table 3
+    biogas_output_flow = 0.29 * ch4_mass_share * LHV_ch4  # MW_CH4, Table 2
+    electricity_input_flow = 7.33 / 100 * perennials_input_flow  # MW
+
+    usd_per_eur = 1.1422  # ECB 2020 average
+
+    # Table 4: fixed capital investment, excl. working capital
+    investment = 7.24e6 / usd_per_eur / perennials_input_flow
+    FOM = 0.45e6 / 7.24e6 * 100  # labour and maintenance
+
+    protein_price = 535  # USD/t, non-GMO soybean meal, Section 2.3
+    perennial_cost = 4.72e6 / (perennials_input_flow * operating_hours)  # Table 4
+    VOM = (
+        perennial_cost - protein_price * protein_output_flow / perennials_input_flow
+    ) / usd_per_eur
+
+    new_technology_dataframe.loc[(tech_name, "investment"), years] = investment
+    new_technology_dataframe.loc[(tech_name, "investment"), "unit"] = "EUR/(t_DM/h)"
+    new_technology_dataframe.loc[(tech_name, "investment"), "currency_year"] = 2020
+
+    new_technology_dataframe.loc[(tech_name, "lifetime"), years] = 25
+    new_technology_dataframe.loc[(tech_name, "lifetime"), "unit"] = "years"
+
+    new_technology_dataframe.loc[(tech_name, "FOM"), years] = FOM
+    new_technology_dataframe.loc[(tech_name, "FOM"), "unit"] = "%/year"
+    new_technology_dataframe.loc[(tech_name, "FOM"), "currency_year"] = 2020
+
+    new_technology_dataframe.loc[(tech_name, "VOM"), years] = VOM
+    new_technology_dataframe.loc[(tech_name, "VOM"), "unit"] = "EUR/t_DM"
+    new_technology_dataframe.loc[(tech_name, "VOM"), "currency_year"] = 2020
+
+    # Outputs/inputs per tDM
+    new_technology_dataframe.loc[(tech_name, "biogas-output"), years] = (
+        biogas_output_flow / perennials_input_flow
+    )
+    new_technology_dataframe.loc[(tech_name, "biogas-output"), "unit"] = "MWh/t_DM"
+
+    new_technology_dataframe.loc[(tech_name, "electricity-input"), years] = (
+        electricity_input_flow / perennials_input_flow
+    )
+    new_technology_dataframe.loc[(tech_name, "electricity-input"), "unit"] = "MWh/t_DM"
+
+    new_technology_dataframe.loc[tech_name, "source"] = source_r1
+    new_technology_dataframe.loc[tech_name, "further description"] = (
+        "DM: dry matter of perennial crops."
+    )
+
+    new_technology_dataframe.loc[(tech_name, "investment"), "further description"] = (
+        "DM: dry matter. Fixed capital investment incl. digester, excl. working capital: 7.24 MUSD (Table 4) / 7.2 t_DM/h (40 t/h at 18% DM, Table 2), 1.1422 USD/EUR (ECB 2020)."
+    )
+    new_technology_dataframe.loc[(tech_name, "VOM"), "further description"] = (
+        "DM: dry matter. Raw material 4.72 MUSD/a (Table 4) at 4200 h/a = 156 USD/t_DM, minus protein sales 535 USD/t x 1.4 t/h / 7.2 t_DM/h (Table 2). Press cake sales not credited. 1.1422 USD/EUR."
+    )
+    new_technology_dataframe.loc[
+        (tech_name, "biogas-output"), "further description"
+    ] = "DM: dry matter. Brown juice digestion only: 0.29 t_biogas/h (Table 2), 59.3 mol% CH4 (Table 3)."
+    new_technology_dataframe.loc[(tech_name, "lifetime"), "further description"] = (
+        "Guesstimate."
+    )
+    new_technology_dataframe.loc[(tech_name, "FOM"), "further description"] = (
+        "Labour and maintenance 0.45 MUSD/a / 7.24 MUSD (Table 4)."
+    )
+
+    return new_technology_dataframe
+
+
 def add_biomethanation_CO2(
     years: list,
     sheet_names_dict: dict,
@@ -4569,6 +4667,8 @@ if __name__ == "__main__":
     data = convert_units(years_list, data)
     # add carbon capture
     data = add_carbon_capture(years_list, dea_sheet_names, data, tech_data)
+    # add perennials and green biorefining
+    data = add_perennials_refining(years_list, data)
     # add biomethanation from pure CO2
     data = add_biomethanation_CO2(years_list, dea_sheet_names, data, data)
 

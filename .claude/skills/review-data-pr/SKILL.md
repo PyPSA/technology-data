@@ -19,7 +19,7 @@ The skill user is a maintainer of the repository.
 The result of the skill is a **draft review**, which the user may edit and post as a pending GitHub review.
 Never submit a review or post comments without their explicit go-ahead.
 
-Read the data review checklist in the documentation (`docs/review.rst`) before making any checks and writing comments.
+Read the data review checklist in the documentation (`doc/review.md`) before making any checks and writing comments.
 It contains a point for point checklist for maintainers and sample wording for the review.
 
 ## Scope notes

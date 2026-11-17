@@ -153,6 +153,7 @@ dea_sheet_names = {
     "biochar pyrolysis": "105 Slow pyrolysis, Straw",
     "electrolysis small": "86 AEC 10 MW",
     "gas storage": "150 Underground Storage of Gas",
+    "biomethanation": "106 Biomethanation of biogas",
 }
 # --8<-- [end:DEA-sheet-names]
 
@@ -253,6 +254,7 @@ cost_year_2020 = [
     "methanolisation",
     "Fischer-Tropsch",
     "biomethanation",
+    "biomethanation CO2",
     "electrolysis small",
     "central water pit storage",
     "central water tank storage",
@@ -984,6 +986,9 @@ def get_data_DEA(
     if "biochar pyrolysis" in tech_name:
         df = biochar_pyrolysis_dea(df)
 
+    elif "biomethanation" in tech_name:
+        df = biomethanation_dea(df)
+
     elif tech_name == "central geothermal heat source":
         # we need to convert from costs per MW of the entire system (including heat pump)
         # to costs per MW of the geothermal heat source only
@@ -1375,6 +1380,52 @@ def unify_diw(cost_dataframe: pd.DataFrame) -> pd.DataFrame:
     cost_dataframe.loc[("hydro", "investment"), "currency_year"] = 2010
 
     return cost_dataframe
+
+
+def biomethanation_dea(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Normalise DEA biomethanation of biogas (4 H2 + CO2 -> CH4 + 2 H2O) to MWh_CH4.
+
+    DEA gives flows per MWh of total input (hydrogen and electricity) and costs
+    per MW of methane produced (note A). Flows are normalised to the methane
+    produced, excluding the biogas methane passing through. The biogas input
+    follows from the CO2 consumption and the biogas composition (note B).
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        DEA data sheet "106 Biomethanation of biogas".
+
+    Returns
+    -------
+    pandas.DataFrame
+        Data with flows per MWh_CH4 produced.
+    """
+    co2_density = 1.98e-3  # t/Nm3
+    ch4_lhv = 35.8 / 3600  # MWh/Nm3
+    ch4_per_co2_biogas = 0.58 / 0.42  # Nm3/Nm3, 58% CH4 and 42% CO2 (note B)
+
+    flows = df.index[df.index.str.contains("Total Input")]
+    methane = df.loc[df.index.str.contains("Methane Output")].astype(float).iloc[0]
+    df.loc[flows] = df.loc[flows].astype(float) / methane
+
+    co2 = df.index[df.index.str.contains("CO2 Consumption")][0]
+    df.loc["Biogas Consumption, [MWh_biogas/MWh_CH4]"] = (
+        df.loc[co2] * ch4_per_co2_biogas * ch4_lhv
+    )
+    df.loc[co2] = df.loc[co2] * co2_density
+
+    units = {
+        "Hydrogen Consumption": "MWh_H2/MWh_CH4",
+        "CO2 Consumption": "t_CO2/MWh_CH4",
+        "Electricity Consumption": "MWh_el/MWh_CH4",
+        "Heat Output": "MWh_th/MWh_CH4",
+        "Methane Output": "MWh_CH4/MWh_CH4",
+    }
+    for label, unit in units.items():
+        old = df.index[df.index.str.startswith(label)][0]
+        df = df.rename(index={old: f"{label}, [{unit}]"})
+    return df.rename(index=lambda x: x.replace("MEUR /MW", "MEUR /MW_CH4"))
 
 
 def biochar_pyrolysis_dea(df):
@@ -2244,6 +2295,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 | (df.index.str.contains("Bio SNG"))
                 | (df.index.str.contains("biochar"))
                 | (df.index.str.contains("H-Output"))
+                | (tech_name == "biomethanation")
                 | (df.index.str.contains("Biomass Input"))
                 | (df.index.str.contains("El-Input"))
                 | (df.index == ("Hydrogen"))
@@ -2266,6 +2318,7 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
                 | df.unit.str.contains("MWh_biomass/t_CO2")
                 | df.unit.str.contains("MWh_e/t_CO2")
                 | df.unit.str.contains("MWh_CH4/MWh_H2")
+                | df.unit.str.contains("/MWh_CH4")
                 | df.unit.str.contains("% MWh_feedstock")
             )
         ].copy()
@@ -2326,8 +2379,21 @@ def order_data(years: list, technology_dataframe: pd.DataFrame) -> pd.DataFrame:
             efficiency_h2["parameter"] = "efficiency"
             clean_df[tech_name] = pd.concat([clean_df[tech_name], efficiency_h2])
 
+        if tech_name == "biomethanation":
+            parameters = {
+                "Hydrogen Consumption": "hydrogen-input",
+                "CO2 Consumption": "carbondioxide-input",
+                "Electricity Consumption": "electricity-input",
+                "Biogas Consumption": "biogas-input",
+                "Heat Output": "heat-output",
+            }
+            for label, parameter in parameters.items():
+                row = efficiency[efficiency.index.str.startswith(label)].copy()
+                row["parameter"] = parameter
+                clean_df[tech_name] = pd.concat([clean_df[tech_name], row])
+
         # check if electric and heat efficiencies are given
-        if any(["Electric" in ind for ind in efficiency.index]) and any(
+        elif any(["Electric" in ind for ind in efficiency.index]) and any(
             ["Heat" in ind for ind in efficiency.index]
         ):
             efficiency_heat = efficiency[efficiency.index.str.contains("Heat")].copy()
@@ -2798,6 +2864,19 @@ def add_description(
                 ("biochar pyrolysis", parameter), "further description"
             ] += comment
 
+    biomethanation_comments = {
+        "biogas-input": (
+            " from CO2 consumption and biogas with 58% CH4 and 42% CO2 (note B)."
+            " The biogas CH4 passes the reactor: total CH4 output is 1 + biogas-input."
+        ),
+        "carbondioxide-input": " contained in biogas-input.",
+    }
+    if "biomethanation" in technology_dataframe.index:
+        for parameter, comment in biomethanation_comments.items():
+            technology_dataframe.loc[
+                ("biomethanation", parameter), "further description"
+            ] += comment
+
     return technology_dataframe
 
 
@@ -3039,6 +3118,50 @@ def add_perennials_refining(
     )
 
     return new_technology_dataframe
+
+
+def add_biomethanation_co2(
+    years: list,
+    technology_dataframe: pd.DataFrame,
+) -> pd.DataFrame:
+    """
+    Add biomethanation of pure CO2, derived from biomethanation of biogas.
+
+    Flows per MWh_CH4 produced are the same; only the biogas input is dropped.
+    The investment scales with the total inlet gas volume flow (H2 plus CO2
+    instead of H2 plus biogas), since the residence time of the gas sets the
+    reactor size.
+
+    Parameters
+    ----------
+    years : list
+        Years for which a cost assumption is provided (e.g. [2020, 2025, ...]).
+    technology_dataframe : pandas.DataFrame
+        Technology data including "biomethanation".
+
+    Returns
+    -------
+    pandas.DataFrame
+        Technology data including "biomethanation CO2".
+    """
+    base = technology_dataframe.loc["biomethanation"]
+    h2_flow = base.loc["hydrogen-input", years] / (0.09 * 33.3e-3)  # Nm3/MWh_CH4
+    co2_flow = base.loc["carbondioxide-input", years] / 1.98e-3  # Nm3/MWh_CH4
+    biogas_flow = co2_flow / 0.42  # Nm3/MWh_CH4, 42% CO2 in biogas
+    inlet_flow_ratio = (h2_flow + co2_flow) / (h2_flow + biogas_flow)
+
+    new = base.drop("biogas-input").copy()
+    new.loc["carbondioxide-input", "further description"] = new.loc[
+        "carbondioxide-input", "further description"
+    ].removesuffix(" contained in biogas-input.")
+    new.loc["investment", years] = new.loc["investment", years] * inlet_flow_ratio
+    new.loc["investment", "further description"] = (
+        "Scaled from biomethanation by the inlet gas volume flow, (H2 + CO2) / (H2 + biogas)."
+    )
+    new.index = pd.MultiIndex.from_product(
+        [["biomethanation CO2"], new.index], names=technology_dataframe.index.names
+    )
+    return pd.concat([technology_dataframe, new])
 
 
 def rename_pypsa_old(cost_dataframe_pypsa: pd.DataFrame) -> pd.DataFrame:
@@ -4435,6 +4558,8 @@ if __name__ == "__main__":
     data = add_carbon_capture(years_list, dea_sheet_names, data, tech_data)
     # add perennials and green biorefining
     data = add_perennials_refining(years_list, data)
+    # add biomethanation from pure CO2
+    data = add_biomethanation_co2(years_list, data)
 
     # adjust for inflation
     for x in data.index.get_level_values("technology"):

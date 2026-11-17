@@ -163,6 +163,7 @@ def test_get_sheet_location():
         "waste CHP CC": "inputs/technology_data_for_el_and_dh.xlsx",
         "biochar pyrolysis": "inputs/data_sheets_for_renewable_fuels.xlsx",
         "electrolysis small": "inputs/data_sheets_for_renewable_fuels.xlsx",
+        "biomethanation": "inputs/data_sheets_for_renewable_fuels.xlsx",
         "random tech": "Sheet not found",
     }
     dea_sheet_names_dict = copy.deepcopy(dea_sheet_names)
@@ -253,6 +254,7 @@ def test_get_data_from_dea(config):
         "waste CHP CC": (16, 9),
         "biochar pyrolysis": (9, 9),
         "electrolysis small": (7, 9),
+        "biomethanation": (10, 9),
         "random tech": (0, 0),
     }
     excel_files = [

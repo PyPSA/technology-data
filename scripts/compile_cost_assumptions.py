@@ -2969,7 +2969,7 @@ def add_perennials_refining(
 
     tech_name = "perennials refining"
 
-    source_r1 = "Andrade and Ambye-Jensen (2022), https://doi.org/10.1016/B978-0-323-95879-0.50147-8"
+    source_r1 = "Andrade and Ambye-Jensen (2022), Process Integration and Techno-Economic Assessment of a Green Biorefinery Demonstration Scale Platform for Leaf Protein Production, https://doi.org/10.1016/B978-0-323-95879-0.50147-8"
 
     LHV_ch4 = 50 / 3.6  # MWh/t_CH4
     operating_hours = 4200  # h/a, Section 2.3
@@ -3030,7 +3030,7 @@ def add_perennials_refining(
     )
     new_technology_dataframe.loc[
         (tech_name, "biogas-output"), "further description"
-    ] = "Brown juice digestion only: 0.29 t_biogas/h (Table 2), 59.3 mol% CH4 (Table 3)."
+    ] = "DM: dry matter. Brown juice digestion only: 0.29 t_biogas/h (Table 2), 59.3 mol% CH4 (Table 3)."
     new_technology_dataframe.loc[(tech_name, "lifetime"), "further description"] = (
         "Guesstimate."
     )

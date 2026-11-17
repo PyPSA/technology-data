@@ -24,6 +24,8 @@
 
 * Added the process CO2 emissions of clinker calcination (`cement dry clinker`, `carbondioxide-output`, 0.52 t_CO2/t_clinker) and corrected the unit of its `heat-input` to MWh_th/t_clinker. (<https://github.com/PyPSA/technology-data/pull/266>)
 
+* Added `afforestation restorative` as carbon dioxide removal technology, with investment per hectare of new forest. (<https://github.com/PyPSA/technology-data/pull/254>)
+
 * Adding `Enhanced Weathering` (or Rocks) as CDR technology. (<https://github.com/PyPSA/technology-data/pull/256>)
 
 * Add cost assumptions for water network infrastructure: water pipeline HDPE and water pipeline booster pump (<https://github.com/PyPSA/technology-data/pull/277>)
